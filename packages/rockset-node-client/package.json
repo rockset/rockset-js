@@ -1,0 +1,16 @@
+{
+  "name": "rockset",
+  "version": "0.5.0",
+  "description": "Client for querying Rockset and interacting with the Rockset API.",
+  "license": "MIT",
+  "main": "rockset.js",
+  "scripts": {
+    "start": "echo 'not implemented'"
+  },
+  "browser": {
+    "fs": false
+  },
+  "dependencies": {
+    "superagent": "3.7.0"
+  }
+}
