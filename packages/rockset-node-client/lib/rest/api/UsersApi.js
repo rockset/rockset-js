@@ -83,6 +83,47 @@
     }
 
     /**
+     * Callback function to receive the result of the get operation.
+     * @callback module:api/UsersApi~getCallback
+     * @param {String} error Error message, if any.
+     * @param {module:model/ListUsersResponse} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Retrieve current user
+     * Retrieve currently active user.
+     * @param {module:api/UsersApi~getCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link module:model/ListUsersResponse}
+     */
+    this.get = function(callback) {
+      var postBody = null;
+
+
+      var pathParams = {
+      };
+      var queryParams = {
+      };
+      var collectionQueryParams = {
+      };
+      var headerParams = {
+      };
+      var formParams = {
+      };
+
+      var authNames = [];
+      var contentTypes = ['application/json'];
+      var accepts = ['application/json'];
+      var returnType = ListUsersResponse;
+
+      return this.apiClient.callApi(
+        '/v1/orgs/self/users/self', 'GET',
+        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+
+    /**
      * Callback function to receive the result of the list operation.
      * @callback module:api/UsersApi~listCallback
      * @param {String} error Error message, if any.

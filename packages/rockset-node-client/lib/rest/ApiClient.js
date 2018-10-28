@@ -56,7 +56,7 @@
      */
     this.defaultHeaders = {
       "Authorization": "ApiKey " + apiKey,
-      "X-Rockset-Version": "<projectVersion>"
+      "X-Rockset-Version": require('../../package.json').version
     };
 
     /**

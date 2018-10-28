@@ -36,6 +36,7 @@
 
 
     _this['email'] = email;
+
   };
 
   /**
@@ -58,6 +59,9 @@
       if (data.hasOwnProperty('email')) {
         obj['email'] = ApiClient.convertToType(data['email'], 'String');
       }
+      if (data.hasOwnProperty('roles')) {
+        obj['roles'] = ApiClient.convertToType(data['roles'], ['String']);
+      }
     }
     return obj;
   }
@@ -77,6 +81,11 @@
    * @member {String} email
    */
   exports.prototype['email'] = undefined;
+  /**
+   * List of roles for a given user
+   * @member {Array.<String>} roles
+   */
+  exports.prototype['roles'] = undefined;
 
 
 

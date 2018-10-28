@@ -1,18 +1,18 @@
 (function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(['ApiClient', 'model/EventTimeInfo', 'model/Source'], factory);
+    define(['ApiClient', 'model/EventTimeInfo', 'model/FieldMappingV2', 'model/Source'], factory);
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS-like environments that support module.exports, like Node.
-    module.exports = factory(require('../ApiClient'), require('./EventTimeInfo'), require('./Source'));
+    module.exports = factory(require('../ApiClient'), require('./EventTimeInfo'), require('./FieldMappingV2'), require('./Source'));
   } else {
     // Browser globals (root is window)
     if (!root.RestApi) {
       root.RestApi = {};
     }
-    root.RestApi.CreateCollectionRequest = factory(root.RestApi.ApiClient, root.RestApi.EventTimeInfo, root.RestApi.Source);
+    root.RestApi.CreateCollectionRequest = factory(root.RestApi.ApiClient, root.RestApi.EventTimeInfo, root.RestApi.FieldMappingV2, root.RestApi.Source);
   }
-}(this, function(ApiClient, EventTimeInfo, Source) {
+}(this, function(ApiClient, EventTimeInfo, FieldMappingV2, Source) {
     'use strict';
 
 
@@ -34,6 +34,7 @@
     var _this = this;
 
     _this['name'] = name;
+
 
 
 
@@ -66,6 +67,9 @@
       if (data.hasOwnProperty('event_time_info')) {
         obj['event_time_info'] = EventTimeInfo.constructFromObject(data['event_time_info']);
       }
+      if (data.hasOwnProperty('field_mappings')) {
+        obj['field_mappings'] = ApiClient.convertToType(data['field_mappings'], [FieldMappingV2]);
+      }
     }
     return obj;
   }
@@ -95,6 +99,11 @@
    * @member {module:model/EventTimeInfo} event_time_info
    */
   exports.prototype['event_time_info'] = undefined;
+  /**
+   * list of mappings
+   * @member {Array.<module:model/FieldMappingV2>} field_mappings
+   */
+  exports.prototype['field_mappings'] = undefined;
 
 
 

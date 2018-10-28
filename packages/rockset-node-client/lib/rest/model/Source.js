@@ -1,18 +1,18 @@
 (function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(['ApiClient', 'model/CsvParams', 'model/SourceS3'], factory);
+    define(['ApiClient', 'model/CsvParams', 'model/SourceDynamoDb', 'model/SourceKinesis', 'model/SourceS3'], factory);
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS-like environments that support module.exports, like Node.
-    module.exports = factory(require('../ApiClient'), require('./CsvParams'), require('./SourceS3'));
+    module.exports = factory(require('../ApiClient'), require('./CsvParams'), require('./SourceDynamoDb'), require('./SourceKinesis'), require('./SourceS3'));
   } else {
     // Browser globals (root is window)
     if (!root.RestApi) {
       root.RestApi = {};
     }
-    root.RestApi.Source = factory(root.RestApi.ApiClient, root.RestApi.CsvParams, root.RestApi.SourceS3);
+    root.RestApi.Source = factory(root.RestApi.ApiClient, root.RestApi.CsvParams, root.RestApi.SourceDynamoDb, root.RestApi.SourceKinesis, root.RestApi.SourceS3);
   }
-}(this, function(ApiClient, CsvParams, SourceS3) {
+}(this, function(ApiClient, CsvParams, SourceDynamoDb, SourceKinesis, SourceS3) {
     'use strict';
 
 
@@ -39,6 +39,8 @@
 
 
 
+
+
   };
 
   /**
@@ -60,6 +62,12 @@
       }
       if (data.hasOwnProperty('s3')) {
         obj['s3'] = SourceS3.constructFromObject(data['s3']);
+      }
+      if (data.hasOwnProperty('kinesis')) {
+        obj['kinesis'] = SourceKinesis.constructFromObject(data['kinesis']);
+      }
+      if (data.hasOwnProperty('dynamodb')) {
+        obj['dynamodb'] = SourceDynamoDb.constructFromObject(data['dynamodb']);
       }
       if (data.hasOwnProperty('format')) {
         obj['format'] = ApiClient.convertToType(data['format'], 'String');
@@ -86,6 +94,16 @@
    * @member {module:model/SourceS3} s3
    */
   exports.prototype['s3'] = undefined;
+  /**
+   * configuration for ingestion from kinesis stream
+   * @member {module:model/SourceKinesis} kinesis
+   */
+  exports.prototype['kinesis'] = undefined;
+  /**
+   * configuration for ingestion from  a dynamodb table
+   * @member {module:model/SourceDynamoDb} dynamodb
+   */
+  exports.prototype['dynamodb'] = undefined;
   /**
    * can be one of: CSV
    * @member {module:model/Source.FormatEnum} format

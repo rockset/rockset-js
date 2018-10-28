@@ -33,6 +33,7 @@
     var _this = this;
 
 
+
   };
 
   /**
@@ -49,6 +50,9 @@
       if (data.hasOwnProperty('elapsed_time_ms')) {
         obj['elapsed_time_ms'] = ApiClient.convertToType(data['elapsed_time_ms'], 'Number');
       }
+      if (data.hasOwnProperty('rows_scanned')) {
+        obj['rows_scanned'] = ApiClient.convertToType(data['rows_scanned'], 'Number');
+      }
     }
     return obj;
   }
@@ -58,6 +62,11 @@
    * @member {Number} elapsed_time_ms
    */
   exports.prototype['elapsed_time_ms'] = undefined;
+  /**
+   * rows scanned as part of query execution
+   * @member {Number} rows_scanned
+   */
+  exports.prototype['rows_scanned'] = undefined;
 
 
 

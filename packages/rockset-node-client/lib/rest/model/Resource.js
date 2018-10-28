@@ -1,18 +1,18 @@
 (function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(['ApiClient', 'model/ResourceStats', 'model/Source'], factory);
+    define(['ApiClient', 'model/FieldMappingV2', 'model/ResourceStats', 'model/Source'], factory);
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS-like environments that support module.exports, like Node.
-    module.exports = factory(require('../ApiClient'), require('./ResourceStats'), require('./Source'));
+    module.exports = factory(require('../ApiClient'), require('./FieldMappingV2'), require('./ResourceStats'), require('./Source'));
   } else {
     // Browser globals (root is window)
     if (!root.RestApi) {
       root.RestApi = {};
     }
-    root.RestApi.Resource = factory(root.RestApi.ApiClient, root.RestApi.ResourceStats, root.RestApi.Source);
+    root.RestApi.Resource = factory(root.RestApi.ApiClient, root.RestApi.FieldMappingV2, root.RestApi.ResourceStats, root.RestApi.Source);
   }
-}(this, function(ApiClient, ResourceStats, Source) {
+}(this, function(ApiClient, FieldMappingV2, ResourceStats, Source) {
     'use strict';
 
 
@@ -31,6 +31,7 @@
    */
   var exports = function() {
     var _this = this;
+
 
 
 
@@ -77,6 +78,9 @@
       if (data.hasOwnProperty('retention_secs')) {
         obj['retention_secs'] = ApiClient.convertToType(data['retention_secs'], 'Number');
       }
+      if (data.hasOwnProperty('field_mappings')) {
+        obj['field_mappings'] = ApiClient.convertToType(data['field_mappings'], [FieldMappingV2]);
+      }
     }
     return obj;
   }
@@ -121,6 +125,11 @@
    * @member {Number} retention_secs
    */
   exports.prototype['retention_secs'] = undefined;
+  /**
+   * list of mappings applied on all documents in a collection
+   * @member {Array.<module:model/FieldMappingV2>} field_mappings
+   */
+  exports.prototype['field_mappings'] = undefined;
 
 
   /**
