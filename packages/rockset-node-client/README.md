@@ -18,10 +18,18 @@ npm install rockset --save
 This client has the following external dependencies:
 * superagent@3.7.0
 
+## Usage
+You can see a few [sample examples](https://github.com/rockset/rockset-node-client/tree/master/examples) of how to create a collection, how to put documents in a collection and how to use SQL to query your collections.
+
 Testing
 =======
 
 Unit tests are available in the [Test](https://github.com/rockset/rockset-node-client/tree/master/test) folder.
+
+Run unit tests:
+```
+npm test
+```
 
 ## Support
 
