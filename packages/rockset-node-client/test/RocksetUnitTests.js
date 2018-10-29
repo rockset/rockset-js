@@ -6,12 +6,22 @@ var awsSecret = process.env.AWS_SECRET_KEY;
 var rockset = require('../src/rockset')(apiKey, apiServer)
 var assert = require('assert');
 var superagent = require('superagent');
+var randomstring = require('randomstring');
 
-var collection = 'rockset-node-collection-test'
-var integration = 'rockset-node-integration-test'
+var randstr = randomstring.generate(4);
+var collection = 'rockset-node-collection-test' + randstr;
+var integration = 'rockset-node-integration-test' + randstr;
 
 describe('Rockset Unit Tests:', function(done) {
     describe('collection tests', function(done) {
+        after(function() {
+            // cleanup incase of failures
+            rockset.collections.remove(collection,
+                function(error, response, body) {});
+            rockset.integrations.remove(integration,
+                function(error, response, body) {});
+        });
+
         it('create an integration', function(done) {
             const result = rockset.integrations.create({
                 'name': integration,

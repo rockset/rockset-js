@@ -21,12 +21,11 @@ This client has the following external dependencies:
 ## Usage
 You can see a few [sample examples](https://github.com/rockset/rockset-node-client/tree/master/examples) of how to create a collection, how to put documents in a collection and how to use SQL to query your collections.
 
-Testing
-=======
+## Testing
 
 Unit tests are available in the [Test](https://github.com/rockset/rockset-node-client/tree/master/test) folder.
 
-Run unit tests:
+Set ROCKSET_APIKEY and ROCKSET_APISERVER endpoint in the environment variables. To run tests:
 ```
 npm test
 ```
