@@ -17,22 +17,26 @@ var getResponseLogger = function (callback) {
 
 
 function example1() {
-  console.log('\n\n=== List Collections ===');
-  rockset.collections.list(getResponseLogger(example2));
+  console.log('\n\n=== List Integration ===');
+  rockset.integrations.list(getResponseLogger(example2));
 }
 
 
 function example2() {
-  console.log('\n\n=== Create a Collection ===');
-  rockset.collections.create({
-    'name': 'mycollection'
+  console.log('\n\n=== Create an Integration ===');
+  rockset.integrations.create({
+    'name': 'myintegration',
+    'aws': {
+        'aws_access_key_id': '....',
+        'aws_secret_access_key': '....'
+    }
   }, getResponseLogger(example3))
 }
 
 
 function example3() {
-  console.log('\n\n=== Delete the collection ===');
-  rockset.collections.remove('mycollection', getResponseLogger(done));
+  console.log('\n\n=== Delete the integration ===');
+  rockset.integrations.remove('myintegration', getResponseLogger(done));
 }
 
 function done() {

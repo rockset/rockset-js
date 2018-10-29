@@ -1,5 +1,6 @@
-var apiKey = process.env.API_KEY;
-var rockset = require('../lib/rockset')(apiKey);
+var apiKey = process.env.ROCKSET_APIKEY;
+var apiServer = process.env.ROCKSET_APISERVER;
+var rockset = require('../src/rockset')(apiKey, apiServer);
 
 
 var getResponseLogger = function (callback) {
@@ -8,7 +9,7 @@ var getResponseLogger = function (callback) {
         console.log(error.response.error.text);
         callback();
       } else {
-        console.log(response)
+        console.log(response);
         callback();
       }
     }

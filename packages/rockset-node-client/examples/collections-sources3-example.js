@@ -1,5 +1,7 @@
 var apiKey = process.env.ROCKSET_APIKEY;
 var apiServer = process.env.ROCKSET_APISERVER;
+var awsKey = process.env.AWS_KEY;
+var awsSecret = process.env.AWS_SECRET_KEY;
 var rockset = require('../src/rockset')(apiKey, apiServer);
 
 
@@ -15,14 +17,20 @@ var getResponseLogger = function (callback) {
     }
 }
 
+
 function example1() {
-  console.log('\n\n=== Query Collection ===');
-  rockset.queries.query({
-    'sql': {
-        'query': 'select * from \"_events\" limit 1'
-    }
-  }, null, getResponseLogger(done))
+  console.log('\n\n=== Create a Collection ===');
+  rockset.collections.create({
+      'name': 'my-first-s3-collection',
+      'description': 'my first s3 collection',
+      'sources': [{'integration_name': 'my-first-integration',
+                    's3': {'bucket': 'rockset-unittest-public'}}]
+  }, function (error, response, body) {
+      console.log(response);
+
+  });
 }
+
 
 function done() {
   console.log('\n\n=== done ===');
