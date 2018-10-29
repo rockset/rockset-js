@@ -18,6 +18,11 @@ npm install rockset --save
 This client has the following external dependencies:
 * superagent@3.7.0
 
+Testing
+=======
+
+Unit tests are available in the [Test](https://github.com/rockset/rockset-node-client/tree/master/test) folder.
+
 ## Support
 
 Feel free to log issues against this client through GitHub.
