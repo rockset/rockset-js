@@ -1,6 +1,6 @@
 {
   "name": "rockset",
-  "version": "0.4.7",
+  "version": "1.0.0",
   "description": "Client for querying Rockset and interacting with the Rockset API.",
   "license": "MIT",
   "main": "src/rockset.js",
