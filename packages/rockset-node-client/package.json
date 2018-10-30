@@ -1,15 +1,15 @@
 {
   "name": "rockset",
-  "version": "0.5.0",
+  "version": "0.4.7",
   "description": "Client for querying Rockset and interacting with the Rockset API.",
   "license": "MIT",
-  "main": "rockset.js",
+  "main": "src/rockset.js",
   "scripts": {
     "start": "echo 'not implemented'",
     "test": "semistandard && ./node_modules/mocha/bin/mocha test/RocksetUnitTests"
   },
-  "browser": {
-    "fs": false
+  "engines": {
+    "node": ">=2.2.1"
   },
   "semistandard": {
     "globals": [
@@ -26,7 +26,8 @@
   },
   "directories": {
     "example": "examples",
-    "src": "src"
+    "src": "src",
+    "test": "test"
   },
   "dependencies": {
     "randomstring": "^1.1.5",
@@ -42,8 +43,13 @@
     "type": "git",
     "url": "git+https://github.com/rockset/rockset-node-client.git"
   },
-  "keywords": [],
-  "author": "Rockset, Inc",
+  "keywords": [
+      "rockset",
+      "database",
+      "REST",
+      "information analysis"
+  ],
+  "author": "Rockset, Inc <api@rockset.com>",
   "bugs": {
     "url": "https://github.com/rockset/rockset-node-client/issues"
   },

@@ -2,7 +2,7 @@ var apiKey = process.env.ROCKSET_APIKEY;
 var apiServer = process.env.ROCKSET_APISERVER;
 var awsKey = process.env.AWS_KEY;
 var awsSecret = process.env.AWS_SECRET_KEY;
-var rockset = require('../src/rockset')(apiKey, apiServer);
+var rockset = require('rockset')(apiKey, apiServer);
 
 
 var getResponseLogger = function (callback) {
