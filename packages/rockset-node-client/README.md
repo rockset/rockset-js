@@ -36,4 +36,4 @@ Feel free to log issues against this client through GitHub.
 
 ## License
 
-The Rockset Node Client is licensed under the [MIT License](https://github.com/rockset/rockset-node-client/blob/master/LICENSE)
+The Rockset Node Client is licensed under the [Apache 2.0 License](https://github.com/rockset/rockset-node-client/blob/master/LICENSE)
