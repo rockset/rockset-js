@@ -47,13 +47,10 @@
      * Query
      * Make a SQL query to Rockset.
      * @param {module:model/QueryRequest} body JSON object
-     * @param {Object} opts Optional parameters
-     * @param {String} opts.workspace name of the workspace (default to commons)
      * @param {module:api/QueriesApi~queryCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/QueryResponse}
      */
-    this.query = function(body, opts, callback) {
-      opts = opts || {};
+    this.query = function(body, callback) {
       var postBody = body;
 
       // verify the required parameter 'body' is set
@@ -65,7 +62,6 @@
       var pathParams = {
       };
       var queryParams = {
-        'workspace': opts['workspace'],
       };
       var collectionQueryParams = {
       };

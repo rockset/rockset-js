@@ -29,12 +29,12 @@
    * An organization in Rockset is a container for users and collections.
    * @alias module:model/Organization
    * @class
-   * @param name {String} name of the organization
    */
-  var exports = function(name) {
+  var exports = function() {
     var _this = this;
 
-    _this['name'] = name;
+
+
 
 
   };
@@ -50,33 +50,87 @@
     if (data) {
       obj = obj || new exports();
 
-      if (data.hasOwnProperty('name')) {
-        obj['name'] = ApiClient.convertToType(data['name'], 'String');
+      if (data.hasOwnProperty('id')) {
+        obj['id'] = ApiClient.convertToType(data['id'], 'String');
       }
-      if (data.hasOwnProperty('inputRateLimitMbs')) {
-        obj['inputRateLimitMbs'] = ApiClient.convertToType(data['inputRateLimitMbs'], 'Number');
+      if (data.hasOwnProperty('display_name')) {
+        obj['display_name'] = ApiClient.convertToType(data['display_name'], 'String');
       }
-      if (data.hasOwnProperty('sizeLimitGb')) {
-        obj['sizeLimitGb'] = ApiClient.convertToType(data['sizeLimitGb'], 'Number');
+      if (data.hasOwnProperty('tier')) {
+        obj['tier'] = ApiClient.convertToType(data['tier'], 'String');
+      }
+      if (data.hasOwnProperty('state')) {
+        obj['state'] = ApiClient.convertToType(data['state'], 'String');
       }
     }
     return obj;
   }
 
   /**
+   * unique identifier for the organization
+   * @member {String} id
+   */
+  exports.prototype['id'] = undefined;
+  /**
    * name of the organization
-   * @member {String} name
+   * @member {String} display_name
    */
-  exports.prototype['name'] = undefined;
+  exports.prototype['display_name'] = undefined;
   /**
-   * @member {Number} inputRateLimitMbs
+   * pricing tier
+   * @member {module:model/Organization.TierEnum} tier
    */
-  exports.prototype['inputRateLimitMbs'] = undefined;
+  exports.prototype['tier'] = undefined;
   /**
-   * @member {Number} sizeLimitGb
+   * org state
+   * @member {module:model/Organization.StateEnum} state
    */
-  exports.prototype['sizeLimitGb'] = undefined;
+  exports.prototype['state'] = undefined;
 
+
+  /**
+   * Allowed values for the <code>tier</code> property.
+   * @enum {String}
+   * @readonly
+   */
+  exports.TierEnum = {
+    /**
+     * value: "STARTER"
+     * @const
+     */
+    "STARTER": "STARTER",
+    /**
+     * value: "PREMIUM"
+     * @const
+     */
+    "PREMIUM": "PREMIUM",
+    /**
+     * value: "ENTERPRISE"
+     * @const
+     */
+    "ENTERPRISE": "ENTERPRISE"  };
+
+  /**
+   * Allowed values for the <code>state</code> property.
+   * @enum {String}
+   * @readonly
+   */
+  exports.StateEnum = {
+    /**
+     * value: "NEW"
+     * @const
+     */
+    "NEW": "NEW",
+    /**
+     * value: "ACTIVE"
+     * @const
+     */
+    "ACTIVE": "ACTIVE",
+    /**
+     * value: "DELETED"
+     * @const
+     */
+    "DELETED": "DELETED"  };
 
 
   return exports;

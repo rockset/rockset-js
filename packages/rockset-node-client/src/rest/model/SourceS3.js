@@ -29,13 +29,13 @@
    * @alias module:model/SourceS3
    * @class
    * @param bucket {String} address of S3 bucket containing data
-   * @param prefixes {Array.<String>} list of prefixes to paths from which data should be ingested
    */
-  var exports = function(bucket, prefixes) {
+  var exports = function(bucket) {
     var _this = this;
 
+
+
     _this['bucket'] = bucket;
-    _this['prefixes'] = prefixes;
   };
 
   /**
@@ -49,26 +49,34 @@
     if (data) {
       obj = obj || new exports();
 
+      if (data.hasOwnProperty('prefix')) {
+        obj['prefix'] = ApiClient.convertToType(data['prefix'], 'String');
+      }
+      if (data.hasOwnProperty('pattern')) {
+        obj['pattern'] = ApiClient.convertToType(data['pattern'], 'String');
+      }
       if (data.hasOwnProperty('bucket')) {
         obj['bucket'] = ApiClient.convertToType(data['bucket'], 'String');
-      }
-      if (data.hasOwnProperty('prefixes')) {
-        obj['prefixes'] = ApiClient.convertToType(data['prefixes'], ['String']);
       }
     }
     return obj;
   }
 
   /**
+   * Prefix that selects keys to ingest.
+   * @member {String} prefix
+   */
+  exports.prototype['prefix'] = undefined;
+  /**
+   * Pattern that selects keys to ingest.
+   * @member {String} pattern
+   */
+  exports.prototype['pattern'] = undefined;
+  /**
    * address of S3 bucket containing data
    * @member {String} bucket
    */
   exports.prototype['bucket'] = undefined;
-  /**
-   * list of prefixes to paths from which data should be ingested
-   * @member {Array.<String>} prefixes
-   */
-  exports.prototype['prefixes'] = undefined;
 
 
 

@@ -91,7 +91,7 @@
      */
 
     /**
-     * Retrieve current user
+     * Get Current User
      * Retrieve currently active user.
      * @param {module:api/UsersApi~getCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/ListUsersResponse}

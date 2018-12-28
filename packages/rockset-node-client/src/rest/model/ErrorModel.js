@@ -168,7 +168,12 @@
      * value: "NOT_READY"
      * @const
      */
-    "NOT_READY": "NOT_READY"  };
+    "NOT_READY": "NOT_READY",
+    /**
+     * value: "FORBIDDEN"
+     * @const
+     */
+    "FORBIDDEN": "FORBIDDEN"  };
 
 
   return exports;

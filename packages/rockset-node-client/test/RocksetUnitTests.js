@@ -63,7 +63,7 @@ describe('Rockset Unit Tests:', function(done) {
                 'sql': {
                             'query': 'select * from _events limit 1'
                 }
-            }, null, function(error, response, body) {
+            }, function(error, response, body) {
                 assert.equal(error, null)
                 return done()
             });

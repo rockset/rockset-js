@@ -46,7 +46,7 @@
     /**
      * Add Documents
      * Add documents to a collection in Rockset.
-     * @param {String} collection name of the workspace
+     * @param {String} collection name of the collection
      * @param {module:model/AddDocumentsRequest} body JSON object
      * @param {module:api/DocumentsApi~addCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/AddDocumentsResponse}
