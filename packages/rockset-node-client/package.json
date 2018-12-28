@@ -2,7 +2,7 @@
   "name": "rockset",
   "version": "1.0.1",
   "description": "Client for querying Rockset and interacting with the Rockset API.",
-  "license": "MIT",
+  "license": "Apache License 2.0",
   "main": "src/rockset.js",
   "scripts": {
     "start": "echo 'not implemented'",
