@@ -1,5 +1,9 @@
 # Rockset Node Client Changelog
 
+## v1.0.3 2019-01-22
+- Add support for AWS External ID as a new type of integration
+- Add support for Google Cloud Storage
+
 ## v1.0.2 2018-12-28
 - License change to Apache 2.0
 

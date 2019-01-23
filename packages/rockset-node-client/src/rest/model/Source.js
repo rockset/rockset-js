@@ -1,18 +1,18 @@
 (function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(['ApiClient', 'model/FormatParams', 'model/SourceDynamoDb', 'model/SourceKinesis', 'model/SourceS3'], factory);
+    define(['ApiClient', 'model/FormatParams', 'model/SourceDynamoDb', 'model/SourceFileUpload', 'model/SourceGcs', 'model/SourceKinesis', 'model/SourceS3'], factory);
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS-like environments that support module.exports, like Node.
-    module.exports = factory(require('../ApiClient'), require('./FormatParams'), require('./SourceDynamoDb'), require('./SourceKinesis'), require('./SourceS3'));
+    module.exports = factory(require('../ApiClient'), require('./FormatParams'), require('./SourceDynamoDb'), require('./SourceFileUpload'), require('./SourceGcs'), require('./SourceKinesis'), require('./SourceS3'));
   } else {
     // Browser globals (root is window)
     if (!root.RestApi) {
       root.RestApi = {};
     }
-    root.RestApi.Source = factory(root.RestApi.ApiClient, root.RestApi.FormatParams, root.RestApi.SourceDynamoDb, root.RestApi.SourceKinesis, root.RestApi.SourceS3);
+    root.RestApi.Source = factory(root.RestApi.ApiClient, root.RestApi.FormatParams, root.RestApi.SourceDynamoDb, root.RestApi.SourceFileUpload, root.RestApi.SourceGcs, root.RestApi.SourceKinesis, root.RestApi.SourceS3);
   }
-}(this, function(ApiClient, FormatParams, SourceDynamoDb, SourceKinesis, SourceS3) {
+}(this, function(ApiClient, FormatParams, SourceDynamoDb, SourceFileUpload, SourceGcs, SourceKinesis, SourceS3) {
     'use strict';
 
 
@@ -36,6 +36,8 @@
 
 
     _this['integration_name'] = integrationName;
+
+
 
 
 
@@ -67,6 +69,12 @@
       }
       if (data.hasOwnProperty('dynamodb')) {
         obj['dynamodb'] = SourceDynamoDb.constructFromObject(data['dynamodb']);
+      }
+      if (data.hasOwnProperty('gcs')) {
+        obj['gcs'] = SourceGcs.constructFromObject(data['gcs']);
+      }
+      if (data.hasOwnProperty('file_upload')) {
+        obj['file_upload'] = SourceFileUpload.constructFromObject(data['file_upload']);
       }
       if (data.hasOwnProperty('format_params')) {
         obj['format_params'] = FormatParams.constructFromObject(data['format_params']);
@@ -100,6 +108,16 @@
    * @member {module:model/SourceDynamoDb} dynamodb
    */
   exports.prototype['dynamodb'] = undefined;
+  /**
+   * configuration for ingestion from GCS
+   * @member {module:model/SourceGcs} gcs
+   */
+  exports.prototype['gcs'] = undefined;
+  /**
+   * file upload details
+   * @member {module:model/SourceFileUpload} file_upload
+   */
+  exports.prototype['file_upload'] = undefined;
   /**
    * format parameters for data from this source
    * @member {module:model/FormatParams} format_params
