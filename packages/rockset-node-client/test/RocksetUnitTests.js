@@ -14,6 +14,7 @@ var integration = 'rockset-node-integration-test' + randstr;
 
 describe('Rockset Unit Tests:', function(done) {
     describe('collection tests', function(done) {
+        this.timeout(15000);
         after(function() {
             // cleanup incase of failures
             rockset.collections.remove(collection,
