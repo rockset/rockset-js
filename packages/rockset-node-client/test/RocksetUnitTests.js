@@ -11,6 +11,7 @@ var randomstring = require('randomstring');
 var randstr = randomstring.generate(4);
 var collection = 'rockset-node-collection-test' + randstr;
 var integration = 'rockset-node-integration-test' + randstr;
+const sleep = (waitTimeInMs) => new Promise(resolve => setTimeout(resolve, waitTimeInMs));
 
 describe('Rockset Unit Tests:', function(done) {
     describe('collection tests', function(done) {
@@ -45,12 +46,14 @@ describe('Rockset Unit Tests:', function(done) {
             })
         });
         it('delete a collection', function(done) {
-            rockset.collections.remove(collection,
-                function(error, response, body) {
-                    assert.equal(response.data.name, collection);
-                    assert.equal(response.data.status, 'DELETED');
-                    return done();
-            })
+            sleep(5000).then(() => {
+                rockset.collections.remove(collection,
+                        function(error, response, body) {
+                            assert.equal(response.data.name, collection);
+                            assert.equal(response.data.status, 'DELETED');
+                            return done();
+                        })
+            });
         })
         it('delete an integration', function(done) {
             rockset.integrations.remove(integration,
