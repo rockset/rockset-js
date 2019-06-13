@@ -20,7 +20,7 @@ var getResponseLogger = function (callback) {
 
 function example1() {
   console.log('\n\n=== Create a Collection ===');
-  rockset.collections.create({
+  rockset.collections.create('commons', {
       'name': 'my-first-s3-collection',
       'description': 'my first s3 collection',
       'sources': [{'integration_name': 'my-first-integration',

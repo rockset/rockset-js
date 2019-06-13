@@ -46,13 +46,19 @@
     /**
      * Add Documents
      * Add documents to a collection in Rockset.
+     * @param {String} workspace name of the workspace
      * @param {String} collection name of the collection
      * @param {module:model/AddDocumentsRequest} body JSON object
      * @param {module:api/DocumentsApi~addCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/AddDocumentsResponse}
      */
-    this.add = function(collection, body, callback) {
+    this.add = function(workspace, collection, body, callback) {
       var postBody = body;
+
+      // verify the required parameter 'workspace' is set
+      if (workspace === undefined || workspace === null) {
+        throw new Error("Missing the required parameter 'workspace' when calling add");
+      }
 
       // verify the required parameter 'collection' is set
       if (collection === undefined || collection === null) {
@@ -66,6 +72,7 @@
 
 
       var pathParams = {
+        'workspace': workspace,
         'collection': collection
       };
       var queryParams = {
@@ -83,7 +90,7 @@
       var returnType = AddDocumentsResponse;
 
       return this.apiClient.callApi(
-        '/v1/orgs/self/ws/commons/collections/{collection}/docs', 'POST',
+        '/v1/orgs/self/ws/{workspace}/collections/{collection}/docs', 'POST',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -100,13 +107,19 @@
     /**
      * Delete Documents
      * Delete documents from a collection in Rockset.
+     * @param {String} workspace name of the workspace
      * @param {String} collection name of the collection
      * @param {module:model/DeleteDocumentsRequest} body JSON object
      * @param {module:api/DocumentsApi~removeCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/DeleteDocumentsResponse}
      */
-    this.remove = function(collection, body, callback) {
+    this.remove = function(workspace, collection, body, callback) {
       var postBody = body;
+
+      // verify the required parameter 'workspace' is set
+      if (workspace === undefined || workspace === null) {
+        throw new Error("Missing the required parameter 'workspace' when calling remove");
+      }
 
       // verify the required parameter 'collection' is set
       if (collection === undefined || collection === null) {
@@ -120,6 +133,7 @@
 
 
       var pathParams = {
+        'workspace': workspace,
         'collection': collection
       };
       var queryParams = {
@@ -137,7 +151,7 @@
       var returnType = DeleteDocumentsResponse;
 
       return this.apiClient.callApi(
-        '/v1/orgs/self/ws/commons/collections/{collection}/docs', 'DELETE',
+        '/v1/orgs/self/ws/{workspace}/collections/{collection}/docs', 'DELETE',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );

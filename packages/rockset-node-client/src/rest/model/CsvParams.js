@@ -37,6 +37,7 @@
 
 
 
+
   };
 
   /**
@@ -64,6 +65,9 @@
       }
       if (data.hasOwnProperty('columnTypes')) {
         obj['columnTypes'] = ApiClient.convertToType(data['columnTypes'], ['String']);
+      }
+      if (data.hasOwnProperty('quoteChar')) {
+        obj['quoteChar'] = ApiClient.convertToType(data['quoteChar'], 'String');
       }
     }
     return obj;
@@ -94,6 +98,11 @@
    * @member {Array.<module:model/CsvParams.ColumnTypesEnum>} columnTypes
    */
   exports.prototype['columnTypes'] = undefined;
+  /**
+   * character within which a cell value is enclosed,null character if no such character, default is '\"'
+   * @member {String} quoteChar
+   */
+  exports.prototype['quoteChar'] = undefined;
 
 
   /**
@@ -113,10 +122,20 @@
      */
     "BOOLEAN": "BOOLEAN",
     /**
+     * value: "BOOL"
+     * @const
+     */
+    "BOOL": "BOOL",
+    /**
      * value: "INTEGER"
      * @const
      */
     "INTEGER": "INTEGER",
+    /**
+     * value: "INT"
+     * @const
+     */
+    "INT": "INT",
     /**
      * value: "FLOAT"
      * @const

@@ -37,7 +37,7 @@ describe('Rockset Unit Tests:', function(done) {
             })
         });
         it('create a collection', function(done) {
-            const result = rockset.collections.create({
+            const result = rockset.collections.create('commons', {
                 'name': collection,
             }, function(error, response, body) {
                 assert.equal(response.data.name, collection);
@@ -47,7 +47,7 @@ describe('Rockset Unit Tests:', function(done) {
         });
         it('delete a collection', function(done) {
             sleep(5000).then(() => {
-                rockset.collections.remove(collection,
+                rockset.collections.remove('commons', collection,
                         function(error, response, body) {
                             assert.equal(response.data.name, collection);
                             assert.equal(response.data.status, 'DELETED');

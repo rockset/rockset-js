@@ -24,7 +24,7 @@ function example1() {
 
 function example2() {
   console.log('\n\n=== Create a Collection ===');
-  rockset.collections.create({
+  rockset.collections.create('commons', {
     'name': 'mycollection'
   }, getResponseLogger(example3))
 }
@@ -32,7 +32,7 @@ function example2() {
 
 function example3() {
   console.log('\n\n=== Delete the collection ===');
-  rockset.collections.remove('mycollection', getResponseLogger(done));
+  rockset.collections.remove('commons', 'mycollection', getResponseLogger(done));
 }
 
 function done() {

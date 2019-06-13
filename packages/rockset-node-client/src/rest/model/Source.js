@@ -1,18 +1,18 @@
 (function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(['ApiClient', 'model/FormatParams', 'model/SourceDynamoDb', 'model/SourceFileUpload', 'model/SourceGcs', 'model/SourceKinesis', 'model/SourceS3'], factory);
+    define(['ApiClient', 'model/FormatParams', 'model/SourceDynamoDb', 'model/SourceFileUpload', 'model/SourceGcs', 'model/SourceKinesis', 'model/SourceRedshift', 'model/SourceS3'], factory);
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS-like environments that support module.exports, like Node.
-    module.exports = factory(require('../ApiClient'), require('./FormatParams'), require('./SourceDynamoDb'), require('./SourceFileUpload'), require('./SourceGcs'), require('./SourceKinesis'), require('./SourceS3'));
+    module.exports = factory(require('../ApiClient'), require('./FormatParams'), require('./SourceDynamoDb'), require('./SourceFileUpload'), require('./SourceGcs'), require('./SourceKinesis'), require('./SourceRedshift'), require('./SourceS3'));
   } else {
     // Browser globals (root is window)
     if (!root.RestApi) {
       root.RestApi = {};
     }
-    root.RestApi.Source = factory(root.RestApi.ApiClient, root.RestApi.FormatParams, root.RestApi.SourceDynamoDb, root.RestApi.SourceFileUpload, root.RestApi.SourceGcs, root.RestApi.SourceKinesis, root.RestApi.SourceS3);
+    root.RestApi.Source = factory(root.RestApi.ApiClient, root.RestApi.FormatParams, root.RestApi.SourceDynamoDb, root.RestApi.SourceFileUpload, root.RestApi.SourceGcs, root.RestApi.SourceKinesis, root.RestApi.SourceRedshift, root.RestApi.SourceS3);
   }
-}(this, function(ApiClient, FormatParams, SourceDynamoDb, SourceFileUpload, SourceGcs, SourceKinesis, SourceS3) {
+}(this, function(ApiClient, FormatParams, SourceDynamoDb, SourceFileUpload, SourceGcs, SourceKinesis, SourceRedshift, SourceS3) {
     'use strict';
 
 
@@ -36,6 +36,7 @@
 
 
     _this['integration_name'] = integrationName;
+
 
 
 
@@ -72,6 +73,9 @@
       }
       if (data.hasOwnProperty('gcs')) {
         obj['gcs'] = SourceGcs.constructFromObject(data['gcs']);
+      }
+      if (data.hasOwnProperty('redshift')) {
+        obj['redshift'] = SourceRedshift.constructFromObject(data['redshift']);
       }
       if (data.hasOwnProperty('file_upload')) {
         obj['file_upload'] = SourceFileUpload.constructFromObject(data['file_upload']);
@@ -113,6 +117,11 @@
    * @member {module:model/SourceGcs} gcs
    */
   exports.prototype['gcs'] = undefined;
+  /**
+   * configuration for ingestion from Redshift
+   * @member {module:model/SourceRedshift} redshift
+   */
+  exports.prototype['redshift'] = undefined;
   /**
    * file upload details
    * @member {module:model/SourceFileUpload} file_upload

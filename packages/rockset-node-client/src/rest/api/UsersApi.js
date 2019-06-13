@@ -1,18 +1,18 @@
 (function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(['ApiClient', 'model/CreateUserRequest', 'model/CreateUserResponse', 'model/DeleteUserResponse', 'model/ListUsersResponse'], factory);
+    define(['ApiClient', 'model/CreateUserRequest', 'model/CreateUserResponse', 'model/DeleteUserResponse', 'model/ListUsersResponse', 'model/User'], factory);
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS-like environments that support module.exports, like Node.
-    module.exports = factory(require('../ApiClient'), require('../model/CreateUserRequest'), require('../model/CreateUserResponse'), require('../model/DeleteUserResponse'), require('../model/ListUsersResponse'));
+    module.exports = factory(require('../ApiClient'), require('../model/CreateUserRequest'), require('../model/CreateUserResponse'), require('../model/DeleteUserResponse'), require('../model/ListUsersResponse'), require('../model/User'));
   } else {
     // Browser globals (root is window)
     if (!root.RestApi) {
       root.RestApi = {};
     }
-    root.RestApi.UsersApi = factory(root.RestApi.ApiClient, root.RestApi.CreateUserRequest, root.RestApi.CreateUserResponse, root.RestApi.DeleteUserResponse, root.RestApi.ListUsersResponse);
+    root.RestApi.UsersApi = factory(root.RestApi.ApiClient, root.RestApi.CreateUserRequest, root.RestApi.CreateUserResponse, root.RestApi.DeleteUserResponse, root.RestApi.ListUsersResponse, root.RestApi.User);
   }
-}(this, function(ApiClient, CreateUserRequest, CreateUserResponse, DeleteUserResponse, ListUsersResponse) {
+}(this, function(ApiClient, CreateUserRequest, CreateUserResponse, DeleteUserResponse, ListUsersResponse, User) {
     'use strict';
 
   /**
@@ -86,7 +86,7 @@
      * Callback function to receive the result of the get operation.
      * @callback module:api/UsersApi~getCallback
      * @param {String} error Error message, if any.
-     * @param {module:model/ListUsersResponse} data The data returned by the service call.
+     * @param {module:model/User} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
@@ -94,7 +94,7 @@
      * Get Current User
      * Retrieve currently active user.
      * @param {module:api/UsersApi~getCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link module:model/ListUsersResponse}
+     * data is of type: {@link module:model/User}
      */
     this.get = function(callback) {
       var postBody = null;
@@ -114,7 +114,7 @@
       var authNames = [];
       var contentTypes = ['application/json'];
       var accepts = ['application/json'];
-      var returnType = ListUsersResponse;
+      var returnType = User;
 
       return this.apiClient.callApi(
         '/v1/orgs/self/users/self', 'GET',

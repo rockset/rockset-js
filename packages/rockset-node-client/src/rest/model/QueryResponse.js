@@ -35,6 +35,7 @@
 
 
 
+
   };
 
   /**
@@ -57,6 +58,9 @@
       if (data.hasOwnProperty('stats')) {
         obj['stats'] = QueryResponseStats.constructFromObject(data['stats']);
       }
+      if (data.hasOwnProperty('column_fields')) {
+        obj['column_fields'] = ApiClient.convertToType(data['column_fields'], [QueryFieldType]);
+      }
     }
     return obj;
   }
@@ -76,6 +80,11 @@
    * @member {module:model/QueryResponseStats} stats
    */
   exports.prototype['stats'] = undefined;
+  /**
+   * meta information about each column in the result set
+   * @member {Array.<module:model/QueryFieldType>} column_fields
+   */
+  exports.prototype['column_fields'] = undefined;
 
 
 

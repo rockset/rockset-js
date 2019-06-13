@@ -44,10 +44,10 @@
     "url": "git+https://github.com/rockset/rockset-node-client.git"
   },
   "keywords": [
-      "rockset",
-      "database",
-      "REST",
-      "information analysis"
+    "rockset",
+    "database",
+    "REST",
+    "information analysis"
   ],
   "author": "Rockset, Inc <api@rockset.com>",
   "bugs": {

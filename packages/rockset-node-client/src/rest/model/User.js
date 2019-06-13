@@ -37,6 +37,9 @@
 
     _this['email'] = email;
 
+
+
+
   };
 
   /**
@@ -59,8 +62,17 @@
       if (data.hasOwnProperty('email')) {
         obj['email'] = ApiClient.convertToType(data['email'], 'String');
       }
+      if (data.hasOwnProperty('first_name')) {
+        obj['first_name'] = ApiClient.convertToType(data['first_name'], 'String');
+      }
+      if (data.hasOwnProperty('last_name')) {
+        obj['last_name'] = ApiClient.convertToType(data['last_name'], 'String');
+      }
       if (data.hasOwnProperty('roles')) {
         obj['roles'] = ApiClient.convertToType(data['roles'], ['String']);
+      }
+      if (data.hasOwnProperty('state')) {
+        obj['state'] = ApiClient.convertToType(data['state'], 'String');
       }
     }
     return obj;
@@ -82,10 +94,25 @@
    */
   exports.prototype['email'] = undefined;
   /**
+   * user first name
+   * @member {String} first_name
+   */
+  exports.prototype['first_name'] = undefined;
+  /**
+   * user last name
+   * @member {String} last_name
+   */
+  exports.prototype['last_name'] = undefined;
+  /**
    * List of roles for a given user
    * @member {Array.<String>} roles
    */
   exports.prototype['roles'] = undefined;
+  /**
+   * state of user - NEW / ACTIVE
+   * @member {String} state
+   */
+  exports.prototype['state'] = undefined;
 
 
 

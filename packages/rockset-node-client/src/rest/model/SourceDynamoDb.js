@@ -34,6 +34,7 @@
     var _this = this;
 
     _this['table_name'] = tableName;
+
   };
 
   /**
@@ -50,6 +51,9 @@
       if (data.hasOwnProperty('table_name')) {
         obj['table_name'] = ApiClient.convertToType(data['table_name'], 'String');
       }
+      if (data.hasOwnProperty('aws_region')) {
+        obj['aws_region'] = ApiClient.convertToType(data['aws_region'], 'String');
+      }
     }
     return obj;
   }
@@ -59,6 +63,11 @@
    * @member {String} table_name
    */
   exports.prototype['table_name'] = undefined;
+  /**
+   * AWS region name of DynamoDB table, by default us-west-2 is used
+   * @member {String} aws_region
+   */
+  exports.prototype['aws_region'] = undefined;
 
 
 

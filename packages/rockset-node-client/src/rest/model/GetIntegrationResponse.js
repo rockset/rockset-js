@@ -1,18 +1,18 @@
 (function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(['ApiClient', 'model/Integration', 'model/Resource'], factory);
+    define(['ApiClient', 'model/Collection', 'model/Integration'], factory);
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS-like environments that support module.exports, like Node.
-    module.exports = factory(require('../ApiClient'), require('./Integration'), require('./Resource'));
+    module.exports = factory(require('../ApiClient'), require('./Collection'), require('./Integration'));
   } else {
     // Browser globals (root is window)
     if (!root.RestApi) {
       root.RestApi = {};
     }
-    root.RestApi.GetIntegrationResponse = factory(root.RestApi.ApiClient, root.RestApi.Integration, root.RestApi.Resource);
+    root.RestApi.GetIntegrationResponse = factory(root.RestApi.ApiClient, root.RestApi.Collection, root.RestApi.Integration);
   }
-}(this, function(ApiClient, Integration, Resource) {
+}(this, function(ApiClient, Collection, Integration) {
     'use strict';
 
 
@@ -51,7 +51,7 @@
         obj['data'] = Integration.constructFromObject(data['data']);
       }
       if (data.hasOwnProperty('collections')) {
-        obj['collections'] = ApiClient.convertToType(data['collections'], [Resource]);
+        obj['collections'] = ApiClient.convertToType(data['collections'], [Collection]);
       }
     }
     return obj;
@@ -64,7 +64,7 @@
   exports.prototype['data'] = undefined;
   /**
    * list of collections that use the integration
-   * @member {Array.<module:model/Resource>} collections
+   * @member {Array.<module:model/Collection>} collections
    */
   exports.prototype['collections'] = undefined;
 

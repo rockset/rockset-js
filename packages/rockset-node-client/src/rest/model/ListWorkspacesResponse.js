@@ -1,32 +1,32 @@
 (function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(['ApiClient', 'model/Collection'], factory);
+    define(['ApiClient', 'model/Workspace'], factory);
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS-like environments that support module.exports, like Node.
-    module.exports = factory(require('../ApiClient'), require('./Collection'));
+    module.exports = factory(require('../ApiClient'), require('./Workspace'));
   } else {
     // Browser globals (root is window)
     if (!root.RestApi) {
       root.RestApi = {};
     }
-    root.RestApi.CreateCollectionResponse = factory(root.RestApi.ApiClient, root.RestApi.Collection);
+    root.RestApi.ListWorkspacesResponse = factory(root.RestApi.ApiClient, root.RestApi.Workspace);
   }
-}(this, function(ApiClient, Collection) {
+}(this, function(ApiClient, Workspace) {
     'use strict';
 
 
 
 
   /**
-   * The CreateCollectionResponse model module.
-   * @module model/CreateCollectionResponse
+   * The ListWorkspacesResponse model module.
+   * @module model/ListWorkspacesResponse
    * @version v1
    */
 
   /**
-   * Constructs a new <code>CreateCollectionResponse</code>.
-   * @alias module:model/CreateCollectionResponse
+   * Constructs a new <code>ListWorkspacesResponse</code>.
+   * @alias module:model/ListWorkspacesResponse
    * @class
    */
   var exports = function() {
@@ -36,26 +36,26 @@
   };
 
   /**
-   * Constructs a <code>CreateCollectionResponse</code> from a plain JavaScript object, optionally creating a new instance.
+   * Constructs a <code>ListWorkspacesResponse</code> from a plain JavaScript object, optionally creating a new instance.
    * Copies all relevant properties from <code>data</code> to <code>obj</code> if supplied or a new instance if not.
    * @param {Object} data The plain JavaScript object bearing properties of interest.
-   * @param {module:model/CreateCollectionResponse} obj Optional instance to populate.
-   * @return {module:model/CreateCollectionResponse} The populated <code>CreateCollectionResponse</code> instance.
+   * @param {module:model/ListWorkspacesResponse} obj Optional instance to populate.
+   * @return {module:model/ListWorkspacesResponse} The populated <code>ListWorkspacesResponse</code> instance.
    */
   exports.constructFromObject = function(data, obj) {
     if (data) {
       obj = obj || new exports();
 
       if (data.hasOwnProperty('data')) {
-        obj['data'] = Collection.constructFromObject(data['data']);
+        obj['data'] = ApiClient.convertToType(data['data'], [Workspace]);
       }
     }
     return obj;
   }
 
   /**
-   * collection that was created
-   * @member {module:model/Collection} data
+   * list of workspaces
+   * @member {Array.<module:model/Workspace>} data
    */
   exports.prototype['data'] = undefined;
 

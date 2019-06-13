@@ -1,18 +1,18 @@
 (function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(['ApiClient', 'model/Resource'], factory);
+    define(['ApiClient', 'model/Collection'], factory);
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS-like environments that support module.exports, like Node.
-    module.exports = factory(require('../ApiClient'), require('./Resource'));
+    module.exports = factory(require('../ApiClient'), require('./Collection'));
   } else {
     // Browser globals (root is window)
     if (!root.RestApi) {
       root.RestApi = {};
     }
-    root.RestApi.ListCollectionsResponse = factory(root.RestApi.ApiClient, root.RestApi.Resource);
+    root.RestApi.ListCollectionsResponse = factory(root.RestApi.ApiClient, root.RestApi.Collection);
   }
-}(this, function(ApiClient, Resource) {
+}(this, function(ApiClient, Collection) {
     'use strict';
 
 
@@ -47,7 +47,7 @@
       obj = obj || new exports();
 
       if (data.hasOwnProperty('data')) {
-        obj['data'] = ApiClient.convertToType(data['data'], [Resource]);
+        obj['data'] = ApiClient.convertToType(data['data'], [Collection]);
       }
     }
     return obj;
@@ -55,7 +55,7 @@
 
   /**
    * list of all collections
-   * @member {Array.<module:model/Resource>} data
+   * @member {Array.<module:model/Collection>} data
    */
   exports.prototype['data'] = undefined;
 

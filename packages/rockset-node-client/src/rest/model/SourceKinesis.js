@@ -34,6 +34,7 @@
     var _this = this;
 
     _this['stream_name'] = streamName;
+
   };
 
   /**
@@ -50,6 +51,9 @@
       if (data.hasOwnProperty('stream_name')) {
         obj['stream_name'] = ApiClient.convertToType(data['stream_name'], 'String');
       }
+      if (data.hasOwnProperty('aws_region')) {
+        obj['aws_region'] = ApiClient.convertToType(data['aws_region'], 'String');
+      }
     }
     return obj;
   }
@@ -59,6 +63,11 @@
    * @member {String} stream_name
    */
   exports.prototype['stream_name'] = undefined;
+  /**
+   * AWS region name of Kinesis stream, by default us-west-2 is used
+   * @member {String} aws_region
+   */
+  exports.prototype['aws_region'] = undefined;
 
 
 

@@ -1,18 +1,18 @@
 (function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(['ApiClient', 'model/ErrorModelContext'], factory);
+    define(['ApiClient'], factory);
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS-like environments that support module.exports, like Node.
-    module.exports = factory(require('../ApiClient'), require('./ErrorModelContext'));
+    module.exports = factory(require('../ApiClient'));
   } else {
     // Browser globals (root is window)
     if (!root.RestApi) {
       root.RestApi = {};
     }
-    root.RestApi.ErrorModel = factory(root.RestApi.ApiClient, root.RestApi.ErrorModelContext);
+    root.RestApi.ErrorModel = factory(root.RestApi.ApiClient);
   }
-}(this, function(ApiClient, ErrorModelContext) {
+}(this, function(ApiClient) {
     'use strict';
 
 
@@ -37,6 +37,7 @@
 
 
 
+
   };
 
   /**
@@ -50,27 +51,25 @@
     if (data) {
       obj = obj || new exports();
 
-      if (data.hasOwnProperty('code')) {
-        obj['code'] = ApiClient.convertToType(data['code'], 'Number');
-      }
       if (data.hasOwnProperty('message')) {
         obj['message'] = ApiClient.convertToType(data['message'], 'String');
       }
       if (data.hasOwnProperty('type')) {
         obj['type'] = ApiClient.convertToType(data['type'], 'String');
       }
-      if (data.hasOwnProperty('context')) {
-        obj['context'] = ErrorModelContext.constructFromObject(data['context']);
+      if (data.hasOwnProperty('line')) {
+        obj['line'] = ApiClient.convertToType(data['line'], 'Number');
+      }
+      if (data.hasOwnProperty('column')) {
+        obj['column'] = ApiClient.convertToType(data['column'], 'Number');
+      }
+      if (data.hasOwnProperty('trace_id')) {
+        obj['trace_id'] = ApiClient.convertToType(data['trace_id'], 'String');
       }
     }
     return obj;
   }
 
-  /**
-   * HTTP status code
-   * @member {Number} code
-   */
-  exports.prototype['code'] = undefined;
   /**
    * descriptive message about the error
    * @member {String} message
@@ -82,10 +81,20 @@
    */
   exports.prototype['type'] = undefined;
   /**
-   * additional error information
-   * @member {module:model/ErrorModelContext} context
+   * Line where the error happened (if applicable)
+   * @member {Number} line
    */
-  exports.prototype['context'] = undefined;
+  exports.prototype['line'] = undefined;
+  /**
+   * Column where the error happened (if applicable)
+   * @member {Number} column
+   */
+  exports.prototype['column'] = undefined;
+  /**
+   * Internal trace ID to help with debugging
+   * @member {String} trace_id
+   */
+  exports.prototype['trace_id'] = undefined;
 
 
   /**
@@ -120,20 +129,10 @@
      */
     "NOTIMPLEMENTEDYET": "NOTIMPLEMENTEDYET",
     /**
-     * value: "PROTOCOLERROR"
-     * @const
-     */
-    "PROTOCOLERROR": "PROTOCOLERROR",
-    /**
      * value: "RESOURCEEXCEEDED"
      * @const
      */
     "RESOURCEEXCEEDED": "RESOURCEEXCEEDED",
-    /**
-     * value: "RESOURCENAMETOOLONG"
-     * @const
-     */
-    "RESOURCENAMETOOLONG": "RESOURCENAMETOOLONG",
     /**
      * value: "ALREADYEXISTS"
      * @const
@@ -150,20 +149,10 @@
      */
     "DEPENDENTRESOURCES": "DEPENDENTRESOURCES",
     /**
-     * value: "PAUSED"
-     * @const
-     */
-    "PAUSED": "PAUSED",
-    /**
      * value: "QUERY_ERROR"
      * @const
      */
     "QUERY_ERROR": "QUERY_ERROR",
-    /**
-     * value: "QUERY_PARSE_ERROR"
-     * @const
-     */
-    "QUERY_PARSE_ERROR": "QUERY_PARSE_ERROR",
     /**
      * value: "NOT_READY"
      * @const
@@ -173,7 +162,22 @@
      * value: "FORBIDDEN"
      * @const
      */
-    "FORBIDDEN": "FORBIDDEN"  };
+    "FORBIDDEN": "FORBIDDEN",
+    /**
+     * value: "QUERY_TIMEOUT"
+     * @const
+     */
+    "QUERY_TIMEOUT": "QUERY_TIMEOUT",
+    /**
+     * value: "INTEGRATION_NOT_FOUND"
+     * @const
+     */
+    "INTEGRATION_NOT_FOUND": "INTEGRATION_NOT_FOUND",
+    /**
+     * value: "ROLE_NOT_FOUND"
+     * @const
+     */
+    "ROLE_NOT_FOUND": "ROLE_NOT_FOUND"  };
 
 
   return exports;

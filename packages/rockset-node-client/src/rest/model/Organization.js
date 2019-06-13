@@ -37,6 +37,9 @@
 
 
 
+
+
+
   };
 
   /**
@@ -53,11 +56,20 @@
       if (data.hasOwnProperty('id')) {
         obj['id'] = ApiClient.convertToType(data['id'], 'String');
       }
+      if (data.hasOwnProperty('created_at')) {
+        obj['created_at'] = ApiClient.convertToType(data['created_at'], 'String');
+      }
       if (data.hasOwnProperty('display_name')) {
         obj['display_name'] = ApiClient.convertToType(data['display_name'], 'String');
       }
+      if (data.hasOwnProperty('company_name')) {
+        obj['company_name'] = ApiClient.convertToType(data['company_name'], 'String');
+      }
       if (data.hasOwnProperty('tier')) {
         obj['tier'] = ApiClient.convertToType(data['tier'], 'String');
+      }
+      if (data.hasOwnProperty('qcu')) {
+        obj['qcu'] = ApiClient.convertToType(data['qcu'], 'Number');
       }
       if (data.hasOwnProperty('state')) {
         obj['state'] = ApiClient.convertToType(data['state'], 'String');
@@ -72,15 +84,30 @@
    */
   exports.prototype['id'] = undefined;
   /**
+   * ISO-8601 date
+   * @member {String} created_at
+   */
+  exports.prototype['created_at'] = undefined;
+  /**
    * name of the organization
    * @member {String} display_name
    */
   exports.prototype['display_name'] = undefined;
   /**
+   * name of the company
+   * @member {String} company_name
+   */
+  exports.prototype['company_name'] = undefined;
+  /**
    * pricing tier
    * @member {module:model/Organization.TierEnum} tier
    */
   exports.prototype['tier'] = undefined;
+  /**
+   * number of QCUs
+   * @member {Number} qcu
+   */
+  exports.prototype['qcu'] = undefined;
   /**
    * org state
    * @member {module:model/Organization.StateEnum} state
@@ -95,15 +122,20 @@
    */
   exports.TierEnum = {
     /**
-     * value: "STARTER"
+     * value: "FREE"
      * @const
      */
-    "STARTER": "STARTER",
+    "FREE": "FREE",
     /**
-     * value: "PREMIUM"
+     * value: "BASIC"
      * @const
      */
-    "PREMIUM": "PREMIUM",
+    "BASIC": "BASIC",
+    /**
+     * value: "PRO"
+     * @const
+     */
+    "PRO": "PRO",
     /**
      * value: "ENTERPRISE"
      * @const
@@ -117,15 +149,20 @@
    */
   exports.StateEnum = {
     /**
-     * value: "NEW"
-     * @const
-     */
-    "NEW": "NEW",
-    /**
      * value: "ACTIVE"
      * @const
      */
     "ACTIVE": "ACTIVE",
+    /**
+     * value: "TRIAL"
+     * @const
+     */
+    "TRIAL": "TRIAL",
+    /**
+     * value: "TRIAL_EXPIRED"
+     * @const
+     */
+    "TRIAL_EXPIRED": "TRIAL_EXPIRED",
     /**
      * value: "DELETED"
      * @const

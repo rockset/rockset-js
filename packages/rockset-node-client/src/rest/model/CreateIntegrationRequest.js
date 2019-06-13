@@ -1,18 +1,18 @@
 (function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(['ApiClient', 'model/AwsExternalIdIntegration', 'model/AwsKeyIntegration', 'model/GcpServiceAccount'], factory);
+    define(['ApiClient', 'model/AwsExternalIdIntegration', 'model/AwsKeyIntegration', 'model/GcpServiceAccount', 'model/RedshiftIntegration'], factory);
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS-like environments that support module.exports, like Node.
-    module.exports = factory(require('../ApiClient'), require('./AwsExternalIdIntegration'), require('./AwsKeyIntegration'), require('./GcpServiceAccount'));
+    module.exports = factory(require('../ApiClient'), require('./AwsExternalIdIntegration'), require('./AwsKeyIntegration'), require('./GcpServiceAccount'), require('./RedshiftIntegration'));
   } else {
     // Browser globals (root is window)
     if (!root.RestApi) {
       root.RestApi = {};
     }
-    root.RestApi.CreateIntegrationRequest = factory(root.RestApi.ApiClient, root.RestApi.AwsExternalIdIntegration, root.RestApi.AwsKeyIntegration, root.RestApi.GcpServiceAccount);
+    root.RestApi.CreateIntegrationRequest = factory(root.RestApi.ApiClient, root.RestApi.AwsExternalIdIntegration, root.RestApi.AwsKeyIntegration, root.RestApi.GcpServiceAccount, root.RestApi.RedshiftIntegration);
   }
-}(this, function(ApiClient, AwsExternalIdIntegration, AwsKeyIntegration, GcpServiceAccount) {
+}(this, function(ApiClient, AwsExternalIdIntegration, AwsKeyIntegration, GcpServiceAccount, RedshiftIntegration) {
     'use strict';
 
 
@@ -34,6 +34,7 @@
     var _this = this;
 
     _this['name'] = name;
+
 
 
 
@@ -66,6 +67,9 @@
       if (data.hasOwnProperty('gcp_service_account')) {
         obj['gcp_service_account'] = GcpServiceAccount.constructFromObject(data['gcp_service_account']);
       }
+      if (data.hasOwnProperty('redshift')) {
+        obj['redshift'] = RedshiftIntegration.constructFromObject(data['redshift']);
+      }
     }
     return obj;
   }
@@ -95,6 +99,11 @@
    * @member {module:model/GcpServiceAccount} gcp_service_account
    */
   exports.prototype['gcp_service_account'] = undefined;
+  /**
+   * details of AWS Redshift integration
+   * @member {module:model/RedshiftIntegration} redshift
+   */
+  exports.prototype['redshift'] = undefined;
 
 
 
