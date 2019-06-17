@@ -1,5 +1,8 @@
 # Rockset Node Client Changelog
 
+## v1.0.4 2019-06-17
+- move from cloud-level integrations to service-level integrations: DynamoDB, GCS, Kinesis, Redshift, S3
+
 ## v1.0.3 2019-01-22
 - Add support for AWS External ID as a new type of integration
 - Add support for Google Cloud Storage
