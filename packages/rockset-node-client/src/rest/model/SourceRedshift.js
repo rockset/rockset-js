@@ -31,15 +31,13 @@
    * @param database {String} name of the database in Redshift Cluster
    * @param schema {String} schema which contains the Redshift table
    * @param tableName {String} name of Redshift table containing data
-   * @param s3BucketPath {String} unload S3 bucket path
    */
-  var exports = function(database, schema, tableName, s3BucketPath) {
+  var exports = function(database, schema, tableName) {
     var _this = this;
 
     _this['database'] = database;
     _this['schema'] = schema;
     _this['table_name'] = tableName;
-    _this['s3_bucket_path'] = s3BucketPath;
 
   };
 
@@ -63,9 +61,6 @@
       if (data.hasOwnProperty('table_name')) {
         obj['table_name'] = ApiClient.convertToType(data['table_name'], 'String');
       }
-      if (data.hasOwnProperty('s3_bucket_path')) {
-        obj['s3_bucket_path'] = ApiClient.convertToType(data['s3_bucket_path'], 'String');
-      }
       if (data.hasOwnProperty('incremental_field')) {
         obj['incremental_field'] = ApiClient.convertToType(data['incremental_field'], 'String');
       }
@@ -88,11 +83,6 @@
    * @member {String} table_name
    */
   exports.prototype['table_name'] = undefined;
-  /**
-   * unload S3 bucket path
-   * @member {String} s3_bucket_path
-   */
-  exports.prototype['s3_bucket_path'] = undefined;
   /**
    * field in Redshift source table to monitor for updates
    * @member {String} incremental_field

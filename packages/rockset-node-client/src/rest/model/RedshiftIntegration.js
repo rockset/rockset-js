@@ -1,18 +1,18 @@
 (function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(['ApiClient', 'model/AwsKeyIntegration'], factory);
+    define(['ApiClient', 'model/AwsAccessKey'], factory);
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS-like environments that support module.exports, like Node.
-    module.exports = factory(require('../ApiClient'), require('./AwsKeyIntegration'));
+    module.exports = factory(require('../ApiClient'), require('./AwsAccessKey'));
   } else {
     // Browser globals (root is window)
     if (!root.RestApi) {
       root.RestApi = {};
     }
-    root.RestApi.RedshiftIntegration = factory(root.RestApi.ApiClient, root.RestApi.AwsKeyIntegration);
+    root.RestApi.RedshiftIntegration = factory(root.RestApi.ApiClient, root.RestApi.AwsAccessKey);
   }
-}(this, function(ApiClient, AwsKeyIntegration) {
+}(this, function(ApiClient, AwsAccessKey) {
     'use strict';
 
 
@@ -32,8 +32,9 @@
    * @param password {String} Password associated with Redshift cluster
    * @param host {String} Redshift Cluster host
    * @param port {Number} Redshift Cluster port
+   * @param s3BucketPath {String} unload S3 bucket path
    */
-  var exports = function(username, password, host, port) {
+  var exports = function(username, password, host, port, s3BucketPath) {
     var _this = this;
 
 
@@ -41,6 +42,7 @@
     _this['password'] = password;
     _this['host'] = host;
     _this['port'] = port;
+    _this['s3_bucket_path'] = s3BucketPath;
   };
 
   /**
@@ -55,7 +57,7 @@
       obj = obj || new exports();
 
       if (data.hasOwnProperty('aws_access_key')) {
-        obj['aws_access_key'] = AwsKeyIntegration.constructFromObject(data['aws_access_key']);
+        obj['aws_access_key'] = AwsAccessKey.constructFromObject(data['aws_access_key']);
       }
       if (data.hasOwnProperty('username')) {
         obj['username'] = ApiClient.convertToType(data['username'], 'String');
@@ -69,13 +71,16 @@
       if (data.hasOwnProperty('port')) {
         obj['port'] = ApiClient.convertToType(data['port'], 'Number');
       }
+      if (data.hasOwnProperty('s3_bucket_path')) {
+        obj['s3_bucket_path'] = ApiClient.convertToType(data['s3_bucket_path'], 'String');
+      }
     }
     return obj;
   }
 
   /**
-   * AWS Access and Secret keys
-   * @member {module:model/AwsKeyIntegration} aws_access_key
+   * AWS access key credentials
+   * @member {module:model/AwsAccessKey} aws_access_key
    */
   exports.prototype['aws_access_key'] = undefined;
   /**
@@ -98,6 +103,11 @@
    * @member {Number} port
    */
   exports.prototype['port'] = undefined;
+  /**
+   * unload S3 bucket path
+   * @member {String} s3_bucket_path
+   */
+  exports.prototype['s3_bucket_path'] = undefined;
 
 
 

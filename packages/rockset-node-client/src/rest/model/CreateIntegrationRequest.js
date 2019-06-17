@@ -1,18 +1,18 @@
 (function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(['ApiClient', 'model/AwsExternalIdIntegration', 'model/AwsKeyIntegration', 'model/GcpServiceAccount', 'model/RedshiftIntegration'], factory);
+    define(['ApiClient', 'model/DynamodbIntegration', 'model/GcsIntegration', 'model/KinesisIntegration', 'model/RedshiftIntegration', 'model/S3Integration'], factory);
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS-like environments that support module.exports, like Node.
-    module.exports = factory(require('../ApiClient'), require('./AwsExternalIdIntegration'), require('./AwsKeyIntegration'), require('./GcpServiceAccount'), require('./RedshiftIntegration'));
+    module.exports = factory(require('../ApiClient'), require('./DynamodbIntegration'), require('./GcsIntegration'), require('./KinesisIntegration'), require('./RedshiftIntegration'), require('./S3Integration'));
   } else {
     // Browser globals (root is window)
     if (!root.RestApi) {
       root.RestApi = {};
     }
-    root.RestApi.CreateIntegrationRequest = factory(root.RestApi.ApiClient, root.RestApi.AwsExternalIdIntegration, root.RestApi.AwsKeyIntegration, root.RestApi.GcpServiceAccount, root.RestApi.RedshiftIntegration);
+    root.RestApi.CreateIntegrationRequest = factory(root.RestApi.ApiClient, root.RestApi.DynamodbIntegration, root.RestApi.GcsIntegration, root.RestApi.KinesisIntegration, root.RestApi.RedshiftIntegration, root.RestApi.S3Integration);
   }
-}(this, function(ApiClient, AwsExternalIdIntegration, AwsKeyIntegration, GcpServiceAccount, RedshiftIntegration) {
+}(this, function(ApiClient, DynamodbIntegration, GcsIntegration, KinesisIntegration, RedshiftIntegration, S3Integration) {
     'use strict';
 
 
@@ -39,6 +39,7 @@
 
 
 
+
   };
 
   /**
@@ -58,17 +59,20 @@
       if (data.hasOwnProperty('description')) {
         obj['description'] = ApiClient.convertToType(data['description'], 'String');
       }
-      if (data.hasOwnProperty('aws')) {
-        obj['aws'] = AwsKeyIntegration.constructFromObject(data['aws']);
+      if (data.hasOwnProperty('s3')) {
+        obj['s3'] = S3Integration.constructFromObject(data['s3']);
       }
-      if (data.hasOwnProperty('aws_external_id')) {
-        obj['aws_external_id'] = AwsExternalIdIntegration.constructFromObject(data['aws_external_id']);
+      if (data.hasOwnProperty('kinesis')) {
+        obj['kinesis'] = KinesisIntegration.constructFromObject(data['kinesis']);
       }
-      if (data.hasOwnProperty('gcp_service_account')) {
-        obj['gcp_service_account'] = GcpServiceAccount.constructFromObject(data['gcp_service_account']);
+      if (data.hasOwnProperty('dynamodb')) {
+        obj['dynamodb'] = DynamodbIntegration.constructFromObject(data['dynamodb']);
       }
       if (data.hasOwnProperty('redshift')) {
         obj['redshift'] = RedshiftIntegration.constructFromObject(data['redshift']);
+      }
+      if (data.hasOwnProperty('gcs')) {
+        obj['gcs'] = GcsIntegration.constructFromObject(data['gcs']);
       }
     }
     return obj;
@@ -85,25 +89,30 @@
    */
   exports.prototype['description'] = undefined;
   /**
-   * credentials for an AWS key integration
-   * @member {module:model/AwsKeyIntegration} aws
+   * Amazon S3 details, must have one of aws_access_key or aws_role
+   * @member {module:model/S3Integration} s3
    */
-  exports.prototype['aws'] = undefined;
+  exports.prototype['s3'] = undefined;
   /**
-   * details for an AWS External Id integration
-   * @member {module:model/AwsExternalIdIntegration} aws_external_id
+   * Amazon Kinesis details, must have one of aws_access_key or aws_role
+   * @member {module:model/KinesisIntegration} kinesis
    */
-  exports.prototype['aws_external_id'] = undefined;
+  exports.prototype['kinesis'] = undefined;
   /**
-   * details of a GCP Service Account integration
-   * @member {module:model/GcpServiceAccount} gcp_service_account
+   * Amazon DynamoDB details, must have one of aws_access_key or aws_role
+   * @member {module:model/DynamodbIntegration} dynamodb
    */
-  exports.prototype['gcp_service_account'] = undefined;
+  exports.prototype['dynamodb'] = undefined;
   /**
-   * details of AWS Redshift integration
+   * Amazon Redshift details
    * @member {module:model/RedshiftIntegration} redshift
    */
   exports.prototype['redshift'] = undefined;
+  /**
+   * GCS details
+   * @member {module:model/GcsIntegration} gcs
+   */
+  exports.prototype['gcs'] = undefined;
 
 
 
