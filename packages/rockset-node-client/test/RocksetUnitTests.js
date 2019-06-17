@@ -1,7 +1,5 @@
 var apiKey = process.env.ROCKSET_APIKEY;
 var apiServer = process.env.ROCKSET_APISERVER;
-var awsKey = process.env.AWS_KEY;
-var awsSecret = process.env.AWS_SECRET_KEY;
 
 var rockset = require('../src/rockset')(apiKey, apiServer)
 var assert = require('assert');
@@ -27,11 +25,14 @@ describe('Rockset Unit Tests:', function(done) {
         it('create an integration', function(done) {
             const result = rockset.integrations.create({
                 'name': integration,
-                'aws': {
-                    'aws_access_key_id': awsKey,
-                    'aws_secret_access_key': awsSecret
-                }
+                'kinesis': {
+                  'aws_access_key': {
+                      'aws_access_key_id': 'dummy_id',
+                      'aws_secret_access_key': 'dummy_secret',
+                  },
+                },
             }, function(error, response, body) {
+                if (error) console.log(error.response.text);
                 assert.equal(response.data.name, integration);
                 return done();
             })
@@ -40,6 +41,7 @@ describe('Rockset Unit Tests:', function(done) {
             const result = rockset.collections.create('commons', {
                 'name': collection,
             }, function(error, response, body) {
+                if (error) console.log(error.response.text);
                 assert.equal(response.data.name, collection);
                 assert.equal(response.data.status, 'CREATED');
                 return done();
@@ -49,6 +51,7 @@ describe('Rockset Unit Tests:', function(done) {
             sleep(5000).then(() => {
                 rockset.collections.remove('commons', collection,
                         function(error, response, body) {
+                            if (error) console.log(error.response.text);
                             assert.equal(response.data.name, collection);
                             assert.equal(response.data.status, 'DELETED');
                             return done();
@@ -58,6 +61,7 @@ describe('Rockset Unit Tests:', function(done) {
         it('delete an integration', function(done) {
             rockset.integrations.remove(integration,
                 function(error, response, body) {
+                    if (error) console.log(error.response.text);
                     assert.equal(response.data.name, integration);
                     return done();
             })
@@ -68,6 +72,7 @@ describe('Rockset Unit Tests:', function(done) {
                             'query': 'select * from _events limit 1'
                 }
             }, function(error, response, body) {
+                if (error) console.log(error.response.text);
                 assert.equal(error, null)
                 return done()
             });
