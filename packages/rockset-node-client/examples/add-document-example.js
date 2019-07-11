@@ -25,7 +25,7 @@ function example1() {
 
 function example2() {
   console.log('\n\n=== Add documents to collection ===');
-  rockset.documents.add(
+  rockset.documents.add('commons',
     'myjscollection',
     {
       'data': [{
