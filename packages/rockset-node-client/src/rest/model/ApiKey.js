@@ -1,7 +1,7 @@
 (function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(['ApiClient'], factory);
+    define(['../ApiClient'], factory);
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS-like environments that support module.exports, like Node.
     module.exports = factory(require('../ApiClient'));
@@ -36,7 +36,6 @@
     var _this = this;
 
 
-
     _this['name'] = name;
     _this['key'] = key;
   };
@@ -52,9 +51,6 @@
     if (data) {
       obj = obj || new exports();
 
-      if (data.hasOwnProperty('type')) {
-        obj['type'] = ApiClient.convertToType(data['type'], 'String');
-      }
       if (data.hasOwnProperty('created_at')) {
         obj['created_at'] = ApiClient.convertToType(data['created_at'], 'String');
       }
@@ -68,11 +64,6 @@
     return obj;
   }
 
-  /**
-   * has value `api_key` for an API key object
-   * @member {String} type
-   */
-  exports.prototype['type'] = undefined;
   /**
    * ISO-8601 date
    * @member {String} created_at

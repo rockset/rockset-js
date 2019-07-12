@@ -1,7 +1,7 @@
 (function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(['ApiClient', 'model/CreateIntegrationRequest', 'model/CreateIntegrationResponse', 'model/DeleteIntegrationResponse', 'model/GetIntegrationResponse', 'model/ListIntegrationsResponse'], factory);
+    define(['../ApiClient', '../model/CreateIntegrationRequest', '../model/CreateIntegrationResponse', '../model/DeleteIntegrationResponse', '../model/GetIntegrationResponse', '../model/ListIntegrationsResponse'], factory);
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS-like environments that support module.exports, like Node.
     module.exports = factory(require('../ApiClient'), require('../model/CreateIntegrationRequest'), require('../model/CreateIntegrationResponse'), require('../model/DeleteIntegrationResponse'), require('../model/GetIntegrationResponse'), require('../model/ListIntegrationsResponse'));

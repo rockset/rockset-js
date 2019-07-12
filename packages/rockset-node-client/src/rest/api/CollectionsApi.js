@@ -1,7 +1,7 @@
 (function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(['ApiClient', 'model/CreateCollectionRequest', 'model/CreateCollectionResponse', 'model/DeleteCollectionResponse', 'model/GetCollectionResponse', 'model/ListCollectionsResponse'], factory);
+    define(['../ApiClient', '../model/CreateCollectionRequest', '../model/CreateCollectionResponse', '../model/DeleteCollectionResponse', '../model/GetCollectionResponse', '../model/ListCollectionsResponse'], factory);
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS-like environments that support module.exports, like Node.
     module.exports = factory(require('../ApiClient'), require('../model/CreateCollectionRequest'), require('../model/CreateCollectionResponse'), require('../model/DeleteCollectionResponse'), require('../model/GetCollectionResponse'), require('../model/ListCollectionsResponse'));
@@ -154,22 +154,15 @@
 
     /**
      * List Collections
-     * Retrieve all collections in a workspace.
-     * @param {String} workspace name of the workspace
+     * Retrieve all collections in an organization.
      * @param {module:api/CollectionsApi~listCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/ListCollectionsResponse}
      */
-    this.list = function(workspace, callback) {
+    this.list = function(callback) {
       var postBody = null;
-
-      // verify the required parameter 'workspace' is set
-      if (workspace === undefined || workspace === null) {
-        throw new Error("Missing the required parameter 'workspace' when calling list");
-      }
 
 
       var pathParams = {
-        'workspace': workspace
       };
       var queryParams = {
       };
@@ -186,7 +179,7 @@
       var returnType = ListCollectionsResponse;
 
       return this.apiClient.callApi(
-        '/v1/orgs/self/ws/{workspace}/collections', 'GET',
+        '/v1/orgs/self/collections', 'GET',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -248,45 +241,31 @@
     }
 
     /**
-     * Callback function to receive the result of the set operation.
-     * @callback module:api/CollectionsApi~setCallback
+     * Callback function to receive the result of the workspace operation.
+     * @callback module:api/CollectionsApi~workspaceCallback
      * @param {String} error Error message, if any.
-     * @param {module:model/GetCollectionResponse} data The data returned by the service call.
+     * @param {module:model/ListCollectionsResponse} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
     /**
-     * Update state of Collection
-     * Update state of a collection.
+     * List Collections for Workspace
+     * Retrieve all collections in a workspace.
      * @param {String} workspace name of the workspace
-     * @param {String} collection name of the collection
-     * @param {module:model/String} state new state of this collection
-     * @param {module:api/CollectionsApi~setCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link module:model/GetCollectionResponse}
+     * @param {module:api/CollectionsApi~workspaceCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link module:model/ListCollectionsResponse}
      */
-    this.set = function(workspace, collection, state, callback) {
+    this.workspace = function(workspace, callback) {
       var postBody = null;
 
       // verify the required parameter 'workspace' is set
       if (workspace === undefined || workspace === null) {
-        throw new Error("Missing the required parameter 'workspace' when calling set");
-      }
-
-      // verify the required parameter 'collection' is set
-      if (collection === undefined || collection === null) {
-        throw new Error("Missing the required parameter 'collection' when calling set");
-      }
-
-      // verify the required parameter 'state' is set
-      if (state === undefined || state === null) {
-        throw new Error("Missing the required parameter 'state' when calling set");
+        throw new Error("Missing the required parameter 'workspace' when calling workspace");
       }
 
 
       var pathParams = {
-        'workspace': workspace,
-        'collection': collection,
-        'state': state
+        'workspace': workspace
       };
       var queryParams = {
       };
@@ -300,10 +279,10 @@
       var authNames = [];
       var contentTypes = ['application/json'];
       var accepts = ['application/json'];
-      var returnType = GetCollectionResponse;
+      var returnType = ListCollectionsResponse;
 
       return this.apiClient.callApi(
-        '/v1/orgs/self/ws/{workspace}/collections/{collection}/state/{state}', 'POST',
+        '/v1/orgs/self/ws/{workspace}/collections', 'GET',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );

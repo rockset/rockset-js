@@ -1,7 +1,7 @@
 (function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(['ApiClient', 'model/AddDocumentsRequest', 'model/AddDocumentsResponse', 'model/DeleteDocumentsRequest', 'model/DeleteDocumentsResponse'], factory);
+    define(['../ApiClient', '../model/AddDocumentsRequest', '../model/AddDocumentsResponse', '../model/DeleteDocumentsRequest', '../model/DeleteDocumentsResponse'], factory);
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS-like environments that support module.exports, like Node.
     module.exports = factory(require('../ApiClient'), require('../model/AddDocumentsRequest'), require('../model/AddDocumentsResponse'), require('../model/DeleteDocumentsRequest'), require('../model/DeleteDocumentsResponse'));
