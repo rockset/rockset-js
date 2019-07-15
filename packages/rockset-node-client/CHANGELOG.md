@@ -1,5 +1,8 @@
 # Rockset Node Client Changelog
 
+## v1.0.5 2019-07-15
+- use relative path for AMD
+
 ## v1.0.4 2019-06-17
 - move from cloud-level integrations to service-level integrations: DynamoDB, GCS, Kinesis, Redshift, S3
 
