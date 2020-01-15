@@ -1,5 +1,10 @@
 # Rockset Node Client Changelog
 
+## v2.0.0 2020-01-14
+- support promises
+- support custom fetch functions
+- use swagger-codegen 2.4.10
+
 ## v1.0.5 2019-07-15
 - use relative path for AMD
 
