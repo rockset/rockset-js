@@ -59,3 +59,12 @@ test("add documents", async () => {
     }
   );
 });
+
+test("is snake case", async () => {
+
+  // This line won't type check if the generated code is camel case
+  rockset.collections.createCollection("ws", {
+    name: "sname",
+    field_mappings: []
+  })
+})
