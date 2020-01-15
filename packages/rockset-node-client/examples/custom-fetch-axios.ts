@@ -8,14 +8,13 @@ import axios from "axios";
 import rocksetConfigure from "rockset";
 
 // Super simple fetch with axios: axios docs show how to check for errors, cancel requests etc.
-const customFetchAxios = async (url: string, options: any) => {
-  const {
-    headers,
-    method,
-    body: data,
-    queryParams: params,
-    cancelToken
-  } = options;
+const customFetchAxios = async (url: string, {
+  headers,
+  method,
+  body: data,
+  queryParams: params,
+  cancelToken
+}:any) => {
   const res = await axios.request({
     url,
     headers,
