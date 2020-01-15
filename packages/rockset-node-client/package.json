@@ -1,7 +1,7 @@
 {
   "name": "rockset",
-  "version": "2.0.0",
-  "main": "dist/src/index.js",
+  "version": "2.0.1",
+  "main": "dist/index.js",
   "description": "Client for querying Rockset and interacting with the Rockset API.",
   "license": "Apache License 2.0",
   "directories": {
@@ -19,10 +19,18 @@
     "axios": "^0.19.1",
     "jest": "^24.9.0",
     "ts-jest": "^24.1.0",
+    "jest-cli": "^24.9.0",
     "typescript": "^3.7.2"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rockset/rockset-node-client/tree/v2"
+  },
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "build": "tsc",
+    "clean": "rm -r dist",
+    "prepublishOnly": "npm run clean && npm run build && npm run test"
   },
   "author": "Rockset Inc <api@rockset.com>",
   "keywords": [
@@ -34,5 +42,8 @@
   "bugs": {
     "url": "https://github.com/rockset/rockset-node-client/issues"
   },
-  "types": "dist/src/index.d.ts"
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/**/*"
+  ]
 }
