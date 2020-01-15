@@ -7,7 +7,7 @@ Official JS/TS client library for Rockset.
 ## What's new
 Supports ES6 promises and TS types out of the box.
 
-Documentation: https://docs.rockset.com/nodejs-client/
+Documentation: https://docs.rockset.com/nodejs/
 
 ## Requirements
 
