@@ -20,15 +20,28 @@ ES6 node or Webpack. Typescript in order to get types support.
 
 ## Usage
 
+### Using Require
+
+```js
+const rockset = require("rockset").default(apikey, "https://api.rs2.usw2.rockset.com");
+
+await rockset.queries.query({
+  { sql: { query: "Select count(*) from _events" } }
+});
+```
+
+### Using ES6 Import
+
 ```ts
 import rocksetConfigure from "rockset";
 const rockset = rocksetConfigure(apikey, "https://api.rs2.usw2.rockset.com");
+
 await rockset.queries.query({
-  sql: {
-    query
-  }
+  { sql: { query: "Select count(*) from _events" } }
 });
 ```
+
+### Custom Fetch Function
 
 To supply a custom fetch function, we pass it in as the last parameter to rocksetConfigure.
 
