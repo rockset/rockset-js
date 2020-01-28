@@ -26,7 +26,7 @@ ES6 node or Webpack. Typescript in order to get types support.
 const rockset = require("rockset").default(apikey, "https://api.rs2.usw2.rockset.com");
 
 await rockset.queries.query({
-  { sql: { query: "Select count(*) from _events" } }
+  sql: { query: "Select count(*) from _events" }
 });
 ```
 
@@ -37,7 +37,7 @@ import rocksetConfigure from "rockset";
 const rockset = rocksetConfigure(apikey, "https://api.rs2.usw2.rockset.com");
 
 await rockset.queries.query({
-  { sql: { query: "Select count(*) from _events" } }
+  sql: { query: "Select count(*) from _events" }
 });
 ```
 
