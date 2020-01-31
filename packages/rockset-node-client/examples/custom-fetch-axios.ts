@@ -4,8 +4,8 @@
  *
  * Note: this method DOES NOT cancel the request on rockset servers. It simply rejects the promise returned by axios.
  */
-import axios from "axios";
-import rocksetConfigure from "rockset";
+import axios from 'axios';
+import rocksetConfigure from 'rockset';
 
 // Super simple fetch with axios: axios docs show how to check for errors, cancel requests etc.
 const customFetchAxios = async (url: string, {
@@ -28,7 +28,7 @@ const customFetchAxios = async (url: string, {
 };
 
 // Configure
-const basePath = process.env.ROCKSET_HOST || "https://api.rs2.usw2.rockset.com";
+const basePath = process.env.ROCKSET_HOST || 'https://api.rs2.usw2.rockset.com';
 const apikey = process.env.ROCKSET_APIKEY as string;
 
 const rockset = rocksetConfigure(apikey, basePath, customFetchAxios);
@@ -37,12 +37,12 @@ const cancelSource = axios.CancelToken.source();
 // To execute a query
 rockset.queries
   .query(
-    { sql: { query: "Select count(*) from _events" } },
+    { sql: { query: 'Select count(*) from _events' } },
     { cancelToken: cancelSource.token }
   )
   .then(console.log)
   .catch(console.error);
 
 // To cancel the request through axios
-// *** THIS DOES NOT CANCEL THE QUERY ON OUR SERVERS ***
+// Note: this closes the HTTP connection but will not stop query execution on our servers
 cancelSource.cancel();
