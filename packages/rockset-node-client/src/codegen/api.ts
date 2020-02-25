@@ -244,6 +244,7 @@ export namespace Collection {
      * @enum {string}
      */
     export enum StatusEnum {
+        INITIALIZED = <any> 'INITIALIZED',
         CREATED = <any> 'CREATED',
         READY = <any> 'READY',
         PAUSED = <any> 'PAUSED',
@@ -483,47 +484,41 @@ export interface CreateIntegrationResponse {
 /**
  * 
  * @export
- * @interface CreateSavedQueryRequest
+ * @interface CreateQueryLambdaRequest
  */
-export interface CreateSavedQueryRequest {
+export interface CreateQueryLambdaRequest {
     /**
-     * query name
+     * Query Lambda name
      * @type {string}
-     * @memberof CreateSavedQueryRequest
+     * @memberof CreateQueryLambdaRequest
      */
     name: string;
     /**
-     * optional version tag
+     * optional description
      * @type {string}
-     * @memberof CreateSavedQueryRequest
+     * @memberof CreateQueryLambdaRequest
      */
-    version_tag?: string;
+    description?: string;
     /**
-     * SQL text of this query
-     * @type {string}
-     * @memberof CreateSavedQueryRequest
+     * Query Lambda SQL query
+     * @type {QueryLambdaSql}
+     * @memberof CreateQueryLambdaRequest
      */
-    query_sql: string;
-    /**
-     * parameters associated with this query
-     * @type {Array<SavedQueryParameter>}
-     * @memberof CreateSavedQueryRequest
-     */
-    parameters?: Array<SavedQueryParameter>;
+    sql?: QueryLambdaSql;
 }
 
 /**
  * 
  * @export
- * @interface CreateSavedQueryResponse
+ * @interface CreateQueryLambdaResponse
  */
-export interface CreateSavedQueryResponse {
+export interface CreateQueryLambdaResponse {
     /**
-     * saved query data
-     * @type {SavedQuery}
-     * @memberof CreateSavedQueryResponse
+     * Query Lambda data
+     * @type {QueryLambda}
+     * @memberof CreateQueryLambdaResponse
      */
-    data?: SavedQuery;
+    data?: QueryLambda;
 }
 
 /**
@@ -607,7 +602,7 @@ export interface CsvParams {
      */
     firstLineAsColumnNames?: boolean;
     /**
-     * a single character that is the column seperator
+     * a single character that is the column separator
      * @type {string}
      * @memberof CsvParams
      */
@@ -755,15 +750,15 @@ export interface DeleteIntegrationResponse {
 /**
  * 
  * @export
- * @interface DeleteSavedQueryResponse
+ * @interface DeleteQueryLambdaResponse
  */
-export interface DeleteSavedQueryResponse {
+export interface DeleteQueryLambdaResponse {
     /**
-     * saved query details
-     * @type {SavedQuery}
-     * @memberof DeleteSavedQueryResponse
+     * Query Lambda details
+     * @type {QueryLambda}
+     * @memberof DeleteQueryLambdaResponse
      */
-    data?: SavedQuery;
+    data?: QueryLambda;
 }
 
 /**
@@ -969,19 +964,19 @@ export interface EventTimeInfo {
 /**
  * 
  * @export
- * @interface ExecuteSavedQueryParameter
+ * @interface ExecuteQueryLambdaParameter
  */
-export interface ExecuteSavedQueryParameter {
+export interface ExecuteQueryLambdaParameter {
     /**
      * name of the field
      * @type {string}
-     * @memberof ExecuteSavedQueryParameter
+     * @memberof ExecuteQueryLambdaParameter
      */
     name: string;
     /**
      * literal value of the field
      * @type {any}
-     * @memberof ExecuteSavedQueryParameter
+     * @memberof ExecuteQueryLambdaParameter
      */
     value: any;
 }
@@ -989,43 +984,25 @@ export interface ExecuteSavedQueryParameter {
 /**
  * 
  * @export
- * @interface ExecuteSavedQueryRequest
+ * @interface ExecuteQueryLambdaRequest
  */
-export interface ExecuteSavedQueryRequest {
-    /**
-     * workspace of this saved query
-     * @type {string}
-     * @memberof ExecuteSavedQueryRequest
-     */
-    workspace?: string;
-    /**
-     * query name
-     * @type {string}
-     * @memberof ExecuteSavedQueryRequest
-     */
-    name?: string;
-    /**
-     * query version
-     * @type {string}
-     * @memberof ExecuteSavedQueryRequest
-     */
-    version?: string;
+export interface ExecuteQueryLambdaRequest {
     /**
      * list of named parameters
-     * @type {Array<ExecuteSavedQueryParameter>}
-     * @memberof ExecuteSavedQueryRequest
+     * @type {Array<ExecuteQueryLambdaParameter>}
+     * @memberof ExecuteQueryLambdaRequest
      */
-    parameters?: Array<ExecuteSavedQueryParameter>;
+    parameters?: Array<ExecuteQueryLambdaParameter>;
     /**
-     * Row limit to use if no limit specified in the query
+     * Row limit to use if no limit specified in the SQL query text
      * @type {number}
-     * @memberof ExecuteSavedQueryRequest
+     * @memberof ExecuteQueryLambdaRequest
      */
     default_row_limit?: number;
     /**
      * Whether to generate warnings
      * @type {boolean}
-     * @memberof ExecuteSavedQueryRequest
+     * @memberof ExecuteQueryLambdaRequest
      */
     generate_warnings?: boolean;
 }
@@ -1195,15 +1172,15 @@ export interface GetIntegrationResponse {
 /**
  * 
  * @export
- * @interface GetSavedQueryResponse
+ * @interface GetQueryLambdaResponse
  */
-export interface GetSavedQueryResponse {
+export interface GetQueryLambdaResponse {
     /**
-     * saved query details
-     * @type {SavedQuery}
-     * @memberof GetSavedQueryResponse
+     * Query Lambda details
+     * @type {QueryLambda}
+     * @memberof GetQueryLambdaResponse
      */
-    data?: SavedQuery;
+    data?: QueryLambda;
 }
 
 /**
@@ -1453,15 +1430,15 @@ export interface ListIntegrationsResponse {
 /**
  * 
  * @export
- * @interface ListSavedQueriesResponse
+ * @interface ListQueryLambdasResponse
  */
-export interface ListSavedQueriesResponse {
+export interface ListQueryLambdasResponse {
     /**
-     * list of all saved queries
-     * @type {Array<SavedQuery>}
-     * @memberof ListSavedQueriesResponse
+     * list of all Query Lambdas
+     * @type {Array<QueryLambda>}
+     * @memberof ListQueryLambdasResponse
      */
-    data?: Array<SavedQuery>;
+    data?: Array<QueryLambda>;
 }
 
 /**
@@ -1570,6 +1547,12 @@ export interface OperatorStats {
      * @memberof OperatorStats
      */
     output_rows?: number;
+    /**
+     * Total time in microseconds spent doing useful work
+     * @type {number}
+     * @memberof OperatorStats
+     */
+    processing_time_us?: number;
 }
 
 /**
@@ -1603,7 +1586,7 @@ export interface Organization {
      */
     company_name?: string;
     /**
-     * 
+     * organization's unique external ID within Rockset
      * @type {string}
      * @memberof Organization
      */
@@ -1818,6 +1801,167 @@ export interface QueryFieldType {
 /**
  * 
  * @export
+ * @interface QueryLambda
+ */
+export interface QueryLambda {
+    /**
+     * workspace of this Query Lambda
+     * @type {string}
+     * @memberof QueryLambda
+     */
+    workspace?: string;
+    /**
+     * user that created this Query Lambda
+     * @type {string}
+     * @memberof QueryLambda
+     */
+    created_by?: string;
+    /**
+     * ISO-8601 date of when Query Lambda was created
+     * @type {string}
+     * @memberof QueryLambda
+     */
+    created_at?: string;
+    /**
+     * Query Lambda name
+     * @type {string}
+     * @memberof QueryLambda
+     */
+    name?: string;
+    /**
+     * Query Lambda version
+     * @type {number}
+     * @memberof QueryLambda
+     */
+    version?: number;
+    /**
+     * optional description
+     * @type {string}
+     * @memberof QueryLambda
+     */
+    description?: string;
+    /**
+     * Query Lambda SQL query
+     * @type {QueryLambdaSql}
+     * @memberof QueryLambda
+     */
+    sql?: QueryLambdaSql;
+    /**
+     * collections queried by underlying SQL query
+     * @type {Array<string>}
+     * @memberof QueryLambda
+     */
+    collections?: Array<string>;
+    /**
+     * status of this Query Lambda
+     * @type {string}
+     * @memberof QueryLambda
+     */
+    state?: QueryLambda.StateEnum;
+    /**
+     * stats related to this Query Lambda
+     * @type {QueryLambdaStats}
+     * @memberof QueryLambda
+     */
+    stats?: QueryLambdaStats;
+}
+
+/**
+ * @export
+ * @namespace QueryLambda
+ */
+export namespace QueryLambda {
+    /**
+     * @export
+     * @enum {string}
+     */
+    export enum StateEnum {
+        ACTIVE = <any> 'ACTIVE',
+        ARCHIVED = <any> 'ARCHIVED'
+    }
+}
+
+/**
+ * 
+ * @export
+ * @interface QueryLambdaParameter
+ */
+export interface QueryLambdaParameter {
+    /**
+     * name of the field
+     * @type {string}
+     * @memberof QueryLambdaParameter
+     */
+    name: string;
+    /**
+     * data type of the field
+     * @type {string}
+     * @memberof QueryLambdaParameter
+     */
+    type: string;
+    /**
+     * default value of the field
+     * @type {any}
+     * @memberof QueryLambdaParameter
+     */
+    default_value: any;
+}
+
+/**
+ * 
+ * @export
+ * @interface QueryLambdaSql
+ */
+export interface QueryLambdaSql {
+    /**
+     * SQL text
+     * @type {string}
+     * @memberof QueryLambdaSql
+     */
+    query: string;
+    /**
+     * parameters associated with this Query Lambda
+     * @type {Array<QueryLambdaParameter>}
+     * @memberof QueryLambdaSql
+     */
+    parameters?: Array<QueryLambdaParameter>;
+}
+
+/**
+ * 
+ * @export
+ * @interface QueryLambdaStats
+ */
+export interface QueryLambdaStats {
+    /**
+     * ISO-8601 date
+     * @type {string}
+     * @memberof QueryLambdaStats
+     */
+    last_executed?: string;
+    /**
+     * user who last executed Query Lambda
+     * @type {string}
+     * @memberof QueryLambdaStats
+     */
+    last_executed_by?: string;
+    /**
+     * ISO-8601 date of last execution failure
+     * @type {string}
+     * @memberof QueryLambdaStats
+     */
+    last_execution_error?: string;
+    /**
+     * error message associated with last failed execution
+     * @type {string}
+     * @memberof QueryLambdaStats
+     */
+    last_execution_error_message?: string;
+}
+
+/**
+ * 
+ * @export
  * @interface QueryParameter
  */
 export interface QueryParameter {
@@ -1950,11 +2094,23 @@ export interface QueryResponseStats {
      */
     rows_scanned?: number;
     /**
+     * number of rows returned from the query
+     * @type {number}
+     * @memberof QueryResponseStats
+     */
+    rows_returned?: number;
+    /**
      * Statistics for each operator from query execution
      * @type {Array<OperatorStats>}
      * @memberof QueryResponseStats
      */
     operators?: Array<OperatorStats>;
+    /**
+     * DOT graph representing the execution steps of this query
+     * @type {string}
+     * @memberof QueryResponseStats
+     */
+    execution_graph?: string;
 }
 
 /**
@@ -2019,153 +2175,6 @@ export interface S3Integration {
      * @memberof S3Integration
      */
     aws_role?: AwsRole;
-}
-
-/**
- * 
- * @export
- * @interface SavedQuery
- */
-export interface SavedQuery {
-    /**
-     * workspace of this saved query
-     * @type {string}
-     * @memberof SavedQuery
-     */
-    workspace?: string;
-    /**
-     * user that created this query
-     * @type {string}
-     * @memberof SavedQuery
-     */
-    created_by?: string;
-    /**
-     * ISO-8601 date of when saved query was created
-     * @type {string}
-     * @memberof SavedQuery
-     */
-    created_at?: string;
-    /**
-     * query name
-     * @type {string}
-     * @memberof SavedQuery
-     */
-    name?: string;
-    /**
-     * query version
-     * @type {number}
-     * @memberof SavedQuery
-     */
-    version?: number;
-    /**
-     * optional version tag
-     * @type {string}
-     * @memberof SavedQuery
-     */
-    version_tag?: string;
-    /**
-     * SQL text of this query
-     * @type {string}
-     * @memberof SavedQuery
-     */
-    query_sql?: string;
-    /**
-     * collections queried by this query
-     * @type {Array<string>}
-     * @memberof SavedQuery
-     */
-    collections?: Array<string>;
-    /**
-     * parameters associated with this query
-     * @type {Array<SavedQueryParameter>}
-     * @memberof SavedQuery
-     */
-    parameters?: Array<SavedQueryParameter>;
-    /**
-     * status of this query
-     * @type {string}
-     * @memberof SavedQuery
-     */
-    state?: SavedQuery.StateEnum;
-    /**
-     * stats related to this query
-     * @type {SavedQueryStats}
-     * @memberof SavedQuery
-     */
-    stats?: SavedQueryStats;
-}
-
-/**
- * @export
- * @namespace SavedQuery
- */
-export namespace SavedQuery {
-    /**
-     * @export
-     * @enum {string}
-     */
-    export enum StateEnum {
-        ACTIVE = <any> 'ACTIVE',
-        ARCHIVED = <any> 'ARCHIVED'
-    }
-}
-
-/**
- * 
- * @export
- * @interface SavedQueryParameter
- */
-export interface SavedQueryParameter {
-    /**
-     * name of the field
-     * @type {string}
-     * @memberof SavedQueryParameter
-     */
-    name: string;
-    /**
-     * data type of the field
-     * @type {string}
-     * @memberof SavedQueryParameter
-     */
-    type: string;
-    /**
-     * default value of the field
-     * @type {any}
-     * @memberof SavedQueryParameter
-     */
-    default_value: any;
-}
-
-/**
- * 
- * @export
- * @interface SavedQueryStats
- */
-export interface SavedQueryStats {
-    /**
-     * ISO-8601 date
-     * @type {string}
-     * @memberof SavedQueryStats
-     */
-    last_executed?: string;
-    /**
-     * user who last executed saved query
-     * @type {string}
-     * @memberof SavedQueryStats
-     */
-    last_executed_by?: string;
-    /**
-     * ISO-8601 date of last execution failure
-     * @type {string}
-     * @memberof SavedQueryStats
-     */
-    last_execution_error?: string;
-    /**
-     * error message associated with last failed query execution
-     * @type {string}
-     * @memberof SavedQueryStats
-     */
-    last_execution_error_message?: string;
 }
 
 /**
@@ -2651,41 +2660,35 @@ export interface StatusKafkaPartition {
 /**
  * 
  * @export
- * @interface UpdateSavedQueryRequest
+ * @interface UpdateQueryLambdaRequest
  */
-export interface UpdateSavedQueryRequest {
+export interface UpdateQueryLambdaRequest {
     /**
-     * optional version tag
+     * optional description
      * @type {string}
-     * @memberof UpdateSavedQueryRequest
+     * @memberof UpdateQueryLambdaRequest
      */
-    version_tag?: string;
+    description?: string;
     /**
-     * SQL text of this query
-     * @type {string}
-     * @memberof UpdateSavedQueryRequest
+     * Query Lambda SQL query
+     * @type {QueryLambdaSql}
+     * @memberof UpdateQueryLambdaRequest
      */
-    query_sql: string;
-    /**
-     * parameters associated with this query
-     * @type {Array<SavedQueryParameter>}
-     * @memberof UpdateSavedQueryRequest
-     */
-    parameters?: Array<SavedQueryParameter>;
+    sql?: QueryLambdaSql;
 }
 
 /**
  * 
  * @export
- * @interface UpdateSavedQueryResponse
+ * @interface UpdateQueryLambdaResponse
  */
-export interface UpdateSavedQueryResponse {
+export interface UpdateQueryLambdaResponse {
     /**
-     * saved query data
-     * @type {SavedQuery}
-     * @memberof UpdateSavedQueryResponse
+     * Query Lambda data
+     * @type {QueryLambda}
+     * @memberof UpdateQueryLambdaResponse
      */
-    data?: SavedQuery;
+    data?: QueryLambda;
 }
 
 /**
@@ -2730,6 +2733,12 @@ export interface User {
      * @memberof User
      */
     state?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof User
+     */
+    org?: string;
 }
 
 /**
@@ -4410,207 +4419,6 @@ export class OrganizationsApi extends BaseAPI {
 export const QueriesApiFetchParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Create a saved query in given workspace.
-         * @summary Create Saved Query
-         * @param {string} workspace name of the workspace
-         * @param {CreateSavedQueryRequest} body JSON object
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createSavedQuery(workspace: string, body: CreateSavedQueryRequest, options: any = {}): FetchArgs {
-            // verify required parameter 'workspace' is not null or undefined
-            if (workspace === null || workspace === undefined) {
-                throw new RequiredError('workspace','Required parameter workspace was null or undefined when calling createSavedQuery.');
-            }
-            // verify required parameter 'body' is not null or undefined
-            if (body === null || body === undefined) {
-                throw new RequiredError('body','Required parameter body was null or undefined when calling createSavedQuery.');
-            }
-            const localVarPath = `/v1/orgs/self/ws/{workspace}/queries`
-                .replace(`{${"workspace"}}`, encodeURIComponent(String(workspace)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"CreateSavedQueryRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Delete a saved query.
-         * @summary Delete Saved Query
-         * @param {string} workspace name of the workspace
-         * @param {string} query name of the query
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteSavedQuery(workspace: string, query: string, options: any = {}): FetchArgs {
-            // verify required parameter 'workspace' is not null or undefined
-            if (workspace === null || workspace === undefined) {
-                throw new RequiredError('workspace','Required parameter workspace was null or undefined when calling deleteSavedQuery.');
-            }
-            // verify required parameter 'query' is not null or undefined
-            if (query === null || query === undefined) {
-                throw new RequiredError('query','Required parameter query was null or undefined when calling deleteSavedQuery.');
-            }
-            const localVarPath = `/v1/orgs/self/ws/{workspace}/queries/{query}`
-                .replace(`{${"workspace"}}`, encodeURIComponent(String(workspace)))
-                .replace(`{${"query"}}`, encodeURIComponent(String(query)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'DELETE' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Get a specific version of a saved query
-         * @summary Get Saved Query Version
-         * @param {string} workspace name of the workspace
-         * @param {string} query name of the query
-         * @param {number} version version of the query
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getQueryVersion(workspace: string, query: string, version: number, options: any = {}): FetchArgs {
-            // verify required parameter 'workspace' is not null or undefined
-            if (workspace === null || workspace === undefined) {
-                throw new RequiredError('workspace','Required parameter workspace was null or undefined when calling getQueryVersion.');
-            }
-            // verify required parameter 'query' is not null or undefined
-            if (query === null || query === undefined) {
-                throw new RequiredError('query','Required parameter query was null or undefined when calling getQueryVersion.');
-            }
-            // verify required parameter 'version' is not null or undefined
-            if (version === null || version === undefined) {
-                throw new RequiredError('version','Required parameter version was null or undefined when calling getQueryVersion.');
-            }
-            const localVarPath = `/v1/orgs/self/ws/{workspace}/queries/{query}/versions/{version}`
-                .replace(`{${"workspace"}}`, encodeURIComponent(String(workspace)))
-                .replace(`{${"query"}}`, encodeURIComponent(String(query)))
-                .replace(`{${"version"}}`, encodeURIComponent(String(version)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * List all queries.
-         * @summary List Saved Queries
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listAllQueries(options: any = {}): FetchArgs {
-            const localVarPath = `/v1/orgs/self/queries`;
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * List all queries under given workspace.
-         * @summary List Saved Queries
-         * @param {string} workspace name of the workspace
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listQueriesInWorkspace(workspace: string, options: any = {}): FetchArgs {
-            // verify required parameter 'workspace' is not null or undefined
-            if (workspace === null || workspace === undefined) {
-                throw new RequiredError('workspace','Required parameter workspace was null or undefined when calling listQueriesInWorkspace.');
-            }
-            const localVarPath = `/v1/orgs/self/ws/{workspace}/queries`
-                .replace(`{${"workspace"}}`, encodeURIComponent(String(workspace)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * List all versions of a saved query.
-         * @summary List Saved Query Versions
-         * @param {string} workspace name of the workspace
-         * @param {string} query name of the query
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listVersions(workspace: string, query: string, options: any = {}): FetchArgs {
-            // verify required parameter 'workspace' is not null or undefined
-            if (workspace === null || workspace === undefined) {
-                throw new RequiredError('workspace','Required parameter workspace was null or undefined when calling listVersions.');
-            }
-            // verify required parameter 'query' is not null or undefined
-            if (query === null || query === undefined) {
-                throw new RequiredError('query','Required parameter query was null or undefined when calling listVersions.');
-            }
-            const localVarPath = `/v1/orgs/self/ws/{workspace}/queries/{query}/versions`
-                .replace(`{${"workspace"}}`, encodeURIComponent(String(workspace)))
-                .replace(`{${"query"}}`, encodeURIComponent(String(query)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Make a SQL query to Rockset.
          * @summary Query
          * @param {QueryRequest} body JSON object
@@ -4642,96 +4450,6 @@ export const QueriesApiFetchParamCreator = function (configuration?: Configurati
                 options: localVarRequestOptions,
             };
         },
-        /**
-         * Run a particular version of a saved query.
-         * @summary Run Saved Query
-         * @param {string} workspace name of the workspace
-         * @param {string} query name of the query
-         * @param {number} version version of the query
-         * @param {ExecuteSavedQueryRequest} [body] JSON object
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        runSavedQuery(workspace: string, query: string, version: number, body?: ExecuteSavedQueryRequest, options: any = {}): FetchArgs {
-            // verify required parameter 'workspace' is not null or undefined
-            if (workspace === null || workspace === undefined) {
-                throw new RequiredError('workspace','Required parameter workspace was null or undefined when calling runSavedQuery.');
-            }
-            // verify required parameter 'query' is not null or undefined
-            if (query === null || query === undefined) {
-                throw new RequiredError('query','Required parameter query was null or undefined when calling runSavedQuery.');
-            }
-            // verify required parameter 'version' is not null or undefined
-            if (version === null || version === undefined) {
-                throw new RequiredError('version','Required parameter version was null or undefined when calling runSavedQuery.');
-            }
-            const localVarPath = `/v1/orgs/self/ws/{workspace}/queries/{query}/versions/{version}`
-                .replace(`{${"workspace"}}`, encodeURIComponent(String(workspace)))
-                .replace(`{${"query"}}`, encodeURIComponent(String(query)))
-                .replace(`{${"version"}}`, encodeURIComponent(String(version)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"ExecuteSavedQueryRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Create a new version of a saved query in given workspace.
-         * @summary Update Saved Query
-         * @param {string} workspace name of the workspace
-         * @param {string} query name of the query
-         * @param {UpdateSavedQueryRequest} body JSON object
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updateSavedQuery(workspace: string, query: string, body: UpdateSavedQueryRequest, options: any = {}): FetchArgs {
-            // verify required parameter 'workspace' is not null or undefined
-            if (workspace === null || workspace === undefined) {
-                throw new RequiredError('workspace','Required parameter workspace was null or undefined when calling updateSavedQuery.');
-            }
-            // verify required parameter 'query' is not null or undefined
-            if (query === null || query === undefined) {
-                throw new RequiredError('query','Required parameter query was null or undefined when calling updateSavedQuery.');
-            }
-            // verify required parameter 'body' is not null or undefined
-            if (body === null || body === undefined) {
-                throw new RequiredError('body','Required parameter body was null or undefined when calling updateSavedQuery.');
-            }
-            const localVarPath = `/v1/orgs/self/ws/{workspace}/queries/{query}/versions`
-                .replace(`{${"workspace"}}`, encodeURIComponent(String(workspace)))
-                .replace(`{${"query"}}`, encodeURIComponent(String(query)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"UpdateSavedQueryRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
     }
 };
 
@@ -4742,124 +4460,6 @@ export const QueriesApiFetchParamCreator = function (configuration?: Configurati
 export const QueriesApiFp = function(configuration?: Configuration) {
     return {
         /**
-         * Create a saved query in given workspace.
-         * @summary Create Saved Query
-         * @param {string} workspace name of the workspace
-         * @param {CreateSavedQueryRequest} body JSON object
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createSavedQuery(workspace: string, body: CreateSavedQueryRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<CreateSavedQueryResponse> {
-            const localVarFetchArgs = QueriesApiFetchParamCreator(configuration).createSavedQuery(workspace, body, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * Delete a saved query.
-         * @summary Delete Saved Query
-         * @param {string} workspace name of the workspace
-         * @param {string} query name of the query
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteSavedQuery(workspace: string, query: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<DeleteSavedQueryResponse> {
-            const localVarFetchArgs = QueriesApiFetchParamCreator(configuration).deleteSavedQuery(workspace, query, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * Get a specific version of a saved query
-         * @summary Get Saved Query Version
-         * @param {string} workspace name of the workspace
-         * @param {string} query name of the query
-         * @param {number} version version of the query
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getQueryVersion(workspace: string, query: string, version: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<GetSavedQueryResponse> {
-            const localVarFetchArgs = QueriesApiFetchParamCreator(configuration).getQueryVersion(workspace, query, version, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * List all queries.
-         * @summary List Saved Queries
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listAllQueries(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ListSavedQueriesResponse> {
-            const localVarFetchArgs = QueriesApiFetchParamCreator(configuration).listAllQueries(options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * List all queries under given workspace.
-         * @summary List Saved Queries
-         * @param {string} workspace name of the workspace
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listQueriesInWorkspace(workspace: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ListSavedQueriesResponse> {
-            const localVarFetchArgs = QueriesApiFetchParamCreator(configuration).listQueriesInWorkspace(workspace, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * List all versions of a saved query.
-         * @summary List Saved Query Versions
-         * @param {string} workspace name of the workspace
-         * @param {string} query name of the query
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listVersions(workspace: string, query: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ListSavedQueriesResponse> {
-            const localVarFetchArgs = QueriesApiFetchParamCreator(configuration).listVersions(workspace, query, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
          * Make a SQL query to Rockset.
          * @summary Query
          * @param {QueryRequest} body JSON object
@@ -4868,49 +4468,6 @@ export const QueriesApiFp = function(configuration?: Configuration) {
          */
         query(body: QueryRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<QueryResponse> {
             const localVarFetchArgs = QueriesApiFetchParamCreator(configuration).query(body, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * Run a particular version of a saved query.
-         * @summary Run Saved Query
-         * @param {string} workspace name of the workspace
-         * @param {string} query name of the query
-         * @param {number} version version of the query
-         * @param {ExecuteSavedQueryRequest} [body] JSON object
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        runSavedQuery(workspace: string, query: string, version: number, body?: ExecuteSavedQueryRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<QueryResponse> {
-            const localVarFetchArgs = QueriesApiFetchParamCreator(configuration).runSavedQuery(workspace, query, version, body, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * Create a new version of a saved query in given workspace.
-         * @summary Update Saved Query
-         * @param {string} workspace name of the workspace
-         * @param {string} query name of the query
-         * @param {UpdateSavedQueryRequest} body JSON object
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updateSavedQuery(workspace: string, query: string, body: UpdateSavedQueryRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<UpdateSavedQueryResponse> {
-            const localVarFetchArgs = QueriesApiFetchParamCreator(configuration).updateSavedQuery(workspace, query, body, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -4931,70 +4488,6 @@ export const QueriesApiFp = function(configuration?: Configuration) {
 export const QueriesApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
     return {
         /**
-         * Create a saved query in given workspace.
-         * @summary Create Saved Query
-         * @param {string} workspace name of the workspace
-         * @param {CreateSavedQueryRequest} body JSON object
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createSavedQuery(workspace: string, body: CreateSavedQueryRequest, options?: any) {
-            return QueriesApiFp(configuration).createSavedQuery(workspace, body, options)(fetch, basePath);
-        },
-        /**
-         * Delete a saved query.
-         * @summary Delete Saved Query
-         * @param {string} workspace name of the workspace
-         * @param {string} query name of the query
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteSavedQuery(workspace: string, query: string, options?: any) {
-            return QueriesApiFp(configuration).deleteSavedQuery(workspace, query, options)(fetch, basePath);
-        },
-        /**
-         * Get a specific version of a saved query
-         * @summary Get Saved Query Version
-         * @param {string} workspace name of the workspace
-         * @param {string} query name of the query
-         * @param {number} version version of the query
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getQueryVersion(workspace: string, query: string, version: number, options?: any) {
-            return QueriesApiFp(configuration).getQueryVersion(workspace, query, version, options)(fetch, basePath);
-        },
-        /**
-         * List all queries.
-         * @summary List Saved Queries
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listAllQueries(options?: any) {
-            return QueriesApiFp(configuration).listAllQueries(options)(fetch, basePath);
-        },
-        /**
-         * List all queries under given workspace.
-         * @summary List Saved Queries
-         * @param {string} workspace name of the workspace
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listQueriesInWorkspace(workspace: string, options?: any) {
-            return QueriesApiFp(configuration).listQueriesInWorkspace(workspace, options)(fetch, basePath);
-        },
-        /**
-         * List all versions of a saved query.
-         * @summary List Saved Query Versions
-         * @param {string} workspace name of the workspace
-         * @param {string} query name of the query
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listVersions(workspace: string, query: string, options?: any) {
-            return QueriesApiFp(configuration).listVersions(workspace, query, options)(fetch, basePath);
-        },
-        /**
          * Make a SQL query to Rockset.
          * @summary Query
          * @param {QueryRequest} body JSON object
@@ -5003,31 +4496,6 @@ export const QueriesApiFactory = function (configuration?: Configuration, fetch?
          */
         query(body: QueryRequest, options?: any) {
             return QueriesApiFp(configuration).query(body, options)(fetch, basePath);
-        },
-        /**
-         * Run a particular version of a saved query.
-         * @summary Run Saved Query
-         * @param {string} workspace name of the workspace
-         * @param {string} query name of the query
-         * @param {number} version version of the query
-         * @param {ExecuteSavedQueryRequest} [body] JSON object
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        runSavedQuery(workspace: string, query: string, version: number, body?: ExecuteSavedQueryRequest, options?: any) {
-            return QueriesApiFp(configuration).runSavedQuery(workspace, query, version, body, options)(fetch, basePath);
-        },
-        /**
-         * Create a new version of a saved query in given workspace.
-         * @summary Update Saved Query
-         * @param {string} workspace name of the workspace
-         * @param {string} query name of the query
-         * @param {UpdateSavedQueryRequest} body JSON object
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updateSavedQuery(workspace: string, query: string, body: UpdateSavedQueryRequest, options?: any) {
-            return QueriesApiFp(configuration).updateSavedQuery(workspace, query, body, options)(fetch, basePath);
         },
     };
 };
@@ -5040,82 +4508,6 @@ export const QueriesApiFactory = function (configuration?: Configuration, fetch?
  */
 export class QueriesApi extends BaseAPI {
     /**
-     * Create a saved query in given workspace.
-     * @summary Create Saved Query
-     * @param {string} workspace name of the workspace
-     * @param {CreateSavedQueryRequest} body JSON object
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof QueriesApi
-     */
-    public createSavedQuery(workspace: string, body: CreateSavedQueryRequest, options?: any) {
-        return QueriesApiFp(this.configuration).createSavedQuery(workspace, body, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * Delete a saved query.
-     * @summary Delete Saved Query
-     * @param {string} workspace name of the workspace
-     * @param {string} query name of the query
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof QueriesApi
-     */
-    public deleteSavedQuery(workspace: string, query: string, options?: any) {
-        return QueriesApiFp(this.configuration).deleteSavedQuery(workspace, query, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * Get a specific version of a saved query
-     * @summary Get Saved Query Version
-     * @param {string} workspace name of the workspace
-     * @param {string} query name of the query
-     * @param {number} version version of the query
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof QueriesApi
-     */
-    public getQueryVersion(workspace: string, query: string, version: number, options?: any) {
-        return QueriesApiFp(this.configuration).getQueryVersion(workspace, query, version, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * List all queries.
-     * @summary List Saved Queries
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof QueriesApi
-     */
-    public listAllQueries(options?: any) {
-        return QueriesApiFp(this.configuration).listAllQueries(options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * List all queries under given workspace.
-     * @summary List Saved Queries
-     * @param {string} workspace name of the workspace
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof QueriesApi
-     */
-    public listQueriesInWorkspace(workspace: string, options?: any) {
-        return QueriesApiFp(this.configuration).listQueriesInWorkspace(workspace, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * List all versions of a saved query.
-     * @summary List Saved Query Versions
-     * @param {string} workspace name of the workspace
-     * @param {string} query name of the query
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof QueriesApi
-     */
-    public listVersions(workspace: string, query: string, options?: any) {
-        return QueriesApiFp(this.configuration).listVersions(workspace, query, options)(this.fetch, this.basePath);
-    }
-
-    /**
      * Make a SQL query to Rockset.
      * @summary Query
      * @param {QueryRequest} body JSON object
@@ -5127,33 +4519,686 @@ export class QueriesApi extends BaseAPI {
         return QueriesApiFp(this.configuration).query(body, options)(this.fetch, this.basePath);
     }
 
+}
+
+/**
+ * QueryLambdasApi - fetch parameter creator
+ * @export
+ */
+export const QueryLambdasApiFetchParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Create a Query Lambda in given workspace.
+         * @summary Create Query Lambda
+         * @param {string} workspace name of the workspace
+         * @param {CreateQueryLambdaRequest} body JSON object
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createQueryLambda(workspace: string, body: CreateQueryLambdaRequest, options: any = {}): FetchArgs {
+            // verify required parameter 'workspace' is not null or undefined
+            if (workspace === null || workspace === undefined) {
+                throw new RequiredError('workspace','Required parameter workspace was null or undefined when calling createQueryLambda.');
+            }
+            // verify required parameter 'body' is not null or undefined
+            if (body === null || body === undefined) {
+                throw new RequiredError('body','Required parameter body was null or undefined when calling createQueryLambda.');
+            }
+            const localVarPath = `/v1/orgs/self/ws/{workspace}/lambdas`
+                .replace(`{${"workspace"}}`, encodeURIComponent(String(workspace)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"CreateQueryLambdaRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Delete a Query Lambda.
+         * @summary Delete Query Lambda
+         * @param {string} workspace name of the workspace
+         * @param {string} queryLambda name of the Query Lambda
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteQueryLambda(workspace: string, queryLambda: string, options: any = {}): FetchArgs {
+            // verify required parameter 'workspace' is not null or undefined
+            if (workspace === null || workspace === undefined) {
+                throw new RequiredError('workspace','Required parameter workspace was null or undefined when calling deleteQueryLambda.');
+            }
+            // verify required parameter 'queryLambda' is not null or undefined
+            if (queryLambda === null || queryLambda === undefined) {
+                throw new RequiredError('queryLambda','Required parameter queryLambda was null or undefined when calling deleteQueryLambda.');
+            }
+            const localVarPath = `/v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}`
+                .replace(`{${"workspace"}}`, encodeURIComponent(String(workspace)))
+                .replace(`{${"queryLambda"}}`, encodeURIComponent(String(queryLambda)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'DELETE' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Run a particular version of a Query Lambda.
+         * @summary Run Query Lambda
+         * @param {string} workspace name of the workspace
+         * @param {string} queryLambda name of the Query Lambda
+         * @param {number} version version
+         * @param {ExecuteQueryLambdaRequest} [body] JSON object
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        executeQueryLambda(workspace: string, queryLambda: string, version: number, body?: ExecuteQueryLambdaRequest, options: any = {}): FetchArgs {
+            // verify required parameter 'workspace' is not null or undefined
+            if (workspace === null || workspace === undefined) {
+                throw new RequiredError('workspace','Required parameter workspace was null or undefined when calling executeQueryLambda.');
+            }
+            // verify required parameter 'queryLambda' is not null or undefined
+            if (queryLambda === null || queryLambda === undefined) {
+                throw new RequiredError('queryLambda','Required parameter queryLambda was null or undefined when calling executeQueryLambda.');
+            }
+            // verify required parameter 'version' is not null or undefined
+            if (version === null || version === undefined) {
+                throw new RequiredError('version','Required parameter version was null or undefined when calling executeQueryLambda.');
+            }
+            const localVarPath = `/v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/versions/{version}`
+                .replace(`{${"workspace"}}`, encodeURIComponent(String(workspace)))
+                .replace(`{${"queryLambda"}}`, encodeURIComponent(String(queryLambda)))
+                .replace(`{${"version"}}`, encodeURIComponent(String(version)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"ExecuteQueryLambdaRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Get a specific version of a Query Lambda
+         * @summary Get Query Lambda Version
+         * @param {string} workspace name of the workspace
+         * @param {string} queryLambda name of the Query Lambda
+         * @param {number} version version
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getQueryLambdaVersion(workspace: string, queryLambda: string, version: number, options: any = {}): FetchArgs {
+            // verify required parameter 'workspace' is not null or undefined
+            if (workspace === null || workspace === undefined) {
+                throw new RequiredError('workspace','Required parameter workspace was null or undefined when calling getQueryLambdaVersion.');
+            }
+            // verify required parameter 'queryLambda' is not null or undefined
+            if (queryLambda === null || queryLambda === undefined) {
+                throw new RequiredError('queryLambda','Required parameter queryLambda was null or undefined when calling getQueryLambdaVersion.');
+            }
+            // verify required parameter 'version' is not null or undefined
+            if (version === null || version === undefined) {
+                throw new RequiredError('version','Required parameter version was null or undefined when calling getQueryLambdaVersion.');
+            }
+            const localVarPath = `/v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/versions/{version}`
+                .replace(`{${"workspace"}}`, encodeURIComponent(String(workspace)))
+                .replace(`{${"queryLambda"}}`, encodeURIComponent(String(queryLambda)))
+                .replace(`{${"version"}}`, encodeURIComponent(String(version)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * List all Query Lambdas.
+         * @summary List Query Lambdas
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listAllQueryLambdas(options: any = {}): FetchArgs {
+            const localVarPath = `/v1/orgs/self/lambdas`;
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * List all versions of a Query Lambda.
+         * @summary List Query Lambda Versions
+         * @param {string} workspace name of the workspace
+         * @param {string} queryLambda name of the Query Lambda
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listQueryLambdaVersions(workspace: string, queryLambda: string, options: any = {}): FetchArgs {
+            // verify required parameter 'workspace' is not null or undefined
+            if (workspace === null || workspace === undefined) {
+                throw new RequiredError('workspace','Required parameter workspace was null or undefined when calling listQueryLambdaVersions.');
+            }
+            // verify required parameter 'queryLambda' is not null or undefined
+            if (queryLambda === null || queryLambda === undefined) {
+                throw new RequiredError('queryLambda','Required parameter queryLambda was null or undefined when calling listQueryLambdaVersions.');
+            }
+            const localVarPath = `/v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/versions`
+                .replace(`{${"workspace"}}`, encodeURIComponent(String(workspace)))
+                .replace(`{${"queryLambda"}}`, encodeURIComponent(String(queryLambda)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * List all Query Lambdas under given workspace.
+         * @summary List Query Lambdas
+         * @param {string} workspace name of the workspace
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listQueryLambdasInWorkspace(workspace: string, options: any = {}): FetchArgs {
+            // verify required parameter 'workspace' is not null or undefined
+            if (workspace === null || workspace === undefined) {
+                throw new RequiredError('workspace','Required parameter workspace was null or undefined when calling listQueryLambdasInWorkspace.');
+            }
+            const localVarPath = `/v1/orgs/self/ws/{workspace}/lambdas`
+                .replace(`{${"workspace"}}`, encodeURIComponent(String(workspace)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Create a new version of a Query Lambda in given workspace.
+         * @summary Update Query Lambda
+         * @param {string} workspace name of the workspace
+         * @param {string} queryLambda name of the Query Lambda
+         * @param {UpdateQueryLambdaRequest} body JSON object
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateQueryLambda(workspace: string, queryLambda: string, body: UpdateQueryLambdaRequest, options: any = {}): FetchArgs {
+            // verify required parameter 'workspace' is not null or undefined
+            if (workspace === null || workspace === undefined) {
+                throw new RequiredError('workspace','Required parameter workspace was null or undefined when calling updateQueryLambda.');
+            }
+            // verify required parameter 'queryLambda' is not null or undefined
+            if (queryLambda === null || queryLambda === undefined) {
+                throw new RequiredError('queryLambda','Required parameter queryLambda was null or undefined when calling updateQueryLambda.');
+            }
+            // verify required parameter 'body' is not null or undefined
+            if (body === null || body === undefined) {
+                throw new RequiredError('body','Required parameter body was null or undefined when calling updateQueryLambda.');
+            }
+            const localVarPath = `/v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/versions`
+                .replace(`{${"workspace"}}`, encodeURIComponent(String(workspace)))
+                .replace(`{${"queryLambda"}}`, encodeURIComponent(String(queryLambda)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"UpdateQueryLambdaRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * QueryLambdasApi - functional programming interface
+ * @export
+ */
+export const QueryLambdasApiFp = function(configuration?: Configuration) {
+    return {
+        /**
+         * Create a Query Lambda in given workspace.
+         * @summary Create Query Lambda
+         * @param {string} workspace name of the workspace
+         * @param {CreateQueryLambdaRequest} body JSON object
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createQueryLambda(workspace: string, body: CreateQueryLambdaRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<CreateQueryLambdaResponse> {
+            const localVarFetchArgs = QueryLambdasApiFetchParamCreator(configuration).createQueryLambda(workspace, body, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * Delete a Query Lambda.
+         * @summary Delete Query Lambda
+         * @param {string} workspace name of the workspace
+         * @param {string} queryLambda name of the Query Lambda
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteQueryLambda(workspace: string, queryLambda: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<DeleteQueryLambdaResponse> {
+            const localVarFetchArgs = QueryLambdasApiFetchParamCreator(configuration).deleteQueryLambda(workspace, queryLambda, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * Run a particular version of a Query Lambda.
+         * @summary Run Query Lambda
+         * @param {string} workspace name of the workspace
+         * @param {string} queryLambda name of the Query Lambda
+         * @param {number} version version
+         * @param {ExecuteQueryLambdaRequest} [body] JSON object
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        executeQueryLambda(workspace: string, queryLambda: string, version: number, body?: ExecuteQueryLambdaRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<QueryResponse> {
+            const localVarFetchArgs = QueryLambdasApiFetchParamCreator(configuration).executeQueryLambda(workspace, queryLambda, version, body, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * Get a specific version of a Query Lambda
+         * @summary Get Query Lambda Version
+         * @param {string} workspace name of the workspace
+         * @param {string} queryLambda name of the Query Lambda
+         * @param {number} version version
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getQueryLambdaVersion(workspace: string, queryLambda: string, version: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<GetQueryLambdaResponse> {
+            const localVarFetchArgs = QueryLambdasApiFetchParamCreator(configuration).getQueryLambdaVersion(workspace, queryLambda, version, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * List all Query Lambdas.
+         * @summary List Query Lambdas
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listAllQueryLambdas(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ListQueryLambdasResponse> {
+            const localVarFetchArgs = QueryLambdasApiFetchParamCreator(configuration).listAllQueryLambdas(options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * List all versions of a Query Lambda.
+         * @summary List Query Lambda Versions
+         * @param {string} workspace name of the workspace
+         * @param {string} queryLambda name of the Query Lambda
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listQueryLambdaVersions(workspace: string, queryLambda: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ListQueryLambdasResponse> {
+            const localVarFetchArgs = QueryLambdasApiFetchParamCreator(configuration).listQueryLambdaVersions(workspace, queryLambda, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * List all Query Lambdas under given workspace.
+         * @summary List Query Lambdas
+         * @param {string} workspace name of the workspace
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listQueryLambdasInWorkspace(workspace: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ListQueryLambdasResponse> {
+            const localVarFetchArgs = QueryLambdasApiFetchParamCreator(configuration).listQueryLambdasInWorkspace(workspace, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * Create a new version of a Query Lambda in given workspace.
+         * @summary Update Query Lambda
+         * @param {string} workspace name of the workspace
+         * @param {string} queryLambda name of the Query Lambda
+         * @param {UpdateQueryLambdaRequest} body JSON object
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateQueryLambda(workspace: string, queryLambda: string, body: UpdateQueryLambdaRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<UpdateQueryLambdaResponse> {
+            const localVarFetchArgs = QueryLambdasApiFetchParamCreator(configuration).updateQueryLambda(workspace, queryLambda, body, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+    }
+};
+
+/**
+ * QueryLambdasApi - factory interface
+ * @export
+ */
+export const QueryLambdasApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
+    return {
+        /**
+         * Create a Query Lambda in given workspace.
+         * @summary Create Query Lambda
+         * @param {string} workspace name of the workspace
+         * @param {CreateQueryLambdaRequest} body JSON object
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createQueryLambda(workspace: string, body: CreateQueryLambdaRequest, options?: any) {
+            return QueryLambdasApiFp(configuration).createQueryLambda(workspace, body, options)(fetch, basePath);
+        },
+        /**
+         * Delete a Query Lambda.
+         * @summary Delete Query Lambda
+         * @param {string} workspace name of the workspace
+         * @param {string} queryLambda name of the Query Lambda
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteQueryLambda(workspace: string, queryLambda: string, options?: any) {
+            return QueryLambdasApiFp(configuration).deleteQueryLambda(workspace, queryLambda, options)(fetch, basePath);
+        },
+        /**
+         * Run a particular version of a Query Lambda.
+         * @summary Run Query Lambda
+         * @param {string} workspace name of the workspace
+         * @param {string} queryLambda name of the Query Lambda
+         * @param {number} version version
+         * @param {ExecuteQueryLambdaRequest} [body] JSON object
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        executeQueryLambda(workspace: string, queryLambda: string, version: number, body?: ExecuteQueryLambdaRequest, options?: any) {
+            return QueryLambdasApiFp(configuration).executeQueryLambda(workspace, queryLambda, version, body, options)(fetch, basePath);
+        },
+        /**
+         * Get a specific version of a Query Lambda
+         * @summary Get Query Lambda Version
+         * @param {string} workspace name of the workspace
+         * @param {string} queryLambda name of the Query Lambda
+         * @param {number} version version
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getQueryLambdaVersion(workspace: string, queryLambda: string, version: number, options?: any) {
+            return QueryLambdasApiFp(configuration).getQueryLambdaVersion(workspace, queryLambda, version, options)(fetch, basePath);
+        },
+        /**
+         * List all Query Lambdas.
+         * @summary List Query Lambdas
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listAllQueryLambdas(options?: any) {
+            return QueryLambdasApiFp(configuration).listAllQueryLambdas(options)(fetch, basePath);
+        },
+        /**
+         * List all versions of a Query Lambda.
+         * @summary List Query Lambda Versions
+         * @param {string} workspace name of the workspace
+         * @param {string} queryLambda name of the Query Lambda
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listQueryLambdaVersions(workspace: string, queryLambda: string, options?: any) {
+            return QueryLambdasApiFp(configuration).listQueryLambdaVersions(workspace, queryLambda, options)(fetch, basePath);
+        },
+        /**
+         * List all Query Lambdas under given workspace.
+         * @summary List Query Lambdas
+         * @param {string} workspace name of the workspace
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listQueryLambdasInWorkspace(workspace: string, options?: any) {
+            return QueryLambdasApiFp(configuration).listQueryLambdasInWorkspace(workspace, options)(fetch, basePath);
+        },
+        /**
+         * Create a new version of a Query Lambda in given workspace.
+         * @summary Update Query Lambda
+         * @param {string} workspace name of the workspace
+         * @param {string} queryLambda name of the Query Lambda
+         * @param {UpdateQueryLambdaRequest} body JSON object
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateQueryLambda(workspace: string, queryLambda: string, body: UpdateQueryLambdaRequest, options?: any) {
+            return QueryLambdasApiFp(configuration).updateQueryLambda(workspace, queryLambda, body, options)(fetch, basePath);
+        },
+    };
+};
+
+/**
+ * QueryLambdasApi - object-oriented interface
+ * @export
+ * @class QueryLambdasApi
+ * @extends {BaseAPI}
+ */
+export class QueryLambdasApi extends BaseAPI {
     /**
-     * Run a particular version of a saved query.
-     * @summary Run Saved Query
+     * Create a Query Lambda in given workspace.
+     * @summary Create Query Lambda
      * @param {string} workspace name of the workspace
-     * @param {string} query name of the query
-     * @param {number} version version of the query
-     * @param {ExecuteSavedQueryRequest} [body] JSON object
+     * @param {CreateQueryLambdaRequest} body JSON object
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof QueriesApi
+     * @memberof QueryLambdasApi
      */
-    public runSavedQuery(workspace: string, query: string, version: number, body?: ExecuteSavedQueryRequest, options?: any) {
-        return QueriesApiFp(this.configuration).runSavedQuery(workspace, query, version, body, options)(this.fetch, this.basePath);
+    public createQueryLambda(workspace: string, body: CreateQueryLambdaRequest, options?: any) {
+        return QueryLambdasApiFp(this.configuration).createQueryLambda(workspace, body, options)(this.fetch, this.basePath);
     }
 
     /**
-     * Create a new version of a saved query in given workspace.
-     * @summary Update Saved Query
+     * Delete a Query Lambda.
+     * @summary Delete Query Lambda
      * @param {string} workspace name of the workspace
-     * @param {string} query name of the query
-     * @param {UpdateSavedQueryRequest} body JSON object
+     * @param {string} queryLambda name of the Query Lambda
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof QueriesApi
+     * @memberof QueryLambdasApi
      */
-    public updateSavedQuery(workspace: string, query: string, body: UpdateSavedQueryRequest, options?: any) {
-        return QueriesApiFp(this.configuration).updateSavedQuery(workspace, query, body, options)(this.fetch, this.basePath);
+    public deleteQueryLambda(workspace: string, queryLambda: string, options?: any) {
+        return QueryLambdasApiFp(this.configuration).deleteQueryLambda(workspace, queryLambda, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * Run a particular version of a Query Lambda.
+     * @summary Run Query Lambda
+     * @param {string} workspace name of the workspace
+     * @param {string} queryLambda name of the Query Lambda
+     * @param {number} version version
+     * @param {ExecuteQueryLambdaRequest} [body] JSON object
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof QueryLambdasApi
+     */
+    public executeQueryLambda(workspace: string, queryLambda: string, version: number, body?: ExecuteQueryLambdaRequest, options?: any) {
+        return QueryLambdasApiFp(this.configuration).executeQueryLambda(workspace, queryLambda, version, body, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * Get a specific version of a Query Lambda
+     * @summary Get Query Lambda Version
+     * @param {string} workspace name of the workspace
+     * @param {string} queryLambda name of the Query Lambda
+     * @param {number} version version
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof QueryLambdasApi
+     */
+    public getQueryLambdaVersion(workspace: string, queryLambda: string, version: number, options?: any) {
+        return QueryLambdasApiFp(this.configuration).getQueryLambdaVersion(workspace, queryLambda, version, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * List all Query Lambdas.
+     * @summary List Query Lambdas
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof QueryLambdasApi
+     */
+    public listAllQueryLambdas(options?: any) {
+        return QueryLambdasApiFp(this.configuration).listAllQueryLambdas(options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * List all versions of a Query Lambda.
+     * @summary List Query Lambda Versions
+     * @param {string} workspace name of the workspace
+     * @param {string} queryLambda name of the Query Lambda
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof QueryLambdasApi
+     */
+    public listQueryLambdaVersions(workspace: string, queryLambda: string, options?: any) {
+        return QueryLambdasApiFp(this.configuration).listQueryLambdaVersions(workspace, queryLambda, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * List all Query Lambdas under given workspace.
+     * @summary List Query Lambdas
+     * @param {string} workspace name of the workspace
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof QueryLambdasApi
+     */
+    public listQueryLambdasInWorkspace(workspace: string, options?: any) {
+        return QueryLambdasApiFp(this.configuration).listQueryLambdasInWorkspace(workspace, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * Create a new version of a Query Lambda in given workspace.
+     * @summary Update Query Lambda
+     * @param {string} workspace name of the workspace
+     * @param {string} queryLambda name of the Query Lambda
+     * @param {UpdateQueryLambdaRequest} body JSON object
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof QueryLambdasApi
+     */
+    public updateQueryLambda(workspace: string, queryLambda: string, body: UpdateQueryLambdaRequest, options?: any) {
+        return QueryLambdasApiFp(this.configuration).updateQueryLambda(workspace, queryLambda, body, options)(this.fetch, this.basePath);
     }
 
 }
