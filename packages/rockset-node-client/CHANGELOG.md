@@ -1,5 +1,8 @@
 # Rockset Node Client Changelog
 
+## v3.0.0 2020-02-24
+- support for Query Lambdas
+
 ## v2.0.0 2020-01-14
 - support promises
 - support custom fetch functions

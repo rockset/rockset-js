@@ -99,16 +99,18 @@ describe("Rockset Unit Tests", function() {
     }
   });
 
-  test("creating a saved query", async () => {
+  test("creating a Query Lambda", async () => {
     try {
-      const result = await rockset.queries.createSavedQuery("commons", {
+      const result = await rockset.queryLambdas.createQueryLambda("commons", {
         name: savedQuery,
-        query_sql: 'SELECT :param as echo',
-        parameters: [{
-          name: 'param',
-          type: 'string',
-          default_value: 'Hello world!'
-        }]
+        sql: {
+          query: 'SELECT :param as echo',
+          parameters: [{
+            name: 'param',
+            type: 'string',
+            default_value: 'Hello world!'
+          }],
+        },
       });
       expect(result).toMatchObject({
         data: {
@@ -117,13 +119,15 @@ describe("Rockset Unit Tests", function() {
           name: savedQuery,
           workspace: "commons",
           version: 1,
-          version_tag: null,
-          query_sql: 'SELECT :param as echo',
-          parameters: [{
-            name: 'param',
-            type: 'string',
-            default_value: 'Hello world!'
-          }],
+          description: null,
+          sql: { 
+            query: 'SELECT :param as echo',
+            parameters: [{
+              name: 'param',
+              type: 'string',
+              default_value: 'Hello world!'
+            }],
+          },
           stats: expect.anything(),
           collections: [],
         }
@@ -133,9 +137,9 @@ describe("Rockset Unit Tests", function() {
     }
   });
 
-  test("running a saved query with default parameters", async () => {
+  test("running a Query Lambda with default parameters", async () => {
     try {
-      const result = await rockset.queries.runSavedQuery("commons", savedQuery, 1);
+      const result = await rockset.queryLambdas.executeQueryLambda("commons", savedQuery, 1);
       expect(result).toMatchObject({
         results: [{
           "echo": "Hello world!",
@@ -147,9 +151,9 @@ describe("Rockset Unit Tests", function() {
     }
   });
 
-  test("running a saved query with custom parameters", async () => {
+  test("running a Query Lambda with custom parameters", async () => {
     try {
-      const result = await rockset.queries.runSavedQuery("commons", savedQuery, 1, {
+      const result = await rockset.queryLambdas.executeQueryLambda("commons", savedQuery, 1, {
         parameters: [{
           name: 'param',
           value: 'All work and no play makes Jack a dull boy',
@@ -166,9 +170,9 @@ describe("Rockset Unit Tests", function() {
     }
   });
 
-  test("deleting a saved query", async () => {
+  test("deleting a Query Lambda", async () => {
     try {
-      const result = await rockset.queries.deleteSavedQuery("commons", savedQuery);
+      const result = await rockset.queryLambdas.deleteQueryLambda("commons", savedQuery);
       expect(result).toMatchObject({
         data: {
           created_at: expect.anything(),
@@ -176,13 +180,15 @@ describe("Rockset Unit Tests", function() {
           name: savedQuery,
           workspace: "commons",
           version: 1,
-          version_tag: null,
-          query_sql: 'SELECT :param as echo',
-          parameters: [{
-            name: 'param',
-            type: 'string',
-            default_value: 'Hello world!'
-          }],
+          description: null,
+          sql: {
+            query: 'SELECT :param as echo',
+            parameters: [{
+              name: 'param',
+              type: 'string',
+              default_value: 'Hello world!'
+            }],
+          },
           stats: expect.anything(),
           collections: [],
         }
@@ -191,6 +197,4 @@ describe("Rockset Unit Tests", function() {
       fail(e);
     }
   });
-
-
 });

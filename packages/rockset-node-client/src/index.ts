@@ -42,7 +42,8 @@ const rocksetConfigure = (
     documents: new api.DocumentsApi({}, host, authFetch),
     integrations: new api.IntegrationsApi({}, host, authFetch),
     orgs: new api.OrganizationsApi({}, host, authFetch),
-    queries: new api.QueriesApi({}, host, authFetch)
+    queries: new api.QueriesApi({}, host, authFetch),
+    queryLambdas: new api.QueryLambdasApi({}, host, authFetch),
   };
 };
 
