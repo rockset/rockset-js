@@ -100,7 +100,7 @@ You can see a few more [sample examples](https://github.com/rockset/rockset-node
 
 Unit tests are available in the [Test](https://github.com/rockset/rockset-node-client/tree/v2.0/test) folder.
 
-Set ROCKSET_APIKEY and ROCKSET_APISERVER endpoint in the environment variables. To run tests:
+Set ROCKSET_APIKEY and ROCKSET_HOST endpoint in the environment variables. To run tests:
 ```
 npm test
 ```
