@@ -105,10 +105,10 @@ describe("Rockset Unit Tests", function() {
         name: savedQuery,
         sql: {
           query: 'SELECT :param as echo',
-          parameters: [{
+          default_parameters: [{
             name: 'param',
             type: 'string',
-            default_value: 'Hello world!'
+            value: 'Hello world!'
           }],
         },
       });
@@ -122,10 +122,10 @@ describe("Rockset Unit Tests", function() {
           description: null,
           sql: { 
             query: 'SELECT :param as echo',
-            parameters: [{
+            default_parameters: [{
               name: 'param',
               type: 'string',
-              default_value: 'Hello world!'
+              value: 'Hello world!'
             }],
           },
           stats: expect.anything(),
@@ -156,6 +156,7 @@ describe("Rockset Unit Tests", function() {
       const result = await rockset.queryLambdas.executeQueryLambda("commons", savedQuery, 1, {
         parameters: [{
           name: 'param',
+          type: 'string',
           value: 'All work and no play makes Jack a dull boy',
         }]
       });
@@ -183,10 +184,10 @@ describe("Rockset Unit Tests", function() {
           description: null,
           sql: {
             query: 'SELECT :param as echo',
-            parameters: [{
+            default_parameters: [{
               name: 'param',
               type: 'string',
-              default_value: 'Hello world!'
+              value: 'Hello world!'
             }],
           },
           stats: expect.anything(),

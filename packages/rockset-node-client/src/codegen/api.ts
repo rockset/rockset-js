@@ -964,35 +964,15 @@ export interface EventTimeInfo {
 /**
  * 
  * @export
- * @interface ExecuteQueryLambdaParameter
- */
-export interface ExecuteQueryLambdaParameter {
-    /**
-     * name of the field
-     * @type {string}
-     * @memberof ExecuteQueryLambdaParameter
-     */
-    name: string;
-    /**
-     * literal value of the field
-     * @type {any}
-     * @memberof ExecuteQueryLambdaParameter
-     */
-    value: any;
-}
-
-/**
- * 
- * @export
  * @interface ExecuteQueryLambdaRequest
  */
 export interface ExecuteQueryLambdaRequest {
     /**
      * list of named parameters
-     * @type {Array<ExecuteQueryLambdaParameter>}
+     * @type {Array<QueryParameter>}
      * @memberof ExecuteQueryLambdaRequest
      */
-    parameters?: Array<ExecuteQueryLambdaParameter>;
+    parameters?: Array<QueryParameter>;
     /**
      * Row limit to use if no limit specified in the SQL query text
      * @type {number}
@@ -1884,32 +1864,6 @@ export namespace QueryLambda {
 /**
  * 
  * @export
- * @interface QueryLambdaParameter
- */
-export interface QueryLambdaParameter {
-    /**
-     * name of the field
-     * @type {string}
-     * @memberof QueryLambdaParameter
-     */
-    name: string;
-    /**
-     * data type of the field
-     * @type {string}
-     * @memberof QueryLambdaParameter
-     */
-    type: string;
-    /**
-     * default value of the field
-     * @type {any}
-     * @memberof QueryLambdaParameter
-     */
-    default_value: any;
-}
-
-/**
- * 
- * @export
  * @interface QueryLambdaSql
  */
 export interface QueryLambdaSql {
@@ -1920,11 +1874,11 @@ export interface QueryLambdaSql {
      */
     query: string;
     /**
-     * parameters associated with this Query Lambda
-     * @type {Array<QueryLambdaParameter>}
+     * default parameters for this Query Lambda
+     * @type {Array<QueryParameter>}
      * @memberof QueryLambdaSql
      */
-    parameters?: Array<QueryLambdaParameter>;
+    default_parameters?: Array<QueryParameter>;
 }
 
 /**
