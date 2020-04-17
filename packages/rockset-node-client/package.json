@@ -1,6 +1,6 @@
 {
   "name": "rockset",
-  "version": "3.1.1",
+  "version": "3.2.0",
   "main": "dist/index.js",
   "description": "Client for querying Rockset and interacting with the Rockset API.",
   "license": "Apache License 2.0",
@@ -28,7 +28,7 @@
   },
   "scripts": {
     "test": "jest",
-    "build": "tsc",
+    "build": "tsc && cp src/codegen/custom.d.ts dist/codegen/custom.d.ts",
     "clean": "rm -r dist",
     "prepublishOnly": "npm run clean && npm run build && npm run test"
   },
