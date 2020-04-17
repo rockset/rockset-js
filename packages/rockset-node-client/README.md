@@ -1,73 +1,123 @@
-
-
 # rockset-node-client v2 [![npm version](https://badge.fury.io/js/rockset.svg)](https://badge.fury.io/js/rockset) [![npm version](https://img.shields.io/npm/dm/rockset.svg)](https://www.npmjs.com/package/rockset)
 
-
-Official JS/TS client library for Rockset.
+Official Rockset Javascript/Typescript SDK.
 
 ```
 npm i rockset
 ```
 
 ## What's new
-Supports ES6 promises and TS types out of the box.
 
-If you are looking for the old Rockset client, you can find it at branch [v1](https://github.com/rockset/rockset-node-client/tree/v1)
+Supports ES6 promises and Typescript out of the box.
 
 ## Requirements
 
-ES6 node or Webpack. Typescript in order to get types support.
+At least Node v4.3.2
+
+If you are using Webpack, you should have ES6 support.
+
+Optionally use Typescript for type checking.
+
+## Documentation
+
+Further documentation of the Javascript SDK can be found in the [Rockset Docs](https://docs.rockset.com/nodejs/).
 
 ## Usage
 
-### Using Require
+### Import Using Require
 
 ```js
-const rockset = require("rockset").default(apikey, "https://api.rs2.usw2.rockset.com");
+const rockset = require("rockset").default(
+  apikey,
+  "https://api.rs2.usw2.rockset.com"
+);
 
 await rockset.queries.query({
-  sql: { query: "Select count(*) from _events" }
+  sql: { query: "Select count(*) from _events" },
 });
 ```
 
-### Using ES6 Import
+### Import Using ES6 Syntax
 
 ```ts
 import rocksetConfigure from "rockset";
 const rockset = rocksetConfigure(apikey, "https://api.rs2.usw2.rockset.com");
 
 await rockset.queries.query({
-  sql: { query: "Select count(*) from _events" }
+  sql: { query: "Select count(*) from _events" },
 });
+```
+
+### Query Lambdas
+
+```ts
+// Create a Query Lambda
+rockset.queryLambdas
+  .createQueryLambda("commons", {
+    name: "myQuery",
+    sql: {
+      query: "SELECT :param as echo",
+      default_parameters: [
+        {
+          name: "param",
+          type: "string",
+          value: "Hello world!",
+        },
+      ],
+    },
+  })
+  .then(console.log)
+  .catch(console.error);
+
+// Execute a Query Lambda with default parameters (or no parameters)
+rockset.queryLambdas
+  .executeQueryLambda(
+    /* workspace */ "commons",
+    /* queryName */ "myQuery",
+    /* version */ 1
+  )
+  .then(console.log)
+  .catch(console.error);
+
+// Execute a Query Lambda with, and specify parameters
+rockset.queryLambdas
+  .executeQueryLambda("commons", "myQuery", 1, {
+    parameters: [
+      {
+        name: "param",
+        value: "All work and no play makes Jack a dull boy",
+        type: "string",
+      },
+    ],
+  })
+  .then(console.log)
+  .catch(console.error);
 ```
 
 ### Custom Fetch Function
 
-To supply a custom fetch function, we pass it in as the last parameter to rocksetConfigure.
+By default, the rockset-node-client is a thin wrapper that sends REST calls to Rockset using `node-fetch`. Many applications may require more complex behavior. If additional functionality is required, `rockset-node-client` can be configured to generate the parameters for a REST call, and pass them to a custom fetch function to be handled accordingly.
 
-This example shows how to configure a custom fetch function with axios's promise cancellation feature.
+Here is an example that shows how to support cancelling API calls using a custom fetch function with Axios. To supply a custom fetch function, we pass it in as the last parameter to rocksetConfigure.
 
-*Note this does not cancel the api request on Rockset's servers*
+_Note this does not cancel the API request on Rockset's servers_
 
 ```ts
 import axios from "axios";
 import rocksetConfigure from "rockset";
 
 // Super simple fetch with axios: axios docs show how to check for errors, cancel requests etc.
-const customFetchAxios = async (url: string, {
-  headers,
-  method,
-  body: data,
-  queryParams: params,
-  cancelToken
-}:any) => {
+const customFetchAxios = async (
+  url: string,
+  { headers, method, body: data, queryParams: params, cancelToken }: any
+) => {
   const res = await axios.request({
     url,
     headers,
     method,
     data,
     params,
-    cancelToken
+    cancelToken,
   });
 
   return res.data;
@@ -94,18 +144,23 @@ rockset.queries
 cancelSource.cancel();
 ```
 
-You can see a few more [sample examples](https://github.com/rockset/rockset-node-client/tree/v2.0/examples) of how to create a collection, how to put documents in a collection and how to use SQL to query your collections.
+You can see a few more [sample examples](examples) of how to create a collection, how to put documents in a collection and how to use SQL to query your collections.
 
 ## Testing
 
-Unit tests are available in the [Test](https://github.com/rockset/rockset-node-client/tree/v2.0/test) folder.
+Unit tests are available in the [tests](tests) folder.
 
 Set ROCKSET_APIKEY and ROCKSET_HOST endpoint in the environment variables. To run tests:
+
 ```
 npm test
 ```
 
 This runs unit tests and integration tests.
+
+## How to contribute
+
+Please feel free to submit a pull request for modifications that can benefit other users in the community. It is best to have a unit test associated with each pull request.
 
 ## Support
 
@@ -113,4 +168,4 @@ Feel free to log issues against this client through GitHub.
 
 ## License
 
-The Rockset Node Client is licensed under the [Apache 2.0 License](https://github.com/rockset/rockset-node-client/blob/v2.0/LICENSE)
+The Rockset Node Client is licensed under the [Apache 2.0 License](LICENSE)

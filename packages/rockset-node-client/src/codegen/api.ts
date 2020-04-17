@@ -465,6 +465,12 @@ export interface CreateIntegrationRequest {
      * @memberof CreateIntegrationRequest
      */
     kafka?: KafkaIntegration;
+    /**
+     * MongoDb details
+     * @type {MongoDbIntegration}
+     * @memberof CreateIntegrationRequest
+     */
+    mongodb?: MongoDbIntegration;
 }
 
 /**
@@ -1008,6 +1014,12 @@ export interface FieldMappingV2 {
      */
     name?: string;
     /**
+     * A boolean that determines whether to drop all fields in this document. If set, input and output fields should not be set
+     * @type {boolean}
+     * @memberof FieldMappingV2
+     */
+    is_drop_all_fields?: boolean;
+    /**
      * A List of InputField for this mapping
      * @type {Array<InputField>}
      * @memberof FieldMappingV2
@@ -1296,6 +1308,12 @@ export interface Integration {
      * @memberof Integration
      */
     kafka?: KafkaIntegration;
+    /**
+     * MongoDb details
+     * @type {MongoDbIntegration}
+     * @memberof Integration
+     */
+    mongodb?: MongoDbIntegration;
 }
 
 /**
@@ -1447,6 +1465,20 @@ export interface ListWorkspacesResponse {
      * @memberof ListWorkspacesResponse
      */
     data?: Array<Workspace>;
+}
+
+/**
+ * 
+ * @export
+ * @interface MongoDbIntegration
+ */
+export interface MongoDbIntegration {
+    /**
+     * MongoDB connection URI string
+     * @type {string}
+     * @memberof MongoDbIntegration
+     */
+    connection_uri: string;
 }
 
 /**
@@ -1960,17 +1992,17 @@ export interface QueryRequest {
  */
 export interface QueryRequestSql {
     /**
-     * SQL query as a string
-     * @type {string}
-     * @memberof QueryRequestSql
-     */
-    query: string;
-    /**
      * list of named parameters
      * @type {Array<QueryParameter>}
      * @memberof QueryRequestSql
      */
     parameters?: Array<QueryParameter>;
+    /**
+     * SQL query as a string
+     * @type {string}
+     * @memberof QueryRequestSql
+     */
+    query: string;
     /**
      * Row limit to use if no limit specified in the query
      * @type {number}
@@ -1983,6 +2015,12 @@ export interface QueryRequestSql {
      * @memberof QueryRequestSql
      */
     generate_warnings?: boolean;
+    /**
+     * Whether to generate a performance profile for this query
+     * @type {boolean}
+     * @memberof QueryRequestSql
+     */
+    profiling_enabled?: boolean;
 }
 
 /**
@@ -1992,17 +2030,23 @@ export interface QueryRequestSql {
  */
 export interface QueryResponse {
     /**
+     * unique id for this query
+     * @type {string}
+     * @memberof QueryResponse
+     */
+    query_id?: string;
+    /**
+     * list of collections queried by the query
+     * @type {Array<string>}
+     * @memberof QueryResponse
+     */
+    collections?: Array<string>;
+    /**
      * list of objects returned by the query
      * @type {Array<any>}
      * @memberof QueryResponse
      */
     results?: Array<any>;
-    /**
-     * list of fields returned by the query
-     * @type {Array<QueryFieldType>}
-     * @memberof QueryResponse
-     */
-    fields?: Array<QueryFieldType>;
     /**
      * meta information about the query
      * @type {QueryResponseStats}
@@ -2016,17 +2060,17 @@ export interface QueryResponse {
      */
     warnings?: Array<string>;
     /**
-     * list of collections queried by the query
-     * @type {Array<string>}
-     * @memberof QueryResponse
-     */
-    collections?: Array<string>;
-    /**
      * meta information about each column in the result set
      * @type {Array<QueryFieldType>}
      * @memberof QueryResponse
      */
     column_fields?: Array<QueryFieldType>;
+    /**
+     * list of fields returned by the query
+     * @type {Array<QueryFieldType>}
+     * @memberof QueryResponse
+     */
+    fields?: Array<QueryFieldType>;
 }
 
 /**
@@ -2065,6 +2109,18 @@ export interface QueryResponseStats {
      * @memberof QueryResponseStats
      */
     execution_graph?: string;
+    /**
+     * Execution plan (output of EXPLAIN) of this query
+     * @type {string}
+     * @memberof QueryResponseStats
+     */
+    execution_plan?: string;
+    /**
+     * SQL text of Query that was executed
+     * @type {string}
+     * @memberof QueryResponseStats
+     */
+    query_text?: string;
 }
 
 /**
@@ -2194,11 +2250,17 @@ export interface Source {
      */
     file_upload?: SourceFileUpload;
     /**
-     * 
+     * kafka collection identifier
      * @type {SourceKafka}
      * @memberof Source
      */
     kafka?: SourceKafka;
+    /**
+     * MongoDB collection details
+     * @type {SourceMongoDb}
+     * @memberof Source
+     */
+    mongodb?: SourceMongoDb;
     /**
      * the ingest status of this source
      * @type {Status}
@@ -2329,6 +2391,32 @@ export interface SourceKinesis {
      * @memberof SourceKinesis
      */
     aws_region?: string;
+}
+
+/**
+ * 
+ * @export
+ * @interface SourceMongoDb
+ */
+export interface SourceMongoDb {
+    /**
+     * MongoDB database name containing this collection
+     * @type {string}
+     * @memberof SourceMongoDb
+     */
+    database_name: string;
+    /**
+     * MongoDB collection name
+     * @type {string}
+     * @memberof SourceMongoDb
+     */
+    collection_name: string;
+    /**
+     * MongoDB source status
+     * @type {StatusMongoDb}
+     * @memberof SourceMongoDb
+     */
+    status?: StatusMongoDb;
 }
 
 /**
@@ -2609,6 +2697,96 @@ export interface StatusKafkaPartition {
      * @memberof StatusKafkaPartition
      */
     num_documents_processed?: number;
+}
+
+/**
+ * 
+ * @export
+ * @interface StatusMongoDb
+ */
+export interface StatusMongoDb {
+    /**
+     * MongoDB scan start time
+     * @type {string}
+     * @memberof StatusMongoDb
+     */
+    scan_start_time?: string;
+    /**
+     * MongoDB scan end time
+     * @type {string}
+     * @memberof StatusMongoDb
+     */
+    scan_end_time?: string;
+    /**
+     * Number of records inserted using scan
+     * @type {number}
+     * @memberof StatusMongoDb
+     */
+    scan_records_processed?: number;
+    /**
+     * Number of records in MongoDB table at time of scan
+     * @type {number}
+     * @memberof StatusMongoDb
+     */
+    scan_total_records?: number;
+    /**
+     * state of current ingest for this table
+     * @type {string}
+     * @memberof StatusMongoDb
+     */
+    state?: StatusMongoDb.StateEnum;
+    /**
+     * ISO-8601 date when new insert from source was last processed
+     * @type {string}
+     * @memberof StatusMongoDb
+     */
+    stream_last_insert_processed_at?: string;
+    /**
+     * ISO-8601 date when update from source was last processed
+     * @type {string}
+     * @memberof StatusMongoDb
+     */
+    stream_last_update_processed_at?: string;
+    /**
+     * ISO-8601 date when delete from source was last processed
+     * @type {string}
+     * @memberof StatusMongoDb
+     */
+    stream_last_delete_processed_at?: string;
+    /**
+     * Number of new records inserted using stream
+     * @type {number}
+     * @memberof StatusMongoDb
+     */
+    stream_records_inserted?: number;
+    /**
+     * Number of new records updated using stream
+     * @type {number}
+     * @memberof StatusMongoDb
+     */
+    stream_records_updated?: number;
+    /**
+     * Number of new records deleted using stream
+     * @type {number}
+     * @memberof StatusMongoDb
+     */
+    stream_records_deleted?: number;
+}
+
+/**
+ * @export
+ * @namespace StatusMongoDb
+ */
+export namespace StatusMongoDb {
+    /**
+     * @export
+     * @enum {string}
+     */
+    export enum StateEnum {
+        INITIALIZING = <any> 'INITIALIZING',
+        SCANNINGTABLE = <any> 'SCANNING_TABLE',
+        PROCESSINGSTREAM = <any> 'PROCESSING_STREAM'
+    }
 }
 
 /**
@@ -3381,6 +3559,41 @@ export const CollectionsApiFetchParamCreator = function (configuration?: Configu
             };
         },
         /**
+         * Get all Query Lambdas that hit a specific Rockset Collection.
+         * @summary Get Query Lambdas
+         * @param {string} workspace name of the workspace
+         * @param {string} collection name of the collection
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listQueryLambdasInCollection(workspace: string, collection: string, options: any = {}): FetchArgs {
+            // verify required parameter 'workspace' is not null or undefined
+            if (workspace === null || workspace === undefined) {
+                throw new RequiredError('workspace','Required parameter workspace was null or undefined when calling listQueryLambdasInCollection.');
+            }
+            // verify required parameter 'collection' is not null or undefined
+            if (collection === null || collection === undefined) {
+                throw new RequiredError('collection','Required parameter collection was null or undefined when calling listQueryLambdasInCollection.');
+            }
+            const localVarPath = `/v1/orgs/self/ws/{workspace}/collections/{collection}/lambdas`
+                .replace(`{${"workspace"}}`, encodeURIComponent(String(workspace)))
+                .replace(`{${"collection"}}`, encodeURIComponent(String(collection)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Retrieve all collections in a workspace.
          * @summary List Collections for Workspace
          * @param {string} workspace name of the workspace
@@ -3497,6 +3710,26 @@ export const CollectionsApiFp = function(configuration?: Configuration) {
             };
         },
         /**
+         * Get all Query Lambdas that hit a specific Rockset Collection.
+         * @summary Get Query Lambdas
+         * @param {string} workspace name of the workspace
+         * @param {string} collection name of the collection
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listQueryLambdasInCollection(workspace: string, collection: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ListQueryLambdasResponse> {
+            const localVarFetchArgs = CollectionsApiFetchParamCreator(configuration).listQueryLambdasInCollection(workspace, collection, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
          * Retrieve all collections in a workspace.
          * @summary List Collections for Workspace
          * @param {string} workspace name of the workspace
@@ -3567,6 +3800,17 @@ export const CollectionsApiFactory = function (configuration?: Configuration, fe
             return CollectionsApiFp(configuration).listCollections(options)(fetch, basePath);
         },
         /**
+         * Get all Query Lambdas that hit a specific Rockset Collection.
+         * @summary Get Query Lambdas
+         * @param {string} workspace name of the workspace
+         * @param {string} collection name of the collection
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listQueryLambdasInCollection(workspace: string, collection: string, options?: any) {
+            return CollectionsApiFp(configuration).listQueryLambdasInCollection(workspace, collection, options)(fetch, basePath);
+        },
+        /**
          * Retrieve all collections in a workspace.
          * @summary List Collections for Workspace
          * @param {string} workspace name of the workspace
@@ -3634,6 +3878,19 @@ export class CollectionsApi extends BaseAPI {
      */
     public listCollections(options?: any) {
         return CollectionsApiFp(this.configuration).listCollections(options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * Get all Query Lambdas that hit a specific Rockset Collection.
+     * @summary Get Query Lambdas
+     * @param {string} workspace name of the workspace
+     * @param {string} collection name of the collection
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CollectionsApi
+     */
+    public listQueryLambdasInCollection(workspace: string, collection: string, options?: any) {
+        return CollectionsApiFp(this.configuration).listQueryLambdasInCollection(workspace, collection, options)(this.fetch, this.basePath);
     }
 
     /**
