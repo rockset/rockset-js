@@ -18,8 +18,8 @@ const rocksetConfigure = (
       ...options,
       headers: {
         ...options.headers,
-        Authorization: `ApiKey ${apikey}`
-      }
+        Authorization: `ApiKey ${apikey}`,
+      },
     };
 
     // Override the custom fetch so that the user doesn't see .json issues
@@ -27,10 +27,15 @@ const rocksetConfigure = (
       const out = await customFetch(url as string, newOptions);
       return {
         json: () => out,
-        status: 200
+        status: 200,
       } as Response;
     } else {
-      return fetch(url, newOptions);
+      const response = await fetch(url, newOptions);
+      if (response.status >= 200 && response.status < 300) {
+        return response;
+      } else {
+        throw await response.json();
+      }
     }
   };
 

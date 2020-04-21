@@ -1,9 +1,11 @@
 # Rockset Node Client Changelog
 
-## v3.2.0 2020-04-17
+## v3.2.1 2020-04-17
 
 - Add support for MongoDB sources and integrations
 - Update examples
+- Change error behavior to return actual error object instead of error headers
+- Update license expression to be SPDX
 
 ## v3.0.0 2020-02-24
 
