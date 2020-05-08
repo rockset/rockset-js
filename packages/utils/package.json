@@ -1,0 +1,30 @@
+{
+  "dependencies": {
+    "@types/prompts": "^2.0.6",
+    "eslint": "^6.8.0",
+    "glob-fs": "^0.1.7",
+    "lodash.get": "^4.4.2",
+    "prettier": "^2.0.5",
+    "prompts": "^2.3.2",
+    "rockset": "^3.2.1",
+    "typescript": "^3.8.3",
+    "typescript-eslint": "^0.0.1-alpha.0",
+    "yargs": "^15.3.1"
+  },
+  "name": "@rockset/util",
+  "version": "0.0.1",
+  "description": "JS Rock Cli for Lambdas",
+  "main": "./out/index.js",
+  "devDependencies": {
+    "@types/lodash.get": "^4.4.6",
+    "@types/yargs": "^15.0.4",
+    "jest": "^25.5.3"
+  },
+  "scripts": {
+    "test": "jest",
+    "start": "tsc && npm link && tsc --watch"
+  },
+  "bin": "./cli.js",
+  "author": "",
+  "license": "ISC"
+}
