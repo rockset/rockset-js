@@ -10,11 +10,17 @@
   "dependencies": {
     "@oclif/command": "^1.6.1",
     "@oclif/config": "^1.15.1",
+    "@oclif/plugin-autocomplete": "^0.2.0",
     "@oclif/plugin-help": "^2.2.3",
+    "@rockset/client": "^3.2.1",
+    "@rockset/core": "^0.0.1",
+    "handlebars": "^4.7.6",
+    "lodash": "^4.17.15",
     "tslib": "^1.11.2"
   },
   "devDependencies": {
     "@oclif/dev-cli": "^1.22.2",
+    "@types/lodash": "^4.14.150",
     "@types/node": "^10.17.21",
     "eslint": "^5.16.0",
     "eslint-config-oclif": "^3.1.0",
@@ -42,7 +48,8 @@
     "commands": "./lib/commands",
     "bin": "rock",
     "plugins": [
-      "@oclif/plugin-help"
+      "@oclif/plugin-help",
+      "@oclif/plugin-autocomplete"
     ]
   },
   "repository": "rockset/rockset-js",

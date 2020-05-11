@@ -8,6 +8,7 @@
     "test": "tests"
   },
   "dependencies": {
+    "@types/lodash": "^4.14.150",
     "@types/node-fetch": "^2.5.3",
     "node-fetch": "^2.6.0",
     "portable-fetch": "^3.0.0",
@@ -16,10 +17,11 @@
   "devDependencies": {
     "@types/axios": "^0.14.0",
     "@types/jest": "^24.0.23",
+    "@types/lodash": "^4.14.150",
     "axios": "^0.19.1",
     "jest": "^24.9.0",
-    "ts-jest": "^24.1.0",
     "jest-cli": "^24.9.0",
+    "ts-jest": "^24.1.0",
     "typescript": "^3.7.2"
   },
   "repository": {

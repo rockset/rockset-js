@@ -18,7 +18,7 @@ async function resolveQueryName(p: string) {
   return { name, ws: dir.replace(path.sep, ".") };
 }
 
-async function createClient() {
+export async function createClient() {
   const rootDir = await resolveRoot();
   const secretPath = path.join(rootDir, SECRETS_FILE);
   const secretsString = (await fs.readFile(secretPath)).toString();

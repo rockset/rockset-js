@@ -1,0 +1,30 @@
+// Generated file, please do not edit directly
+
+import { Command, flags } from '@oclif/command';
+import * as _ from 'lodash';
+import { createClient } from '@rockset/core';
+import { runApiCall } from 'helper/util';
+
+const client = createClient();
+const apicall = client.collections.deleteCollection.bind(client.collections);
+const namedArgs = [object Object],[object Object];
+
+class DeleteCollection extends Command {
+  static flags = {
+    help: flags.help({ char: 'h' }),
+    file: flags.string({
+      char: 'f',
+      description: 'The config file to execute this command from. Format must be [yaml|json]',
+    }),
+  };
+
+  static args = [object Object],[object Object];
+  static description = Delete a collection and all its documents from Rockset.
+
+  async run() {
+    const { args, flags } = this.parse(DeleteCollection);
+    runApiCall({args, flags, namedArgs, apicall, log: this.log, error: this.error});
+  }
+}
+
+export default DeleteCollection;

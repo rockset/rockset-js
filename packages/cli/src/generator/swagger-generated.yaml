@@ -1,0 +1,2577 @@
+---
+swagger: "2.0"
+info:
+  description: "Rockset's REST API allows for creating and managing all resources\
+    \ in Rockset. Each supported endpoint is documented below.\n\nAll requests must\
+    \ be authorized with a Rockset API key, which can be created in the [Rockset console](https://console.rockset.com).\
+    \ The API key must be provided as `ApiKey <api_key>` in the `Authorization` request\
+    \ header. For example:\n```\nAuthorization: ApiKey aB35kDjg93J5nsf4GjwMeErAVd832F7ad4vhsW1S02kfZiab42sTsfW5Sxt25asT\n\
+    ```\n\nAll endpoints are only accessible via https.\n\nBuild something awesome!"
+  version: "v1"
+  title: "REST API"
+host: "api.rs2.usw2.rockset.com"
+tags:
+- name: "ApiKeys"
+- name: "Collections"
+- name: "Documents"
+- name: "Integrations"
+- name: "Organizations"
+- name: "Queries"
+- name: "Query Lambdas"
+- name: "Users"
+- name: "Workspaces"
+schemes:
+- "https"
+paths:
+  /v1/orgs/self:
+    get:
+      tags:
+      - "Organizations"
+      summary: "Get Organization"
+      description: "Retrieve information about current organization."
+      operationId: "getOrganization"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "organization retrieved successfully"
+          schema:
+            $ref: "#/definitions/OrganizationResponse"
+  /v1/orgs/self/collections:
+    get:
+      tags:
+      - "Collections"
+      summary: "List Collections"
+      description: "Retrieve all collections in an organization."
+      operationId: "listCollections"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "collections retrieved successfully"
+          schema:
+            $ref: "#/definitions/ListCollectionsResponse"
+  /v1/orgs/self/integrations:
+    get:
+      tags:
+      - "Integrations"
+      summary: "List Integrations"
+      description: "List all integrations for organization."
+      operationId: "listIntegrations"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "integrations retrieved successfully"
+          schema:
+            $ref: "#/definitions/ListIntegrationsResponse"
+    post:
+      tags:
+      - "Integrations"
+      summary: "Create Integration"
+      description: "Create a new integration with Rockset."
+      operationId: "createIntegration"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "integration credentials"
+        required: true
+        schema:
+          $ref: "#/definitions/CreateIntegrationRequest"
+      responses:
+        200:
+          description: "integration created successfully"
+          schema:
+            $ref: "#/definitions/CreateIntegrationResponse"
+  /v1/orgs/self/integrations/{integration}:
+    get:
+      tags:
+      - "Integrations"
+      summary: "Get Integration"
+      description: "Get information about a single integration."
+      operationId: "getIntegration"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "integration"
+        in: "path"
+        description: "name of the integration"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "integration retrieved successfully"
+          schema:
+            $ref: "#/definitions/GetIntegrationResponse"
+    delete:
+      tags:
+      - "Integrations"
+      summary: "Delete Integration"
+      description: "Remove an integration."
+      operationId: "deleteIntegration"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "integration"
+        in: "path"
+        description: "name of the integration"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "integration deleted successfully"
+          schema:
+            $ref: "#/definitions/DeleteIntegrationResponse"
+  /v1/orgs/self/lambdas:
+    get:
+      tags:
+      - "Query Lambdas"
+      summary: "List Query Lambdas"
+      description: "List all Query Lambdas."
+      operationId: "listAllQueryLambdas"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "Query Lambdas listed successfully"
+          schema:
+            $ref: "#/definitions/ListQueryLambdasResponse"
+  /v1/orgs/self/queries:
+    post:
+      tags:
+      - "Queries"
+      summary: "Query"
+      description: "Make a SQL query to Rockset."
+      operationId: "query"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "JSON object"
+        required: true
+        schema:
+          $ref: "#/definitions/QueryRequest"
+      responses:
+        200:
+          description: "query executed successfully"
+          schema:
+            $ref: "#/definitions/QueryResponse"
+  /v1/orgs/self/users:
+    get:
+      tags:
+      - "Users"
+      summary: "List Users"
+      description: "Retrieve all users for an organization."
+      operationId: "listUsers"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "users retrieved successfully"
+          schema:
+            $ref: "#/definitions/ListUsersResponse"
+    post:
+      tags:
+      - "Users"
+      summary: "Create User"
+      description: "Create a new user for an organization."
+      operationId: "createUser"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "JSON object"
+        required: true
+        schema:
+          $ref: "#/definitions/CreateUserRequest"
+      responses:
+        200:
+          description: "user created successfully"
+          schema:
+            $ref: "#/definitions/CreateUserResponse"
+  /v1/orgs/self/users/self:
+    get:
+      tags:
+      - "Users"
+      summary: "Get Current User"
+      description: "Retrieve currently active user."
+      operationId: "getCurrentUser"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "user retrieved successfully"
+          schema:
+            $ref: "#/definitions/User"
+  /v1/orgs/self/users/self/apikeys:
+    get:
+      tags:
+      - "ApiKeys"
+      summary: "List API Keys"
+      description: "List all API keys for the authenticated user."
+      operationId: "listApiKeys"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "API keys retrieved successfully"
+          schema:
+            $ref: "#/definitions/ListApiKeysResponse"
+    post:
+      tags:
+      - "ApiKeys"
+      summary: "Create API Key"
+      description: "Create a new API key for the authenticated user."
+      operationId: "createApiKey"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "JSON object"
+        required: true
+        schema:
+          $ref: "#/definitions/CreateApiKeyRequest"
+      responses:
+        200:
+          description: "API key created successfully"
+          schema:
+            $ref: "#/definitions/CreateApiKeyResponse"
+  /v1/orgs/self/users/self/apikeys/{name}:
+    delete:
+      tags:
+      - "ApiKeys"
+      summary: "Delete API Key"
+      description: "Delete an API key for the authenticated user."
+      operationId: "deleteApiKey"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "name"
+        in: "path"
+        description: "name of the API key"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "API key deleted successfully"
+          schema:
+            $ref: "#/definitions/DeleteApiKeyResponse"
+  /v1/orgs/self/users/{user}:
+    delete:
+      tags:
+      - "Users"
+      summary: "Delete User"
+      description: "Delete a user from an organization."
+      operationId: "deleteUser"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "user"
+        in: "path"
+        description: "user email"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "user deleted successfully"
+          schema:
+            $ref: "#/definitions/DeleteUserResponse"
+  /v1/orgs/self/users/{user}/apikeys:
+    get:
+      tags:
+      - "ApiKeys"
+      summary: "List API Keys for any user (admin only)"
+      description: "List all API keys for any user (admin only)."
+      operationId: "listApiKeysAdmin"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "user"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "API keys retrieved successfully"
+          schema:
+            $ref: "#/definitions/ListApiKeysResponse"
+    post:
+      tags:
+      - "ApiKeys"
+      summary: "Create API Key for any user (admin only)"
+      description: "Create a new API key for any user (admin only)."
+      operationId: "createApiKeyAdmin"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "JSON object"
+        required: true
+        schema:
+          $ref: "#/definitions/CreateApiKeyRequest"
+      - name: "user"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "API key created successfully"
+          schema:
+            $ref: "#/definitions/CreateApiKeyResponse"
+  /v1/orgs/self/users/{user}/apikeys/{name}:
+    delete:
+      tags:
+      - "ApiKeys"
+      summary: "Delete API Key for any user (admin only)"
+      description: "Delete an API key for any user (admin only)."
+      operationId: "deleteApiKeyAdmin"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "name"
+        in: "path"
+        description: "name of the API key"
+        required: true
+        type: "string"
+      - name: "user"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "API key deleted successfully"
+          schema:
+            $ref: "#/definitions/DeleteApiKeyResponse"
+  /v1/orgs/self/ws:
+    get:
+      tags:
+      - "Workspaces"
+      summary: "List Workspaces"
+      description: "List all workspaces."
+      operationId: "listWorkspaces"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "workspaces retrieved successfully"
+          schema:
+            $ref: "#/definitions/ListWorkspacesResponse"
+    post:
+      tags:
+      - "Workspaces"
+      summary: "Create Workspace"
+      description: "Create a new workspace in your org."
+      operationId: "createWorkspace"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "workspace details"
+        required: true
+        schema:
+          $ref: "#/definitions/CreateWorkspaceRequest"
+      responses:
+        200:
+          description: "workspace created successfully"
+          schema:
+            $ref: "#/definitions/CreateWorkspaceResponse"
+  /v1/orgs/self/ws/{workspace}:
+    get:
+      tags:
+      - "Workspaces"
+      summary: "Get Workspace"
+      description: "Get information about a single workspace."
+      operationId: "getWorkspace"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "workspace"
+        in: "path"
+        description: "name of the workspace"
+        required: true
+        type: "string"
+        default: "commons"
+      responses:
+        200:
+          description: "workspace retrieved successfully"
+          schema:
+            $ref: "#/definitions/GetWorkspaceResponse"
+    delete:
+      tags:
+      - "Workspaces"
+      summary: "Delete Workspace"
+      description: "Remove a workspace."
+      operationId: "deleteWorkspace"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "workspace"
+        in: "path"
+        description: "name of the workspace"
+        required: true
+        type: "string"
+        default: "commons"
+      responses:
+        200:
+          description: "workspace deleted successfully"
+          schema:
+            $ref: "#/definitions/DeleteWorkspaceResponse"
+  /v1/orgs/self/ws/{workspace}/collections:
+    get:
+      tags:
+      - "Collections"
+      summary: "List Collections for Workspace"
+      description: "Retrieve all collections in a workspace."
+      operationId: "workspaceCollections"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "workspace"
+        in: "path"
+        description: "name of the workspace"
+        required: true
+        type: "string"
+        default: "commons"
+      responses:
+        200:
+          description: "collections retrieved successfully"
+          schema:
+            $ref: "#/definitions/ListCollectionsResponse"
+    post:
+      tags:
+      - "Collections"
+      summary: "Create Collection"
+      description: "Create new collection in a workspace."
+      operationId: "createCollection"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "workspace"
+        in: "path"
+        description: "name of the workspace"
+        required: true
+        type: "string"
+        default: "commons"
+      - in: "body"
+        name: "body"
+        description: "JSON object"
+        required: true
+        schema:
+          $ref: "#/definitions/CreateCollectionRequest"
+      responses:
+        200:
+          description: "collection created successfully"
+          schema:
+            $ref: "#/definitions/CreateCollectionResponse"
+  /v1/orgs/self/ws/{workspace}/collections/{collection}:
+    get:
+      tags:
+      - "Collections"
+      summary: "Get Collection"
+      description: "Get details about a collection."
+      operationId: "getCollection"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "workspace"
+        in: "path"
+        description: "name of the workspace"
+        required: true
+        type: "string"
+        default: "commons"
+      - name: "collection"
+        in: "path"
+        description: "name of the collection"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "collection retrieved successfully"
+          schema:
+            $ref: "#/definitions/GetCollectionResponse"
+    delete:
+      tags:
+      - "Collections"
+      summary: "Delete Collection"
+      description: "Delete a collection and all its documents from Rockset."
+      operationId: "deleteCollection"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "workspace"
+        in: "path"
+        description: "name of the workspace"
+        required: true
+        type: "string"
+        default: "commons"
+      - name: "collection"
+        in: "path"
+        description: "name of the collection"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "collection deleted successfully"
+          schema:
+            $ref: "#/definitions/DeleteCollectionResponse"
+  /v1/orgs/self/ws/{workspace}/collections/{collection}/docs:
+    post:
+      tags:
+      - "Documents"
+      summary: "Add Documents"
+      description: "Add documents to a collection in Rockset."
+      operationId: "addDocuments"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "workspace"
+        in: "path"
+        description: "name of the workspace"
+        required: true
+        type: "string"
+        default: "commons"
+      - name: "collection"
+        in: "path"
+        description: "name of the collection"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        description: "JSON object"
+        required: true
+        schema:
+          $ref: "#/definitions/AddDocumentsRequest"
+      responses:
+        200:
+          description: "documents added successfully"
+          schema:
+            $ref: "#/definitions/AddDocumentsResponse"
+    delete:
+      tags:
+      - "Documents"
+      summary: "Delete Documents"
+      description: "Delete documents from a collection in Rockset."
+      operationId: "deleteDocuments"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "workspace"
+        in: "path"
+        description: "name of the workspace"
+        required: true
+        type: "string"
+        default: "commons"
+      - name: "collection"
+        in: "path"
+        description: "name of the collection"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        description: "JSON object"
+        required: true
+        schema:
+          $ref: "#/definitions/DeleteDocumentsRequest"
+      responses:
+        200:
+          description: "documents deleted successfully"
+          schema:
+            $ref: "#/definitions/DeleteDocumentsResponse"
+    patch:
+      tags:
+      - "Documents"
+      summary: "Patch Documents"
+      description: "Patch documents in a collection"
+      operationId: "patchDocuments"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "workspace"
+        in: "path"
+        description: "name of the workspace"
+        required: true
+        type: "string"
+        default: "commons"
+      - name: "collection"
+        in: "path"
+        description: "name of the collection"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        description: "JSON Patch objects"
+        required: true
+        schema:
+          $ref: "#/definitions/PatchDocumentsRequest"
+      responses:
+        200:
+          description: "Documents patched successfully"
+          schema:
+            $ref: "#/definitions/PatchDocumentsResponse"
+  /v1/orgs/self/ws/{workspace}/collections/{collection}/lambdas:
+    get:
+      tags:
+      - "Collections"
+      summary: "Get Query Lambdas"
+      description: "Get all Query Lambdas that hit a specific Rockset Collection."
+      operationId: "listQueryLambdasInCollection"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "workspace"
+        in: "path"
+        description: "name of the workspace"
+        required: true
+        type: "string"
+        default: "commons"
+      - name: "collection"
+        in: "path"
+        description: "name of the collection"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Query Lambdas fetched successfully"
+          schema:
+            $ref: "#/definitions/ListQueryLambdasResponse"
+  /v1/orgs/self/ws/{workspace}/lambdas:
+    get:
+      tags:
+      - "Query Lambdas"
+      summary: "List Query Lambdas"
+      description: "List all Query Lambdas under given workspace."
+      operationId: "listQueryLambdasInWorkspace"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "workspace"
+        in: "path"
+        description: "name of the workspace"
+        required: true
+        type: "string"
+        default: "commons"
+      responses:
+        200:
+          description: "Query Lambdas listed successfully"
+          schema:
+            $ref: "#/definitions/ListQueryLambdasResponse"
+    post:
+      tags:
+      - "Query Lambdas"
+      summary: "Create Query Lambda"
+      description: "Create a Query Lambda in given workspace."
+      operationId: "createQueryLambda"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "workspace"
+        in: "path"
+        description: "name of the workspace"
+        required: true
+        type: "string"
+        default: "commons"
+      - in: "body"
+        name: "body"
+        description: "JSON object"
+        required: true
+        schema:
+          $ref: "#/definitions/CreateQueryLambdaRequest"
+      responses:
+        200:
+          description: "Query Lambda created successfully"
+          schema:
+            $ref: "#/definitions/CreateQueryLambdaResponse"
+  /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}:
+    delete:
+      tags:
+      - "Query Lambdas"
+      summary: "Delete Query Lambda"
+      description: "Delete a Query Lambda."
+      operationId: "deleteQueryLambda"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "workspace"
+        in: "path"
+        description: "name of the workspace"
+        required: true
+        type: "string"
+        default: "commons"
+      - name: "queryLambda"
+        in: "path"
+        description: "name of the Query Lambda"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Query Lambda deleted successfully"
+          schema:
+            $ref: "#/definitions/DeleteQueryLambdaResponse"
+  /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/versions:
+    get:
+      tags:
+      - "Query Lambdas"
+      summary: "List Query Lambda Versions"
+      description: "List all versions of a Query Lambda."
+      operationId: "listQueryLambdaVersions"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "workspace"
+        in: "path"
+        description: "name of the workspace"
+        required: true
+        type: "string"
+        default: "commons"
+      - name: "queryLambda"
+        in: "path"
+        description: "name of the Query Lambda"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "versions listed successfully"
+          schema:
+            $ref: "#/definitions/ListQueryLambdasResponse"
+    post:
+      tags:
+      - "Query Lambdas"
+      summary: "Update Query Lambda"
+      description: "Create a new version of a Query Lambda in given workspace."
+      operationId: "updateQueryLambda"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "workspace"
+        in: "path"
+        description: "name of the workspace"
+        required: true
+        type: "string"
+        default: "commons"
+      - name: "queryLambda"
+        in: "path"
+        description: "name of the Query Lambda"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        description: "JSON object"
+        required: true
+        schema:
+          $ref: "#/definitions/UpdateQueryLambdaRequest"
+      responses:
+        200:
+          description: "Query Lambda updated successfully"
+          schema:
+            $ref: "#/definitions/UpdateQueryLambdaResponse"
+  /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/versions/{version}:
+    get:
+      tags:
+      - "Query Lambdas"
+      summary: "Get Query Lambda Version"
+      description: "Get a specific version of a Query Lambda"
+      operationId: "getQueryLambdaVersion"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "workspace"
+        in: "path"
+        description: "name of the workspace"
+        required: true
+        type: "string"
+        default: "commons"
+      - name: "queryLambda"
+        in: "path"
+        description: "name of the Query Lambda"
+        required: true
+        type: "string"
+      - name: "version"
+        in: "path"
+        description: "version"
+        required: true
+        type: "integer"
+        format: "int32"
+      responses:
+        200:
+          description: "Query Lambda retrieved successfully"
+          schema:
+            $ref: "#/definitions/GetQueryLambdaResponse"
+    post:
+      tags:
+      - "Query Lambdas"
+      summary: "Run Query Lambda"
+      description: "Run a particular version of a Query Lambda."
+      operationId: "executeQueryLambda"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "workspace"
+        in: "path"
+        description: "name of the workspace"
+        required: true
+        type: "string"
+        default: "commons"
+      - name: "queryLambda"
+        in: "path"
+        description: "name of the Query Lambda"
+        required: true
+        type: "string"
+      - name: "version"
+        in: "path"
+        description: "version"
+        required: true
+        type: "integer"
+        format: "int32"
+      - in: "body"
+        name: "body"
+        description: "JSON object"
+        required: false
+        schema:
+          $ref: "#/definitions/ExecuteQueryLambdaRequest"
+      responses:
+        200:
+          description: "Query Lambda executed successfully"
+          schema:
+            $ref: "#/definitions/QueryResponse"
+  /v1/orgs/self/ws/{workspace}/ws:
+    get:
+      tags:
+      - "Workspaces"
+      summary: "List Workspaces"
+      description: "List workspaces under given workspace."
+      operationId: "childWorkspaces"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "workspace"
+        in: "path"
+        description: "name of the workspace"
+        required: true
+        type: "string"
+        default: "commons"
+      responses:
+        200:
+          description: "workspaces retrieved successfully"
+          schema:
+            $ref: "#/definitions/ListWorkspacesResponse"
+definitions:
+  AddDocumentsRequest:
+    type: "object"
+    required:
+    - "data"
+    properties:
+      data:
+        type: "array"
+        description: "Array of JSON documents"
+        items:
+          type: "object"
+  AddDocumentsResponse:
+    type: "object"
+    properties:
+      data:
+        type: "array"
+        description: "information about the added documents"
+        items:
+          $ref: "#/definitions/DocumentStatus"
+  ApiKey:
+    type: "object"
+    required:
+    - "key"
+    - "name"
+    properties:
+      created_at:
+        type: "string"
+        example: "2001-08-28T00:23:41Z"
+        description: "ISO-8601 date"
+      name:
+        type: "string"
+        example: "my-event-logger-key"
+        description: "descriptive label"
+      key:
+        type: "string"
+        example: "aB35kDjg93J5nsf4GjwMeErAVd832F7ad4vhsW1S02kfZiab42sTsfW5Sxt25asT"
+        description: "string of 64 alphanumeric characters"
+    description: "API keys are used to authenticate requests to Rockset's API. An\
+      \ API key is tied to the user who creates it. A new API key can be created for\
+      \ each use case, with a maximum of 10 API keys per user."
+  AwsAccessKey:
+    type: "object"
+    required:
+    - "aws_access_key_id"
+    - "aws_secret_access_key"
+    properties:
+      aws_access_key_id:
+        type: "string"
+        example: "AKIAIOSFODNN7EXAMPLE"
+        description: "AWS access key ID"
+      aws_secret_access_key:
+        type: "string"
+        example: "wJal...."
+        description: "AWS secret access key"
+  AwsRole:
+    type: "object"
+    required:
+    - "aws_role_arn"
+    properties:
+      aws_role_arn:
+        type: "string"
+        example: "arn:aws:iam::2378964092:role/rockset-role"
+        description: "ARN of rockset-role created in your account"
+  Collection:
+    type: "object"
+    properties:
+      created_at:
+        type: "string"
+        example: "2001-08-28T00:23:41Z"
+        description: "ISO-8601 date"
+      created_by:
+        type: "string"
+        example: "hello@rockset.com"
+        description: "email of user who created the collection"
+      name:
+        type: "string"
+        example: "global-transactions"
+        description: "unique identifer for collection, can contain alphanumeric or\
+          \ dash characters"
+        pattern: "^[A-Za-z0-9_\\-.]+$"
+      description:
+        type: "string"
+        example: "transactions from stores worldwide"
+        description: "text describing the collection"
+      workspace:
+        type: "string"
+        example: "commons"
+        description: "name of the workspace that the collection is in"
+      status:
+        type: "string"
+        example: "READY"
+        description: "current status of collection, one of: CREATED, READY, DELETED"
+        enum:
+        - "INITIALIZED"
+        - "CREATED"
+        - "READY"
+        - "PAUSED"
+        - "DELETED"
+        - "PAUSING"
+        - "RESUMING"
+        - "BULK_INGEST_MODE"
+        - "EXITING_BULK_INGEST_MODE"
+        - "UNKNOWN"
+      sources:
+        type: "array"
+        description: "list of sources from which collection ingests"
+        items:
+          $ref: "#/definitions/Source"
+      stats:
+        description: "metrics about the collection"
+        $ref: "#/definitions/CollectionStats"
+      retention_secs:
+        type: "integer"
+        format: "int64"
+        example: 2592000
+        description: "number of seconds after which data is purged based on event\
+          \ time"
+      field_mappings:
+        type: "array"
+        description: "list of mappings applied on all documents in a collection"
+        items:
+          $ref: "#/definitions/FieldMappingV2"
+  CollectionStats:
+    type: "object"
+    properties:
+      doc_count:
+        type: "integer"
+        format: "int64"
+        example: 2145
+        description: "number of documents in the collection"
+      total_size:
+        type: "integer"
+        format: "int64"
+        example: 123456
+        description: "total collection size in bytes"
+      fill_progress:
+        type: "number"
+        format: "double"
+        example: 0.6
+        description: "number between 0 and 1 that indicates progress of collection\
+          \ creation"
+      purged_doc_count:
+        type: "integer"
+        format: "int64"
+        example: 2145
+        description: "number of documents purged from the collection"
+      purged_doc_size:
+        type: "integer"
+        format: "int64"
+        example: 123456
+        description: "total collection size in bytes purged"
+      last_updated_ms:
+        type: "integer"
+        format: "int64"
+        example: 1535101094433
+        description: "milliseconds since Unix epoch Jan 1, 1970"
+      last_queried_ms:
+        type: "integer"
+        format: "int64"
+        example: 1535101119334
+        description: "milliseconds since Unix epoch Jan 1, 1970"
+      bytes_inserted:
+        type: "integer"
+        format: "int64"
+        example: 123456
+        description: "total number of bytes inserted into the collection"
+      bytes_overwritten:
+        type: "integer"
+        format: "int64"
+        example: 123456
+        description: "total number of bytes overwritten in writing into the collection"
+  CreateApiKeyRequest:
+    type: "object"
+    required:
+    - "name"
+    properties:
+      name:
+        type: "string"
+        example: "event-logger"
+        description: "descriptive label"
+  CreateApiKeyResponse:
+    type: "object"
+    properties:
+      data:
+        description: "the API key that was created"
+        $ref: "#/definitions/ApiKey"
+  CreateCollectionRequest:
+    type: "object"
+    required:
+    - "name"
+    properties:
+      name:
+        type: "string"
+        example: "global-transactions"
+        description: "unique identifer for collection, can contain alphanumeric or\
+          \ dash characters"
+      description:
+        type: "string"
+        example: "transactions from stores worldwide"
+        description: "text describing the collection"
+      sources:
+        type: "array"
+        description: "list of sources from which to ingest data"
+        items:
+          $ref: "#/definitions/Source"
+      retention_secs:
+        type: "integer"
+        format: "int64"
+        example: 1000000
+        description: "number of seconds after which data is purged, based on event\
+          \ time"
+      event_time_info:
+        description: "configuration for event data"
+        $ref: "#/definitions/EventTimeInfo"
+      field_mappings:
+        type: "array"
+        description: "list of mappings"
+        items:
+          $ref: "#/definitions/FieldMappingV2"
+  CreateCollectionResponse:
+    type: "object"
+    properties:
+      data:
+        description: "collection that was created"
+        $ref: "#/definitions/Collection"
+  CreateIntegrationRequest:
+    type: "object"
+    required:
+    - "name"
+    properties:
+      name:
+        type: "string"
+        example: "event-logs"
+        description: "descriptive label"
+      description:
+        type: "string"
+        example: "AWS account with event data for the data science team."
+        description: "longer explanation for the integration"
+      s3:
+        description: "Amazon S3 details, must have one of aws_access_key or aws_role"
+        $ref: "#/definitions/S3Integration"
+      kinesis:
+        description: "Amazon Kinesis details, must have one of aws_access_key or aws_role"
+        $ref: "#/definitions/KinesisIntegration"
+      dynamodb:
+        description: "Amazon DynamoDB details, must have one of aws_access_key or\
+          \ aws_role"
+        $ref: "#/definitions/DynamodbIntegration"
+      redshift:
+        description: "Amazon Redshift details"
+        $ref: "#/definitions/RedshiftIntegration"
+      gcs:
+        description: "GCS details"
+        $ref: "#/definitions/GcsIntegration"
+      segment:
+        $ref: "#/definitions/SegmentIntegration"
+      kafka:
+        $ref: "#/definitions/KafkaIntegration"
+      mongodb:
+        description: "MongoDb details"
+        $ref: "#/definitions/MongoDbIntegration"
+  CreateIntegrationResponse:
+    type: "object"
+    properties:
+      data:
+        description: "integration object that was created"
+        $ref: "#/definitions/Integration"
+  CreateQueryLambdaRequest:
+    type: "object"
+    required:
+    - "name"
+    properties:
+      name:
+        type: "string"
+        example: "myQueryLambda"
+        description: "Query Lambda name"
+      description:
+        type: "string"
+        example: "production version foo"
+        description: "optional description"
+      sql:
+        description: "Query Lambda SQL query"
+        $ref: "#/definitions/QueryLambdaSql"
+  CreateQueryLambdaResponse:
+    type: "object"
+    properties:
+      data:
+        description: "Query Lambda data"
+        $ref: "#/definitions/QueryLambda"
+  CreateUserRequest:
+    type: "object"
+    required:
+    - "email"
+    properties:
+      email:
+        type: "string"
+        example: "hello@rockset.com"
+        description: "user email, must be unique"
+      roles:
+        type: "array"
+        example: "[\"admin\", \"member\", \"read-only\"]"
+        description: "List of roles for a given user"
+        items:
+          type: "string"
+  CreateUserResponse:
+    type: "object"
+    properties:
+      data:
+        description: "user that was created"
+        $ref: "#/definitions/User"
+  CreateWorkspaceRequest:
+    type: "object"
+    required:
+    - "name"
+    properties:
+      name:
+        type: "string"
+        example: "event_logs"
+        description: "descriptive label and unique identifier"
+      description:
+        type: "string"
+        example: "Datasets of system logs for the ops team."
+        description: "longer explanation for the workspace"
+  CreateWorkspaceResponse:
+    type: "object"
+    properties:
+      data:
+        description: "the workspace that was created"
+        $ref: "#/definitions/Workspace"
+  CsvParams:
+    type: "object"
+    properties:
+      firstLineAsColumnNames:
+        type: "boolean"
+        example: true
+        description: "If the first line in every object specifies the column names"
+      separator:
+        type: "string"
+        example: ","
+        description: "a single character that is the column separator"
+      encoding:
+        type: "string"
+        example: "UTF-8"
+        description: "can be one of: UTF-8, ISO_8859_1, UTF-16"
+      columnNames:
+        type: "array"
+        example: "[c1, c2, c3]"
+        description: "names of columns"
+        items:
+          type: "string"
+      columnTypes:
+        type: "array"
+        example: "['BOOLEAN', 'INTEGER', 'FLOAT', 'STRING']"
+        description: "names of columns"
+        items:
+          type: "string"
+          enum:
+          - "UNKNOWN"
+          - "BOOLEAN"
+          - "BOOL"
+          - "INTEGER"
+          - "INT"
+          - "FLOAT"
+          - "TIME"
+          - "DATE"
+          - "DATETIME"
+          - "TIMESTAMP"
+          - "STRING"
+      quoteChar:
+        type: "string"
+        example: "\""
+        description: "character within which a cell value is enclosed,null character\
+          \ if no such character, default is '\"'"
+      escapeChar:
+        type: "string"
+        example: "\\"
+        description: "escape character removes any special meaning from the following\
+          \ character,default is '\\'"
+  DeleteApiKeyResponse:
+    type: "object"
+    properties:
+      data:
+        description: "the API key that was deleted"
+        $ref: "#/definitions/ApiKey"
+  DeleteCollectionResponse:
+    type: "object"
+    properties:
+      data:
+        description: "collection that was deleted"
+        $ref: "#/definitions/Collection"
+  DeleteDocumentsRequest:
+    type: "object"
+    required:
+    - "data"
+    properties:
+      data:
+        type: "array"
+        description: "array of document IDs"
+        items:
+          $ref: "#/definitions/DeleteDocumentsRequestData"
+  DeleteDocumentsRequestData:
+    type: "object"
+    required:
+    - "_id"
+    properties:
+      _id:
+        type: "string"
+        example: "2cd61e3b"
+        description: "unique document ID"
+  DeleteDocumentsResponse:
+    type: "object"
+    properties:
+      data:
+        type: "array"
+        description: "information about deleted documents"
+        items:
+          $ref: "#/definitions/DocumentStatus"
+  DeleteIntegrationResponse:
+    type: "object"
+    properties:
+      data:
+        description: "integration object that was deleted"
+        $ref: "#/definitions/Integration"
+  DeleteQueryLambdaResponse:
+    type: "object"
+    properties:
+      data:
+        description: "Query Lambda details"
+        $ref: "#/definitions/QueryLambda"
+  DeleteUserResponse:
+    type: "object"
+    properties:
+      data:
+        description: "user object that was deleted"
+        $ref: "#/definitions/User"
+  DeleteWorkspaceResponse:
+    type: "object"
+    properties:
+      data:
+        description: "the workspace that was deleted"
+        $ref: "#/definitions/Workspace"
+  DocumentStatus:
+    type: "object"
+    properties:
+      _collection:
+        type: "string"
+        example: "customers"
+        description: "collection name"
+      error:
+        description: "error message, if any"
+        $ref: "#/definitions/ErrorModel"
+      _id:
+        type: "string"
+        example: "2cd61e3b"
+        description: "unique document ID"
+      status:
+        type: "string"
+        example: "ADDED"
+        description: "status, one of ADDED, REPLACED, DELETED, ERROR"
+        enum:
+        - "ADDED"
+        - "REPLACED"
+        - "DELETED"
+        - "PATCHED"
+        - "ERROR"
+      patch_id:
+        type: "string"
+        example: "486gsg8"
+        description: "unique id used to represent each patch request"
+  DynamodbIntegration:
+    type: "object"
+    properties:
+      aws_access_key:
+        description: "credentials for an AWS access key integration"
+        $ref: "#/definitions/AwsAccessKey"
+      aws_role:
+        description: "role used for external id type authentication"
+        $ref: "#/definitions/AwsRole"
+  ErrorModel:
+    type: "object"
+    properties:
+      message:
+        type: "string"
+        example: "collection not found"
+        description: "descriptive message about the error"
+      type:
+        type: "string"
+        example: "InvalidInput"
+        description: "category of the error"
+        enum:
+        - "AUTHEXCEPTION"
+        - "VERSIONEXCEPTION"
+        - "INTERNALERROR"
+        - "INVALIDINPUT"
+        - "NOTIMPLEMENTEDYET"
+        - "RESOURCEEXCEEDED"
+        - "ALREADYEXISTS"
+        - "NOTFOUND"
+        - "DEPENDENTRESOURCES"
+        - "QUERY_ERROR"
+        - "NOT_READY"
+        - "FORBIDDEN"
+        - "QUERY_TIMEOUT"
+        - "INTEGRATION_NOT_FOUND"
+        - "ROLE_NOT_FOUND"
+        - "CONNECTION_ERROR"
+        - "CREATING"
+        - "BADREQUEST"
+        - "RATELIMITEXCEEDED"
+      line:
+        type: "integer"
+        format: "int32"
+        description: "Line where the error happened (if applicable)"
+      column:
+        type: "integer"
+        format: "int32"
+        description: "Column where the error happened (if applicable)"
+      trace_id:
+        type: "string"
+        description: "Internal trace ID to help with debugging"
+    description: "Describes details about an error"
+  EventTimeInfo:
+    type: "object"
+    required:
+    - "field"
+    properties:
+      field:
+        type: "string"
+        example: "timestamp"
+        description: "name of the field containing event time"
+      format:
+        type: "string"
+        example: "seconds_since_epoch"
+        description: "format of time field, can be one of: milliseconds_since_epoch,\
+          \ seconds_since_epoch"
+      time_zone:
+        type: "string"
+        example: "UTC"
+        description: "default time zone, in standard IANA format"
+  ExecuteQueryLambdaRequest:
+    type: "object"
+    properties:
+      parameters:
+        type: "array"
+        description: "list of named parameters"
+        items:
+          $ref: "#/definitions/QueryParameter"
+      default_row_limit:
+        type: "integer"
+        format: "int32"
+        description: "Row limit to use if no limit specified in the SQL query text"
+      generate_warnings:
+        type: "boolean"
+        description: "Whether to generate warnings"
+  FieldMapping:
+    type: "object"
+    properties: {}
+  FieldMappingV2:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+        example: "myTestMapping"
+        description: "A user specified string that is a name for this mapping"
+      is_drop_all_fields:
+        type: "boolean"
+        example: true
+        description: "A boolean that determines whether to drop all fields in this\
+          \ document. If set, input and output fields should not be set"
+      input_fields:
+        type: "array"
+        description: "A List of InputField for this mapping"
+        items:
+          $ref: "#/definitions/InputField"
+      output_field:
+        description: "An OutputField for this mapping"
+        $ref: "#/definitions/OutputField"
+  FieldMask:
+    type: "object"
+    required:
+    - "input_path"
+    properties:
+      input_path:
+        type: "array"
+        items:
+          type: "string"
+      mask:
+        $ref: "#/definitions/FieldMaskMask"
+  FieldMaskMask:
+    type: "object"
+    required:
+    - "name"
+    properties:
+      name:
+        type: "string"
+      args:
+        type: "object"
+    description: "Field masking function name + args. The args is a JSON object."
+  FormatParams:
+    type: "object"
+    properties:
+      json:
+        type: "boolean"
+        example: true
+        description: "source data is in json format"
+      csv:
+        $ref: "#/definitions/CsvParams"
+      xml:
+        $ref: "#/definitions/XmlParams"
+  GcpServiceAccount:
+    type: "object"
+    required:
+    - "service_account_key_file_json"
+    properties:
+      service_account_key_file_json:
+        type: "string"
+        description: "Contents of JSON Service Account key file"
+  GcsIntegration:
+    type: "object"
+    properties:
+      gcp_service_account:
+        description: "credentials for an AWS key integration"
+        $ref: "#/definitions/GcpServiceAccount"
+  GetCollectionResponse:
+    type: "object"
+    properties:
+      data:
+        description: "collection that was requested"
+        $ref: "#/definitions/Collection"
+  GetIntegrationResponse:
+    type: "object"
+    properties:
+      data:
+        description: "integration object"
+        $ref: "#/definitions/Integration"
+      collections:
+        type: "array"
+        items:
+          $ref: "#/definitions/Collection"
+  GetQueryLambdaResponse:
+    type: "object"
+    properties:
+      data:
+        description: "Query Lambda details"
+        $ref: "#/definitions/QueryLambda"
+  GetWorkspaceResponse:
+    type: "object"
+    properties:
+      data:
+        description: "the workspace that was requested"
+        $ref: "#/definitions/Workspace"
+  InputField:
+    type: "object"
+    properties:
+      field_name:
+        type: "string"
+        example: "address.city.zipcode"
+        description: "The name of a field, parsed as a SQL qualified name"
+      if_missing:
+        type: "string"
+        example: "['SKIP', 'PASS']"
+        description: "Define the behaviour if fieldName is missing or is null"
+        enum:
+        - "SKIP"
+        - "PASS"
+      is_drop:
+        type: "boolean"
+        example: true
+        description: "If true, then drop fieldName from the document"
+      param:
+        type: "string"
+        example: "zip"
+        description: "Sql parameter name"
+  Integration:
+    type: "object"
+    required:
+    - "created_by"
+    - "name"
+    properties:
+      name:
+        type: "string"
+        example: "event-logs"
+        description: "descriptive label and unique identifier"
+      description:
+        type: "string"
+        example: "AWS account with event data for the data science team."
+        description: "longer explanation for the integration"
+      created_by:
+        type: "string"
+        example: "hello@rockset.com"
+        description: "email of user who created the integration"
+      created_at:
+        type: "string"
+        example: "2001-08-28T00:23:41Z"
+        description: "ISO-8601 date"
+      s3:
+        description: "Amazon S3 details, must have one of aws_access_key or aws_role"
+        $ref: "#/definitions/S3Integration"
+      kinesis:
+        description: "Amazon Kinesis details, must have one of aws_access_key or aws_role"
+        $ref: "#/definitions/KinesisIntegration"
+      dynamodb:
+        description: "Amazon DynamoDB details, must have one of aws_access_key or\
+          \ aws_role"
+        $ref: "#/definitions/DynamodbIntegration"
+      redshift:
+        description: "Amazon Redshift details"
+        $ref: "#/definitions/RedshiftIntegration"
+      gcs:
+        description: "GCS details"
+        $ref: "#/definitions/GcsIntegration"
+      segment:
+        description: "Segment details"
+        $ref: "#/definitions/SegmentIntegration"
+      kafka:
+        description: "Kafka details"
+        $ref: "#/definitions/KafkaIntegration"
+      mongodb:
+        description: "MongoDb details"
+        $ref: "#/definitions/MongoDbIntegration"
+    description: "Integrations that can be associated with data sources to create\
+      \ collections. Only one type of integration may be specified."
+  KafkaIntegration:
+    type: "object"
+    required:
+    - "kafka_data_format"
+    - "kafka_topic_names"
+    properties:
+      kafka_topic_names:
+        type: "array"
+        description: "Kafka topics to tail"
+        uniqueItems: true
+        items:
+          type: "string"
+      source_status_by_topic:
+        type: "object"
+        example: "topic-a:DORMANT"
+        description: "The status of the Kafka source by topic"
+        readOnly: true
+        additionalProperties:
+          $ref: "#/definitions/StatusKafka"
+      kafka_data_format:
+        type: "string"
+        example: "json"
+        description: "The format of the Kafka topics being tailed"
+        enum:
+        - "JSON"
+        - "AVRO"
+      connection_string:
+        type: "string"
+        description: "segment connection string"
+        readOnly: true
+  KinesisIntegration:
+    type: "object"
+    properties:
+      aws_access_key:
+        description: "credentials for an AWS access key integration"
+        $ref: "#/definitions/AwsAccessKey"
+      aws_role:
+        description: "details of an AWS cross-account role integration"
+        $ref: "#/definitions/AwsRole"
+  ListApiKeysResponse:
+    type: "object"
+    properties:
+      data:
+        type: "array"
+        description: "list of API key objects"
+        items:
+          $ref: "#/definitions/ApiKey"
+  ListCollectionsResponse:
+    type: "object"
+    properties:
+      data:
+        type: "array"
+        description: "list of all collections"
+        items:
+          $ref: "#/definitions/Collection"
+  ListIntegrationsResponse:
+    type: "object"
+    properties:
+      data:
+        type: "array"
+        description: "list of integration objects"
+        items:
+          $ref: "#/definitions/Integration"
+  ListQueryLambdasResponse:
+    type: "object"
+    properties:
+      data:
+        type: "array"
+        description: "list of all Query Lambdas"
+        items:
+          $ref: "#/definitions/QueryLambda"
+  ListUsersResponse:
+    type: "object"
+    properties:
+      data:
+        type: "array"
+        description: "list of users"
+        items:
+          $ref: "#/definitions/User"
+  ListWorkspacesResponse:
+    type: "object"
+    properties:
+      data:
+        type: "array"
+        description: "list of workspaces"
+        items:
+          $ref: "#/definitions/Workspace"
+  MongoDbIntegration:
+    type: "object"
+    required:
+    - "connection_uri"
+    properties:
+      connection_uri:
+        type: "string"
+        example: "mongodb+srv://<username>:<password>@server.example.com/"
+        description: "MongoDB connection URI string"
+  Organization:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+        example: "rockset"
+        description: "unique identifier for the organization"
+      created_at:
+        type: "string"
+        example: "2001-08-28T00:23:41Z"
+        description: "ISO-8601 date"
+      display_name:
+        type: "string"
+        example: "Rockset, Inc"
+        description: "name of the organization"
+      company_name:
+        type: "string"
+        example: "Rockset, Inc"
+        description: "name of the company"
+      external_id:
+        type: "string"
+        example: "<hash>"
+        description: "organization's unique external ID within Rockset"
+      rockset_user:
+        type: "string"
+      state:
+        type: "string"
+        example: "TRIAL"
+        description: "org state"
+        enum:
+        - "FREE"
+        - "PAID"
+        - "TRIAL"
+        - "TRIAL_EXPIRED"
+        - "TRIAL_DEPLETED"
+        - "DELETED"
+    description: "An organization in Rockset is a container for users and collections."
+  OrganizationResponse:
+    type: "object"
+    properties:
+      data:
+        description: "Organization object"
+        $ref: "#/definitions/Organization"
+  OutputField:
+    type: "object"
+    properties:
+      field_name:
+        type: "string"
+        example: "zip_hash"
+        description: "The name of a field, parsed as a SQL qualified name "
+      value:
+        example: "SHA256(:zip)"
+        description: "The name of a sql function"
+        $ref: "#/definitions/SqlExpression"
+      on_error:
+        type: "string"
+        example: "['SKIP', 'FAIL']"
+        description: "Error in Mapping execution: 'skip' or 'fail' "
+        enum:
+        - "SKIP"
+        - "FAIL"
+  PatchDocument:
+    type: "object"
+    required:
+    - "_id"
+    - "patch"
+    properties:
+      _id:
+        type: "string"
+        example: "ca2d6832-1bfd-f88f-0620-d2aa27a5d86c"
+        description: "Unique id of the document which is being patched"
+      patch:
+        type: "array"
+        description: "List of patch operations"
+        items:
+          $ref: "#/definitions/PatchOperation"
+  PatchDocumentsRequest:
+    type: "object"
+    required:
+    - "data"
+    properties:
+      data:
+        type: "array"
+        description: "List of JSON Patch Documents"
+        items:
+          $ref: "#/definitions/PatchDocument"
+  PatchDocumentsResponse:
+    type: "object"
+    required:
+    - "data"
+    properties:
+      data:
+        type: "array"
+        items:
+          $ref: "#/definitions/DocumentStatus"
+  PatchOperation:
+    type: "object"
+    required:
+    - "op"
+    - "path"
+    properties:
+      op:
+        type: "string"
+        example: "add"
+        description: "Operation to be performed in this patch"
+        enum:
+        - "ADD"
+        - "REPLACE"
+        - "REMOVE"
+        - "COPY"
+        - "MOVE"
+        - "TEST"
+      path:
+        type: "string"
+        example: "/foo/bar"
+        description: "JSON-Pointer referencing a location in the target document where\
+          \ theoperation is performed"
+      value:
+        type: "object"
+        example: "baz"
+        description: "Value used in the patch operation. Required for add, replace\
+          \ and test operations"
+      from:
+        type: "string"
+        description: "JSON-Pointer referencing a location in the target document.Required\
+          \ for copy and move operations"
+  QueryFieldType:
+    type: "object"
+    required:
+    - "name"
+    - "type"
+    properties:
+      name:
+        type: "string"
+        example: "_id"
+        description: "name of the field"
+      type:
+        type: "string"
+        example: "string"
+        description: "data type of the field"
+  QueryLambda:
+    type: "object"
+    properties:
+      workspace:
+        type: "string"
+        example: "commons"
+        description: "workspace of this Query Lambda"
+      created_by:
+        type: "string"
+        example: "..@rockset.com"
+        description: "user that created this Query Lambda"
+      created_at:
+        type: "string"
+        example: "2001-08-28T00:23:41Z"
+        description: "ISO-8601 date of when Query Lambda was created"
+      name:
+        type: "string"
+        example: "myQuery"
+        description: "Query Lambda name"
+      version:
+        type: "integer"
+        format: "int32"
+        example: 1
+        description: "Query Lambda version"
+      description:
+        type: "string"
+        example: "production version foo"
+        description: "optional description"
+      sql:
+        description: "Query Lambda SQL query"
+        $ref: "#/definitions/QueryLambdaSql"
+      collections:
+        type: "array"
+        description: "collections queried by underlying SQL query"
+        items:
+          type: "string"
+      state:
+        type: "string"
+        example: "ACTIVE"
+        description: "status of this Query Lambda"
+        enum:
+        - "ACTIVE"
+        - "ARCHIVED"
+      stats:
+        description: "stats related to this Query Lambda"
+        $ref: "#/definitions/QueryLambdaStats"
+  QueryLambdaSql:
+    type: "object"
+    required:
+    - "query"
+    properties:
+      query:
+        type: "string"
+        example: "SELECT 'Foo'"
+        description: "SQL text"
+      default_parameters:
+        type: "array"
+        description: "default parameters for this Query Lambda"
+        items:
+          $ref: "#/definitions/QueryParameter"
+  QueryLambdaStats:
+    type: "object"
+    properties:
+      last_executed:
+        type: "string"
+        example: "2001-08-28T00:23:41Z"
+        description: "ISO-8601 date"
+      last_executed_by:
+        type: "string"
+        example: "...@rockset.com"
+        description: "user who last executed Query Lambda"
+      last_execution_error:
+        type: "string"
+        example: "2001-08-28T00:23:41Z"
+        description: "ISO-8601 date of last execution failure"
+      last_execution_error_message:
+        type: "string"
+        example: "[error message]"
+        description: "error message associated with last failed execution"
+  QueryParameter:
+    type: "object"
+    required:
+    - "name"
+    - "type"
+    - "value"
+    properties:
+      name:
+        type: "string"
+        example: "_id"
+        description: "name of the field"
+      type:
+        type: "string"
+        example: "string"
+        description: "data type of the field"
+      value:
+        type: "string"
+        example: "85beb391"
+        description: "literal value of the field"
+  QueryRequest:
+    type: "object"
+    properties:
+      sql:
+        description: "details about the query"
+        $ref: "#/definitions/QueryRequestSql"
+  QueryRequestSql:
+    type: "object"
+    required:
+    - "query"
+    properties:
+      parameters:
+        type: "array"
+        description: "list of named parameters"
+        items:
+          $ref: "#/definitions/QueryParameter"
+      query:
+        type: "string"
+        example: "SELECT * FROM foo where _id = :_id"
+        description: "SQL query as a string"
+      default_row_limit:
+        type: "integer"
+        format: "int32"
+        description: "Row limit to use if no limit specified in the query"
+      generate_warnings:
+        type: "boolean"
+        description: "Whether to generate warnings"
+      profiling_enabled:
+        type: "boolean"
+        description: "Whether to generate a performance profile for this query"
+  QueryResponse:
+    type: "object"
+    properties:
+      query_id:
+        type: "string"
+        description: "unique id for this query"
+      collections:
+        type: "array"
+        description: "list of collections queried by the query"
+        items:
+          type: "string"
+      results:
+        type: "array"
+        description: "list of objects returned by the query"
+        items:
+          type: "object"
+      stats:
+        description: "meta information about the query"
+        $ref: "#/definitions/QueryResponseStats"
+      warnings:
+        type: "array"
+        description: "warnings received from the query"
+        items:
+          type: "string"
+      column_fields:
+        type: "array"
+        description: "meta information about each column in the result set"
+        items:
+          $ref: "#/definitions/QueryFieldType"
+  QueryResponseStats:
+    type: "object"
+    properties:
+      elapsed_time_ms:
+        type: "integer"
+        format: "int64"
+        example: 126
+        description: "query time in milliseconds"
+  RedshiftIntegration:
+    type: "object"
+    required:
+    - "host"
+    - "password"
+    - "port"
+    - "s3_bucket_path"
+    - "username"
+    properties:
+      aws_access_key:
+        description: "AWS access key credentials"
+        $ref: "#/definitions/AwsAccessKey"
+      username:
+        type: "string"
+        example: "awsuser"
+        description: "Username associated with Redshift cluster"
+      password:
+        type: "string"
+        example: "pswd...."
+        description: "Password associated with Redshift cluster"
+      host:
+        type: "string"
+        example: "test.yuyugt.us-west-2.redshift.amazonaws.com"
+        description: "Redshift Cluster host"
+      port:
+        type: "integer"
+        format: "int32"
+        example: 5439
+        description: "Redshift Cluster port"
+      s3_bucket_path:
+        type: "string"
+        example: "s3://redshift-unload"
+        description: "unload S3 bucket path"
+  S3Integration:
+    type: "object"
+    properties:
+      aws_access_key:
+        description: "credentials for an AWS access key integration"
+        $ref: "#/definitions/AwsAccessKey"
+      aws_role:
+        description: "details of an AWS cross-account role integration"
+        $ref: "#/definitions/AwsRole"
+  SegmentIntegration:
+    type: "object"
+    properties:
+      connection_string:
+        type: "string"
+        description: "segment connection string"
+        readOnly: true
+  Source:
+    type: "object"
+    required:
+    - "integration_name"
+    properties:
+      integration_name:
+        type: "string"
+        example: "aws-integration"
+        description: "name of integration to use"
+      s3:
+        description: "configuration for ingestion from S3"
+        $ref: "#/definitions/SourceS3"
+      kinesis:
+        description: "configuration for ingestion from kinesis stream"
+        $ref: "#/definitions/SourceKinesis"
+      gcs:
+        description: "configuration for ingestion from GCS"
+        $ref: "#/definitions/SourceGcs"
+      redshift:
+        description: "configuration for ingestion from Redshift"
+        $ref: "#/definitions/SourceRedshift"
+      dynamodb:
+        description: "configuration for ingestion from  a dynamodb table"
+        $ref: "#/definitions/SourceDynamoDb"
+      file_upload:
+        description: "file upload details"
+        $ref: "#/definitions/SourceFileUpload"
+      kafka:
+        description: "kafka collection identifier"
+        $ref: "#/definitions/SourceKafka"
+      mongodb:
+        description: "MongoDB collection details"
+        $ref: "#/definitions/SourceMongoDb"
+      status:
+        description: "the ingest status of this source"
+        $ref: "#/definitions/Status"
+      format_params:
+        description: "format parameters for data from this source"
+        $ref: "#/definitions/FormatParams"
+    description: "Details about the data source for the given collection. Only one\
+      \ of the following fields are allowed to be defined. Only collections can act\
+      \ as data sources for views. "
+  SourceDynamoDb:
+    type: "object"
+    required:
+    - "table_name"
+    properties:
+      aws_region:
+        type: "string"
+        example: "us-east-2"
+        description: "AWS region name of DynamoDB table, by default us-west-2 is used"
+      table_name:
+        type: "string"
+        example: "dynamodb_table_name"
+        description: "name of DynamoDB table containing data"
+      status:
+        description: "DynamoDB source status"
+        readOnly: true
+        $ref: "#/definitions/StatusDynamoDb"
+      rcu:
+        type: "integer"
+        format: "int64"
+        example: 1000
+        description: "Max RCU usage for scan"
+  SourceFileUpload:
+    type: "object"
+    required:
+    - "file_name"
+    - "file_size"
+    - "file_upload_time"
+    properties:
+      file_name:
+        type: "string"
+        example: "file1.json"
+        description: "name of the file"
+      file_size:
+        type: "integer"
+        format: "int64"
+        example: 12345
+        description: "size of the file in bytes"
+      file_upload_time:
+        type: "string"
+        example: "2019-01-15T21:48:23Z"
+        description: "time of file upload"
+  SourceGcs:
+    type: "object"
+    properties:
+      bucket:
+        type: "string"
+        example: "server-logs"
+        description: "name of GCS bucket you want to ingest from"
+      prefix:
+        type: "string"
+        example: "prefix/to/keys"
+        description: "Prefix that selects keys to ingest."
+  SourceKafka:
+    type: "object"
+    required:
+    - "kafka_topic_name"
+    properties:
+      kafka_topic_name:
+        type: "string"
+        example: "example-topic"
+        description: "The Kafka topic to be tailed"
+      status:
+        description: "Kafka source status"
+        readOnly: true
+        $ref: "#/definitions/StatusKafka"
+  SourceKinesis:
+    type: "object"
+    required:
+    - "stream_name"
+    properties:
+      stream_name:
+        type: "string"
+        example: "click_stream"
+        description: "name of kinesis stream"
+      aws_region:
+        type: "string"
+        example: "us-east-2"
+        description: "AWS region name of Kinesis stream, by default us-west-2 is used"
+  SourceMongoDb:
+    type: "object"
+    required:
+    - "collection_name"
+    - "database_name"
+    properties:
+      database_name:
+        type: "string"
+        example: "my_database"
+        description: "MongoDB database name containing this collection"
+      collection_name:
+        type: "string"
+        example: "my_collection"
+        description: "MongoDB collection name"
+      status:
+        description: "MongoDB source status"
+        readOnly: true
+        $ref: "#/definitions/StatusMongoDb"
+  SourceRedshift:
+    type: "object"
+    required:
+    - "database"
+    - "schema"
+    - "table_name"
+    properties:
+      database:
+        type: "string"
+        example: "dev"
+        description: "name of the database in Redshift Cluster"
+      schema:
+        type: "string"
+        example: "common"
+        description: "schema which contains the Redshift table"
+      table_name:
+        type: "string"
+        example: "redshift_table_name"
+        description: "name of Redshift table containing data"
+      incremental_field:
+        type: "string"
+        example: "updated_at"
+        description: "field in Redshift source table to monitor for updates"
+  SourceS3:
+    type: "object"
+    required:
+    - "bucket"
+    properties:
+      prefix:
+        type: "string"
+        example: "prefix/to/keys"
+        description: "Prefix that selects keys to ingest."
+      pattern:
+        type: "string"
+        example: "prefix/to/**/keys/*.format"
+        description: "Pattern that selects keys to ingest."
+      bucket:
+        type: "string"
+        example: "s3://customer-account-info"
+        description: "address of S3 bucket containing data"
+  SqlExpression:
+    type: "object"
+    properties:
+      sql:
+        type: "string"
+        example: "SHA256()"
+        description: "The name of a sql function"
+  Status:
+    type: "object"
+    properties:
+      state:
+        type: "string"
+        example: "INITIALIZING"
+        description: "Status of the Source's ingestion, one of: INITIALIZING, WATCHING,\
+          \ PROCESSING, COMPLETED, ERROR"
+        enum:
+        - "INITIALIZING"
+        - "WATCHING"
+        - "PROCESSING"
+        - "COMPLETED"
+        - "ERROR"
+      since:
+        type: "string"
+        example: "2019-01-15T21:48:23Z"
+        description: "ISO-8601 date when state was triggered"
+      message:
+        type: "string"
+        example: "error 403 forbidden"
+        description: "state message"
+      last_processed_at:
+        type: "string"
+        example: "2019-01-15T21:48:23Z"
+        description: "ISO-8601 date when source was last processed"
+      last_processed_item:
+        type: "string"
+        example: "/path/to/some/object"
+        description: "last source item processed by ingester"
+      total_processed_items:
+        type: "integer"
+        format: "int64"
+        example: 32849023
+        description: "Total items processed of source"
+      last_error_at:
+        type: "string"
+        example: "2019-01-15T21:48:23Z"
+        description: "ISO-8601 date when last error occurred"
+      last_error_item:
+        type: "string"
+        example: "/path/to/some/object"
+        description: "last source item that errored"
+      last_error_reason:
+        type: "string"
+        example: "invalid format .docx"
+        description: "reason for the last error"
+      total_error_items:
+        type: "integer"
+        format: "int64"
+        example: 32849023
+        description: "Total items that errored"
+  StatusDynamoDb:
+    type: "object"
+    properties:
+      scan_start_time:
+        type: "string"
+        example: "2001-08-28T00:23:41Z"
+        description: "DynamoDB scan start time"
+      scan_end_time:
+        type: "string"
+        example: "2001-08-28T00:23:41Z"
+        description: "DynamoDb scan end time"
+      scan_records_processed:
+        type: "integer"
+        format: "int64"
+        example: 1000
+        description: "Number of records inserted using scan"
+      scan_total_records:
+        type: "integer"
+        format: "int64"
+        example: 2000
+        description: "Number of records in DynamoDB table at time of scan"
+      state:
+        type: "string"
+        example: "SCANNING_TABLE"
+        description: "state of current ingest for this table"
+        enum:
+        - "INITIALIZING"
+        - "SCANNING_TABLE"
+        - "PROCESSING_STREAM"
+      stream_last_processed_at:
+        type: "string"
+        example: "2019-01-15T21:48:23Z"
+        description: "ISO-8601 date when source was last processed"
+  StatusKafka:
+    type: "object"
+    properties:
+      state:
+        type: "string"
+        example: "ACTIVE"
+        description: "State of the Kafka source"
+        enum:
+        - "NO_DOCS_YET"
+        - "ACTIVE"
+        - "DORMANT"
+      last_consumed_time:
+        type: "string"
+        example: "2001-08-28T00:23:41Z"
+        description: "Time at which the last document was consumed from Kafka"
+      num_documents_processed:
+        type: "integer"
+        format: "int64"
+        example: 1337
+        description: "Number of documents consumed by this Kafka topic"
+  StatusKafkaPartition:
+    type: "object"
+    properties:
+      partition_number:
+        type: "integer"
+        format: "int32"
+        example: 123
+        description: "The number of this partition"
+      num_documents_processed:
+        type: "integer"
+        format: "int64"
+        example: 1337
+        description: "Number of documents consumed by this partition"
+  StatusMongoDb:
+    type: "object"
+    properties:
+      scan_start_time:
+        type: "string"
+        example: "2001-08-28T00:23:41Z"
+        description: "MongoDB scan start time"
+      scan_end_time:
+        type: "string"
+        example: "2001-08-28T00:23:41Z"
+        description: "MongoDB scan end time"
+      scan_records_processed:
+        type: "integer"
+        format: "int64"
+        example: 1000
+        description: "Number of records inserted using scan"
+      scan_total_records:
+        type: "integer"
+        format: "int64"
+        example: 2000
+        description: "Number of records in MongoDB table at time of scan"
+      state:
+        type: "string"
+        example: "SCANNING_TABLE"
+        description: "state of current ingest for this table"
+        enum:
+        - "INITIALIZING"
+        - "SCANNING_TABLE"
+        - "PROCESSING_STREAM"
+      stream_last_insert_processed_at:
+        type: "string"
+        example: "2019-01-15T21:48:23Z"
+        description: "ISO-8601 date when new insert from source was last processed"
+      stream_last_update_processed_at:
+        type: "string"
+        example: "2019-01-15T21:48:23Z"
+        description: "ISO-8601 date when update from source was last processed"
+      stream_last_delete_processed_at:
+        type: "string"
+        example: "2019-01-15T21:48:23Z"
+        description: "ISO-8601 date when delete from source was last processed"
+      stream_records_inserted:
+        type: "integer"
+        format: "int64"
+        example: 10000
+        description: "Number of new records inserted using stream"
+      stream_records_updated:
+        type: "integer"
+        format: "int64"
+        example: 1000
+        description: "Number of new records updated using stream"
+      stream_records_deleted:
+        type: "integer"
+        format: "int64"
+        example: 100
+        description: "Number of new records deleted using stream"
+  UpdateQueryLambdaRequest:
+    type: "object"
+    properties:
+      description:
+        type: "string"
+        example: "production version foo"
+        description: "optional description"
+      sql:
+        description: "Query Lambda SQL query"
+        $ref: "#/definitions/QueryLambdaSql"
+  UpdateQueryLambdaResponse:
+    type: "object"
+    properties:
+      data:
+        description: "Query Lambda data"
+        $ref: "#/definitions/QueryLambda"
+  User:
+    type: "object"
+    required:
+    - "email"
+    properties:
+      created_at:
+        type: "string"
+        example: "2001-08-28T00:23:41Z"
+        description: "ISO-8601 date"
+      email:
+        type: "string"
+        example: "hello@rockset.com"
+        description: "user email"
+      first_name:
+        type: "string"
+        example: "John"
+        description: "user first name"
+      last_name:
+        type: "string"
+        example: "Doe"
+        description: "user last name"
+      roles:
+        type: "array"
+        example: "[\"admin\", \"member\", \"read-only\"]"
+        description: "List of roles for a given user"
+        items:
+          type: "string"
+      state:
+        type: "string"
+        example: "ACTIVE"
+        description: "state of user - NEW / ACTIVE"
+      org:
+        type: "string"
+  Workspace:
+    type: "object"
+    properties:
+      created_at:
+        type: "string"
+        example: "2001-08-28T00:23:41Z"
+        description: "ISO-8601 date of when workspace was created"
+      created_by:
+        type: "string"
+        example: "hello@rockset.com"
+        description: "email of user who created the workspace"
+      name:
+        type: "string"
+        example: "event_logs"
+        description: "descriptive label and unique identifier"
+      description:
+        type: "string"
+        example: "Datasets of system logs for the ops team."
+        description: "longer explanation for the workspace"
+      collection_count:
+        type: "integer"
+        format: "int64"
+        example: 3
+        description: "number of collections that are immediate children of workspace"
+    description: "Workspaces are organizational containers for collections."
+  XmlParams:
+    type: "object"
+    properties:
+      root_tag:
+        type: "string"
+        example: "root"
+        description: "tag until which xml is ignored"
+      encoding:
+        type: "string"
+        example: "UTF-8"
+        description: "encoding in which data source is encoded"
+      doc_tag:
+        type: "string"
+        example: "row"
+        description: "tags with which documents are identified"
+      value_tag:
+        type: "string"
+        example: "value"
+        description: "tag used for the value when there are attributes in the element\
+          \ having no child"
+      attribute_prefix:
+        type: "string"
+        example: "_attr"
+        description: "tag to differentiate between attributes and elements"
