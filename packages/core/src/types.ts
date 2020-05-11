@@ -1,4 +1,4 @@
-import { QueryParameter, ErrorModel } from "rockset/dist/codegen/api";
+import { QueryParameter, ErrorModel } from "@rockset/client/dist/codegen/api";
 
 export const ROOT_CONFIG = "rockconfig.json" as const;
 

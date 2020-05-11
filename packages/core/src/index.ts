@@ -1,5 +1,4 @@
-import rocksetConfigure from "rockset";
-import { promises as fs } from "fs";
+import rocksetConfigure from "@rockset/client";
 import path from "path";
 import {
   AuthProfile,
@@ -9,7 +8,7 @@ import {
   DeployHooks,
   LambdaEntity,
 } from "./types";
-import { FetchAPI } from "rockset/dist/codegen/api";
+import { FetchAPI } from "@rockset/client/dist/codegen/api";
 import {
   readConfigFromPath,
   resolveRootFile,
