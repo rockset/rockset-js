@@ -6,7 +6,7 @@ import { createClient } from '@rockset/core';
 import { runApiCall, Args } from '../../../helper/util';
 
 
-class {{{className}}} extends Command {
+class GetCurrentUser extends Command {
   static flags = {
     help: flags.help({ char: 'h' }),
     file: flags.string({
@@ -15,23 +15,34 @@ class {{{className}}} extends Command {
     }),
   };
 
-  static args = {{{args}}};
-  static description = `{{{description}}}`;
+  static args = [];
+  static description = `
+Get Current User
+
+Retrieve currently active user.
+
+Endpoint: GET: /v1/orgs/self/users/self
+
+Endpoint Documentation: https://docs.rockset.com/rest-api#getcurrentuser
+
+This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
+
+`;
 
   async run() {
-    const { args, flags } = this.parse({{{className}}});
+    const { args, flags } = this.parse(GetCurrentUser);
 
     // Rockset client object
     const client = await createClient();
 
     // Arguments
-    const namedArgs :Args = {{{args}}};
+    const namedArgs :Args = [];
 
     // apicall 
-    const apicall = {{{apicall}}};
+    const apicall = client.users.getCurrentUser.bind(client.users);
 
     runApiCall({args, flags, namedArgs, apicall, log: this.log, error: this.error});
   }
 }
 
-export default {{className}};
+export default GetCurrentUser;

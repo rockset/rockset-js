@@ -2,7 +2,7 @@
 import * as Parser from '@oclif/parser';
 
 export type Args = Parser.args.Input;
-export type Flags = {file: string};
+export type Flags = {file?: string};
 export type Apicall = (...a: any) => Promise<any>;
 
 export const runApiCall = async ({args, flags, namedArgs, apicall, log, error}: {
