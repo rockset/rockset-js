@@ -43,19 +43,12 @@ This command is a simple wrapper around the above endpoint. Please view further 
     const client = await createClient();
 
     // Arguments
-    const namedArgs :Args = [
-  {
-    "name": "integration",
-    "description": "name of the integration",
-    "required": true,
-    "hidden": false
-  }
-];
+    const namedArgs :Args = GetIntegration.args;
 
     // apicall 
     const apicall = client.integrations.getIntegration.bind(client.integrations);
 
-    runApiCall({args, flags, namedArgs, apicall, log: this.log, error: this.error});
+    runApiCall.bind(this)({args, flags, namedArgs, apicall});
   }
 }
 

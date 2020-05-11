@@ -5,6 +5,7 @@ import * as _ from 'lodash';
 import { createClient } from '@rockset/core';
 import { runApiCall, Args } from '../../../helper/util';
 
+
 class CreateApiKey extends Command {
   static flags = {
     help: flags.help({ char: 'h' }),
@@ -15,13 +16,13 @@ class CreateApiKey extends Command {
   };
 
   static args = [
-    {
-      name: 'body',
-      description: 'JSON object',
-      required: true,
-      hidden: false,
-    },
-  ];
+  {
+    "name": "body",
+    "description": "JSON object",
+    "required": true,
+    "hidden": false
+  }
+];
   static description = `
 Create API Key
 
@@ -42,19 +43,12 @@ This command is a simple wrapper around the above endpoint. Please view further 
     const client = await createClient();
 
     // Arguments
-    const namedArgs: Args = [
-      {
-        name: 'body',
-        description: 'JSON object',
-        required: true,
-        hidden: false,
-      },
-    ];
+    const namedArgs :Args = CreateApiKey.args;
 
-    // apicall
+    // apicall 
     const apicall = client.apikeys.createApiKey.bind(client.apikeys);
 
-    runApiCall({ args, flags, namedArgs, apicall, log: this.log, error: this.error });
+    runApiCall.bind(this)({args, flags, namedArgs, apicall});
   }
 }
 

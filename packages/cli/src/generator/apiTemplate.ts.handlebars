@@ -25,12 +25,12 @@ class {{{className}}} extends Command {
     const client = await createClient();
 
     // Arguments
-    const namedArgs :Args = {{{args}}};
+    const namedArgs :Args = {{{className}}}.args;
 
     // apicall 
     const apicall = {{{apicall}}};
 
-    runApiCall({args, flags, namedArgs, apicall, log: this.log, error: this.error});
+    runApiCall.bind(this)({args, flags, namedArgs, apicall});
   }
 }
 

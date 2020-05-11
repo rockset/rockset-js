@@ -1,19 +1,21 @@
 
 import * as Parser from '@oclif/parser';
+import Command from '@oclif/command';
+import * as _ from 'lodash';
 
 export type Args = Parser.args.Input;
 export type Flags = {file?: string};
 export type Apicall = (...a: any) => Promise<any>;
 
-export const runApiCall = async ({args, flags, namedArgs, apicall, log, error}: {
+export async function runApiCall(this: Command, {args, flags, namedArgs, apicall}: {
   args: Record<string, string>,
   flags: Flags,
   namedArgs: Args,
   apicall: Apicall,
-  log: Function,
-  error: Function
-}) => {
+}) {
 
+    const log = this.log.bind(this) ?? console.log;
+    const error = this.error.bind(this) ?? console.error;
     let allArgs = [];
 
     if (flags.file) {

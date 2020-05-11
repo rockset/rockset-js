@@ -1,11 +1,9 @@
-import { SwaggerGenerated, Get } from './swaggerTypes';
+import { Get } from './swaggerTypes';
 import _ = require('lodash');
-import * as swaggerI from './swagger-generated.json';
+import * as swagger from './swagger-generated.json';
 import * as Handlebars from 'handlebars';
 import { promises as fs } from 'fs';
 import * as p from 'path';
-
-const swagger = swaggerI as SwaggerGenerated;
 
 const capitalize = (s: string) => {
   return s.charAt(0).toUpperCase() + s.slice(1);
@@ -22,7 +20,7 @@ async function generate() {
 
     const output = _.flatMap(paths, (path, endpoint: string) =>
       _.map(path, (get: Get, method: string) => {
-        const tag = _.camelCase(get.tags[0]).replace(/apiKey/, "apikey");
+        const tag = _.camelCase(get.tags[0]).replace(/apiKey/, 'apikey');
         const operation = get.operationId;
         const apicall = `client.${tag}.${operation}.bind(client.${tag})`;
         const parameters = pp(
@@ -30,7 +28,7 @@ async function generate() {
             name,
             description,
             required,
-            hidden: false
+            hidden: false,
           })),
         );
 

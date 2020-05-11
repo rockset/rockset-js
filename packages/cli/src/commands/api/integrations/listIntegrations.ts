@@ -36,12 +36,12 @@ This command is a simple wrapper around the above endpoint. Please view further 
     const client = await createClient();
 
     // Arguments
-    const namedArgs :Args = [];
+    const namedArgs :Args = ListIntegrations.args;
 
     // apicall 
     const apicall = client.integrations.listIntegrations.bind(client.integrations);
 
-    runApiCall({args, flags, namedArgs, apicall, log: this.log, error: this.error});
+    runApiCall.bind(this)({args, flags, namedArgs, apicall});
   }
 }
 

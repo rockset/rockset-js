@@ -61,37 +61,12 @@ This command is a simple wrapper around the above endpoint. Please view further 
     const client = await createClient();
 
     // Arguments
-    const namedArgs :Args = [
-  {
-    "name": "workspace",
-    "description": "name of the workspace",
-    "required": true,
-    "hidden": false
-  },
-  {
-    "name": "queryLambda",
-    "description": "name of the Query Lambda",
-    "required": true,
-    "hidden": false
-  },
-  {
-    "name": "version",
-    "description": "version",
-    "required": true,
-    "hidden": false
-  },
-  {
-    "name": "body",
-    "description": "JSON object",
-    "required": false,
-    "hidden": false
-  }
-];
+    const namedArgs :Args = ExecuteQueryLambda.args;
 
     // apicall 
     const apicall = client.queryLambdas.executeQueryLambda.bind(client.queryLambdas);
 
-    runApiCall({args, flags, namedArgs, apicall, log: this.log, error: this.error});
+    runApiCall.bind(this)({args, flags, namedArgs, apicall});
   }
 }
 

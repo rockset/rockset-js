@@ -2,7 +2,7 @@
   "name": "@rockset/cli",
   "description": "Official Rockset CLI",
   "version": "0.1.0",
-  "author": "Tanmay Chordia @tchordia",
+  "author": "Rockset @rockset",
   "bin": {
     "rock": "./bin/run"
   },

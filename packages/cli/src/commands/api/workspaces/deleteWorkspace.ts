@@ -43,19 +43,12 @@ This command is a simple wrapper around the above endpoint. Please view further 
     const client = await createClient();
 
     // Arguments
-    const namedArgs :Args = [
-  {
-    "name": "workspace",
-    "description": "name of the workspace",
-    "required": true,
-    "hidden": false
-  }
-];
+    const namedArgs :Args = DeleteWorkspace.args;
 
     // apicall 
     const apicall = client.workspaces.deleteWorkspace.bind(client.workspaces);
 
-    runApiCall({args, flags, namedArgs, apicall, log: this.log, error: this.error});
+    runApiCall.bind(this)({args, flags, namedArgs, apicall});
   }
 }
 

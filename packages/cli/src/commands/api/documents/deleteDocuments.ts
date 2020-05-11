@@ -55,31 +55,12 @@ This command is a simple wrapper around the above endpoint. Please view further 
     const client = await createClient();
 
     // Arguments
-    const namedArgs :Args = [
-  {
-    "name": "workspace",
-    "description": "name of the workspace",
-    "required": true,
-    "hidden": false
-  },
-  {
-    "name": "collection",
-    "description": "name of the collection",
-    "required": true,
-    "hidden": false
-  },
-  {
-    "name": "body",
-    "description": "JSON object",
-    "required": true,
-    "hidden": false
-  }
-];
+    const namedArgs :Args = DeleteDocuments.args;
 
     // apicall 
     const apicall = client.documents.deleteDocuments.bind(client.documents);
 
-    runApiCall({args, flags, namedArgs, apicall, log: this.log, error: this.error});
+    runApiCall.bind(this)({args, flags, namedArgs, apicall});
   }
 }
 
