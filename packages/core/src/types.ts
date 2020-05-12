@@ -1,6 +1,6 @@
-import { QueryParameter, ErrorModel } from "@rockset/client/dist/codegen/api";
+import { QueryParameter, ErrorModel } from '@rockset/client/dist/codegen/api';
 
-export const ROOT_CONFIG = "rockconfig.json" as const;
+export const ROOT_CONFIG = 'rockconfig.json' as const;
 
 export interface AuthProfile {
   apikey: string;
@@ -29,13 +29,13 @@ export interface LambdaConfig {
 export type QualifiedName = string;
 export type SqlString = string;
 
-export type EntityType = "lambda" | "collection";
+export type EntityType = 'lambda' | 'collection';
 
 export interface LambdaEntity {
   fullName: string;
   ws: string;
   name: string;
-  type: "lambda";
+  type: 'lambda';
   config: LambdaConfig;
   sql: string;
 }

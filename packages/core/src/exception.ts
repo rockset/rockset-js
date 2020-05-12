@@ -1,5 +1,4 @@
-import { ErrorModel } from "@rockset/client/dist/codegen/api";
-import { ROOT_CONFIG, RockClientErrorTypes } from "./types";
+import { ROOT_CONFIG, RockClientErrorTypes } from './types';
 
 class RockClientException extends Error {
   id: string;

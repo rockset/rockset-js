@@ -1,5 +1,5 @@
-import rocksetConfigure from "@rockset/client";
-import path from "path";
+import rocksetConfigure from '@rockset/client';
+import path from 'path';
 import {
   AuthProfile,
   RootConfig,
@@ -7,8 +7,8 @@ import {
   LambdaConfig,
   DeployHooks,
   LambdaEntity,
-} from "./types";
-import { FetchAPI } from "@rockset/client/dist/codegen/api";
+} from './types';
+import { FetchAPI } from '@rockset/client/dist/codegen/api';
 import {
   readConfigFromPath,
   resolveRootFile,
@@ -19,7 +19,7 @@ import {
   isDefinitionPath,
   resolveQualifiedNameFromPath,
   getWsNamePair,
-} from "./pathutil";
+} from './pathutil';
 
 /**
  *
@@ -45,8 +45,8 @@ async function getSrcPath() {
  * Currently just loads from environment, in the future we can do more sophisticated profile management
  */
 async function getAuthProfile() {
-  const apikey = process.env.ROCKSET_APIKEY ?? "";
-  const apiserver = process.env.ROCKSET_APISERVER ?? "";
+  const apikey = process.env.ROCKSET_APIKEY ?? '';
+  const apiserver = process.env.ROCKSET_APISERVER ?? '';
   return { apikey, apiserver } as AuthProfile;
 }
 
@@ -63,7 +63,7 @@ export async function readLambdaFromQualifiedName(name: QualifiedName) {
   const srcPath = await getSrcPath();
   const fullPath = path.join(
     srcPath,
-    resolvePathFromQualifiedName(name, "lambda")
+    resolvePathFromQualifiedName(name, 'lambda')
   );
   return readLambda(name, fullPath);
 }
@@ -78,21 +78,21 @@ export async function readLambda(fullName: QualifiedName, fullPath: string) {
     fullName,
     ws,
     name,
-    type: "lambda" as const,
+    type: 'lambda' as const,
     config,
     sql,
   } as LambdaEntity;
 }
 
-async function listEntityNames() {
+export async function listEntityNames() {
   const src = await getSrcPath();
   const allFiles = await getFiles(src);
   const lambdaFiles = allFiles.filter((file) =>
-    isDefinitionPath(file, "lambda")
+    isDefinitionPath(file, 'lambda')
   );
 
   const collectionFiles = allFiles.filter((file) =>
-    isDefinitionPath(file, "lambda")
+    isDefinitionPath(file, 'lambda')
   );
 
   const lambdas = lambdaFiles.map((path) =>
@@ -109,13 +109,13 @@ async function listEntityNames() {
   };
 }
 
-async function deploy(hooks: DeployHooks) {
+export async function deploy(hooks: DeployHooks) {
   const [srcPath, client] = await Promise.all([getSrcPath(), createClient()]);
 
   // Grab all files
   const allFiles = await getFiles(srcPath);
   const lambdaFiles = allFiles.filter((file) =>
-    isDefinitionPath(file, "lambda")
+    isDefinitionPath(file, 'lambda')
   );
 
   // Construct lambda entities
@@ -129,7 +129,7 @@ async function deploy(hooks: DeployHooks) {
   const lambdas = await client.queryLambdas.listAllQueryLambdas();
 
   return lambdaEntities.map(async (lambdaEntity) => {
-    const { ws, name: lambda, sql: text, fullName } = lambdaEntity;
+    const { ws, name: lambda, sql: text } = lambdaEntity;
 
     const lambdaObj = lambdas.data?.find(
       ({ workspace, name }) => workspace === ws && name === lambda

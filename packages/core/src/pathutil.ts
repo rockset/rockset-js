@@ -1,8 +1,8 @@
-import { errorNotValidProject } from "./exception";
-import { ROOT_CONFIG, QualifiedName, SqlString, EntityType } from "./types";
+import { errorNotValidProject } from './exception';
+import { ROOT_CONFIG, QualifiedName, SqlString, EntityType } from './types';
 
-import { promises as fs } from "fs";
-import path from "path";
+import { promises as fs } from 'fs';
+import path from 'path';
 
 /**
  * Resolve the root directory of this project. The root directory is the nearest ancestor containing
@@ -13,7 +13,7 @@ import path from "path";
 export async function resolveRootDirectory(
   startingPath?: string
 ): Promise<string> {
-  if (startingPath === "/") {
+  if (startingPath === '/') {
     throw errorNotValidProject();
   }
   const dir = startingPath ?? process.cwd();
@@ -47,8 +47,8 @@ export function resolvePathFromQualifiedName(
   entityName: QualifiedName,
   type: EntityType
 ) {
-  const entityDir = entityName.replace(".", path.sep);
-  const filename = type + ".json";
+  const entityDir = entityName.replace('.', path.sep);
+  const filename = type + '.json';
   return path.join(entityDir, filename);
 }
 
@@ -58,7 +58,7 @@ export function resolveQualifiedNameFromPath(
 ): QualifiedName {
   const relative = path.relative(srcPath, absolutePath);
   const { dir } = path.parse(relative);
-  return dir.replace(path.sep, ".");
+  return dir.replace(path.sep, '.');
 }
 
 export async function readSqlFromPath(
@@ -87,12 +87,12 @@ export function isDefinitionPath(url: string, entityType: EntityType) {
 }
 
 export function getEntityFileName(entityType: EntityType) {
-  return entityType + ".json";
+  return entityType + '.json';
 }
 
 export function getWsNamePair(fullName: QualifiedName) {
-  const pieces = fullName.split(".");
+  const pieces = fullName.split('.');
   const name = pieces.pop();
-  const ws = pieces.join(".");
+  const ws = pieces.join('.');
   return { name, ws };
 }
