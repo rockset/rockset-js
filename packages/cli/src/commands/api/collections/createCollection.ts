@@ -1,10 +1,10 @@
+/* eslint-disable unicorn/filename-case */
+
 // Generated file, please do not edit directly
 
 import { Command, flags } from '@oclif/command';
-import * as _ from 'lodash';
 import { createClient } from '@rockset/core';
 import { runApiCall, Args } from '../../../helper/util';
-
 
 class CreateCollection extends Command {
   static flags = {
@@ -16,19 +16,20 @@ class CreateCollection extends Command {
   };
 
   static args = [
-  {
-    "name": "workspace",
-    "description": "name of the workspace",
-    "required": true,
-    "hidden": false
-  },
-  {
-    "name": "body",
-    "description": "JSON object",
-    "required": true,
-    "hidden": false
-  }
-];
+    {
+      name: 'workspace',
+      description: 'name of the workspace',
+      required: true,
+      hidden: false,
+    },
+    {
+      name: 'body',
+      description: 'JSON object',
+      required: true,
+      hidden: false,
+    },
+  ];
+
   static description = `
 Create Collection
 
@@ -49,12 +50,12 @@ This command is a simple wrapper around the above endpoint. Please view further 
     const client = await createClient();
 
     // Arguments
-    const namedArgs :Args = CreateCollection.args;
+    const namedArgs: Args = CreateCollection.args;
 
-    // apicall 
+    // apicall
     const apicall = client.collections.createCollection.bind(client.collections);
 
-    runApiCall.bind(this)({args, flags, namedArgs, apicall});
+    runApiCall.bind(this)({ args, flags, namedArgs, apicall });
   }
 }
 

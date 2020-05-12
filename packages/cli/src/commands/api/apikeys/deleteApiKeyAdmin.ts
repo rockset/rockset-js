@@ -1,10 +1,10 @@
+/* eslint-disable unicorn/filename-case */
+
 // Generated file, please do not edit directly
 
 import { Command, flags } from '@oclif/command';
-import * as _ from 'lodash';
 import { createClient } from '@rockset/core';
 import { runApiCall, Args } from '../../../helper/util';
-
 
 class DeleteApiKeyAdmin extends Command {
   static flags = {
@@ -16,18 +16,19 @@ class DeleteApiKeyAdmin extends Command {
   };
 
   static args = [
-  {
-    "name": "name",
-    "description": "name of the API key",
-    "required": true,
-    "hidden": false
-  },
-  {
-    "name": "user",
-    "required": true,
-    "hidden": false
-  }
-];
+    {
+      name: 'name',
+      description: 'name of the API key',
+      required: true,
+      hidden: false,
+    },
+    {
+      name: 'user',
+      required: true,
+      hidden: false,
+    },
+  ];
+
   static description = `
 Delete API Key for any user (admin only)
 
@@ -48,12 +49,12 @@ This command is a simple wrapper around the above endpoint. Please view further 
     const client = await createClient();
 
     // Arguments
-    const namedArgs :Args = DeleteApiKeyAdmin.args;
+    const namedArgs: Args = DeleteApiKeyAdmin.args;
 
-    // apicall 
+    // apicall
     const apicall = client.apikeys.deleteApiKeyAdmin.bind(client.apikeys);
 
-    runApiCall.bind(this)({args, flags, namedArgs, apicall});
+    runApiCall.bind(this)({ args, flags, namedArgs, apicall });
   }
 }
 

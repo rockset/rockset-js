@@ -1,10 +1,10 @@
+/* eslint-disable unicorn/filename-case */
+
 // Generated file, please do not edit directly
 
 import { Command, flags } from '@oclif/command';
-import * as _ from 'lodash';
 import { createClient } from '@rockset/core';
 import { runApiCall, Args } from '../../../helper/util';
-
 
 class ListApiKeys extends Command {
   static flags = {
@@ -16,6 +16,7 @@ class ListApiKeys extends Command {
   };
 
   static args = [];
+
   static description = `
 List API Keys
 
@@ -36,12 +37,12 @@ This command is a simple wrapper around the above endpoint. Please view further 
     const client = await createClient();
 
     // Arguments
-    const namedArgs :Args = ListApiKeys.args;
+    const namedArgs: Args = ListApiKeys.args;
 
-    // apicall 
+    // apicall
     const apicall = client.apikeys.listApiKeys.bind(client.apikeys);
 
-    runApiCall.bind(this)({args, flags, namedArgs, apicall});
+    runApiCall.bind(this)({ args, flags, namedArgs, apicall });
   }
 }
 

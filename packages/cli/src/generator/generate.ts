@@ -20,7 +20,9 @@ async function generate() {
 
     const output = _.flatMap(paths, (path, endpoint: string) =>
       _.map(path, (get: Get, method: string) => {
-        const tag = _.camelCase(get.tags[0]).replace(/apiKey/, 'apikey');
+        const tag = _.camelCase(get.tags[0])
+          .replace(/apiKey/, 'apikey')
+          .replace(/organizations/, 'orgs');
         const operation = get.operationId;
         const apicall = `client.${tag}.${operation}.bind(client.${tag})`;
         const parameters = pp(

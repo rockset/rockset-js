@@ -1,10 +1,10 @@
+/* eslint-disable unicorn/filename-case */
+
 // Generated file, please do not edit directly
 
 import { Command, flags } from '@oclif/command';
-import * as _ from 'lodash';
 import { createClient } from '@rockset/core';
 import { runApiCall, Args } from '../../../helper/util';
-
 
 class CreateApiKeyAdmin extends Command {
   static flags = {
@@ -16,18 +16,19 @@ class CreateApiKeyAdmin extends Command {
   };
 
   static args = [
-  {
-    "name": "body",
-    "description": "JSON object",
-    "required": true,
-    "hidden": false
-  },
-  {
-    "name": "user",
-    "required": true,
-    "hidden": false
-  }
-];
+    {
+      name: 'body',
+      description: 'JSON object',
+      required: true,
+      hidden: false,
+    },
+    {
+      name: 'user',
+      required: true,
+      hidden: false,
+    },
+  ];
+
   static description = `
 Create API Key for any user (admin only)
 
@@ -48,12 +49,12 @@ This command is a simple wrapper around the above endpoint. Please view further 
     const client = await createClient();
 
     // Arguments
-    const namedArgs :Args = CreateApiKeyAdmin.args;
+    const namedArgs: Args = CreateApiKeyAdmin.args;
 
-    // apicall 
+    // apicall
     const apicall = client.apikeys.createApiKeyAdmin.bind(client.apikeys);
 
-    runApiCall.bind(this)({args, flags, namedArgs, apicall});
+    runApiCall.bind(this)({ args, flags, namedArgs, apicall });
   }
 }
 

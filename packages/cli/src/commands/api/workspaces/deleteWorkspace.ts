@@ -1,10 +1,10 @@
+/* eslint-disable unicorn/filename-case */
+
 // Generated file, please do not edit directly
 
 import { Command, flags } from '@oclif/command';
-import * as _ from 'lodash';
 import { createClient } from '@rockset/core';
 import { runApiCall, Args } from '../../../helper/util';
-
 
 class DeleteWorkspace extends Command {
   static flags = {
@@ -16,13 +16,14 @@ class DeleteWorkspace extends Command {
   };
 
   static args = [
-  {
-    "name": "workspace",
-    "description": "name of the workspace",
-    "required": true,
-    "hidden": false
-  }
-];
+    {
+      name: 'workspace',
+      description: 'name of the workspace',
+      required: true,
+      hidden: false,
+    },
+  ];
+
   static description = `
 Delete Workspace
 
@@ -43,12 +44,12 @@ This command is a simple wrapper around the above endpoint. Please view further 
     const client = await createClient();
 
     // Arguments
-    const namedArgs :Args = DeleteWorkspace.args;
+    const namedArgs: Args = DeleteWorkspace.args;
 
-    // apicall 
+    // apicall
     const apicall = client.workspaces.deleteWorkspace.bind(client.workspaces);
 
-    runApiCall.bind(this)({args, flags, namedArgs, apicall});
+    runApiCall.bind(this)({ args, flags, namedArgs, apicall });
   }
 }
 

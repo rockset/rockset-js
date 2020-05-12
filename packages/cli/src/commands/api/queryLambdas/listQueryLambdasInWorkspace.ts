@@ -1,10 +1,10 @@
+/* eslint-disable unicorn/filename-case */
+
 // Generated file, please do not edit directly
 
 import { Command, flags } from '@oclif/command';
-import * as _ from 'lodash';
 import { createClient } from '@rockset/core';
 import { runApiCall, Args } from '../../../helper/util';
-
 
 class ListQueryLambdasInWorkspace extends Command {
   static flags = {
@@ -16,13 +16,14 @@ class ListQueryLambdasInWorkspace extends Command {
   };
 
   static args = [
-  {
-    "name": "workspace",
-    "description": "name of the workspace",
-    "required": true,
-    "hidden": false
-  }
-];
+    {
+      name: 'workspace',
+      description: 'name of the workspace',
+      required: true,
+      hidden: false,
+    },
+  ];
+
   static description = `
 List Query Lambdas
 
@@ -43,12 +44,12 @@ This command is a simple wrapper around the above endpoint. Please view further 
     const client = await createClient();
 
     // Arguments
-    const namedArgs :Args = ListQueryLambdasInWorkspace.args;
+    const namedArgs: Args = ListQueryLambdasInWorkspace.args;
 
-    // apicall 
+    // apicall
     const apicall = client.queryLambdas.listQueryLambdasInWorkspace.bind(client.queryLambdas);
 
-    runApiCall.bind(this)({args, flags, namedArgs, apicall});
+    runApiCall.bind(this)({ args, flags, namedArgs, apicall });
   }
 }
 

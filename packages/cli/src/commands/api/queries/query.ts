@@ -1,10 +1,10 @@
+/* eslint-disable unicorn/filename-case */
+
 // Generated file, please do not edit directly
 
 import { Command, flags } from '@oclif/command';
-import * as _ from 'lodash';
 import { createClient } from '@rockset/core';
 import { runApiCall, Args } from '../../../helper/util';
-
 
 class Query extends Command {
   static flags = {
@@ -16,13 +16,14 @@ class Query extends Command {
   };
 
   static args = [
-  {
-    "name": "body",
-    "description": "JSON object",
-    "required": true,
-    "hidden": false
-  }
-];
+    {
+      name: 'body',
+      description: 'JSON object',
+      required: true,
+      hidden: false,
+    },
+  ];
+
   static description = `
 Query
 
@@ -43,12 +44,12 @@ This command is a simple wrapper around the above endpoint. Please view further 
     const client = await createClient();
 
     // Arguments
-    const namedArgs :Args = Query.args;
+    const namedArgs: Args = Query.args;
 
-    // apicall 
+    // apicall
     const apicall = client.queries.query.bind(client.queries);
 
-    runApiCall.bind(this)({args, flags, namedArgs, apicall});
+    runApiCall.bind(this)({ args, flags, namedArgs, apicall });
   }
 }
 

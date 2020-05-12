@@ -10,6 +10,8 @@
   "dependencies": {
     "@oclif/command": "^1.6.1",
     "@oclif/config": "^1.15.1",
+    "@oclif/errors": "^1.2.2",
+    "@oclif/parser": "^3.8.4",
     "@oclif/plugin-autocomplete": "^0.2.0",
     "@oclif/plugin-help": "^2.2.3",
     "@rockset/client": "^3.2.1",
@@ -31,7 +33,7 @@
     "typescript": "^3.8.3"
   },
   "engines": {
-    "node": ">=8.0.0"
+    "node": ">=10.1.0"
   },
   "files": [
     "/bin",
@@ -60,7 +62,8 @@
     "prepack": "rm -rf lib && tsc -b && oclif-dev manifest && oclif-dev readme",
     "test": "echo NO TESTS",
     "version": "oclif-dev readme && git add README.md",
-    "build": "oclif-dev pack"
+    "build": "npm run prepack",
+    "codegen": "rm -r src/commands/api/ && ts-node src/generator/generate.ts && eslint --fix src/commands/api/**/*.ts --no-ignore"
   },
   "types": "lib/index.d.ts"
 }

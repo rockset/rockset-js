@@ -1,10 +1,10 @@
+/* eslint-disable unicorn/filename-case */
+
 // Generated file, please do not edit directly
 
 import { Command, flags } from '@oclif/command';
-import * as _ from 'lodash';
 import { createClient } from '@rockset/core';
 import { runApiCall, Args } from '../../../helper/util';
-
 
 class AddDocuments extends Command {
   static flags = {
@@ -16,25 +16,26 @@ class AddDocuments extends Command {
   };
 
   static args = [
-  {
-    "name": "workspace",
-    "description": "name of the workspace",
-    "required": true,
-    "hidden": false
-  },
-  {
-    "name": "collection",
-    "description": "name of the collection",
-    "required": true,
-    "hidden": false
-  },
-  {
-    "name": "body",
-    "description": "JSON object",
-    "required": true,
-    "hidden": false
-  }
-];
+    {
+      name: 'workspace',
+      description: 'name of the workspace',
+      required: true,
+      hidden: false,
+    },
+    {
+      name: 'collection',
+      description: 'name of the collection',
+      required: true,
+      hidden: false,
+    },
+    {
+      name: 'body',
+      description: 'JSON object',
+      required: true,
+      hidden: false,
+    },
+  ];
+
   static description = `
 Add Documents
 
@@ -55,12 +56,12 @@ This command is a simple wrapper around the above endpoint. Please view further 
     const client = await createClient();
 
     // Arguments
-    const namedArgs :Args = AddDocuments.args;
+    const namedArgs: Args = AddDocuments.args;
 
-    // apicall 
+    // apicall
     const apicall = client.documents.addDocuments.bind(client.documents);
 
-    runApiCall.bind(this)({args, flags, namedArgs, apicall});
+    runApiCall.bind(this)({ args, flags, namedArgs, apicall });
   }
 }
 

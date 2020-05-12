@@ -12,12 +12,6 @@ module.exports = {
   },
   rules: {
     'dot-notation': 2,
-    'no-restricted-imports': [
-      'error',
-      {
-        patterns: ['../*'],
-      },
-    ],
     'prettier/prettier': [
       'error',
       {

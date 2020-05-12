@@ -1,10 +1,10 @@
+/* eslint-disable unicorn/filename-case */
+
 // Generated file, please do not edit directly
 
 import { Command, flags } from '@oclif/command';
-import * as _ from 'lodash';
 import { createClient } from '@rockset/core';
 import { runApiCall, Args } from '../../../helper/util';
-
 
 class ExecuteQueryLambda extends Command {
   static flags = {
@@ -16,31 +16,32 @@ class ExecuteQueryLambda extends Command {
   };
 
   static args = [
-  {
-    "name": "workspace",
-    "description": "name of the workspace",
-    "required": true,
-    "hidden": false
-  },
-  {
-    "name": "queryLambda",
-    "description": "name of the Query Lambda",
-    "required": true,
-    "hidden": false
-  },
-  {
-    "name": "version",
-    "description": "version",
-    "required": true,
-    "hidden": false
-  },
-  {
-    "name": "body",
-    "description": "JSON object",
-    "required": false,
-    "hidden": false
-  }
-];
+    {
+      name: 'workspace',
+      description: 'name of the workspace',
+      required: true,
+      hidden: false,
+    },
+    {
+      name: 'queryLambda',
+      description: 'name of the Query Lambda',
+      required: true,
+      hidden: false,
+    },
+    {
+      name: 'version',
+      description: 'version',
+      required: true,
+      hidden: false,
+    },
+    {
+      name: 'body',
+      description: 'JSON object',
+      required: false,
+      hidden: false,
+    },
+  ];
+
   static description = `
 Run Query Lambda
 
@@ -61,12 +62,12 @@ This command is a simple wrapper around the above endpoint. Please view further 
     const client = await createClient();
 
     // Arguments
-    const namedArgs :Args = ExecuteQueryLambda.args;
+    const namedArgs: Args = ExecuteQueryLambda.args;
 
-    // apicall 
+    // apicall
     const apicall = client.queryLambdas.executeQueryLambda.bind(client.queryLambdas);
 
-    runApiCall.bind(this)({args, flags, namedArgs, apicall});
+    runApiCall.bind(this)({ args, flags, namedArgs, apicall });
   }
 }
 
