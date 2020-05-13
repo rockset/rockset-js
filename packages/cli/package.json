@@ -17,8 +17,10 @@
     "@rockset/client": "^3.2.1",
     "@rockset/core": "^0.0.1",
     "@rockset/eslint-config": "^0.0.0",
+    "@types/prompts": "^2.0.8",
     "handlebars": "^4.7.6",
     "lodash": "^4.17.15",
+    "prompts": "^2.3.2",
     "tslib": "^1.11.2"
   },
   "devDependencies": {

@@ -1,4 +1,5 @@
 *-debug.log
+testLambdas
 *-error.log
 /.nyc_output
 /dist

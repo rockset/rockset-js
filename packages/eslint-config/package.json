@@ -10,7 +10,9 @@
     "access": "public"
   },
   "dependencies": {
-    "eslint-config-prettier": "^6.11.0"
+    "@types/prompts": "^2.0.8",
+    "eslint-config-prettier": "^6.11.0",
+    "prompts": "^2.3.2"
   },
   "devDependencies": {
     "eslint": "^7.0.0",
