@@ -16,5 +16,9 @@
   },
   "workspaces": [
     "packages/*"
-  ]
+  ],
+  "scripts": {
+    "build": "lerna run build",
+    "lint": "lerna run lint"
+  }
 }

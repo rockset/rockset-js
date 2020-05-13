@@ -3,3 +3,4 @@ node_modules
 dist
 lib
 lerna-debug.log
+yarn-error.log
