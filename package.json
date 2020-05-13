@@ -1,5 +1,5 @@
 {
-  "name": "root",
+  "name": "rockset",
   "private": true,
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^2.32.0",
@@ -13,5 +13,8 @@
     "eslint-plugin-react": "^7.19.0",
     "eslint-plugin-react-hooks": "^4.0.0",
     "lerna": "^3.20.2"
-  }
+  },
+  "workspaces": [
+    "packages/*"
+  ]
 }
