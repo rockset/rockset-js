@@ -2,7 +2,7 @@
 // Generated file, please do not edit directly
 
 import { Command, flags } from '@oclif/command';
-import { createClient } from '@rockset/core';
+import { main } from '@rockset/core';
 import { runApiCall, Args } from '../../../helper/util';
 
 class GetOrganization extends Command {
@@ -33,13 +33,13 @@ This command is a simple wrapper around the above endpoint. Please view further 
     const { args, flags } = this.parse(GetOrganization);
 
     // Rockset client object
-    const client = await createClient();
+    const client = await main.createClient();
 
     // Arguments
     const namedArgs: Args = GetOrganization.args;
 
     // apicall
-    const apicall = client.organizations.getOrganization.bind(client.organizations);
+    const apicall = client.orgs.getOrganization.bind(client.orgs);
 
     runApiCall.bind(this)({ args, flags, namedArgs, apicall });
   }

@@ -8,3 +8,4 @@ testLambdas
 /yarn.lock
 node_modules
 pkg-out
+oclif.manifest.json

@@ -2,7 +2,7 @@
 // Generated file, please do not edit directly
 
 import { Command, flags } from '@oclif/command';
-import { createClient } from '@rockset/core';
+import { main } from '@rockset/core';
 import { runApiCall, Args } from '../../../helper/util';
 
 
@@ -22,7 +22,7 @@ class {{{className}}} extends Command {
     const { args, flags } = this.parse({{{className}}});
 
     // Rockset client object
-    const client = await createClient();
+    const client = await main.createClient();
 
     // Arguments
     const namedArgs :Args = {{{className}}}.args;

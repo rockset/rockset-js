@@ -1,4 +1,4 @@
-import { Get } from './swaggerTypes';
+import { Get } from './swagger-types';
 import _ = require('lodash');
 import * as swagger from './swagger-generated.json';
 import * as Handlebars from 'handlebars';
@@ -20,7 +20,9 @@ async function generate() {
 
     const output = _.flatMap(paths, (path, endpoint: string) =>
       _.map(path, (get: Get, method: string) => {
-        const tag = _.camelCase(get.tags[0]).replace(/apiKey/, 'apikey');
+        const tag = _.camelCase(get.tags[0])
+          .replace(/apiKey/, 'apikey')
+          .replace(/organizations/, 'orgs');
         const operation = get.operationId;
         const apicall = `client.${tag}.${operation}.bind(client.${tag})`;
         const parameters = pp(
@@ -59,8 +61,8 @@ This command is a simple wrapper around the above endpoint. Please view further 
       await fs.mkdir(d, { recursive: true });
       fs.writeFile(p.join(d, `${out.filename}.ts`), out.value);
     });
-  } catch (e) {
-    console.log(e);
+  } catch (error) {
+    console.log(error);
   }
 }
 

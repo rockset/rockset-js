@@ -66,6 +66,7 @@
     "test": "echo NO TESTS",
     "version": "oclif-dev readme && git add README.md",
     "build": "npm run prepack",
+    "lint": "eslint src/**/*.ts",
     "codegen": "rm -r src/commands/api/ && ts-node src/generator/generate.ts && eslint --fix src/commands/api/**/*.ts --no-ignore"
   },
   "types": "lib/index.d.ts"

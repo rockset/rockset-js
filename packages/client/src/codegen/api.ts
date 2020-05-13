@@ -11,21 +11,21 @@
  * Do not edit the class manually.
  */
 
-import * as url from "url";
-import * as portableFetch from "portable-fetch";
-import { Configuration } from "./configuration";
+import * as url from 'url';
+import * as portableFetch from 'portable-fetch';
+import { Configuration } from './configuration';
 
-const BASE_PATH = "https://api.rs2.usw2.rockset.com".replace(/\/+$/, "");
+const BASE_PATH = 'https://api.rs2.usw2.rockset.com'.replace(/\/+$/, '');
 
 /**
  *
  * @export
  */
 export const COLLECTION_FORMATS = {
-  csv: ",",
-  ssv: " ",
-  tsv: "\t",
-  pipes: "|",
+  csv: ',',
+  ssv: ' ',
+  tsv: '\t',
+  pipes: '|',
 };
 
 /**
@@ -74,7 +74,7 @@ export class BaseAPI {
  * @extends {Error}
  */
 export class RequiredError extends Error {
-  name: "RequiredError";
+  name: 'RequiredError';
   constructor(public field: string, msg?: string) {
     super(msg);
   }
@@ -246,16 +246,16 @@ export namespace Collection {
    * @enum {string}
    */
   export enum StatusEnum {
-    INITIALIZED = <any>"INITIALIZED",
-    CREATED = <any>"CREATED",
-    READY = <any>"READY",
-    PAUSED = <any>"PAUSED",
-    DELETED = <any>"DELETED",
-    PAUSING = <any>"PAUSING",
-    RESUMING = <any>"RESUMING",
-    BULKINGESTMODE = <any>"BULK_INGEST_MODE",
-    EXITINGBULKINGESTMODE = <any>"EXITING_BULK_INGEST_MODE",
-    UNKNOWN = <any>"UNKNOWN",
+    INITIALIZED = <any>'INITIALIZED',
+    CREATED = <any>'CREATED',
+    READY = <any>'READY',
+    PAUSED = <any>'PAUSED',
+    DELETED = <any>'DELETED',
+    PAUSING = <any>'PAUSING',
+    RESUMING = <any>'RESUMING',
+    BULKINGESTMODE = <any>'BULK_INGEST_MODE',
+    EXITINGBULKINGESTMODE = <any>'EXITING_BULK_INGEST_MODE',
+    UNKNOWN = <any>'UNKNOWN',
   }
 }
 
@@ -657,17 +657,17 @@ export namespace CsvParams {
    * @enum {string}
    */
   export enum ColumnTypesEnum {
-    UNKNOWN = <any>"UNKNOWN",
-    BOOLEAN = <any>"BOOLEAN",
-    BOOL = <any>"BOOL",
-    INTEGER = <any>"INTEGER",
-    INT = <any>"INT",
-    FLOAT = <any>"FLOAT",
-    TIME = <any>"TIME",
-    DATE = <any>"DATE",
-    DATETIME = <any>"DATETIME",
-    TIMESTAMP = <any>"TIMESTAMP",
-    STRING = <any>"STRING",
+    UNKNOWN = <any>'UNKNOWN',
+    BOOLEAN = <any>'BOOLEAN',
+    BOOL = <any>'BOOL',
+    INTEGER = <any>'INTEGER',
+    INT = <any>'INT',
+    FLOAT = <any>'FLOAT',
+    TIME = <any>'TIME',
+    DATE = <any>'DATE',
+    DATETIME = <any>'DATETIME',
+    TIMESTAMP = <any>'TIMESTAMP',
+    STRING = <any>'STRING',
   }
 }
 
@@ -845,11 +845,11 @@ export namespace DocumentStatus {
    * @enum {string}
    */
   export enum StatusEnum {
-    ADDED = <any>"ADDED",
-    REPLACED = <any>"REPLACED",
-    DELETED = <any>"DELETED",
-    PATCHED = <any>"PATCHED",
-    ERROR = <any>"ERROR",
+    ADDED = <any>'ADDED',
+    REPLACED = <any>'REPLACED',
+    DELETED = <any>'DELETED',
+    PATCHED = <any>'PATCHED',
+    ERROR = <any>'ERROR',
   }
 }
 
@@ -921,25 +921,25 @@ export namespace ErrorModel {
    * @enum {string}
    */
   export enum TypeEnum {
-    AUTHEXCEPTION = <any>"AUTHEXCEPTION",
-    VERSIONEXCEPTION = <any>"VERSIONEXCEPTION",
-    INTERNALERROR = <any>"INTERNALERROR",
-    INVALIDINPUT = <any>"INVALIDINPUT",
-    NOTIMPLEMENTEDYET = <any>"NOTIMPLEMENTEDYET",
-    RESOURCEEXCEEDED = <any>"RESOURCEEXCEEDED",
-    ALREADYEXISTS = <any>"ALREADYEXISTS",
-    NOTFOUND = <any>"NOTFOUND",
-    DEPENDENTRESOURCES = <any>"DEPENDENTRESOURCES",
-    QUERYERROR = <any>"QUERY_ERROR",
-    NOTREADY = <any>"NOT_READY",
-    FORBIDDEN = <any>"FORBIDDEN",
-    QUERYTIMEOUT = <any>"QUERY_TIMEOUT",
-    INTEGRATIONNOTFOUND = <any>"INTEGRATION_NOT_FOUND",
-    ROLENOTFOUND = <any>"ROLE_NOT_FOUND",
-    CONNECTIONERROR = <any>"CONNECTION_ERROR",
-    CREATING = <any>"CREATING",
-    BADREQUEST = <any>"BADREQUEST",
-    RATELIMITEXCEEDED = <any>"RATELIMITEXCEEDED",
+    AUTHEXCEPTION = <any>'AUTHEXCEPTION',
+    VERSIONEXCEPTION = <any>'VERSIONEXCEPTION',
+    INTERNALERROR = <any>'INTERNALERROR',
+    INVALIDINPUT = <any>'INVALIDINPUT',
+    NOTIMPLEMENTEDYET = <any>'NOTIMPLEMENTEDYET',
+    RESOURCEEXCEEDED = <any>'RESOURCEEXCEEDED',
+    ALREADYEXISTS = <any>'ALREADYEXISTS',
+    NOTFOUND = <any>'NOTFOUND',
+    DEPENDENTRESOURCES = <any>'DEPENDENTRESOURCES',
+    QUERYERROR = <any>'QUERY_ERROR',
+    NOTREADY = <any>'NOT_READY',
+    FORBIDDEN = <any>'FORBIDDEN',
+    QUERYTIMEOUT = <any>'QUERY_TIMEOUT',
+    INTEGRATIONNOTFOUND = <any>'INTEGRATION_NOT_FOUND',
+    ROLENOTFOUND = <any>'ROLE_NOT_FOUND',
+    CONNECTIONERROR = <any>'CONNECTION_ERROR',
+    CREATING = <any>'CREATING',
+    BADREQUEST = <any>'BADREQUEST',
+    RATELIMITEXCEEDED = <any>'RATELIMITEXCEEDED',
   }
 }
 
@@ -1232,8 +1232,8 @@ export namespace InputField {
    * @enum {string}
    */
   export enum IfMissingEnum {
-    SKIP = <any>"SKIP",
-    PASS = <any>"PASS",
+    SKIP = <any>'SKIP',
+    PASS = <any>'PASS',
   }
 }
 
@@ -1359,8 +1359,8 @@ export namespace KafkaIntegration {
    * @enum {string}
    */
   export enum KafkaDataFormatEnum {
-    JSON = <any>"JSON",
-    AVRO = <any>"AVRO",
+    JSON = <any>'JSON',
+    AVRO = <any>'AVRO',
   }
 }
 
@@ -1628,12 +1628,12 @@ export namespace Organization {
    * @enum {string}
    */
   export enum StateEnum {
-    FREE = <any>"FREE",
-    PAID = <any>"PAID",
-    TRIAL = <any>"TRIAL",
-    TRIALEXPIRED = <any>"TRIAL_EXPIRED",
-    TRIALDEPLETED = <any>"TRIAL_DEPLETED",
-    DELETED = <any>"DELETED",
+    FREE = <any>'FREE',
+    PAID = <any>'PAID',
+    TRIAL = <any>'TRIAL',
+    TRIALEXPIRED = <any>'TRIAL_EXPIRED',
+    TRIALDEPLETED = <any>'TRIAL_DEPLETED',
+    DELETED = <any>'DELETED',
   }
 }
 
@@ -1687,8 +1687,8 @@ export namespace OutputField {
    * @enum {string}
    */
   export enum OnErrorEnum {
-    SKIP = <any>"SKIP",
-    FAIL = <any>"FAIL",
+    SKIP = <any>'SKIP',
+    FAIL = <any>'FAIL',
   }
 }
 
@@ -1782,12 +1782,12 @@ export namespace PatchOperation {
    * @enum {string}
    */
   export enum OpEnum {
-    ADD = <any>"ADD",
-    REPLACE = <any>"REPLACE",
-    REMOVE = <any>"REMOVE",
-    COPY = <any>"COPY",
-    MOVE = <any>"MOVE",
-    TEST = <any>"TEST",
+    ADD = <any>'ADD',
+    REPLACE = <any>'REPLACE',
+    REMOVE = <any>'REMOVE',
+    COPY = <any>'COPY',
+    MOVE = <any>'MOVE',
+    TEST = <any>'TEST',
   }
 }
 
@@ -1889,8 +1889,8 @@ export namespace QueryLambda {
    * @enum {string}
    */
   export enum StateEnum {
-    ACTIVE = <any>"ACTIVE",
-    ARCHIVED = <any>"ARCHIVED",
+    ACTIVE = <any>'ACTIVE',
+    ARCHIVED = <any>'ARCHIVED',
   }
 }
 
@@ -2570,11 +2570,11 @@ export namespace Status {
    * @enum {string}
    */
   export enum StateEnum {
-    INITIALIZING = <any>"INITIALIZING",
-    WATCHING = <any>"WATCHING",
-    PROCESSING = <any>"PROCESSING",
-    COMPLETED = <any>"COMPLETED",
-    ERROR = <any>"ERROR",
+    INITIALIZING = <any>'INITIALIZING',
+    WATCHING = <any>'WATCHING',
+    PROCESSING = <any>'PROCESSING',
+    COMPLETED = <any>'COMPLETED',
+    ERROR = <any>'ERROR',
   }
 }
 
@@ -2632,9 +2632,9 @@ export namespace StatusDynamoDb {
    * @enum {string}
    */
   export enum StateEnum {
-    INITIALIZING = <any>"INITIALIZING",
-    SCANNINGTABLE = <any>"SCANNING_TABLE",
-    PROCESSINGSTREAM = <any>"PROCESSING_STREAM",
+    INITIALIZING = <any>'INITIALIZING',
+    SCANNINGTABLE = <any>'SCANNING_TABLE',
+    PROCESSINGSTREAM = <any>'PROCESSING_STREAM',
   }
 }
 
@@ -2674,9 +2674,9 @@ export namespace StatusKafka {
    * @enum {string}
    */
   export enum StateEnum {
-    NODOCSYET = <any>"NO_DOCS_YET",
-    ACTIVE = <any>"ACTIVE",
-    DORMANT = <any>"DORMANT",
+    NODOCSYET = <any>'NO_DOCS_YET',
+    ACTIVE = <any>'ACTIVE',
+    DORMANT = <any>'DORMANT',
   }
 }
 
@@ -2784,9 +2784,9 @@ export namespace StatusMongoDb {
    * @enum {string}
    */
   export enum StateEnum {
-    INITIALIZING = <any>"INITIALIZING",
-    SCANNINGTABLE = <any>"SCANNING_TABLE",
-    PROCESSINGSTREAM = <any>"PROCESSING_STREAM",
+    INITIALIZING = <any>'INITIALIZING',
+    SCANNINGTABLE = <any>'SCANNING_TABLE',
+    PROCESSINGSTREAM = <any>'PROCESSING_STREAM',
   }
 }
 
@@ -2969,17 +2969,17 @@ export const ApiKeysApiFetchParamCreator = function (
       // verify required parameter 'body' is not null or undefined
       if (body === null || body === undefined) {
         throw new RequiredError(
-          "body",
-          "Required parameter body was null or undefined when calling createApiKey."
+          'body',
+          'Required parameter body was null or undefined when calling createApiKey.'
         );
       }
       const localVarPath = `/v1/orgs/self/users/self/apikeys`;
       const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = Object.assign({ method: "POST" }, options);
+      const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
-      localVarHeaderParameter["Content-Type"] = "application/json";
+      localVarHeaderParameter['Content-Type'] = 'application/json';
 
       localVarUrlObj.query = Object.assign(
         {},
@@ -2995,11 +2995,11 @@ export const ApiKeysApiFetchParamCreator = function (
         options.headers
       );
       const needsSerialization =
-        <any>"CreateApiKeyRequest" !== "string" ||
-        localVarRequestOptions.headers["Content-Type"] === "application/json";
+        <any>'CreateApiKeyRequest' !== 'string' ||
+        localVarRequestOptions.headers['Content-Type'] === 'application/json';
       localVarRequestOptions.body = needsSerialization
         ? JSON.stringify(body || {})
-        : body || "";
+        : body || '';
 
       return {
         url: url.format(localVarUrlObj),
@@ -3022,27 +3022,27 @@ export const ApiKeysApiFetchParamCreator = function (
       // verify required parameter 'body' is not null or undefined
       if (body === null || body === undefined) {
         throw new RequiredError(
-          "body",
-          "Required parameter body was null or undefined when calling createApiKeyAdmin."
+          'body',
+          'Required parameter body was null or undefined when calling createApiKeyAdmin.'
         );
       }
       // verify required parameter 'user' is not null or undefined
       if (user === null || user === undefined) {
         throw new RequiredError(
-          "user",
-          "Required parameter user was null or undefined when calling createApiKeyAdmin."
+          'user',
+          'Required parameter user was null or undefined when calling createApiKeyAdmin.'
         );
       }
       const localVarPath = `/v1/orgs/self/users/{user}/apikeys`.replace(
-        `{${"user"}}`,
+        `{${'user'}}`,
         encodeURIComponent(String(user))
       );
       const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = Object.assign({ method: "POST" }, options);
+      const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
-      localVarHeaderParameter["Content-Type"] = "application/json";
+      localVarHeaderParameter['Content-Type'] = 'application/json';
 
       localVarUrlObj.query = Object.assign(
         {},
@@ -3058,11 +3058,11 @@ export const ApiKeysApiFetchParamCreator = function (
         options.headers
       );
       const needsSerialization =
-        <any>"CreateApiKeyRequest" !== "string" ||
-        localVarRequestOptions.headers["Content-Type"] === "application/json";
+        <any>'CreateApiKeyRequest' !== 'string' ||
+        localVarRequestOptions.headers['Content-Type'] === 'application/json';
       localVarRequestOptions.body = needsSerialization
         ? JSON.stringify(body || {})
-        : body || "";
+        : body || '';
 
       return {
         url: url.format(localVarUrlObj),
@@ -3080,17 +3080,17 @@ export const ApiKeysApiFetchParamCreator = function (
       // verify required parameter 'name' is not null or undefined
       if (name === null || name === undefined) {
         throw new RequiredError(
-          "name",
-          "Required parameter name was null or undefined when calling deleteApiKey."
+          'name',
+          'Required parameter name was null or undefined when calling deleteApiKey.'
         );
       }
       const localVarPath = `/v1/orgs/self/users/self/apikeys/{name}`.replace(
-        `{${"name"}}`,
+        `{${'name'}}`,
         encodeURIComponent(String(name))
       );
       const localVarUrlObj = url.parse(localVarPath, true);
       const localVarRequestOptions = Object.assign(
-        { method: "DELETE" },
+        { method: 'DELETE' },
         options
       );
       const localVarHeaderParameter = {} as any;
@@ -3131,23 +3131,23 @@ export const ApiKeysApiFetchParamCreator = function (
       // verify required parameter 'name' is not null or undefined
       if (name === null || name === undefined) {
         throw new RequiredError(
-          "name",
-          "Required parameter name was null or undefined when calling deleteApiKeyAdmin."
+          'name',
+          'Required parameter name was null or undefined when calling deleteApiKeyAdmin.'
         );
       }
       // verify required parameter 'user' is not null or undefined
       if (user === null || user === undefined) {
         throw new RequiredError(
-          "user",
-          "Required parameter user was null or undefined when calling deleteApiKeyAdmin."
+          'user',
+          'Required parameter user was null or undefined when calling deleteApiKeyAdmin.'
         );
       }
       const localVarPath = `/v1/orgs/self/users/{user}/apikeys/{name}`
-        .replace(`{${"name"}}`, encodeURIComponent(String(name)))
-        .replace(`{${"user"}}`, encodeURIComponent(String(user)));
+        .replace(`{${'name'}}`, encodeURIComponent(String(name)))
+        .replace(`{${'user'}}`, encodeURIComponent(String(user)));
       const localVarUrlObj = url.parse(localVarPath, true);
       const localVarRequestOptions = Object.assign(
-        { method: "DELETE" },
+        { method: 'DELETE' },
         options
       );
       const localVarHeaderParameter = {} as any;
@@ -3181,7 +3181,7 @@ export const ApiKeysApiFetchParamCreator = function (
     listApiKeys(options: any = {}): FetchArgs {
       const localVarPath = `/v1/orgs/self/users/self/apikeys`;
       const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = Object.assign({ method: "GET" }, options);
+      const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
@@ -3215,16 +3215,16 @@ export const ApiKeysApiFetchParamCreator = function (
       // verify required parameter 'user' is not null or undefined
       if (user === null || user === undefined) {
         throw new RequiredError(
-          "user",
-          "Required parameter user was null or undefined when calling listApiKeysAdmin."
+          'user',
+          'Required parameter user was null or undefined when calling listApiKeysAdmin.'
         );
       }
       const localVarPath = `/v1/orgs/self/users/{user}/apikeys`.replace(
-        `{${"user"}}`,
+        `{${'user'}}`,
         encodeURIComponent(String(user))
       );
       const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = Object.assign({ method: "GET" }, options);
+      const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
@@ -3661,27 +3661,27 @@ export const CollectionsApiFetchParamCreator = function (
       // verify required parameter 'workspace' is not null or undefined
       if (workspace === null || workspace === undefined) {
         throw new RequiredError(
-          "workspace",
-          "Required parameter workspace was null or undefined when calling createCollection."
+          'workspace',
+          'Required parameter workspace was null or undefined when calling createCollection.'
         );
       }
       // verify required parameter 'body' is not null or undefined
       if (body === null || body === undefined) {
         throw new RequiredError(
-          "body",
-          "Required parameter body was null or undefined when calling createCollection."
+          'body',
+          'Required parameter body was null or undefined when calling createCollection.'
         );
       }
       const localVarPath = `/v1/orgs/self/ws/{workspace}/collections`.replace(
-        `{${"workspace"}}`,
+        `{${'workspace'}}`,
         encodeURIComponent(String(workspace))
       );
       const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = Object.assign({ method: "POST" }, options);
+      const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
-      localVarHeaderParameter["Content-Type"] = "application/json";
+      localVarHeaderParameter['Content-Type'] = 'application/json';
 
       localVarUrlObj.query = Object.assign(
         {},
@@ -3697,11 +3697,11 @@ export const CollectionsApiFetchParamCreator = function (
         options.headers
       );
       const needsSerialization =
-        <any>"CreateCollectionRequest" !== "string" ||
-        localVarRequestOptions.headers["Content-Type"] === "application/json";
+        <any>'CreateCollectionRequest' !== 'string' ||
+        localVarRequestOptions.headers['Content-Type'] === 'application/json';
       localVarRequestOptions.body = needsSerialization
         ? JSON.stringify(body || {})
-        : body || "";
+        : body || '';
 
       return {
         url: url.format(localVarUrlObj),
@@ -3724,23 +3724,23 @@ export const CollectionsApiFetchParamCreator = function (
       // verify required parameter 'workspace' is not null or undefined
       if (workspace === null || workspace === undefined) {
         throw new RequiredError(
-          "workspace",
-          "Required parameter workspace was null or undefined when calling deleteCollection."
+          'workspace',
+          'Required parameter workspace was null or undefined when calling deleteCollection.'
         );
       }
       // verify required parameter 'collection' is not null or undefined
       if (collection === null || collection === undefined) {
         throw new RequiredError(
-          "collection",
-          "Required parameter collection was null or undefined when calling deleteCollection."
+          'collection',
+          'Required parameter collection was null or undefined when calling deleteCollection.'
         );
       }
       const localVarPath = `/v1/orgs/self/ws/{workspace}/collections/{collection}`
-        .replace(`{${"workspace"}}`, encodeURIComponent(String(workspace)))
-        .replace(`{${"collection"}}`, encodeURIComponent(String(collection)));
+        .replace(`{${'workspace'}}`, encodeURIComponent(String(workspace)))
+        .replace(`{${'collection'}}`, encodeURIComponent(String(collection)));
       const localVarUrlObj = url.parse(localVarPath, true);
       const localVarRequestOptions = Object.assign(
-        { method: "DELETE" },
+        { method: 'DELETE' },
         options
       );
       const localVarHeaderParameter = {} as any;
@@ -3781,22 +3781,22 @@ export const CollectionsApiFetchParamCreator = function (
       // verify required parameter 'workspace' is not null or undefined
       if (workspace === null || workspace === undefined) {
         throw new RequiredError(
-          "workspace",
-          "Required parameter workspace was null or undefined when calling getCollection."
+          'workspace',
+          'Required parameter workspace was null or undefined when calling getCollection.'
         );
       }
       // verify required parameter 'collection' is not null or undefined
       if (collection === null || collection === undefined) {
         throw new RequiredError(
-          "collection",
-          "Required parameter collection was null or undefined when calling getCollection."
+          'collection',
+          'Required parameter collection was null or undefined when calling getCollection.'
         );
       }
       const localVarPath = `/v1/orgs/self/ws/{workspace}/collections/{collection}`
-        .replace(`{${"workspace"}}`, encodeURIComponent(String(workspace)))
-        .replace(`{${"collection"}}`, encodeURIComponent(String(collection)));
+        .replace(`{${'workspace'}}`, encodeURIComponent(String(workspace)))
+        .replace(`{${'collection'}}`, encodeURIComponent(String(collection)));
       const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = Object.assign({ method: "GET" }, options);
+      const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
@@ -3828,7 +3828,7 @@ export const CollectionsApiFetchParamCreator = function (
     listCollections(options: any = {}): FetchArgs {
       const localVarPath = `/v1/orgs/self/collections`;
       const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = Object.assign({ method: "GET" }, options);
+      const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
@@ -3867,22 +3867,22 @@ export const CollectionsApiFetchParamCreator = function (
       // verify required parameter 'workspace' is not null or undefined
       if (workspace === null || workspace === undefined) {
         throw new RequiredError(
-          "workspace",
-          "Required parameter workspace was null or undefined when calling listQueryLambdasInCollection."
+          'workspace',
+          'Required parameter workspace was null or undefined when calling listQueryLambdasInCollection.'
         );
       }
       // verify required parameter 'collection' is not null or undefined
       if (collection === null || collection === undefined) {
         throw new RequiredError(
-          "collection",
-          "Required parameter collection was null or undefined when calling listQueryLambdasInCollection."
+          'collection',
+          'Required parameter collection was null or undefined when calling listQueryLambdasInCollection.'
         );
       }
       const localVarPath = `/v1/orgs/self/ws/{workspace}/collections/{collection}/lambdas`
-        .replace(`{${"workspace"}}`, encodeURIComponent(String(workspace)))
-        .replace(`{${"collection"}}`, encodeURIComponent(String(collection)));
+        .replace(`{${'workspace'}}`, encodeURIComponent(String(workspace)))
+        .replace(`{${'collection'}}`, encodeURIComponent(String(collection)));
       const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = Object.assign({ method: "GET" }, options);
+      const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
@@ -3916,16 +3916,16 @@ export const CollectionsApiFetchParamCreator = function (
       // verify required parameter 'workspace' is not null or undefined
       if (workspace === null || workspace === undefined) {
         throw new RequiredError(
-          "workspace",
-          "Required parameter workspace was null or undefined when calling workspaceCollections."
+          'workspace',
+          'Required parameter workspace was null or undefined when calling workspaceCollections.'
         );
       }
       const localVarPath = `/v1/orgs/self/ws/{workspace}/collections`.replace(
-        `{${"workspace"}}`,
+        `{${'workspace'}}`,
         encodeURIComponent(String(workspace))
       );
       const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = Object.assign({ method: "GET" }, options);
+      const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
@@ -4410,33 +4410,33 @@ export const DocumentsApiFetchParamCreator = function (
       // verify required parameter 'workspace' is not null or undefined
       if (workspace === null || workspace === undefined) {
         throw new RequiredError(
-          "workspace",
-          "Required parameter workspace was null or undefined when calling addDocuments."
+          'workspace',
+          'Required parameter workspace was null or undefined when calling addDocuments.'
         );
       }
       // verify required parameter 'collection' is not null or undefined
       if (collection === null || collection === undefined) {
         throw new RequiredError(
-          "collection",
-          "Required parameter collection was null or undefined when calling addDocuments."
+          'collection',
+          'Required parameter collection was null or undefined when calling addDocuments.'
         );
       }
       // verify required parameter 'body' is not null or undefined
       if (body === null || body === undefined) {
         throw new RequiredError(
-          "body",
-          "Required parameter body was null or undefined when calling addDocuments."
+          'body',
+          'Required parameter body was null or undefined when calling addDocuments.'
         );
       }
       const localVarPath = `/v1/orgs/self/ws/{workspace}/collections/{collection}/docs`
-        .replace(`{${"workspace"}}`, encodeURIComponent(String(workspace)))
-        .replace(`{${"collection"}}`, encodeURIComponent(String(collection)));
+        .replace(`{${'workspace'}}`, encodeURIComponent(String(workspace)))
+        .replace(`{${'collection'}}`, encodeURIComponent(String(collection)));
       const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = Object.assign({ method: "POST" }, options);
+      const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
-      localVarHeaderParameter["Content-Type"] = "application/json";
+      localVarHeaderParameter['Content-Type'] = 'application/json';
 
       localVarUrlObj.query = Object.assign(
         {},
@@ -4452,11 +4452,11 @@ export const DocumentsApiFetchParamCreator = function (
         options.headers
       );
       const needsSerialization =
-        <any>"AddDocumentsRequest" !== "string" ||
-        localVarRequestOptions.headers["Content-Type"] === "application/json";
+        <any>'AddDocumentsRequest' !== 'string' ||
+        localVarRequestOptions.headers['Content-Type'] === 'application/json';
       localVarRequestOptions.body = needsSerialization
         ? JSON.stringify(body || {})
-        : body || "";
+        : body || '';
 
       return {
         url: url.format(localVarUrlObj),
@@ -4481,36 +4481,36 @@ export const DocumentsApiFetchParamCreator = function (
       // verify required parameter 'workspace' is not null or undefined
       if (workspace === null || workspace === undefined) {
         throw new RequiredError(
-          "workspace",
-          "Required parameter workspace was null or undefined when calling deleteDocuments."
+          'workspace',
+          'Required parameter workspace was null or undefined when calling deleteDocuments.'
         );
       }
       // verify required parameter 'collection' is not null or undefined
       if (collection === null || collection === undefined) {
         throw new RequiredError(
-          "collection",
-          "Required parameter collection was null or undefined when calling deleteDocuments."
+          'collection',
+          'Required parameter collection was null or undefined when calling deleteDocuments.'
         );
       }
       // verify required parameter 'body' is not null or undefined
       if (body === null || body === undefined) {
         throw new RequiredError(
-          "body",
-          "Required parameter body was null or undefined when calling deleteDocuments."
+          'body',
+          'Required parameter body was null or undefined when calling deleteDocuments.'
         );
       }
       const localVarPath = `/v1/orgs/self/ws/{workspace}/collections/{collection}/docs`
-        .replace(`{${"workspace"}}`, encodeURIComponent(String(workspace)))
-        .replace(`{${"collection"}}`, encodeURIComponent(String(collection)));
+        .replace(`{${'workspace'}}`, encodeURIComponent(String(workspace)))
+        .replace(`{${'collection'}}`, encodeURIComponent(String(collection)));
       const localVarUrlObj = url.parse(localVarPath, true);
       const localVarRequestOptions = Object.assign(
-        { method: "DELETE" },
+        { method: 'DELETE' },
         options
       );
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
-      localVarHeaderParameter["Content-Type"] = "application/json";
+      localVarHeaderParameter['Content-Type'] = 'application/json';
 
       localVarUrlObj.query = Object.assign(
         {},
@@ -4526,11 +4526,11 @@ export const DocumentsApiFetchParamCreator = function (
         options.headers
       );
       const needsSerialization =
-        <any>"DeleteDocumentsRequest" !== "string" ||
-        localVarRequestOptions.headers["Content-Type"] === "application/json";
+        <any>'DeleteDocumentsRequest' !== 'string' ||
+        localVarRequestOptions.headers['Content-Type'] === 'application/json';
       localVarRequestOptions.body = needsSerialization
         ? JSON.stringify(body || {})
-        : body || "";
+        : body || '';
 
       return {
         url: url.format(localVarUrlObj),
@@ -4555,36 +4555,36 @@ export const DocumentsApiFetchParamCreator = function (
       // verify required parameter 'workspace' is not null or undefined
       if (workspace === null || workspace === undefined) {
         throw new RequiredError(
-          "workspace",
-          "Required parameter workspace was null or undefined when calling patchDocuments."
+          'workspace',
+          'Required parameter workspace was null or undefined when calling patchDocuments.'
         );
       }
       // verify required parameter 'collection' is not null or undefined
       if (collection === null || collection === undefined) {
         throw new RequiredError(
-          "collection",
-          "Required parameter collection was null or undefined when calling patchDocuments."
+          'collection',
+          'Required parameter collection was null or undefined when calling patchDocuments.'
         );
       }
       // verify required parameter 'body' is not null or undefined
       if (body === null || body === undefined) {
         throw new RequiredError(
-          "body",
-          "Required parameter body was null or undefined when calling patchDocuments."
+          'body',
+          'Required parameter body was null or undefined when calling patchDocuments.'
         );
       }
       const localVarPath = `/v1/orgs/self/ws/{workspace}/collections/{collection}/docs`
-        .replace(`{${"workspace"}}`, encodeURIComponent(String(workspace)))
-        .replace(`{${"collection"}}`, encodeURIComponent(String(collection)));
+        .replace(`{${'workspace'}}`, encodeURIComponent(String(workspace)))
+        .replace(`{${'collection'}}`, encodeURIComponent(String(collection)));
       const localVarUrlObj = url.parse(localVarPath, true);
       const localVarRequestOptions = Object.assign(
-        { method: "PATCH" },
+        { method: 'PATCH' },
         options
       );
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
-      localVarHeaderParameter["Content-Type"] = "application/json";
+      localVarHeaderParameter['Content-Type'] = 'application/json';
 
       localVarUrlObj.query = Object.assign(
         {},
@@ -4600,11 +4600,11 @@ export const DocumentsApiFetchParamCreator = function (
         options.headers
       );
       const needsSerialization =
-        <any>"PatchDocumentsRequest" !== "string" ||
-        localVarRequestOptions.headers["Content-Type"] === "application/json";
+        <any>'PatchDocumentsRequest' !== 'string' ||
+        localVarRequestOptions.headers['Content-Type'] === 'application/json';
       localVarRequestOptions.body = needsSerialization
         ? JSON.stringify(body || {})
-        : body || "";
+        : body || '';
 
       return {
         url: url.format(localVarUrlObj),
@@ -4912,17 +4912,17 @@ export const IntegrationsApiFetchParamCreator = function (
       // verify required parameter 'body' is not null or undefined
       if (body === null || body === undefined) {
         throw new RequiredError(
-          "body",
-          "Required parameter body was null or undefined when calling createIntegration."
+          'body',
+          'Required parameter body was null or undefined when calling createIntegration.'
         );
       }
       const localVarPath = `/v1/orgs/self/integrations`;
       const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = Object.assign({ method: "POST" }, options);
+      const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
-      localVarHeaderParameter["Content-Type"] = "application/json";
+      localVarHeaderParameter['Content-Type'] = 'application/json';
 
       localVarUrlObj.query = Object.assign(
         {},
@@ -4938,11 +4938,11 @@ export const IntegrationsApiFetchParamCreator = function (
         options.headers
       );
       const needsSerialization =
-        <any>"CreateIntegrationRequest" !== "string" ||
-        localVarRequestOptions.headers["Content-Type"] === "application/json";
+        <any>'CreateIntegrationRequest' !== 'string' ||
+        localVarRequestOptions.headers['Content-Type'] === 'application/json';
       localVarRequestOptions.body = needsSerialization
         ? JSON.stringify(body || {})
-        : body || "";
+        : body || '';
 
       return {
         url: url.format(localVarUrlObj),
@@ -4960,17 +4960,17 @@ export const IntegrationsApiFetchParamCreator = function (
       // verify required parameter 'integration' is not null or undefined
       if (integration === null || integration === undefined) {
         throw new RequiredError(
-          "integration",
-          "Required parameter integration was null or undefined when calling deleteIntegration."
+          'integration',
+          'Required parameter integration was null or undefined when calling deleteIntegration.'
         );
       }
       const localVarPath = `/v1/orgs/self/integrations/{integration}`.replace(
-        `{${"integration"}}`,
+        `{${'integration'}}`,
         encodeURIComponent(String(integration))
       );
       const localVarUrlObj = url.parse(localVarPath, true);
       const localVarRequestOptions = Object.assign(
-        { method: "DELETE" },
+        { method: 'DELETE' },
         options
       );
       const localVarHeaderParameter = {} as any;
@@ -5006,16 +5006,16 @@ export const IntegrationsApiFetchParamCreator = function (
       // verify required parameter 'integration' is not null or undefined
       if (integration === null || integration === undefined) {
         throw new RequiredError(
-          "integration",
-          "Required parameter integration was null or undefined when calling getIntegration."
+          'integration',
+          'Required parameter integration was null or undefined when calling getIntegration.'
         );
       }
       const localVarPath = `/v1/orgs/self/integrations/{integration}`.replace(
-        `{${"integration"}}`,
+        `{${'integration'}}`,
         encodeURIComponent(String(integration))
       );
       const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = Object.assign({ method: "GET" }, options);
+      const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
@@ -5047,7 +5047,7 @@ export const IntegrationsApiFetchParamCreator = function (
     listIntegrations(options: any = {}): FetchArgs {
       const localVarPath = `/v1/orgs/self/integrations`;
       const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = Object.assign({ method: "GET" }, options);
+      const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
@@ -5360,7 +5360,7 @@ export const OrganizationsApiFetchParamCreator = function (
     getOrganization(options: any = {}): FetchArgs {
       const localVarPath = `/v1/orgs/self`;
       const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = Object.assign({ method: "GET" }, options);
+      const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
@@ -5489,17 +5489,17 @@ export const QueriesApiFetchParamCreator = function (
       // verify required parameter 'body' is not null or undefined
       if (body === null || body === undefined) {
         throw new RequiredError(
-          "body",
-          "Required parameter body was null or undefined when calling query."
+          'body',
+          'Required parameter body was null or undefined when calling query.'
         );
       }
       const localVarPath = `/v1/orgs/self/queries`;
       const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = Object.assign({ method: "POST" }, options);
+      const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
-      localVarHeaderParameter["Content-Type"] = "application/json";
+      localVarHeaderParameter['Content-Type'] = 'application/json';
 
       localVarUrlObj.query = Object.assign(
         {},
@@ -5515,11 +5515,11 @@ export const QueriesApiFetchParamCreator = function (
         options.headers
       );
       const needsSerialization =
-        <any>"QueryRequest" !== "string" ||
-        localVarRequestOptions.headers["Content-Type"] === "application/json";
+        <any>'QueryRequest' !== 'string' ||
+        localVarRequestOptions.headers['Content-Type'] === 'application/json';
       localVarRequestOptions.body = needsSerialization
         ? JSON.stringify(body || {})
-        : body || "";
+        : body || '';
 
       return {
         url: url.format(localVarUrlObj),
@@ -5638,27 +5638,27 @@ export const QueryLambdasApiFetchParamCreator = function (
       // verify required parameter 'workspace' is not null or undefined
       if (workspace === null || workspace === undefined) {
         throw new RequiredError(
-          "workspace",
-          "Required parameter workspace was null or undefined when calling createQueryLambda."
+          'workspace',
+          'Required parameter workspace was null or undefined when calling createQueryLambda.'
         );
       }
       // verify required parameter 'body' is not null or undefined
       if (body === null || body === undefined) {
         throw new RequiredError(
-          "body",
-          "Required parameter body was null or undefined when calling createQueryLambda."
+          'body',
+          'Required parameter body was null or undefined when calling createQueryLambda.'
         );
       }
       const localVarPath = `/v1/orgs/self/ws/{workspace}/lambdas`.replace(
-        `{${"workspace"}}`,
+        `{${'workspace'}}`,
         encodeURIComponent(String(workspace))
       );
       const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = Object.assign({ method: "POST" }, options);
+      const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
-      localVarHeaderParameter["Content-Type"] = "application/json";
+      localVarHeaderParameter['Content-Type'] = 'application/json';
 
       localVarUrlObj.query = Object.assign(
         {},
@@ -5674,11 +5674,11 @@ export const QueryLambdasApiFetchParamCreator = function (
         options.headers
       );
       const needsSerialization =
-        <any>"CreateQueryLambdaRequest" !== "string" ||
-        localVarRequestOptions.headers["Content-Type"] === "application/json";
+        <any>'CreateQueryLambdaRequest' !== 'string' ||
+        localVarRequestOptions.headers['Content-Type'] === 'application/json';
       localVarRequestOptions.body = needsSerialization
         ? JSON.stringify(body || {})
-        : body || "";
+        : body || '';
 
       return {
         url: url.format(localVarUrlObj),
@@ -5701,23 +5701,23 @@ export const QueryLambdasApiFetchParamCreator = function (
       // verify required parameter 'workspace' is not null or undefined
       if (workspace === null || workspace === undefined) {
         throw new RequiredError(
-          "workspace",
-          "Required parameter workspace was null or undefined when calling deleteQueryLambda."
+          'workspace',
+          'Required parameter workspace was null or undefined when calling deleteQueryLambda.'
         );
       }
       // verify required parameter 'queryLambda' is not null or undefined
       if (queryLambda === null || queryLambda === undefined) {
         throw new RequiredError(
-          "queryLambda",
-          "Required parameter queryLambda was null or undefined when calling deleteQueryLambda."
+          'queryLambda',
+          'Required parameter queryLambda was null or undefined when calling deleteQueryLambda.'
         );
       }
       const localVarPath = `/v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}`
-        .replace(`{${"workspace"}}`, encodeURIComponent(String(workspace)))
-        .replace(`{${"queryLambda"}}`, encodeURIComponent(String(queryLambda)));
+        .replace(`{${'workspace'}}`, encodeURIComponent(String(workspace)))
+        .replace(`{${'queryLambda'}}`, encodeURIComponent(String(queryLambda)));
       const localVarUrlObj = url.parse(localVarPath, true);
       const localVarRequestOptions = Object.assign(
-        { method: "DELETE" },
+        { method: 'DELETE' },
         options
       );
       const localVarHeaderParameter = {} as any;
@@ -5762,34 +5762,34 @@ export const QueryLambdasApiFetchParamCreator = function (
       // verify required parameter 'workspace' is not null or undefined
       if (workspace === null || workspace === undefined) {
         throw new RequiredError(
-          "workspace",
-          "Required parameter workspace was null or undefined when calling executeQueryLambda."
+          'workspace',
+          'Required parameter workspace was null or undefined when calling executeQueryLambda.'
         );
       }
       // verify required parameter 'queryLambda' is not null or undefined
       if (queryLambda === null || queryLambda === undefined) {
         throw new RequiredError(
-          "queryLambda",
-          "Required parameter queryLambda was null or undefined when calling executeQueryLambda."
+          'queryLambda',
+          'Required parameter queryLambda was null or undefined when calling executeQueryLambda.'
         );
       }
       // verify required parameter 'version' is not null or undefined
       if (version === null || version === undefined) {
         throw new RequiredError(
-          "version",
-          "Required parameter version was null or undefined when calling executeQueryLambda."
+          'version',
+          'Required parameter version was null or undefined when calling executeQueryLambda.'
         );
       }
       const localVarPath = `/v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/versions/{version}`
-        .replace(`{${"workspace"}}`, encodeURIComponent(String(workspace)))
-        .replace(`{${"queryLambda"}}`, encodeURIComponent(String(queryLambda)))
-        .replace(`{${"version"}}`, encodeURIComponent(String(version)));
+        .replace(`{${'workspace'}}`, encodeURIComponent(String(workspace)))
+        .replace(`{${'queryLambda'}}`, encodeURIComponent(String(queryLambda)))
+        .replace(`{${'version'}}`, encodeURIComponent(String(version)));
       const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = Object.assign({ method: "POST" }, options);
+      const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
-      localVarHeaderParameter["Content-Type"] = "application/json";
+      localVarHeaderParameter['Content-Type'] = 'application/json';
 
       localVarUrlObj.query = Object.assign(
         {},
@@ -5805,11 +5805,11 @@ export const QueryLambdasApiFetchParamCreator = function (
         options.headers
       );
       const needsSerialization =
-        <any>"ExecuteQueryLambdaRequest" !== "string" ||
-        localVarRequestOptions.headers["Content-Type"] === "application/json";
+        <any>'ExecuteQueryLambdaRequest' !== 'string' ||
+        localVarRequestOptions.headers['Content-Type'] === 'application/json';
       localVarRequestOptions.body = needsSerialization
         ? JSON.stringify(body || {})
-        : body || "";
+        : body || '';
 
       return {
         url: url.format(localVarUrlObj),
@@ -5834,30 +5834,30 @@ export const QueryLambdasApiFetchParamCreator = function (
       // verify required parameter 'workspace' is not null or undefined
       if (workspace === null || workspace === undefined) {
         throw new RequiredError(
-          "workspace",
-          "Required parameter workspace was null or undefined when calling getQueryLambdaVersion."
+          'workspace',
+          'Required parameter workspace was null or undefined when calling getQueryLambdaVersion.'
         );
       }
       // verify required parameter 'queryLambda' is not null or undefined
       if (queryLambda === null || queryLambda === undefined) {
         throw new RequiredError(
-          "queryLambda",
-          "Required parameter queryLambda was null or undefined when calling getQueryLambdaVersion."
+          'queryLambda',
+          'Required parameter queryLambda was null or undefined when calling getQueryLambdaVersion.'
         );
       }
       // verify required parameter 'version' is not null or undefined
       if (version === null || version === undefined) {
         throw new RequiredError(
-          "version",
-          "Required parameter version was null or undefined when calling getQueryLambdaVersion."
+          'version',
+          'Required parameter version was null or undefined when calling getQueryLambdaVersion.'
         );
       }
       const localVarPath = `/v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/versions/{version}`
-        .replace(`{${"workspace"}}`, encodeURIComponent(String(workspace)))
-        .replace(`{${"queryLambda"}}`, encodeURIComponent(String(queryLambda)))
-        .replace(`{${"version"}}`, encodeURIComponent(String(version)));
+        .replace(`{${'workspace'}}`, encodeURIComponent(String(workspace)))
+        .replace(`{${'queryLambda'}}`, encodeURIComponent(String(queryLambda)))
+        .replace(`{${'version'}}`, encodeURIComponent(String(version)));
       const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = Object.assign({ method: "GET" }, options);
+      const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
@@ -5889,7 +5889,7 @@ export const QueryLambdasApiFetchParamCreator = function (
     listAllQueryLambdas(options: any = {}): FetchArgs {
       const localVarPath = `/v1/orgs/self/lambdas`;
       const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = Object.assign({ method: "GET" }, options);
+      const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
@@ -5928,22 +5928,22 @@ export const QueryLambdasApiFetchParamCreator = function (
       // verify required parameter 'workspace' is not null or undefined
       if (workspace === null || workspace === undefined) {
         throw new RequiredError(
-          "workspace",
-          "Required parameter workspace was null or undefined when calling listQueryLambdaVersions."
+          'workspace',
+          'Required parameter workspace was null or undefined when calling listQueryLambdaVersions.'
         );
       }
       // verify required parameter 'queryLambda' is not null or undefined
       if (queryLambda === null || queryLambda === undefined) {
         throw new RequiredError(
-          "queryLambda",
-          "Required parameter queryLambda was null or undefined when calling listQueryLambdaVersions."
+          'queryLambda',
+          'Required parameter queryLambda was null or undefined when calling listQueryLambdaVersions.'
         );
       }
       const localVarPath = `/v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/versions`
-        .replace(`{${"workspace"}}`, encodeURIComponent(String(workspace)))
-        .replace(`{${"queryLambda"}}`, encodeURIComponent(String(queryLambda)));
+        .replace(`{${'workspace'}}`, encodeURIComponent(String(workspace)))
+        .replace(`{${'queryLambda'}}`, encodeURIComponent(String(queryLambda)));
       const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = Object.assign({ method: "GET" }, options);
+      const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
@@ -5980,16 +5980,16 @@ export const QueryLambdasApiFetchParamCreator = function (
       // verify required parameter 'workspace' is not null or undefined
       if (workspace === null || workspace === undefined) {
         throw new RequiredError(
-          "workspace",
-          "Required parameter workspace was null or undefined when calling listQueryLambdasInWorkspace."
+          'workspace',
+          'Required parameter workspace was null or undefined when calling listQueryLambdasInWorkspace.'
         );
       }
       const localVarPath = `/v1/orgs/self/ws/{workspace}/lambdas`.replace(
-        `{${"workspace"}}`,
+        `{${'workspace'}}`,
         encodeURIComponent(String(workspace))
       );
       const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = Object.assign({ method: "GET" }, options);
+      const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
@@ -6030,33 +6030,33 @@ export const QueryLambdasApiFetchParamCreator = function (
       // verify required parameter 'workspace' is not null or undefined
       if (workspace === null || workspace === undefined) {
         throw new RequiredError(
-          "workspace",
-          "Required parameter workspace was null or undefined when calling updateQueryLambda."
+          'workspace',
+          'Required parameter workspace was null or undefined when calling updateQueryLambda.'
         );
       }
       // verify required parameter 'queryLambda' is not null or undefined
       if (queryLambda === null || queryLambda === undefined) {
         throw new RequiredError(
-          "queryLambda",
-          "Required parameter queryLambda was null or undefined when calling updateQueryLambda."
+          'queryLambda',
+          'Required parameter queryLambda was null or undefined when calling updateQueryLambda.'
         );
       }
       // verify required parameter 'body' is not null or undefined
       if (body === null || body === undefined) {
         throw new RequiredError(
-          "body",
-          "Required parameter body was null or undefined when calling updateQueryLambda."
+          'body',
+          'Required parameter body was null or undefined when calling updateQueryLambda.'
         );
       }
       const localVarPath = `/v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/versions`
-        .replace(`{${"workspace"}}`, encodeURIComponent(String(workspace)))
-        .replace(`{${"queryLambda"}}`, encodeURIComponent(String(queryLambda)));
+        .replace(`{${'workspace'}}`, encodeURIComponent(String(workspace)))
+        .replace(`{${'queryLambda'}}`, encodeURIComponent(String(queryLambda)));
       const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = Object.assign({ method: "POST" }, options);
+      const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
-      localVarHeaderParameter["Content-Type"] = "application/json";
+      localVarHeaderParameter['Content-Type'] = 'application/json';
 
       localVarUrlObj.query = Object.assign(
         {},
@@ -6072,11 +6072,11 @@ export const QueryLambdasApiFetchParamCreator = function (
         options.headers
       );
       const needsSerialization =
-        <any>"UpdateQueryLambdaRequest" !== "string" ||
-        localVarRequestOptions.headers["Content-Type"] === "application/json";
+        <any>'UpdateQueryLambdaRequest' !== 'string' ||
+        localVarRequestOptions.headers['Content-Type'] === 'application/json';
       localVarRequestOptions.body = needsSerialization
         ? JSON.stringify(body || {})
-        : body || "";
+        : body || '';
 
       return {
         url: url.format(localVarUrlObj),
@@ -6728,17 +6728,17 @@ export const UsersApiFetchParamCreator = function (
       // verify required parameter 'body' is not null or undefined
       if (body === null || body === undefined) {
         throw new RequiredError(
-          "body",
-          "Required parameter body was null or undefined when calling createUser."
+          'body',
+          'Required parameter body was null or undefined when calling createUser.'
         );
       }
       const localVarPath = `/v1/orgs/self/users`;
       const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = Object.assign({ method: "POST" }, options);
+      const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
-      localVarHeaderParameter["Content-Type"] = "application/json";
+      localVarHeaderParameter['Content-Type'] = 'application/json';
 
       localVarUrlObj.query = Object.assign(
         {},
@@ -6754,11 +6754,11 @@ export const UsersApiFetchParamCreator = function (
         options.headers
       );
       const needsSerialization =
-        <any>"CreateUserRequest" !== "string" ||
-        localVarRequestOptions.headers["Content-Type"] === "application/json";
+        <any>'CreateUserRequest' !== 'string' ||
+        localVarRequestOptions.headers['Content-Type'] === 'application/json';
       localVarRequestOptions.body = needsSerialization
         ? JSON.stringify(body || {})
-        : body || "";
+        : body || '';
 
       return {
         url: url.format(localVarUrlObj),
@@ -6776,17 +6776,17 @@ export const UsersApiFetchParamCreator = function (
       // verify required parameter 'user' is not null or undefined
       if (user === null || user === undefined) {
         throw new RequiredError(
-          "user",
-          "Required parameter user was null or undefined when calling deleteUser."
+          'user',
+          'Required parameter user was null or undefined when calling deleteUser.'
         );
       }
       const localVarPath = `/v1/orgs/self/users/{user}`.replace(
-        `{${"user"}}`,
+        `{${'user'}}`,
         encodeURIComponent(String(user))
       );
       const localVarUrlObj = url.parse(localVarPath, true);
       const localVarRequestOptions = Object.assign(
-        { method: "DELETE" },
+        { method: 'DELETE' },
         options
       );
       const localVarHeaderParameter = {} as any;
@@ -6820,7 +6820,7 @@ export const UsersApiFetchParamCreator = function (
     getCurrentUser(options: any = {}): FetchArgs {
       const localVarPath = `/v1/orgs/self/users/self`;
       const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = Object.assign({ method: "GET" }, options);
+      const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
@@ -6852,7 +6852,7 @@ export const UsersApiFetchParamCreator = function (
     listUsers(options: any = {}): FetchArgs {
       const localVarPath = `/v1/orgs/self/users`;
       const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = Object.assign({ method: "GET" }, options);
+      const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
@@ -7145,16 +7145,16 @@ export const WorkspacesApiFetchParamCreator = function (
       // verify required parameter 'workspace' is not null or undefined
       if (workspace === null || workspace === undefined) {
         throw new RequiredError(
-          "workspace",
-          "Required parameter workspace was null or undefined when calling childWorkspaces."
+          'workspace',
+          'Required parameter workspace was null or undefined when calling childWorkspaces.'
         );
       }
       const localVarPath = `/v1/orgs/self/ws/{workspace}/ws`.replace(
-        `{${"workspace"}}`,
+        `{${'workspace'}}`,
         encodeURIComponent(String(workspace))
       );
       const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = Object.assign({ method: "GET" }, options);
+      const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
@@ -7191,17 +7191,17 @@ export const WorkspacesApiFetchParamCreator = function (
       // verify required parameter 'body' is not null or undefined
       if (body === null || body === undefined) {
         throw new RequiredError(
-          "body",
-          "Required parameter body was null or undefined when calling createWorkspace."
+          'body',
+          'Required parameter body was null or undefined when calling createWorkspace.'
         );
       }
       const localVarPath = `/v1/orgs/self/ws`;
       const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = Object.assign({ method: "POST" }, options);
+      const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
-      localVarHeaderParameter["Content-Type"] = "application/json";
+      localVarHeaderParameter['Content-Type'] = 'application/json';
 
       localVarUrlObj.query = Object.assign(
         {},
@@ -7217,11 +7217,11 @@ export const WorkspacesApiFetchParamCreator = function (
         options.headers
       );
       const needsSerialization =
-        <any>"CreateWorkspaceRequest" !== "string" ||
-        localVarRequestOptions.headers["Content-Type"] === "application/json";
+        <any>'CreateWorkspaceRequest' !== 'string' ||
+        localVarRequestOptions.headers['Content-Type'] === 'application/json';
       localVarRequestOptions.body = needsSerialization
         ? JSON.stringify(body || {})
-        : body || "";
+        : body || '';
 
       return {
         url: url.format(localVarUrlObj),
@@ -7239,17 +7239,17 @@ export const WorkspacesApiFetchParamCreator = function (
       // verify required parameter 'workspace' is not null or undefined
       if (workspace === null || workspace === undefined) {
         throw new RequiredError(
-          "workspace",
-          "Required parameter workspace was null or undefined when calling deleteWorkspace."
+          'workspace',
+          'Required parameter workspace was null or undefined when calling deleteWorkspace.'
         );
       }
       const localVarPath = `/v1/orgs/self/ws/{workspace}`.replace(
-        `{${"workspace"}}`,
+        `{${'workspace'}}`,
         encodeURIComponent(String(workspace))
       );
       const localVarUrlObj = url.parse(localVarPath, true);
       const localVarRequestOptions = Object.assign(
-        { method: "DELETE" },
+        { method: 'DELETE' },
         options
       );
       const localVarHeaderParameter = {} as any;
@@ -7285,16 +7285,16 @@ export const WorkspacesApiFetchParamCreator = function (
       // verify required parameter 'workspace' is not null or undefined
       if (workspace === null || workspace === undefined) {
         throw new RequiredError(
-          "workspace",
-          "Required parameter workspace was null or undefined when calling getWorkspace."
+          'workspace',
+          'Required parameter workspace was null or undefined when calling getWorkspace.'
         );
       }
       const localVarPath = `/v1/orgs/self/ws/{workspace}`.replace(
-        `{${"workspace"}}`,
+        `{${'workspace'}}`,
         encodeURIComponent(String(workspace))
       );
       const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = Object.assign({ method: "GET" }, options);
+      const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
@@ -7326,7 +7326,7 @@ export const WorkspacesApiFetchParamCreator = function (
     listWorkspaces(options: any = {}): FetchArgs {
       const localVarPath = `/v1/orgs/self/ws`;
       const localVarUrlObj = url.parse(localVarPath, true);
-      const localVarRequestOptions = Object.assign({ method: "GET" }, options);
+      const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 

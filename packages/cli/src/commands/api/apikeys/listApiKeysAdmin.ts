@@ -2,7 +2,7 @@
 // Generated file, please do not edit directly
 
 import { Command, flags } from '@oclif/command';
-import { createClient } from '@rockset/core';
+import { main } from '@rockset/core';
 import { runApiCall, Args } from '../../../helper/util';
 
 class ListApiKeysAdmin extends Command {
@@ -39,7 +39,7 @@ This command is a simple wrapper around the above endpoint. Please view further 
     const { args, flags } = this.parse(ListApiKeysAdmin);
 
     // Rockset client object
-    const client = await createClient();
+    const client = await main.createClient();
 
     // Arguments
     const namedArgs: Args = ListApiKeysAdmin.args;

@@ -23,7 +23,8 @@
   "scripts": {
     "test": "jest",
     "start": "tsc --watch",
-    "build": "tsc"
+    "build": "tsc",
+    "lint": "eslint src/**/*.ts"
   },
   "author": "",
   "license": "ISC"

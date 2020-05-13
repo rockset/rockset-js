@@ -19,7 +19,7 @@ $ npm install -g @rockset/cli
 $ rock COMMAND
 running command...
 $ rock (-v|--version|version)
-@rockset/cli/0.1.0 darwin-x64 node-v11.11.0
+@rockset/cli/0.1.0 darwin-x64 node-v12.16.3
 $ rock --help [COMMAND]
 USAGE
   $ rock COMMAND
@@ -28,12 +28,12 @@ USAGE
 <!-- usagestop -->
 # Commands
 <!-- commands -->
-* [`rock api:apiKeys:createApiKey BODY`](#rock-apiapikeyscreateapikey-body)
-* [`rock api:apiKeys:createApiKeyAdmin BODY USER`](#rock-apiapikeyscreateapikeyadmin-body-user)
-* [`rock api:apiKeys:deleteApiKey NAME`](#rock-apiapikeysdeleteapikey-name)
-* [`rock api:apiKeys:deleteApiKeyAdmin NAME USER`](#rock-apiapikeysdeleteapikeyadmin-name-user)
-* [`rock api:apiKeys:listApiKeys`](#rock-apiapikeyslistapikeys)
-* [`rock api:apiKeys:listApiKeysAdmin USER`](#rock-apiapikeyslistapikeysadmin-user)
+* [`rock api:apikeys:createApiKey BODY`](#rock-apiapikeyscreateapikey-body)
+* [`rock api:apikeys:createApiKeyAdmin BODY USER`](#rock-apiapikeyscreateapikeyadmin-body-user)
+* [`rock api:apikeys:deleteApiKey NAME`](#rock-apiapikeysdeleteapikey-name)
+* [`rock api:apikeys:deleteApiKeyAdmin NAME USER`](#rock-apiapikeysdeleteapikeyadmin-name-user)
+* [`rock api:apikeys:listApiKeys`](#rock-apiapikeyslistapikeys)
+* [`rock api:apikeys:listApiKeysAdmin USER`](#rock-apiapikeyslistapikeysadmin-user)
 * [`rock api:collections:createCollection WORKSPACE BODY`](#rock-apicollectionscreatecollection-workspace-body)
 * [`rock api:collections:deleteCollection WORKSPACE COLLECTION`](#rock-apicollectionsdeletecollection-workspace-collection)
 * [`rock api:collections:getCollection WORKSPACE COLLECTION`](#rock-apicollectionsgetcollection-workspace-collection)
@@ -47,7 +47,7 @@ USAGE
 * [`rock api:integrations:deleteIntegration INTEGRATION`](#rock-apiintegrationsdeleteintegration-integration)
 * [`rock api:integrations:getIntegration INTEGRATION`](#rock-apiintegrationsgetintegration-integration)
 * [`rock api:integrations:listIntegrations`](#rock-apiintegrationslistintegrations)
-* [`rock api:organizations:getOrganization`](#rock-apiorganizationsgetorganization)
+* [`rock api:orgs:getOrganization`](#rock-apiorgsgetorganization)
 * [`rock api:queries:query BODY`](#rock-apiqueriesquery-body)
 * [`rock api:queryLambdas:createQueryLambda WORKSPACE BODY`](#rock-apiquerylambdascreatequerylambda-workspace-body)
 * [`rock api:queryLambdas:deleteQueryLambda WORKSPACE QUERYLAMBDA`](#rock-apiquerylambdasdeletequerylambda-workspace-querylambda)
@@ -68,14 +68,15 @@ USAGE
 * [`rock api:workspaces:listWorkspaces`](#rock-apiworkspaceslistworkspaces)
 * [`rock autocomplete [SHELL]`](#rock-autocomplete-shell)
 * [`rock help [COMMAND]`](#rock-help-command)
+* [`rock project:init BODY`](#rock-projectinit-body)
 
-## `rock api:apiKeys:createApiKey BODY`
+## `rock api:apikeys:createApiKey BODY`
 
 Create API Key
 
 ```
 USAGE
-  $ rock api:apiKeys:createApiKey BODY
+  $ rock api:apikeys:createApiKey BODY
 
 ARGUMENTS
   BODY  JSON object
@@ -96,15 +97,15 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/apiKeys/createApiKey.ts](https://github.com/rockset/rockset-js/blob/v0.1.0/src/commands/api/apiKeys/createApiKey.ts)_
+_See code: [src/commands/api/apikeys/createApiKey.ts](https://github.com/rockset/rockset-js/blob/v0.1.0/src/commands/api/apikeys/createApiKey.ts)_
 
-## `rock api:apiKeys:createApiKeyAdmin BODY USER`
+## `rock api:apikeys:createApiKeyAdmin BODY USER`
 
 Create API Key for any user (admin only)
 
 ```
 USAGE
-  $ rock api:apiKeys:createApiKeyAdmin BODY USER
+  $ rock api:apikeys:createApiKeyAdmin BODY USER
 
 ARGUMENTS
   BODY  JSON object
@@ -126,15 +127,15 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/apiKeys/createApiKeyAdmin.ts](https://github.com/rockset/rockset-js/blob/v0.1.0/src/commands/api/apiKeys/createApiKeyAdmin.ts)_
+_See code: [src/commands/api/apikeys/createApiKeyAdmin.ts](https://github.com/rockset/rockset-js/blob/v0.1.0/src/commands/api/apikeys/createApiKeyAdmin.ts)_
 
-## `rock api:apiKeys:deleteApiKey NAME`
+## `rock api:apikeys:deleteApiKey NAME`
 
 Delete API Key
 
 ```
 USAGE
-  $ rock api:apiKeys:deleteApiKey NAME
+  $ rock api:apikeys:deleteApiKey NAME
 
 ARGUMENTS
   NAME  name of the API key
@@ -155,15 +156,15 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/apiKeys/deleteApiKey.ts](https://github.com/rockset/rockset-js/blob/v0.1.0/src/commands/api/apiKeys/deleteApiKey.ts)_
+_See code: [src/commands/api/apikeys/deleteApiKey.ts](https://github.com/rockset/rockset-js/blob/v0.1.0/src/commands/api/apikeys/deleteApiKey.ts)_
 
-## `rock api:apiKeys:deleteApiKeyAdmin NAME USER`
+## `rock api:apikeys:deleteApiKeyAdmin NAME USER`
 
 Delete API Key for any user (admin only)
 
 ```
 USAGE
-  $ rock api:apiKeys:deleteApiKeyAdmin NAME USER
+  $ rock api:apikeys:deleteApiKeyAdmin NAME USER
 
 ARGUMENTS
   NAME  name of the API key
@@ -185,15 +186,15 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/apiKeys/deleteApiKeyAdmin.ts](https://github.com/rockset/rockset-js/blob/v0.1.0/src/commands/api/apiKeys/deleteApiKeyAdmin.ts)_
+_See code: [src/commands/api/apikeys/deleteApiKeyAdmin.ts](https://github.com/rockset/rockset-js/blob/v0.1.0/src/commands/api/apikeys/deleteApiKeyAdmin.ts)_
 
-## `rock api:apiKeys:listApiKeys`
+## `rock api:apikeys:listApiKeys`
 
 List API Keys
 
 ```
 USAGE
-  $ rock api:apiKeys:listApiKeys
+  $ rock api:apikeys:listApiKeys
 
 OPTIONS
   -f, --file=file  The config file to execute this command from. Format must be [yaml|json]
@@ -211,15 +212,15 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/apiKeys/listApiKeys.ts](https://github.com/rockset/rockset-js/blob/v0.1.0/src/commands/api/apiKeys/listApiKeys.ts)_
+_See code: [src/commands/api/apikeys/listApiKeys.ts](https://github.com/rockset/rockset-js/blob/v0.1.0/src/commands/api/apikeys/listApiKeys.ts)_
 
-## `rock api:apiKeys:listApiKeysAdmin USER`
+## `rock api:apikeys:listApiKeysAdmin USER`
 
 List API Keys for any user (admin only)
 
 ```
 USAGE
-  $ rock api:apiKeys:listApiKeysAdmin USER
+  $ rock api:apikeys:listApiKeysAdmin USER
 
 OPTIONS
   -f, --file=file  The config file to execute this command from. Format must be [yaml|json]
@@ -237,7 +238,7 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/apiKeys/listApiKeysAdmin.ts](https://github.com/rockset/rockset-js/blob/v0.1.0/src/commands/api/apiKeys/listApiKeysAdmin.ts)_
+_See code: [src/commands/api/apikeys/listApiKeysAdmin.ts](https://github.com/rockset/rockset-js/blob/v0.1.0/src/commands/api/apikeys/listApiKeysAdmin.ts)_
 
 ## `rock api:collections:createCollection WORKSPACE BODY`
 
@@ -620,13 +621,13 @@ DESCRIPTION
 
 _See code: [src/commands/api/integrations/listIntegrations.ts](https://github.com/rockset/rockset-js/blob/v0.1.0/src/commands/api/integrations/listIntegrations.ts)_
 
-## `rock api:organizations:getOrganization`
+## `rock api:orgs:getOrganization`
 
 Get Organization
 
 ```
 USAGE
-  $ rock api:organizations:getOrganization
+  $ rock api:orgs:getOrganization
 
 OPTIONS
   -f, --file=file  The config file to execute this command from. Format must be [yaml|json]
@@ -644,7 +645,7 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/organizations/getOrganization.ts](https://github.com/rockset/rockset-js/blob/v0.1.0/src/commands/api/organizations/getOrganization.ts)_
+_See code: [src/commands/api/orgs/getOrganization.ts](https://github.com/rockset/rockset-js/blob/v0.1.0/src/commands/api/orgs/getOrganization.ts)_
 
 ## `rock api:queries:query BODY`
 
@@ -1205,4 +1206,27 @@ OPTIONS
 ```
 
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v2.2.3/src/commands/help.ts)_
+
+## `rock project:init BODY`
+
+Initialize your project.
+
+```
+USAGE
+  $ rock project:init BODY
+
+ARGUMENTS
+  BODY  JSON object
+
+OPTIONS
+  -f, --file=file  The config file to execute this command from. Format must be [yaml|json]
+  -h, --help       show CLI help
+
+DESCRIPTION
+  Initialize your project.
+
+  This command initializes your project with a rockconfig.json file.
+```
+
+_See code: [src/commands/project/init.ts](https://github.com/rockset/rockset-js/blob/v0.1.0/src/commands/project/init.ts)_
 <!-- commandsstop -->

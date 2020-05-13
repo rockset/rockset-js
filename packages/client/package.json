@@ -35,6 +35,7 @@
     "test": "jest",
     "build": "tsc && cp src/codegen/custom.d.ts dist/codegen/custom.d.ts",
     "clean": "rm -r dist",
+    "lint": "eslint src/**/*.ts",
     "prepublishOnly": "npm run clean && npm run build && npm run test"
   },
   "author": "Rockset Inc <api@rockset.com>",
