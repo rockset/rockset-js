@@ -9,6 +9,7 @@ This repo is managed by [lerna](https://github.com/lerna/lerna).
 To get started, please run 
 
 ```
-lerna bootstrap
-lerna run build
+yarn
+yarn run build
 ```
+
