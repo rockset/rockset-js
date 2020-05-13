@@ -1,10 +1,9 @@
+/* eslint-disable unicorn/filename-case */
 // Generated file, please do not edit directly
 
 import { Command, flags } from '@oclif/command';
-import * as _ from 'lodash';
 import { createClient } from '@rockset/core';
 import { runApiCall, Args } from '../../../helper/util';
-
 
 class DeleteQueryLambda extends Command {
   static flags = {
@@ -16,19 +15,20 @@ class DeleteQueryLambda extends Command {
   };
 
   static args = [
-  {
-    "name": "workspace",
-    "description": "name of the workspace",
-    "required": true,
-    "hidden": false
-  },
-  {
-    "name": "queryLambda",
-    "description": "name of the Query Lambda",
-    "required": true,
-    "hidden": false
-  }
-];
+    {
+      name: 'workspace',
+      description: 'name of the workspace',
+      required: true,
+      hidden: false,
+    },
+    {
+      name: 'queryLambda',
+      description: 'name of the Query Lambda',
+      required: true,
+      hidden: false,
+    },
+  ];
+
   static description = `
 Delete Query Lambda
 
@@ -49,12 +49,12 @@ This command is a simple wrapper around the above endpoint. Please view further 
     const client = await createClient();
 
     // Arguments
-    const namedArgs :Args = DeleteQueryLambda.args;
+    const namedArgs: Args = DeleteQueryLambda.args;
 
-    // apicall 
+    // apicall
     const apicall = client.queryLambdas.deleteQueryLambda.bind(client.queryLambdas);
 
-    runApiCall.bind(this)({args, flags, namedArgs, apicall});
+    runApiCall.bind(this)({ args, flags, namedArgs, apicall });
   }
 }
 

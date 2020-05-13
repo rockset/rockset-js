@@ -1,10 +1,9 @@
+/* eslint-disable unicorn/filename-case */
 // Generated file, please do not edit directly
 
 import { Command, flags } from '@oclif/command';
-import * as _ from 'lodash';
 import { createClient } from '@rockset/core';
 import { runApiCall, Args } from '../../../helper/util';
-
 
 class ListQueryLambdasInCollection extends Command {
   static flags = {
@@ -16,19 +15,20 @@ class ListQueryLambdasInCollection extends Command {
   };
 
   static args = [
-  {
-    "name": "workspace",
-    "description": "name of the workspace",
-    "required": true,
-    "hidden": false
-  },
-  {
-    "name": "collection",
-    "description": "name of the collection",
-    "required": true,
-    "hidden": false
-  }
-];
+    {
+      name: 'workspace',
+      description: 'name of the workspace',
+      required: true,
+      hidden: false,
+    },
+    {
+      name: 'collection',
+      description: 'name of the collection',
+      required: true,
+      hidden: false,
+    },
+  ];
+
   static description = `
 Get Query Lambdas
 
@@ -49,12 +49,12 @@ This command is a simple wrapper around the above endpoint. Please view further 
     const client = await createClient();
 
     // Arguments
-    const namedArgs :Args = ListQueryLambdasInCollection.args;
+    const namedArgs: Args = ListQueryLambdasInCollection.args;
 
-    // apicall 
+    // apicall
     const apicall = client.collections.listQueryLambdasInCollection.bind(client.collections);
 
-    runApiCall.bind(this)({args, flags, namedArgs, apicall});
+    runApiCall.bind(this)({ args, flags, namedArgs, apicall });
   }
 }
 

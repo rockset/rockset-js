@@ -1,10 +1,9 @@
+/* eslint-disable unicorn/filename-case */
 // Generated file, please do not edit directly
 
 import { Command, flags } from '@oclif/command';
-import * as _ from 'lodash';
 import { createClient } from '@rockset/core';
 import { runApiCall, Args } from '../../../helper/util';
-
 
 class ListIntegrations extends Command {
   static flags = {
@@ -16,6 +15,7 @@ class ListIntegrations extends Command {
   };
 
   static args = [];
+
   static description = `
 List Integrations
 
@@ -36,12 +36,12 @@ This command is a simple wrapper around the above endpoint. Please view further 
     const client = await createClient();
 
     // Arguments
-    const namedArgs :Args = ListIntegrations.args;
+    const namedArgs: Args = ListIntegrations.args;
 
-    // apicall 
+    // apicall
     const apicall = client.integrations.listIntegrations.bind(client.integrations);
 
-    runApiCall.bind(this)({args, flags, namedArgs, apicall});
+    runApiCall.bind(this)({ args, flags, namedArgs, apicall });
   }
 }
 

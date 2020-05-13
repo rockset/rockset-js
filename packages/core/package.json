@@ -15,6 +15,7 @@
   "devDependencies": {
     "@types/lodash": "^4.14.150",
     "@types/lodash.get": "^4.4.6",
+    "eslint": "^7.0.0",
     "jest": "^26.0.1",
     "typescript": "^3.8.3"
   },

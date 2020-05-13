@@ -1,10 +1,9 @@
+/* eslint-disable unicorn/filename-case */
 // Generated file, please do not edit directly
 
 import { Command, flags } from '@oclif/command';
-import * as _ from 'lodash';
 import { createClient } from '@rockset/core';
 import { runApiCall, Args } from '../../../helper/util';
-
 
 class CreateIntegration extends Command {
   static flags = {
@@ -16,13 +15,14 @@ class CreateIntegration extends Command {
   };
 
   static args = [
-  {
-    "name": "body",
-    "description": "integration credentials",
-    "required": true,
-    "hidden": false
-  }
-];
+    {
+      name: 'body',
+      description: 'integration credentials',
+      required: true,
+      hidden: false,
+    },
+  ];
+
   static description = `
 Create Integration
 
@@ -43,12 +43,12 @@ This command is a simple wrapper around the above endpoint. Please view further 
     const client = await createClient();
 
     // Arguments
-    const namedArgs :Args = CreateIntegration.args;
+    const namedArgs: Args = CreateIntegration.args;
 
-    // apicall 
+    // apicall
     const apicall = client.integrations.createIntegration.bind(client.integrations);
 
-    runApiCall.bind(this)({args, flags, namedArgs, apicall});
+    runApiCall.bind(this)({ args, flags, namedArgs, apicall });
   }
 }
 

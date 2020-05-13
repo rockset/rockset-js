@@ -1,10 +1,9 @@
+/* eslint-disable unicorn/filename-case */
 // Generated file, please do not edit directly
 
 import { Command, flags } from '@oclif/command';
-import * as _ from 'lodash';
 import { createClient } from '@rockset/core';
 import { runApiCall, Args } from '../../../helper/util';
-
 
 class GetQueryLambdaVersion extends Command {
   static flags = {
@@ -16,25 +15,26 @@ class GetQueryLambdaVersion extends Command {
   };
 
   static args = [
-  {
-    "name": "workspace",
-    "description": "name of the workspace",
-    "required": true,
-    "hidden": false
-  },
-  {
-    "name": "queryLambda",
-    "description": "name of the Query Lambda",
-    "required": true,
-    "hidden": false
-  },
-  {
-    "name": "version",
-    "description": "version",
-    "required": true,
-    "hidden": false
-  }
-];
+    {
+      name: 'workspace',
+      description: 'name of the workspace',
+      required: true,
+      hidden: false,
+    },
+    {
+      name: 'queryLambda',
+      description: 'name of the Query Lambda',
+      required: true,
+      hidden: false,
+    },
+    {
+      name: 'version',
+      description: 'version',
+      required: true,
+      hidden: false,
+    },
+  ];
+
   static description = `
 Get Query Lambda Version
 
@@ -55,12 +55,12 @@ This command is a simple wrapper around the above endpoint. Please view further 
     const client = await createClient();
 
     // Arguments
-    const namedArgs :Args = GetQueryLambdaVersion.args;
+    const namedArgs: Args = GetQueryLambdaVersion.args;
 
-    // apicall 
+    // apicall
     const apicall = client.queryLambdas.getQueryLambdaVersion.bind(client.queryLambdas);
 
-    runApiCall.bind(this)({args, flags, namedArgs, apicall});
+    runApiCall.bind(this)({ args, flags, namedArgs, apicall });
   }
 }
 
