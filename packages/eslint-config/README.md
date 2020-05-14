@@ -1,11 +1,14 @@
 # `@rockset/eslint-config`
 
-> TODO: description
+Rockset's default eslint configuration
 
 ## Usage
 
-```
-const eslintConfig = require('@rockset/eslint-config');
+See the [ESLint Shareable Config Docs](https://eslint.org/docs/developer-guide/shareable-configs)
 
-// TODO: DEMONSTRATE API
+```
+...
+{
+    "extends": "@rockset"
+}
 ```
