@@ -4,9 +4,11 @@ import axios from "axios";
 const basePath = process.env.ROCKSET_APISERVER; 
 const apikey = process.env.ROCKSET_APIKEY as string;
 
-if (apikey == null || basePath == null) {
+if (!apikey || !basePath) {
   throw "No ROCKSET_APIKEY specified. Please specify an environment variable ROCKSET_APIKEY with your Rockset key. eg: $ export ROCKSET_APIKEY=...";
 }
+
+console.log("Specified apiserver to hit:", basePath);
 
 const customFetchAxios = async (url: string, options: any) => {
   const { headers, method, body: data, queryParams: params } = options;
