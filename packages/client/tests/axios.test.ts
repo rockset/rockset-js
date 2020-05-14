@@ -1,10 +1,10 @@
 import rocksetConfigure from "../src/index";
 import axios from "axios";
 
-const basePath = process.env.ROCKSET_HOST || "https://api.rs2.usw2.rockset.com";
+const basePath = process.env.ROCKSET_APISERVER; 
 const apikey = process.env.ROCKSET_APIKEY as string;
 
-if (apikey == null) {
+if (apikey == null || basePath == null) {
   throw "No ROCKSET_APIKEY specified. Please specify an environment variable ROCKSET_APIKEY with your Rockset key. eg: $ export ROCKSET_APIKEY=...";
 }
 
@@ -70,7 +70,6 @@ describe("Rockset Unit Tests", function() {
       collections: ["commons._events"],
       column_fields: [{ name: "?count", type: "" }],
       results: [{ "?count": expect.anything() }],
-      stats: { rows_scanned: 0 }
     });
   });
 
@@ -144,7 +143,6 @@ describe("Rockset Unit Tests", function() {
         results: [{
           "echo": "Hello world!",
         }],
-        stats: expect.anything(),
       });
     } catch (e) {
       fail(e);
@@ -176,21 +174,8 @@ describe("Rockset Unit Tests", function() {
       const result = await rockset.queryLambdas.deleteQueryLambda("commons", savedQuery);
       expect(result).toMatchObject({
         data: {
-          created_at: expect.anything(),
-          created_by: expect.anything(),
           name: savedQuery,
           workspace: "commons",
-          version: 1,
-          description: null,
-          sql: {
-            query: 'SELECT :param as echo',
-            default_parameters: [{
-              name: 'param',
-              type: 'string',
-              value: 'Hello world!'
-            }],
-          },
-          stats: expect.anything(),
           collections: [],
         }
       });
