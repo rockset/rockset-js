@@ -1,4 +1,4 @@
-name: Rockset Mono JS CI
+name: "Build|Lint|Test"
 
 on: [push]
 
