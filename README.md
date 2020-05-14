@@ -1,6 +1,9 @@
 # rockset-js
 
-![Build](https://github.com/rockset/rockset-js/workflows/Node.js%20CI/badge.svg)
+![Build|Lint|Test](https://github.com/rockset/rockset-js/workflows/Build%7CLint%7CTest/badge.svg)
+[![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lerna.js.org/)
+[![Strict TypeScript Checked](https://badgen.net/badge/TS/Strict "Strict TypeScript Checked")](https://www.typescriptlang.org)
+
 
 The home for all of Rockset's Javascript developer experience efforts. 
 
