@@ -148,7 +148,7 @@ export async function download(
     collections.data?.forEach(async (collection) => {
       const collectionEntity = constructCollectionEntity(collection);
       if (collectionEntity) {
-        writeCollection(collectionEntity);
+        await writeCollection(collectionEntity);
         hooks.onWriteCollection?.(collectionEntity);
       }
     });

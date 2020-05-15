@@ -21,7 +21,8 @@ import {
 // This is the only package that is allowed to access the file system
 // This ensures that we are able to typecheck and unit test all file system input
 // eslint-disable-next-line no-restricted-imports
-import { promises as fs } from 'fs';
+import { promises as fs, constants as fsconstants } from 'fs';
+
 import { prettyPrint } from '../helper';
 import { errorFailToWriteFileOutsideProject } from '../exception';
 
@@ -35,7 +36,7 @@ export async function readRootConfig(): Promise<RootConfig> {
 }
 
 export async function writeRootConfig(config: RootConfig) {
-  fs.writeFile(ROOT_CONFIG, prettyPrint(config));
+  return fs.writeFile(ROOT_CONFIG, prettyPrint(config));
 }
 
 /**
@@ -101,7 +102,7 @@ export async function writeCollection(entity: CollectionEntity) {
     resolvePathFromQualifiedName(entity.fullName, 'collection')
   );
 
-  writeFileSafe(srcPath, fullPath, prettyPrint(entity.config));
+  return writeFileSafe(srcPath, fullPath, prettyPrint(entity.config));
 }
 
 export async function writeFileSafe(
@@ -115,4 +116,17 @@ export async function writeFileSafe(
 
   await fs.mkdir(path.dirname(fullPath), { recursive: true });
   await fs.writeFile(fullPath, data);
+}
+
+/**
+ * return true is a path exists
+ * @param fullPath the path to check
+ */
+export async function exists(fullPath: string) {
+  try {
+    await fs.access(fullPath, fsconstants.F_OK);
+    return true;
+  } catch (e) {
+    return false;
+  }
 }

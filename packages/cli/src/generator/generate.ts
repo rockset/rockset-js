@@ -62,11 +62,11 @@ This command is a simple wrapper around the above endpoint. Please view further 
     output.forEach(async (out) => {
       const d = p.join(p.dirname(__dirname), 'commands', 'api', out.topic);
       await fs.mkdir(d, { recursive: true });
-      fs.writeFile(p.join(d, `${out.filename}.ts`), out.value);
+      return fs.writeFile(p.join(d, `${out.filename}.ts`), out.value);
     });
   } catch (error) {
     console.log(error);
   }
 }
 
-generate();
+generate().catch(console.error);

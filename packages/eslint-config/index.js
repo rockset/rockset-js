@@ -33,6 +33,7 @@ module.exports = {
     "@typescript-eslint/no-unused-vars": 2,
     "@typescript-eslint/ban-ts-ignore": 0,
     "@typescript-eslint/no-empty-function": 0,
+    '@typescript-eslint/no-floating-promises': 2,
     "react/prop-types": 0,
     "react/jsx-key": 0,
     "react/no-unescaped-entities": 0,

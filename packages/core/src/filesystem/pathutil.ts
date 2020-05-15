@@ -23,10 +23,13 @@ import { tuple } from '../helper';
 export async function resolveRootDirectory(
   startingPath?: string
 ): Promise<string> {
-  if (startingPath === '/') {
+  const dir = startingPath ?? process.cwd();
+  const { root } = path.parse(dir);
+
+  if (dir === root || !path.isAbsolute(dir)) {
     throw errorNotValidProject();
   }
-  const dir = startingPath ?? process.cwd();
+
   const p = path.join(dir, ROOT_CONFIG);
   try {
     await fs.access(p);
@@ -72,17 +75,18 @@ export async function getFiles(dir: string): Promise<string[]> {
 // *** Translating qualified names into paths and vice versa **
 
 /**
- * Returns the path to the entity file that defines the entity passed in.
+ * Returns the relative path to the entity file that defines the entity passed in.
  *
  * @param entityName
  */
 export function resolvePathFromQualifiedName(
   entityName: QualifiedName,
-  type: EntityType
+  type: EntityType | 'workspace',
+  srcPath = ''
 ) {
   const entity = entityName.replace('.', path.sep);
-  const filenameExt = getEntityExt(type);
-  return entity + filenameExt;
+  const filenameExt = type === 'workspace' ? '' : getEntityExt(type);
+  return path.join(srcPath, entity + filenameExt);
 }
 
 export function resolveQualifiedNameFromPath(

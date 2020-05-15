@@ -70,6 +70,7 @@ USAGE
 * [`rock help [COMMAND]`](#rock-help-command)
 * [`rock project:download`](#rock-projectdownload)
 * [`rock project:init`](#rock-projectinit)
+* [`rock project:resolve QUALIFIED NAME`](#rock-projectresolve-qualified-name)
 
 ## `rock api:apikeys:createApiKey BODY`
 
@@ -1243,4 +1244,30 @@ DESCRIPTION
 ```
 
 _See code: [src/commands/project/init.ts](https://github.com/rockset/rockset-js/blob/v0.1.0/src/commands/project/init.ts)_
+
+## `rock project:resolve QUALIFIED NAME`
+
+Resolve the absolute path of an entity in the current project.
+
+```
+USAGE
+  $ rock project:resolve QUALIFIED NAME
+
+ARGUMENTS
+  QUALIFIED NAME  The fully qualified name of the entity you wish to resolve
+
+OPTIONS
+  -e, --entity=lambda|workspace  [default: lambda] the type of entity you wish to resolve
+  -h, --help                     show CLI help
+  --exists                       Return with an error if file does not exist
+
+DESCRIPTION
+  Resolve the absolute path of an entity in the current project.
+  
+     You must specify the fully qualified name of the entity: eg. 'commons.foo'.
+
+     You must specify the type of entity that will be resolved.
+```
+
+_See code: [src/commands/project/resolve.ts](https://github.com/rockset/rockset-js/blob/v0.1.0/src/commands/project/resolve.ts)_
 <!-- commandsstop -->
