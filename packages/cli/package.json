@@ -30,6 +30,7 @@
     "eslint": "^7.0.0",
     "eslint-config-oclif": "^3.1.0",
     "eslint-config-oclif-typescript": "^0.1.0",
+    "eslint-plugin-promise": "^4.2.1",
     "globby": "^10.0.2",
     "jest": "^26.0.1",
     "ts-node": "^8.10.1",
