@@ -7,3 +7,11 @@ export const wait = (timeout: number) => {
     setTimeout(resolve, timeout);
   });
 };
+
+/**
+ * Helps typescript infer tuple types correctly
+ * @param data data to convert to a tuple
+ */
+export function tuple<T extends unknown[]>(...data: T) {
+  return data;
+}

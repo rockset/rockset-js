@@ -2,6 +2,9 @@ import { Get } from './swagger-types';
 import _ = require('lodash');
 import * as swagger from './swagger-generated.json';
 import * as Handlebars from 'handlebars';
+
+// Allow filesystem in this file because it is not invoked at runtime
+// eslint-disable-next-line no-restricted-imports
 import { promises as fs } from 'fs';
 import * as p from 'path';
 

@@ -68,7 +68,8 @@ USAGE
 * [`rock api:workspaces:listWorkspaces`](#rock-apiworkspaceslistworkspaces)
 * [`rock autocomplete [SHELL]`](#rock-autocomplete-shell)
 * [`rock help [COMMAND]`](#rock-help-command)
-* [`rock project:init BODY`](#rock-projectinit-body)
+* [`rock project:download`](#rock-projectdownload)
+* [`rock project:init`](#rock-projectinit)
 
 ## `rock api:apikeys:createApiKey BODY`
 
@@ -1207,20 +1208,33 @@ OPTIONS
 
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v2.2.3/src/commands/help.ts)_
 
-## `rock project:init BODY`
+## `rock project:download`
+
+Download project entites from Rockset to your local project.
+
+```
+USAGE
+  $ rock project:download
+
+OPTIONS
+  -h, --help  show CLI help
+
+DESCRIPTION
+  Download project entites from Rockset to your local project.
+```
+
+_See code: [src/commands/project/download.ts](https://github.com/rockset/rockset-js/blob/v0.1.0/src/commands/project/download.ts)_
+
+## `rock project:init`
 
 Initialize your project.
 
 ```
 USAGE
-  $ rock project:init BODY
-
-ARGUMENTS
-  BODY  JSON object
+  $ rock project:init
 
 OPTIONS
-  -f, --file=file  The config file to execute this command from. Format must be [yaml|json]
-  -h, --help       show CLI help
+  -h, --help  show CLI help
 
 DESCRIPTION
   Initialize your project.

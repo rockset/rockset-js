@@ -1,4 +1,4 @@
-import * as core from './index';
+import * as pathutil from './pathutil';
 const mock = require('mock-fs');
 import * as path from 'path';
 
@@ -52,7 +52,7 @@ describe('Core Path Util Tests', () => {
   test('Test Resolve Root', async () => {
     await withMockFS(async () => {
       const a = process.cwd();
-      const p = await core.pathutil.resolveRootDirectory(
+      const p = await pathutil.resolveRootDirectory(
         path.join(a, 'root/src/myLambda')
       );
 
