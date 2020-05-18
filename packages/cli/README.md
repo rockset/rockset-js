@@ -71,6 +71,7 @@ USAGE
 * [`rock project:download`](#rock-projectdownload)
 * [`rock project:init`](#rock-projectinit)
 * [`rock project:resolve NAME`](#rock-projectresolve-name)
+* [`rock update [CHANNEL]`](#rock-update-channel)
 
 ## `rock api:apikeys:createApiKey BODY`
 
@@ -1270,4 +1271,15 @@ DESCRIPTION
 ```
 
 _See code: [src/commands/project/resolve.ts](https://github.com/rockset/rockset-js/blob/v0.0.3-alpha.0/src/commands/project/resolve.ts)_
+
+## `rock update [CHANNEL]`
+
+update the rock CLI
+
+```
+USAGE
+  $ rock update [CHANNEL]
+```
+
+_See code: [@oclif/plugin-update](https://github.com/oclif/plugin-update/blob/v1.3.10/src/commands/update.ts)_
 <!-- commandsstop -->
