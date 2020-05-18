@@ -69,5 +69,6 @@
     "lint": "eslint src/**/*.ts",
     "codegen": "rm -r src/commands/api/ && ts-node src/generator/generate.ts && eslint --fix src/commands/api/**/*.ts --no-ignore"
   },
-  "types": "lib/index.d.ts"
+  "types": "lib/index.d.ts",
+  "gitHead": "5e79900a4ae6fcef98309ef47133e6c94e729257"
 }

@@ -31,5 +31,6 @@
     "lint": "eslint src/**/*.ts"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "gitHead": "5e79900a4ae6fcef98309ef47133e6c94e729257"
 }

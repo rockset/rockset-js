@@ -33,7 +33,7 @@
     "url": "https://github.com/rockset/rockset-node-client/tree/v2"
   },
   "scripts": {
-    "test": "jest",
+    "test": "echo 'no tests'",
     "build": "tsc && cp src/codegen/custom.d.ts dist/codegen/custom.d.ts",
     "clean": "rm -r dist",
     "lint": "eslint src/**/*.ts",
@@ -52,5 +52,6 @@
   "types": "dist/index.d.ts",
   "files": [
     "dist/**/*"
-  ]
+  ],
+  "gitHead": "5e79900a4ae6fcef98309ef47133e6c94e729257"
 }
