@@ -19,7 +19,7 @@ $ npm install -g @rockset/cli
 $ rock COMMAND
 running command...
 $ rock (-v|--version|version)
-@rockset/cli/0.1.0 darwin-x64 node-v12.16.3
+@rockset/cli/0.1.0 darwin-x64 node-v11.11.0
 $ rock --help [COMMAND]
 USAGE
   $ rock COMMAND
@@ -70,7 +70,7 @@ USAGE
 * [`rock help [COMMAND]`](#rock-help-command)
 * [`rock project:download`](#rock-projectdownload)
 * [`rock project:init`](#rock-projectinit)
-* [`rock project:resolve QUALIFIED NAME`](#rock-projectresolve-qualified-name)
+* [`rock project:resolve NAME`](#rock-projectresolve-name)
 
 ## `rock api:apikeys:createApiKey BODY`
 
@@ -1245,16 +1245,16 @@ DESCRIPTION
 
 _See code: [src/commands/project/init.ts](https://github.com/rockset/rockset-js/blob/v0.1.0/src/commands/project/init.ts)_
 
-## `rock project:resolve QUALIFIED NAME`
+## `rock project:resolve NAME`
 
 Resolve the absolute path of an entity in the current project.
 
 ```
 USAGE
-  $ rock project:resolve QUALIFIED NAME
+  $ rock project:resolve NAME
 
 ARGUMENTS
-  QUALIFIED NAME  The fully qualified name of the entity you wish to resolve
+  NAME  The fully qualified name of the entity you wish to resolve
 
 OPTIONS
   -e, --entity=lambda|workspace  [default: lambda] the type of entity you wish to resolve
