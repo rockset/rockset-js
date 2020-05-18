@@ -3,7 +3,7 @@
   "version": "0.0.2-alpha.0",
   "main": "dist/index.js",
   "description": "Client for querying Rockset and interacting with the Rockset API.",
-  "license": "Apache-2.0",
+  "license": "MIT",
   "directories": {
     "test": "tests"
   },
@@ -23,15 +23,14 @@
     "axios": "^0.19.1",
     "eslint": "^7.0.0",
     "eslint-plugin-promise": "^4.2.1",
+    "generate": "^0.14.0",
+    "generate-license": "^1.0.0",
     "jest": "^26.0.1",
     "jest-cli": "^24.9.0",
     "ts-jest": "^24.1.0",
     "typescript": "^3.8.3"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/rockset/rockset-node-client/tree/v2"
-  },
+  "repository": "https://github.com/rockset/rockset-node-client/tree/v2",
   "scripts": {
     "test": "echo 'no tests'",
     "build": "tsc && cp src/codegen/custom.d.ts dist/codegen/custom.d.ts",
@@ -39,7 +38,7 @@
     "lint": "eslint src/**/*.ts",
     "prepublishOnly": "npm run clean && npm run build && npm run test"
   },
-  "author": "Rockset Inc <api@rockset.com>",
+  "author": "Rockset Inc",
   "keywords": [
     "rockset",
     "database",
@@ -52,6 +51,5 @@
   "types": "dist/index.d.ts",
   "files": [
     "dist/**/*"
-  ],
-  "gitHead": "5e79900a4ae6fcef98309ef47133e6c94e729257"
+  ]
 }

@@ -2,7 +2,7 @@
   "name": "@rockset/cli",
   "description": "Official Rockset CLI",
   "version": "0.0.2-alpha.0",
-  "author": "Rockset @rockset",
+  "author": "Rockset",
   "bin": {
     "rock": "./bin/run"
   },
@@ -31,6 +31,8 @@
     "eslint-config-oclif": "^3.1.0",
     "eslint-config-oclif-typescript": "^0.1.0",
     "eslint-plugin-promise": "^4.2.1",
+    "generate": "^0.14.0",
+    "generate-license": "^1.0.0",
     "globby": "^10.0.2",
     "jest": "^26.0.1",
     "ts-node": "^8.10.1",
@@ -47,7 +49,9 @@
   ],
   "homepage": "https://github.com/rockset/rockset-js",
   "keywords": [
-    "oclif"
+    "oclif",
+    "rockset",
+    "cli"
   ],
   "license": "MIT",
   "main": "lib/index.js",
@@ -56,10 +60,11 @@
     "bin": "rock",
     "plugins": [
       "@oclif/plugin-help",
-      "@oclif/plugin-autocomplete"
+      "@oclif/plugin-autocomplete",
+      "@oclif/plugin-update"
     ]
   },
-  "repository": "rockset/rockset-js",
+  "repository": "https://github.com/rockset/rockset-js",
   "scripts": {
     "postpack": "rm -f oclif.manifest.json",
     "prepack": "rm -rf lib && tsc -b && oclif-dev manifest && oclif-dev readme",
@@ -69,6 +74,5 @@
     "lint": "eslint src/**/*.ts",
     "codegen": "rm -r src/commands/api/ && ts-node src/generator/generate.ts && eslint --fix src/commands/api/**/*.ts --no-ignore"
   },
-  "types": "lib/index.d.ts",
-  "gitHead": "5e79900a4ae6fcef98309ef47133e6c94e729257"
+  "types": "lib/index.d.ts"
 }

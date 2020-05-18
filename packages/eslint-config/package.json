@@ -2,9 +2,9 @@
   "name": "@rockset/eslint-config",
   "version": "0.0.2-alpha.0",
   "description": "Rockset eslint config",
-  "author": "\"Tanmay Chordia\" <\"tchordia@gmail.com\">",
+  "author": "Rockset",
   "homepage": "",
-  "license": "ISC",
+  "license": "MIT",
   "main": "index.js",
   "publishConfig": {
     "access": "public"
@@ -17,7 +17,9 @@
   "devDependencies": {
     "eslint": "^7.0.0",
     "eslint-plugin-promise": "^4.2.1",
+    "generate": "^0.14.0",
+    "generate-license": "^1.0.0",
     "jest": "^26.0.1"
   },
-  "gitHead": "5e79900a4ae6fcef98309ef47133e6c94e729257"
+  "repository": "https://github.com/rockset/rockset-js/"
 }
