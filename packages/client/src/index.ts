@@ -1,5 +1,5 @@
-import * as api from "./codegen/api";
-require("node-fetch");
+import * as api from './codegen/api';
+require('node-fetch');
 
 /**
  * Returns a master object for all rockset apis

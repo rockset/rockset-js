@@ -512,21 +512,27 @@ export interface CreateQueryLambdaRequest {
    * @type {QueryLambdaSql}
    * @memberof CreateQueryLambdaRequest
    */
-  sql?: QueryLambdaSql;
+  sql: QueryLambdaSql;
 }
 
 /**
  *
  * @export
- * @interface CreateQueryLambdaResponse
+ * @interface CreateQueryLambdaTagRequest
  */
-export interface CreateQueryLambdaResponse {
+export interface CreateQueryLambdaTagRequest {
   /**
-   * Query Lambda data
-   * @type {QueryLambda}
-   * @memberof CreateQueryLambdaResponse
+   * name of Query Lambda tag
+   * @type {string}
+   * @memberof CreateQueryLambdaTagRequest
    */
-  data?: QueryLambda;
+  tag_name?: string;
+  /**
+   * hash identifying a Query Lambda tag
+   * @type {string}
+   * @memberof CreateQueryLambdaTagRequest
+   */
+  version?: string;
 }
 
 /**
@@ -928,6 +934,7 @@ export namespace ErrorModel {
     NOTIMPLEMENTEDYET = <any>'NOTIMPLEMENTEDYET',
     RESOURCEEXCEEDED = <any>'RESOURCEEXCEEDED',
     ALREADYEXISTS = <any>'ALREADYEXISTS',
+    NOTALLOWED = <any>'NOTALLOWED',
     NOTFOUND = <any>'NOTFOUND',
     DEPENDENTRESOURCES = <any>'DEPENDENTRESOURCES',
     QUERYERROR = <any>'QUERY_ERROR',
@@ -1160,20 +1167,6 @@ export interface GetIntegrationResponse {
    * @memberof GetIntegrationResponse
    */
   collections?: Array<Collection>;
-}
-
-/**
- *
- * @export
- * @interface GetQueryLambdaResponse
- */
-export interface GetQueryLambdaResponse {
-  /**
-   * Query Lambda details
-   * @type {QueryLambda}
-   * @memberof GetQueryLambdaResponse
-   */
-  data?: QueryLambda;
 }
 
 /**
@@ -1429,6 +1422,34 @@ export interface ListIntegrationsResponse {
 /**
  *
  * @export
+ * @interface ListQueryLambdaTagsResponse
+ */
+export interface ListQueryLambdaTagsResponse {
+  /**
+   * list of all tags associated with a Query Lambda
+   * @type {Array<QueryLambdaTag>}
+   * @memberof ListQueryLambdaTagsResponse
+   */
+  data?: Array<QueryLambdaTag>;
+}
+
+/**
+ *
+ * @export
+ * @interface ListQueryLambdaVersionsResponse
+ */
+export interface ListQueryLambdaVersionsResponse {
+  /**
+   * list of all versions for a particular Query Lambda
+   * @type {Array<QueryLambdaVersion>}
+   * @memberof ListQueryLambdaVersionsResponse
+   */
+  data?: Array<QueryLambdaVersion>;
+}
+
+/**
+ *
+ * @export
  * @interface ListQueryLambdasResponse
  */
 export interface ListQueryLambdasResponse {
@@ -1480,92 +1501,6 @@ export interface MongoDbIntegration {
    * @memberof MongoDbIntegration
    */
   connection_uri: string;
-}
-
-/**
- *
- * @export
- * @interface OperatorStats
- */
-export interface OperatorStats {
-  /**
-   * The id of the worker this operator ran on
-   * @type {string}
-   * @memberof OperatorStats
-   */
-  worker?: string;
-  /**
-   * The id of the fragment this operator belonged to
-   * @type {number}
-   * @memberof OperatorStats
-   */
-  fragment?: number;
-  /**
-   * The id of the task this operator belonged to
-   * @type {string}
-   * @memberof OperatorStats
-   */
-  task?: string;
-  /**
-   * The id of this operator in the task
-   * @type {number}
-   * @memberof OperatorStats
-   */
-  operator_id?: number;
-  /**
-   * The class name of this operator
-   * @type {string}
-   * @memberof OperatorStats
-   */
-  operator_name?: string;
-  /**
-   * Microseconds since UNIX epoch of the first time data was received from any of this operator's inputs
-   * @type {number}
-   * @memberof OperatorStats
-   */
-  start_time_us?: number;
-  /**
-   * Microseconds since UNIX epoch of the last time data was sent to any of this operator's outputs
-   * @type {number}
-   * @memberof OperatorStats
-   */
-  end_time_us?: number;
-  /**
-   * Maximum memory used by this operator during execution
-   * @type {number}
-   * @memberof OperatorStats
-   */
-  max_memory?: number;
-  /**
-   * Total bytes received across all inputs
-   * @type {number}
-   * @memberof OperatorStats
-   */
-  input_bytes?: number;
-  /**
-   * Total rows received across all inputs
-   * @type {number}
-   * @memberof OperatorStats
-   */
-  input_rows?: number;
-  /**
-   * Total bytes sent across all outputs
-   * @type {number}
-   * @memberof OperatorStats
-   */
-  output_bytes?: number;
-  /**
-   * Total rows sent across all outputs
-   * @type {number}
-   * @memberof OperatorStats
-   */
-  output_rows?: number;
-  /**
-   * Total time in microseconds spent doing useful work
-   * @type {number}
-   * @memberof OperatorStats
-   */
-  processing_time_us?: number;
 }
 
 /**
@@ -1828,13 +1763,13 @@ export interface QueryLambda {
    * @type {string}
    * @memberof QueryLambda
    */
-  created_by?: string;
+  last_updated_by?: string;
   /**
-   * ISO-8601 date of when Query Lambda was created
+   * ISO-8601 date of when Query Lambda was last updated
    * @type {string}
    * @memberof QueryLambda
    */
-  created_at?: string;
+  last_updated?: string;
   /**
    * Query Lambda name
    * @type {string}
@@ -1842,56 +1777,17 @@ export interface QueryLambda {
    */
   name?: string;
   /**
-   * Query Lambda version
+   * number of Query Lambda versions
    * @type {number}
    * @memberof QueryLambda
    */
-  version?: number;
-  /**
-   * optional description
-   * @type {string}
-   * @memberof QueryLambda
-   */
-  description?: string;
-  /**
-   * Query Lambda SQL query
-   * @type {QueryLambdaSql}
-   * @memberof QueryLambda
-   */
-  sql?: QueryLambdaSql;
+  version_count?: number;
   /**
    * collections queried by underlying SQL query
    * @type {Array<string>}
    * @memberof QueryLambda
    */
   collections?: Array<string>;
-  /**
-   * status of this Query Lambda
-   * @type {string}
-   * @memberof QueryLambda
-   */
-  state?: QueryLambda.StateEnum;
-  /**
-   * stats related to this Query Lambda
-   * @type {QueryLambdaStats}
-   * @memberof QueryLambda
-   */
-  stats?: QueryLambdaStats;
-}
-
-/**
- * @export
- * @namespace QueryLambda
- */
-export namespace QueryLambda {
-  /**
-   * @export
-   * @enum {string}
-   */
-  export enum StateEnum {
-    ACTIVE = <any>'ACTIVE',
-    ARCHIVED = <any>'ARCHIVED',
-  }
 }
 
 /**
@@ -1944,6 +1840,137 @@ export interface QueryLambdaStats {
    * @memberof QueryLambdaStats
    */
   last_execution_error_message?: string;
+}
+
+/**
+ *
+ * @export
+ * @interface QueryLambdaTag
+ */
+export interface QueryLambdaTag {
+  /**
+   * name of Query Lambda tag
+   * @type {string}
+   * @memberof QueryLambdaTag
+   */
+  tag_name?: string;
+  /**
+   * query lambda version
+   * @type {QueryLambdaVersion}
+   * @memberof QueryLambdaTag
+   */
+  version?: QueryLambdaVersion;
+}
+
+/**
+ *
+ * @export
+ * @interface QueryLambdaTagResponse
+ */
+export interface QueryLambdaTagResponse {
+  /**
+   * updated Query Lambda tag
+   * @type {QueryLambdaTag}
+   * @memberof QueryLambdaTagResponse
+   */
+  data?: QueryLambdaTag;
+}
+
+/**
+ *
+ * @export
+ * @interface QueryLambdaVersion
+ */
+export interface QueryLambdaVersion {
+  /**
+   * workspace of this Query Lambda
+   * @type {string}
+   * @memberof QueryLambdaVersion
+   */
+  workspace?: string;
+  /**
+   * user that created this Query Lambda
+   * @type {string}
+   * @memberof QueryLambdaVersion
+   */
+  created_by?: string;
+  /**
+   * ISO-8601 date of when Query Lambda was created
+   * @type {string}
+   * @memberof QueryLambdaVersion
+   */
+  created_at?: string;
+  /**
+   * Query Lambda name
+   * @type {string}
+   * @memberof QueryLambdaVersion
+   */
+  name?: string;
+  /**
+   * Query Lambda version
+   * @type {string}
+   * @memberof QueryLambdaVersion
+   */
+  version?: string;
+  /**
+   * optional description
+   * @type {string}
+   * @memberof QueryLambdaVersion
+   */
+  description?: string;
+  /**
+   * Query Lambda SQL query
+   * @type {QueryLambdaSql}
+   * @memberof QueryLambdaVersion
+   */
+  sql?: QueryLambdaSql;
+  /**
+   * collections queried by underlying SQL query
+   * @type {Array<string>}
+   * @memberof QueryLambdaVersion
+   */
+  collections?: Array<string>;
+  /**
+   * status of this Query Lambda
+   * @type {string}
+   * @memberof QueryLambdaVersion
+   */
+  state?: QueryLambdaVersion.StateEnum;
+  /**
+   * stats related to this Query Lambda
+   * @type {QueryLambdaStats}
+   * @memberof QueryLambdaVersion
+   */
+  stats?: QueryLambdaStats;
+}
+
+/**
+ * @export
+ * @namespace QueryLambdaVersion
+ */
+export namespace QueryLambdaVersion {
+  /**
+   * @export
+   * @enum {string}
+   */
+  export enum StateEnum {
+    ACTIVE = <any>'ACTIVE',
+    INVALIDSQL = <any>'INVALID_SQL',
+  }
+}
+
+/**
+ *
+ * @export
+ * @interface QueryLambdaVersionResponse
+ */
+export interface QueryLambdaVersionResponse {
+  /**
+   * Query Lambda version details
+   * @type {QueryLambdaVersion}
+   * @memberof QueryLambdaVersionResponse
+   */
+  data?: QueryLambdaVersion;
 }
 
 /**
@@ -2066,12 +2093,6 @@ export interface QueryResponse {
    * @memberof QueryResponse
    */
   column_fields?: Array<QueryFieldType>;
-  /**
-   * list of fields returned by the query
-   * @type {Array<QueryFieldType>}
-   * @memberof QueryResponse
-   */
-  fields?: Array<QueryFieldType>;
 }
 
 /**
@@ -2086,42 +2107,6 @@ export interface QueryResponseStats {
    * @memberof QueryResponseStats
    */
   elapsed_time_ms?: number;
-  /**
-   * rows scanned as part of query execution
-   * @type {number}
-   * @memberof QueryResponseStats
-   */
-  rows_scanned?: number;
-  /**
-   * number of rows returned from the query
-   * @type {number}
-   * @memberof QueryResponseStats
-   */
-  rows_returned?: number;
-  /**
-   * Statistics for each operator from query execution
-   * @type {Array<OperatorStats>}
-   * @memberof QueryResponseStats
-   */
-  operators?: Array<OperatorStats>;
-  /**
-   * DOT graph representing the execution steps of this query
-   * @type {string}
-   * @memberof QueryResponseStats
-   */
-  execution_graph?: string;
-  /**
-   * Execution plan (output of EXPLAIN) of this query
-   * @type {string}
-   * @memberof QueryResponseStats
-   */
-  execution_plan?: string;
-  /**
-   * SQL text of Query that was executed
-   * @type {string}
-   * @memberof QueryResponseStats
-   */
-  query_text?: string;
 }
 
 /**
@@ -2813,20 +2798,6 @@ export interface UpdateQueryLambdaRequest {
 /**
  *
  * @export
- * @interface UpdateQueryLambdaResponse
- */
-export interface UpdateQueryLambdaResponse {
-  /**
-   * Query Lambda data
-   * @type {QueryLambda}
-   * @memberof UpdateQueryLambdaResponse
-   */
-  data?: QueryLambda;
-}
-
-/**
- *
- * @export
  * @interface User
  */
 export interface User {
@@ -2872,6 +2843,12 @@ export interface User {
    * @memberof User
    */
   org?: string;
+  /**
+   *
+   * @type {Array<Organization>}
+   * @memberof User
+   */
+  orgs?: Array<Organization>;
 }
 
 /**
@@ -4105,7 +4082,7 @@ export const CollectionsApiFp = function (configuration?: Configuration) {
     ): (
       fetch?: FetchAPI,
       basePath?: string
-    ) => Promise<ListQueryLambdasResponse> {
+    ) => Promise<ListQueryLambdaVersionsResponse> {
       const localVarFetchArgs = CollectionsApiFetchParamCreator(
         configuration
       ).listQueryLambdasInCollection(workspace, collection, options);
@@ -5686,6 +5663,77 @@ export const QueryLambdasApiFetchParamCreator = function (
       };
     },
     /**
+     * Create a tag for a specific Query Lambda version, or update if it exists
+     * @summary Create Query Lambda Tag
+     * @param {string} workspace name of the workspace
+     * @param {string} queryLambda name of the Query Lambda
+     * @param {CreateQueryLambdaTagRequest} body JSON object
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    createQueryLambdaTag(
+      workspace: string,
+      queryLambda: string,
+      body: CreateQueryLambdaTagRequest,
+      options: any = {}
+    ): FetchArgs {
+      // verify required parameter 'workspace' is not null or undefined
+      if (workspace === null || workspace === undefined) {
+        throw new RequiredError(
+          'workspace',
+          'Required parameter workspace was null or undefined when calling createQueryLambdaTag.'
+        );
+      }
+      // verify required parameter 'queryLambda' is not null or undefined
+      if (queryLambda === null || queryLambda === undefined) {
+        throw new RequiredError(
+          'queryLambda',
+          'Required parameter queryLambda was null or undefined when calling createQueryLambdaTag.'
+        );
+      }
+      // verify required parameter 'body' is not null or undefined
+      if (body === null || body === undefined) {
+        throw new RequiredError(
+          'body',
+          'Required parameter body was null or undefined when calling createQueryLambdaTag.'
+        );
+      }
+      const localVarPath = `/v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/tags`
+        .replace(`{${'workspace'}}`, encodeURIComponent(String(workspace)))
+        .replace(`{${'queryLambda'}}`, encodeURIComponent(String(queryLambda)));
+      const localVarUrlObj = url.parse(localVarPath, true);
+      const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      localVarHeaderParameter['Content-Type'] = 'application/json';
+
+      localVarUrlObj.query = Object.assign(
+        {},
+        localVarUrlObj.query,
+        localVarQueryParameter,
+        options.query
+      );
+      // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+      delete localVarUrlObj.search;
+      localVarRequestOptions.headers = Object.assign(
+        {},
+        localVarHeaderParameter,
+        options.headers
+      );
+      const needsSerialization =
+        <any>'CreateQueryLambdaTagRequest' !== 'string' ||
+        localVarRequestOptions.headers['Content-Type'] === 'application/json';
+      localVarRequestOptions.body = needsSerialization
+        ? JSON.stringify(body || {})
+        : body || '';
+
+      return {
+        url: url.format(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
      * Delete a Query Lambda.
      * @summary Delete Query Lambda
      * @param {string} workspace name of the workspace
@@ -5743,11 +5791,145 @@ export const QueryLambdasApiFetchParamCreator = function (
       };
     },
     /**
+     * Delete a tag for a specific Query Lambda
+     * @summary Delete Query Lambda Tag Version
+     * @param {string} workspace name of the workspace
+     * @param {string} queryLambda name of the Query Lambda
+     * @param {string} tag name of the tag
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    deleteQueryLambdaTag(
+      workspace: string,
+      queryLambda: string,
+      tag: string,
+      options: any = {}
+    ): FetchArgs {
+      // verify required parameter 'workspace' is not null or undefined
+      if (workspace === null || workspace === undefined) {
+        throw new RequiredError(
+          'workspace',
+          'Required parameter workspace was null or undefined when calling deleteQueryLambdaTag.'
+        );
+      }
+      // verify required parameter 'queryLambda' is not null or undefined
+      if (queryLambda === null || queryLambda === undefined) {
+        throw new RequiredError(
+          'queryLambda',
+          'Required parameter queryLambda was null or undefined when calling deleteQueryLambdaTag.'
+        );
+      }
+      // verify required parameter 'tag' is not null or undefined
+      if (tag === null || tag === undefined) {
+        throw new RequiredError(
+          'tag',
+          'Required parameter tag was null or undefined when calling deleteQueryLambdaTag.'
+        );
+      }
+      const localVarPath = `/v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/tags/{tag}`
+        .replace(`{${'workspace'}}`, encodeURIComponent(String(workspace)))
+        .replace(`{${'queryLambda'}}`, encodeURIComponent(String(queryLambda)))
+        .replace(`{${'tag'}}`, encodeURIComponent(String(tag)));
+      const localVarUrlObj = url.parse(localVarPath, true);
+      const localVarRequestOptions = Object.assign(
+        { method: 'DELETE' },
+        options
+      );
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      localVarUrlObj.query = Object.assign(
+        {},
+        localVarUrlObj.query,
+        localVarQueryParameter,
+        options.query
+      );
+      // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+      delete localVarUrlObj.search;
+      localVarRequestOptions.headers = Object.assign(
+        {},
+        localVarHeaderParameter,
+        options.headers
+      );
+
+      return {
+        url: url.format(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
+     * Delete a Query Lambda version.
+     * @summary Delete Query Lambda Version
+     * @param {string} workspace name of the workspace
+     * @param {string} queryLambda name of the Query Lambda
+     * @param {string} version version
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    deleteQueryLambdaVersion(
+      workspace: string,
+      queryLambda: string,
+      version: string,
+      options: any = {}
+    ): FetchArgs {
+      // verify required parameter 'workspace' is not null or undefined
+      if (workspace === null || workspace === undefined) {
+        throw new RequiredError(
+          'workspace',
+          'Required parameter workspace was null or undefined when calling deleteQueryLambdaVersion.'
+        );
+      }
+      // verify required parameter 'queryLambda' is not null or undefined
+      if (queryLambda === null || queryLambda === undefined) {
+        throw new RequiredError(
+          'queryLambda',
+          'Required parameter queryLambda was null or undefined when calling deleteQueryLambdaVersion.'
+        );
+      }
+      // verify required parameter 'version' is not null or undefined
+      if (version === null || version === undefined) {
+        throw new RequiredError(
+          'version',
+          'Required parameter version was null or undefined when calling deleteQueryLambdaVersion.'
+        );
+      }
+      const localVarPath = `/v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/version/{version}`
+        .replace(`{${'workspace'}}`, encodeURIComponent(String(workspace)))
+        .replace(`{${'queryLambda'}}`, encodeURIComponent(String(queryLambda)))
+        .replace(`{${'version'}}`, encodeURIComponent(String(version)));
+      const localVarUrlObj = url.parse(localVarPath, true);
+      const localVarRequestOptions = Object.assign(
+        { method: 'DELETE' },
+        options
+      );
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      localVarUrlObj.query = Object.assign(
+        {},
+        localVarUrlObj.query,
+        localVarQueryParameter,
+        options.query
+      );
+      // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+      delete localVarUrlObj.search;
+      localVarRequestOptions.headers = Object.assign(
+        {},
+        localVarHeaderParameter,
+        options.headers
+      );
+
+      return {
+        url: url.format(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
      * Run a particular version of a Query Lambda.
      * @summary Run Query Lambda
      * @param {string} workspace name of the workspace
      * @param {string} queryLambda name of the Query Lambda
-     * @param {number} version version
+     * @param {string} version version
      * @param {ExecuteQueryLambdaRequest} [body] JSON object
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -5755,7 +5937,7 @@ export const QueryLambdasApiFetchParamCreator = function (
     executeQueryLambda(
       workspace: string,
       queryLambda: string,
-      version: number,
+      version: string,
       body?: ExecuteQueryLambdaRequest,
       options: any = {}
     ): FetchArgs {
@@ -5817,18 +5999,156 @@ export const QueryLambdasApiFetchParamCreator = function (
       };
     },
     /**
+     * Run the Query Lambda version associated with a given tag.
+     * @summary Run Query Lambda By Tag
+     * @param {string} workspace name of the workspace
+     * @param {string} queryLambda name of the Query Lambda
+     * @param {string} tag tag
+     * @param {ExecuteQueryLambdaRequest} [body] JSON object
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    executeQueryLambdaByTag(
+      workspace: string,
+      queryLambda: string,
+      tag: string,
+      body?: ExecuteQueryLambdaRequest,
+      options: any = {}
+    ): FetchArgs {
+      // verify required parameter 'workspace' is not null or undefined
+      if (workspace === null || workspace === undefined) {
+        throw new RequiredError(
+          'workspace',
+          'Required parameter workspace was null or undefined when calling executeQueryLambdaByTag.'
+        );
+      }
+      // verify required parameter 'queryLambda' is not null or undefined
+      if (queryLambda === null || queryLambda === undefined) {
+        throw new RequiredError(
+          'queryLambda',
+          'Required parameter queryLambda was null or undefined when calling executeQueryLambdaByTag.'
+        );
+      }
+      // verify required parameter 'tag' is not null or undefined
+      if (tag === null || tag === undefined) {
+        throw new RequiredError(
+          'tag',
+          'Required parameter tag was null or undefined when calling executeQueryLambdaByTag.'
+        );
+      }
+      const localVarPath = `/v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/tags/{tag}`
+        .replace(`{${'workspace'}}`, encodeURIComponent(String(workspace)))
+        .replace(`{${'queryLambda'}}`, encodeURIComponent(String(queryLambda)))
+        .replace(`{${'tag'}}`, encodeURIComponent(String(tag)));
+      const localVarUrlObj = url.parse(localVarPath, true);
+      const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      localVarHeaderParameter['Content-Type'] = 'application/json';
+
+      localVarUrlObj.query = Object.assign(
+        {},
+        localVarUrlObj.query,
+        localVarQueryParameter,
+        options.query
+      );
+      // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+      delete localVarUrlObj.search;
+      localVarRequestOptions.headers = Object.assign(
+        {},
+        localVarHeaderParameter,
+        options.headers
+      );
+      const needsSerialization =
+        <any>'ExecuteQueryLambdaRequest' !== 'string' ||
+        localVarRequestOptions.headers['Content-Type'] === 'application/json';
+      localVarRequestOptions.body = needsSerialization
+        ? JSON.stringify(body || {})
+        : body || '';
+
+      return {
+        url: url.format(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
+     * Get the specific Query Lambda version associated with a given tag
+     * @summary Get Query Lambda Tag
+     * @param {string} workspace name of the workspace
+     * @param {string} queryLambda name of the Query Lambda
+     * @param {string} tag name of the tag
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    getQueryLambdaTagVersion(
+      workspace: string,
+      queryLambda: string,
+      tag: string,
+      options: any = {}
+    ): FetchArgs {
+      // verify required parameter 'workspace' is not null or undefined
+      if (workspace === null || workspace === undefined) {
+        throw new RequiredError(
+          'workspace',
+          'Required parameter workspace was null or undefined when calling getQueryLambdaTagVersion.'
+        );
+      }
+      // verify required parameter 'queryLambda' is not null or undefined
+      if (queryLambda === null || queryLambda === undefined) {
+        throw new RequiredError(
+          'queryLambda',
+          'Required parameter queryLambda was null or undefined when calling getQueryLambdaTagVersion.'
+        );
+      }
+      // verify required parameter 'tag' is not null or undefined
+      if (tag === null || tag === undefined) {
+        throw new RequiredError(
+          'tag',
+          'Required parameter tag was null or undefined when calling getQueryLambdaTagVersion.'
+        );
+      }
+      const localVarPath = `/v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/tags/{tag}`
+        .replace(`{${'workspace'}}`, encodeURIComponent(String(workspace)))
+        .replace(`{${'queryLambda'}}`, encodeURIComponent(String(queryLambda)))
+        .replace(`{${'tag'}}`, encodeURIComponent(String(tag)));
+      const localVarUrlObj = url.parse(localVarPath, true);
+      const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      localVarUrlObj.query = Object.assign(
+        {},
+        localVarUrlObj.query,
+        localVarQueryParameter,
+        options.query
+      );
+      // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+      delete localVarUrlObj.search;
+      localVarRequestOptions.headers = Object.assign(
+        {},
+        localVarHeaderParameter,
+        options.headers
+      );
+
+      return {
+        url: url.format(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
      * Get a specific version of a Query Lambda
      * @summary Get Query Lambda Version
      * @param {string} workspace name of the workspace
      * @param {string} queryLambda name of the Query Lambda
-     * @param {number} version version
+     * @param {string} version version
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     getQueryLambdaVersion(
       workspace: string,
       queryLambda: string,
-      version: number,
+      version: string,
       options: any = {}
     ): FetchArgs {
       // verify required parameter 'workspace' is not null or undefined
@@ -5888,6 +6208,135 @@ export const QueryLambdasApiFetchParamCreator = function (
      */
     listAllQueryLambdas(options: any = {}): FetchArgs {
       const localVarPath = `/v1/orgs/self/lambdas`;
+      const localVarUrlObj = url.parse(localVarPath, true);
+      const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      localVarUrlObj.query = Object.assign(
+        {},
+        localVarUrlObj.query,
+        localVarQueryParameter,
+        options.query
+      );
+      // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+      delete localVarUrlObj.search;
+      localVarRequestOptions.headers = Object.assign(
+        {},
+        localVarHeaderParameter,
+        options.headers
+      );
+
+      return {
+        url: url.format(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
+     * List all tags in an organization
+     * @summary List Query Lambda Tags
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    listOrganizationTags(options: any = {}): FetchArgs {
+      const localVarPath = `/v1/orgs/self/lambdas/tags`;
+      const localVarUrlObj = url.parse(localVarPath, true);
+      const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      localVarUrlObj.query = Object.assign(
+        {},
+        localVarUrlObj.query,
+        localVarQueryParameter,
+        options.query
+      );
+      // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+      delete localVarUrlObj.search;
+      localVarRequestOptions.headers = Object.assign(
+        {},
+        localVarHeaderParameter,
+        options.headers
+      );
+
+      return {
+        url: url.format(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
+     * List all Query Lambda versions associated with a tag
+     * @summary List Query Lambda Tag Versions
+     * @param {string} tag name of the tag
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    listQueryLambdaTagVersions(tag: string, options: any = {}): FetchArgs {
+      // verify required parameter 'tag' is not null or undefined
+      if (tag === null || tag === undefined) {
+        throw new RequiredError(
+          'tag',
+          'Required parameter tag was null or undefined when calling listQueryLambdaTagVersions.'
+        );
+      }
+      const localVarPath = `/v1/orgs/self/lambdas/tags/{tag}`.replace(
+        `{${'tag'}}`,
+        encodeURIComponent(String(tag))
+      );
+      const localVarUrlObj = url.parse(localVarPath, true);
+      const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      localVarUrlObj.query = Object.assign(
+        {},
+        localVarUrlObj.query,
+        localVarQueryParameter,
+        options.query
+      );
+      // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+      delete localVarUrlObj.search;
+      localVarRequestOptions.headers = Object.assign(
+        {},
+        localVarHeaderParameter,
+        options.headers
+      );
+
+      return {
+        url: url.format(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
+     * List all tags associated with a Query Lambda
+     * @summary List Query Lambda Tags
+     * @param {string} workspace name of the workspace
+     * @param {string} queryLambda name of the Query Lambda
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    listQueryLambdaTags(
+      workspace: string,
+      queryLambda: string,
+      options: any = {}
+    ): FetchArgs {
+      // verify required parameter 'workspace' is not null or undefined
+      if (workspace === null || workspace === undefined) {
+        throw new RequiredError(
+          'workspace',
+          'Required parameter workspace was null or undefined when calling listQueryLambdaTags.'
+        );
+      }
+      // verify required parameter 'queryLambda' is not null or undefined
+      if (queryLambda === null || queryLambda === undefined) {
+        throw new RequiredError(
+          'queryLambda',
+          'Required parameter queryLambda was null or undefined when calling listQueryLambdaTags.'
+        );
+      }
+      const localVarPath = `/v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/tags`
+        .replace(`{${'workspace'}}`, encodeURIComponent(String(workspace)))
+        .replace(`{${'queryLambda'}}`, encodeURIComponent(String(queryLambda)));
       const localVarUrlObj = url.parse(localVarPath, true);
       const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
       const localVarHeaderParameter = {} as any;
@@ -6018,6 +6467,7 @@ export const QueryLambdasApiFetchParamCreator = function (
      * @param {string} workspace name of the workspace
      * @param {string} queryLambda name of the Query Lambda
      * @param {UpdateQueryLambdaRequest} body JSON object
+     * @param {boolean} [create]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
@@ -6025,6 +6475,7 @@ export const QueryLambdasApiFetchParamCreator = function (
       workspace: string,
       queryLambda: string,
       body: UpdateQueryLambdaRequest,
+      create?: boolean,
       options: any = {}
     ): FetchArgs {
       // verify required parameter 'workspace' is not null or undefined
@@ -6055,6 +6506,10 @@ export const QueryLambdasApiFetchParamCreator = function (
       const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
+
+      if (create !== undefined) {
+        localVarQueryParameter.create = create;
+      }
 
       localVarHeaderParameter['Content-Type'] = 'application/json';
 
@@ -6107,10 +6562,47 @@ export const QueryLambdasApiFp = function (configuration?: Configuration) {
     ): (
       fetch?: FetchAPI,
       basePath?: string
-    ) => Promise<CreateQueryLambdaResponse> {
+    ) => Promise<QueryLambdaVersionResponse> {
       const localVarFetchArgs = QueryLambdasApiFetchParamCreator(
         configuration
       ).createQueryLambda(workspace, body, options);
+      return (
+        fetch: FetchAPI = portableFetch,
+        basePath: string = BASE_PATH
+      ) => {
+        return fetch(
+          basePath + localVarFetchArgs.url,
+          localVarFetchArgs.options
+        ).then((response) => {
+          if (response.status >= 200 && response.status < 300) {
+            return response.json();
+          } else {
+            throw response;
+          }
+        });
+      };
+    },
+    /**
+     * Create a tag for a specific Query Lambda version, or update if it exists
+     * @summary Create Query Lambda Tag
+     * @param {string} workspace name of the workspace
+     * @param {string} queryLambda name of the Query Lambda
+     * @param {CreateQueryLambdaTagRequest} body JSON object
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    createQueryLambdaTag(
+      workspace: string,
+      queryLambda: string,
+      body: CreateQueryLambdaTagRequest,
+      options?: any
+    ): (
+      fetch?: FetchAPI,
+      basePath?: string
+    ) => Promise<QueryLambdaTagResponse> {
+      const localVarFetchArgs = QueryLambdasApiFetchParamCreator(
+        configuration
+      ).createQueryLambdaTag(workspace, queryLambda, body, options);
       return (
         fetch: FetchAPI = portableFetch,
         basePath: string = BASE_PATH
@@ -6163,11 +6655,85 @@ export const QueryLambdasApiFp = function (configuration?: Configuration) {
       };
     },
     /**
+     * Delete a tag for a specific Query Lambda
+     * @summary Delete Query Lambda Tag Version
+     * @param {string} workspace name of the workspace
+     * @param {string} queryLambda name of the Query Lambda
+     * @param {string} tag name of the tag
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    deleteQueryLambdaTag(
+      workspace: string,
+      queryLambda: string,
+      tag: string,
+      options?: any
+    ): (
+      fetch?: FetchAPI,
+      basePath?: string
+    ) => Promise<QueryLambdaTagResponse> {
+      const localVarFetchArgs = QueryLambdasApiFetchParamCreator(
+        configuration
+      ).deleteQueryLambdaTag(workspace, queryLambda, tag, options);
+      return (
+        fetch: FetchAPI = portableFetch,
+        basePath: string = BASE_PATH
+      ) => {
+        return fetch(
+          basePath + localVarFetchArgs.url,
+          localVarFetchArgs.options
+        ).then((response) => {
+          if (response.status >= 200 && response.status < 300) {
+            return response.json();
+          } else {
+            throw response;
+          }
+        });
+      };
+    },
+    /**
+     * Delete a Query Lambda version.
+     * @summary Delete Query Lambda Version
+     * @param {string} workspace name of the workspace
+     * @param {string} queryLambda name of the Query Lambda
+     * @param {string} version version
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    deleteQueryLambdaVersion(
+      workspace: string,
+      queryLambda: string,
+      version: string,
+      options?: any
+    ): (
+      fetch?: FetchAPI,
+      basePath?: string
+    ) => Promise<QueryLambdaVersionResponse> {
+      const localVarFetchArgs = QueryLambdasApiFetchParamCreator(
+        configuration
+      ).deleteQueryLambdaVersion(workspace, queryLambda, version, options);
+      return (
+        fetch: FetchAPI = portableFetch,
+        basePath: string = BASE_PATH
+      ) => {
+        return fetch(
+          basePath + localVarFetchArgs.url,
+          localVarFetchArgs.options
+        ).then((response) => {
+          if (response.status >= 200 && response.status < 300) {
+            return response.json();
+          } else {
+            throw response;
+          }
+        });
+      };
+    },
+    /**
      * Run a particular version of a Query Lambda.
      * @summary Run Query Lambda
      * @param {string} workspace name of the workspace
      * @param {string} queryLambda name of the Query Lambda
-     * @param {number} version version
+     * @param {string} version version
      * @param {ExecuteQueryLambdaRequest} [body] JSON object
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -6175,7 +6741,7 @@ export const QueryLambdasApiFp = function (configuration?: Configuration) {
     executeQueryLambda(
       workspace: string,
       queryLambda: string,
-      version: number,
+      version: string,
       body?: ExecuteQueryLambdaRequest,
       options?: any
     ): (fetch?: FetchAPI, basePath?: string) => Promise<QueryResponse> {
@@ -6199,23 +6765,96 @@ export const QueryLambdasApiFp = function (configuration?: Configuration) {
       };
     },
     /**
+     * Run the Query Lambda version associated with a given tag.
+     * @summary Run Query Lambda By Tag
+     * @param {string} workspace name of the workspace
+     * @param {string} queryLambda name of the Query Lambda
+     * @param {string} tag tag
+     * @param {ExecuteQueryLambdaRequest} [body] JSON object
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    executeQueryLambdaByTag(
+      workspace: string,
+      queryLambda: string,
+      tag: string,
+      body?: ExecuteQueryLambdaRequest,
+      options?: any
+    ): (fetch?: FetchAPI, basePath?: string) => Promise<QueryResponse> {
+      const localVarFetchArgs = QueryLambdasApiFetchParamCreator(
+        configuration
+      ).executeQueryLambdaByTag(workspace, queryLambda, tag, body, options);
+      return (
+        fetch: FetchAPI = portableFetch,
+        basePath: string = BASE_PATH
+      ) => {
+        return fetch(
+          basePath + localVarFetchArgs.url,
+          localVarFetchArgs.options
+        ).then((response) => {
+          if (response.status >= 200 && response.status < 300) {
+            return response.json();
+          } else {
+            throw response;
+          }
+        });
+      };
+    },
+    /**
+     * Get the specific Query Lambda version associated with a given tag
+     * @summary Get Query Lambda Tag
+     * @param {string} workspace name of the workspace
+     * @param {string} queryLambda name of the Query Lambda
+     * @param {string} tag name of the tag
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    getQueryLambdaTagVersion(
+      workspace: string,
+      queryLambda: string,
+      tag: string,
+      options?: any
+    ): (
+      fetch?: FetchAPI,
+      basePath?: string
+    ) => Promise<QueryLambdaTagResponse> {
+      const localVarFetchArgs = QueryLambdasApiFetchParamCreator(
+        configuration
+      ).getQueryLambdaTagVersion(workspace, queryLambda, tag, options);
+      return (
+        fetch: FetchAPI = portableFetch,
+        basePath: string = BASE_PATH
+      ) => {
+        return fetch(
+          basePath + localVarFetchArgs.url,
+          localVarFetchArgs.options
+        ).then((response) => {
+          if (response.status >= 200 && response.status < 300) {
+            return response.json();
+          } else {
+            throw response;
+          }
+        });
+      };
+    },
+    /**
      * Get a specific version of a Query Lambda
      * @summary Get Query Lambda Version
      * @param {string} workspace name of the workspace
      * @param {string} queryLambda name of the Query Lambda
-     * @param {number} version version
+     * @param {string} version version
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     getQueryLambdaVersion(
       workspace: string,
       queryLambda: string,
-      version: number,
+      version: string,
       options?: any
     ): (
       fetch?: FetchAPI,
       basePath?: string
-    ) => Promise<GetQueryLambdaResponse> {
+    ) => Promise<QueryLambdaVersionResponse> {
       const localVarFetchArgs = QueryLambdasApiFetchParamCreator(
         configuration
       ).getQueryLambdaVersion(workspace, queryLambda, version, options);
@@ -6267,6 +6906,105 @@ export const QueryLambdasApiFp = function (configuration?: Configuration) {
       };
     },
     /**
+     * List all tags in an organization
+     * @summary List Query Lambda Tags
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    listOrganizationTags(
+      options?: any
+    ): (
+      fetch?: FetchAPI,
+      basePath?: string
+    ) => Promise<ListQueryLambdaTagsResponse> {
+      const localVarFetchArgs = QueryLambdasApiFetchParamCreator(
+        configuration
+      ).listOrganizationTags(options);
+      return (
+        fetch: FetchAPI = portableFetch,
+        basePath: string = BASE_PATH
+      ) => {
+        return fetch(
+          basePath + localVarFetchArgs.url,
+          localVarFetchArgs.options
+        ).then((response) => {
+          if (response.status >= 200 && response.status < 300) {
+            return response.json();
+          } else {
+            throw response;
+          }
+        });
+      };
+    },
+    /**
+     * List all Query Lambda versions associated with a tag
+     * @summary List Query Lambda Tag Versions
+     * @param {string} tag name of the tag
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    listQueryLambdaTagVersions(
+      tag: string,
+      options?: any
+    ): (
+      fetch?: FetchAPI,
+      basePath?: string
+    ) => Promise<ListQueryLambdaVersionsResponse> {
+      const localVarFetchArgs = QueryLambdasApiFetchParamCreator(
+        configuration
+      ).listQueryLambdaTagVersions(tag, options);
+      return (
+        fetch: FetchAPI = portableFetch,
+        basePath: string = BASE_PATH
+      ) => {
+        return fetch(
+          basePath + localVarFetchArgs.url,
+          localVarFetchArgs.options
+        ).then((response) => {
+          if (response.status >= 200 && response.status < 300) {
+            return response.json();
+          } else {
+            throw response;
+          }
+        });
+      };
+    },
+    /**
+     * List all tags associated with a Query Lambda
+     * @summary List Query Lambda Tags
+     * @param {string} workspace name of the workspace
+     * @param {string} queryLambda name of the Query Lambda
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    listQueryLambdaTags(
+      workspace: string,
+      queryLambda: string,
+      options?: any
+    ): (
+      fetch?: FetchAPI,
+      basePath?: string
+    ) => Promise<ListQueryLambdaTagsResponse> {
+      const localVarFetchArgs = QueryLambdasApiFetchParamCreator(
+        configuration
+      ).listQueryLambdaTags(workspace, queryLambda, options);
+      return (
+        fetch: FetchAPI = portableFetch,
+        basePath: string = BASE_PATH
+      ) => {
+        return fetch(
+          basePath + localVarFetchArgs.url,
+          localVarFetchArgs.options
+        ).then((response) => {
+          if (response.status >= 200 && response.status < 300) {
+            return response.json();
+          } else {
+            throw response;
+          }
+        });
+      };
+    },
+    /**
      * List all versions of a Query Lambda.
      * @summary List Query Lambda Versions
      * @param {string} workspace name of the workspace
@@ -6281,7 +7019,7 @@ export const QueryLambdasApiFp = function (configuration?: Configuration) {
     ): (
       fetch?: FetchAPI,
       basePath?: string
-    ) => Promise<ListQueryLambdasResponse> {
+    ) => Promise<ListQueryLambdaVersionsResponse> {
       const localVarFetchArgs = QueryLambdasApiFetchParamCreator(
         configuration
       ).listQueryLambdaVersions(workspace, queryLambda, options);
@@ -6340,6 +7078,7 @@ export const QueryLambdasApiFp = function (configuration?: Configuration) {
      * @param {string} workspace name of the workspace
      * @param {string} queryLambda name of the Query Lambda
      * @param {UpdateQueryLambdaRequest} body JSON object
+     * @param {boolean} [create]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
@@ -6347,14 +7086,15 @@ export const QueryLambdasApiFp = function (configuration?: Configuration) {
       workspace: string,
       queryLambda: string,
       body: UpdateQueryLambdaRequest,
+      create?: boolean,
       options?: any
     ): (
       fetch?: FetchAPI,
       basePath?: string
-    ) => Promise<UpdateQueryLambdaResponse> {
+    ) => Promise<QueryLambdaVersionResponse> {
       const localVarFetchArgs = QueryLambdasApiFetchParamCreator(
         configuration
-      ).updateQueryLambda(workspace, queryLambda, body, options);
+      ).updateQueryLambda(workspace, queryLambda, body, create, options);
       return (
         fetch: FetchAPI = portableFetch,
         basePath: string = BASE_PATH
@@ -6404,6 +7144,28 @@ export const QueryLambdasApiFactory = function (
       )(fetch, basePath);
     },
     /**
+     * Create a tag for a specific Query Lambda version, or update if it exists
+     * @summary Create Query Lambda Tag
+     * @param {string} workspace name of the workspace
+     * @param {string} queryLambda name of the Query Lambda
+     * @param {CreateQueryLambdaTagRequest} body JSON object
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    createQueryLambdaTag(
+      workspace: string,
+      queryLambda: string,
+      body: CreateQueryLambdaTagRequest,
+      options?: any
+    ) {
+      return QueryLambdasApiFp(configuration).createQueryLambdaTag(
+        workspace,
+        queryLambda,
+        body,
+        options
+      )(fetch, basePath);
+    },
+    /**
      * Delete a Query Lambda.
      * @summary Delete Query Lambda
      * @param {string} workspace name of the workspace
@@ -6419,11 +7181,55 @@ export const QueryLambdasApiFactory = function (
       )(fetch, basePath);
     },
     /**
+     * Delete a tag for a specific Query Lambda
+     * @summary Delete Query Lambda Tag Version
+     * @param {string} workspace name of the workspace
+     * @param {string} queryLambda name of the Query Lambda
+     * @param {string} tag name of the tag
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    deleteQueryLambdaTag(
+      workspace: string,
+      queryLambda: string,
+      tag: string,
+      options?: any
+    ) {
+      return QueryLambdasApiFp(configuration).deleteQueryLambdaTag(
+        workspace,
+        queryLambda,
+        tag,
+        options
+      )(fetch, basePath);
+    },
+    /**
+     * Delete a Query Lambda version.
+     * @summary Delete Query Lambda Version
+     * @param {string} workspace name of the workspace
+     * @param {string} queryLambda name of the Query Lambda
+     * @param {string} version version
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    deleteQueryLambdaVersion(
+      workspace: string,
+      queryLambda: string,
+      version: string,
+      options?: any
+    ) {
+      return QueryLambdasApiFp(configuration).deleteQueryLambdaVersion(
+        workspace,
+        queryLambda,
+        version,
+        options
+      )(fetch, basePath);
+    },
+    /**
      * Run a particular version of a Query Lambda.
      * @summary Run Query Lambda
      * @param {string} workspace name of the workspace
      * @param {string} queryLambda name of the Query Lambda
-     * @param {number} version version
+     * @param {string} version version
      * @param {ExecuteQueryLambdaRequest} [body] JSON object
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -6431,7 +7237,7 @@ export const QueryLambdasApiFactory = function (
     executeQueryLambda(
       workspace: string,
       queryLambda: string,
-      version: number,
+      version: string,
       body?: ExecuteQueryLambdaRequest,
       options?: any
     ) {
@@ -6444,18 +7250,65 @@ export const QueryLambdasApiFactory = function (
       )(fetch, basePath);
     },
     /**
+     * Run the Query Lambda version associated with a given tag.
+     * @summary Run Query Lambda By Tag
+     * @param {string} workspace name of the workspace
+     * @param {string} queryLambda name of the Query Lambda
+     * @param {string} tag tag
+     * @param {ExecuteQueryLambdaRequest} [body] JSON object
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    executeQueryLambdaByTag(
+      workspace: string,
+      queryLambda: string,
+      tag: string,
+      body?: ExecuteQueryLambdaRequest,
+      options?: any
+    ) {
+      return QueryLambdasApiFp(configuration).executeQueryLambdaByTag(
+        workspace,
+        queryLambda,
+        tag,
+        body,
+        options
+      )(fetch, basePath);
+    },
+    /**
+     * Get the specific Query Lambda version associated with a given tag
+     * @summary Get Query Lambda Tag
+     * @param {string} workspace name of the workspace
+     * @param {string} queryLambda name of the Query Lambda
+     * @param {string} tag name of the tag
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    getQueryLambdaTagVersion(
+      workspace: string,
+      queryLambda: string,
+      tag: string,
+      options?: any
+    ) {
+      return QueryLambdasApiFp(configuration).getQueryLambdaTagVersion(
+        workspace,
+        queryLambda,
+        tag,
+        options
+      )(fetch, basePath);
+    },
+    /**
      * Get a specific version of a Query Lambda
      * @summary Get Query Lambda Version
      * @param {string} workspace name of the workspace
      * @param {string} queryLambda name of the Query Lambda
-     * @param {number} version version
+     * @param {string} version version
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     getQueryLambdaVersion(
       workspace: string,
       queryLambda: string,
-      version: number,
+      version: string,
       options?: any
     ) {
       return QueryLambdasApiFp(configuration).getQueryLambdaVersion(
@@ -6476,6 +7329,46 @@ export const QueryLambdasApiFactory = function (
         fetch,
         basePath
       );
+    },
+    /**
+     * List all tags in an organization
+     * @summary List Query Lambda Tags
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    listOrganizationTags(options?: any) {
+      return QueryLambdasApiFp(configuration).listOrganizationTags(options)(
+        fetch,
+        basePath
+      );
+    },
+    /**
+     * List all Query Lambda versions associated with a tag
+     * @summary List Query Lambda Tag Versions
+     * @param {string} tag name of the tag
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    listQueryLambdaTagVersions(tag: string, options?: any) {
+      return QueryLambdasApiFp(configuration).listQueryLambdaTagVersions(
+        tag,
+        options
+      )(fetch, basePath);
+    },
+    /**
+     * List all tags associated with a Query Lambda
+     * @summary List Query Lambda Tags
+     * @param {string} workspace name of the workspace
+     * @param {string} queryLambda name of the Query Lambda
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    listQueryLambdaTags(workspace: string, queryLambda: string, options?: any) {
+      return QueryLambdasApiFp(configuration).listQueryLambdaTags(
+        workspace,
+        queryLambda,
+        options
+      )(fetch, basePath);
     },
     /**
      * List all versions of a Query Lambda.
@@ -6515,6 +7408,7 @@ export const QueryLambdasApiFactory = function (
      * @param {string} workspace name of the workspace
      * @param {string} queryLambda name of the Query Lambda
      * @param {UpdateQueryLambdaRequest} body JSON object
+     * @param {boolean} [create]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
@@ -6522,12 +7416,14 @@ export const QueryLambdasApiFactory = function (
       workspace: string,
       queryLambda: string,
       body: UpdateQueryLambdaRequest,
+      create?: boolean,
       options?: any
     ) {
       return QueryLambdasApiFp(configuration).updateQueryLambda(
         workspace,
         queryLambda,
         body,
+        create,
         options
       )(fetch, basePath);
     },
@@ -6563,6 +7459,30 @@ export class QueryLambdasApi extends BaseAPI {
   }
 
   /**
+   * Create a tag for a specific Query Lambda version, or update if it exists
+   * @summary Create Query Lambda Tag
+   * @param {string} workspace name of the workspace
+   * @param {string} queryLambda name of the Query Lambda
+   * @param {CreateQueryLambdaTagRequest} body JSON object
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof QueryLambdasApi
+   */
+  public createQueryLambdaTag(
+    workspace: string,
+    queryLambda: string,
+    body: CreateQueryLambdaTagRequest,
+    options?: any
+  ) {
+    return QueryLambdasApiFp(this.configuration).createQueryLambdaTag(
+      workspace,
+      queryLambda,
+      body,
+      options
+    )(this.fetch, this.basePath);
+  }
+
+  /**
    * Delete a Query Lambda.
    * @summary Delete Query Lambda
    * @param {string} workspace name of the workspace
@@ -6584,11 +7504,59 @@ export class QueryLambdasApi extends BaseAPI {
   }
 
   /**
+   * Delete a tag for a specific Query Lambda
+   * @summary Delete Query Lambda Tag Version
+   * @param {string} workspace name of the workspace
+   * @param {string} queryLambda name of the Query Lambda
+   * @param {string} tag name of the tag
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof QueryLambdasApi
+   */
+  public deleteQueryLambdaTag(
+    workspace: string,
+    queryLambda: string,
+    tag: string,
+    options?: any
+  ) {
+    return QueryLambdasApiFp(this.configuration).deleteQueryLambdaTag(
+      workspace,
+      queryLambda,
+      tag,
+      options
+    )(this.fetch, this.basePath);
+  }
+
+  /**
+   * Delete a Query Lambda version.
+   * @summary Delete Query Lambda Version
+   * @param {string} workspace name of the workspace
+   * @param {string} queryLambda name of the Query Lambda
+   * @param {string} version version
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof QueryLambdasApi
+   */
+  public deleteQueryLambdaVersion(
+    workspace: string,
+    queryLambda: string,
+    version: string,
+    options?: any
+  ) {
+    return QueryLambdasApiFp(this.configuration).deleteQueryLambdaVersion(
+      workspace,
+      queryLambda,
+      version,
+      options
+    )(this.fetch, this.basePath);
+  }
+
+  /**
    * Run a particular version of a Query Lambda.
    * @summary Run Query Lambda
    * @param {string} workspace name of the workspace
    * @param {string} queryLambda name of the Query Lambda
-   * @param {number} version version
+   * @param {string} version version
    * @param {ExecuteQueryLambdaRequest} [body] JSON object
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
@@ -6597,7 +7565,7 @@ export class QueryLambdasApi extends BaseAPI {
   public executeQueryLambda(
     workspace: string,
     queryLambda: string,
-    version: number,
+    version: string,
     body?: ExecuteQueryLambdaRequest,
     options?: any
   ) {
@@ -6611,11 +7579,62 @@ export class QueryLambdasApi extends BaseAPI {
   }
 
   /**
+   * Run the Query Lambda version associated with a given tag.
+   * @summary Run Query Lambda By Tag
+   * @param {string} workspace name of the workspace
+   * @param {string} queryLambda name of the Query Lambda
+   * @param {string} tag tag
+   * @param {ExecuteQueryLambdaRequest} [body] JSON object
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof QueryLambdasApi
+   */
+  public executeQueryLambdaByTag(
+    workspace: string,
+    queryLambda: string,
+    tag: string,
+    body?: ExecuteQueryLambdaRequest,
+    options?: any
+  ) {
+    return QueryLambdasApiFp(this.configuration).executeQueryLambdaByTag(
+      workspace,
+      queryLambda,
+      tag,
+      body,
+      options
+    )(this.fetch, this.basePath);
+  }
+
+  /**
+   * Get the specific Query Lambda version associated with a given tag
+   * @summary Get Query Lambda Tag
+   * @param {string} workspace name of the workspace
+   * @param {string} queryLambda name of the Query Lambda
+   * @param {string} tag name of the tag
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof QueryLambdasApi
+   */
+  public getQueryLambdaTagVersion(
+    workspace: string,
+    queryLambda: string,
+    tag: string,
+    options?: any
+  ) {
+    return QueryLambdasApiFp(this.configuration).getQueryLambdaTagVersion(
+      workspace,
+      queryLambda,
+      tag,
+      options
+    )(this.fetch, this.basePath);
+  }
+
+  /**
    * Get a specific version of a Query Lambda
    * @summary Get Query Lambda Version
    * @param {string} workspace name of the workspace
    * @param {string} queryLambda name of the Query Lambda
-   * @param {number} version version
+   * @param {string} version version
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof QueryLambdasApi
@@ -6623,7 +7642,7 @@ export class QueryLambdasApi extends BaseAPI {
   public getQueryLambdaVersion(
     workspace: string,
     queryLambda: string,
-    version: number,
+    version: string,
     options?: any
   ) {
     return QueryLambdasApiFp(this.configuration).getQueryLambdaVersion(
@@ -6646,6 +7665,56 @@ export class QueryLambdasApi extends BaseAPI {
       this.fetch,
       this.basePath
     );
+  }
+
+  /**
+   * List all tags in an organization
+   * @summary List Query Lambda Tags
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof QueryLambdasApi
+   */
+  public listOrganizationTags(options?: any) {
+    return QueryLambdasApiFp(this.configuration).listOrganizationTags(options)(
+      this.fetch,
+      this.basePath
+    );
+  }
+
+  /**
+   * List all Query Lambda versions associated with a tag
+   * @summary List Query Lambda Tag Versions
+   * @param {string} tag name of the tag
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof QueryLambdasApi
+   */
+  public listQueryLambdaTagVersions(tag: string, options?: any) {
+    return QueryLambdasApiFp(this.configuration).listQueryLambdaTagVersions(
+      tag,
+      options
+    )(this.fetch, this.basePath);
+  }
+
+  /**
+   * List all tags associated with a Query Lambda
+   * @summary List Query Lambda Tags
+   * @param {string} workspace name of the workspace
+   * @param {string} queryLambda name of the Query Lambda
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof QueryLambdasApi
+   */
+  public listQueryLambdaTags(
+    workspace: string,
+    queryLambda: string,
+    options?: any
+  ) {
+    return QueryLambdasApiFp(this.configuration).listQueryLambdaTags(
+      workspace,
+      queryLambda,
+      options
+    )(this.fetch, this.basePath);
   }
 
   /**
@@ -6690,6 +7759,7 @@ export class QueryLambdasApi extends BaseAPI {
    * @param {string} workspace name of the workspace
    * @param {string} queryLambda name of the Query Lambda
    * @param {UpdateQueryLambdaRequest} body JSON object
+   * @param {boolean} [create]
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof QueryLambdasApi
@@ -6698,12 +7768,14 @@ export class QueryLambdasApi extends BaseAPI {
     workspace: string,
     queryLambda: string,
     body: UpdateQueryLambdaRequest,
+    create?: boolean,
     options?: any
   ) {
     return QueryLambdasApiFp(this.configuration).updateQueryLambda(
       workspace,
       queryLambda,
       body,
+      create,
       options
     )(this.fetch, this.basePath);
   }
