@@ -28,6 +28,7 @@
     "@oclif/dev-cli": "^1.22.2",
     "@types/lodash": "^4.14.150",
     "@types/node": "^10.17.21",
+    "aws-sdk": "^2.679.0",
     "eslint": "^7.0.0",
     "eslint-config-oclif": "^3.1.0",
     "eslint-config-oclif-typescript": "^0.1.0",
@@ -58,6 +59,11 @@
   "main": "lib/index.js",
   "oclif": {
     "commands": "./lib/commands",
+    "update": {
+      "s3": {
+        "bucket": "rockset-cli-artifacts"
+      }
+    },
     "bin": "rock",
     "plugins": [
       "@oclif/plugin-help",
