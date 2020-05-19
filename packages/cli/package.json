@@ -19,6 +19,7 @@
     "@rockset/core": "0.0.4",
     "@rockset/eslint-config": "^0.0.3-alpha.0",
     "@types/prompts": "^2.0.8",
+    "aws-sdk": "^2.679.0",
     "handlebars": "^4.7.6",
     "lodash": "^4.17.15",
     "prompts": "^2.3.2",
