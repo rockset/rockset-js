@@ -5,7 +5,7 @@ import {
   LambdaEntity,
   CollectionEntity,
   DownloadHooks,
-  DownloadOptions,
+  LambdaDownloadOptions,
 } from './types';
 import {
   FetchAPI,
@@ -120,39 +120,46 @@ export const constructCollectionEntity = (networkCollection: Collection) => {
   return entity;
 };
 
-export async function download(
-  hooks: DownloadHooks = {},
-  options: DownloadOptions
-) {
+export async function downloadCollections(hooks: DownloadHooks = {}) {
   const client = await createClient();
 
   // Grab entities from apiserver
-  const [lambdas, collections] = await Promise.all([
-    client.queryLambdas.listAllQueryLambdas(),
-    client.collections.listCollections(),
-  ]);
+  const collections = await client.collections.listCollections();
 
-  if (options.writeLambdas) {
-    // Write lambdas to file
-    lambdas.data?.forEach(async (lambda) => {
-      const qlEntity = constructLambdaEntity(lambda);
-      if (qlEntity) {
-        await writeLambda(qlEntity);
-        hooks.onWriteLambda?.(qlEntity);
-      }
-    });
-  }
+  // Write collections to file
+  collections.data?.forEach(async (collection) => {
+    const collectionEntity = constructCollectionEntity(collection);
+    if (collectionEntity) {
+      await writeCollection(collectionEntity);
+      hooks.onWriteCollection?.(collectionEntity);
+    }
+  });
+}
 
-  if (options.writeCollections) {
-    // Write collections to file
-    collections.data?.forEach(async (collection) => {
-      const collectionEntity = constructCollectionEntity(collection);
-      if (collectionEntity) {
-        await writeCollection(collectionEntity);
-        hooks.onWriteCollection?.(collectionEntity);
-      }
-    });
+export async function downloadQueryLambdas(
+  hooks: DownloadHooks = {},
+  options: LambdaDownloadOptions
+) {
+  const client = await createClient();
+
+  let lambdas: QueryLambdaVersion[] = [];
+  // Grab entities from apiserver
+  if (options.useLambdaTag) {
+    const lambdaReponse = await client.queryLambdas.listQueryLambdaTagVersions(
+      options.useLambdaTag
+    );
+    lambdas = lambdaReponse?.data ?? [];
+  } else {
+    // Use latest versions
+    // TODO (Scott) — update this once code to fetch latest versions is up in API
   }
+  lambdas.forEach(async (lambda: QueryLambdaVersion) => {
+    const qlEntity = constructLambdaEntity(lambda);
+    if (qlEntity) {
+      await writeLambda(qlEntity);
+      hooks.onWriteLambda?.(qlEntity);
+    }
+  });
 }
 
 /**

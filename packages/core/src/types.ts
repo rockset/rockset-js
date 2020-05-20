@@ -68,7 +68,6 @@ export interface DownloadHooks {
   onWriteCollection?: (e: CollectionEntity) => void;
 }
 
-export interface DownloadOptions {
-  writeCollections?: boolean;
-  writeLambdas?: boolean;
+export interface LambdaDownloadOptions {
+  useLambdaTag?: string;
 }

@@ -68,7 +68,8 @@ USAGE
 * [`rock api:workspaces:listWorkspaces`](#rock-apiworkspaceslistworkspaces)
 * [`rock autocomplete [SHELL]`](#rock-autocomplete-shell)
 * [`rock help [COMMAND]`](#rock-help-command)
-* [`rock project:download`](#rock-projectdownload)
+* [`rock project:download:collections`](#rock-projectdownloadcollections)
+* [`rock project:download:queryLambdas`](#rock-projectdownloadquerylambdas)
 * [`rock project:init`](#rock-projectinit)
 * [`rock project:resolve NAME`](#rock-projectresolve-name)
 * [`rock update [CHANNEL]`](#rock-update-channel)
@@ -1210,22 +1211,42 @@ OPTIONS
 
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v2.2.3/src/commands/help.ts)_
 
-## `rock project:download`
+## `rock project:download:collections`
 
-Download project entites from Rockset to your local project.
+Download collection entities from Rockset to your local project.
 
 ```
 USAGE
-  $ rock project:download
+  $ rock project:download:collections
 
 OPTIONS
   -h, --help  show CLI help
 
 DESCRIPTION
-  Download project entites from Rockset to your local project.
+  Download collection entities from Rockset to your local project.
 ```
 
-_See code: [src/commands/project/download.ts](https://github.com/rockset/rockset-js/blob/v0.0.4/src/commands/project/download.ts)_
+_See code: [src/commands/project/download/collections.ts](https://github.com/rockset/rockset-js/blob/v0.0.4/src/commands/project/download/collections.ts)_
+
+## `rock project:download:queryLambdas`
+
+Download Query Lambda entities from Rockset to your local project.
+
+```
+USAGE
+  $ rock project:download:queryLambdas
+
+OPTIONS
+  -h, --help                                                                            show CLI help
+  -t, --tag=
+          Specify a value to download all Query Lambda versions tagged with this tag. 
+          Query Lambdas that do not have a version with this tag name will be skipped.
+
+DESCRIPTION
+  Download Query Lambda entities from Rockset to your local project.
+```
+
+_See code: [src/commands/project/download/queryLambdas.ts](https://github.com/rockset/rockset-js/blob/v0.0.4/src/commands/project/download/queryLambdas.ts)_
 
 ## `rock project:init`
 
