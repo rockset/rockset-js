@@ -9,8 +9,8 @@ import {
 } from './types';
 import {
   FetchAPI,
-  QueryLambda,
   Collection,
+  QueryLambdaVersion,
 } from '@rockset/client/dist/codegen/api';
 import {
   getFiles,
@@ -73,7 +73,7 @@ export async function listEntityNames() {
 }
 
 const constructLambdaEntity = (
-  networkLambda: QueryLambda
+  networkLambda: QueryLambdaVersion
 ): LambdaEntity | null => {
   const ws = networkLambda.workspace;
   const name = networkLambda.name;
@@ -160,7 +160,10 @@ export async function download(
  * @param hooks Lifecycle hooks that will be called at appropriate intervals
  */
 export async function deploy(hooks: DeployHooks = {}) {
-  const [srcPath, client] = await Promise.all([getSrcPath(), createClient()]);
+  const [srcPath /*, client*/] = await Promise.all([
+    getSrcPath(),
+    /* createClient(),*/
+  ]);
 
   // Grab all files
   const allFiles = await getFiles(srcPath);
@@ -185,45 +188,46 @@ export async function deploy(hooks: DeployHooks = {}) {
   )) as LambdaEntity[];
 
   // Grab lambdas from apiserver
-  const lambdas = await client.queryLambdas.listAllQueryLambdas();
+  // const lambdas = await client.queryLambdas.listAllQueryLambdas();
 
   return lambdaEntities.map(async (lambdaEntity) => {
-    const { ws, name: lambda, sql: text } = lambdaEntity;
+    // const { ws, name: lambda, sql: text } = lambdaEntity;
 
-    const lambdaObj = lambdas.data?.find(
-      ({ workspace, name }) => workspace === ws && name === lambda
-    );
+    // const lambdaObj = lambdas.data?.find(
+    //   ({ workspace, name }) => workspace === ws && name === lambda
+    // );
 
-    if (lambdaObj?.sql?.query === text) {
-      hooks?.onNoChange?.(lambdaEntity);
-    } else if (!lambdaObj) {
-      hooks.onDeployStart?.(lambdaEntity);
-      try {
-        await client.queryLambdas.createQueryLambda(ws, {
-          name: lambda,
-          sql: {
-            query: text,
-            default_parameters: lambdaEntity.config.default_parameters,
-          },
-        });
-        hooks.onDeploySuccess?.(lambdaEntity);
-      } catch (e) {
-        hooks.onDeployError?.(e, lambdaEntity);
-      }
-    } else {
-      hooks.onDeployStart?.(lambdaEntity);
-      try {
-        await client.queryLambdas.updateQueryLambda(ws, lambda, {
-          sql: {
-            query: text,
-            default_parameters: lambdaEntity.config.default_parameters,
-          },
-        });
+    // TODO (Scott) — update this with new version logic and tags
+    // if (lambdaObj?.sql?.query === text) {
+    hooks?.onNoChange?.(lambdaEntity);
+    // } else if (!lambdaObj) {
+    //   hooks.onDeployStart?.(lambdaEntity);
+    //   try {
+    //     await client.queryLambdas.createQueryLambda(ws, {
+    //       name: lambda,
+    //       sql: {
+    //         query: text,
+    //         default_parameters: lambdaEntity.config.default_parameters,
+    //       },
+    //     });
+    //     hooks.onDeploySuccess?.(lambdaEntity);
+    //   } catch (e) {
+    //     hooks.onDeployError?.(e, lambdaEntity);
+    //   }
+    // } else {
+    //   hooks.onDeployStart?.(lambdaEntity);
+    //   try {
+    //     await client.queryLambdas.updateQueryLambda(ws, lambda, {
+    //       sql: {
+    //         query: text,
+    //         default_parameters: lambdaEntity.config.default_parameters,
+    //       },
+    //     });
 
-        hooks.onDeploySuccess?.(lambdaEntity);
-      } catch (e) {
-        hooks.onDeployError?.(e, lambdaEntity);
-      }
-    }
+    //     hooks.onDeploySuccess?.(lambdaEntity);
+    //   } catch (e) {
+    //     hooks.onDeployError?.(e, lambdaEntity);
+    //   }
+    // }
   });
 }
