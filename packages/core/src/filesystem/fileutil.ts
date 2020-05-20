@@ -6,16 +6,19 @@ import {
   readSqlFromPath,
   getWsNamePair,
   isParent,
+  join,
+  dirname,
 } from './pathutil';
 
 import * as path from 'path';
 import {
   RootConfig,
   QualifiedName,
-  LambdaConfig,
   LambdaEntity,
   CollectionEntity,
-  ROOT_CONFIG,
+  AbsolutePath,
+  LambdaConfig,
+  throwOnError,
 } from '../types';
 
 // This is the only package that is allowed to access the file system
@@ -24,42 +27,54 @@ import {
 import { promises as fs, constants as fsconstants } from 'fs';
 
 import { prettyPrint } from '../helper';
-import { errorFailToWriteFileOutsideProject } from '../exception';
+import {
+  errorFailToWriteFileOutsideProject,
+  errorInvalidRootConfig,
+  errorFailedToParseLambdaConfig,
+} from '../exception';
 
 /**
  *
  * Get the root config for a project
  * @param path The path to search in. If no path is provided, will attempt to resolve the root path
  */
-export async function readRootConfig(): Promise<RootConfig> {
-  return readConfigFromPath(await resolveRootFile());
+export async function readRootConfig() {
+  const rawConfig = await readConfigFromPath(await resolveRootFile());
+  return throwOnError(RootConfig.decode(rawConfig), errorInvalidRootConfig);
 }
 
 export async function writeRootConfig(config: RootConfig) {
-  return fs.writeFile(ROOT_CONFIG, prettyPrint(config));
+  const decode = RootConfig.decode(config);
+  return throwOnError(decode, errorInvalidRootConfig);
 }
 
 /**
  * Resolve the current source path
  */
-export async function getSrcPath() {
+export async function getSrcPath(): Promise<AbsolutePath> {
   const root = await resolveRootDirectory();
   const config = await readRootConfig();
-  return path.join(root, config.source_root);
+  const finalPath = join(root, config.source_root);
+  return finalPath;
 }
 
 export async function readLambdaFromQualifiedName(name: QualifiedName) {
   const srcPath = await getSrcPath();
-  const fullPath = path.join(
-    srcPath,
-    resolvePathFromQualifiedName(name, 'lambda')
-  );
+  const fullPath = join(srcPath, resolvePathFromQualifiedName(name, 'lambda'));
   return readLambda(name, fullPath);
 }
 
-export async function readLambda(fullName: QualifiedName, fullPath: string) {
-  const config = (await readConfigFromPath(fullPath)) as LambdaConfig;
-  const sqlPath = path.join(path.dirname(fullPath), config.sql_path);
+export async function readLambda(
+  fullName: QualifiedName,
+  fullPath: AbsolutePath
+) {
+  const rawConfig = await readConfigFromPath(fullPath);
+  const config = throwOnError(
+    LambdaConfig.decode(rawConfig),
+    errorFailedToParseLambdaConfig(fullName, fullPath)
+  );
+
+  const sqlPath = join(dirname(fullPath), config.sql_path);
   const sql = await readSqlFromPath(sqlPath);
   const { name, ws } = getWsNamePair(fullName);
 
@@ -70,18 +85,18 @@ export async function readLambda(fullName: QualifiedName, fullPath: string) {
     type: 'lambda' as const,
     config,
     sql,
-  } as LambdaEntity;
+  };
 }
 
 export async function writeLambda(entity: LambdaEntity) {
   const srcPath = await getSrcPath();
-  const fullPath = path.join(
+  const fullPath = join(
     srcPath,
     resolvePathFromQualifiedName(entity.fullName, 'lambda')
   );
-  const lambdaDirectory = path.dirname(fullPath);
+  const lambdaDirectory = dirname(fullPath);
 
-  const sqlFileName = path.join(lambdaDirectory, entity.config.sql_path);
+  const sqlFileName = join(lambdaDirectory, entity.config.sql_path);
   // Make sure the directory exists
 
   const configFile = writeFileSafe(
@@ -97,7 +112,7 @@ export async function writeLambda(entity: LambdaEntity) {
 
 export async function writeCollection(entity: CollectionEntity) {
   const srcPath = await getSrcPath();
-  const fullPath = path.join(
+  const fullPath = join(
     srcPath,
     resolvePathFromQualifiedName(entity.fullName, 'collection')
   );
@@ -106,8 +121,8 @@ export async function writeCollection(entity: CollectionEntity) {
 }
 
 export async function writeFileSafe(
-  srcPath: string,
-  fullPath: string,
+  srcPath: AbsolutePath,
+  fullPath: AbsolutePath,
   data: string | Uint8Array
 ) {
   if (!isParent(srcPath, fullPath)) {

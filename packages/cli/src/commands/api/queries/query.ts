@@ -48,7 +48,7 @@ This command is a simple wrapper around the above endpoint. Please view further 
     // apicall
     const apicall = client.queries.query.bind(client.queries);
 
-    runApiCall.bind(this)({ args, flags, namedArgs, apicall });
+    await runApiCall.bind(this)({ args, flags, namedArgs, apicall });
   }
 }
 

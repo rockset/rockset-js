@@ -60,7 +60,7 @@ This command is a simple wrapper around the above endpoint. Please view further 
     // apicall
     const apicall = client.documents.addDocuments.bind(client.documents);
 
-    runApiCall.bind(this)({ args, flags, namedArgs, apicall });
+    await runApiCall.bind(this)({ args, flags, namedArgs, apicall });
   }
 }
 

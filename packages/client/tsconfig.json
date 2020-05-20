@@ -13,5 +13,5 @@
     "noImplicitAny": true,
     "declaration": true
   },
-  "include": [ "src/**/*", "tests/**/*", "examples/**/*" ]
+  "include": [ "src/**/*" ]
 }

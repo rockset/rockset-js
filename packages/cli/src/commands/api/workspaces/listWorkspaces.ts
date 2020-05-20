@@ -41,7 +41,7 @@ This command is a simple wrapper around the above endpoint. Please view further 
     // apicall
     const apicall = client.workspaces.listWorkspaces.bind(client.workspaces);
 
-    runApiCall.bind(this)({ args, flags, namedArgs, apicall });
+    await runApiCall.bind(this)({ args, flags, namedArgs, apicall });
   }
 }
 

@@ -10,13 +10,18 @@ require('node-fetch');
 const rocksetConfigure = (
   apikey: string,
   host: string,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   customFetch?: (url: string, request: any) => Promise<any>
 ) => {
   // Overwrite the apikey so it doesn't need to be specified on every query
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const authFetch = async (url: string, options: any) => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const newOptions = {
       ...options,
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       headers: {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
         ...options.headers,
         Authorization: `ApiKey ${apikey}`,
       },
@@ -24,8 +29,10 @@ const rocksetConfigure = (
 
     // Override the custom fetch so that the user doesn't see .json issues
     if (customFetch) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       const out = await customFetch(url as string, newOptions);
       return {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
         json: () => out,
         status: 200,
       } as Response;

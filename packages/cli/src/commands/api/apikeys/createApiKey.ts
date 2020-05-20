@@ -48,7 +48,7 @@ This command is a simple wrapper around the above endpoint. Please view further 
     // apicall
     const apicall = client.apikeys.createApiKey.bind(client.apikeys);
 
-    runApiCall.bind(this)({ args, flags, namedArgs, apicall });
+    await runApiCall.bind(this)({ args, flags, namedArgs, apicall });
   }
 }
 

@@ -1,12 +1,14 @@
+/* eslint-disable unicorn/no-abusive-eslint-disable */
 import * as Parser from '@oclif/parser';
 import Command from '@oclif/command';
 import * as _ from 'lodash';
 
 export type Args = Parser.args.Input;
 export type Flags = { file?: string };
-export type Apicall = (...a: any) => Promise<any>;
+export type Apicall<A extends unknown[], Return> = (...a: A) => Promise<Return>;
 
-export async function runApiCall(
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export async function runApiCall<A extends any[], Return>(
   this: Command,
   {
     args,
@@ -17,7 +19,7 @@ export async function runApiCall(
     args: Record<string, string>;
     flags: Flags;
     namedArgs: Args;
-    apicall: Apicall;
+    apicall: Apicall<A, Return>;
   },
 ) {
   const log = this.log.bind(this) ?? console.log;
@@ -26,7 +28,7 @@ export async function runApiCall(
 
   if (flags.file) {
     // Load the specified file
-    const config: Record<string, any> = require(flags.file);
+    const config: Record<string, unknown> = require(flags.file) as Record<string, unknown>;
     const ordArgs = namedArgs.map((arg) => config[arg.name]);
     const body = _.filter(config, (key: string) => !namedArgs.some(({ name }) => name === key));
     allArgs = [...ordArgs, body];
@@ -36,7 +38,9 @@ export async function runApiCall(
   }
 
   try {
-    const data = await apicall(...allArgs);
+    type R = Return & { results?: unknown };
+    const data = (await apicall(...(allArgs as A))) as R;
+
     log(JSON.stringify(data?.results ?? data, null, 2));
   } catch (error2) {
     error(JSON.stringify(error2, null, 2));

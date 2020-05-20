@@ -1,5 +1,6 @@
-import rocksetConfigure from '../src/index';
-import { ErrorModel, QueryLambdaVersionResponse } from '../src/codegen/api';
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+import rocksetConfigure from '../index';
+import { ErrorModel, QueryLambdaVersionResponse } from '../codegen/api';
 
 const basePath = process.env.ROCKSET_APISERVER;
 const apikey = process.env.ROCKSET_APIKEY as string;

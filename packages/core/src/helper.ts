@@ -1,4 +1,4 @@
-export const prettyPrint = (obj: any) => {
+export const prettyPrint = (obj: unknown) => {
   return JSON.stringify(obj, null, 2);
 };
 

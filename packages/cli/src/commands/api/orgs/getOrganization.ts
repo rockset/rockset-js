@@ -41,7 +41,7 @@ This command is a simple wrapper around the above endpoint. Please view further 
     // apicall
     const apicall = client.orgs.getOrganization.bind(client.orgs);
 
-    runApiCall.bind(this)({ args, flags, namedArgs, apicall });
+    await runApiCall.bind(this)({ args, flags, namedArgs, apicall });
   }
 }
 

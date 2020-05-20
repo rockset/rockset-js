@@ -1,5 +1,5 @@
 import { Command, flags } from '@oclif/command';
-import { pathutil, fileutil } from '@rockset/core';
+import { types, fileutil, pathutil } from '@rockset/core';
 import { getSrcPath } from '@rockset/core/dist/filesystem/fileutil';
 
 class ResolvePath extends Command {
@@ -38,9 +38,12 @@ class ResolvePath extends Command {
   async run() {
     const { args, flags } = this.parse(ResolvePath);
 
+    // Will throw for invalid qualified name
+    const qualifiedName = types.parseQualifiedName(args.name as string);
+
     if ((flags.entity === 'lambda' || flags.entity === 'workspace') && args.name) {
       const srcPath = await getSrcPath();
-      const p = pathutil.resolvePathFromQualifiedName(args.name, flags.entity, srcPath);
+      const p = pathutil.resolvePathFromQualifiedName(qualifiedName, flags.entity, srcPath);
       if ((await fileutil.exists(p)) || !flags.exists) {
         this.log(p);
       } else {

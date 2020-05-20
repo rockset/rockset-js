@@ -19,7 +19,7 @@ async function generate() {
       await fs.readFile(p.join(__dirname, 'apiTemplate.ts.handlebars'))
     ).toString();
     const template = Handlebars.compile(templateText);
-    const pp = (obj: any) => JSON.stringify(obj, null, 2);
+    const pp = (obj: unknown) => JSON.stringify(obj, null, 2);
 
     const output = _.flatMap(paths, (path, endpoint: string) =>
       _.map(path, (get: Get, method: string) => {

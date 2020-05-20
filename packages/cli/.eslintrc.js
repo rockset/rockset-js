@@ -5,6 +5,10 @@ module.exports = {
     "oclif-typescript",
     "@rockset"
   ],
+  rules: {
+    // This rule is being really flaky, and can't be disabled in a file for some reason
+    "unicorn/no-abusive-eslint-disable": 0   
+  },
   parserOptions: {
     project: path.resolve(__dirname, './tsconfig.json'),
     tsconfigRootDir: __dirname,

@@ -5,7 +5,7 @@
  * Note: this method DOES NOT cancel the request on rockset servers. It simply rejects the promise returned by axios.
  */
 import axios from 'axios';
-import rocksetConfigure from '../src';
+import rocksetConfigure from '..';
 
 // Super simple fetch with axios: axios docs show how to check for errors, cancel requests etc.
 const customFetchAxios = async (

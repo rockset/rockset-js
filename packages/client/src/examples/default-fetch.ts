@@ -1,4 +1,4 @@
-import rocksetConfigure from '../src';
+import rocksetConfigure from '..';
 
 const host = 'https://api.rs2.usw2.rockset.com';
 const apikey = '...';

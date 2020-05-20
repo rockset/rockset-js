@@ -1,9 +1,9 @@
-import rocksetConfigure from '../src/index';
+import rocksetConfigure from '../index';
 
 const basePath = 'https://api.rs2.usw2.rockset.com';
 const apikey = 'apikey';
 
-const customFetch = jest.fn(async (url, options) => ({
+const customFetch = jest.fn(async (url: string, options: unknown) => ({
   url,
   options,
 }));

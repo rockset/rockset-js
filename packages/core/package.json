@@ -2,10 +2,12 @@
   "dependencies": {
     "@rockset/client": "0.0.4",
     "@rockset/eslint-config": "^0.0.3-alpha.0",
-    "@types/mock-fs": "^4.10.0",
-    "@types/prompts": "^2.0.6",
+    "fp-ts": "^2.6.1",
     "glob-fs": "^0.1.7",
+    "io-ts": "^2.2.2",
+    "io-ts-types": "^0.5.6",
     "lodash.get": "^4.4.2",
+    "newtype-ts": "^0.3.4",
     "prettier": "^2.0.5",
     "prompts": "^2.3.2"
   },
@@ -15,6 +17,8 @@
   "main": "./dist/index.js",
   "types": "dist/index.d.ts",
   "devDependencies": {
+    "@types/mock-fs": "^4.10.0",
+    "@types/prompts": "^2.0.6",
     "@types/lodash": "^4.14.150",
     "@types/lodash.get": "^4.4.6",
     "eslint": "^7.0.0",
@@ -30,7 +34,7 @@
     "test": "jest",
     "start": "tsc --watch",
     "build": "tsc",
-    "lint": "eslint src/**/*.ts"
+    "lint": "eslint 'src/**/*.ts'"
   },
   "author": "Rockset",
   "publishConfig": {

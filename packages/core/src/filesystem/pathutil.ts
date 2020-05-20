@@ -1,10 +1,12 @@
-import { errorNotValidProject } from '../exception';
+import { errorNotValidProject, errorInvalidQualifiedName } from '../exception';
 import {
   ROOT_CONFIG,
   QualifiedName,
-  SqlString,
   EntityType,
   ENTITIES,
+  AbsolutePath,
+  throwOnError,
+  parseAbsolutePath,
 } from '../types';
 
 // This is the only package that is allowed to access the file system
@@ -21,39 +23,41 @@ import { tuple } from '../helper';
  * @param startingPath The starting path to look in. Defaults to current working directory
  */
 export async function resolveRootDirectory(
-  startingPath?: string
-): Promise<string> {
+  startingPath?: AbsolutePath
+): Promise<AbsolutePath> {
+  // should always be an absolute path
   const dir = startingPath ?? process.cwd();
   const { root } = path.parse(dir);
 
-  if (dir === root || !path.isAbsolute(dir)) {
+  if (dir === root) {
     throw errorNotValidProject();
   }
 
   const p = path.join(dir, ROOT_CONFIG);
   try {
     await fs.access(p);
-    return dir;
-  } catch {
-    return resolveRootDirectory(path.dirname(dir));
+    return parseAbsolutePath(dir);
+  } catch (e) {
+    // dirname of an absolute path is an absolute path
+    return resolveRootDirectory(path.dirname(dir) as AbsolutePath);
   }
 }
 
-export async function resolveRootFile(rootDirectory?: string) {
+export async function resolveRootFile(rootDirectory?: AbsolutePath) {
   const rootDir = rootDirectory ?? (await resolveRootDirectory());
-  return path.join(rootDir, ROOT_CONFIG);
+  return join(rootDir, ROOT_CONFIG);
 }
 
-export async function readConfigFromPath(absolutePath: string) {
+export async function readConfigFromPath(absolutePath: AbsolutePath) {
   const configStr = (await fs.readFile(absolutePath)).toString();
 
   // TODO(tchordia): support YAML in the future?
-  return JSON.parse(configStr);
+  return JSON.parse(configStr) as unknown;
 }
 
 export async function readSqlFromPath(
-  absolutePath: string
-): Promise<SqlString> {
+  absolutePath: AbsolutePath
+): Promise<string> {
   const sqlStr = (await fs.readFile(absolutePath)).toString();
   return sqlStr;
 }
@@ -61,15 +65,16 @@ export async function readSqlFromPath(
 /**
  * Read all files from a directory
  */
-export async function getFiles(dir: string): Promise<string[]> {
+export async function getFiles(dir: string): Promise<AbsolutePath[]> {
   const dirents = await fs.readdir(dir, { withFileTypes: true });
   const files = await Promise.all(
     dirents.map((dirent) => {
-      const res = path.resolve(dir, dirent.name);
+      // Path.resolve always returns an absolute path
+      const res = path.resolve(dir, dirent.name) as AbsolutePath;
       return dirent.isDirectory() ? getFiles(res) : [res];
     })
   );
-  return Array.prototype.concat(...files);
+  return Array.prototype.concat(...files) as AbsolutePath[];
 }
 
 // *** Translating qualified names into paths and vice versa **
@@ -90,8 +95,8 @@ export function resolvePathFromQualifiedName(
 }
 
 export function resolveQualifiedNameFromPath(
-  srcPath: string,
-  absolutePath: string
+  srcPath: AbsolutePath,
+  absolutePath: AbsolutePath
 ): [QualifiedName, EntityType] | null {
   // Src path must be a parent of this path
   if (!isParent(srcPath, absolutePath)) {
@@ -113,8 +118,8 @@ export function resolveQualifiedNameFromPath(
 }
 
 export function isDefinitionPath(
-  srcPath: string,
-  url: string,
+  srcPath: AbsolutePath,
+  url: AbsolutePath,
   entityType: EntityType
 ) {
   const [, entity] = resolveQualifiedNameFromPath(srcPath, url) ?? [null, null];
@@ -133,17 +138,33 @@ export function getWsNamePair(fullName: QualifiedName) {
   return { name, ws };
 }
 
-export function getQualifiedName(ws: string, name: string) {
-  return [ws, name].join('.');
+export function getQualifiedName(ws: string, name: string): QualifiedName {
+  const rawName = [ws, name].join('.');
+  return throwOnError(QualifiedName.decode(rawName), errorInvalidQualifiedName);
 }
 
 /*** Helpers */
 
-export function isParent(parent: string, child: string) {
+export function isParent(parent: AbsolutePath, child: AbsolutePath) {
   const relative = path.relative(parent, child);
-  return relative && !relative.startsWith('..') && !path.isAbsolute(relative);
+  return relative && !relative.startsWith('..');
 }
 
 export function relativeSQLPath(name: string) {
   return path.join('./__sql', name + '.sql');
+}
+
+export const cwd = () => {
+  // process.cwd always returns an absolute path
+  process.cwd() as AbsolutePath;
+};
+
+export function join(root: AbsolutePath, ...paths: string[]): AbsolutePath {
+  // Joining onto an absolute path yields an absolute path
+  return path.join(root, ...paths) as AbsolutePath;
+}
+
+export function dirname(root: AbsolutePath): AbsolutePath {
+  // dirname of an absolute path is an absolute path
+  return path.dirname(root) as AbsolutePath;
 }

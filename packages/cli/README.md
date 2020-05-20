@@ -69,7 +69,7 @@ USAGE
 * [`rock autocomplete [SHELL]`](#rock-autocomplete-shell)
 * [`rock help [COMMAND]`](#rock-help-command)
 * [`rock project:download:collections`](#rock-projectdownloadcollections)
-* [`rock project:download:queryLambdas`](#rock-projectdownloadquerylambdas)
+* [`rock project:download:lambdas`](#rock-projectdownloadlambdas)
 * [`rock project:init`](#rock-projectinit)
 * [`rock project:resolve NAME`](#rock-projectresolve-name)
 * [`rock update [CHANNEL]`](#rock-update-channel)
@@ -1228,13 +1228,13 @@ DESCRIPTION
 
 _See code: [src/commands/project/download/collections.ts](https://github.com/rockset/rockset-js/blob/v0.0.4/src/commands/project/download/collections.ts)_
 
-## `rock project:download:queryLambdas`
+## `rock project:download:lambdas`
 
 Download Query Lambda entities from Rockset to your local project.
 
 ```
 USAGE
-  $ rock project:download:queryLambdas
+  $ rock project:download:lambdas
 
 OPTIONS
   -h, --help                                                                            show CLI help
@@ -1246,7 +1246,7 @@ DESCRIPTION
   Download Query Lambda entities from Rockset to your local project.
 ```
 
-_See code: [src/commands/project/download/queryLambdas.ts](https://github.com/rockset/rockset-js/blob/v0.0.4/src/commands/project/download/queryLambdas.ts)_
+_See code: [src/commands/project/download/lambdas.ts](https://github.com/rockset/rockset-js/blob/v0.0.4/src/commands/project/download/lambdas.ts)_
 
 ## `rock project:init`
 
