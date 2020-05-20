@@ -1,15 +1,15 @@
-import rocksetConfigure from "rockset";
+import rocksetConfigure from '../src';
 
-const host = "https://api.rs2.usw2.rockset.com";
-const apikey = "...";
+const host = 'https://api.rs2.usw2.rockset.com';
+const apikey = '...';
 const rockset = rocksetConfigure(apikey, host);
 
 // All of these examples are strongly typed
 
 // Create a collection
 rockset.collections
-  .createCollection("commons", {
-    name: "collection",
+  .createCollection('commons', {
+    name: 'collection',
   })
   .then(console.log)
   .catch(console.error);
@@ -22,19 +22,21 @@ const executeQuery = async (query: string) =>
     },
   });
 
-executeQuery("Select count(*) from _events;");
+executeQuery('Select count(*) from _events;')
+  .then(console.log)
+  .catch(console.error);
 
 // Create a Query Lambda
 rockset.queryLambdas
-  .createQueryLambda("commons", {
-    name: "myQuery",
+  .createQueryLambda('commons', {
+    name: 'myQuery',
     sql: {
-      query: "SELECT :param as echo",
+      query: 'SELECT :param as echo',
       default_parameters: [
         {
-          name: "param",
-          type: "string",
-          value: "Hello world!",
+          name: 'param',
+          type: 'string',
+          value: 'Hello world!',
         },
       ],
     },
@@ -45,21 +47,21 @@ rockset.queryLambdas
 // Execute a Query Lambda with default parameters (or no parameters)
 rockset.queryLambdas
   .executeQueryLambda(
-    /* workspace */ "commons",
-    /* queryName */ "myQuery",
-    /* version */ 1
+    /* workspace */ 'commons',
+    /* queryName */ 'myQuery',
+    /* version */ 'af13b4b325eg762g'
   )
   .then(console.log)
   .catch(console.error);
 
 // Execute a Query Lambda with, and specify parameters
 rockset.queryLambdas
-  .executeQueryLambda("commons", "myQuery", 1, {
+  .executeQueryLambda('commons', 'myQuery', 'af13b4b325eg762g', {
     parameters: [
       {
-        name: "param",
-        value: "All work and no play makes Jack a dull boy",
-        type: "string",
+        name: 'param',
+        value: 'All work and no play makes Jack a dull boy',
+        type: 'string',
       },
     ],
   })
@@ -68,6 +70,6 @@ rockset.queryLambdas
 
 // Delete a collection
 rockset.collections
-  .deleteCollection("commons", "collection")
+  .deleteCollection('commons', 'collection')
   .then(console.log)
   .catch(console.error);
