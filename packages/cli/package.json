@@ -1,7 +1,7 @@
 {
   "name": "@rockset/cli",
   "description": "Official Rockset CLI",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "author": "Rockset",
   "bin": {
     "rock": "./bin/run"
@@ -15,9 +15,9 @@
     "@oclif/plugin-autocomplete": "^0.2.0",
     "@oclif/plugin-help": "^2.2.3",
     "@oclif/plugin-update": "^1.3.10",
-    "@rockset/client": "0.0.4",
-    "@rockset/core": "0.0.4",
-    "@rockset/eslint-config": "^0.0.3-alpha.0",
+    "@rockset/client": "^0.0.5",
+    "@rockset/core": "^0.0.5",
+    "@rockset/eslint-config": "^0.0.5",
     "@types/prompts": "^2.0.8",
     "aws-sdk": "^2.679.0",
     "handlebars": "^4.7.6",
@@ -80,7 +80,9 @@
     "version": "oclif-dev readme && git add README.md",
     "build": "npm run prepack",
     "lint": "eslint 'src/**/*.ts'",
-    "codegen": "rm -r src/commands/api/ && ts-node src/generator/generate.ts && eslint --fix src/commands/api/**/*.ts --no-ignore"
+    "codegen": "rm -r src/commands/api/ && ts-node src/generator/generate.ts && eslint --fix src/commands/api/**/*.ts --no-ignore",
+    "oclif-pack": "ln -s ../../yarn.lock yarn.lock && oclif-dev pack && rm yarn.lock",
+    "oclif-publish": "oclif-dev publish"
   },
   "types": "lib/index.d.ts",
   "publishConfig": {

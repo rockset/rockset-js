@@ -1,7 +1,7 @@
 {
   "dependencies": {
-    "@rockset/client": "0.0.4",
-    "@rockset/eslint-config": "^0.0.3-alpha.0",
+    "@rockset/client": "^0.0.5",
+    "@rockset/eslint-config": "^0.0.5",
     "fp-ts": "^2.6.1",
     "glob-fs": "^0.1.7",
     "io-ts": "^2.2.2",
@@ -12,15 +12,15 @@
     "prompts": "^2.3.2"
   },
   "name": "@rockset/core",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "JS Rock Cli for Lambdas",
   "main": "./dist/index.js",
   "types": "dist/index.d.ts",
   "devDependencies": {
-    "@types/mock-fs": "^4.10.0",
-    "@types/prompts": "^2.0.6",
     "@types/lodash": "^4.14.150",
     "@types/lodash.get": "^4.4.6",
+    "@types/mock-fs": "^4.10.0",
+    "@types/prompts": "^2.0.6",
     "eslint": "^7.0.0",
     "eslint-plugin-promise": "^4.2.1",
     "generate": "^0.14.0",
