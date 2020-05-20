@@ -22,6 +22,7 @@
     "build": "lerna run build",
     "lint": "lerna run lint",
     "all": "lerna run build && lerna run lint && lerna run test",
-    "test": "lerna run test"
+    "test": "lerna run test",
+    "lerna-publish": "lerna publish from-git"
   }
 }
