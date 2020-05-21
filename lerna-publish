@@ -1,0 +1,3 @@
+#!/bin/bash 
+LERNA=`yarn bin lerna`
+$LERNA publish from-git -y --no-git-tag-version --no-push
