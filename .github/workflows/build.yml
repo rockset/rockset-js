@@ -1,6 +1,9 @@
 name: "Build|Lint|Test"
 
-on: [push]
+on:
+  push:
+    branches:
+      '*'
 
 jobs:
   build:
