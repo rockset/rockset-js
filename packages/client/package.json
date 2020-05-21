@@ -1,6 +1,6 @@
 {
   "name": "@rockset/client",
-  "version": "0.0.21",
+  "version": "0.0.22",
   "main": "dist/index.js",
   "description": "Client for querying Rockset and interacting with the Rockset API.",
   "license": "MIT",
@@ -8,7 +8,7 @@
     "test": "tests"
   },
   "dependencies": {
-    "@rockset/eslint-config": "0.0.21",
+    "@rockset/eslint-config": "0.0.22",
     "@types/node-fetch": "^2.5.3",
     "@types/prompts": "^2.0.8",
     "node-fetch": "^2.6.0",
@@ -55,5 +55,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "21b30e37ecf6c40f90c900d2bbb89d1bc758d852"
+  "gitHead": "a99eba742cb0b475c76e2d898cb01b3369b42fb1"
 }

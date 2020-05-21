@@ -1,6 +1,6 @@
 {
   "name": "@rockset/eslint-config",
-  "version": "0.0.21",
+  "version": "0.0.22",
   "description": "Rockset eslint config",
   "author": "Rockset",
   "homepage": "",
@@ -22,5 +22,5 @@
     "jest": "^26.0.1"
   },
   "repository": "https://github.com/rockset/rockset-js/",
-  "gitHead": "9389fb69cb114b80486129d71f58ea6830be161d"
+  "gitHead": "a99eba742cb0b475c76e2d898cb01b3369b42fb1"
 }

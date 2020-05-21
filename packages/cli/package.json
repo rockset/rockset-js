@@ -1,7 +1,7 @@
 {
   "name": "@rockset/cli",
   "description": "Official Rockset CLI",
-  "version": "0.0.21",
+  "version": "0.0.22",
   "author": "Rockset",
   "bin": {
     "rock": "./bin/run"
@@ -15,9 +15,9 @@
     "@oclif/plugin-autocomplete": "^0.2.0",
     "@oclif/plugin-help": "^2.2.3",
     "@oclif/plugin-update": "^1.3.10",
-    "@rockset/client": "0.0.21",
-    "@rockset/core": "0.0.21",
-    "@rockset/eslint-config": "0.0.21",
+    "@rockset/client": "0.0.22",
+    "@rockset/core": "0.0.22",
+    "@rockset/eslint-config": "0.0.22",
     "@types/prompts": "^2.0.8",
     "aws-sdk": "^2.679.0",
     "handlebars": "^4.7.6",
@@ -88,5 +88,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "9389fb69cb114b80486129d71f58ea6830be161d"
+  "gitHead": "a99eba742cb0b475c76e2d898cb01b3369b42fb1"
 }
