@@ -1,7 +1,7 @@
 {
   "dependencies": {
-    "@rockset/client": "^0.0.5",
-    "@rockset/eslint-config": "^0.0.5",
+    "@rockset/client": "0.0.5",
+    "@rockset/eslint-config": "0.0.5",
     "fp-ts": "^2.6.1",
     "glob-fs": "^0.1.7",
     "io-ts": "^2.2.2",
