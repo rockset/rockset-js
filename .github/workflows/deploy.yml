@@ -22,7 +22,6 @@ jobs:
     - run: yarn run lint
     - run: ROCKSET_APIKEY="${{ secrets.ROCKSET_APIKEY }}" ROCKSET_APISERVER="${{ secrets.ROCKSET_APISERVER }}" yarn run test
     - run: git checkout -- .
-    - run: git fetch --tags
     - run: ./login ${{ secrets.NPM_ACCESS_KEY }}
     - run: ./lerna-publish
     - run: cd packages/cli && yarn run oclif-pack
