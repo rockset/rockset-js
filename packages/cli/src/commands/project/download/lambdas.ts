@@ -25,6 +25,7 @@ Download Query Lambda entities from Rockset to your local project.
         onWriteLambda: (lambda) => {
           this.log(`Downloaded lambda ${lambda.fullName}`);
         },
+        onNoOp: () => this.log('No lambdas found.'),
       },
       {
         useLambdaTag: flags.tag,

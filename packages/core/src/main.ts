@@ -11,6 +11,7 @@ import {
   FetchAPI,
   Collection,
   QueryLambdaVersion,
+  QueryLambda,
 } from '@rockset/client/dist/codegen/api';
 import {
   getFiles,
@@ -145,13 +146,20 @@ export async function downloadQueryLambdas(
   let lambdas: QueryLambdaVersion[] = [];
   // Grab entities from apiserver
   if (options.useLambdaTag) {
-    const lambdaReponse = await client.queryLambdas.listQueryLambdaTagVersions(
+    // Use tags — QLs without this tag will not be pulled
+    const lambdaResponse = await client.queryLambdas.listQueryLambdaTagVersions(
       options.useLambdaTag
     );
-    lambdas = lambdaReponse?.data ?? [];
+    lambdas = lambdaResponse?.data ?? [];
   } else {
-    // Use latest versions
-    // TODO (Scott) — update this once code to fetch latest versions is up in API
+    // Use latest versions - all QLs will be pulled
+    const lambdaResponse = await client.queryLambdas.listAllQueryLambdas();
+    lambdas = (lambdaResponse.data ?? []).map(
+      (l: QueryLambda) => l.latest_version as QueryLambdaVersion
+    );
+  }
+  if (lambdas.length === 0) {
+    hooks.onNoOp?.();
   }
   lambdas.forEach(async (lambda: QueryLambdaVersion) => {
     const qlEntity = constructLambdaEntity(lambda);
