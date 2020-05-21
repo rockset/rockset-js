@@ -19,7 +19,7 @@ $ npm install -g @rockset/cli
 $ rock COMMAND
 running command...
 $ rock (-v|--version|version)
-@rockset/cli/0.0.8 darwin-x64 node-v12.16.3
+@rockset/cli/0.0.16 darwin-x64 node-v12.16.3
 $ rock --help [COMMAND]
 USAGE
   $ rock COMMAND
@@ -101,7 +101,7 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/apikeys/createApiKey.ts](https://github.com/rockset/rockset-js/blob/v0.0.8/src/commands/api/apikeys/createApiKey.ts)_
+_See code: [src/commands/api/apikeys/createApiKey.ts](https://github.com/rockset/rockset-js/blob/v0.0.16/src/commands/api/apikeys/createApiKey.ts)_
 
 ## `rock api:apikeys:createApiKeyAdmin BODY USER`
 
@@ -131,7 +131,7 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/apikeys/createApiKeyAdmin.ts](https://github.com/rockset/rockset-js/blob/v0.0.8/src/commands/api/apikeys/createApiKeyAdmin.ts)_
+_See code: [src/commands/api/apikeys/createApiKeyAdmin.ts](https://github.com/rockset/rockset-js/blob/v0.0.16/src/commands/api/apikeys/createApiKeyAdmin.ts)_
 
 ## `rock api:apikeys:deleteApiKey NAME`
 
@@ -160,7 +160,7 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/apikeys/deleteApiKey.ts](https://github.com/rockset/rockset-js/blob/v0.0.8/src/commands/api/apikeys/deleteApiKey.ts)_
+_See code: [src/commands/api/apikeys/deleteApiKey.ts](https://github.com/rockset/rockset-js/blob/v0.0.16/src/commands/api/apikeys/deleteApiKey.ts)_
 
 ## `rock api:apikeys:deleteApiKeyAdmin NAME USER`
 
@@ -190,7 +190,7 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/apikeys/deleteApiKeyAdmin.ts](https://github.com/rockset/rockset-js/blob/v0.0.8/src/commands/api/apikeys/deleteApiKeyAdmin.ts)_
+_See code: [src/commands/api/apikeys/deleteApiKeyAdmin.ts](https://github.com/rockset/rockset-js/blob/v0.0.16/src/commands/api/apikeys/deleteApiKeyAdmin.ts)_
 
 ## `rock api:apikeys:listApiKeys`
 
@@ -216,7 +216,7 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/apikeys/listApiKeys.ts](https://github.com/rockset/rockset-js/blob/v0.0.8/src/commands/api/apikeys/listApiKeys.ts)_
+_See code: [src/commands/api/apikeys/listApiKeys.ts](https://github.com/rockset/rockset-js/blob/v0.0.16/src/commands/api/apikeys/listApiKeys.ts)_
 
 ## `rock api:apikeys:listApiKeysAdmin USER`
 
@@ -242,7 +242,7 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/apikeys/listApiKeysAdmin.ts](https://github.com/rockset/rockset-js/blob/v0.0.8/src/commands/api/apikeys/listApiKeysAdmin.ts)_
+_See code: [src/commands/api/apikeys/listApiKeysAdmin.ts](https://github.com/rockset/rockset-js/blob/v0.0.16/src/commands/api/apikeys/listApiKeysAdmin.ts)_
 
 ## `rock api:collections:createCollection WORKSPACE BODY`
 
@@ -272,7 +272,7 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/collections/createCollection.ts](https://github.com/rockset/rockset-js/blob/v0.0.8/src/commands/api/collections/createCollection.ts)_
+_See code: [src/commands/api/collections/createCollection.ts](https://github.com/rockset/rockset-js/blob/v0.0.16/src/commands/api/collections/createCollection.ts)_
 
 ## `rock api:collections:deleteCollection WORKSPACE COLLECTION`
 
@@ -302,7 +302,7 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/collections/deleteCollection.ts](https://github.com/rockset/rockset-js/blob/v0.0.8/src/commands/api/collections/deleteCollection.ts)_
+_See code: [src/commands/api/collections/deleteCollection.ts](https://github.com/rockset/rockset-js/blob/v0.0.16/src/commands/api/collections/deleteCollection.ts)_
 
 ## `rock api:collections:getCollection WORKSPACE COLLECTION`
 
@@ -332,7 +332,7 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/collections/getCollection.ts](https://github.com/rockset/rockset-js/blob/v0.0.8/src/commands/api/collections/getCollection.ts)_
+_See code: [src/commands/api/collections/getCollection.ts](https://github.com/rockset/rockset-js/blob/v0.0.16/src/commands/api/collections/getCollection.ts)_
 
 ## `rock api:collections:listCollections`
 
@@ -358,7 +358,7 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/collections/listCollections.ts](https://github.com/rockset/rockset-js/blob/v0.0.8/src/commands/api/collections/listCollections.ts)_
+_See code: [src/commands/api/collections/listCollections.ts](https://github.com/rockset/rockset-js/blob/v0.0.16/src/commands/api/collections/listCollections.ts)_
 
 ## `rock api:collections:listQueryLambdasInCollection WORKSPACE COLLECTION`
 
@@ -388,7 +388,7 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/collections/listQueryLambdasInCollection.ts](https://github.com/rockset/rockset-js/blob/v0.0.8/src/commands/api/collections/listQueryLambdasInCollection.ts)_
+_See code: [src/commands/api/collections/listQueryLambdasInCollection.ts](https://github.com/rockset/rockset-js/blob/v0.0.16/src/commands/api/collections/listQueryLambdasInCollection.ts)_
 
 ## `rock api:collections:workspaceCollections WORKSPACE`
 
@@ -417,7 +417,7 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/collections/workspaceCollections.ts](https://github.com/rockset/rockset-js/blob/v0.0.8/src/commands/api/collections/workspaceCollections.ts)_
+_See code: [src/commands/api/collections/workspaceCollections.ts](https://github.com/rockset/rockset-js/blob/v0.0.16/src/commands/api/collections/workspaceCollections.ts)_
 
 ## `rock api:documents:addDocuments WORKSPACE COLLECTION BODY`
 
@@ -448,7 +448,7 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/documents/addDocuments.ts](https://github.com/rockset/rockset-js/blob/v0.0.8/src/commands/api/documents/addDocuments.ts)_
+_See code: [src/commands/api/documents/addDocuments.ts](https://github.com/rockset/rockset-js/blob/v0.0.16/src/commands/api/documents/addDocuments.ts)_
 
 ## `rock api:documents:deleteDocuments WORKSPACE COLLECTION BODY`
 
@@ -479,7 +479,7 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/documents/deleteDocuments.ts](https://github.com/rockset/rockset-js/blob/v0.0.8/src/commands/api/documents/deleteDocuments.ts)_
+_See code: [src/commands/api/documents/deleteDocuments.ts](https://github.com/rockset/rockset-js/blob/v0.0.16/src/commands/api/documents/deleteDocuments.ts)_
 
 ## `rock api:documents:patchDocuments WORKSPACE COLLECTION BODY`
 
@@ -510,7 +510,7 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/documents/patchDocuments.ts](https://github.com/rockset/rockset-js/blob/v0.0.8/src/commands/api/documents/patchDocuments.ts)_
+_See code: [src/commands/api/documents/patchDocuments.ts](https://github.com/rockset/rockset-js/blob/v0.0.16/src/commands/api/documents/patchDocuments.ts)_
 
 ## `rock api:integrations:createIntegration BODY`
 
@@ -539,7 +539,7 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/integrations/createIntegration.ts](https://github.com/rockset/rockset-js/blob/v0.0.8/src/commands/api/integrations/createIntegration.ts)_
+_See code: [src/commands/api/integrations/createIntegration.ts](https://github.com/rockset/rockset-js/blob/v0.0.16/src/commands/api/integrations/createIntegration.ts)_
 
 ## `rock api:integrations:deleteIntegration INTEGRATION`
 
@@ -568,7 +568,7 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/integrations/deleteIntegration.ts](https://github.com/rockset/rockset-js/blob/v0.0.8/src/commands/api/integrations/deleteIntegration.ts)_
+_See code: [src/commands/api/integrations/deleteIntegration.ts](https://github.com/rockset/rockset-js/blob/v0.0.16/src/commands/api/integrations/deleteIntegration.ts)_
 
 ## `rock api:integrations:getIntegration INTEGRATION`
 
@@ -597,7 +597,7 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/integrations/getIntegration.ts](https://github.com/rockset/rockset-js/blob/v0.0.8/src/commands/api/integrations/getIntegration.ts)_
+_See code: [src/commands/api/integrations/getIntegration.ts](https://github.com/rockset/rockset-js/blob/v0.0.16/src/commands/api/integrations/getIntegration.ts)_
 
 ## `rock api:integrations:listIntegrations`
 
@@ -623,7 +623,7 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/integrations/listIntegrations.ts](https://github.com/rockset/rockset-js/blob/v0.0.8/src/commands/api/integrations/listIntegrations.ts)_
+_See code: [src/commands/api/integrations/listIntegrations.ts](https://github.com/rockset/rockset-js/blob/v0.0.16/src/commands/api/integrations/listIntegrations.ts)_
 
 ## `rock api:orgs:getOrganization`
 
@@ -649,7 +649,7 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/orgs/getOrganization.ts](https://github.com/rockset/rockset-js/blob/v0.0.8/src/commands/api/orgs/getOrganization.ts)_
+_See code: [src/commands/api/orgs/getOrganization.ts](https://github.com/rockset/rockset-js/blob/v0.0.16/src/commands/api/orgs/getOrganization.ts)_
 
 ## `rock api:queries:query BODY`
 
@@ -678,7 +678,7 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/queries/query.ts](https://github.com/rockset/rockset-js/blob/v0.0.8/src/commands/api/queries/query.ts)_
+_See code: [src/commands/api/queries/query.ts](https://github.com/rockset/rockset-js/blob/v0.0.16/src/commands/api/queries/query.ts)_
 
 ## `rock api:queryLambdas:createQueryLambda WORKSPACE BODY`
 
@@ -708,7 +708,7 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/queryLambdas/createQueryLambda.ts](https://github.com/rockset/rockset-js/blob/v0.0.8/src/commands/api/queryLambdas/createQueryLambda.ts)_
+_See code: [src/commands/api/queryLambdas/createQueryLambda.ts](https://github.com/rockset/rockset-js/blob/v0.0.16/src/commands/api/queryLambdas/createQueryLambda.ts)_
 
 ## `rock api:queryLambdas:deleteQueryLambda WORKSPACE QUERYLAMBDA`
 
@@ -738,7 +738,7 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/queryLambdas/deleteQueryLambda.ts](https://github.com/rockset/rockset-js/blob/v0.0.8/src/commands/api/queryLambdas/deleteQueryLambda.ts)_
+_See code: [src/commands/api/queryLambdas/deleteQueryLambda.ts](https://github.com/rockset/rockset-js/blob/v0.0.16/src/commands/api/queryLambdas/deleteQueryLambda.ts)_
 
 ## `rock api:queryLambdas:executeQueryLambda WORKSPACE QUERYLAMBDA VERSION [BODY]`
 
@@ -770,7 +770,7 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/queryLambdas/executeQueryLambda.ts](https://github.com/rockset/rockset-js/blob/v0.0.8/src/commands/api/queryLambdas/executeQueryLambda.ts)_
+_See code: [src/commands/api/queryLambdas/executeQueryLambda.ts](https://github.com/rockset/rockset-js/blob/v0.0.16/src/commands/api/queryLambdas/executeQueryLambda.ts)_
 
 ## `rock api:queryLambdas:getQueryLambdaVersion WORKSPACE QUERYLAMBDA VERSION`
 
@@ -801,7 +801,7 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/queryLambdas/getQueryLambdaVersion.ts](https://github.com/rockset/rockset-js/blob/v0.0.8/src/commands/api/queryLambdas/getQueryLambdaVersion.ts)_
+_See code: [src/commands/api/queryLambdas/getQueryLambdaVersion.ts](https://github.com/rockset/rockset-js/blob/v0.0.16/src/commands/api/queryLambdas/getQueryLambdaVersion.ts)_
 
 ## `rock api:queryLambdas:listAllQueryLambdas`
 
@@ -827,7 +827,7 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/queryLambdas/listAllQueryLambdas.ts](https://github.com/rockset/rockset-js/blob/v0.0.8/src/commands/api/queryLambdas/listAllQueryLambdas.ts)_
+_See code: [src/commands/api/queryLambdas/listAllQueryLambdas.ts](https://github.com/rockset/rockset-js/blob/v0.0.16/src/commands/api/queryLambdas/listAllQueryLambdas.ts)_
 
 ## `rock api:queryLambdas:listQueryLambdaVersions WORKSPACE QUERYLAMBDA`
 
@@ -857,7 +857,7 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/queryLambdas/listQueryLambdaVersions.ts](https://github.com/rockset/rockset-js/blob/v0.0.8/src/commands/api/queryLambdas/listQueryLambdaVersions.ts)_
+_See code: [src/commands/api/queryLambdas/listQueryLambdaVersions.ts](https://github.com/rockset/rockset-js/blob/v0.0.16/src/commands/api/queryLambdas/listQueryLambdaVersions.ts)_
 
 ## `rock api:queryLambdas:listQueryLambdasInWorkspace WORKSPACE`
 
@@ -886,7 +886,7 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/queryLambdas/listQueryLambdasInWorkspace.ts](https://github.com/rockset/rockset-js/blob/v0.0.8/src/commands/api/queryLambdas/listQueryLambdasInWorkspace.ts)_
+_See code: [src/commands/api/queryLambdas/listQueryLambdasInWorkspace.ts](https://github.com/rockset/rockset-js/blob/v0.0.16/src/commands/api/queryLambdas/listQueryLambdasInWorkspace.ts)_
 
 ## `rock api:queryLambdas:updateQueryLambda WORKSPACE QUERYLAMBDA BODY`
 
@@ -917,7 +917,7 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/queryLambdas/updateQueryLambda.ts](https://github.com/rockset/rockset-js/blob/v0.0.8/src/commands/api/queryLambdas/updateQueryLambda.ts)_
+_See code: [src/commands/api/queryLambdas/updateQueryLambda.ts](https://github.com/rockset/rockset-js/blob/v0.0.16/src/commands/api/queryLambdas/updateQueryLambda.ts)_
 
 ## `rock api:users:createUser BODY`
 
@@ -946,7 +946,7 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/users/createUser.ts](https://github.com/rockset/rockset-js/blob/v0.0.8/src/commands/api/users/createUser.ts)_
+_See code: [src/commands/api/users/createUser.ts](https://github.com/rockset/rockset-js/blob/v0.0.16/src/commands/api/users/createUser.ts)_
 
 ## `rock api:users:deleteUser USER`
 
@@ -975,7 +975,7 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/users/deleteUser.ts](https://github.com/rockset/rockset-js/blob/v0.0.8/src/commands/api/users/deleteUser.ts)_
+_See code: [src/commands/api/users/deleteUser.ts](https://github.com/rockset/rockset-js/blob/v0.0.16/src/commands/api/users/deleteUser.ts)_
 
 ## `rock api:users:getCurrentUser`
 
@@ -1001,7 +1001,7 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/users/getCurrentUser.ts](https://github.com/rockset/rockset-js/blob/v0.0.8/src/commands/api/users/getCurrentUser.ts)_
+_See code: [src/commands/api/users/getCurrentUser.ts](https://github.com/rockset/rockset-js/blob/v0.0.16/src/commands/api/users/getCurrentUser.ts)_
 
 ## `rock api:users:listUsers`
 
@@ -1027,7 +1027,7 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/users/listUsers.ts](https://github.com/rockset/rockset-js/blob/v0.0.8/src/commands/api/users/listUsers.ts)_
+_See code: [src/commands/api/users/listUsers.ts](https://github.com/rockset/rockset-js/blob/v0.0.16/src/commands/api/users/listUsers.ts)_
 
 ## `rock api:workspaces:childWorkspaces WORKSPACE`
 
@@ -1056,7 +1056,7 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/workspaces/childWorkspaces.ts](https://github.com/rockset/rockset-js/blob/v0.0.8/src/commands/api/workspaces/childWorkspaces.ts)_
+_See code: [src/commands/api/workspaces/childWorkspaces.ts](https://github.com/rockset/rockset-js/blob/v0.0.16/src/commands/api/workspaces/childWorkspaces.ts)_
 
 ## `rock api:workspaces:createWorkspace BODY`
 
@@ -1085,7 +1085,7 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/workspaces/createWorkspace.ts](https://github.com/rockset/rockset-js/blob/v0.0.8/src/commands/api/workspaces/createWorkspace.ts)_
+_See code: [src/commands/api/workspaces/createWorkspace.ts](https://github.com/rockset/rockset-js/blob/v0.0.16/src/commands/api/workspaces/createWorkspace.ts)_
 
 ## `rock api:workspaces:deleteWorkspace WORKSPACE`
 
@@ -1114,7 +1114,7 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/workspaces/deleteWorkspace.ts](https://github.com/rockset/rockset-js/blob/v0.0.8/src/commands/api/workspaces/deleteWorkspace.ts)_
+_See code: [src/commands/api/workspaces/deleteWorkspace.ts](https://github.com/rockset/rockset-js/blob/v0.0.16/src/commands/api/workspaces/deleteWorkspace.ts)_
 
 ## `rock api:workspaces:getWorkspace WORKSPACE`
 
@@ -1143,7 +1143,7 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/workspaces/getWorkspace.ts](https://github.com/rockset/rockset-js/blob/v0.0.8/src/commands/api/workspaces/getWorkspace.ts)_
+_See code: [src/commands/api/workspaces/getWorkspace.ts](https://github.com/rockset/rockset-js/blob/v0.0.16/src/commands/api/workspaces/getWorkspace.ts)_
 
 ## `rock api:workspaces:listWorkspaces`
 
@@ -1169,7 +1169,7 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/workspaces/listWorkspaces.ts](https://github.com/rockset/rockset-js/blob/v0.0.8/src/commands/api/workspaces/listWorkspaces.ts)_
+_See code: [src/commands/api/workspaces/listWorkspaces.ts](https://github.com/rockset/rockset-js/blob/v0.0.16/src/commands/api/workspaces/listWorkspaces.ts)_
 
 ## `rock autocomplete [SHELL]`
 
@@ -1226,7 +1226,7 @@ DESCRIPTION
   Download collection entities from Rockset to your local project.
 ```
 
-_See code: [src/commands/project/download/collections.ts](https://github.com/rockset/rockset-js/blob/v0.0.8/src/commands/project/download/collections.ts)_
+_See code: [src/commands/project/download/collections.ts](https://github.com/rockset/rockset-js/blob/v0.0.16/src/commands/project/download/collections.ts)_
 
 ## `rock project:download:lambdas`
 
@@ -1246,7 +1246,7 @@ DESCRIPTION
   Download Query Lambda entities from Rockset to your local project.
 ```
 
-_See code: [src/commands/project/download/lambdas.ts](https://github.com/rockset/rockset-js/blob/v0.0.8/src/commands/project/download/lambdas.ts)_
+_See code: [src/commands/project/download/lambdas.ts](https://github.com/rockset/rockset-js/blob/v0.0.16/src/commands/project/download/lambdas.ts)_
 
 ## `rock project:init`
 
@@ -1265,7 +1265,7 @@ DESCRIPTION
   This command initializes your project with a rockconfig.json file.
 ```
 
-_See code: [src/commands/project/init.ts](https://github.com/rockset/rockset-js/blob/v0.0.8/src/commands/project/init.ts)_
+_See code: [src/commands/project/init.ts](https://github.com/rockset/rockset-js/blob/v0.0.16/src/commands/project/init.ts)_
 
 ## `rock project:resolve NAME`
 
@@ -1291,7 +1291,7 @@ DESCRIPTION
      You must specify the type of entity that will be resolved.
 ```
 
-_See code: [src/commands/project/resolve.ts](https://github.com/rockset/rockset-js/blob/v0.0.8/src/commands/project/resolve.ts)_
+_See code: [src/commands/project/resolve.ts](https://github.com/rockset/rockset-js/blob/v0.0.16/src/commands/project/resolve.ts)_
 
 ## `rock update [CHANNEL]`
 
