@@ -2,8 +2,8 @@ name: "Deploy"
 
 on:
   push: 
-    tags:
-    - 'v*.*.*'
+    branches:
+    - '*'
 jobs:
   build:
 
@@ -22,6 +22,7 @@ jobs:
     - run: yarn run build 
     - run: yarn run lint
     - run: ROCKSET_APIKEY="${{ secrets.ROCKSET_APIKEY }}" ROCKSET_APISERVER="${{ secrets.ROCKSET_APISERVER }}" yarn run test
+    - run: git fetch --tags
     - run: git checkout -- .
     - run: ./login ${{ secrets.NPM_ACCESS_KEY }}
     - run: ./lerna-publish
