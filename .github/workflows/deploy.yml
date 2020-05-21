@@ -6,7 +6,6 @@ on:
     - '*'
 jobs:
   build:
-
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -22,12 +21,13 @@ jobs:
     - run: yarn run build 
     - run: yarn run lint
     - run: ROCKSET_APIKEY="${{ secrets.ROCKSET_APIKEY }}" ROCKSET_APISERVER="${{ secrets.ROCKSET_APISERVER }}" yarn run test
-    - run: git fetch --tags
     - run: git checkout -- .
+    - run: git fetch --tags
     - run: ./login ${{ secrets.NPM_ACCESS_KEY }}
     - run: ./lerna-publish
     - run: cd packages/cli && yarn run oclif-pack
     - run: cd packages/cli && yarn run oclif-publish
+      if: [[ `git tag --points-at HEAD` = v*.*.* ]]
       env:
         CI: true
         AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
