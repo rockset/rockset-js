@@ -68,6 +68,7 @@
     "bin": "rock",
     "plugins": [
       "@oclif/plugin-help",
+      
       "@oclif/plugin-autocomplete",
       "@oclif/plugin-update"
     ]
@@ -82,7 +83,7 @@
     "lint": "eslint 'src/**/*.ts'",
     "codegen": "rm -r src/commands/api/ && ts-node src/generator/generate.ts && eslint --fix src/commands/api/**/*.ts --no-ignore",
     "oclif-pack": "ln -s ../../yarn.lock yarn.lock && oclif-dev pack && rm yarn.lock",
-    "oclif-publish": "[[ `git tag --points-at HEAD` = v*.*.* ]] && oclif-dev publish || echo 'No associated tag, skipping publish'"
+    "oclif-publish": "./oclif-publish"
   },
   "types": "lib/index.d.ts",
   "publishConfig": {

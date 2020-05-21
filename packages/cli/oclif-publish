@@ -1,0 +1,2 @@
+#!/bin/bash 
+[[ `git tag --points-at HEAD` = v*.*.* ]] && oclif-dev publish || echo 'No associated tag, skipping publish'
