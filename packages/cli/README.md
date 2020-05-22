@@ -69,6 +69,7 @@ USAGE
 * [`rock autocomplete [SHELL]`](#rock-autocomplete-shell)
 * [`rock help [COMMAND]`](#rock-help-command)
 * [`rock project:add NAME`](#rock-projectadd-name)
+* [`rock project:deploy`](#rock-projectdeploy)
 * [`rock project:download:collections`](#rock-projectdownloadcollections)
 * [`rock project:download:lambdas`](#rock-projectdownloadlambdas)
 * [`rock project:init`](#rock-projectinit)
@@ -1234,6 +1235,25 @@ DESCRIPTION
 ```
 
 _See code: [src/commands/project/add.ts](https://github.com/rockset/rockset-js/blob/v0.0.27/src/commands/project/add.ts)_
+
+## `rock project:deploy`
+
+Deploy Query Lambda entities to Rockset from your local project.
+
+```
+USAGE
+  $ rock project:deploy
+
+OPTIONS
+  -h, --help                                                                show CLI help
+  -t, --tag=
+          Specify a tag name to be applied to these Query Lambda versions.
+
+DESCRIPTION
+  Deploy Query Lambda entities to Rockset from your local project.
+```
+
+_See code: [src/commands/project/deploy.ts](https://github.com/rockset/rockset-js/blob/v0.0.27/src/commands/project/deploy.ts)_
 
 ## `rock project:download:collections`
 

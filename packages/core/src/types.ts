@@ -1,4 +1,8 @@
-import { ErrorModel, Collection } from '@rockset/client/dist/codegen/api';
+import {
+  ErrorModel,
+  Collection,
+  QueryLambdaVersionResponse,
+} from '@rockset/client/dist/codegen/api';
 import { type, TypeOf, string, array } from 'io-ts';
 import * as t from 'io-ts';
 import * as path from 'path';
@@ -126,7 +130,8 @@ export interface CollectionEntity {
 export interface DeployHooks {
   onNoChange?: (e: LambdaEntity) => void;
   onDeployStart?: (e: LambdaEntity) => void;
-  onDeploySuccess?: (e: LambdaEntity) => void;
+  onDeployVersionSuccess?: (e: QueryLambdaVersionResponse) => void;
+  onDeployTagSuccess?: (e: QueryLambdaVersionResponse) => void;
   onDeployError?: (error: ErrorModel, entity: LambdaEntity) => void;
 }
 
@@ -138,6 +143,10 @@ export interface DownloadHooks {
 
 export interface LambdaDownloadOptions {
   useLambdaTag?: string;
+}
+
+export interface LambdaDeployOptions {
+  tag?: string;
 }
 
 // *** Helper functions to parse stuff ***
