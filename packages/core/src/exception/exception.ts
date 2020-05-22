@@ -1,4 +1,5 @@
-import { ROOT_CONFIG, AbsolutePath, QualifiedName } from './types';
+import { ROOT_CONFIG, AbsolutePath, QualifiedName } from '../types';
+import { prettyPrint } from '../helper';
 
 // *** Error types below ***
 export enum RockClientErrorTypes {
@@ -8,6 +9,7 @@ export enum RockClientErrorTypes {
   ERROR_INVALID_QUALIFIED_NAME,
   ERROR_INVALID_ABSOLUTE_PATH,
   ERROR_INVALID_LAMBDA_CONFIG,
+  ERROR_INVALID_LAMBDA_ENTITY,
 }
 
 export class RockClientException extends Error {
@@ -64,5 +66,16 @@ export const errorFailedToParseLambdaConfig = (
   return new RockClientException(
     RockClientErrorTypes.ERROR_INVALID_LAMBDA_CONFIG,
     `Parsing lambda "${name}" at path '${path}' failed. Please check that your lambda is specified correctly. ${message}`
+  );
+};
+
+export const errorFailedToCreateEntity = (obj: unknown) => (
+  message: string
+) => {
+  return new RockClientException(
+    RockClientErrorTypes.ERROR_INVALID_LAMBDA_ENTITY,
+    `Parsing lambda entity from object ${prettyPrint(
+      obj
+    )} failed. Please ensure the object is specified correctly. ${message}`
   );
 };

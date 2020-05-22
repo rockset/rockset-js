@@ -3,7 +3,13 @@ import mocka from 'mock-fs';
 const mock = require('mock-fs') as typeof mocka;
 import * as path from 'path';
 import { fileutil, types } from '..';
-import { RockClientErrorTypes, RockClientException } from '../exception';
+import {
+  RockClientErrorTypes,
+  RockClientException,
+} from '../exception/exception';
+import { createEmptyQLEntity, parseQualifiedName } from '../types';
+import { writeLambda, readLambdaFromQualifiedName } from './fileutil';
+import { expectException } from '../testutil';
 
 const getMockFS = () => ({
   root: {
@@ -23,6 +29,13 @@ const getMockFS = () => ({
   },
   badRoot: {
     'rockconfig.json': '{"bad": "bad"}',
+  },
+  emptyRoot: {
+    'rockconfig.json': `
+    {
+      "source_root": "src"
+    }
+    `,
   },
 });
 
@@ -135,6 +148,31 @@ describe('Root and Source resolve tests', () => {
     mfs('root', async () => {
       const p = await fileutil.getSrcPath();
       expect(p).toBe(mockPath('src'));
+    })
+  );
+});
+
+describe('Reading and writing QLs should be symmetrical', () => {
+  test(
+    'Adding new QL',
+    mfs('emptyRoot', async () => {
+      const entity = createEmptyQLEntity(parseQualifiedName('commons.foo'));
+      await writeLambda(entity);
+      const config = await readLambdaFromQualifiedName(entity.fullName);
+      expect(config).toEqual(entity);
+    })
+  );
+
+  test(
+    'Adding a bad new QL',
+    mfs('emptyRoot', async () => {
+      try {
+        const entity = createEmptyQLEntity(parseQualifiedName('commons.foo.'));
+        await writeLambda(entity);
+        fail('Should have failed to write invalid QL');
+      } catch (e) {
+        expectException(RockClientErrorTypes.ERROR_INVALID_QUALIFIED_NAME, e);
+      }
     })
   );
 });

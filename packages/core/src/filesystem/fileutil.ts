@@ -19,6 +19,7 @@ import {
   AbsolutePath,
   LambdaConfig,
   throwOnError,
+  ROOT_CONFIG,
 } from '../types';
 
 // This is the only package that is allowed to access the file system
@@ -31,7 +32,8 @@ import {
   errorFailToWriteFileOutsideProject,
   errorInvalidRootConfig,
   errorFailedToParseLambdaConfig,
-} from '../exception';
+  errorFailedToCreateEntity,
+} from '../exception/exception';
 
 /**
  *
@@ -45,7 +47,11 @@ export async function readRootConfig() {
 
 export async function writeRootConfig(config: RootConfig) {
   const decode = RootConfig.decode(config);
-  return throwOnError(decode, errorInvalidRootConfig);
+  const conf = throwOnError(decode, errorInvalidRootConfig);
+
+  // Write to the cwd
+  const fileName = path.join(process.cwd(), ROOT_CONFIG);
+  return await fs.writeFile(fileName, prettyPrint(conf));
 }
 
 /**
@@ -78,7 +84,7 @@ export async function readLambda(
   const sql = await readSqlFromPath(sqlPath);
   const { name, ws } = getWsNamePair(fullName);
 
-  return {
+  const rawEntity = {
     fullName,
     ws,
     name,
@@ -86,6 +92,10 @@ export async function readLambda(
     config,
     sql,
   };
+  return throwOnError(
+    LambdaEntity.decode(rawEntity),
+    errorFailedToCreateEntity(rawEntity)
+  );
 }
 
 export async function writeLambda(entity: LambdaEntity) {

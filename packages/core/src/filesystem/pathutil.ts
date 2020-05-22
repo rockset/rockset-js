@@ -1,4 +1,7 @@
-import { errorNotValidProject, errorInvalidQualifiedName } from '../exception';
+import {
+  errorNotValidProject,
+  errorInvalidQualifiedName,
+} from '../exception/exception';
 import {
   ROOT_CONFIG,
   QualifiedName,
@@ -133,7 +136,7 @@ export function getEntityExt(entityType: EntityType) {
 /*** Translating qualified names into ws/name pairs and vice versa ***/
 export function getWsNamePair(fullName: QualifiedName) {
   const pieces = fullName.split('.');
-  const name = pieces.pop();
+  const name = pieces.pop() as string;
   const ws = pieces.join('.');
   return { name, ws };
 }

@@ -68,6 +68,7 @@ USAGE
 * [`rock api:workspaces:listWorkspaces`](#rock-apiworkspaceslistworkspaces)
 * [`rock autocomplete [SHELL]`](#rock-autocomplete-shell)
 * [`rock help [COMMAND]`](#rock-help-command)
+* [`rock project:add NAME`](#rock-projectadd-name)
 * [`rock project:download:collections`](#rock-projectdownloadcollections)
 * [`rock project:download:lambdas`](#rock-projectdownloadlambdas)
 * [`rock project:init`](#rock-projectinit)
@@ -1210,6 +1211,28 @@ OPTIONS
 ```
 
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v2.2.3/src/commands/help.ts)_
+
+## `rock project:add NAME`
+
+Add an empty entity with the specified name to the project. The path for the entity is the same
+
+```
+USAGE
+  $ rock project:add NAME
+
+ARGUMENTS
+  NAME  The fully qualified name of the entity you wish to resolve
+
+OPTIONS
+  -e, --entity=lambda  [default: lambda] the type of entity you wish to resolve
+  -h, --help           show CLI help
+
+DESCRIPTION
+  Add an empty entity with the specified name to the project. The path for the entity is the same
+     as would be created with 'rock project:resolve'
+```
+
+_See code: [src/commands/project/add.ts](https://github.com/rockset/rockset-js/blob/v0.0.27/src/commands/project/add.ts)_
 
 ## `rock project:download:collections`
 

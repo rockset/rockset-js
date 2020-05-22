@@ -1,13 +1,6 @@
 import { parseQualifiedName, parseAbsolutePath } from '../types';
-import { RockClientException, RockClientErrorTypes } from '../exception';
-
-const expectException = (id: RockClientErrorTypes, e: unknown) => {
-  if (e instanceof RockClientException) {
-    expect(e.id).toBe(RockClientErrorTypes[id]);
-  } else {
-    fail('Not the right exception type!');
-  }
-};
+import { RockClientErrorTypes } from '../exception/exception';
+import { expectException } from '../testutil';
 
 describe('Testing runtime type validation', () => {
   test('parse qualified name', () => {
