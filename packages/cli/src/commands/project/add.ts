@@ -1,7 +1,7 @@
 import { Command, flags } from '@oclif/command';
 import { types, fileutil } from '@rockset/core';
 
-class ResolvePath extends Command {
+class AddEntity extends Command {
   static flags = {
     help: flags.help({ char: 'h' }),
     entity: flags.string({
@@ -29,7 +29,7 @@ class ResolvePath extends Command {
 `;
 
   async run() {
-    const { args, flags } = this.parse(ResolvePath);
+    const { args, flags } = this.parse(AddEntity);
 
     // Will throw for invalid qualified name
     const qualifiedName = types.parseQualifiedName(args.name as string);
@@ -43,4 +43,4 @@ class ResolvePath extends Command {
   }
 }
 
-export default ResolvePath;
+export default AddEntity;

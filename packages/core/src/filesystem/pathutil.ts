@@ -110,14 +110,15 @@ export function resolveQualifiedNameFromPath(
   const { dir, base } = path.parse(relative);
   const ws = dir.replace(path.sep, '.');
   const entityName = ENTITIES.find((entity) => {
-    base.endsWith(getEntityExt(entity));
+    return base.endsWith(getEntityExt(entity));
   });
 
   if (!entityName) {
     return null;
+  } else {
+    const name = base.replace(new RegExp(getEntityExt(entityName) + '$'), '');
+    return tuple(getQualifiedName(ws, name), entityName);
   }
-  const name = base.replace(new RegExp(getEntityExt(entityName) + '$'), '');
-  return tuple(getQualifiedName(ws, name), entityName);
 }
 
 export function isDefinitionPath(

@@ -72,6 +72,7 @@ USAGE
 * [`rock project:download:collections`](#rock-projectdownloadcollections)
 * [`rock project:download:lambdas`](#rock-projectdownloadlambdas)
 * [`rock project:init`](#rock-projectinit)
+* [`rock project:list`](#rock-projectlist)
 * [`rock project:resolve NAME`](#rock-projectresolve-name)
 * [`rock update [CHANNEL]`](#rock-update-channel)
 
@@ -1289,6 +1290,25 @@ DESCRIPTION
 ```
 
 _See code: [src/commands/project/init.ts](https://github.com/rockset/rockset-js/blob/v0.0.27/src/commands/project/init.ts)_
+
+## `rock project:list`
+
+Add an empty entity with the specified name to the project. The path for the entity is the same
+
+```
+USAGE
+  $ rock project:list
+
+OPTIONS
+  -e, --entity=lambda  [default: lambda] the type of entity you wish to list
+  -h, --help           show CLI help
+
+DESCRIPTION
+  Add an empty entity with the specified name to the project. The path for the entity is the same
+     as would be created with 'rock project:resolve'
+```
+
+_See code: [src/commands/project/list.ts](https://github.com/rockset/rockset-js/blob/v0.0.27/src/commands/project/list.ts)_
 
 ## `rock project:resolve NAME`
 

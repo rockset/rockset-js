@@ -6,6 +6,7 @@ import {
   CollectionEntity,
   DownloadHooks,
   LambdaDownloadOptions,
+  notEmpty,
 } from './types';
 import {
   FetchAPI,
@@ -51,21 +52,13 @@ export async function createClient(customFetch?: FetchAPI) {
 export async function listEntityNames() {
   const src = await getSrcPath();
   const allFiles = await getFiles(src);
-  const lambdaFiles = allFiles.filter((file) =>
-    isDefinitionPath(src, file, 'lambda')
-  );
 
-  const collectionFiles = allFiles.filter((file) =>
-    isDefinitionPath(src, file, 'lambda')
-  );
+  const entities = allFiles
+    .map((path) => resolveQualifiedNameFromPath(src, path))
+    .filter(notEmpty);
 
-  const lambdas = lambdaFiles.map((path) =>
-    resolveQualifiedNameFromPath(src, path)
-  );
-
-  const collections = collectionFiles.map((path) =>
-    resolveQualifiedNameFromPath(src, path)
-  );
+  const lambdas = entities.filter(([, t]) => t === 'lambda');
+  const collections = entities.filter(([, t]) => t === 'collection');
 
   return {
     lambdas,

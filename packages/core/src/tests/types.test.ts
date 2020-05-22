@@ -1,6 +1,6 @@
 import { parseQualifiedName, parseAbsolutePath } from '../types';
 import { RockClientErrorTypes } from '../exception/exception';
-import { expectException } from '../testutil';
+import { expectException } from './testUtil';
 
 describe('Testing runtime type validation', () => {
   test('parse qualified name', () => {

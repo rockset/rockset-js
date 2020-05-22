@@ -167,6 +167,12 @@ export function parseLambdaEntity(obj: unknown): LambdaEntity {
   return throwOnError(LambdaEntity.decode(obj), errorFailedToCreateEntity(obj));
 }
 
+export function notEmpty<TValue>(
+  value: TValue | null | undefined
+): value is TValue {
+  return value !== null && value !== undefined;
+}
+
 // Helper function to create default values for types
 
 export function createEmptyQLEntity(fullName: QualifiedName, description = '') {
