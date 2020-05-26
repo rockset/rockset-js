@@ -36,6 +36,9 @@
     "build": "tsc",
     "lint": "eslint 'src/**/*.ts'"
   },
+  "files": [
+    "/dist"
+  ],
   "author": "Rockset",
   "publishConfig": {
     "access": "public"
