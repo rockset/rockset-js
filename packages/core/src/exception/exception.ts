@@ -10,6 +10,11 @@ export enum RockClientErrorTypes {
   ERROR_INVALID_ABSOLUTE_PATH,
   ERROR_INVALID_LAMBDA_CONFIG,
   ERROR_INVALID_LAMBDA_ENTITY,
+  ERROR_INVALID_AUTH_PROFILE,
+  ERROR_INVALID_AUTH_CONFIG,
+  ERROR_AUTH_CONFIG_NOT_FOUND,
+  ERROR_AUTH_PROFILE_NOT_FOUND,
+  ERROR_AUTH_PROFILE_EXISTS,
 }
 
 export class RockClientException extends Error {
@@ -79,3 +84,37 @@ export const errorFailedToCreateEntity = (obj: unknown) => (
     )} failed. Please ensure the object is specified correctly. ${message}`
   );
 };
+
+export const errorGenericParse = (
+  type: RockClientErrorTypes,
+  description: string,
+  obj: unknown
+) => (message: string) => {
+  return new RockClientException(
+    type,
+    `Parsing ${description} from object:
+
+     ${typeof obj === 'string' ? obj : prettyPrint(obj)} 
+
+    failed. Please ensure the object is specified correctly. ${message}`
+  );
+};
+
+export const errorAuthConfigNotFound = () =>
+  new RockClientException(
+    RockClientErrorTypes.ERROR_AUTH_CONFIG_NOT_FOUND,
+    `There is no auth configuration found in your home directory. 
+Please first initialize an auth configuration, or export $ROCKSET_APIKEY and $ROCKSET_APISERVER env variables to skip this step.`
+  );
+
+export const errorAuthProfileNotFound = (profileName: string) =>
+  new RockClientException(
+    RockClientErrorTypes.ERROR_AUTH_PROFILE_NOT_FOUND,
+    `There is no auth profile called ${profileName} in your auth configuration file. Please first initialize it.`
+  );
+
+export const errorAuthProfileExists = (profileName: string) =>
+  new RockClientException(
+    RockClientErrorTypes.ERROR_AUTH_PROFILE_EXISTS,
+    `A profile ${profileName} already exists in your configuration file.`
+  );

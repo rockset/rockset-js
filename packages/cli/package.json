@@ -20,6 +20,7 @@
     "@rockset/eslint-config": "0.0.27",
     "@types/prompts": "^2.0.8",
     "aws-sdk": "^2.679.0",
+    "chalk": "^4.0.0",
     "handlebars": "^4.7.6",
     "lodash": "^4.17.15",
     "prompts": "^2.3.2",
@@ -27,6 +28,7 @@
   },
   "devDependencies": {
     "@oclif/dev-cli": "^1.22.2",
+    "@types/chalk": "^2.2.0",
     "@types/lodash": "^4.14.150",
     "@types/node": "^10.17.21",
     "aws-sdk": "^2.679.0",

@@ -1,5 +1,4 @@
-import * as pathutil from '../filesystem/pathutil';
-import { fileutil, main } from '..';
+import { main } from '..';
 import {} from '../exception/exception';
 import { createEmptyQLEntity, parseQualifiedName } from '../types';
 import { writeLambda } from '../filesystem/fileutil';

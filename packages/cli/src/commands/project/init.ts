@@ -1,9 +1,10 @@
-import { Command, flags } from '@oclif/command';
+import { flags } from '@oclif/command';
 import * as prompts from 'prompts';
 import { helper, types, fileutil } from '@rockset/core';
 import { RootConfig } from '@rockset/core/dist/types';
+import { RockCommand } from '../../base-command';
 
-class InitializeProject extends Command {
+class InitializeProject extends RockCommand {
   static flags = {
     help: flags.help({ char: 'h' }),
   };

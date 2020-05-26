@@ -1,7 +1,8 @@
-import { Command, flags } from '@oclif/command';
+import { flags } from '@oclif/command';
 import { listEntityNames } from '@rockset/core/dist/main';
+import { RockCommand } from '../../base-command';
 
-class ListEntities extends Command {
+class ListEntities extends RockCommand {
   static flags = {
     help: flags.help({ char: 'h' }),
     entity: flags.string({

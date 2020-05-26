@@ -66,6 +66,9 @@ USAGE
 * [`rock api:workspaces:deleteWorkspace WORKSPACE`](#rock-apiworkspacesdeleteworkspace-workspace)
 * [`rock api:workspaces:getWorkspace WORKSPACE`](#rock-apiworkspacesgetworkspace-workspace)
 * [`rock api:workspaces:listWorkspaces`](#rock-apiworkspaceslistworkspaces)
+* [`rock auth:activate NAME`](#rock-authactivate-name)
+* [`rock auth:add NAME APIKEY [APISERVER]`](#rock-authadd-name-apikey-apiserver)
+* [`rock auth:list`](#rock-authlist)
 * [`rock autocomplete [SHELL]`](#rock-autocomplete-shell)
 * [`rock help [COMMAND]`](#rock-help-command)
 * [`rock project:add NAME`](#rock-projectadd-name)
@@ -1174,6 +1177,66 @@ DESCRIPTION
 
 _See code: [src/commands/api/workspaces/listWorkspaces.ts](https://github.com/rockset/rockset-js/blob/v0.0.27/src/commands/api/workspaces/listWorkspaces.ts)_
 
+## `rock auth:activate NAME`
+
+Create a new profile with the specified name and apikey.
+
+```
+USAGE
+  $ rock auth:activate NAME
+
+ARGUMENTS
+  NAME  The name of the profile you wish to create.
+
+OPTIONS
+  -h, --help  show CLI help
+
+DESCRIPTION
+  Create a new profile with the specified name and apikey.
+```
+
+_See code: [src/commands/auth/activate.ts](https://github.com/rockset/rockset-js/blob/v0.0.27/src/commands/auth/activate.ts)_
+
+## `rock auth:add NAME APIKEY [APISERVER]`
+
+Create a new profile with the specified name and apikey.
+
+```
+USAGE
+  $ rock auth:add NAME APIKEY [APISERVER]
+
+ARGUMENTS
+  NAME       The name of the profile you wish to create.
+  APIKEY     The url for the apiserver to include in this profile
+  APISERVER  [default: https://api.rs2.usw2.rockset.com] The url for the apiserver to include in this profile
+
+OPTIONS
+  -a, --activate  Whether to activate the profile after creating it
+  -h, --help      show CLI help
+
+DESCRIPTION
+  Create a new profile with the specified name and apikey.
+```
+
+_See code: [src/commands/auth/add.ts](https://github.com/rockset/rockset-js/blob/v0.0.27/src/commands/auth/add.ts)_
+
+## `rock auth:list`
+
+List all of the available profiles.
+
+```
+USAGE
+  $ rock auth:list
+
+OPTIONS
+  -h, --help  show CLI help
+
+DESCRIPTION
+  List all of the available profiles.
+```
+
+_See code: [src/commands/auth/list.ts](https://github.com/rockset/rockset-js/blob/v0.0.27/src/commands/auth/list.ts)_
+
 ## `rock autocomplete [SHELL]`
 
 display autocomplete installation instructions
@@ -1313,7 +1376,7 @@ _See code: [src/commands/project/init.ts](https://github.com/rockset/rockset-js/
 
 ## `rock project:list`
 
-Add an empty entity with the specified name to the project. The path for the entity is the same
+List all of the entities in the current project. Note: this does not list entities on remote. For that, please use
 
 ```
 USAGE
@@ -1324,8 +1387,8 @@ OPTIONS
   -h, --help           show CLI help
 
 DESCRIPTION
-  Add an empty entity with the specified name to the project. The path for the entity is the same
-     as would be created with 'rock project:resolve'
+  List all of the entities in the current project. Note: this does not list entities on remote. For that, please use
+     the API endpoints present in 'rock api:...'
 ```
 
 _See code: [src/commands/project/list.ts](https://github.com/rockset/rockset-js/blob/v0.0.27/src/commands/project/list.ts)_

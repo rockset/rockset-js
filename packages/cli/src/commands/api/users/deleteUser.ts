@@ -1,11 +1,12 @@
 /* eslint-disable unicorn/filename-case */
 // Generated file, please do not edit directly
 
-import { Command, flags } from '@oclif/command';
+import { flags } from '@oclif/command';
 import { main } from '@rockset/core';
 import { runApiCall, Args } from '../../../helper/util';
+import { RockCommand } from '../../../base-command';
 
-class DeleteUser extends Command {
+class DeleteUser extends RockCommand {
   static flags = {
     help: flags.help({ char: 'h' }),
     file: flags.string({

@@ -11,10 +11,13 @@ import {
   errorInvalidAbsolutePath,
   errorInvalidQualifiedName,
   errorFailedToCreateEntity,
+  errorGenericParse,
+  RockClientErrorTypes,
 } from './exception/exception';
-import { Either, fold } from 'fp-ts/lib/Either';
+import { Either, fold, chain } from 'fp-ts/lib/Either';
 import { PathReporter } from 'io-ts/lib/PathReporter';
 import { getWsNamePair, relativeSQLPath } from './filesystem/pathutil';
+import { pipe } from 'fp-ts/lib/pipeable';
 
 export const ROOT_CONFIG = 'rockconfig.json' as const;
 
@@ -39,6 +42,39 @@ const AuthProfile = type({
  * Eg. `QualifiedName` is a string subtype that refers to an entity name, eg `commons.foo`
  *
  */
+
+export type JSONObject = { [key: string]: JSON };
+export type JSONArray = Array<JSON>;
+export type JSONType =
+  | null
+  | string
+  | number
+  | boolean
+  | JSONArray
+  | JSONObject;
+
+/**
+ * Json type is a way of validating a JSON object in io-ts. This is copy pasted from io-ts documentation.
+ */
+const JSONType = new t.Type<JSONType, string, string>(
+  'JSONType',
+  (s: unknown): s is JSONType => {
+    try {
+      JSON.stringify(s);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  },
+  (s: string, c) => {
+    try {
+      return t.success(JSON.parse(s) as JSONType);
+    } catch (e) {
+      return t.failure(s, c);
+    }
+  },
+  JSON.stringify
+);
 
 export interface QualifiedNameBrand {
   readonly QualifiedName: unique symbol;
@@ -164,6 +200,28 @@ export function throwOnError<B>(
   )(e);
 }
 
+export function parseOrThrow<A>(
+  type: t.Type<A>,
+  value: unknown,
+  errorType: RockClientErrorTypes,
+  description: string
+) {
+  return throwOnError(
+    type.decode(value),
+    errorGenericParse(errorType, description, value)
+  );
+}
+
+export function parseOrThrowFromJSON<A>(
+  type: t.Type<A>,
+  value: string,
+  errorType: RockClientErrorTypes,
+  description: string
+) {
+  const a = pipe(value, JSONType.decode, chain(type.decode));
+  return throwOnError(a, errorGenericParse(errorType, description, value));
+}
+
 export function parseAbsolutePath(p: string): AbsolutePath {
   return throwOnError(AbsolutePath.decode(p), errorInvalidAbsolutePath);
 }
@@ -183,7 +241,6 @@ export function notEmpty<TValue>(
 }
 
 // Helper function to create default values for types
-
 export function createEmptyQLEntity(fullName: QualifiedName, description = '') {
   const { ws, name } = getWsNamePair(fullName);
   return parseLambdaEntity({

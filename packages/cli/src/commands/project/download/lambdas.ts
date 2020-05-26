@@ -1,7 +1,8 @@
-import { Command, flags } from '@oclif/command';
+import { flags } from '@oclif/command';
 import { main } from '@rockset/core';
+import { RockCommand } from '../../../base-command';
 
-class DownloadQueryLambda extends Command {
+class DownloadQueryLambda extends RockCommand {
   static flags = {
     help: flags.help({ char: 'h' }),
     tag: flags.string({

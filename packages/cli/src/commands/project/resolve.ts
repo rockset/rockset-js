@@ -1,8 +1,9 @@
-import { Command, flags } from '@oclif/command';
+import { flags } from '@oclif/command';
 import { types, fileutil, pathutil } from '@rockset/core';
 import { getSrcPath } from '@rockset/core/dist/filesystem/fileutil';
+import { RockCommand } from '../../base-command';
 
-class ResolvePath extends Command {
+class ResolvePath extends RockCommand {
   static flags = {
     help: flags.help({ char: 'h' }),
     entity: flags.string({

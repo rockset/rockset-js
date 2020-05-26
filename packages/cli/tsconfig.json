@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "baseUrl": "./src",
     "declaration": true,
     "importHelpers": true,
     "module": "commonjs",
