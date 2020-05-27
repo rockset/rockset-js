@@ -16,6 +16,10 @@ class ResolvePath extends RockCommand {
     exists: flags.boolean({
       description: 'Return with an error if file does not exist',
     }),
+
+    sql: flags.boolean({
+      description: 'Return the SQL file path. Only for Query Lambdas.',
+    }),
   };
 
   static args = [
@@ -43,12 +47,24 @@ class ResolvePath extends RockCommand {
     const qualifiedName = types.parseQualifiedName(args.name as string);
 
     if ((flags.entity === 'lambda' || flags.entity === 'workspace') && args.name) {
-      const srcPath = await getSrcPath();
-      const p = pathutil.resolvePathFromQualifiedName(qualifiedName, flags.entity, srcPath);
-      if ((await fileutil.exists(p)) || !flags.exists) {
-        this.log(p);
+      if (flags.entity === 'lambda' && flags.sql) {
+        try {
+          const path = await fileutil.getLambdaSqlPathFromQualifiedName(qualifiedName);
+          this.log(path);
+        } catch (error) {
+          this.error(
+            'There was an error parsing the lambda config. Are you sure this lambda exists and is specified correctly?',
+            error,
+          );
+        }
       } else {
-        this.error(`The entity "${args.name}" resolves to path '${p}', which does not exist.`);
+        const srcPath = await getSrcPath();
+        const p = pathutil.resolvePathFromQualifiedName(qualifiedName, flags.entity, srcPath);
+        if ((await fileutil.exists(p)) || !flags.exists) {
+          this.log(p);
+        } else {
+          this.error(`The entity "${args.name}" resolves to path '${p}', which does not exist.`);
+        }
       }
     } else {
       this.error(`Unsupported entity type: ${flags.entity}`);

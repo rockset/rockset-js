@@ -98,6 +98,13 @@ export async function readLambda(
   );
 }
 
+export async function getLambdaSqlPathFromQualifiedName(name: QualifiedName) {
+  const srcPath = await getSrcPath();
+  const fullPath = join(srcPath, resolvePathFromQualifiedName(name, 'lambda'));
+  const entity = await readLambda(name, fullPath);
+  return join(dirname(fullPath), entity.config.sql_path);
+}
+
 export async function writeLambda(entity: LambdaEntity) {
   const srcPath = await getSrcPath();
   const fullPath = join(
