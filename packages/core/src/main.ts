@@ -27,6 +27,7 @@ import {
   readLambda,
   writeLambda,
   writeCollection,
+  deleteLambda,
 } from './filesystem/fileutil';
 import _ from 'lodash';
 
@@ -160,6 +161,25 @@ export async function downloadQueryLambdas(
     if (qlEntity) {
       await writeLambda(qlEntity);
       hooks.onWriteLambda?.(qlEntity);
+    }
+  });
+}
+
+export async function deleteAllQueryLambdas() {
+  const srcPath = await getSrcPath();
+  const allFiles = await getFiles(srcPath);
+  const lambdaFiles = allFiles.filter((file) =>
+    isDefinitionPath(srcPath, file, 'lambda')
+  );
+
+  lambdaFiles.map(async (file) => {
+    const [qualifiedName] = resolveQualifiedNameFromPath(srcPath, file) ?? [
+      null,
+      null,
+    ];
+    if (qualifiedName) {
+      const lambda = await readLambda(qualifiedName, file);
+      return await deleteLambda(srcPath, file, lambda);
     }
   });
 }

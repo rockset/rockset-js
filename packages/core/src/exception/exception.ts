@@ -39,6 +39,13 @@ export const errorFailToWriteFileOutsideProject = () => {
   );
 };
 
+export const errorFailToDeleteFileOutsideProject = () => {
+  return new RockClientException(
+    RockClientErrorTypes.ERROR_NOT_IN_SRC_ROOT,
+    `This file is not in the source root defined in your project, and will not be deleted`
+  );
+};
+
 export const errorInvalidRootConfig = (message: string) => {
   return new RockClientException(
     RockClientErrorTypes.ERROR_INVALID_ROOT_CONFIG,

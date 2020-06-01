@@ -33,6 +33,7 @@ import {
   errorInvalidRootConfig,
   errorFailedToParseLambdaConfig,
   errorFailedToCreateEntity,
+  errorFailToDeleteFileOutsideProject,
 } from '../exception/exception';
 
 /**
@@ -62,6 +63,19 @@ export async function getSrcPath(): Promise<AbsolutePath> {
   const config = await readRootConfig();
   const finalPath = join(root, config.source_root);
   return finalPath;
+}
+
+export async function deleteLambda(
+  srcPath: AbsolutePath,
+  entityPath: AbsolutePath,
+  entity: LambdaEntity
+) {
+  const sqlPath = join(entityPath, entity.config.sql_path);
+
+  return await Promise.all([
+    deleteFileSafe(srcPath, entityPath),
+    deleteFileSafe(srcPath, sqlPath),
+  ]);
 }
 
 export async function readLambdaFromQualifiedName(name: QualifiedName) {
@@ -148,6 +162,23 @@ export async function writeFileSafe(
 
   await fs.mkdir(path.dirname(fullPath), { recursive: true });
   await fs.writeFile(fullPath, data);
+}
+
+export async function deleteFileSafe(
+  srcPath: AbsolutePath,
+  fullPath: AbsolutePath
+) {
+  if (!isParent(srcPath, fullPath)) {
+    throw errorFailToDeleteFileOutsideProject();
+  }
+
+  try {
+    return await fs.unlink(fullPath);
+  } catch (e) {
+    // Probably failed because the file doesn't exist or we don't have permissions.
+    // Return null and let the parent determine what to do in this case
+    return null;
+  }
 }
 
 /**
