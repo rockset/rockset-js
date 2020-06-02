@@ -1,6 +1,5 @@
 import rocksetConfigure from '@rockset/client';
 import {
-  AuthProfile,
   DeployHooks,
   LambdaEntity,
   CollectionEntity,
@@ -30,17 +29,7 @@ import {
   deleteLambda,
 } from './filesystem/fileutil';
 import _ from 'lodash';
-
-/**
- * Resolve the current auth profile.
- *
- * Currently just loads from environment, in the future we can do more sophisticated profile management
- */
-async function getAuthProfile() {
-  const apikey = process.env.ROCKSET_APIKEY ?? '';
-  const apiserver = process.env.ROCKSET_APISERVER ?? '';
-  return { apikey, apiserver } as AuthProfile;
-}
+import { getAuthProfile } from './filesystem/auth';
 
 /**
  *

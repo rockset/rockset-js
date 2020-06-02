@@ -79,8 +79,9 @@ export const getEnvProfile = () => {
  * Gets currently active credentials from env
  */
 export async function getAuthProfile() {
-  if (isAuthEnvActive()) {
-    return getEnvProfile();
+  const { apikey, apiserver } = getEnvProfile();
+  if (isAuthEnvActive() && apikey && apiserver) {
+    return { apikey, apiserver };
   } else {
     const config = await readConfigurationFile();
     const profile = config.profiles[config.activeProfile];
