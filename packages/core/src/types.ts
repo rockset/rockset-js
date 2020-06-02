@@ -2,6 +2,7 @@ import {
   ErrorModel,
   Collection,
   QueryLambdaVersionResponse,
+  QueryResponse,
 } from '@rockset/client/dist/codegen/api';
 import { type, TypeOf, string, array } from 'io-ts';
 import * as t from 'io-ts';
@@ -175,6 +176,11 @@ export interface DownloadHooks {
   onNoOp?: () => void;
   onWriteLambda?: (e: LambdaEntity) => void;
   onWriteCollection?: (e: CollectionEntity) => void;
+}
+
+export interface ExecuteHooks {
+  onExecuteSuccess?: (e: QueryResponse) => void;
+  onExecuteError?: (error: ErrorModel, entity: LambdaEntity) => void;
 }
 
 export interface LambdaDownloadOptions {

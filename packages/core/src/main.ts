@@ -7,6 +7,9 @@ import {
   LambdaDownloadOptions,
   notEmpty,
   LambdaDeployOptions,
+  QualifiedName,
+  parseAbsolutePath,
+  ExecuteHooks,
 } from './types';
 import {
   FetchAPI,
@@ -20,6 +23,7 @@ import {
   resolveQualifiedNameFromPath,
   getQualifiedName,
   relativeSQLPath,
+  resolvePathFromQualifiedName,
 } from './filesystem/pathutil';
 import {
   getSrcPath,
@@ -233,4 +237,40 @@ export async function deployQueryLambdas(
       hooks.onDeployError?.(e, lambdaEntity);
     }
   });
+}
+
+/**
+ * This function executes a specified version of a Query Lambda
+ * @param hooks Lifecycle hooks that will be called at appropriate intervals
+ */
+// TODO add tests for this
+export async function executeQueryLambda(
+  hooks: ExecuteHooks = {},
+  qualifiedName: QualifiedName,
+  version: string
+) {
+  const [srcPath, client] = await Promise.all([getSrcPath(), createClient()]);
+  const file = parseAbsolutePath(resolvePathFromQualifiedName(
+    qualifiedName,
+    'lambda',
+    srcPath
+  ));
+
+  // Construct lambda entity
+  const lambdaEntity: LambdaEntity = await readLambda(qualifiedName, file);
+  const { ws, name: lambda, config } = lambdaEntity;
+
+  try {
+    const lambdaResponse = await client.queryLambdas.executeQueryLambda(
+      ws,
+      lambda,
+      version,
+      {
+        parameters: config.default_parameters,
+      }
+    );
+    hooks.onExecuteSuccess?.(lambdaResponse);
+  } catch (e) {
+    hooks.onExecuteError?.(e, lambdaEntity);
+  }
 }

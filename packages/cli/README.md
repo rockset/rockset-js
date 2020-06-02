@@ -72,9 +72,11 @@ USAGE
 * [`rock autocomplete [SHELL]`](#rock-autocomplete-shell)
 * [`rock help [COMMAND]`](#rock-help-command)
 * [`rock project:add NAME`](#rock-projectadd-name)
+* [`rock project:delete`](#rock-projectdelete)
 * [`rock project:deploy`](#rock-projectdeploy)
 * [`rock project:download:collections`](#rock-projectdownloadcollections)
 * [`rock project:download:lambdas`](#rock-projectdownloadlambdas)
+* [`rock project:execute NAME VERSION`](#rock-projectexecute-name-version)
 * [`rock project:init`](#rock-projectinit)
 * [`rock project:list`](#rock-projectlist)
 * [`rock project:resolve NAME`](#rock-projectresolve-name)
@@ -1299,6 +1301,24 @@ DESCRIPTION
 
 _See code: [src/commands/project/add.ts](https://github.com/rockset/rockset-js/blob/v0.0.28/src/commands/project/add.ts)_
 
+## `rock project:delete`
+
+Delete query lambdas from the project.
+
+```
+USAGE
+  $ rock project:delete
+
+OPTIONS
+  -h, --help  show CLI help
+  -y, --yes   Bypass the safety checks, and automatically engage in dangerous actions.
+
+DESCRIPTION
+  Delete query lambdas from the project.
+```
+
+_See code: [src/commands/project/delete.ts](https://github.com/rockset/rockset-js/blob/v0.0.28/src/commands/project/delete.ts)_
+
 ## `rock project:deploy`
 
 Deploy Query Lambda entities to Rockset from your local project.
@@ -1355,6 +1375,31 @@ DESCRIPTION
 
 _See code: [src/commands/project/download/lambdas.ts](https://github.com/rockset/rockset-js/blob/v0.0.28/src/commands/project/download/lambdas.ts)_
 
+## `rock project:execute NAME VERSION`
+
+Execute a specific version of a Query Lambda in the current project.
+
+```
+USAGE
+  $ rock project:execute NAME VERSION
+
+ARGUMENTS
+  NAME     The fully qualified name of the Query Lambda you wish to execute
+  VERSION  The Query Lambda version you wish to execute
+
+OPTIONS
+  -h, --help  show CLI help
+
+DESCRIPTION
+  Execute a specific version of a Query Lambda in the current project.
+  
+     You must specify the fully qualified name of the Query Lambda: eg. 'commons.foo'.
+
+     You must specify the specific version to execute: eg. 'b1d7c9a34b50cd'.
+```
+
+_See code: [src/commands/project/execute.ts](https://github.com/rockset/rockset-js/blob/v0.0.28/src/commands/project/execute.ts)_
+
 ## `rock project:init`
 
 Initialize your project.
@@ -1408,6 +1453,7 @@ OPTIONS
   -e, --entity=lambda|workspace  [default: lambda] the type of entity you wish to resolve
   -h, --help                     show CLI help
   --exists                       Return with an error if file does not exist
+  --sql                          Return the SQL file path. Only for Query Lambdas.
 
 DESCRIPTION
   Resolve the absolute path of an entity in the current project.
