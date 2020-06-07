@@ -14,7 +14,7 @@ class CleanEntities extends RockCommand {
   };
 
   static description = `
-Delete query lambdas from the project.
+Delete all query lambdas from the project.
 `;
 
   async run() {

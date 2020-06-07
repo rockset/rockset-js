@@ -9,7 +9,7 @@ class AddEntity extends RockCommand {
       char: 'e',
       options: ['lambda'],
       default: 'lambda',
-      description: 'the type of entity you wish to resolve',
+      description: 'the type of entity you wish to add',
     }),
   };
 

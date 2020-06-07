@@ -1,6 +1,6 @@
 import { flags } from '@oclif/command';
 import { main } from '@rockset/core';
-import { RockCommand } from '../../../base-command';
+import { RockCommand } from '../../base-command';
 
 class DownloadQueryLambda extends RockCommand {
   static flags = {
