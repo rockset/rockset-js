@@ -80,6 +80,7 @@ USAGE
 * [`rock project:init`](#rock-projectinit)
 * [`rock project:list`](#rock-projectlist)
 * [`rock project:resolve NAME`](#rock-projectresolve-name)
+* [`rock project:serve`](#rock-projectserve)
 * [`rock update [CHANNEL]`](#rock-update-channel)
 
 ## `rock api:apikeys:createApiKey BODY`
@@ -1464,6 +1465,24 @@ DESCRIPTION
 ```
 
 _See code: [src/commands/project/resolve.ts](https://github.com/rockset/rockset-js/blob/v0.0.28/src/commands/project/resolve.ts)_
+
+## `rock project:serve`
+
+Start a development server that allows you to execute Query Lambdas from your local project from a development UI.
+
+```
+USAGE
+  $ rock project:serve
+
+OPTIONS
+  -h, --help       show CLI help
+  -p, --port=port  [default: 3001] The port to start the server at
+
+DESCRIPTION
+  Start a development server that allows you to execute Query Lambdas from your local project from a development UI.
+```
+
+_See code: [src/commands/project/serve.ts](https://github.com/rockset/rockset-js/blob/v0.0.28/src/commands/project/serve.ts)_
 
 ## `rock update [CHANNEL]`
 

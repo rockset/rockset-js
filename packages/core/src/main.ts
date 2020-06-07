@@ -250,11 +250,9 @@ export async function executeQueryLambda(
   version: string
 ) {
   const [srcPath, client] = await Promise.all([getSrcPath(), createClient()]);
-  const file = parseAbsolutePath(resolvePathFromQualifiedName(
-    qualifiedName,
-    'lambda',
-    srcPath
-  ));
+  const file = parseAbsolutePath(
+    resolvePathFromQualifiedName(qualifiedName, 'lambda', srcPath)
+  );
 
   // Construct lambda entity
   const lambdaEntity: LambdaEntity = await readLambda(qualifiedName, file);
