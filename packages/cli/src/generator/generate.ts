@@ -22,17 +22,18 @@ async function generate() {
     const pp = (obj: unknown) => JSON.stringify(obj, null, 2);
 
     const output = _.flatMap(paths, (path, endpoint: string) =>
-      _.map(path, (get: Get, method: string) => {
+      _.map(path, (get: Get, rawMethod: string) => {
+        const method = rawMethod.toUpperCase();
         const tag = _.camelCase(get.tags[0])
           .replace(/apiKey/, 'apikey')
           .replace(/organizations/, 'orgs');
         const operation = get.operationId;
         const apicall = `client.${tag}.${operation}.bind(client.${tag})`;
         const parameters = pp(
-          (get.parameters ?? []).map(({ name, description, required }) => ({
+          (get.parameters ?? []).map(({ name, description }) => ({
             name,
             description,
-            required,
+            required: false,
             hidden: false,
           })),
         );
@@ -54,6 +55,8 @@ This command is a simple wrapper around the above endpoint. Please view further 
           apicall,
           description,
           args: parameters,
+          endpoint,
+          method,
           className: capitalize(operation),
         });
         return { topic: tag, filename: operation, value: output };

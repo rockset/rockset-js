@@ -14,6 +14,7 @@ class ListProfiles extends RockCommand {
 `;
 
   async run() {
+    this.parse(ListProfiles);
     // First check if there is a profile active at all
     const allAuth = await auth.listAuthProfiles();
 

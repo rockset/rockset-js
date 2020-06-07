@@ -11,7 +11,8 @@ class CreateUser extends RockCommand {
     help: flags.help({ char: 'h' }),
     file: flags.string({
       char: 'f',
-      description: 'The config file to execute this command from. Format must be [yaml|json]',
+      description:
+        'The config file to execute this command from. Format must be json. Keys are translated into arguments of the same name. If no BODY argument is specified, the whole object, minus keys used as other arguments, will be passed in as the BODY.',
     }),
   };
 
@@ -19,7 +20,7 @@ class CreateUser extends RockCommand {
     {
       name: 'body',
       description: 'JSON object',
-      required: true,
+      required: false,
       hidden: false,
     },
   ];
@@ -49,7 +50,11 @@ This command is a simple wrapper around the above endpoint. Please view further 
     // apicall
     const apicall = client.users.createUser.bind(client.users);
 
-    await runApiCall.bind(this)({ args, flags, namedArgs, apicall });
+    // endpoint
+    const endpoint = '/v1/orgs/self/users';
+    const method = 'POST';
+
+    await runApiCall.bind(this)({ args, flags, namedArgs, apicall, method, endpoint });
   }
 }
 

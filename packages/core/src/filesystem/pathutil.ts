@@ -160,7 +160,7 @@ export function relativeSQLPath(name: string) {
 
 export const cwd = () => {
   // process.cwd always returns an absolute path
-  process.cwd() as AbsolutePath;
+  return process.cwd() as AbsolutePath;
 };
 
 export function join(root: AbsolutePath, ...paths: string[]): AbsolutePath {
