@@ -14,6 +14,16 @@ class DeleteQueryLambda extends RockCommand {
       description:
         'The config file to execute this command from. Format must be json. Keys are translated into arguments of the same name. If no BODY argument is specified, the whole object, minus keys used as other arguments, will be passed in as the BODY.',
     }),
+    loadTestRps: flags.integer({
+      char: 'l',
+      description:
+        'If this flag is active, a load test will be conducted using this apicall. The value passed to this flag determines how many requests per second will be sent',
+    }),
+    yes: flags.boolean({
+      char: 'y',
+      description: 'Skip all safety prompts',
+      default: false,
+    }),
   };
 
   static args = [

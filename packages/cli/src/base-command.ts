@@ -1,4 +1,5 @@
 import Command from '@oclif/command';
+import { prettyPrint } from '@rockset/core/dist/helper';
 
 export abstract class RockCommand extends Command {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -8,7 +9,13 @@ export abstract class RockCommand extends Command {
     if (err?.oclif?.exit === 0) {
       return;
     }
-    this.error(JSON.stringify(err, null, 2));
+    const finalErr = `
+${err}
+
+Error Object: 
+${prettyPrint(err)}
+    `;
+    this.error(finalErr);
   }
 
   info(...params: Parameters<typeof console.error>) {

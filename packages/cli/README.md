@@ -28,43 +28,43 @@ USAGE
 <!-- usagestop -->
 # Commands
 <!-- commands -->
-* [`rock api:apikeys:createApiKey BODY`](#rock-apiapikeyscreateapikey-body)
-* [`rock api:apikeys:createApiKeyAdmin BODY USER`](#rock-apiapikeyscreateapikeyadmin-body-user)
-* [`rock api:apikeys:deleteApiKey NAME`](#rock-apiapikeysdeleteapikey-name)
-* [`rock api:apikeys:deleteApiKeyAdmin NAME USER`](#rock-apiapikeysdeleteapikeyadmin-name-user)
+* [`rock api:apikeys:createApiKey [BODY]`](#rock-apiapikeyscreateapikey-body)
+* [`rock api:apikeys:createApiKeyAdmin [BODY] [USER]`](#rock-apiapikeyscreateapikeyadmin-body-user)
+* [`rock api:apikeys:deleteApiKey [NAME]`](#rock-apiapikeysdeleteapikey-name)
+* [`rock api:apikeys:deleteApiKeyAdmin [NAME] [USER]`](#rock-apiapikeysdeleteapikeyadmin-name-user)
 * [`rock api:apikeys:listApiKeys`](#rock-apiapikeyslistapikeys)
-* [`rock api:apikeys:listApiKeysAdmin USER`](#rock-apiapikeyslistapikeysadmin-user)
-* [`rock api:collections:createCollection WORKSPACE BODY`](#rock-apicollectionscreatecollection-workspace-body)
-* [`rock api:collections:deleteCollection WORKSPACE COLLECTION`](#rock-apicollectionsdeletecollection-workspace-collection)
-* [`rock api:collections:getCollection WORKSPACE COLLECTION`](#rock-apicollectionsgetcollection-workspace-collection)
+* [`rock api:apikeys:listApiKeysAdmin [USER]`](#rock-apiapikeyslistapikeysadmin-user)
+* [`rock api:collections:createCollection [WORKSPACE] [BODY]`](#rock-apicollectionscreatecollection-workspace-body)
+* [`rock api:collections:deleteCollection [WORKSPACE] [COLLECTION]`](#rock-apicollectionsdeletecollection-workspace-collection)
+* [`rock api:collections:getCollection [WORKSPACE] [COLLECTION]`](#rock-apicollectionsgetcollection-workspace-collection)
 * [`rock api:collections:listCollections`](#rock-apicollectionslistcollections)
-* [`rock api:collections:listQueryLambdasInCollection WORKSPACE COLLECTION`](#rock-apicollectionslistquerylambdasincollection-workspace-collection)
-* [`rock api:collections:workspaceCollections WORKSPACE`](#rock-apicollectionsworkspacecollections-workspace)
-* [`rock api:documents:addDocuments WORKSPACE COLLECTION BODY`](#rock-apidocumentsadddocuments-workspace-collection-body)
-* [`rock api:documents:deleteDocuments WORKSPACE COLLECTION BODY`](#rock-apidocumentsdeletedocuments-workspace-collection-body)
-* [`rock api:documents:patchDocuments WORKSPACE COLLECTION BODY`](#rock-apidocumentspatchdocuments-workspace-collection-body)
-* [`rock api:integrations:createIntegration BODY`](#rock-apiintegrationscreateintegration-body)
-* [`rock api:integrations:deleteIntegration INTEGRATION`](#rock-apiintegrationsdeleteintegration-integration)
-* [`rock api:integrations:getIntegration INTEGRATION`](#rock-apiintegrationsgetintegration-integration)
+* [`rock api:collections:listQueryLambdasInCollection [WORKSPACE] [COLLECTION]`](#rock-apicollectionslistquerylambdasincollection-workspace-collection)
+* [`rock api:collections:workspaceCollections [WORKSPACE]`](#rock-apicollectionsworkspacecollections-workspace)
+* [`rock api:documents:addDocuments [WORKSPACE] [COLLECTION] [BODY]`](#rock-apidocumentsadddocuments-workspace-collection-body)
+* [`rock api:documents:deleteDocuments [WORKSPACE] [COLLECTION] [BODY]`](#rock-apidocumentsdeletedocuments-workspace-collection-body)
+* [`rock api:documents:patchDocuments [WORKSPACE] [COLLECTION] [BODY]`](#rock-apidocumentspatchdocuments-workspace-collection-body)
+* [`rock api:integrations:createIntegration [BODY]`](#rock-apiintegrationscreateintegration-body)
+* [`rock api:integrations:deleteIntegration [INTEGRATION]`](#rock-apiintegrationsdeleteintegration-integration)
+* [`rock api:integrations:getIntegration [INTEGRATION]`](#rock-apiintegrationsgetintegration-integration)
 * [`rock api:integrations:listIntegrations`](#rock-apiintegrationslistintegrations)
 * [`rock api:orgs:getOrganization`](#rock-apiorgsgetorganization)
-* [`rock api:queries:query BODY`](#rock-apiqueriesquery-body)
-* [`rock api:queryLambdas:createQueryLambda WORKSPACE BODY`](#rock-apiquerylambdascreatequerylambda-workspace-body)
-* [`rock api:queryLambdas:deleteQueryLambda WORKSPACE QUERYLAMBDA`](#rock-apiquerylambdasdeletequerylambda-workspace-querylambda)
-* [`rock api:queryLambdas:executeQueryLambda WORKSPACE QUERYLAMBDA VERSION [BODY]`](#rock-apiquerylambdasexecutequerylambda-workspace-querylambda-version-body)
-* [`rock api:queryLambdas:getQueryLambdaVersion WORKSPACE QUERYLAMBDA VERSION`](#rock-apiquerylambdasgetquerylambdaversion-workspace-querylambda-version)
+* [`rock api:queries:query [BODY]`](#rock-apiqueriesquery-body)
+* [`rock api:queryLambdas:createQueryLambda [WORKSPACE] [BODY]`](#rock-apiquerylambdascreatequerylambda-workspace-body)
+* [`rock api:queryLambdas:deleteQueryLambda [WORKSPACE] [QUERYLAMBDA]`](#rock-apiquerylambdasdeletequerylambda-workspace-querylambda)
+* [`rock api:queryLambdas:executeQueryLambda [WORKSPACE] [QUERYLAMBDA] [VERSION] [BODY]`](#rock-apiquerylambdasexecutequerylambda-workspace-querylambda-version-body)
+* [`rock api:queryLambdas:getQueryLambdaVersion [WORKSPACE] [QUERYLAMBDA] [VERSION]`](#rock-apiquerylambdasgetquerylambdaversion-workspace-querylambda-version)
 * [`rock api:queryLambdas:listAllQueryLambdas`](#rock-apiquerylambdaslistallquerylambdas)
-* [`rock api:queryLambdas:listQueryLambdaVersions WORKSPACE QUERYLAMBDA`](#rock-apiquerylambdaslistquerylambdaversions-workspace-querylambda)
-* [`rock api:queryLambdas:listQueryLambdasInWorkspace WORKSPACE`](#rock-apiquerylambdaslistquerylambdasinworkspace-workspace)
-* [`rock api:queryLambdas:updateQueryLambda WORKSPACE QUERYLAMBDA BODY`](#rock-apiquerylambdasupdatequerylambda-workspace-querylambda-body)
-* [`rock api:users:createUser BODY`](#rock-apiuserscreateuser-body)
-* [`rock api:users:deleteUser USER`](#rock-apiusersdeleteuser-user)
+* [`rock api:queryLambdas:listQueryLambdaVersions [WORKSPACE] [QUERYLAMBDA]`](#rock-apiquerylambdaslistquerylambdaversions-workspace-querylambda)
+* [`rock api:queryLambdas:listQueryLambdasInWorkspace [WORKSPACE]`](#rock-apiquerylambdaslistquerylambdasinworkspace-workspace)
+* [`rock api:queryLambdas:updateQueryLambda [WORKSPACE] [QUERYLAMBDA] [BODY]`](#rock-apiquerylambdasupdatequerylambda-workspace-querylambda-body)
+* [`rock api:users:createUser [BODY]`](#rock-apiuserscreateuser-body)
+* [`rock api:users:deleteUser [USER]`](#rock-apiusersdeleteuser-user)
 * [`rock api:users:getCurrentUser`](#rock-apiusersgetcurrentuser)
 * [`rock api:users:listUsers`](#rock-apiuserslistusers)
-* [`rock api:workspaces:childWorkspaces WORKSPACE`](#rock-apiworkspaceschildworkspaces-workspace)
-* [`rock api:workspaces:createWorkspace BODY`](#rock-apiworkspacescreateworkspace-body)
-* [`rock api:workspaces:deleteWorkspace WORKSPACE`](#rock-apiworkspacesdeleteworkspace-workspace)
-* [`rock api:workspaces:getWorkspace WORKSPACE`](#rock-apiworkspacesgetworkspace-workspace)
+* [`rock api:workspaces:childWorkspaces [WORKSPACE]`](#rock-apiworkspaceschildworkspaces-workspace)
+* [`rock api:workspaces:createWorkspace [BODY]`](#rock-apiworkspacescreateworkspace-body)
+* [`rock api:workspaces:deleteWorkspace [WORKSPACE]`](#rock-apiworkspacesdeleteworkspace-workspace)
+* [`rock api:workspaces:getWorkspace [WORKSPACE]`](#rock-apiworkspacesgetworkspace-workspace)
 * [`rock api:workspaces:listWorkspaces`](#rock-apiworkspaceslistworkspaces)
 * [`rock auth:add NAME APIKEY [APISERVER]`](#rock-authadd-name-apikey-apiserver)
 * [`rock auth:list`](#rock-authlist)
@@ -74,8 +74,7 @@ USAGE
 * [`rock project:add NAME`](#rock-projectadd-name)
 * [`rock project:delete`](#rock-projectdelete)
 * [`rock project:deploy`](#rock-projectdeploy)
-* [`rock project:download:collections`](#rock-projectdownloadcollections)
-* [`rock project:download:lambdas`](#rock-projectdownloadlambdas)
+* [`rock project:download`](#rock-projectdownload)
 * [`rock project:execute NAME VERSION`](#rock-projectexecute-name-version)
 * [`rock project:init`](#rock-projectinit)
 * [`rock project:list`](#rock-projectlist)
@@ -83,19 +82,22 @@ USAGE
 * [`rock project:serve`](#rock-projectserve)
 * [`rock update [CHANNEL]`](#rock-update-channel)
 
-## `rock api:apikeys:createApiKey BODY`
+## `rock api:apikeys:createApiKey [BODY]`
 
 Create API Key
 
 ```
 USAGE
-  $ rock api:apikeys:createApiKey BODY
+  $ rock api:apikeys:createApiKey [BODY]
 
 ARGUMENTS
   BODY  JSON object
 
 OPTIONS
-  -f, --file=file  The config file to execute this command from. Format must be [yaml|json]
+  -f, --file=file  The config file to execute this command from. Format must be json. Keys are translated into arguments
+                   of the same name. If no BODY argument is specified, the whole object, minus keys used as other
+                   arguments, will be passed in as the BODY.
+
   -h, --help       show CLI help
 
 DESCRIPTION
@@ -112,20 +114,23 @@ DESCRIPTION
 
 _See code: [src/commands/api/apikeys/createApiKey.ts](https://github.com/rockset/rockset-js/blob/v0.0.28/src/commands/api/apikeys/createApiKey.ts)_
 
-## `rock api:apikeys:createApiKeyAdmin BODY USER`
+## `rock api:apikeys:createApiKeyAdmin [BODY] [USER]`
 
 Create API Key for any user (admin only)
 
 ```
 USAGE
-  $ rock api:apikeys:createApiKeyAdmin BODY USER
+  $ rock api:apikeys:createApiKeyAdmin [BODY] [USER]
 
 ARGUMENTS
   BODY  JSON object
   USER
 
 OPTIONS
-  -f, --file=file  The config file to execute this command from. Format must be [yaml|json]
+  -f, --file=file  The config file to execute this command from. Format must be json. Keys are translated into arguments
+                   of the same name. If no BODY argument is specified, the whole object, minus keys used as other
+                   arguments, will be passed in as the BODY.
+
   -h, --help       show CLI help
 
 DESCRIPTION
@@ -142,19 +147,22 @@ DESCRIPTION
 
 _See code: [src/commands/api/apikeys/createApiKeyAdmin.ts](https://github.com/rockset/rockset-js/blob/v0.0.28/src/commands/api/apikeys/createApiKeyAdmin.ts)_
 
-## `rock api:apikeys:deleteApiKey NAME`
+## `rock api:apikeys:deleteApiKey [NAME]`
 
 Delete API Key
 
 ```
 USAGE
-  $ rock api:apikeys:deleteApiKey NAME
+  $ rock api:apikeys:deleteApiKey [NAME]
 
 ARGUMENTS
   NAME  name of the API key
 
 OPTIONS
-  -f, --file=file  The config file to execute this command from. Format must be [yaml|json]
+  -f, --file=file  The config file to execute this command from. Format must be json. Keys are translated into arguments
+                   of the same name. If no BODY argument is specified, the whole object, minus keys used as other
+                   arguments, will be passed in as the BODY.
+
   -h, --help       show CLI help
 
 DESCRIPTION
@@ -171,20 +179,23 @@ DESCRIPTION
 
 _See code: [src/commands/api/apikeys/deleteApiKey.ts](https://github.com/rockset/rockset-js/blob/v0.0.28/src/commands/api/apikeys/deleteApiKey.ts)_
 
-## `rock api:apikeys:deleteApiKeyAdmin NAME USER`
+## `rock api:apikeys:deleteApiKeyAdmin [NAME] [USER]`
 
 Delete API Key for any user (admin only)
 
 ```
 USAGE
-  $ rock api:apikeys:deleteApiKeyAdmin NAME USER
+  $ rock api:apikeys:deleteApiKeyAdmin [NAME] [USER]
 
 ARGUMENTS
   NAME  name of the API key
   USER
 
 OPTIONS
-  -f, --file=file  The config file to execute this command from. Format must be [yaml|json]
+  -f, --file=file  The config file to execute this command from. Format must be json. Keys are translated into arguments
+                   of the same name. If no BODY argument is specified, the whole object, minus keys used as other
+                   arguments, will be passed in as the BODY.
+
   -h, --help       show CLI help
 
 DESCRIPTION
@@ -210,7 +221,10 @@ USAGE
   $ rock api:apikeys:listApiKeys
 
 OPTIONS
-  -f, --file=file  The config file to execute this command from. Format must be [yaml|json]
+  -f, --file=file  The config file to execute this command from. Format must be json. Keys are translated into arguments
+                   of the same name. If no BODY argument is specified, the whole object, minus keys used as other
+                   arguments, will be passed in as the BODY.
+
   -h, --help       show CLI help
 
 DESCRIPTION
@@ -227,16 +241,19 @@ DESCRIPTION
 
 _See code: [src/commands/api/apikeys/listApiKeys.ts](https://github.com/rockset/rockset-js/blob/v0.0.28/src/commands/api/apikeys/listApiKeys.ts)_
 
-## `rock api:apikeys:listApiKeysAdmin USER`
+## `rock api:apikeys:listApiKeysAdmin [USER]`
 
 List API Keys for any user (admin only)
 
 ```
 USAGE
-  $ rock api:apikeys:listApiKeysAdmin USER
+  $ rock api:apikeys:listApiKeysAdmin [USER]
 
 OPTIONS
-  -f, --file=file  The config file to execute this command from. Format must be [yaml|json]
+  -f, --file=file  The config file to execute this command from. Format must be json. Keys are translated into arguments
+                   of the same name. If no BODY argument is specified, the whole object, minus keys used as other
+                   arguments, will be passed in as the BODY.
+
   -h, --help       show CLI help
 
 DESCRIPTION
@@ -253,20 +270,23 @@ DESCRIPTION
 
 _See code: [src/commands/api/apikeys/listApiKeysAdmin.ts](https://github.com/rockset/rockset-js/blob/v0.0.28/src/commands/api/apikeys/listApiKeysAdmin.ts)_
 
-## `rock api:collections:createCollection WORKSPACE BODY`
+## `rock api:collections:createCollection [WORKSPACE] [BODY]`
 
 Create Collection
 
 ```
 USAGE
-  $ rock api:collections:createCollection WORKSPACE BODY
+  $ rock api:collections:createCollection [WORKSPACE] [BODY]
 
 ARGUMENTS
   WORKSPACE  name of the workspace
   BODY       JSON object
 
 OPTIONS
-  -f, --file=file  The config file to execute this command from. Format must be [yaml|json]
+  -f, --file=file  The config file to execute this command from. Format must be json. Keys are translated into arguments
+                   of the same name. If no BODY argument is specified, the whole object, minus keys used as other
+                   arguments, will be passed in as the BODY.
+
   -h, --help       show CLI help
 
 DESCRIPTION
@@ -283,20 +303,23 @@ DESCRIPTION
 
 _See code: [src/commands/api/collections/createCollection.ts](https://github.com/rockset/rockset-js/blob/v0.0.28/src/commands/api/collections/createCollection.ts)_
 
-## `rock api:collections:deleteCollection WORKSPACE COLLECTION`
+## `rock api:collections:deleteCollection [WORKSPACE] [COLLECTION]`
 
 Delete Collection
 
 ```
 USAGE
-  $ rock api:collections:deleteCollection WORKSPACE COLLECTION
+  $ rock api:collections:deleteCollection [WORKSPACE] [COLLECTION]
 
 ARGUMENTS
   WORKSPACE   name of the workspace
   COLLECTION  name of the collection
 
 OPTIONS
-  -f, --file=file  The config file to execute this command from. Format must be [yaml|json]
+  -f, --file=file  The config file to execute this command from. Format must be json. Keys are translated into arguments
+                   of the same name. If no BODY argument is specified, the whole object, minus keys used as other
+                   arguments, will be passed in as the BODY.
+
   -h, --help       show CLI help
 
 DESCRIPTION
@@ -313,20 +336,23 @@ DESCRIPTION
 
 _See code: [src/commands/api/collections/deleteCollection.ts](https://github.com/rockset/rockset-js/blob/v0.0.28/src/commands/api/collections/deleteCollection.ts)_
 
-## `rock api:collections:getCollection WORKSPACE COLLECTION`
+## `rock api:collections:getCollection [WORKSPACE] [COLLECTION]`
 
 Get Collection
 
 ```
 USAGE
-  $ rock api:collections:getCollection WORKSPACE COLLECTION
+  $ rock api:collections:getCollection [WORKSPACE] [COLLECTION]
 
 ARGUMENTS
   WORKSPACE   name of the workspace
   COLLECTION  name of the collection
 
 OPTIONS
-  -f, --file=file  The config file to execute this command from. Format must be [yaml|json]
+  -f, --file=file  The config file to execute this command from. Format must be json. Keys are translated into arguments
+                   of the same name. If no BODY argument is specified, the whole object, minus keys used as other
+                   arguments, will be passed in as the BODY.
+
   -h, --help       show CLI help
 
 DESCRIPTION
@@ -352,7 +378,10 @@ USAGE
   $ rock api:collections:listCollections
 
 OPTIONS
-  -f, --file=file  The config file to execute this command from. Format must be [yaml|json]
+  -f, --file=file  The config file to execute this command from. Format must be json. Keys are translated into arguments
+                   of the same name. If no BODY argument is specified, the whole object, minus keys used as other
+                   arguments, will be passed in as the BODY.
+
   -h, --help       show CLI help
 
 DESCRIPTION
@@ -369,20 +398,23 @@ DESCRIPTION
 
 _See code: [src/commands/api/collections/listCollections.ts](https://github.com/rockset/rockset-js/blob/v0.0.28/src/commands/api/collections/listCollections.ts)_
 
-## `rock api:collections:listQueryLambdasInCollection WORKSPACE COLLECTION`
+## `rock api:collections:listQueryLambdasInCollection [WORKSPACE] [COLLECTION]`
 
 Get Query Lambdas
 
 ```
 USAGE
-  $ rock api:collections:listQueryLambdasInCollection WORKSPACE COLLECTION
+  $ rock api:collections:listQueryLambdasInCollection [WORKSPACE] [COLLECTION]
 
 ARGUMENTS
   WORKSPACE   name of the workspace
   COLLECTION  name of the collection
 
 OPTIONS
-  -f, --file=file  The config file to execute this command from. Format must be [yaml|json]
+  -f, --file=file  The config file to execute this command from. Format must be json. Keys are translated into arguments
+                   of the same name. If no BODY argument is specified, the whole object, minus keys used as other
+                   arguments, will be passed in as the BODY.
+
   -h, --help       show CLI help
 
 DESCRIPTION
@@ -399,19 +431,22 @@ DESCRIPTION
 
 _See code: [src/commands/api/collections/listQueryLambdasInCollection.ts](https://github.com/rockset/rockset-js/blob/v0.0.28/src/commands/api/collections/listQueryLambdasInCollection.ts)_
 
-## `rock api:collections:workspaceCollections WORKSPACE`
+## `rock api:collections:workspaceCollections [WORKSPACE]`
 
 List Collections for Workspace
 
 ```
 USAGE
-  $ rock api:collections:workspaceCollections WORKSPACE
+  $ rock api:collections:workspaceCollections [WORKSPACE]
 
 ARGUMENTS
   WORKSPACE  name of the workspace
 
 OPTIONS
-  -f, --file=file  The config file to execute this command from. Format must be [yaml|json]
+  -f, --file=file  The config file to execute this command from. Format must be json. Keys are translated into arguments
+                   of the same name. If no BODY argument is specified, the whole object, minus keys used as other
+                   arguments, will be passed in as the BODY.
+
   -h, --help       show CLI help
 
 DESCRIPTION
@@ -428,13 +463,13 @@ DESCRIPTION
 
 _See code: [src/commands/api/collections/workspaceCollections.ts](https://github.com/rockset/rockset-js/blob/v0.0.28/src/commands/api/collections/workspaceCollections.ts)_
 
-## `rock api:documents:addDocuments WORKSPACE COLLECTION BODY`
+## `rock api:documents:addDocuments [WORKSPACE] [COLLECTION] [BODY]`
 
 Add Documents
 
 ```
 USAGE
-  $ rock api:documents:addDocuments WORKSPACE COLLECTION BODY
+  $ rock api:documents:addDocuments [WORKSPACE] [COLLECTION] [BODY]
 
 ARGUMENTS
   WORKSPACE   name of the workspace
@@ -442,8 +477,16 @@ ARGUMENTS
   BODY        JSON object
 
 OPTIONS
-  -f, --file=file  The config file to execute this command from. Format must be [yaml|json]
-  -h, --help       show CLI help
+  -f, --file=file                The config file to execute this command from. Format must be json. Keys are translated
+                                 into arguments of the same name. If no BODY argument is specified, the whole object,
+                                 minus keys used as other arguments, will be passed in as the BODY.
+
+  -h, --help                     show CLI help
+
+  -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this apicall. The value
+                                 passed to this flag determines how many requests per second will be sent
+
+  -y, --yes                      Skip all safety prompts
 
 DESCRIPTION
   Add Documents
@@ -459,13 +502,13 @@ DESCRIPTION
 
 _See code: [src/commands/api/documents/addDocuments.ts](https://github.com/rockset/rockset-js/blob/v0.0.28/src/commands/api/documents/addDocuments.ts)_
 
-## `rock api:documents:deleteDocuments WORKSPACE COLLECTION BODY`
+## `rock api:documents:deleteDocuments [WORKSPACE] [COLLECTION] [BODY]`
 
 Delete Documents
 
 ```
 USAGE
-  $ rock api:documents:deleteDocuments WORKSPACE COLLECTION BODY
+  $ rock api:documents:deleteDocuments [WORKSPACE] [COLLECTION] [BODY]
 
 ARGUMENTS
   WORKSPACE   name of the workspace
@@ -473,8 +516,16 @@ ARGUMENTS
   BODY        JSON object
 
 OPTIONS
-  -f, --file=file  The config file to execute this command from. Format must be [yaml|json]
-  -h, --help       show CLI help
+  -f, --file=file                The config file to execute this command from. Format must be json. Keys are translated
+                                 into arguments of the same name. If no BODY argument is specified, the whole object,
+                                 minus keys used as other arguments, will be passed in as the BODY.
+
+  -h, --help                     show CLI help
+
+  -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this apicall. The value
+                                 passed to this flag determines how many requests per second will be sent
+
+  -y, --yes                      Skip all safety prompts
 
 DESCRIPTION
   Delete Documents
@@ -490,13 +541,13 @@ DESCRIPTION
 
 _See code: [src/commands/api/documents/deleteDocuments.ts](https://github.com/rockset/rockset-js/blob/v0.0.28/src/commands/api/documents/deleteDocuments.ts)_
 
-## `rock api:documents:patchDocuments WORKSPACE COLLECTION BODY`
+## `rock api:documents:patchDocuments [WORKSPACE] [COLLECTION] [BODY]`
 
 Patch Documents
 
 ```
 USAGE
-  $ rock api:documents:patchDocuments WORKSPACE COLLECTION BODY
+  $ rock api:documents:patchDocuments [WORKSPACE] [COLLECTION] [BODY]
 
 ARGUMENTS
   WORKSPACE   name of the workspace
@@ -504,8 +555,16 @@ ARGUMENTS
   BODY        JSON Patch objects
 
 OPTIONS
-  -f, --file=file  The config file to execute this command from. Format must be [yaml|json]
-  -h, --help       show CLI help
+  -f, --file=file                The config file to execute this command from. Format must be json. Keys are translated
+                                 into arguments of the same name. If no BODY argument is specified, the whole object,
+                                 minus keys used as other arguments, will be passed in as the BODY.
+
+  -h, --help                     show CLI help
+
+  -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this apicall. The value
+                                 passed to this flag determines how many requests per second will be sent
+
+  -y, --yes                      Skip all safety prompts
 
 DESCRIPTION
   Patch Documents
@@ -521,19 +580,22 @@ DESCRIPTION
 
 _See code: [src/commands/api/documents/patchDocuments.ts](https://github.com/rockset/rockset-js/blob/v0.0.28/src/commands/api/documents/patchDocuments.ts)_
 
-## `rock api:integrations:createIntegration BODY`
+## `rock api:integrations:createIntegration [BODY]`
 
 Create Integration
 
 ```
 USAGE
-  $ rock api:integrations:createIntegration BODY
+  $ rock api:integrations:createIntegration [BODY]
 
 ARGUMENTS
   BODY  integration credentials
 
 OPTIONS
-  -f, --file=file  The config file to execute this command from. Format must be [yaml|json]
+  -f, --file=file  The config file to execute this command from. Format must be json. Keys are translated into arguments
+                   of the same name. If no BODY argument is specified, the whole object, minus keys used as other
+                   arguments, will be passed in as the BODY.
+
   -h, --help       show CLI help
 
 DESCRIPTION
@@ -550,19 +612,22 @@ DESCRIPTION
 
 _See code: [src/commands/api/integrations/createIntegration.ts](https://github.com/rockset/rockset-js/blob/v0.0.28/src/commands/api/integrations/createIntegration.ts)_
 
-## `rock api:integrations:deleteIntegration INTEGRATION`
+## `rock api:integrations:deleteIntegration [INTEGRATION]`
 
 Delete Integration
 
 ```
 USAGE
-  $ rock api:integrations:deleteIntegration INTEGRATION
+  $ rock api:integrations:deleteIntegration [INTEGRATION]
 
 ARGUMENTS
   INTEGRATION  name of the integration
 
 OPTIONS
-  -f, --file=file  The config file to execute this command from. Format must be [yaml|json]
+  -f, --file=file  The config file to execute this command from. Format must be json. Keys are translated into arguments
+                   of the same name. If no BODY argument is specified, the whole object, minus keys used as other
+                   arguments, will be passed in as the BODY.
+
   -h, --help       show CLI help
 
 DESCRIPTION
@@ -579,19 +644,22 @@ DESCRIPTION
 
 _See code: [src/commands/api/integrations/deleteIntegration.ts](https://github.com/rockset/rockset-js/blob/v0.0.28/src/commands/api/integrations/deleteIntegration.ts)_
 
-## `rock api:integrations:getIntegration INTEGRATION`
+## `rock api:integrations:getIntegration [INTEGRATION]`
 
 Get Integration
 
 ```
 USAGE
-  $ rock api:integrations:getIntegration INTEGRATION
+  $ rock api:integrations:getIntegration [INTEGRATION]
 
 ARGUMENTS
   INTEGRATION  name of the integration
 
 OPTIONS
-  -f, --file=file  The config file to execute this command from. Format must be [yaml|json]
+  -f, --file=file  The config file to execute this command from. Format must be json. Keys are translated into arguments
+                   of the same name. If no BODY argument is specified, the whole object, minus keys used as other
+                   arguments, will be passed in as the BODY.
+
   -h, --help       show CLI help
 
 DESCRIPTION
@@ -617,7 +685,10 @@ USAGE
   $ rock api:integrations:listIntegrations
 
 OPTIONS
-  -f, --file=file  The config file to execute this command from. Format must be [yaml|json]
+  -f, --file=file  The config file to execute this command from. Format must be json. Keys are translated into arguments
+                   of the same name. If no BODY argument is specified, the whole object, minus keys used as other
+                   arguments, will be passed in as the BODY.
+
   -h, --help       show CLI help
 
 DESCRIPTION
@@ -643,7 +714,10 @@ USAGE
   $ rock api:orgs:getOrganization
 
 OPTIONS
-  -f, --file=file  The config file to execute this command from. Format must be [yaml|json]
+  -f, --file=file  The config file to execute this command from. Format must be json. Keys are translated into arguments
+                   of the same name. If no BODY argument is specified, the whole object, minus keys used as other
+                   arguments, will be passed in as the BODY.
+
   -h, --help       show CLI help
 
 DESCRIPTION
@@ -660,20 +734,28 @@ DESCRIPTION
 
 _See code: [src/commands/api/orgs/getOrganization.ts](https://github.com/rockset/rockset-js/blob/v0.0.28/src/commands/api/orgs/getOrganization.ts)_
 
-## `rock api:queries:query BODY`
+## `rock api:queries:query [BODY]`
 
 Query
 
 ```
 USAGE
-  $ rock api:queries:query BODY
+  $ rock api:queries:query [BODY]
 
 ARGUMENTS
   BODY  JSON object
 
 OPTIONS
-  -f, --file=file  The config file to execute this command from. Format must be [yaml|json]
-  -h, --help       show CLI help
+  -f, --file=file                The config file to execute this command from. Format must be json. Keys are translated
+                                 into arguments of the same name. If no BODY argument is specified, the whole object,
+                                 minus keys used as other arguments, will be passed in as the BODY.
+
+  -h, --help                     show CLI help
+
+  -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this apicall. The value
+                                 passed to this flag determines how many requests per second will be sent
+
+  -y, --yes                      Skip all safety prompts
 
 DESCRIPTION
   Query
@@ -689,21 +771,29 @@ DESCRIPTION
 
 _See code: [src/commands/api/queries/query.ts](https://github.com/rockset/rockset-js/blob/v0.0.28/src/commands/api/queries/query.ts)_
 
-## `rock api:queryLambdas:createQueryLambda WORKSPACE BODY`
+## `rock api:queryLambdas:createQueryLambda [WORKSPACE] [BODY]`
 
 Create Query Lambda
 
 ```
 USAGE
-  $ rock api:queryLambdas:createQueryLambda WORKSPACE BODY
+  $ rock api:queryLambdas:createQueryLambda [WORKSPACE] [BODY]
 
 ARGUMENTS
   WORKSPACE  name of the workspace
   BODY       JSON object
 
 OPTIONS
-  -f, --file=file  The config file to execute this command from. Format must be [yaml|json]
-  -h, --help       show CLI help
+  -f, --file=file                The config file to execute this command from. Format must be json. Keys are translated
+                                 into arguments of the same name. If no BODY argument is specified, the whole object,
+                                 minus keys used as other arguments, will be passed in as the BODY.
+
+  -h, --help                     show CLI help
+
+  -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this apicall. The value
+                                 passed to this flag determines how many requests per second will be sent
+
+  -y, --yes                      Skip all safety prompts
 
 DESCRIPTION
   Create Query Lambda
@@ -719,21 +809,29 @@ DESCRIPTION
 
 _See code: [src/commands/api/queryLambdas/createQueryLambda.ts](https://github.com/rockset/rockset-js/blob/v0.0.28/src/commands/api/queryLambdas/createQueryLambda.ts)_
 
-## `rock api:queryLambdas:deleteQueryLambda WORKSPACE QUERYLAMBDA`
+## `rock api:queryLambdas:deleteQueryLambda [WORKSPACE] [QUERYLAMBDA]`
 
 Delete Query Lambda
 
 ```
 USAGE
-  $ rock api:queryLambdas:deleteQueryLambda WORKSPACE QUERYLAMBDA
+  $ rock api:queryLambdas:deleteQueryLambda [WORKSPACE] [QUERYLAMBDA]
 
 ARGUMENTS
   WORKSPACE    name of the workspace
   QUERYLAMBDA  name of the Query Lambda
 
 OPTIONS
-  -f, --file=file  The config file to execute this command from. Format must be [yaml|json]
-  -h, --help       show CLI help
+  -f, --file=file                The config file to execute this command from. Format must be json. Keys are translated
+                                 into arguments of the same name. If no BODY argument is specified, the whole object,
+                                 minus keys used as other arguments, will be passed in as the BODY.
+
+  -h, --help                     show CLI help
+
+  -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this apicall. The value
+                                 passed to this flag determines how many requests per second will be sent
+
+  -y, --yes                      Skip all safety prompts
 
 DESCRIPTION
   Delete Query Lambda
@@ -749,13 +847,13 @@ DESCRIPTION
 
 _See code: [src/commands/api/queryLambdas/deleteQueryLambda.ts](https://github.com/rockset/rockset-js/blob/v0.0.28/src/commands/api/queryLambdas/deleteQueryLambda.ts)_
 
-## `rock api:queryLambdas:executeQueryLambda WORKSPACE QUERYLAMBDA VERSION [BODY]`
+## `rock api:queryLambdas:executeQueryLambda [WORKSPACE] [QUERYLAMBDA] [VERSION] [BODY]`
 
 Run Query Lambda
 
 ```
 USAGE
-  $ rock api:queryLambdas:executeQueryLambda WORKSPACE QUERYLAMBDA VERSION [BODY]
+  $ rock api:queryLambdas:executeQueryLambda [WORKSPACE] [QUERYLAMBDA] [VERSION] [BODY]
 
 ARGUMENTS
   WORKSPACE    name of the workspace
@@ -764,8 +862,16 @@ ARGUMENTS
   BODY         JSON object
 
 OPTIONS
-  -f, --file=file  The config file to execute this command from. Format must be [yaml|json]
-  -h, --help       show CLI help
+  -f, --file=file                The config file to execute this command from. Format must be json. Keys are translated
+                                 into arguments of the same name. If no BODY argument is specified, the whole object,
+                                 minus keys used as other arguments, will be passed in as the BODY.
+
+  -h, --help                     show CLI help
+
+  -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this apicall. The value
+                                 passed to this flag determines how many requests per second will be sent
+
+  -y, --yes                      Skip all safety prompts
 
 DESCRIPTION
   Run Query Lambda
@@ -781,13 +887,13 @@ DESCRIPTION
 
 _See code: [src/commands/api/queryLambdas/executeQueryLambda.ts](https://github.com/rockset/rockset-js/blob/v0.0.28/src/commands/api/queryLambdas/executeQueryLambda.ts)_
 
-## `rock api:queryLambdas:getQueryLambdaVersion WORKSPACE QUERYLAMBDA VERSION`
+## `rock api:queryLambdas:getQueryLambdaVersion [WORKSPACE] [QUERYLAMBDA] [VERSION]`
 
 Get Query Lambda Version
 
 ```
 USAGE
-  $ rock api:queryLambdas:getQueryLambdaVersion WORKSPACE QUERYLAMBDA VERSION
+  $ rock api:queryLambdas:getQueryLambdaVersion [WORKSPACE] [QUERYLAMBDA] [VERSION]
 
 ARGUMENTS
   WORKSPACE    name of the workspace
@@ -795,8 +901,16 @@ ARGUMENTS
   VERSION      version
 
 OPTIONS
-  -f, --file=file  The config file to execute this command from. Format must be [yaml|json]
-  -h, --help       show CLI help
+  -f, --file=file                The config file to execute this command from. Format must be json. Keys are translated
+                                 into arguments of the same name. If no BODY argument is specified, the whole object,
+                                 minus keys used as other arguments, will be passed in as the BODY.
+
+  -h, --help                     show CLI help
+
+  -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this apicall. The value
+                                 passed to this flag determines how many requests per second will be sent
+
+  -y, --yes                      Skip all safety prompts
 
 DESCRIPTION
   Get Query Lambda Version
@@ -821,8 +935,16 @@ USAGE
   $ rock api:queryLambdas:listAllQueryLambdas
 
 OPTIONS
-  -f, --file=file  The config file to execute this command from. Format must be [yaml|json]
-  -h, --help       show CLI help
+  -f, --file=file                The config file to execute this command from. Format must be json. Keys are translated
+                                 into arguments of the same name. If no BODY argument is specified, the whole object,
+                                 minus keys used as other arguments, will be passed in as the BODY.
+
+  -h, --help                     show CLI help
+
+  -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this apicall. The value
+                                 passed to this flag determines how many requests per second will be sent
+
+  -y, --yes                      Skip all safety prompts
 
 DESCRIPTION
   List Query Lambdas
@@ -838,21 +960,29 @@ DESCRIPTION
 
 _See code: [src/commands/api/queryLambdas/listAllQueryLambdas.ts](https://github.com/rockset/rockset-js/blob/v0.0.28/src/commands/api/queryLambdas/listAllQueryLambdas.ts)_
 
-## `rock api:queryLambdas:listQueryLambdaVersions WORKSPACE QUERYLAMBDA`
+## `rock api:queryLambdas:listQueryLambdaVersions [WORKSPACE] [QUERYLAMBDA]`
 
 List Query Lambda Versions
 
 ```
 USAGE
-  $ rock api:queryLambdas:listQueryLambdaVersions WORKSPACE QUERYLAMBDA
+  $ rock api:queryLambdas:listQueryLambdaVersions [WORKSPACE] [QUERYLAMBDA]
 
 ARGUMENTS
   WORKSPACE    name of the workspace
   QUERYLAMBDA  name of the Query Lambda
 
 OPTIONS
-  -f, --file=file  The config file to execute this command from. Format must be [yaml|json]
-  -h, --help       show CLI help
+  -f, --file=file                The config file to execute this command from. Format must be json. Keys are translated
+                                 into arguments of the same name. If no BODY argument is specified, the whole object,
+                                 minus keys used as other arguments, will be passed in as the BODY.
+
+  -h, --help                     show CLI help
+
+  -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this apicall. The value
+                                 passed to this flag determines how many requests per second will be sent
+
+  -y, --yes                      Skip all safety prompts
 
 DESCRIPTION
   List Query Lambda Versions
@@ -868,20 +998,28 @@ DESCRIPTION
 
 _See code: [src/commands/api/queryLambdas/listQueryLambdaVersions.ts](https://github.com/rockset/rockset-js/blob/v0.0.28/src/commands/api/queryLambdas/listQueryLambdaVersions.ts)_
 
-## `rock api:queryLambdas:listQueryLambdasInWorkspace WORKSPACE`
+## `rock api:queryLambdas:listQueryLambdasInWorkspace [WORKSPACE]`
 
 List Query Lambdas
 
 ```
 USAGE
-  $ rock api:queryLambdas:listQueryLambdasInWorkspace WORKSPACE
+  $ rock api:queryLambdas:listQueryLambdasInWorkspace [WORKSPACE]
 
 ARGUMENTS
   WORKSPACE  name of the workspace
 
 OPTIONS
-  -f, --file=file  The config file to execute this command from. Format must be [yaml|json]
-  -h, --help       show CLI help
+  -f, --file=file                The config file to execute this command from. Format must be json. Keys are translated
+                                 into arguments of the same name. If no BODY argument is specified, the whole object,
+                                 minus keys used as other arguments, will be passed in as the BODY.
+
+  -h, --help                     show CLI help
+
+  -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this apicall. The value
+                                 passed to this flag determines how many requests per second will be sent
+
+  -y, --yes                      Skip all safety prompts
 
 DESCRIPTION
   List Query Lambdas
@@ -897,13 +1035,13 @@ DESCRIPTION
 
 _See code: [src/commands/api/queryLambdas/listQueryLambdasInWorkspace.ts](https://github.com/rockset/rockset-js/blob/v0.0.28/src/commands/api/queryLambdas/listQueryLambdasInWorkspace.ts)_
 
-## `rock api:queryLambdas:updateQueryLambda WORKSPACE QUERYLAMBDA BODY`
+## `rock api:queryLambdas:updateQueryLambda [WORKSPACE] [QUERYLAMBDA] [BODY]`
 
 Update Query Lambda
 
 ```
 USAGE
-  $ rock api:queryLambdas:updateQueryLambda WORKSPACE QUERYLAMBDA BODY
+  $ rock api:queryLambdas:updateQueryLambda [WORKSPACE] [QUERYLAMBDA] [BODY]
 
 ARGUMENTS
   WORKSPACE    name of the workspace
@@ -911,8 +1049,16 @@ ARGUMENTS
   BODY         JSON object
 
 OPTIONS
-  -f, --file=file  The config file to execute this command from. Format must be [yaml|json]
-  -h, --help       show CLI help
+  -f, --file=file                The config file to execute this command from. Format must be json. Keys are translated
+                                 into arguments of the same name. If no BODY argument is specified, the whole object,
+                                 minus keys used as other arguments, will be passed in as the BODY.
+
+  -h, --help                     show CLI help
+
+  -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this apicall. The value
+                                 passed to this flag determines how many requests per second will be sent
+
+  -y, --yes                      Skip all safety prompts
 
 DESCRIPTION
   Update Query Lambda
@@ -928,19 +1074,22 @@ DESCRIPTION
 
 _See code: [src/commands/api/queryLambdas/updateQueryLambda.ts](https://github.com/rockset/rockset-js/blob/v0.0.28/src/commands/api/queryLambdas/updateQueryLambda.ts)_
 
-## `rock api:users:createUser BODY`
+## `rock api:users:createUser [BODY]`
 
 Create User
 
 ```
 USAGE
-  $ rock api:users:createUser BODY
+  $ rock api:users:createUser [BODY]
 
 ARGUMENTS
   BODY  JSON object
 
 OPTIONS
-  -f, --file=file  The config file to execute this command from. Format must be [yaml|json]
+  -f, --file=file  The config file to execute this command from. Format must be json. Keys are translated into arguments
+                   of the same name. If no BODY argument is specified, the whole object, minus keys used as other
+                   arguments, will be passed in as the BODY.
+
   -h, --help       show CLI help
 
 DESCRIPTION
@@ -957,19 +1106,22 @@ DESCRIPTION
 
 _See code: [src/commands/api/users/createUser.ts](https://github.com/rockset/rockset-js/blob/v0.0.28/src/commands/api/users/createUser.ts)_
 
-## `rock api:users:deleteUser USER`
+## `rock api:users:deleteUser [USER]`
 
 Delete User
 
 ```
 USAGE
-  $ rock api:users:deleteUser USER
+  $ rock api:users:deleteUser [USER]
 
 ARGUMENTS
   USER  user email
 
 OPTIONS
-  -f, --file=file  The config file to execute this command from. Format must be [yaml|json]
+  -f, --file=file  The config file to execute this command from. Format must be json. Keys are translated into arguments
+                   of the same name. If no BODY argument is specified, the whole object, minus keys used as other
+                   arguments, will be passed in as the BODY.
+
   -h, --help       show CLI help
 
 DESCRIPTION
@@ -995,7 +1147,10 @@ USAGE
   $ rock api:users:getCurrentUser
 
 OPTIONS
-  -f, --file=file  The config file to execute this command from. Format must be [yaml|json]
+  -f, --file=file  The config file to execute this command from. Format must be json. Keys are translated into arguments
+                   of the same name. If no BODY argument is specified, the whole object, minus keys used as other
+                   arguments, will be passed in as the BODY.
+
   -h, --help       show CLI help
 
 DESCRIPTION
@@ -1021,7 +1176,10 @@ USAGE
   $ rock api:users:listUsers
 
 OPTIONS
-  -f, --file=file  The config file to execute this command from. Format must be [yaml|json]
+  -f, --file=file  The config file to execute this command from. Format must be json. Keys are translated into arguments
+                   of the same name. If no BODY argument is specified, the whole object, minus keys used as other
+                   arguments, will be passed in as the BODY.
+
   -h, --help       show CLI help
 
 DESCRIPTION
@@ -1038,19 +1196,22 @@ DESCRIPTION
 
 _See code: [src/commands/api/users/listUsers.ts](https://github.com/rockset/rockset-js/blob/v0.0.28/src/commands/api/users/listUsers.ts)_
 
-## `rock api:workspaces:childWorkspaces WORKSPACE`
+## `rock api:workspaces:childWorkspaces [WORKSPACE]`
 
 List Workspaces
 
 ```
 USAGE
-  $ rock api:workspaces:childWorkspaces WORKSPACE
+  $ rock api:workspaces:childWorkspaces [WORKSPACE]
 
 ARGUMENTS
   WORKSPACE  name of the workspace
 
 OPTIONS
-  -f, --file=file  The config file to execute this command from. Format must be [yaml|json]
+  -f, --file=file  The config file to execute this command from. Format must be json. Keys are translated into arguments
+                   of the same name. If no BODY argument is specified, the whole object, minus keys used as other
+                   arguments, will be passed in as the BODY.
+
   -h, --help       show CLI help
 
 DESCRIPTION
@@ -1067,19 +1228,22 @@ DESCRIPTION
 
 _See code: [src/commands/api/workspaces/childWorkspaces.ts](https://github.com/rockset/rockset-js/blob/v0.0.28/src/commands/api/workspaces/childWorkspaces.ts)_
 
-## `rock api:workspaces:createWorkspace BODY`
+## `rock api:workspaces:createWorkspace [BODY]`
 
 Create Workspace
 
 ```
 USAGE
-  $ rock api:workspaces:createWorkspace BODY
+  $ rock api:workspaces:createWorkspace [BODY]
 
 ARGUMENTS
   BODY  workspace details
 
 OPTIONS
-  -f, --file=file  The config file to execute this command from. Format must be [yaml|json]
+  -f, --file=file  The config file to execute this command from. Format must be json. Keys are translated into arguments
+                   of the same name. If no BODY argument is specified, the whole object, minus keys used as other
+                   arguments, will be passed in as the BODY.
+
   -h, --help       show CLI help
 
 DESCRIPTION
@@ -1096,19 +1260,22 @@ DESCRIPTION
 
 _See code: [src/commands/api/workspaces/createWorkspace.ts](https://github.com/rockset/rockset-js/blob/v0.0.28/src/commands/api/workspaces/createWorkspace.ts)_
 
-## `rock api:workspaces:deleteWorkspace WORKSPACE`
+## `rock api:workspaces:deleteWorkspace [WORKSPACE]`
 
 Delete Workspace
 
 ```
 USAGE
-  $ rock api:workspaces:deleteWorkspace WORKSPACE
+  $ rock api:workspaces:deleteWorkspace [WORKSPACE]
 
 ARGUMENTS
   WORKSPACE  name of the workspace
 
 OPTIONS
-  -f, --file=file  The config file to execute this command from. Format must be [yaml|json]
+  -f, --file=file  The config file to execute this command from. Format must be json. Keys are translated into arguments
+                   of the same name. If no BODY argument is specified, the whole object, minus keys used as other
+                   arguments, will be passed in as the BODY.
+
   -h, --help       show CLI help
 
 DESCRIPTION
@@ -1125,19 +1292,22 @@ DESCRIPTION
 
 _See code: [src/commands/api/workspaces/deleteWorkspace.ts](https://github.com/rockset/rockset-js/blob/v0.0.28/src/commands/api/workspaces/deleteWorkspace.ts)_
 
-## `rock api:workspaces:getWorkspace WORKSPACE`
+## `rock api:workspaces:getWorkspace [WORKSPACE]`
 
 Get Workspace
 
 ```
 USAGE
-  $ rock api:workspaces:getWorkspace WORKSPACE
+  $ rock api:workspaces:getWorkspace [WORKSPACE]
 
 ARGUMENTS
   WORKSPACE  name of the workspace
 
 OPTIONS
-  -f, --file=file  The config file to execute this command from. Format must be [yaml|json]
+  -f, --file=file  The config file to execute this command from. Format must be json. Keys are translated into arguments
+                   of the same name. If no BODY argument is specified, the whole object, minus keys used as other
+                   arguments, will be passed in as the BODY.
+
   -h, --help       show CLI help
 
 DESCRIPTION
@@ -1163,7 +1333,10 @@ USAGE
   $ rock api:workspaces:listWorkspaces
 
 OPTIONS
-  -f, --file=file  The config file to execute this command from. Format must be [yaml|json]
+  -f, --file=file  The config file to execute this command from. Format must be json. Keys are translated into arguments
+                   of the same name. If no BODY argument is specified, the whole object, minus keys used as other
+                   arguments, will be passed in as the BODY.
+
   -h, --help       show CLI help
 
 DESCRIPTION
@@ -1292,7 +1465,7 @@ ARGUMENTS
   NAME  The fully qualified name of the entity you wish to resolve
 
 OPTIONS
-  -e, --entity=lambda  [default: lambda] the type of entity you wish to resolve
+  -e, --entity=lambda  [default: lambda] the type of entity you wish to add
   -h, --help           show CLI help
 
 DESCRIPTION
@@ -1304,7 +1477,7 @@ _See code: [src/commands/project/add.ts](https://github.com/rockset/rockset-js/b
 
 ## `rock project:delete`
 
-Delete query lambdas from the project.
+Delete all query lambdas from the project.
 
 ```
 USAGE
@@ -1315,7 +1488,7 @@ OPTIONS
   -y, --yes   Bypass the safety checks, and automatically engage in dangerous actions.
 
 DESCRIPTION
-  Delete query lambdas from the project.
+  Delete all query lambdas from the project.
 ```
 
 _See code: [src/commands/project/delete.ts](https://github.com/rockset/rockset-js/blob/v0.0.28/src/commands/project/delete.ts)_
@@ -1339,30 +1512,13 @@ DESCRIPTION
 
 _See code: [src/commands/project/deploy.ts](https://github.com/rockset/rockset-js/blob/v0.0.28/src/commands/project/deploy.ts)_
 
-## `rock project:download:collections`
-
-Download collection entities from Rockset to your local project.
-
-```
-USAGE
-  $ rock project:download:collections
-
-OPTIONS
-  -h, --help  show CLI help
-
-DESCRIPTION
-  Download collection entities from Rockset to your local project.
-```
-
-_See code: [src/commands/project/download/collections.ts](https://github.com/rockset/rockset-js/blob/v0.0.28/src/commands/project/download/collections.ts)_
-
-## `rock project:download:lambdas`
+## `rock project:download`
 
 Download Query Lambda entities from Rockset to your local project.
 
 ```
 USAGE
-  $ rock project:download:lambdas
+  $ rock project:download
 
 OPTIONS
   -h, --help                                                                            show CLI help
@@ -1374,7 +1530,7 @@ DESCRIPTION
   Download Query Lambda entities from Rockset to your local project.
 ```
 
-_See code: [src/commands/project/download/lambdas.ts](https://github.com/rockset/rockset-js/blob/v0.0.28/src/commands/project/download/lambdas.ts)_
+_See code: [src/commands/project/download.ts](https://github.com/rockset/rockset-js/blob/v0.0.28/src/commands/project/download.ts)_
 
 ## `rock project:execute NAME VERSION`
 

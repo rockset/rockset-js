@@ -38,6 +38,8 @@ async function generate() {
           })),
         );
 
+        // These are the tags that we want to support load testing for
+        const loadTest = ['queryLambdas', 'queries', 'documents'].includes(tag);
         const description = `
 ${get.summary}
 
@@ -58,6 +60,7 @@ This command is a simple wrapper around the above endpoint. Please view further 
           endpoint,
           method,
           className: capitalize(operation),
+          loadTest,
         });
         return { topic: tag, filename: operation, value: output };
       }),
