@@ -1,5 +1,5 @@
 import { flags } from '@oclif/command';
-import { types, main } from '@rockset/core';
+import { types, main, helper } from '@rockset/core';
 import { RockCommand } from '../../base-command';
 import { QueryResponse, ErrorModel } from '@rockset/client/dist/codegen/api';
 import { LambdaEntity } from '@rockset/core/dist/types';
@@ -16,12 +16,6 @@ class ExecuteQueryLambda extends RockCommand {
       hidden: false,
       description: 'The fully qualified name of the Query Lambda you wish to execute',
     },
-    {
-      name: 'version',
-      required: true,
-      hidden: false,
-      description: 'The Query Lambda version you wish to execute',
-    },
   ];
 
   static description = `
@@ -36,19 +30,24 @@ class ExecuteQueryLambda extends RockCommand {
   async run() {
     const { args } = this.parse(ExecuteQueryLambda);
 
-    if (args.name && args.version) {
+    if (args.name) {
       const qualifiedName = types.parseQualifiedName(args.name);
-      await main.executeQueryLambda(
+      await main.executeLocalQueryLambda(
         {
+          onBeforeExecute: (sql, params) => {
+            this.info(`About to execute ${args.name} from local project...`);
+            this.info(`SQL: ${sql}`);
+            this.info(`Parameters: ${helper.prettyPrint(params)}`);
+          },
           onExecuteSuccess: (response: QueryResponse) => {
-            this.log(`Successfully executed: ${JSON.stringify(response.results)}"`);
+            this.info('Successfully executed query.');
+            this.log(helper.prettyPrint(response));
           },
           onExecuteError: (error: ErrorModel, lambda: LambdaEntity) => {
             this.error(error.message ?? `Unknown error executing lambda ${lambda.fullName}`);
           },
         },
         qualifiedName,
-        args.version,
       );
     }
   }

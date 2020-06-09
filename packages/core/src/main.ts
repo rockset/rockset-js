@@ -244,10 +244,9 @@ export async function deployQueryLambdas(
  * @param hooks Lifecycle hooks that will be called at appropriate intervals
  */
 // TODO add tests for this
-export async function executeQueryLambda(
+export async function executeLocalQueryLambda(
   hooks: ExecuteHooks = {},
-  qualifiedName: QualifiedName,
-  version: string
+  qualifiedName: QualifiedName
 ) {
   const [srcPath, client] = await Promise.all([getSrcPath(), createClient()]);
   const file = parseAbsolutePath(
@@ -256,17 +255,18 @@ export async function executeQueryLambda(
 
   // Construct lambda entity
   const lambdaEntity: LambdaEntity = await readLambda(qualifiedName, file);
-  const { ws, name: lambda, config } = lambdaEntity;
+  const { config, sql } = lambdaEntity;
+
+  const params = config?.default_parameters ?? [];
+  hooks.onBeforeExecute?.(sql, params);
 
   try {
-    const lambdaResponse = await client.queryLambdas.executeQueryLambda(
-      ws,
-      lambda,
-      version,
-      {
-        parameters: config.default_parameters,
-      }
-    );
+    const lambdaResponse = await client.queries.query({
+      sql: {
+        query: sql,
+        parameters: params,
+      },
+    });
     hooks.onExecuteSuccess?.(lambdaResponse);
   } catch (e) {
     hooks.onExecuteError?.(e, lambdaEntity);

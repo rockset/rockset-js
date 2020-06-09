@@ -179,6 +179,7 @@ export interface DownloadHooks {
 }
 
 export interface ExecuteHooks {
+  onBeforeExecute?: (sql: string, parameters: unknown[]) => void;
   onExecuteSuccess?: (e: QueryResponse) => void;
   onExecuteError?: (error: ErrorModel, entity: LambdaEntity) => void;
 }
