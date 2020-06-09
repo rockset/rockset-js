@@ -13,19 +13,28 @@ Official Rockset CLI
 * [Commands](#commands)
 <!-- tocstop -->
 # Usage
-<!-- usage -->
 ```sh-session
-$ npm install -g @rockset/cli
+// This will require a password
+$ curl https://rockset-cli-artifacts.s3-us-west-2.amazonaws.com/install-standalone.sh | bash 
+
+// open a new shell
+$ rock -h
+$ rock -v
+
+// Set up autocomplete
+$ rock autocomplete
+
+// Update rock cli
+$ rock update
+
 $ rock COMMAND
 running command...
-$ rock (-v|--version|version)
 @rockset/cli/0.0.28 darwin-x64 node-v12.16.3
 $ rock --help [COMMAND]
 USAGE
   $ rock COMMAND
 ...
 ```
-<!-- usagestop -->
 # Commands
 <!-- commands -->
 * [`rock api:apikeys:createApiKey [BODY]`](#rock-apiapikeyscreateapikey-body)
