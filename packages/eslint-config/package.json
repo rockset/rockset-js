@@ -21,5 +21,6 @@
     "generate-license": "^1.0.0",
     "jest": "^26.0.1"
   },
-  "repository": "https://github.com/rockset/rockset-js/"
+  "repository": "https://github.com/rockset/rockset-js/",
+  "gitHead": "a995e39183da8c1641b9b16917dfb5067e258893"
 }
