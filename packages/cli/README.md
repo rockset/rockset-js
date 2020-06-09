@@ -9,6 +9,8 @@ Official Rockset CLI
 [![License](https://img.shields.io/npm/l/@rockset/cli.svg)](https://github.com/rockset/rockset-js/blob/master/package.json)
 
 <!-- toc -->
+* [Installation](#installation)
+* [Getting Started](#getting-started)
 * [Usage](#usage)
 * [Commands](#commands)
 <!-- tocstop -->
