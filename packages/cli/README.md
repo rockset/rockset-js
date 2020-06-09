@@ -12,6 +12,51 @@ Official Rockset CLI
 * [Usage](#usage)
 * [Commands](#commands)
 <!-- tocstop -->
+
+# Installation
+
+Mac/Linux installation (recommended):
+```
+curl https://rockset-cli-artifacts.s3-us-west-2.amazonaws.com/install-standalone.sh | bash 
+```
+
+You can also install the `@rockset/cli` package directly from NPM. This isn't recommended, as the 
+package will not be able to autoupdate. Make sure you are on Node 10.x or 12.x before attempting this.
+
+```
+npm install -g @rockset/cli
+```
+
+# Getting Started
+
+
+The first thing you should do after installing is to set up Autocomplete. This will greatly ease the process
+of navigating the Rock CLI tool.
+
+```
+// Print autocomplete instructions for bash
+rock autocomplete
+
+// Print autocomplete instructions for ZSH
+rock autocomplete:zsh
+```
+
+The new Rockset CLI support 3 core workflows.
+
+1. Authentication (`rock auth`)
+1. REST API support (`rock api`)
+  1. API calls have been modified to closely model the Rockset API Documentation
+  1. Load test functionality has been added for select routes
+  1. This section of the CLI tool is a thin wrapper around Rockset's REST API. See full documentation for the REST API at 
+https://docs.rockset.com/rest-api
+1. Query Lambda Project support (`rock project`)
+  1. A tool that allows you to manage your Query Lambdas from your file system
+  1. Download your Query Lambdas to your local project
+  1. Edit your query lambdas and commit to git
+  1. Deploy your query lambdas to Rockset
+
+You can also update the Rockset CLI using `rock update`.
+
 # Usage
 ```sh-session
 // This will require a password
@@ -84,7 +129,7 @@ USAGE
 * [`rock project:delete`](#rock-projectdelete)
 * [`rock project:deploy`](#rock-projectdeploy)
 * [`rock project:download`](#rock-projectdownload)
-* [`rock project:execute NAME VERSION`](#rock-projectexecute-name-version)
+* [`rock project:execute NAME`](#rock-projectexecute-name)
 * [`rock project:init`](#rock-projectinit)
 * [`rock project:list`](#rock-projectlist)
 * [`rock project:resolve NAME`](#rock-projectresolve-name)
@@ -1541,17 +1586,16 @@ DESCRIPTION
 
 _See code: [src/commands/project/download.ts](https://github.com/rockset/rockset-js/blob/v0.0.28/src/commands/project/download.ts)_
 
-## `rock project:execute NAME VERSION`
+## `rock project:execute NAME`
 
 Execute a specific version of a Query Lambda in the current project.
 
 ```
 USAGE
-  $ rock project:execute NAME VERSION
+  $ rock project:execute NAME
 
 ARGUMENTS
-  NAME     The fully qualified name of the Query Lambda you wish to execute
-  VERSION  The Query Lambda version you wish to execute
+  NAME  The fully qualified name of the Query Lambda you wish to execute
 
 OPTIONS
   -h, --help  show CLI help

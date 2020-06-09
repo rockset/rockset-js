@@ -11,7 +11,7 @@ import {
   useParams,
 } from 'react-router-dom';
 
-declare function useParams(): { workspace?: string; queryLambda?: string };
+// declare function useParams(): { workspace?: string; queryLambda?: string };
 
 const client = rocksetConfigure('', '');
 
@@ -73,7 +73,11 @@ const useEffectOnce = (effect) => {
 };
 
 const Page = () => {
-  const { workspace, queryLambda } = useParams();
+  const { workspace, queryLambda } = (useParams as () => {
+    workspace?: string;
+    queryLambda?: string;
+  })();
+
   const [data, setData] = React.useState([]);
   const [err, setErr] = React.useState();
 
