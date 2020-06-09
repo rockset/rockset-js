@@ -47,15 +47,15 @@ The new Rockset CLI support 3 core workflows.
 
 1. Authentication (`rock auth`)
 1. REST API support (`rock api`)
-  1. API calls have been modified to closely model the Rockset API Documentation
-  1. Load test functionality has been added for select routes
-  1. This section of the CLI tool is a thin wrapper around Rockset's REST API. See full documentation for the REST API at 
+    1. API calls have been modified to closely model the Rockset API Documentation
+    1. Load test functionality has been added for select routes
+    1. This section of the CLI tool is a thin wrapper around Rockset's REST API. See full documentation for the REST API at 
 https://docs.rockset.com/rest-api
 1. Query Lambda Project support (`rock project`)
-  1. A tool that allows you to manage your Query Lambdas from your file system
-  1. Download your Query Lambdas to your local project
-  1. Edit your query lambdas and commit to git
-  1. Deploy your query lambdas to Rockset
+    1. A tool that allows you to manage your Query Lambdas from your file system
+    1. Download your Query Lambdas to your local project
+    1. Edit your query lambdas and commit to git
+    1. Deploy your query lambdas to Rockset
 
 You can also update the Rockset CLI using `rock update`.
 
