@@ -94,57 +94,6 @@ rockset.queryLambdas
   .catch(console.error);
 ```
 
-### Custom Fetch Function
-
-By default, the rockset-node-client is a thin wrapper that sends REST calls to Rockset using `node-fetch`. Many applications may require more complex behavior. If additional functionality is required, `rockset-node-client` can be configured to generate the parameters for a REST call, and pass them to a custom fetch function to be handled accordingly.
-
-Here is an example that shows how to support cancelling API calls using a custom fetch function with Axios. To supply a custom fetch function, we pass it in as the last parameter to rocksetConfigure.
-
-_Note this does not cancel the API request on Rockset's servers_
-
-```ts
-import axios from "axios";
-import rocksetConfigure from "rockset";
-
-// Super simple fetch with axios: axios docs show how to check for errors, cancel requests etc.
-const customFetchAxios = async (
-  url: string,
-  { headers, method, body: data, queryParams: params, cancelToken }: any
-) => {
-  const res = await axios.request({
-    url,
-    headers,
-    method,
-    data,
-    params,
-    cancelToken,
-  });
-
-  return res.data;
-};
-
-// Configure
-const basePath = "https://api.rs2.usw2.rockset.com";
-const apikey = "<your apikey>";
-
-const rockset = rocksetConfigure(apikey, basePath, customFetchAxios);
-const cancelSource = axios.CancelToken.source();
-
-// To execute a query
-rockset.queries
-  .query(
-    { sql: { query: "Select count(*) from _events" } },
-    { cancelToken: cancelSource.token }
-  )
-  .then(console.log)
-  .catch(console.error);
-
-// To cancel the request through axios
-// *** THIS DOES NOT CANCEL THE QUERY ON OUR SERVERS ***
-cancelSource.cancel();
-```
-
-You can see a few more [sample examples](examples) of how to create a collection, how to put documents in a collection and how to use SQL to query your collections.
 
 ## Testing
 
