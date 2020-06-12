@@ -21,6 +21,7 @@
     "@types/jest": "^24.0.23",
     "@types/lodash": "^4.14.150",
     "axios": "^0.19.1",
+    "dotenv": "^8.2.0",
     "eslint": "^7.0.0",
     "eslint-plugin-promise": "^4.2.1",
     "generate": "^0.14.0",
@@ -32,7 +33,7 @@
   },
   "repository": "https://github.com/rockset/rockset-node-client/tree/v2",
   "scripts": {
-    "test": "echo 'tests disabled'",
+    "test": "jest --setupFiles dotenv/config",
     "build": "tsc && cp src/codegen/custom.d.ts dist/codegen/custom.d.ts",
     "clean": "rm -r dist",
     "lint": "eslint 'src/**/*.ts'",

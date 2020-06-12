@@ -23,6 +23,7 @@ test('simple query', async () => {
       headers: {
         Authorization: 'ApiKey apikey',
         'Content-Type': 'application/json',
+        'User-Agent': 'Rockset Node SDK',
       },
       method: 'POST',
     },
@@ -36,6 +37,7 @@ test('simple query', async () => {
       headers: {
         Authorization: 'ApiKey apikey',
         'Content-Type': 'application/json',
+        'User-Agent': 'Rockset Node SDK',
       },
       method: 'POST',
     }
@@ -54,6 +56,7 @@ test('add documents', async () => {
       headers: {
         Authorization: 'ApiKey apikey',
         'Content-Type': 'application/json',
+        'User-Agent': 'Rockset Node SDK',
       },
       method: 'POST',
     }
