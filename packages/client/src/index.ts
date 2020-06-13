@@ -2,6 +2,18 @@ import * as api from './codegen/api';
 import { version } from './version';
 require('node-fetch');
 
+export interface MainApi {
+  users: api.UsersApi;
+  apikeys: api.ApiKeysApi;
+  workspaces: api.WorkspacesApi;
+  collections: api.CollectionsApi;
+  documents: api.DocumentsApi;
+  integrations: api.IntegrationsApi;
+  orgs: api.OrganizationsApi;
+  queries: api.QueriesApi;
+  queryLambdas: api.QueryLambdasApi;
+}
+
 /**
  * Returns a master object for all rockset apis
  *
@@ -13,7 +25,7 @@ const rocksetConfigure = (
   host: string,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   customFetch?: (url: string, request: any) => Promise<any>
-) => {
+): MainApi => {
   // Overwrite the apikey so it doesn't need to be specified on every query
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const authFetch = async (url: string, options: any) => {
