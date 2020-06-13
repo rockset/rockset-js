@@ -1,4 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import rocksetConfigure from '../index';
+import { version } from '../version';
 
 const basePath = 'https://api.rs2.usw2.rockset.com';
 const apikey = 'apikey';
@@ -23,6 +25,7 @@ test('simple query', async () => {
       headers: {
         Authorization: 'ApiKey apikey',
         'Content-Type': 'application/json',
+        'User-Agent': `Rockset Node SDK/${version}`,
       },
       method: 'POST',
     },
@@ -36,6 +39,7 @@ test('simple query', async () => {
       headers: {
         Authorization: 'ApiKey apikey',
         'Content-Type': 'application/json',
+        'User-Agent': `Rockset Node SDK/${version}`,
       },
       method: 'POST',
     }
@@ -54,6 +58,7 @@ test('add documents', async () => {
       headers: {
         Authorization: 'ApiKey apikey',
         'Content-Type': 'application/json',
+        'User-Agent': `Rockset Node SDK/${version}`,
       },
       method: 'POST',
     }
