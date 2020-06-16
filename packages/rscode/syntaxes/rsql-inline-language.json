@@ -1,0 +1,40 @@
+{
+  "scopeName": "rocksql",
+  "fileTypes": ["js", "jsx", "ts", "tsx", "vue"],
+  "injectionSelector": "L:source -comment -string",
+  "patterns": [
+    {
+      "include": "#expression"
+    }
+  ],
+  "repository": {
+    "braces": {
+      "begin": "\\$\\{",
+      "end": "\\}",
+      "beginCaptures": {
+        "0": { "name": "punctuation.definition.template-expression.begin.ts" }
+      },
+      "endCaptures": {
+        "0": { "name": "punctuation.definition.template-expression.end.ts" }
+      },
+      "name": "meta.embedded.line.ts meta.template.express.ts",
+      "patterns": [{ "include": "source.ts" }]
+    },
+    "expression": {
+      "begin": "r(\\.)(sql)(\\`)",
+      "end": "\\`",
+      "beginCaptures": {
+        "1": { "name": "string.template.js punctuation.accessor.js" },
+        "2": {
+          "name": "string.template.js entity.name.function.tagged-template.js"
+        },
+        "3": { "name": "string.template.js" }
+      },
+      "endCaptures": {
+        "0": { "name": "string.template.js" }
+      },
+      "contentName": "meta.embedded.inline.rsql",
+      "patterns": [{ "include": "source.sql" }, { "include": "#braces" }]
+    }
+  }
+}

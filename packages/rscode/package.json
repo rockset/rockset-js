@@ -1,0 +1,138 @@
+{
+  "name": "rockset-vscode",
+  "displayName": "rockset-vscode",
+  "description": "This extension provides syntax highlighting for Rockset SQL in VSCode.",
+  "version": "0.1.3",
+  "license": "MIT",
+  "publisher": "rockset",
+  "repository": "https://github.com/rockset/rockset-node-client/tree/v2",
+  "engines": {
+    "vscode": "^1.38.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Other"
+  ],
+  "activationEvents": [
+    "onLanguage:rsql"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "rs-tree-container",
+          "title": "Rockset Tree Container",
+          "icon": "./logo.svg"
+        }
+      ]
+    },
+    "views": {
+      "rs-tree-container": [
+        {
+          "id": "rs-tree-view",
+          "name": "Rockset Collection View"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "rockset",
+      "properties": {
+        "rockset.apikey": {
+          "type": "string",
+          "default": "<insert your api key>",
+          "description": "Apikey is required to access rockset. You can find it in the rockset console."
+        },
+        "rockset.apiserver": {
+          "type": "string",
+          "default": "https://api.rs2.usw2.rockset.com",
+          "description": "Specifies which apiserver to hit w/ rockset"
+        }
+      }
+    },
+    "commands": [
+      {
+        "command": "extension.rocksetRun",
+        "title": "Rockset Run"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "extension.rocksetRun",
+        "key": "ctrl+shift+r",
+        "mac": "cmd+shift+r",
+        "when": "editorTextFocus"
+      }
+    ],
+    "languages": [
+      {
+        "id": "rsql",
+        "aliases": [
+          "RockSQL",
+          "rsql"
+        ],
+        "extensions": [
+          ".rsql",
+          ".sql"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "rsql",
+        "scopeName": "source.sql",
+        "path": "./syntaxes/rocksql.tmLanguage"
+      },
+      {
+        "injectTo": [
+          "source.js",
+          "source.ts",
+          "source.jsx",
+          "source.js.jsx",
+          "source.tsx",
+          "source.vue"
+        ],
+        "scopeName": "rocksql",
+        "path": "./syntaxes/rsql-inline-language.json",
+        "embeddedLanguages": {
+          "meta.embedded.line.ts": "typescript",
+          "meta.embedded.inline.rsql": "rsql"
+        }
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "yarn run compile",
+    "compile": "tsc -p ./",
+    "build": "vsce package --yarn",
+    "watch": "tsc -watch -p ./",
+    "test": "echo 'no tests'",
+    "lint": "eslint 'src/**/*.ts'"
+  },
+  "devDependencies": {
+    "@rockset/eslint-config": "0.1.3",
+    "@types/axios": "^0.14.0",
+    "@types/glob": "^7.1.1",
+    "@types/lodash": "^4.14.141",
+    "@types/node": "^10.12.21",
+    "@types/sql-formatter": "^2.3.0",
+    "@types/vscode": "^1.38.0",
+    "eslint": "^7.0.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "glob": "^7.1.4",
+    "typescript": "^3.8.3",
+    "vsce": "^1.77.0",
+    "vscode-test": "^1.2.0"
+  },
+  "dependencies": {
+    "@rockset/client": "^0.1.3",
+    "@types/sql-formatter": "^2.3.0",
+    "axios": "^0.19.0",
+    "handlebars": "^4.7.6",
+    "lodash": "^4.17.15",
+    "mustache": "^4.0.1",
+    "sql-formatter": "^2.3.3",
+    "ts-node": "^8.10.2"
+  }
+}
