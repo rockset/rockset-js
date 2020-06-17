@@ -5,7 +5,7 @@
   "version": "0.1.3",
   "license": "MIT",
   "publisher": "rockset",
-  "repository": "https://github.com/rockset/rockset-node-client/tree/v2",
+  "repository": "https://github.com/rockset/rockset-js/tree/master/packages/rscode",
   "engines": {
     "vscode": "^1.38.0"
   },
