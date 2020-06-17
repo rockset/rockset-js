@@ -8,6 +8,8 @@
 * Autocomplete
 * Formatting
 
+![gif failed to load](./vscode-readme.gif)
+
 ## Beta Installation
 
 ```sh
@@ -25,6 +27,32 @@ After installation, please first set the following two properties in your VSCode
 
 * `rockset.apiserver`: The Rockset API server to use with this extension
 * `rockset.apikey`: the Rockset apikey to use with this extension
+
+The easiest way to get started with SQL files is to use [Rock CLI v2](../cli).
+
+```bash
+
+// Authenticate
+rock auth:add <apikey>
+
+// Populate your Query Lambda SQL from Rockset
+rock project:init
+rock project:download
+
+// Open the current directory in VSCode
+code .
+```
+
+Then simply open one of the SQL files in your project and edit. `CTRL-SHIFT-R` (`CMD-SHIFT-R` on Mac) is the shortkey to execute the current SQL file. This will not include any parameters, and is a little bit limiting.
+
+You can also execute queries with the Rock Development UI as follows:
+
+```
+// After following the setup instructions above
+rock project:serve
+```
+
+This will open up a UI in which you can easily execute your Query Lambdas.
 
 ## Extension Settings
 
