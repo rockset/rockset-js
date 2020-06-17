@@ -1,8 +1,9 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
-import sqlFormatter from 'sql-formatter';
+const sqlFormatter = require('sql-formatter') as {
+  format: (s: string, config?: unknown) => string;
+};
 
 import keywords from './keywords';
 import functions from './functions';
