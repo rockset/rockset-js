@@ -1,5 +1,6 @@
 import Command from '@oclif/command';
 import { prettyPrint } from '@rockset/core/dist/helper';
+import _ = require('lodash');
 
 export abstract class RockCommand extends Command {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -10,10 +11,10 @@ export abstract class RockCommand extends Command {
       return;
     }
     const finalErr = `
-${err}
 
-Error Object: 
-${prettyPrint(err)}
+${_.truncate(prettyPrint(err), { length: 500 })}
+
+${err}
     `;
     this.error(finalErr);
   }

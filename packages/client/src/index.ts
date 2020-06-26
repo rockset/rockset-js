@@ -55,7 +55,12 @@ const rocksetConfigure = (
       if (response.status >= 200 && response.status < 300) {
         return response;
       } else {
-        throw await response.json();
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+        const err: api.ErrorModel = (await response.json()) ?? {
+          message: 'Unknown Error',
+        };
+        err.toString = () => err?.message ?? JSON.stringify(err, null, 2);
+        throw err;
       }
     }
   };

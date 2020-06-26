@@ -6,6 +6,8 @@ import { main } from '@rockset/core';
 import { runApiCall, Args } from '../../../helper/util';
 import { RockCommand } from '../../../base-command';
 
+import { cli } from 'cli-ux';
+
 class DeleteUser extends RockCommand {
   static flags = {
     help: flags.help({ char: 'h' }),
@@ -14,6 +16,10 @@ class DeleteUser extends RockCommand {
       description:
         'The config file to execute this command from. Format must be json. Keys are translated into arguments of the same name. If no BODY argument is specified, the whole object, minus keys used as other arguments, will be passed in as the BODY.',
     }),
+    full: flags.boolean({
+      description: 'Show the full results JSON object',
+    }),
+    ...cli.table.flags(),
   };
 
   static args = [

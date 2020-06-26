@@ -71,6 +71,9 @@ $ rock -v
 // Set up autocomplete
 $ rock autocomplete
 
+// Add authentication information
+$ rock auth:add apikey [apiserver]
+
 // Update rock cli
 $ rock update
 
@@ -150,11 +153,27 @@ ARGUMENTS
   BODY  JSON object
 
 OPTIONS
-  -f, --file=file  The config file to execute this command from. Format must be json. Keys are translated into arguments
-                   of the same name. If no BODY argument is specified, the whole object, minus keys used as other
-                   arguments, will be passed in as the BODY.
+  -f, --file=file         The config file to execute this command from. Format must be json. Keys are translated into
+                          arguments of the same name. If no BODY argument is specified, the whole object, minus keys
+                          used as other arguments, will be passed in as the BODY.
 
-  -h, --help       show CLI help
+  -h, --help              show CLI help
+
+  -x, --extended          show extra columns
+
+  --columns=columns       only show provided columns (comma-separated)
+
+  --csv                   output is csv format [alias: --output=csv]
+
+  --filter=filter         filter property by partial string matching, ex: name=foo
+
+  --no-header             hide table header from output
+
+  --no-truncate           do not truncate output to fit screen
+
+  --output=csv|json|yaml  output in a more machine friendly format
+
+  --sort=sort             property to sort by (prepend '-' for descending)
 
 DESCRIPTION
   Create API Key
@@ -183,11 +202,27 @@ ARGUMENTS
   USER
 
 OPTIONS
-  -f, --file=file  The config file to execute this command from. Format must be json. Keys are translated into arguments
-                   of the same name. If no BODY argument is specified, the whole object, minus keys used as other
-                   arguments, will be passed in as the BODY.
+  -f, --file=file         The config file to execute this command from. Format must be json. Keys are translated into
+                          arguments of the same name. If no BODY argument is specified, the whole object, minus keys
+                          used as other arguments, will be passed in as the BODY.
 
-  -h, --help       show CLI help
+  -h, --help              show CLI help
+
+  -x, --extended          show extra columns
+
+  --columns=columns       only show provided columns (comma-separated)
+
+  --csv                   output is csv format [alias: --output=csv]
+
+  --filter=filter         filter property by partial string matching, ex: name=foo
+
+  --no-header             hide table header from output
+
+  --no-truncate           do not truncate output to fit screen
+
+  --output=csv|json|yaml  output in a more machine friendly format
+
+  --sort=sort             property to sort by (prepend '-' for descending)
 
 DESCRIPTION
   Create API Key for any user (admin only)
@@ -215,11 +250,27 @@ ARGUMENTS
   NAME  name of the API key
 
 OPTIONS
-  -f, --file=file  The config file to execute this command from. Format must be json. Keys are translated into arguments
-                   of the same name. If no BODY argument is specified, the whole object, minus keys used as other
-                   arguments, will be passed in as the BODY.
+  -f, --file=file         The config file to execute this command from. Format must be json. Keys are translated into
+                          arguments of the same name. If no BODY argument is specified, the whole object, minus keys
+                          used as other arguments, will be passed in as the BODY.
 
-  -h, --help       show CLI help
+  -h, --help              show CLI help
+
+  -x, --extended          show extra columns
+
+  --columns=columns       only show provided columns (comma-separated)
+
+  --csv                   output is csv format [alias: --output=csv]
+
+  --filter=filter         filter property by partial string matching, ex: name=foo
+
+  --no-header             hide table header from output
+
+  --no-truncate           do not truncate output to fit screen
+
+  --output=csv|json|yaml  output in a more machine friendly format
+
+  --sort=sort             property to sort by (prepend '-' for descending)
 
 DESCRIPTION
   Delete API Key
@@ -248,11 +299,27 @@ ARGUMENTS
   USER
 
 OPTIONS
-  -f, --file=file  The config file to execute this command from. Format must be json. Keys are translated into arguments
-                   of the same name. If no BODY argument is specified, the whole object, minus keys used as other
-                   arguments, will be passed in as the BODY.
+  -f, --file=file         The config file to execute this command from. Format must be json. Keys are translated into
+                          arguments of the same name. If no BODY argument is specified, the whole object, minus keys
+                          used as other arguments, will be passed in as the BODY.
 
-  -h, --help       show CLI help
+  -h, --help              show CLI help
+
+  -x, --extended          show extra columns
+
+  --columns=columns       only show provided columns (comma-separated)
+
+  --csv                   output is csv format [alias: --output=csv]
+
+  --filter=filter         filter property by partial string matching, ex: name=foo
+
+  --no-header             hide table header from output
+
+  --no-truncate           do not truncate output to fit screen
+
+  --output=csv|json|yaml  output in a more machine friendly format
+
+  --sort=sort             property to sort by (prepend '-' for descending)
 
 DESCRIPTION
   Delete API Key for any user (admin only)
@@ -277,11 +344,27 @@ USAGE
   $ rock api:apikeys:listApiKeys
 
 OPTIONS
-  -f, --file=file  The config file to execute this command from. Format must be json. Keys are translated into arguments
-                   of the same name. If no BODY argument is specified, the whole object, minus keys used as other
-                   arguments, will be passed in as the BODY.
+  -f, --file=file         The config file to execute this command from. Format must be json. Keys are translated into
+                          arguments of the same name. If no BODY argument is specified, the whole object, minus keys
+                          used as other arguments, will be passed in as the BODY.
 
-  -h, --help       show CLI help
+  -h, --help              show CLI help
+
+  -x, --extended          show extra columns
+
+  --columns=columns       only show provided columns (comma-separated)
+
+  --csv                   output is csv format [alias: --output=csv]
+
+  --filter=filter         filter property by partial string matching, ex: name=foo
+
+  --no-header             hide table header from output
+
+  --no-truncate           do not truncate output to fit screen
+
+  --output=csv|json|yaml  output in a more machine friendly format
+
+  --sort=sort             property to sort by (prepend '-' for descending)
 
 DESCRIPTION
   List API Keys
@@ -306,11 +389,27 @@ USAGE
   $ rock api:apikeys:listApiKeysAdmin [USER]
 
 OPTIONS
-  -f, --file=file  The config file to execute this command from. Format must be json. Keys are translated into arguments
-                   of the same name. If no BODY argument is specified, the whole object, minus keys used as other
-                   arguments, will be passed in as the BODY.
+  -f, --file=file         The config file to execute this command from. Format must be json. Keys are translated into
+                          arguments of the same name. If no BODY argument is specified, the whole object, minus keys
+                          used as other arguments, will be passed in as the BODY.
 
-  -h, --help       show CLI help
+  -h, --help              show CLI help
+
+  -x, --extended          show extra columns
+
+  --columns=columns       only show provided columns (comma-separated)
+
+  --csv                   output is csv format [alias: --output=csv]
+
+  --filter=filter         filter property by partial string matching, ex: name=foo
+
+  --no-header             hide table header from output
+
+  --no-truncate           do not truncate output to fit screen
+
+  --output=csv|json|yaml  output in a more machine friendly format
+
+  --sort=sort             property to sort by (prepend '-' for descending)
 
 DESCRIPTION
   List API Keys for any user (admin only)
@@ -339,11 +438,27 @@ ARGUMENTS
   BODY       JSON object
 
 OPTIONS
-  -f, --file=file  The config file to execute this command from. Format must be json. Keys are translated into arguments
-                   of the same name. If no BODY argument is specified, the whole object, minus keys used as other
-                   arguments, will be passed in as the BODY.
+  -f, --file=file         The config file to execute this command from. Format must be json. Keys are translated into
+                          arguments of the same name. If no BODY argument is specified, the whole object, minus keys
+                          used as other arguments, will be passed in as the BODY.
 
-  -h, --help       show CLI help
+  -h, --help              show CLI help
+
+  -x, --extended          show extra columns
+
+  --columns=columns       only show provided columns (comma-separated)
+
+  --csv                   output is csv format [alias: --output=csv]
+
+  --filter=filter         filter property by partial string matching, ex: name=foo
+
+  --no-header             hide table header from output
+
+  --no-truncate           do not truncate output to fit screen
+
+  --output=csv|json|yaml  output in a more machine friendly format
+
+  --sort=sort             property to sort by (prepend '-' for descending)
 
 DESCRIPTION
   Create Collection
@@ -372,11 +487,27 @@ ARGUMENTS
   COLLECTION  name of the collection
 
 OPTIONS
-  -f, --file=file  The config file to execute this command from. Format must be json. Keys are translated into arguments
-                   of the same name. If no BODY argument is specified, the whole object, minus keys used as other
-                   arguments, will be passed in as the BODY.
+  -f, --file=file         The config file to execute this command from. Format must be json. Keys are translated into
+                          arguments of the same name. If no BODY argument is specified, the whole object, minus keys
+                          used as other arguments, will be passed in as the BODY.
 
-  -h, --help       show CLI help
+  -h, --help              show CLI help
+
+  -x, --extended          show extra columns
+
+  --columns=columns       only show provided columns (comma-separated)
+
+  --csv                   output is csv format [alias: --output=csv]
+
+  --filter=filter         filter property by partial string matching, ex: name=foo
+
+  --no-header             hide table header from output
+
+  --no-truncate           do not truncate output to fit screen
+
+  --output=csv|json|yaml  output in a more machine friendly format
+
+  --sort=sort             property to sort by (prepend '-' for descending)
 
 DESCRIPTION
   Delete Collection
@@ -405,11 +536,27 @@ ARGUMENTS
   COLLECTION  name of the collection
 
 OPTIONS
-  -f, --file=file  The config file to execute this command from. Format must be json. Keys are translated into arguments
-                   of the same name. If no BODY argument is specified, the whole object, minus keys used as other
-                   arguments, will be passed in as the BODY.
+  -f, --file=file         The config file to execute this command from. Format must be json. Keys are translated into
+                          arguments of the same name. If no BODY argument is specified, the whole object, minus keys
+                          used as other arguments, will be passed in as the BODY.
 
-  -h, --help       show CLI help
+  -h, --help              show CLI help
+
+  -x, --extended          show extra columns
+
+  --columns=columns       only show provided columns (comma-separated)
+
+  --csv                   output is csv format [alias: --output=csv]
+
+  --filter=filter         filter property by partial string matching, ex: name=foo
+
+  --no-header             hide table header from output
+
+  --no-truncate           do not truncate output to fit screen
+
+  --output=csv|json|yaml  output in a more machine friendly format
+
+  --sort=sort             property to sort by (prepend '-' for descending)
 
 DESCRIPTION
   Get Collection
@@ -434,11 +581,27 @@ USAGE
   $ rock api:collections:listCollections
 
 OPTIONS
-  -f, --file=file  The config file to execute this command from. Format must be json. Keys are translated into arguments
-                   of the same name. If no BODY argument is specified, the whole object, minus keys used as other
-                   arguments, will be passed in as the BODY.
+  -f, --file=file         The config file to execute this command from. Format must be json. Keys are translated into
+                          arguments of the same name. If no BODY argument is specified, the whole object, minus keys
+                          used as other arguments, will be passed in as the BODY.
 
-  -h, --help       show CLI help
+  -h, --help              show CLI help
+
+  -x, --extended          show extra columns
+
+  --columns=columns       only show provided columns (comma-separated)
+
+  --csv                   output is csv format [alias: --output=csv]
+
+  --filter=filter         filter property by partial string matching, ex: name=foo
+
+  --no-header             hide table header from output
+
+  --no-truncate           do not truncate output to fit screen
+
+  --output=csv|json|yaml  output in a more machine friendly format
+
+  --sort=sort             property to sort by (prepend '-' for descending)
 
 DESCRIPTION
   List Collections
@@ -467,11 +630,27 @@ ARGUMENTS
   COLLECTION  name of the collection
 
 OPTIONS
-  -f, --file=file  The config file to execute this command from. Format must be json. Keys are translated into arguments
-                   of the same name. If no BODY argument is specified, the whole object, minus keys used as other
-                   arguments, will be passed in as the BODY.
+  -f, --file=file         The config file to execute this command from. Format must be json. Keys are translated into
+                          arguments of the same name. If no BODY argument is specified, the whole object, minus keys
+                          used as other arguments, will be passed in as the BODY.
 
-  -h, --help       show CLI help
+  -h, --help              show CLI help
+
+  -x, --extended          show extra columns
+
+  --columns=columns       only show provided columns (comma-separated)
+
+  --csv                   output is csv format [alias: --output=csv]
+
+  --filter=filter         filter property by partial string matching, ex: name=foo
+
+  --no-header             hide table header from output
+
+  --no-truncate           do not truncate output to fit screen
+
+  --output=csv|json|yaml  output in a more machine friendly format
+
+  --sort=sort             property to sort by (prepend '-' for descending)
 
 DESCRIPTION
   Get Query Lambdas
@@ -499,11 +678,27 @@ ARGUMENTS
   WORKSPACE  name of the workspace
 
 OPTIONS
-  -f, --file=file  The config file to execute this command from. Format must be json. Keys are translated into arguments
-                   of the same name. If no BODY argument is specified, the whole object, minus keys used as other
-                   arguments, will be passed in as the BODY.
+  -f, --file=file         The config file to execute this command from. Format must be json. Keys are translated into
+                          arguments of the same name. If no BODY argument is specified, the whole object, minus keys
+                          used as other arguments, will be passed in as the BODY.
 
-  -h, --help       show CLI help
+  -h, --help              show CLI help
+
+  -x, --extended          show extra columns
+
+  --columns=columns       only show provided columns (comma-separated)
+
+  --csv                   output is csv format [alias: --output=csv]
+
+  --filter=filter         filter property by partial string matching, ex: name=foo
+
+  --no-header             hide table header from output
+
+  --no-truncate           do not truncate output to fit screen
+
+  --output=csv|json|yaml  output in a more machine friendly format
+
+  --sort=sort             property to sort by (prepend '-' for descending)
 
 DESCRIPTION
   List Collections for Workspace
@@ -542,7 +737,23 @@ OPTIONS
   -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this apicall. The value
                                  passed to this flag determines how many requests per second will be sent
 
+  -x, --extended                 show extra columns
+
   -y, --yes                      Skip all safety prompts
+
+  --columns=columns              only show provided columns (comma-separated)
+
+  --csv                          output is csv format [alias: --output=csv]
+
+  --filter=filter                filter property by partial string matching, ex: name=foo
+
+  --no-header                    hide table header from output
+
+  --no-truncate                  do not truncate output to fit screen
+
+  --output=csv|json|yaml         output in a more machine friendly format
+
+  --sort=sort                    property to sort by (prepend '-' for descending)
 
 DESCRIPTION
   Add Documents
@@ -581,7 +792,23 @@ OPTIONS
   -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this apicall. The value
                                  passed to this flag determines how many requests per second will be sent
 
+  -x, --extended                 show extra columns
+
   -y, --yes                      Skip all safety prompts
+
+  --columns=columns              only show provided columns (comma-separated)
+
+  --csv                          output is csv format [alias: --output=csv]
+
+  --filter=filter                filter property by partial string matching, ex: name=foo
+
+  --no-header                    hide table header from output
+
+  --no-truncate                  do not truncate output to fit screen
+
+  --output=csv|json|yaml         output in a more machine friendly format
+
+  --sort=sort                    property to sort by (prepend '-' for descending)
 
 DESCRIPTION
   Delete Documents
@@ -620,7 +847,23 @@ OPTIONS
   -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this apicall. The value
                                  passed to this flag determines how many requests per second will be sent
 
+  -x, --extended                 show extra columns
+
   -y, --yes                      Skip all safety prompts
+
+  --columns=columns              only show provided columns (comma-separated)
+
+  --csv                          output is csv format [alias: --output=csv]
+
+  --filter=filter                filter property by partial string matching, ex: name=foo
+
+  --no-header                    hide table header from output
+
+  --no-truncate                  do not truncate output to fit screen
+
+  --output=csv|json|yaml         output in a more machine friendly format
+
+  --sort=sort                    property to sort by (prepend '-' for descending)
 
 DESCRIPTION
   Patch Documents
@@ -648,11 +891,27 @@ ARGUMENTS
   BODY  integration credentials
 
 OPTIONS
-  -f, --file=file  The config file to execute this command from. Format must be json. Keys are translated into arguments
-                   of the same name. If no BODY argument is specified, the whole object, minus keys used as other
-                   arguments, will be passed in as the BODY.
+  -f, --file=file         The config file to execute this command from. Format must be json. Keys are translated into
+                          arguments of the same name. If no BODY argument is specified, the whole object, minus keys
+                          used as other arguments, will be passed in as the BODY.
 
-  -h, --help       show CLI help
+  -h, --help              show CLI help
+
+  -x, --extended          show extra columns
+
+  --columns=columns       only show provided columns (comma-separated)
+
+  --csv                   output is csv format [alias: --output=csv]
+
+  --filter=filter         filter property by partial string matching, ex: name=foo
+
+  --no-header             hide table header from output
+
+  --no-truncate           do not truncate output to fit screen
+
+  --output=csv|json|yaml  output in a more machine friendly format
+
+  --sort=sort             property to sort by (prepend '-' for descending)
 
 DESCRIPTION
   Create Integration
@@ -680,11 +939,27 @@ ARGUMENTS
   INTEGRATION  name of the integration
 
 OPTIONS
-  -f, --file=file  The config file to execute this command from. Format must be json. Keys are translated into arguments
-                   of the same name. If no BODY argument is specified, the whole object, minus keys used as other
-                   arguments, will be passed in as the BODY.
+  -f, --file=file         The config file to execute this command from. Format must be json. Keys are translated into
+                          arguments of the same name. If no BODY argument is specified, the whole object, minus keys
+                          used as other arguments, will be passed in as the BODY.
 
-  -h, --help       show CLI help
+  -h, --help              show CLI help
+
+  -x, --extended          show extra columns
+
+  --columns=columns       only show provided columns (comma-separated)
+
+  --csv                   output is csv format [alias: --output=csv]
+
+  --filter=filter         filter property by partial string matching, ex: name=foo
+
+  --no-header             hide table header from output
+
+  --no-truncate           do not truncate output to fit screen
+
+  --output=csv|json|yaml  output in a more machine friendly format
+
+  --sort=sort             property to sort by (prepend '-' for descending)
 
 DESCRIPTION
   Delete Integration
@@ -712,11 +987,27 @@ ARGUMENTS
   INTEGRATION  name of the integration
 
 OPTIONS
-  -f, --file=file  The config file to execute this command from. Format must be json. Keys are translated into arguments
-                   of the same name. If no BODY argument is specified, the whole object, minus keys used as other
-                   arguments, will be passed in as the BODY.
+  -f, --file=file         The config file to execute this command from. Format must be json. Keys are translated into
+                          arguments of the same name. If no BODY argument is specified, the whole object, minus keys
+                          used as other arguments, will be passed in as the BODY.
 
-  -h, --help       show CLI help
+  -h, --help              show CLI help
+
+  -x, --extended          show extra columns
+
+  --columns=columns       only show provided columns (comma-separated)
+
+  --csv                   output is csv format [alias: --output=csv]
+
+  --filter=filter         filter property by partial string matching, ex: name=foo
+
+  --no-header             hide table header from output
+
+  --no-truncate           do not truncate output to fit screen
+
+  --output=csv|json|yaml  output in a more machine friendly format
+
+  --sort=sort             property to sort by (prepend '-' for descending)
 
 DESCRIPTION
   Get Integration
@@ -741,11 +1032,27 @@ USAGE
   $ rock api:integrations:listIntegrations
 
 OPTIONS
-  -f, --file=file  The config file to execute this command from. Format must be json. Keys are translated into arguments
-                   of the same name. If no BODY argument is specified, the whole object, minus keys used as other
-                   arguments, will be passed in as the BODY.
+  -f, --file=file         The config file to execute this command from. Format must be json. Keys are translated into
+                          arguments of the same name. If no BODY argument is specified, the whole object, minus keys
+                          used as other arguments, will be passed in as the BODY.
 
-  -h, --help       show CLI help
+  -h, --help              show CLI help
+
+  -x, --extended          show extra columns
+
+  --columns=columns       only show provided columns (comma-separated)
+
+  --csv                   output is csv format [alias: --output=csv]
+
+  --filter=filter         filter property by partial string matching, ex: name=foo
+
+  --no-header             hide table header from output
+
+  --no-truncate           do not truncate output to fit screen
+
+  --output=csv|json|yaml  output in a more machine friendly format
+
+  --sort=sort             property to sort by (prepend '-' for descending)
 
 DESCRIPTION
   List Integrations
@@ -770,11 +1077,27 @@ USAGE
   $ rock api:orgs:getOrganization
 
 OPTIONS
-  -f, --file=file  The config file to execute this command from. Format must be json. Keys are translated into arguments
-                   of the same name. If no BODY argument is specified, the whole object, minus keys used as other
-                   arguments, will be passed in as the BODY.
+  -f, --file=file         The config file to execute this command from. Format must be json. Keys are translated into
+                          arguments of the same name. If no BODY argument is specified, the whole object, minus keys
+                          used as other arguments, will be passed in as the BODY.
 
-  -h, --help       show CLI help
+  -h, --help              show CLI help
+
+  -x, --extended          show extra columns
+
+  --columns=columns       only show provided columns (comma-separated)
+
+  --csv                   output is csv format [alias: --output=csv]
+
+  --filter=filter         filter property by partial string matching, ex: name=foo
+
+  --no-header             hide table header from output
+
+  --no-truncate           do not truncate output to fit screen
+
+  --output=csv|json|yaml  output in a more machine friendly format
+
+  --sort=sort             property to sort by (prepend '-' for descending)
 
 DESCRIPTION
   Get Organization
@@ -811,7 +1134,23 @@ OPTIONS
   -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this apicall. The value
                                  passed to this flag determines how many requests per second will be sent
 
+  -x, --extended                 show extra columns
+
   -y, --yes                      Skip all safety prompts
+
+  --columns=columns              only show provided columns (comma-separated)
+
+  --csv                          output is csv format [alias: --output=csv]
+
+  --filter=filter                filter property by partial string matching, ex: name=foo
+
+  --no-header                    hide table header from output
+
+  --no-truncate                  do not truncate output to fit screen
+
+  --output=csv|json|yaml         output in a more machine friendly format
+
+  --sort=sort                    property to sort by (prepend '-' for descending)
 
 DESCRIPTION
   Query
@@ -849,7 +1188,23 @@ OPTIONS
   -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this apicall. The value
                                  passed to this flag determines how many requests per second will be sent
 
+  -x, --extended                 show extra columns
+
   -y, --yes                      Skip all safety prompts
+
+  --columns=columns              only show provided columns (comma-separated)
+
+  --csv                          output is csv format [alias: --output=csv]
+
+  --filter=filter                filter property by partial string matching, ex: name=foo
+
+  --no-header                    hide table header from output
+
+  --no-truncate                  do not truncate output to fit screen
+
+  --output=csv|json|yaml         output in a more machine friendly format
+
+  --sort=sort                    property to sort by (prepend '-' for descending)
 
 DESCRIPTION
   Create Query Lambda
@@ -887,7 +1242,23 @@ OPTIONS
   -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this apicall. The value
                                  passed to this flag determines how many requests per second will be sent
 
+  -x, --extended                 show extra columns
+
   -y, --yes                      Skip all safety prompts
+
+  --columns=columns              only show provided columns (comma-separated)
+
+  --csv                          output is csv format [alias: --output=csv]
+
+  --filter=filter                filter property by partial string matching, ex: name=foo
+
+  --no-header                    hide table header from output
+
+  --no-truncate                  do not truncate output to fit screen
+
+  --output=csv|json|yaml         output in a more machine friendly format
+
+  --sort=sort                    property to sort by (prepend '-' for descending)
 
 DESCRIPTION
   Delete Query Lambda
@@ -927,7 +1298,23 @@ OPTIONS
   -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this apicall. The value
                                  passed to this flag determines how many requests per second will be sent
 
+  -x, --extended                 show extra columns
+
   -y, --yes                      Skip all safety prompts
+
+  --columns=columns              only show provided columns (comma-separated)
+
+  --csv                          output is csv format [alias: --output=csv]
+
+  --filter=filter                filter property by partial string matching, ex: name=foo
+
+  --no-header                    hide table header from output
+
+  --no-truncate                  do not truncate output to fit screen
+
+  --output=csv|json|yaml         output in a more machine friendly format
+
+  --sort=sort                    property to sort by (prepend '-' for descending)
 
 DESCRIPTION
   Run Query Lambda
@@ -966,7 +1353,23 @@ OPTIONS
   -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this apicall. The value
                                  passed to this flag determines how many requests per second will be sent
 
+  -x, --extended                 show extra columns
+
   -y, --yes                      Skip all safety prompts
+
+  --columns=columns              only show provided columns (comma-separated)
+
+  --csv                          output is csv format [alias: --output=csv]
+
+  --filter=filter                filter property by partial string matching, ex: name=foo
+
+  --no-header                    hide table header from output
+
+  --no-truncate                  do not truncate output to fit screen
+
+  --output=csv|json|yaml         output in a more machine friendly format
+
+  --sort=sort                    property to sort by (prepend '-' for descending)
 
 DESCRIPTION
   Get Query Lambda Version
@@ -1000,7 +1403,23 @@ OPTIONS
   -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this apicall. The value
                                  passed to this flag determines how many requests per second will be sent
 
+  -x, --extended                 show extra columns
+
   -y, --yes                      Skip all safety prompts
+
+  --columns=columns              only show provided columns (comma-separated)
+
+  --csv                          output is csv format [alias: --output=csv]
+
+  --filter=filter                filter property by partial string matching, ex: name=foo
+
+  --no-header                    hide table header from output
+
+  --no-truncate                  do not truncate output to fit screen
+
+  --output=csv|json|yaml         output in a more machine friendly format
+
+  --sort=sort                    property to sort by (prepend '-' for descending)
 
 DESCRIPTION
   List Query Lambdas
@@ -1038,7 +1457,23 @@ OPTIONS
   -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this apicall. The value
                                  passed to this flag determines how many requests per second will be sent
 
+  -x, --extended                 show extra columns
+
   -y, --yes                      Skip all safety prompts
+
+  --columns=columns              only show provided columns (comma-separated)
+
+  --csv                          output is csv format [alias: --output=csv]
+
+  --filter=filter                filter property by partial string matching, ex: name=foo
+
+  --no-header                    hide table header from output
+
+  --no-truncate                  do not truncate output to fit screen
+
+  --output=csv|json|yaml         output in a more machine friendly format
+
+  --sort=sort                    property to sort by (prepend '-' for descending)
 
 DESCRIPTION
   List Query Lambda Versions
@@ -1075,7 +1510,23 @@ OPTIONS
   -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this apicall. The value
                                  passed to this flag determines how many requests per second will be sent
 
+  -x, --extended                 show extra columns
+
   -y, --yes                      Skip all safety prompts
+
+  --columns=columns              only show provided columns (comma-separated)
+
+  --csv                          output is csv format [alias: --output=csv]
+
+  --filter=filter                filter property by partial string matching, ex: name=foo
+
+  --no-header                    hide table header from output
+
+  --no-truncate                  do not truncate output to fit screen
+
+  --output=csv|json|yaml         output in a more machine friendly format
+
+  --sort=sort                    property to sort by (prepend '-' for descending)
 
 DESCRIPTION
   List Query Lambdas
@@ -1114,7 +1565,23 @@ OPTIONS
   -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this apicall. The value
                                  passed to this flag determines how many requests per second will be sent
 
+  -x, --extended                 show extra columns
+
   -y, --yes                      Skip all safety prompts
+
+  --columns=columns              only show provided columns (comma-separated)
+
+  --csv                          output is csv format [alias: --output=csv]
+
+  --filter=filter                filter property by partial string matching, ex: name=foo
+
+  --no-header                    hide table header from output
+
+  --no-truncate                  do not truncate output to fit screen
+
+  --output=csv|json|yaml         output in a more machine friendly format
+
+  --sort=sort                    property to sort by (prepend '-' for descending)
 
 DESCRIPTION
   Update Query Lambda
@@ -1142,11 +1609,27 @@ ARGUMENTS
   BODY  JSON object
 
 OPTIONS
-  -f, --file=file  The config file to execute this command from. Format must be json. Keys are translated into arguments
-                   of the same name. If no BODY argument is specified, the whole object, minus keys used as other
-                   arguments, will be passed in as the BODY.
+  -f, --file=file         The config file to execute this command from. Format must be json. Keys are translated into
+                          arguments of the same name. If no BODY argument is specified, the whole object, minus keys
+                          used as other arguments, will be passed in as the BODY.
 
-  -h, --help       show CLI help
+  -h, --help              show CLI help
+
+  -x, --extended          show extra columns
+
+  --columns=columns       only show provided columns (comma-separated)
+
+  --csv                   output is csv format [alias: --output=csv]
+
+  --filter=filter         filter property by partial string matching, ex: name=foo
+
+  --no-header             hide table header from output
+
+  --no-truncate           do not truncate output to fit screen
+
+  --output=csv|json|yaml  output in a more machine friendly format
+
+  --sort=sort             property to sort by (prepend '-' for descending)
 
 DESCRIPTION
   Create User
@@ -1174,11 +1657,27 @@ ARGUMENTS
   USER  user email
 
 OPTIONS
-  -f, --file=file  The config file to execute this command from. Format must be json. Keys are translated into arguments
-                   of the same name. If no BODY argument is specified, the whole object, minus keys used as other
-                   arguments, will be passed in as the BODY.
+  -f, --file=file         The config file to execute this command from. Format must be json. Keys are translated into
+                          arguments of the same name. If no BODY argument is specified, the whole object, minus keys
+                          used as other arguments, will be passed in as the BODY.
 
-  -h, --help       show CLI help
+  -h, --help              show CLI help
+
+  -x, --extended          show extra columns
+
+  --columns=columns       only show provided columns (comma-separated)
+
+  --csv                   output is csv format [alias: --output=csv]
+
+  --filter=filter         filter property by partial string matching, ex: name=foo
+
+  --no-header             hide table header from output
+
+  --no-truncate           do not truncate output to fit screen
+
+  --output=csv|json|yaml  output in a more machine friendly format
+
+  --sort=sort             property to sort by (prepend '-' for descending)
 
 DESCRIPTION
   Delete User
@@ -1203,11 +1702,27 @@ USAGE
   $ rock api:users:getCurrentUser
 
 OPTIONS
-  -f, --file=file  The config file to execute this command from. Format must be json. Keys are translated into arguments
-                   of the same name. If no BODY argument is specified, the whole object, minus keys used as other
-                   arguments, will be passed in as the BODY.
+  -f, --file=file         The config file to execute this command from. Format must be json. Keys are translated into
+                          arguments of the same name. If no BODY argument is specified, the whole object, minus keys
+                          used as other arguments, will be passed in as the BODY.
 
-  -h, --help       show CLI help
+  -h, --help              show CLI help
+
+  -x, --extended          show extra columns
+
+  --columns=columns       only show provided columns (comma-separated)
+
+  --csv                   output is csv format [alias: --output=csv]
+
+  --filter=filter         filter property by partial string matching, ex: name=foo
+
+  --no-header             hide table header from output
+
+  --no-truncate           do not truncate output to fit screen
+
+  --output=csv|json|yaml  output in a more machine friendly format
+
+  --sort=sort             property to sort by (prepend '-' for descending)
 
 DESCRIPTION
   Get Current User
@@ -1232,11 +1747,27 @@ USAGE
   $ rock api:users:listUsers
 
 OPTIONS
-  -f, --file=file  The config file to execute this command from. Format must be json. Keys are translated into arguments
-                   of the same name. If no BODY argument is specified, the whole object, minus keys used as other
-                   arguments, will be passed in as the BODY.
+  -f, --file=file         The config file to execute this command from. Format must be json. Keys are translated into
+                          arguments of the same name. If no BODY argument is specified, the whole object, minus keys
+                          used as other arguments, will be passed in as the BODY.
 
-  -h, --help       show CLI help
+  -h, --help              show CLI help
+
+  -x, --extended          show extra columns
+
+  --columns=columns       only show provided columns (comma-separated)
+
+  --csv                   output is csv format [alias: --output=csv]
+
+  --filter=filter         filter property by partial string matching, ex: name=foo
+
+  --no-header             hide table header from output
+
+  --no-truncate           do not truncate output to fit screen
+
+  --output=csv|json|yaml  output in a more machine friendly format
+
+  --sort=sort             property to sort by (prepend '-' for descending)
 
 DESCRIPTION
   List Users
@@ -1264,11 +1795,27 @@ ARGUMENTS
   WORKSPACE  name of the workspace
 
 OPTIONS
-  -f, --file=file  The config file to execute this command from. Format must be json. Keys are translated into arguments
-                   of the same name. If no BODY argument is specified, the whole object, minus keys used as other
-                   arguments, will be passed in as the BODY.
+  -f, --file=file         The config file to execute this command from. Format must be json. Keys are translated into
+                          arguments of the same name. If no BODY argument is specified, the whole object, minus keys
+                          used as other arguments, will be passed in as the BODY.
 
-  -h, --help       show CLI help
+  -h, --help              show CLI help
+
+  -x, --extended          show extra columns
+
+  --columns=columns       only show provided columns (comma-separated)
+
+  --csv                   output is csv format [alias: --output=csv]
+
+  --filter=filter         filter property by partial string matching, ex: name=foo
+
+  --no-header             hide table header from output
+
+  --no-truncate           do not truncate output to fit screen
+
+  --output=csv|json|yaml  output in a more machine friendly format
+
+  --sort=sort             property to sort by (prepend '-' for descending)
 
 DESCRIPTION
   List Workspaces
@@ -1296,11 +1843,27 @@ ARGUMENTS
   BODY  workspace details
 
 OPTIONS
-  -f, --file=file  The config file to execute this command from. Format must be json. Keys are translated into arguments
-                   of the same name. If no BODY argument is specified, the whole object, minus keys used as other
-                   arguments, will be passed in as the BODY.
+  -f, --file=file         The config file to execute this command from. Format must be json. Keys are translated into
+                          arguments of the same name. If no BODY argument is specified, the whole object, minus keys
+                          used as other arguments, will be passed in as the BODY.
 
-  -h, --help       show CLI help
+  -h, --help              show CLI help
+
+  -x, --extended          show extra columns
+
+  --columns=columns       only show provided columns (comma-separated)
+
+  --csv                   output is csv format [alias: --output=csv]
+
+  --filter=filter         filter property by partial string matching, ex: name=foo
+
+  --no-header             hide table header from output
+
+  --no-truncate           do not truncate output to fit screen
+
+  --output=csv|json|yaml  output in a more machine friendly format
+
+  --sort=sort             property to sort by (prepend '-' for descending)
 
 DESCRIPTION
   Create Workspace
@@ -1328,11 +1891,27 @@ ARGUMENTS
   WORKSPACE  name of the workspace
 
 OPTIONS
-  -f, --file=file  The config file to execute this command from. Format must be json. Keys are translated into arguments
-                   of the same name. If no BODY argument is specified, the whole object, minus keys used as other
-                   arguments, will be passed in as the BODY.
+  -f, --file=file         The config file to execute this command from. Format must be json. Keys are translated into
+                          arguments of the same name. If no BODY argument is specified, the whole object, minus keys
+                          used as other arguments, will be passed in as the BODY.
 
-  -h, --help       show CLI help
+  -h, --help              show CLI help
+
+  -x, --extended          show extra columns
+
+  --columns=columns       only show provided columns (comma-separated)
+
+  --csv                   output is csv format [alias: --output=csv]
+
+  --filter=filter         filter property by partial string matching, ex: name=foo
+
+  --no-header             hide table header from output
+
+  --no-truncate           do not truncate output to fit screen
+
+  --output=csv|json|yaml  output in a more machine friendly format
+
+  --sort=sort             property to sort by (prepend '-' for descending)
 
 DESCRIPTION
   Delete Workspace
@@ -1360,11 +1939,27 @@ ARGUMENTS
   WORKSPACE  name of the workspace
 
 OPTIONS
-  -f, --file=file  The config file to execute this command from. Format must be json. Keys are translated into arguments
-                   of the same name. If no BODY argument is specified, the whole object, minus keys used as other
-                   arguments, will be passed in as the BODY.
+  -f, --file=file         The config file to execute this command from. Format must be json. Keys are translated into
+                          arguments of the same name. If no BODY argument is specified, the whole object, minus keys
+                          used as other arguments, will be passed in as the BODY.
 
-  -h, --help       show CLI help
+  -h, --help              show CLI help
+
+  -x, --extended          show extra columns
+
+  --columns=columns       only show provided columns (comma-separated)
+
+  --csv                   output is csv format [alias: --output=csv]
+
+  --filter=filter         filter property by partial string matching, ex: name=foo
+
+  --no-header             hide table header from output
+
+  --no-truncate           do not truncate output to fit screen
+
+  --output=csv|json|yaml  output in a more machine friendly format
+
+  --sort=sort             property to sort by (prepend '-' for descending)
 
 DESCRIPTION
   Get Workspace
@@ -1389,11 +1984,27 @@ USAGE
   $ rock api:workspaces:listWorkspaces
 
 OPTIONS
-  -f, --file=file  The config file to execute this command from. Format must be json. Keys are translated into arguments
-                   of the same name. If no BODY argument is specified, the whole object, minus keys used as other
-                   arguments, will be passed in as the BODY.
+  -f, --file=file         The config file to execute this command from. Format must be json. Keys are translated into
+                          arguments of the same name. If no BODY argument is specified, the whole object, minus keys
+                          used as other arguments, will be passed in as the BODY.
 
-  -h, --help       show CLI help
+  -h, --help              show CLI help
+
+  -x, --extended          show extra columns
+
+  --columns=columns       only show provided columns (comma-separated)
+
+  --csv                   output is csv format [alias: --output=csv]
+
+  --filter=filter         filter property by partial string matching, ex: name=foo
+
+  --no-header             hide table header from output
+
+  --no-truncate           do not truncate output to fit screen
+
+  --output=csv|json|yaml  output in a more machine friendly format
+
+  --sort=sort             property to sort by (prepend '-' for descending)
 
 DESCRIPTION
   List Workspaces

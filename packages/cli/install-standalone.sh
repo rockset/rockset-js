@@ -82,4 +82,5 @@ SCRIPT
   LOCATION=$(command -v rock)
   echo "rock installed to $LOCATION"
   rock --version
+  echo "Please restart your terminal to complete installation."
 }

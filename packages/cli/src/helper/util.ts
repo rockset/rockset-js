@@ -5,10 +5,16 @@ import { readConfigFromPath, join, cwd } from '@rockset/core/dist/filesystem/pat
 import { RockCommand } from '../base-command';
 import { performance } from 'perf_hooks';
 import { wait } from '@rockset/core/dist/helper';
+import { cli } from 'cli-ux';
 import prompts = require('prompts');
 
 export type Args = Parser.args.Input;
-export type Flags = { file?: string; loadTestRps?: number; yes?: boolean };
+export interface Flags {
+  file?: string;
+  loadTestRps?: number;
+  yes?: boolean;
+  full?: boolean;
+}
 export type Apicall<A extends unknown[], Return> = (...a: A) => Promise<Return>;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -74,7 +80,16 @@ export async function runApiCall<A extends any[], Return>(
     type R = Return & { results?: unknown; data?: unknown };
     const data = (await apicall(...(allArgs as A))) as R;
 
-    log(JSON.stringify(data?.results ?? data?.data ?? data, null, 2));
+    const unwrapData = flags.full ? data : data?.results ?? data?.data ?? data;
+
+    if (_.isArray(unwrapData)) {
+      const columns = Object.getOwnPropertyNames(unwrapData?.[0]);
+      const col = columns.reduce((obj, cur) => ({ ...obj, [cur]: {} }), {});
+
+      cli.table(unwrapData, col, { ...flags });
+    } else {
+      log(JSON.stringify(data, null, 2));
+    }
   }
 }
 
