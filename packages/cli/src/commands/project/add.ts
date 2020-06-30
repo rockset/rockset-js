@@ -24,7 +24,7 @@ class AddEntity extends RockCommand {
 
   static description = `
   Add an empty entity with the specified name to the project. The path for the entity is the same
-  as would be created with 'rock project:resolve'
+  as would be created with 'rockset project:resolve'
 
 
 `;

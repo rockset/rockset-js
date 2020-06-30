@@ -4,7 +4,7 @@
   "version": "0.1.3",
   "author": "Rockset",
   "bin": {
-    "rock": "./bin/run"
+    "rockset": "./bin/run"
   },
   "bugs": "https://github.com/rockset/rockset-js/issues",
   "dependencies": {
@@ -81,7 +81,7 @@
         "bucket": "rockset-cli-artifacts"
       }
     },
-    "bin": "rock",
+    "bin": "rockset",
     "plugins": [
       "@oclif/plugin-help",
       "@oclif/plugin-autocomplete",

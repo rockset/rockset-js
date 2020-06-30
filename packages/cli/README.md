@@ -37,27 +37,27 @@ of navigating the Rock CLI tool.
 
 ```
 // Print autocomplete instructions for bash
-rock autocomplete
+rockset autocomplete
 
 // Print autocomplete instructions for ZSH
-rock autocomplete:zsh
+rockset autocomplete:zsh
 ```
 
 The new Rockset CLI support 3 core workflows.
 
-1. Authentication (`rock auth`)
-1. REST API support (`rock api`)
+1. Authentication (`rockset auth`)
+1. REST API support (`rockset api`)
     1. API calls have been modified to closely model the Rockset API Documentation
     1. Load test functionality has been added for select routes
     1. This section of the CLI tool is a thin wrapper around Rockset's REST API. See full documentation for the REST API at 
 https://docs.rockset.com/rest-api
-1. Query Lambda Project support (`rock project`)
+1. Query Lambda Project support (`rockset project`)
     1. A tool that allows you to manage your Query Lambdas from your file system
     1. Download your Query Lambdas to your local project
     1. Edit your query lambdas and commit to git
     1. Deploy your query lambdas to Rockset
 
-You can also update the Rockset CLI using `rock update`.
+You can also update the Rockset CLI using `rockset update`.
 
 # Usage
 ```sh-session
@@ -65,89 +65,90 @@ You can also update the Rockset CLI using `rock update`.
 $ curl https://rockset-cli-artifacts.s3-us-west-2.amazonaws.com/install-standalone.sh | bash 
 
 // open a new shell
-$ rock -h
-$ rock -v
+$ rockset -h
+$ rockset -v
 
 // Set up autocomplete
-$ rock autocomplete
+$ rockset autocomplete
 
 // Add authentication information
-$ rock auth:add apikey [apiserver]
+$ rockset auth:add apikey [apiserver]
 
-// Update rock cli
-$ rock update
+// Update rockset cli
+$ rockset update
 
-$ rock COMMAND
+$ rockset COMMAND
 running command...
 @rockset/cli/0.0.28 darwin-x64 node-v12.16.3
-$ rock --help [COMMAND]
+$ rockset --help [COMMAND]
 USAGE
-  $ rock COMMAND
+  $ rockset COMMAND
 ...
 ```
 # Commands
 <!-- commands -->
-* [`rock api:apikeys:createApiKey [BODY]`](#rock-apiapikeyscreateapikey-body)
-* [`rock api:apikeys:createApiKeyAdmin [BODY] [USER]`](#rock-apiapikeyscreateapikeyadmin-body-user)
-* [`rock api:apikeys:deleteApiKey [NAME]`](#rock-apiapikeysdeleteapikey-name)
-* [`rock api:apikeys:deleteApiKeyAdmin [NAME] [USER]`](#rock-apiapikeysdeleteapikeyadmin-name-user)
-* [`rock api:apikeys:listApiKeys`](#rock-apiapikeyslistapikeys)
-* [`rock api:apikeys:listApiKeysAdmin [USER]`](#rock-apiapikeyslistapikeysadmin-user)
-* [`rock api:collections:createCollection [WORKSPACE] [BODY]`](#rock-apicollectionscreatecollection-workspace-body)
-* [`rock api:collections:deleteCollection [WORKSPACE] [COLLECTION]`](#rock-apicollectionsdeletecollection-workspace-collection)
-* [`rock api:collections:getCollection [WORKSPACE] [COLLECTION]`](#rock-apicollectionsgetcollection-workspace-collection)
-* [`rock api:collections:listCollections`](#rock-apicollectionslistcollections)
-* [`rock api:collections:listQueryLambdasInCollection [WORKSPACE] [COLLECTION]`](#rock-apicollectionslistquerylambdasincollection-workspace-collection)
-* [`rock api:collections:workspaceCollections [WORKSPACE]`](#rock-apicollectionsworkspacecollections-workspace)
-* [`rock api:documents:addDocuments [WORKSPACE] [COLLECTION] [BODY]`](#rock-apidocumentsadddocuments-workspace-collection-body)
-* [`rock api:documents:deleteDocuments [WORKSPACE] [COLLECTION] [BODY]`](#rock-apidocumentsdeletedocuments-workspace-collection-body)
-* [`rock api:documents:patchDocuments [WORKSPACE] [COLLECTION] [BODY]`](#rock-apidocumentspatchdocuments-workspace-collection-body)
-* [`rock api:integrations:createIntegration [BODY]`](#rock-apiintegrationscreateintegration-body)
-* [`rock api:integrations:deleteIntegration [INTEGRATION]`](#rock-apiintegrationsdeleteintegration-integration)
-* [`rock api:integrations:getIntegration [INTEGRATION]`](#rock-apiintegrationsgetintegration-integration)
-* [`rock api:integrations:listIntegrations`](#rock-apiintegrationslistintegrations)
-* [`rock api:orgs:getOrganization`](#rock-apiorgsgetorganization)
-* [`rock api:queries:query [BODY]`](#rock-apiqueriesquery-body)
-* [`rock api:queryLambdas:createQueryLambda [WORKSPACE] [BODY]`](#rock-apiquerylambdascreatequerylambda-workspace-body)
-* [`rock api:queryLambdas:deleteQueryLambda [WORKSPACE] [QUERYLAMBDA]`](#rock-apiquerylambdasdeletequerylambda-workspace-querylambda)
-* [`rock api:queryLambdas:executeQueryLambda [WORKSPACE] [QUERYLAMBDA] [VERSION] [BODY]`](#rock-apiquerylambdasexecutequerylambda-workspace-querylambda-version-body)
-* [`rock api:queryLambdas:getQueryLambdaVersion [WORKSPACE] [QUERYLAMBDA] [VERSION]`](#rock-apiquerylambdasgetquerylambdaversion-workspace-querylambda-version)
-* [`rock api:queryLambdas:listAllQueryLambdas`](#rock-apiquerylambdaslistallquerylambdas)
-* [`rock api:queryLambdas:listQueryLambdaVersions [WORKSPACE] [QUERYLAMBDA]`](#rock-apiquerylambdaslistquerylambdaversions-workspace-querylambda)
-* [`rock api:queryLambdas:listQueryLambdasInWorkspace [WORKSPACE]`](#rock-apiquerylambdaslistquerylambdasinworkspace-workspace)
-* [`rock api:queryLambdas:updateQueryLambda [WORKSPACE] [QUERYLAMBDA] [BODY]`](#rock-apiquerylambdasupdatequerylambda-workspace-querylambda-body)
-* [`rock api:users:createUser [BODY]`](#rock-apiuserscreateuser-body)
-* [`rock api:users:deleteUser [USER]`](#rock-apiusersdeleteuser-user)
-* [`rock api:users:getCurrentUser`](#rock-apiusersgetcurrentuser)
-* [`rock api:users:listUsers`](#rock-apiuserslistusers)
-* [`rock api:workspaces:childWorkspaces [WORKSPACE]`](#rock-apiworkspaceschildworkspaces-workspace)
-* [`rock api:workspaces:createWorkspace [BODY]`](#rock-apiworkspacescreateworkspace-body)
-* [`rock api:workspaces:deleteWorkspace [WORKSPACE]`](#rock-apiworkspacesdeleteworkspace-workspace)
-* [`rock api:workspaces:getWorkspace [WORKSPACE]`](#rock-apiworkspacesgetworkspace-workspace)
-* [`rock api:workspaces:listWorkspaces`](#rock-apiworkspaceslistworkspaces)
-* [`rock auth:add NAME APIKEY [APISERVER]`](#rock-authadd-name-apikey-apiserver)
-* [`rock auth:list`](#rock-authlist)
-* [`rock auth:use NAME`](#rock-authuse-name)
-* [`rock autocomplete [SHELL]`](#rock-autocomplete-shell)
-* [`rock help [COMMAND]`](#rock-help-command)
-* [`rock project:add NAME`](#rock-projectadd-name)
-* [`rock project:delete`](#rock-projectdelete)
-* [`rock project:deploy`](#rock-projectdeploy)
-* [`rock project:download`](#rock-projectdownload)
-* [`rock project:execute NAME`](#rock-projectexecute-name)
-* [`rock project:init`](#rock-projectinit)
-* [`rock project:list`](#rock-projectlist)
-* [`rock project:resolve NAME`](#rock-projectresolve-name)
-* [`rock project:serve`](#rock-projectserve)
-* [`rock update [CHANNEL]`](#rock-update-channel)
+* [`rockset api:apikeys:createApiKey [BODY]`](#rockset-apiapikeyscreateapikey-body)
+* [`rockset api:apikeys:createApiKeyAdmin [BODY] [USER]`](#rockset-apiapikeyscreateapikeyadmin-body-user)
+* [`rockset api:apikeys:deleteApiKey [NAME]`](#rockset-apiapikeysdeleteapikey-name)
+* [`rockset api:apikeys:deleteApiKeyAdmin [NAME] [USER]`](#rockset-apiapikeysdeleteapikeyadmin-name-user)
+* [`rockset api:apikeys:listApiKeys`](#rockset-apiapikeyslistapikeys)
+* [`rockset api:apikeys:listApiKeysAdmin [USER]`](#rockset-apiapikeyslistapikeysadmin-user)
+* [`rockset api:collections:createCollection [WORKSPACE] [BODY]`](#rockset-apicollectionscreatecollection-workspace-body)
+* [`rockset api:collections:deleteCollection [WORKSPACE] [COLLECTION]`](#rockset-apicollectionsdeletecollection-workspace-collection)
+* [`rockset api:collections:getCollection [WORKSPACE] [COLLECTION]`](#rockset-apicollectionsgetcollection-workspace-collection)
+* [`rockset api:collections:listCollections`](#rockset-apicollectionslistcollections)
+* [`rockset api:collections:listQueryLambdasInCollection [WORKSPACE] [COLLECTION]`](#rockset-apicollectionslistquerylambdasincollection-workspace-collection)
+* [`rockset api:collections:workspaceCollections [WORKSPACE]`](#rockset-apicollectionsworkspacecollections-workspace)
+* [`rockset api:documents:addDocuments [WORKSPACE] [COLLECTION] [BODY]`](#rockset-apidocumentsadddocuments-workspace-collection-body)
+* [`rockset api:documents:deleteDocuments [WORKSPACE] [COLLECTION] [BODY]`](#rockset-apidocumentsdeletedocuments-workspace-collection-body)
+* [`rockset api:documents:patchDocuments [WORKSPACE] [COLLECTION] [BODY]`](#rockset-apidocumentspatchdocuments-workspace-collection-body)
+* [`rockset api:integrations:createIntegration [BODY]`](#rockset-apiintegrationscreateintegration-body)
+* [`rockset api:integrations:deleteIntegration [INTEGRATION]`](#rockset-apiintegrationsdeleteintegration-integration)
+* [`rockset api:integrations:getIntegration [INTEGRATION]`](#rockset-apiintegrationsgetintegration-integration)
+* [`rockset api:integrations:listIntegrations`](#rockset-apiintegrationslistintegrations)
+* [`rockset api:orgs:getOrganization`](#rockset-apiorgsgetorganization)
+* [`rockset api:queries:query [BODY]`](#rockset-apiqueriesquery-body)
+* [`rockset api:queryLambdas:createQueryLambda [WORKSPACE] [BODY]`](#rockset-apiquerylambdascreatequerylambda-workspace-body)
+* [`rockset api:queryLambdas:deleteQueryLambda [WORKSPACE] [QUERYLAMBDA]`](#rockset-apiquerylambdasdeletequerylambda-workspace-querylambda)
+* [`rockset api:queryLambdas:executeQueryLambda [WORKSPACE] [QUERYLAMBDA] [VERSION] [BODY]`](#rockset-apiquerylambdasexecutequerylambda-workspace-querylambda-version-body)
+* [`rockset api:queryLambdas:getQueryLambdaVersion [WORKSPACE] [QUERYLAMBDA] [VERSION]`](#rockset-apiquerylambdasgetquerylambdaversion-workspace-querylambda-version)
+* [`rockset api:queryLambdas:listAllQueryLambdas`](#rockset-apiquerylambdaslistallquerylambdas)
+* [`rockset api:queryLambdas:listQueryLambdaVersions [WORKSPACE] [QUERYLAMBDA]`](#rockset-apiquerylambdaslistquerylambdaversions-workspace-querylambda)
+* [`rockset api:queryLambdas:listQueryLambdasInWorkspace [WORKSPACE]`](#rockset-apiquerylambdaslistquerylambdasinworkspace-workspace)
+* [`rockset api:queryLambdas:updateQueryLambda [WORKSPACE] [QUERYLAMBDA] [BODY]`](#rockset-apiquerylambdasupdatequerylambda-workspace-querylambda-body)
+* [`rockset api:users:createUser [BODY]`](#rockset-apiuserscreateuser-body)
+* [`rockset api:users:deleteUser [USER]`](#rockset-apiusersdeleteuser-user)
+* [`rockset api:users:getCurrentUser`](#rockset-apiusersgetcurrentuser)
+* [`rockset api:users:listUsers`](#rockset-apiuserslistusers)
+* [`rockset api:workspaces:childWorkspaces [WORKSPACE]`](#rockset-apiworkspaceschildworkspaces-workspace)
+* [`rockset api:workspaces:createWorkspace [BODY]`](#rockset-apiworkspacescreateworkspace-body)
+* [`rockset api:workspaces:deleteWorkspace [WORKSPACE]`](#rockset-apiworkspacesdeleteworkspace-workspace)
+* [`rockset api:workspaces:getWorkspace [WORKSPACE]`](#rockset-apiworkspacesgetworkspace-workspace)
+* [`rockset api:workspaces:listWorkspaces`](#rockset-apiworkspaceslistworkspaces)
+* [`rockset auth:add NAME APIKEY [APISERVER]`](#rockset-authadd-name-apikey-apiserver)
+* [`rockset auth:list`](#rockset-authlist)
+* [`rockset auth:use NAME`](#rockset-authuse-name)
+* [`rockset autocomplete [SHELL]`](#rockset-autocomplete-shell)
+* [`rockset help [COMMAND]`](#rockset-help-command)
+* [`rockset project:add NAME`](#rockset-projectadd-name)
+* [`rockset project:delete`](#rockset-projectdelete)
+* [`rockset project:deploy`](#rockset-projectdeploy)
+* [`rockset project:download`](#rockset-projectdownload)
+* [`rockset project:execute NAME`](#rockset-projectexecute-name)
+* [`rockset project:init`](#rockset-projectinit)
+* [`rockset project:list`](#rockset-projectlist)
+* [`rockset project:resolve NAME`](#rockset-projectresolve-name)
+* [`rockset project:serve`](#rockset-projectserve)
+* [`rockset sql [SQL]`](#rockset-sql-sql)
+* [`rockset update [CHANNEL]`](#rockset-update-channel)
 
-## `rock api:apikeys:createApiKey [BODY]`
+## `rockset api:apikeys:createApiKey [BODY]`
 
 Create API Key
 
 ```
 USAGE
-  $ rock api:apikeys:createApiKey [BODY]
+  $ rockset api:apikeys:createApiKey [BODY]
 
 ARGUMENTS
   BODY  JSON object
@@ -166,6 +167,8 @@ OPTIONS
   --csv                   output is csv format [alias: --output=csv]
 
   --filter=filter         filter property by partial string matching, ex: name=foo
+
+  --full                  Show the full results JSON object
 
   --no-header             hide table header from output
 
@@ -189,13 +192,13 @@ DESCRIPTION
 
 _See code: [src/commands/api/apikeys/createApiKey.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/api/apikeys/createApiKey.ts)_
 
-## `rock api:apikeys:createApiKeyAdmin [BODY] [USER]`
+## `rockset api:apikeys:createApiKeyAdmin [BODY] [USER]`
 
 Create API Key for any user (admin only)
 
 ```
 USAGE
-  $ rock api:apikeys:createApiKeyAdmin [BODY] [USER]
+  $ rockset api:apikeys:createApiKeyAdmin [BODY] [USER]
 
 ARGUMENTS
   BODY  JSON object
@@ -215,6 +218,8 @@ OPTIONS
   --csv                   output is csv format [alias: --output=csv]
 
   --filter=filter         filter property by partial string matching, ex: name=foo
+
+  --full                  Show the full results JSON object
 
   --no-header             hide table header from output
 
@@ -238,13 +243,13 @@ DESCRIPTION
 
 _See code: [src/commands/api/apikeys/createApiKeyAdmin.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/api/apikeys/createApiKeyAdmin.ts)_
 
-## `rock api:apikeys:deleteApiKey [NAME]`
+## `rockset api:apikeys:deleteApiKey [NAME]`
 
 Delete API Key
 
 ```
 USAGE
-  $ rock api:apikeys:deleteApiKey [NAME]
+  $ rockset api:apikeys:deleteApiKey [NAME]
 
 ARGUMENTS
   NAME  name of the API key
@@ -263,6 +268,8 @@ OPTIONS
   --csv                   output is csv format [alias: --output=csv]
 
   --filter=filter         filter property by partial string matching, ex: name=foo
+
+  --full                  Show the full results JSON object
 
   --no-header             hide table header from output
 
@@ -286,13 +293,13 @@ DESCRIPTION
 
 _See code: [src/commands/api/apikeys/deleteApiKey.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/api/apikeys/deleteApiKey.ts)_
 
-## `rock api:apikeys:deleteApiKeyAdmin [NAME] [USER]`
+## `rockset api:apikeys:deleteApiKeyAdmin [NAME] [USER]`
 
 Delete API Key for any user (admin only)
 
 ```
 USAGE
-  $ rock api:apikeys:deleteApiKeyAdmin [NAME] [USER]
+  $ rockset api:apikeys:deleteApiKeyAdmin [NAME] [USER]
 
 ARGUMENTS
   NAME  name of the API key
@@ -312,6 +319,8 @@ OPTIONS
   --csv                   output is csv format [alias: --output=csv]
 
   --filter=filter         filter property by partial string matching, ex: name=foo
+
+  --full                  Show the full results JSON object
 
   --no-header             hide table header from output
 
@@ -335,13 +344,13 @@ DESCRIPTION
 
 _See code: [src/commands/api/apikeys/deleteApiKeyAdmin.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/api/apikeys/deleteApiKeyAdmin.ts)_
 
-## `rock api:apikeys:listApiKeys`
+## `rockset api:apikeys:listApiKeys`
 
 List API Keys
 
 ```
 USAGE
-  $ rock api:apikeys:listApiKeys
+  $ rockset api:apikeys:listApiKeys
 
 OPTIONS
   -f, --file=file         The config file to execute this command from. Format must be json. Keys are translated into
@@ -357,6 +366,8 @@ OPTIONS
   --csv                   output is csv format [alias: --output=csv]
 
   --filter=filter         filter property by partial string matching, ex: name=foo
+
+  --full                  Show the full results JSON object
 
   --no-header             hide table header from output
 
@@ -380,13 +391,13 @@ DESCRIPTION
 
 _See code: [src/commands/api/apikeys/listApiKeys.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/api/apikeys/listApiKeys.ts)_
 
-## `rock api:apikeys:listApiKeysAdmin [USER]`
+## `rockset api:apikeys:listApiKeysAdmin [USER]`
 
 List API Keys for any user (admin only)
 
 ```
 USAGE
-  $ rock api:apikeys:listApiKeysAdmin [USER]
+  $ rockset api:apikeys:listApiKeysAdmin [USER]
 
 OPTIONS
   -f, --file=file         The config file to execute this command from. Format must be json. Keys are translated into
@@ -402,6 +413,8 @@ OPTIONS
   --csv                   output is csv format [alias: --output=csv]
 
   --filter=filter         filter property by partial string matching, ex: name=foo
+
+  --full                  Show the full results JSON object
 
   --no-header             hide table header from output
 
@@ -425,13 +438,13 @@ DESCRIPTION
 
 _See code: [src/commands/api/apikeys/listApiKeysAdmin.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/api/apikeys/listApiKeysAdmin.ts)_
 
-## `rock api:collections:createCollection [WORKSPACE] [BODY]`
+## `rockset api:collections:createCollection [WORKSPACE] [BODY]`
 
 Create Collection
 
 ```
 USAGE
-  $ rock api:collections:createCollection [WORKSPACE] [BODY]
+  $ rockset api:collections:createCollection [WORKSPACE] [BODY]
 
 ARGUMENTS
   WORKSPACE  name of the workspace
@@ -451,6 +464,8 @@ OPTIONS
   --csv                   output is csv format [alias: --output=csv]
 
   --filter=filter         filter property by partial string matching, ex: name=foo
+
+  --full                  Show the full results JSON object
 
   --no-header             hide table header from output
 
@@ -474,13 +489,13 @@ DESCRIPTION
 
 _See code: [src/commands/api/collections/createCollection.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/api/collections/createCollection.ts)_
 
-## `rock api:collections:deleteCollection [WORKSPACE] [COLLECTION]`
+## `rockset api:collections:deleteCollection [WORKSPACE] [COLLECTION]`
 
 Delete Collection
 
 ```
 USAGE
-  $ rock api:collections:deleteCollection [WORKSPACE] [COLLECTION]
+  $ rockset api:collections:deleteCollection [WORKSPACE] [COLLECTION]
 
 ARGUMENTS
   WORKSPACE   name of the workspace
@@ -500,6 +515,8 @@ OPTIONS
   --csv                   output is csv format [alias: --output=csv]
 
   --filter=filter         filter property by partial string matching, ex: name=foo
+
+  --full                  Show the full results JSON object
 
   --no-header             hide table header from output
 
@@ -523,13 +540,13 @@ DESCRIPTION
 
 _See code: [src/commands/api/collections/deleteCollection.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/api/collections/deleteCollection.ts)_
 
-## `rock api:collections:getCollection [WORKSPACE] [COLLECTION]`
+## `rockset api:collections:getCollection [WORKSPACE] [COLLECTION]`
 
 Get Collection
 
 ```
 USAGE
-  $ rock api:collections:getCollection [WORKSPACE] [COLLECTION]
+  $ rockset api:collections:getCollection [WORKSPACE] [COLLECTION]
 
 ARGUMENTS
   WORKSPACE   name of the workspace
@@ -549,6 +566,8 @@ OPTIONS
   --csv                   output is csv format [alias: --output=csv]
 
   --filter=filter         filter property by partial string matching, ex: name=foo
+
+  --full                  Show the full results JSON object
 
   --no-header             hide table header from output
 
@@ -572,13 +591,13 @@ DESCRIPTION
 
 _See code: [src/commands/api/collections/getCollection.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/api/collections/getCollection.ts)_
 
-## `rock api:collections:listCollections`
+## `rockset api:collections:listCollections`
 
 List Collections
 
 ```
 USAGE
-  $ rock api:collections:listCollections
+  $ rockset api:collections:listCollections
 
 OPTIONS
   -f, --file=file         The config file to execute this command from. Format must be json. Keys are translated into
@@ -594,6 +613,8 @@ OPTIONS
   --csv                   output is csv format [alias: --output=csv]
 
   --filter=filter         filter property by partial string matching, ex: name=foo
+
+  --full                  Show the full results JSON object
 
   --no-header             hide table header from output
 
@@ -617,13 +638,13 @@ DESCRIPTION
 
 _See code: [src/commands/api/collections/listCollections.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/api/collections/listCollections.ts)_
 
-## `rock api:collections:listQueryLambdasInCollection [WORKSPACE] [COLLECTION]`
+## `rockset api:collections:listQueryLambdasInCollection [WORKSPACE] [COLLECTION]`
 
 Get Query Lambdas
 
 ```
 USAGE
-  $ rock api:collections:listQueryLambdasInCollection [WORKSPACE] [COLLECTION]
+  $ rockset api:collections:listQueryLambdasInCollection [WORKSPACE] [COLLECTION]
 
 ARGUMENTS
   WORKSPACE   name of the workspace
@@ -643,6 +664,8 @@ OPTIONS
   --csv                   output is csv format [alias: --output=csv]
 
   --filter=filter         filter property by partial string matching, ex: name=foo
+
+  --full                  Show the full results JSON object
 
   --no-header             hide table header from output
 
@@ -666,13 +689,13 @@ DESCRIPTION
 
 _See code: [src/commands/api/collections/listQueryLambdasInCollection.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/api/collections/listQueryLambdasInCollection.ts)_
 
-## `rock api:collections:workspaceCollections [WORKSPACE]`
+## `rockset api:collections:workspaceCollections [WORKSPACE]`
 
 List Collections for Workspace
 
 ```
 USAGE
-  $ rock api:collections:workspaceCollections [WORKSPACE]
+  $ rockset api:collections:workspaceCollections [WORKSPACE]
 
 ARGUMENTS
   WORKSPACE  name of the workspace
@@ -691,6 +714,8 @@ OPTIONS
   --csv                   output is csv format [alias: --output=csv]
 
   --filter=filter         filter property by partial string matching, ex: name=foo
+
+  --full                  Show the full results JSON object
 
   --no-header             hide table header from output
 
@@ -714,13 +739,13 @@ DESCRIPTION
 
 _See code: [src/commands/api/collections/workspaceCollections.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/api/collections/workspaceCollections.ts)_
 
-## `rock api:documents:addDocuments [WORKSPACE] [COLLECTION] [BODY]`
+## `rockset api:documents:addDocuments [WORKSPACE] [COLLECTION] [BODY]`
 
 Add Documents
 
 ```
 USAGE
-  $ rock api:documents:addDocuments [WORKSPACE] [COLLECTION] [BODY]
+  $ rockset api:documents:addDocuments [WORKSPACE] [COLLECTION] [BODY]
 
 ARGUMENTS
   WORKSPACE   name of the workspace
@@ -746,6 +771,8 @@ OPTIONS
   --csv                          output is csv format [alias: --output=csv]
 
   --filter=filter                filter property by partial string matching, ex: name=foo
+
+  --full                         Show the full results JSON object
 
   --no-header                    hide table header from output
 
@@ -769,13 +796,13 @@ DESCRIPTION
 
 _See code: [src/commands/api/documents/addDocuments.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/api/documents/addDocuments.ts)_
 
-## `rock api:documents:deleteDocuments [WORKSPACE] [COLLECTION] [BODY]`
+## `rockset api:documents:deleteDocuments [WORKSPACE] [COLLECTION] [BODY]`
 
 Delete Documents
 
 ```
 USAGE
-  $ rock api:documents:deleteDocuments [WORKSPACE] [COLLECTION] [BODY]
+  $ rockset api:documents:deleteDocuments [WORKSPACE] [COLLECTION] [BODY]
 
 ARGUMENTS
   WORKSPACE   name of the workspace
@@ -802,6 +829,8 @@ OPTIONS
 
   --filter=filter                filter property by partial string matching, ex: name=foo
 
+  --full                         Show the full results JSON object
+
   --no-header                    hide table header from output
 
   --no-truncate                  do not truncate output to fit screen
@@ -824,13 +853,13 @@ DESCRIPTION
 
 _See code: [src/commands/api/documents/deleteDocuments.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/api/documents/deleteDocuments.ts)_
 
-## `rock api:documents:patchDocuments [WORKSPACE] [COLLECTION] [BODY]`
+## `rockset api:documents:patchDocuments [WORKSPACE] [COLLECTION] [BODY]`
 
 Patch Documents
 
 ```
 USAGE
-  $ rock api:documents:patchDocuments [WORKSPACE] [COLLECTION] [BODY]
+  $ rockset api:documents:patchDocuments [WORKSPACE] [COLLECTION] [BODY]
 
 ARGUMENTS
   WORKSPACE   name of the workspace
@@ -857,6 +886,8 @@ OPTIONS
 
   --filter=filter                filter property by partial string matching, ex: name=foo
 
+  --full                         Show the full results JSON object
+
   --no-header                    hide table header from output
 
   --no-truncate                  do not truncate output to fit screen
@@ -879,13 +910,13 @@ DESCRIPTION
 
 _See code: [src/commands/api/documents/patchDocuments.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/api/documents/patchDocuments.ts)_
 
-## `rock api:integrations:createIntegration [BODY]`
+## `rockset api:integrations:createIntegration [BODY]`
 
 Create Integration
 
 ```
 USAGE
-  $ rock api:integrations:createIntegration [BODY]
+  $ rockset api:integrations:createIntegration [BODY]
 
 ARGUMENTS
   BODY  integration credentials
@@ -904,6 +935,8 @@ OPTIONS
   --csv                   output is csv format [alias: --output=csv]
 
   --filter=filter         filter property by partial string matching, ex: name=foo
+
+  --full                  Show the full results JSON object
 
   --no-header             hide table header from output
 
@@ -927,13 +960,13 @@ DESCRIPTION
 
 _See code: [src/commands/api/integrations/createIntegration.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/api/integrations/createIntegration.ts)_
 
-## `rock api:integrations:deleteIntegration [INTEGRATION]`
+## `rockset api:integrations:deleteIntegration [INTEGRATION]`
 
 Delete Integration
 
 ```
 USAGE
-  $ rock api:integrations:deleteIntegration [INTEGRATION]
+  $ rockset api:integrations:deleteIntegration [INTEGRATION]
 
 ARGUMENTS
   INTEGRATION  name of the integration
@@ -952,6 +985,8 @@ OPTIONS
   --csv                   output is csv format [alias: --output=csv]
 
   --filter=filter         filter property by partial string matching, ex: name=foo
+
+  --full                  Show the full results JSON object
 
   --no-header             hide table header from output
 
@@ -975,13 +1010,13 @@ DESCRIPTION
 
 _See code: [src/commands/api/integrations/deleteIntegration.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/api/integrations/deleteIntegration.ts)_
 
-## `rock api:integrations:getIntegration [INTEGRATION]`
+## `rockset api:integrations:getIntegration [INTEGRATION]`
 
 Get Integration
 
 ```
 USAGE
-  $ rock api:integrations:getIntegration [INTEGRATION]
+  $ rockset api:integrations:getIntegration [INTEGRATION]
 
 ARGUMENTS
   INTEGRATION  name of the integration
@@ -1000,6 +1035,8 @@ OPTIONS
   --csv                   output is csv format [alias: --output=csv]
 
   --filter=filter         filter property by partial string matching, ex: name=foo
+
+  --full                  Show the full results JSON object
 
   --no-header             hide table header from output
 
@@ -1023,13 +1060,13 @@ DESCRIPTION
 
 _See code: [src/commands/api/integrations/getIntegration.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/api/integrations/getIntegration.ts)_
 
-## `rock api:integrations:listIntegrations`
+## `rockset api:integrations:listIntegrations`
 
 List Integrations
 
 ```
 USAGE
-  $ rock api:integrations:listIntegrations
+  $ rockset api:integrations:listIntegrations
 
 OPTIONS
   -f, --file=file         The config file to execute this command from. Format must be json. Keys are translated into
@@ -1045,6 +1082,8 @@ OPTIONS
   --csv                   output is csv format [alias: --output=csv]
 
   --filter=filter         filter property by partial string matching, ex: name=foo
+
+  --full                  Show the full results JSON object
 
   --no-header             hide table header from output
 
@@ -1068,13 +1107,13 @@ DESCRIPTION
 
 _See code: [src/commands/api/integrations/listIntegrations.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/api/integrations/listIntegrations.ts)_
 
-## `rock api:orgs:getOrganization`
+## `rockset api:orgs:getOrganization`
 
 Get Organization
 
 ```
 USAGE
-  $ rock api:orgs:getOrganization
+  $ rockset api:orgs:getOrganization
 
 OPTIONS
   -f, --file=file         The config file to execute this command from. Format must be json. Keys are translated into
@@ -1090,6 +1129,8 @@ OPTIONS
   --csv                   output is csv format [alias: --output=csv]
 
   --filter=filter         filter property by partial string matching, ex: name=foo
+
+  --full                  Show the full results JSON object
 
   --no-header             hide table header from output
 
@@ -1113,13 +1154,13 @@ DESCRIPTION
 
 _See code: [src/commands/api/orgs/getOrganization.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/api/orgs/getOrganization.ts)_
 
-## `rock api:queries:query [BODY]`
+## `rockset api:queries:query [BODY]`
 
 Query
 
 ```
 USAGE
-  $ rock api:queries:query [BODY]
+  $ rockset api:queries:query [BODY]
 
 ARGUMENTS
   BODY  JSON object
@@ -1144,6 +1185,8 @@ OPTIONS
 
   --filter=filter                filter property by partial string matching, ex: name=foo
 
+  --full                         Show the full results JSON object
+
   --no-header                    hide table header from output
 
   --no-truncate                  do not truncate output to fit screen
@@ -1166,13 +1209,13 @@ DESCRIPTION
 
 _See code: [src/commands/api/queries/query.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/api/queries/query.ts)_
 
-## `rock api:queryLambdas:createQueryLambda [WORKSPACE] [BODY]`
+## `rockset api:queryLambdas:createQueryLambda [WORKSPACE] [BODY]`
 
 Create Query Lambda
 
 ```
 USAGE
-  $ rock api:queryLambdas:createQueryLambda [WORKSPACE] [BODY]
+  $ rockset api:queryLambdas:createQueryLambda [WORKSPACE] [BODY]
 
 ARGUMENTS
   WORKSPACE  name of the workspace
@@ -1198,6 +1241,8 @@ OPTIONS
 
   --filter=filter                filter property by partial string matching, ex: name=foo
 
+  --full                         Show the full results JSON object
+
   --no-header                    hide table header from output
 
   --no-truncate                  do not truncate output to fit screen
@@ -1220,13 +1265,13 @@ DESCRIPTION
 
 _See code: [src/commands/api/queryLambdas/createQueryLambda.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/api/queryLambdas/createQueryLambda.ts)_
 
-## `rock api:queryLambdas:deleteQueryLambda [WORKSPACE] [QUERYLAMBDA]`
+## `rockset api:queryLambdas:deleteQueryLambda [WORKSPACE] [QUERYLAMBDA]`
 
 Delete Query Lambda
 
 ```
 USAGE
-  $ rock api:queryLambdas:deleteQueryLambda [WORKSPACE] [QUERYLAMBDA]
+  $ rockset api:queryLambdas:deleteQueryLambda [WORKSPACE] [QUERYLAMBDA]
 
 ARGUMENTS
   WORKSPACE    name of the workspace
@@ -1251,6 +1296,8 @@ OPTIONS
   --csv                          output is csv format [alias: --output=csv]
 
   --filter=filter                filter property by partial string matching, ex: name=foo
+
+  --full                         Show the full results JSON object
 
   --no-header                    hide table header from output
 
@@ -1274,13 +1321,13 @@ DESCRIPTION
 
 _See code: [src/commands/api/queryLambdas/deleteQueryLambda.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/api/queryLambdas/deleteQueryLambda.ts)_
 
-## `rock api:queryLambdas:executeQueryLambda [WORKSPACE] [QUERYLAMBDA] [VERSION] [BODY]`
+## `rockset api:queryLambdas:executeQueryLambda [WORKSPACE] [QUERYLAMBDA] [VERSION] [BODY]`
 
 Run Query Lambda
 
 ```
 USAGE
-  $ rock api:queryLambdas:executeQueryLambda [WORKSPACE] [QUERYLAMBDA] [VERSION] [BODY]
+  $ rockset api:queryLambdas:executeQueryLambda [WORKSPACE] [QUERYLAMBDA] [VERSION] [BODY]
 
 ARGUMENTS
   WORKSPACE    name of the workspace
@@ -1307,6 +1354,8 @@ OPTIONS
   --csv                          output is csv format [alias: --output=csv]
 
   --filter=filter                filter property by partial string matching, ex: name=foo
+
+  --full                         Show the full results JSON object
 
   --no-header                    hide table header from output
 
@@ -1330,13 +1379,13 @@ DESCRIPTION
 
 _See code: [src/commands/api/queryLambdas/executeQueryLambda.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/api/queryLambdas/executeQueryLambda.ts)_
 
-## `rock api:queryLambdas:getQueryLambdaVersion [WORKSPACE] [QUERYLAMBDA] [VERSION]`
+## `rockset api:queryLambdas:getQueryLambdaVersion [WORKSPACE] [QUERYLAMBDA] [VERSION]`
 
 Get Query Lambda Version
 
 ```
 USAGE
-  $ rock api:queryLambdas:getQueryLambdaVersion [WORKSPACE] [QUERYLAMBDA] [VERSION]
+  $ rockset api:queryLambdas:getQueryLambdaVersion [WORKSPACE] [QUERYLAMBDA] [VERSION]
 
 ARGUMENTS
   WORKSPACE    name of the workspace
@@ -1363,6 +1412,8 @@ OPTIONS
 
   --filter=filter                filter property by partial string matching, ex: name=foo
 
+  --full                         Show the full results JSON object
+
   --no-header                    hide table header from output
 
   --no-truncate                  do not truncate output to fit screen
@@ -1385,13 +1436,13 @@ DESCRIPTION
 
 _See code: [src/commands/api/queryLambdas/getQueryLambdaVersion.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/api/queryLambdas/getQueryLambdaVersion.ts)_
 
-## `rock api:queryLambdas:listAllQueryLambdas`
+## `rockset api:queryLambdas:listAllQueryLambdas`
 
 List Query Lambdas
 
 ```
 USAGE
-  $ rock api:queryLambdas:listAllQueryLambdas
+  $ rockset api:queryLambdas:listAllQueryLambdas
 
 OPTIONS
   -f, --file=file                The config file to execute this command from. Format must be json. Keys are translated
@@ -1412,6 +1463,8 @@ OPTIONS
   --csv                          output is csv format [alias: --output=csv]
 
   --filter=filter                filter property by partial string matching, ex: name=foo
+
+  --full                         Show the full results JSON object
 
   --no-header                    hide table header from output
 
@@ -1435,13 +1488,13 @@ DESCRIPTION
 
 _See code: [src/commands/api/queryLambdas/listAllQueryLambdas.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/api/queryLambdas/listAllQueryLambdas.ts)_
 
-## `rock api:queryLambdas:listQueryLambdaVersions [WORKSPACE] [QUERYLAMBDA]`
+## `rockset api:queryLambdas:listQueryLambdaVersions [WORKSPACE] [QUERYLAMBDA]`
 
 List Query Lambda Versions
 
 ```
 USAGE
-  $ rock api:queryLambdas:listQueryLambdaVersions [WORKSPACE] [QUERYLAMBDA]
+  $ rockset api:queryLambdas:listQueryLambdaVersions [WORKSPACE] [QUERYLAMBDA]
 
 ARGUMENTS
   WORKSPACE    name of the workspace
@@ -1467,6 +1520,8 @@ OPTIONS
 
   --filter=filter                filter property by partial string matching, ex: name=foo
 
+  --full                         Show the full results JSON object
+
   --no-header                    hide table header from output
 
   --no-truncate                  do not truncate output to fit screen
@@ -1489,13 +1544,13 @@ DESCRIPTION
 
 _See code: [src/commands/api/queryLambdas/listQueryLambdaVersions.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/api/queryLambdas/listQueryLambdaVersions.ts)_
 
-## `rock api:queryLambdas:listQueryLambdasInWorkspace [WORKSPACE]`
+## `rockset api:queryLambdas:listQueryLambdasInWorkspace [WORKSPACE]`
 
 List Query Lambdas
 
 ```
 USAGE
-  $ rock api:queryLambdas:listQueryLambdasInWorkspace [WORKSPACE]
+  $ rockset api:queryLambdas:listQueryLambdasInWorkspace [WORKSPACE]
 
 ARGUMENTS
   WORKSPACE  name of the workspace
@@ -1520,6 +1575,8 @@ OPTIONS
 
   --filter=filter                filter property by partial string matching, ex: name=foo
 
+  --full                         Show the full results JSON object
+
   --no-header                    hide table header from output
 
   --no-truncate                  do not truncate output to fit screen
@@ -1542,13 +1599,13 @@ DESCRIPTION
 
 _See code: [src/commands/api/queryLambdas/listQueryLambdasInWorkspace.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/api/queryLambdas/listQueryLambdasInWorkspace.ts)_
 
-## `rock api:queryLambdas:updateQueryLambda [WORKSPACE] [QUERYLAMBDA] [BODY]`
+## `rockset api:queryLambdas:updateQueryLambda [WORKSPACE] [QUERYLAMBDA] [BODY]`
 
 Update Query Lambda
 
 ```
 USAGE
-  $ rock api:queryLambdas:updateQueryLambda [WORKSPACE] [QUERYLAMBDA] [BODY]
+  $ rockset api:queryLambdas:updateQueryLambda [WORKSPACE] [QUERYLAMBDA] [BODY]
 
 ARGUMENTS
   WORKSPACE    name of the workspace
@@ -1575,6 +1632,8 @@ OPTIONS
 
   --filter=filter                filter property by partial string matching, ex: name=foo
 
+  --full                         Show the full results JSON object
+
   --no-header                    hide table header from output
 
   --no-truncate                  do not truncate output to fit screen
@@ -1597,13 +1656,13 @@ DESCRIPTION
 
 _See code: [src/commands/api/queryLambdas/updateQueryLambda.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/api/queryLambdas/updateQueryLambda.ts)_
 
-## `rock api:users:createUser [BODY]`
+## `rockset api:users:createUser [BODY]`
 
 Create User
 
 ```
 USAGE
-  $ rock api:users:createUser [BODY]
+  $ rockset api:users:createUser [BODY]
 
 ARGUMENTS
   BODY  JSON object
@@ -1622,6 +1681,8 @@ OPTIONS
   --csv                   output is csv format [alias: --output=csv]
 
   --filter=filter         filter property by partial string matching, ex: name=foo
+
+  --full                  Show the full results JSON object
 
   --no-header             hide table header from output
 
@@ -1645,13 +1706,13 @@ DESCRIPTION
 
 _See code: [src/commands/api/users/createUser.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/api/users/createUser.ts)_
 
-## `rock api:users:deleteUser [USER]`
+## `rockset api:users:deleteUser [USER]`
 
 Delete User
 
 ```
 USAGE
-  $ rock api:users:deleteUser [USER]
+  $ rockset api:users:deleteUser [USER]
 
 ARGUMENTS
   USER  user email
@@ -1670,6 +1731,8 @@ OPTIONS
   --csv                   output is csv format [alias: --output=csv]
 
   --filter=filter         filter property by partial string matching, ex: name=foo
+
+  --full                  Show the full results JSON object
 
   --no-header             hide table header from output
 
@@ -1693,13 +1756,13 @@ DESCRIPTION
 
 _See code: [src/commands/api/users/deleteUser.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/api/users/deleteUser.ts)_
 
-## `rock api:users:getCurrentUser`
+## `rockset api:users:getCurrentUser`
 
 Get Current User
 
 ```
 USAGE
-  $ rock api:users:getCurrentUser
+  $ rockset api:users:getCurrentUser
 
 OPTIONS
   -f, --file=file         The config file to execute this command from. Format must be json. Keys are translated into
@@ -1715,6 +1778,8 @@ OPTIONS
   --csv                   output is csv format [alias: --output=csv]
 
   --filter=filter         filter property by partial string matching, ex: name=foo
+
+  --full                  Show the full results JSON object
 
   --no-header             hide table header from output
 
@@ -1738,13 +1803,13 @@ DESCRIPTION
 
 _See code: [src/commands/api/users/getCurrentUser.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/api/users/getCurrentUser.ts)_
 
-## `rock api:users:listUsers`
+## `rockset api:users:listUsers`
 
 List Users
 
 ```
 USAGE
-  $ rock api:users:listUsers
+  $ rockset api:users:listUsers
 
 OPTIONS
   -f, --file=file         The config file to execute this command from. Format must be json. Keys are translated into
@@ -1760,6 +1825,8 @@ OPTIONS
   --csv                   output is csv format [alias: --output=csv]
 
   --filter=filter         filter property by partial string matching, ex: name=foo
+
+  --full                  Show the full results JSON object
 
   --no-header             hide table header from output
 
@@ -1783,13 +1850,13 @@ DESCRIPTION
 
 _See code: [src/commands/api/users/listUsers.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/api/users/listUsers.ts)_
 
-## `rock api:workspaces:childWorkspaces [WORKSPACE]`
+## `rockset api:workspaces:childWorkspaces [WORKSPACE]`
 
 List Workspaces
 
 ```
 USAGE
-  $ rock api:workspaces:childWorkspaces [WORKSPACE]
+  $ rockset api:workspaces:childWorkspaces [WORKSPACE]
 
 ARGUMENTS
   WORKSPACE  name of the workspace
@@ -1808,6 +1875,8 @@ OPTIONS
   --csv                   output is csv format [alias: --output=csv]
 
   --filter=filter         filter property by partial string matching, ex: name=foo
+
+  --full                  Show the full results JSON object
 
   --no-header             hide table header from output
 
@@ -1831,13 +1900,13 @@ DESCRIPTION
 
 _See code: [src/commands/api/workspaces/childWorkspaces.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/api/workspaces/childWorkspaces.ts)_
 
-## `rock api:workspaces:createWorkspace [BODY]`
+## `rockset api:workspaces:createWorkspace [BODY]`
 
 Create Workspace
 
 ```
 USAGE
-  $ rock api:workspaces:createWorkspace [BODY]
+  $ rockset api:workspaces:createWorkspace [BODY]
 
 ARGUMENTS
   BODY  workspace details
@@ -1856,6 +1925,8 @@ OPTIONS
   --csv                   output is csv format [alias: --output=csv]
 
   --filter=filter         filter property by partial string matching, ex: name=foo
+
+  --full                  Show the full results JSON object
 
   --no-header             hide table header from output
 
@@ -1879,13 +1950,13 @@ DESCRIPTION
 
 _See code: [src/commands/api/workspaces/createWorkspace.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/api/workspaces/createWorkspace.ts)_
 
-## `rock api:workspaces:deleteWorkspace [WORKSPACE]`
+## `rockset api:workspaces:deleteWorkspace [WORKSPACE]`
 
 Delete Workspace
 
 ```
 USAGE
-  $ rock api:workspaces:deleteWorkspace [WORKSPACE]
+  $ rockset api:workspaces:deleteWorkspace [WORKSPACE]
 
 ARGUMENTS
   WORKSPACE  name of the workspace
@@ -1904,6 +1975,8 @@ OPTIONS
   --csv                   output is csv format [alias: --output=csv]
 
   --filter=filter         filter property by partial string matching, ex: name=foo
+
+  --full                  Show the full results JSON object
 
   --no-header             hide table header from output
 
@@ -1927,13 +2000,13 @@ DESCRIPTION
 
 _See code: [src/commands/api/workspaces/deleteWorkspace.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/api/workspaces/deleteWorkspace.ts)_
 
-## `rock api:workspaces:getWorkspace [WORKSPACE]`
+## `rockset api:workspaces:getWorkspace [WORKSPACE]`
 
 Get Workspace
 
 ```
 USAGE
-  $ rock api:workspaces:getWorkspace [WORKSPACE]
+  $ rockset api:workspaces:getWorkspace [WORKSPACE]
 
 ARGUMENTS
   WORKSPACE  name of the workspace
@@ -1952,6 +2025,8 @@ OPTIONS
   --csv                   output is csv format [alias: --output=csv]
 
   --filter=filter         filter property by partial string matching, ex: name=foo
+
+  --full                  Show the full results JSON object
 
   --no-header             hide table header from output
 
@@ -1975,13 +2050,13 @@ DESCRIPTION
 
 _See code: [src/commands/api/workspaces/getWorkspace.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/api/workspaces/getWorkspace.ts)_
 
-## `rock api:workspaces:listWorkspaces`
+## `rockset api:workspaces:listWorkspaces`
 
 List Workspaces
 
 ```
 USAGE
-  $ rock api:workspaces:listWorkspaces
+  $ rockset api:workspaces:listWorkspaces
 
 OPTIONS
   -f, --file=file         The config file to execute this command from. Format must be json. Keys are translated into
@@ -1997,6 +2072,8 @@ OPTIONS
   --csv                   output is csv format [alias: --output=csv]
 
   --filter=filter         filter property by partial string matching, ex: name=foo
+
+  --full                  Show the full results JSON object
 
   --no-header             hide table header from output
 
@@ -2020,13 +2097,13 @@ DESCRIPTION
 
 _See code: [src/commands/api/workspaces/listWorkspaces.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/api/workspaces/listWorkspaces.ts)_
 
-## `rock auth:add NAME APIKEY [APISERVER]`
+## `rockset auth:add NAME APIKEY [APISERVER]`
 
 Create a new profile with the specified name and apikey.
 
 ```
 USAGE
-  $ rock auth:add NAME APIKEY [APISERVER]
+  $ rockset auth:add NAME APIKEY [APISERVER]
 
 ARGUMENTS
   NAME       The name of the profile you wish to create.
@@ -2043,13 +2120,13 @@ DESCRIPTION
 
 _See code: [src/commands/auth/add.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/auth/add.ts)_
 
-## `rock auth:list`
+## `rockset auth:list`
 
 List all of the available profiles.
 
 ```
 USAGE
-  $ rock auth:list
+  $ rockset auth:list
 
 OPTIONS
   -h, --help  show CLI help
@@ -2060,13 +2137,13 @@ DESCRIPTION
 
 _See code: [src/commands/auth/list.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/auth/list.ts)_
 
-## `rock auth:use NAME`
+## `rockset auth:use NAME`
 
 Use a specific authentication profile.
 
 ```
 USAGE
-  $ rock auth:use NAME
+  $ rockset auth:use NAME
 
 ARGUMENTS
   NAME  The name of the profile you wish to use.
@@ -2080,13 +2157,13 @@ DESCRIPTION
 
 _See code: [src/commands/auth/use.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/auth/use.ts)_
 
-## `rock autocomplete [SHELL]`
+## `rockset autocomplete [SHELL]`
 
 display autocomplete installation instructions
 
 ```
 USAGE
-  $ rock autocomplete [SHELL]
+  $ rockset autocomplete [SHELL]
 
 ARGUMENTS
   SHELL  shell type
@@ -2095,21 +2172,21 @@ OPTIONS
   -r, --refresh-cache  Refresh cache (ignores displaying instructions)
 
 EXAMPLES
-  $ rock autocomplete
-  $ rock autocomplete bash
-  $ rock autocomplete zsh
-  $ rock autocomplete --refresh-cache
+  $ rockset autocomplete
+  $ rockset autocomplete bash
+  $ rockset autocomplete zsh
+  $ rockset autocomplete --refresh-cache
 ```
 
 _See code: [@oclif/plugin-autocomplete](https://github.com/oclif/plugin-autocomplete/blob/v0.2.0/src/commands/autocomplete/index.ts)_
 
-## `rock help [COMMAND]`
+## `rockset help [COMMAND]`
 
-display help for rock
+display help for rockset
 
 ```
 USAGE
-  $ rock help [COMMAND]
+  $ rockset help [COMMAND]
 
 ARGUMENTS
   COMMAND  command to show help for
@@ -2120,13 +2197,13 @@ OPTIONS
 
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v2.2.3/src/commands/help.ts)_
 
-## `rock project:add NAME`
+## `rockset project:add NAME`
 
 Add an empty entity with the specified name to the project. The path for the entity is the same
 
 ```
 USAGE
-  $ rock project:add NAME
+  $ rockset project:add NAME
 
 ARGUMENTS
   NAME  The fully qualified name of the entity you wish to resolve
@@ -2137,18 +2214,18 @@ OPTIONS
 
 DESCRIPTION
   Add an empty entity with the specified name to the project. The path for the entity is the same
-     as would be created with 'rock project:resolve'
+     as would be created with 'rockset project:resolve'
 ```
 
 _See code: [src/commands/project/add.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/project/add.ts)_
 
-## `rock project:delete`
+## `rockset project:delete`
 
 Delete all query lambdas from the project.
 
 ```
 USAGE
-  $ rock project:delete
+  $ rockset project:delete
 
 OPTIONS
   -h, --help  show CLI help
@@ -2160,13 +2237,13 @@ DESCRIPTION
 
 _See code: [src/commands/project/delete.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/project/delete.ts)_
 
-## `rock project:deploy`
+## `rockset project:deploy`
 
 Deploy Query Lambda entities to Rockset from your local project.
 
 ```
 USAGE
-  $ rock project:deploy
+  $ rockset project:deploy
 
 OPTIONS
   -h, --help                                                                show CLI help
@@ -2179,13 +2256,13 @@ DESCRIPTION
 
 _See code: [src/commands/project/deploy.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/project/deploy.ts)_
 
-## `rock project:download`
+## `rockset project:download`
 
 Download Query Lambda entities from Rockset to your local project.
 
 ```
 USAGE
-  $ rock project:download
+  $ rockset project:download
 
 OPTIONS
   -h, --help                                                                            show CLI help
@@ -2199,13 +2276,13 @@ DESCRIPTION
 
 _See code: [src/commands/project/download.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/project/download.ts)_
 
-## `rock project:execute NAME`
+## `rockset project:execute NAME`
 
 Execute a specific version of a Query Lambda in the current project.
 
 ```
 USAGE
-  $ rock project:execute NAME
+  $ rockset project:execute NAME
 
 ARGUMENTS
   NAME  The fully qualified name of the Query Lambda you wish to execute
@@ -2223,13 +2300,13 @@ DESCRIPTION
 
 _See code: [src/commands/project/execute.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/project/execute.ts)_
 
-## `rock project:init`
+## `rockset project:init`
 
 Initialize your project.
 
 ```
 USAGE
-  $ rock project:init
+  $ rockset project:init
 
 OPTIONS
   -h, --help  show CLI help
@@ -2242,13 +2319,13 @@ DESCRIPTION
 
 _See code: [src/commands/project/init.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/project/init.ts)_
 
-## `rock project:list`
+## `rockset project:list`
 
 List all of the entities in the current project. Note: this does not list entities on remote. For that, please use
 
 ```
 USAGE
-  $ rock project:list
+  $ rockset project:list
 
 OPTIONS
   -e, --entity=lambda  [default: lambda] the type of entity you wish to list
@@ -2256,18 +2333,18 @@ OPTIONS
 
 DESCRIPTION
   List all of the entities in the current project. Note: this does not list entities on remote. For that, please use
-     the API endpoints present in 'rock api:...'
+     the API endpoints present in 'rockset api:...'
 ```
 
 _See code: [src/commands/project/list.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/project/list.ts)_
 
-## `rock project:resolve NAME`
+## `rockset project:resolve NAME`
 
 Resolve the absolute path of an entity in the current project.
 
 ```
 USAGE
-  $ rock project:resolve NAME
+  $ rockset project:resolve NAME
 
 ARGUMENTS
   NAME  The fully qualified name of the entity you wish to resolve
@@ -2288,13 +2365,13 @@ DESCRIPTION
 
 _See code: [src/commands/project/resolve.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/project/resolve.ts)_
 
-## `rock project:serve`
+## `rockset project:serve`
 
 Start a development server that allows you to execute Query Lambdas from your local project from a development UI.
 
 ```
 USAGE
-  $ rock project:serve
+  $ rockset project:serve
 
 OPTIONS
   -h, --help       show CLI help
@@ -2306,13 +2383,60 @@ DESCRIPTION
 
 _See code: [src/commands/project/serve.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/project/serve.ts)_
 
-## `rock update [CHANNEL]`
+## `rockset sql [SQL]`
 
-update the rock CLI
+Execute a SQL expression.
 
 ```
 USAGE
-  $ rock update [CHANNEL]
+  $ rockset sql [SQL]
+
+ARGUMENTS
+  SQL  Rockset SQL string to execute
+
+OPTIONS
+  -h, --help                       show CLI help
+
+  -l, --defaultLimit=defaultLimit  Set the default row limit property on the query. This will set a default limit on the
+                                   query that can be overrided by a limit in the SQL text.
+
+  -x, --extended                   show extra columns
+
+  --columns=columns                only show provided columns (comma-separated)
+
+  --csv                            output is csv format [alias: --output=csv]
+
+  --filter=filter                  filter property by partial string matching, ex: name=foo
+
+  --no-header                      hide table header from output
+
+  --no-truncate                    do not truncate output to fit screen
+
+  --output=csv|json|yaml           output in a more machine friendly format
+
+  --sort=sort                      property to sort by (prepend '-' for descending)
+
+DESCRIPTION
+  Execute a SQL expression.
+
+EXAMPLE
+
+     // Runs a sql query passed as a string
+     rockset sql QUERY
+
+     // Opens your default editor to edit more complex queries
+     rockset sql -e
+```
+
+_See code: [src/commands/sql.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/sql.ts)_
+
+## `rockset update [CHANNEL]`
+
+update the rockset CLI
+
+```
+USAGE
+  $ rockset update [CHANNEL]
 ```
 
 _See code: [@oclif/plugin-update](https://github.com/oclif/plugin-update/blob/v1.3.10/src/commands/update.ts)_

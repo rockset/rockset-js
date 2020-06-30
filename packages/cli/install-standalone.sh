@@ -53,13 +53,13 @@
 
   mkdir -p /usr/local/lib
   cd /usr/local/lib
-  rm -rf rock
-  rm -rf ~/.local/share/rock/client
+  rm -rf rockset
+  rm -rf ~/.local/share/rockset/client
   # if [ \$(command -v xz) ]; then
-  #   URL="https://rockset-cli-artifacts.s3.amazonaws.com/rock-\$OS-\$ARCH.tar.xz"
+  #   URL="https://rockset-cli-artifacts.s3.amazonaws.com/rockset-\$OS-\$ARCH.tar.xz"
   #   TAR_ARGS="xJ"
   # else
-  URL="https://rockset-cli-artifacts.s3.amazonaws.com/rock-\$OS-\$ARCH.tar.gz"
+  URL="https://rockset-cli-artifacts.s3.amazonaws.com/rockset-\$OS-\$ARCH.tar.gz"
   TAR_ARGS="xz"
   # fi
   echo "Installing CLI from \$URL"
@@ -68,19 +68,19 @@
   else
     wget -O- "\$URL" | tar "\$TAR_ARGS"
   fi
-  # delete old rock bin if exists
-  rm -f \$(command -v rock) || true
-  rm -f /usr/local/bin/rock
-  ln -s /usr/local/lib/rock/bin/rock /usr/local/bin/rock
+  # delete old rockset bin if exists
+  rm -f \$(command -v rockset) || true
+  rm -f /usr/local/bin/rockset
+  ln -s /usr/local/lib/rockset/bin/rockset /usr/local/bin/rockset
 
   # on alpine (and maybe others) the basic node binary does not work
   # remove our node binary and fall back to whatever node is on the PATH
-  /usr/local/lib/rock/bin/node -v || rm /usr/local/lib/rock/bin/node
+  /usr/local/lib/rockset/bin/node -v || rm /usr/local/lib/rockset/bin/node
 
 SCRIPT
   # test the CLI
-  LOCATION=$(command -v rock)
-  echo "rock installed to $LOCATION"
-  rock --version
+  LOCATION=$(command -v rockset)
+  echo "rockset installed to $LOCATION"
+  rockset --version
   echo "Please restart your terminal to complete installation."
 }

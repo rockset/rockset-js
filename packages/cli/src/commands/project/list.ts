@@ -15,7 +15,7 @@ class ListEntities extends RockCommand {
 
   static description = `
   List all of the entities in the current project. Note: this does not list entities on remote. For that, please use
-  the API endpoints present in 'rock api:...'
+  the API endpoints present in 'rockset api:...'
 
 
 `;

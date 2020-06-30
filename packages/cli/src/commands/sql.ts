@@ -29,10 +29,10 @@ class SQL extends RockCommand {
   static examples = [
     `
   // Runs a sql query passed as a string
-  rock sql QUERY
+  rockset sql QUERY
 
   // Opens your default editor to edit more complex queries
-  rock sql -e
+  rockset sql -e
   `,
   ];
 
