@@ -40,8 +40,8 @@ import { getAuthProfile } from './filesystem/auth';
  * @param customFetch custom fetch agent to pass into the client
  */
 export async function createClient(customFetch?: FetchAPI) {
-  const { apikey, apiserver } = await getAuthProfile();
-  return rocksetConfigure(apikey, apiserver, customFetch);
+  const { api_key, api_server } = await getAuthProfile();
+  return rocksetConfigure(api_key, api_server, customFetch);
 }
 
 export async function listEntityNames() {

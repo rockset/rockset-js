@@ -46,12 +46,13 @@ class AddProfile extends RockCommand {
     await auth.createAuthProfile(
       args.name,
       parseAuthProfile({
-        apikey: args.apikey as unknown,
-        apiserver: args.apiserver as unknown,
+        api_key: args.apikey as unknown,
+        api_server: args.apiserver as unknown,
       }),
     );
     if (flags.activate) {
       await auth.activateAuthProfile(args.name);
+      this.info(`Successfully added profile ${args.name}`);
     }
   }
 }

@@ -4,6 +4,10 @@ import _ = require('lodash');
 import { cli } from 'cli-ux';
 import { RockCommand } from '../../base-command';
 
+enum KeyState {
+  ACTIVE = '*',
+  INACTIVE = '',
+}
 class ListProfiles extends RockCommand {
   static flags = {
     help: flags.help({ char: 'h' }),
@@ -21,7 +25,10 @@ class ListProfiles extends RockCommand {
     const configList = _.map(allAuth?.config?.profiles, (v, name) => ({
       ...v,
       name,
-      active: name === allAuth.config?.activeProfile && !allAuth.env.active,
+      active:
+        name === allAuth.config?.active_profile && !allAuth.env.active
+          ? KeyState.ACTIVE
+          : KeyState.INACTIVE,
     }));
 
     const envProfile = allAuth.env.active
@@ -29,7 +36,7 @@ class ListProfiles extends RockCommand {
           {
             ...allAuth.env.profile,
             name: 'ENV',
-            active: true,
+            active: KeyState.ACTIVE,
           },
         ]
       : [];
@@ -48,11 +55,17 @@ ROCKSET_APISERVER
       cli.table(rows, {
         active: {},
         name: {},
-        apiserver: {},
-        apikey: {},
+        api_server: {
+          header: 'API Server',
+        },
+        api_key: {
+          header: 'API Key',
+        },
       });
     } else {
-      this.log('No profiles found! Please add a profile first.');
+      this.error(
+        'No profiles found! Please add a profile first using `rockset auth:add [profile] [apikey] [apiserver]`',
+      );
     }
   }
 }

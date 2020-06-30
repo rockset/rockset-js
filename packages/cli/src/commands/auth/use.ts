@@ -24,6 +24,7 @@ class UseProfile extends RockCommand {
   async run() {
     const { args } = this.parse(UseProfile);
     await auth.activateAuthProfile(args.name);
+    this.info(`Successfully activated profile ${args.name}`);
   }
 }
 

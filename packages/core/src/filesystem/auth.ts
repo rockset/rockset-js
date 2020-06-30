@@ -15,7 +15,7 @@ import * as os from 'os';
 import { prettyPrint } from '../helper';
 import _ from 'lodash';
 
-export const AUTH_CONFIG_FILE = '.rockset/credentialsv2' as const;
+export const AUTH_CONFIG_FILE = '.rockset/credentials' as const;
 
 export const getAuthConfigPath = () =>
   path.join(os.homedir(), AUTH_CONFIG_FILE);
@@ -23,13 +23,13 @@ export const getAuthConfigPath = () =>
  * io-ts runtime type definitions
  */
 export const AuthProfile = type({
-  apikey: string,
-  apiserver: string,
+  api_key: string,
+  api_server: string,
 });
 
 export const AuthConfiguration = type({
-  version: t.literal('v2'),
-  activeProfile: string,
+  version: t.literal('v1'),
+  active_profile: string,
   profiles: t.record(string, AuthProfile, 'profiles'),
 });
 
@@ -69,24 +69,24 @@ export const parseAuthConfiguration = (str: string) => {
 export const isAuthEnvActive = () =>
   Boolean(process.env.ROCKSET_APIKEY && process.env.ROCKSET_APISERVER);
 
-export const getEnvProfile = () => {
-  const apikey = process.env.ROCKSET_APIKEY;
-  const apiserver = process.env.ROCKSET_APISERVER;
-  return { apikey, apiserver };
+const getEnvProfile = () => {
+  const api_key = process.env.ROCKSET_APIKEY;
+  const api_server = process.env.ROCKSET_APISERVER;
+  return { api_key, api_server };
 };
 
 /**
  * Gets currently active credentials from env
  */
 export async function getAuthProfile() {
-  const { apikey, apiserver } = getEnvProfile();
-  if (isAuthEnvActive() && apikey && apiserver) {
-    return { apikey, apiserver };
+  const { api_key, api_server } = getEnvProfile();
+  if (isAuthEnvActive() && api_key && api_server) {
+    return { api_key, api_server };
   } else {
     const config = await readConfigurationFile();
-    const profile = config.profiles[config.activeProfile];
+    const profile = config.profiles[config.active_profile];
     if (!profile) {
-      throw errorAuthProfileNotFound(config.activeProfile);
+      throw errorAuthProfileNotFound(config.active_profile);
     } else {
       return profile;
     }
@@ -100,8 +100,8 @@ export async function createAuthProfile(
   const config = await readConfigurationFile().catch(() => null);
   if (!config) {
     return await writeConfigurationFile({
-      version: 'v2',
-      activeProfile: name,
+      version: 'v1',
+      active_profile: name,
       profiles: {
         [name]: authProfile,
       },
@@ -132,7 +132,7 @@ export async function listAuthProfiles() {
 export async function activateAuthProfile(profile: string) {
   const config = await readConfigurationFile();
   if (config.profiles.hasOwnProperty(profile)) {
-    const nConfig = { ...config, activeProfile: profile };
+    const nConfig: AuthConfiguration = { ...config, active_profile: profile };
     return await writeConfigurationFile(nConfig);
   } else {
     throw errorAuthProfileNotFound(profile);
@@ -157,6 +157,6 @@ export async function readConfigurationFile() {
   return parseAuthConfiguration(jsonStr);
 }
 
-export async function writeConfigurationFile(config: AuthConfiguration) {
+async function writeConfigurationFile(config: AuthConfiguration) {
   return await fs.writeFile(getAuthConfigPath(), prettyPrint(config));
 }
