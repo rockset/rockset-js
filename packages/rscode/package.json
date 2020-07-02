@@ -2,7 +2,7 @@
   "name": "rockset-vscode",
   "displayName": "rockset-vscode",
   "description": "This extension provides syntax highlighting for Rockset SQL in VSCode.",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "license": "MIT",
   "publisher": "rockset",
   "repository": "https://github.com/rockset/rockset-js/tree/master/packages/rscode",
@@ -126,7 +126,7 @@
     "vscode-test": "^1.2.0"
   },
   "dependencies": {
-    "@rockset/client": "0.2.0",
+    "@rockset/client": "0.2.1",
     "@types/sql-formatter": "^2.3.0",
     "axios": "^0.19.0",
     "handlebars": "^4.7.6",
