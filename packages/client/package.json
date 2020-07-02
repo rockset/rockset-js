@@ -39,7 +39,7 @@
     "clean": "rm -r dist",
     "lint": "eslint 'src/**/*.ts'",
     "docs": "rm -rf docs && typedoc --out docs/ --ignoreCompilerErrors  src/index.ts --mode modules",
-    "prepublishOnly": "npm run clean && npm run build && npm run test"
+    "prepublishOnly": "npm run clean && npm run build"
   },
   "author": "Rockset Inc",
   "keywords": [
