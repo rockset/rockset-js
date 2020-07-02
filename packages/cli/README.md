@@ -190,7 +190,7 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/apikeys/createApiKey.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/api/apikeys/createApiKey.ts)_
+_See code: [src/commands/api/apikeys/createApiKey.ts](https://github.com/rockset/rockset-js/blob/v0.2.0/src/commands/api/apikeys/createApiKey.ts)_
 
 ## `rockset api:apikeys:createApiKeyAdmin [BODY] [USER]`
 
@@ -241,7 +241,7 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/apikeys/createApiKeyAdmin.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/api/apikeys/createApiKeyAdmin.ts)_
+_See code: [src/commands/api/apikeys/createApiKeyAdmin.ts](https://github.com/rockset/rockset-js/blob/v0.2.0/src/commands/api/apikeys/createApiKeyAdmin.ts)_
 
 ## `rockset api:apikeys:deleteApiKey [NAME]`
 
@@ -291,7 +291,7 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/apikeys/deleteApiKey.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/api/apikeys/deleteApiKey.ts)_
+_See code: [src/commands/api/apikeys/deleteApiKey.ts](https://github.com/rockset/rockset-js/blob/v0.2.0/src/commands/api/apikeys/deleteApiKey.ts)_
 
 ## `rockset api:apikeys:deleteApiKeyAdmin [NAME] [USER]`
 
@@ -342,7 +342,7 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/apikeys/deleteApiKeyAdmin.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/api/apikeys/deleteApiKeyAdmin.ts)_
+_See code: [src/commands/api/apikeys/deleteApiKeyAdmin.ts](https://github.com/rockset/rockset-js/blob/v0.2.0/src/commands/api/apikeys/deleteApiKeyAdmin.ts)_
 
 ## `rockset api:apikeys:listApiKeys`
 
@@ -389,7 +389,7 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/apikeys/listApiKeys.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/api/apikeys/listApiKeys.ts)_
+_See code: [src/commands/api/apikeys/listApiKeys.ts](https://github.com/rockset/rockset-js/blob/v0.2.0/src/commands/api/apikeys/listApiKeys.ts)_
 
 ## `rockset api:apikeys:listApiKeysAdmin [USER]`
 
@@ -436,7 +436,7 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/apikeys/listApiKeysAdmin.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/api/apikeys/listApiKeysAdmin.ts)_
+_See code: [src/commands/api/apikeys/listApiKeysAdmin.ts](https://github.com/rockset/rockset-js/blob/v0.2.0/src/commands/api/apikeys/listApiKeysAdmin.ts)_
 
 ## `rockset api:collections:createCollection [WORKSPACE] [BODY]`
 
@@ -487,7 +487,7 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/collections/createCollection.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/api/collections/createCollection.ts)_
+_See code: [src/commands/api/collections/createCollection.ts](https://github.com/rockset/rockset-js/blob/v0.2.0/src/commands/api/collections/createCollection.ts)_
 
 ## `rockset api:collections:deleteCollection [WORKSPACE] [COLLECTION]`
 
@@ -538,7 +538,7 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/collections/deleteCollection.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/api/collections/deleteCollection.ts)_
+_See code: [src/commands/api/collections/deleteCollection.ts](https://github.com/rockset/rockset-js/blob/v0.2.0/src/commands/api/collections/deleteCollection.ts)_
 
 ## `rockset api:collections:getCollection [WORKSPACE] [COLLECTION]`
 
@@ -589,7 +589,7 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/collections/getCollection.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/api/collections/getCollection.ts)_
+_See code: [src/commands/api/collections/getCollection.ts](https://github.com/rockset/rockset-js/blob/v0.2.0/src/commands/api/collections/getCollection.ts)_
 
 ## `rockset api:collections:listCollections`
 
@@ -636,7 +636,7 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/collections/listCollections.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/api/collections/listCollections.ts)_
+_See code: [src/commands/api/collections/listCollections.ts](https://github.com/rockset/rockset-js/blob/v0.2.0/src/commands/api/collections/listCollections.ts)_
 
 ## `rockset api:collections:listQueryLambdasInCollection [WORKSPACE] [COLLECTION]`
 
@@ -687,7 +687,7 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/collections/listQueryLambdasInCollection.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/api/collections/listQueryLambdasInCollection.ts)_
+_See code: [src/commands/api/collections/listQueryLambdasInCollection.ts](https://github.com/rockset/rockset-js/blob/v0.2.0/src/commands/api/collections/listQueryLambdasInCollection.ts)_
 
 ## `rockset api:collections:workspaceCollections [WORKSPACE]`
 
@@ -737,7 +737,7 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/collections/workspaceCollections.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/api/collections/workspaceCollections.ts)_
+_See code: [src/commands/api/collections/workspaceCollections.ts](https://github.com/rockset/rockset-js/blob/v0.2.0/src/commands/api/collections/workspaceCollections.ts)_
 
 ## `rockset api:documents:addDocuments [WORKSPACE] [COLLECTION] [BODY]`
 
@@ -794,7 +794,7 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/documents/addDocuments.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/api/documents/addDocuments.ts)_
+_See code: [src/commands/api/documents/addDocuments.ts](https://github.com/rockset/rockset-js/blob/v0.2.0/src/commands/api/documents/addDocuments.ts)_
 
 ## `rockset api:documents:deleteDocuments [WORKSPACE] [COLLECTION] [BODY]`
 
@@ -851,7 +851,7 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/documents/deleteDocuments.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/api/documents/deleteDocuments.ts)_
+_See code: [src/commands/api/documents/deleteDocuments.ts](https://github.com/rockset/rockset-js/blob/v0.2.0/src/commands/api/documents/deleteDocuments.ts)_
 
 ## `rockset api:documents:patchDocuments [WORKSPACE] [COLLECTION] [BODY]`
 
@@ -908,7 +908,7 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/documents/patchDocuments.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/api/documents/patchDocuments.ts)_
+_See code: [src/commands/api/documents/patchDocuments.ts](https://github.com/rockset/rockset-js/blob/v0.2.0/src/commands/api/documents/patchDocuments.ts)_
 
 ## `rockset api:integrations:createIntegration [BODY]`
 
@@ -958,7 +958,7 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/integrations/createIntegration.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/api/integrations/createIntegration.ts)_
+_See code: [src/commands/api/integrations/createIntegration.ts](https://github.com/rockset/rockset-js/blob/v0.2.0/src/commands/api/integrations/createIntegration.ts)_
 
 ## `rockset api:integrations:deleteIntegration [INTEGRATION]`
 
@@ -1008,7 +1008,7 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/integrations/deleteIntegration.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/api/integrations/deleteIntegration.ts)_
+_See code: [src/commands/api/integrations/deleteIntegration.ts](https://github.com/rockset/rockset-js/blob/v0.2.0/src/commands/api/integrations/deleteIntegration.ts)_
 
 ## `rockset api:integrations:getIntegration [INTEGRATION]`
 
@@ -1058,7 +1058,7 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/integrations/getIntegration.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/api/integrations/getIntegration.ts)_
+_See code: [src/commands/api/integrations/getIntegration.ts](https://github.com/rockset/rockset-js/blob/v0.2.0/src/commands/api/integrations/getIntegration.ts)_
 
 ## `rockset api:integrations:listIntegrations`
 
@@ -1105,7 +1105,7 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/integrations/listIntegrations.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/api/integrations/listIntegrations.ts)_
+_See code: [src/commands/api/integrations/listIntegrations.ts](https://github.com/rockset/rockset-js/blob/v0.2.0/src/commands/api/integrations/listIntegrations.ts)_
 
 ## `rockset api:orgs:getOrganization`
 
@@ -1152,7 +1152,7 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/orgs/getOrganization.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/api/orgs/getOrganization.ts)_
+_See code: [src/commands/api/orgs/getOrganization.ts](https://github.com/rockset/rockset-js/blob/v0.2.0/src/commands/api/orgs/getOrganization.ts)_
 
 ## `rockset api:queries:query [BODY]`
 
@@ -1207,7 +1207,7 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/queries/query.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/api/queries/query.ts)_
+_See code: [src/commands/api/queries/query.ts](https://github.com/rockset/rockset-js/blob/v0.2.0/src/commands/api/queries/query.ts)_
 
 ## `rockset api:queryLambdas:createQueryLambda [WORKSPACE] [BODY]`
 
@@ -1263,7 +1263,7 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/queryLambdas/createQueryLambda.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/api/queryLambdas/createQueryLambda.ts)_
+_See code: [src/commands/api/queryLambdas/createQueryLambda.ts](https://github.com/rockset/rockset-js/blob/v0.2.0/src/commands/api/queryLambdas/createQueryLambda.ts)_
 
 ## `rockset api:queryLambdas:deleteQueryLambda [WORKSPACE] [QUERYLAMBDA]`
 
@@ -1319,7 +1319,7 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/queryLambdas/deleteQueryLambda.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/api/queryLambdas/deleteQueryLambda.ts)_
+_See code: [src/commands/api/queryLambdas/deleteQueryLambda.ts](https://github.com/rockset/rockset-js/blob/v0.2.0/src/commands/api/queryLambdas/deleteQueryLambda.ts)_
 
 ## `rockset api:queryLambdas:executeQueryLambda [WORKSPACE] [QUERYLAMBDA] [VERSION] [BODY]`
 
@@ -1377,7 +1377,7 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/queryLambdas/executeQueryLambda.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/api/queryLambdas/executeQueryLambda.ts)_
+_See code: [src/commands/api/queryLambdas/executeQueryLambda.ts](https://github.com/rockset/rockset-js/blob/v0.2.0/src/commands/api/queryLambdas/executeQueryLambda.ts)_
 
 ## `rockset api:queryLambdas:getQueryLambdaVersion [WORKSPACE] [QUERYLAMBDA] [VERSION]`
 
@@ -1434,7 +1434,7 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/queryLambdas/getQueryLambdaVersion.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/api/queryLambdas/getQueryLambdaVersion.ts)_
+_See code: [src/commands/api/queryLambdas/getQueryLambdaVersion.ts](https://github.com/rockset/rockset-js/blob/v0.2.0/src/commands/api/queryLambdas/getQueryLambdaVersion.ts)_
 
 ## `rockset api:queryLambdas:listAllQueryLambdas`
 
@@ -1486,7 +1486,7 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/queryLambdas/listAllQueryLambdas.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/api/queryLambdas/listAllQueryLambdas.ts)_
+_See code: [src/commands/api/queryLambdas/listAllQueryLambdas.ts](https://github.com/rockset/rockset-js/blob/v0.2.0/src/commands/api/queryLambdas/listAllQueryLambdas.ts)_
 
 ## `rockset api:queryLambdas:listQueryLambdaVersions [WORKSPACE] [QUERYLAMBDA]`
 
@@ -1542,7 +1542,7 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/queryLambdas/listQueryLambdaVersions.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/api/queryLambdas/listQueryLambdaVersions.ts)_
+_See code: [src/commands/api/queryLambdas/listQueryLambdaVersions.ts](https://github.com/rockset/rockset-js/blob/v0.2.0/src/commands/api/queryLambdas/listQueryLambdaVersions.ts)_
 
 ## `rockset api:queryLambdas:listQueryLambdasInWorkspace [WORKSPACE]`
 
@@ -1597,7 +1597,7 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/queryLambdas/listQueryLambdasInWorkspace.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/api/queryLambdas/listQueryLambdasInWorkspace.ts)_
+_See code: [src/commands/api/queryLambdas/listQueryLambdasInWorkspace.ts](https://github.com/rockset/rockset-js/blob/v0.2.0/src/commands/api/queryLambdas/listQueryLambdasInWorkspace.ts)_
 
 ## `rockset api:queryLambdas:updateQueryLambda [WORKSPACE] [QUERYLAMBDA] [BODY]`
 
@@ -1654,7 +1654,7 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/queryLambdas/updateQueryLambda.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/api/queryLambdas/updateQueryLambda.ts)_
+_See code: [src/commands/api/queryLambdas/updateQueryLambda.ts](https://github.com/rockset/rockset-js/blob/v0.2.0/src/commands/api/queryLambdas/updateQueryLambda.ts)_
 
 ## `rockset api:users:createUser [BODY]`
 
@@ -1704,7 +1704,7 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/users/createUser.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/api/users/createUser.ts)_
+_See code: [src/commands/api/users/createUser.ts](https://github.com/rockset/rockset-js/blob/v0.2.0/src/commands/api/users/createUser.ts)_
 
 ## `rockset api:users:deleteUser [USER]`
 
@@ -1754,7 +1754,7 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/users/deleteUser.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/api/users/deleteUser.ts)_
+_See code: [src/commands/api/users/deleteUser.ts](https://github.com/rockset/rockset-js/blob/v0.2.0/src/commands/api/users/deleteUser.ts)_
 
 ## `rockset api:users:getCurrentUser`
 
@@ -1801,7 +1801,7 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/users/getCurrentUser.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/api/users/getCurrentUser.ts)_
+_See code: [src/commands/api/users/getCurrentUser.ts](https://github.com/rockset/rockset-js/blob/v0.2.0/src/commands/api/users/getCurrentUser.ts)_
 
 ## `rockset api:users:listUsers`
 
@@ -1848,7 +1848,7 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/users/listUsers.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/api/users/listUsers.ts)_
+_See code: [src/commands/api/users/listUsers.ts](https://github.com/rockset/rockset-js/blob/v0.2.0/src/commands/api/users/listUsers.ts)_
 
 ## `rockset api:workspaces:childWorkspaces [WORKSPACE]`
 
@@ -1898,7 +1898,7 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/workspaces/childWorkspaces.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/api/workspaces/childWorkspaces.ts)_
+_See code: [src/commands/api/workspaces/childWorkspaces.ts](https://github.com/rockset/rockset-js/blob/v0.2.0/src/commands/api/workspaces/childWorkspaces.ts)_
 
 ## `rockset api:workspaces:createWorkspace [BODY]`
 
@@ -1948,7 +1948,7 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/workspaces/createWorkspace.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/api/workspaces/createWorkspace.ts)_
+_See code: [src/commands/api/workspaces/createWorkspace.ts](https://github.com/rockset/rockset-js/blob/v0.2.0/src/commands/api/workspaces/createWorkspace.ts)_
 
 ## `rockset api:workspaces:deleteWorkspace [WORKSPACE]`
 
@@ -1998,7 +1998,7 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/workspaces/deleteWorkspace.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/api/workspaces/deleteWorkspace.ts)_
+_See code: [src/commands/api/workspaces/deleteWorkspace.ts](https://github.com/rockset/rockset-js/blob/v0.2.0/src/commands/api/workspaces/deleteWorkspace.ts)_
 
 ## `rockset api:workspaces:getWorkspace [WORKSPACE]`
 
@@ -2048,7 +2048,7 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/workspaces/getWorkspace.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/api/workspaces/getWorkspace.ts)_
+_See code: [src/commands/api/workspaces/getWorkspace.ts](https://github.com/rockset/rockset-js/blob/v0.2.0/src/commands/api/workspaces/getWorkspace.ts)_
 
 ## `rockset api:workspaces:listWorkspaces`
 
@@ -2095,7 +2095,7 @@ DESCRIPTION
   This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
 ```
 
-_See code: [src/commands/api/workspaces/listWorkspaces.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/api/workspaces/listWorkspaces.ts)_
+_See code: [src/commands/api/workspaces/listWorkspaces.ts](https://github.com/rockset/rockset-js/blob/v0.2.0/src/commands/api/workspaces/listWorkspaces.ts)_
 
 ## `rockset auth:add NAME APIKEY [APISERVER]`
 
@@ -2118,7 +2118,7 @@ DESCRIPTION
   Create a new profile with the specified name and apikey.
 ```
 
-_See code: [src/commands/auth/add.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/auth/add.ts)_
+_See code: [src/commands/auth/add.ts](https://github.com/rockset/rockset-js/blob/v0.2.0/src/commands/auth/add.ts)_
 
 ## `rockset auth:list`
 
@@ -2135,7 +2135,7 @@ DESCRIPTION
   List all of the available profiles.
 ```
 
-_See code: [src/commands/auth/list.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/auth/list.ts)_
+_See code: [src/commands/auth/list.ts](https://github.com/rockset/rockset-js/blob/v0.2.0/src/commands/auth/list.ts)_
 
 ## `rockset auth:use NAME`
 
@@ -2155,7 +2155,7 @@ DESCRIPTION
   Use a specific authentication profile.
 ```
 
-_See code: [src/commands/auth/use.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/auth/use.ts)_
+_See code: [src/commands/auth/use.ts](https://github.com/rockset/rockset-js/blob/v0.2.0/src/commands/auth/use.ts)_
 
 ## `rockset autocomplete [SHELL]`
 
@@ -2217,7 +2217,7 @@ DESCRIPTION
      as would be created with 'rockset project:resolve'
 ```
 
-_See code: [src/commands/project/add.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/project/add.ts)_
+_See code: [src/commands/project/add.ts](https://github.com/rockset/rockset-js/blob/v0.2.0/src/commands/project/add.ts)_
 
 ## `rockset project:delete`
 
@@ -2235,7 +2235,7 @@ DESCRIPTION
   Delete all query lambdas from the project.
 ```
 
-_See code: [src/commands/project/delete.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/project/delete.ts)_
+_See code: [src/commands/project/delete.ts](https://github.com/rockset/rockset-js/blob/v0.2.0/src/commands/project/delete.ts)_
 
 ## `rockset project:deploy`
 
@@ -2254,7 +2254,7 @@ DESCRIPTION
   Deploy Query Lambda entities to Rockset from your local project.
 ```
 
-_See code: [src/commands/project/deploy.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/project/deploy.ts)_
+_See code: [src/commands/project/deploy.ts](https://github.com/rockset/rockset-js/blob/v0.2.0/src/commands/project/deploy.ts)_
 
 ## `rockset project:download`
 
@@ -2274,7 +2274,7 @@ DESCRIPTION
   Download Query Lambda entities from Rockset to your local project.
 ```
 
-_See code: [src/commands/project/download.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/project/download.ts)_
+_See code: [src/commands/project/download.ts](https://github.com/rockset/rockset-js/blob/v0.2.0/src/commands/project/download.ts)_
 
 ## `rockset project:execute NAME`
 
@@ -2298,7 +2298,7 @@ DESCRIPTION
      You must specify the specific version to execute: eg. 'b1d7c9a34b50cd'.
 ```
 
-_See code: [src/commands/project/execute.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/project/execute.ts)_
+_See code: [src/commands/project/execute.ts](https://github.com/rockset/rockset-js/blob/v0.2.0/src/commands/project/execute.ts)_
 
 ## `rockset project:init`
 
@@ -2317,7 +2317,7 @@ DESCRIPTION
   This command initializes your project with a rockconfig.json file.
 ```
 
-_See code: [src/commands/project/init.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/project/init.ts)_
+_See code: [src/commands/project/init.ts](https://github.com/rockset/rockset-js/blob/v0.2.0/src/commands/project/init.ts)_
 
 ## `rockset project:list`
 
@@ -2336,7 +2336,7 @@ DESCRIPTION
      the API endpoints present in 'rockset api:...'
 ```
 
-_See code: [src/commands/project/list.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/project/list.ts)_
+_See code: [src/commands/project/list.ts](https://github.com/rockset/rockset-js/blob/v0.2.0/src/commands/project/list.ts)_
 
 ## `rockset project:resolve NAME`
 
@@ -2363,7 +2363,7 @@ DESCRIPTION
      You must specify the type of entity that will be resolved.
 ```
 
-_See code: [src/commands/project/resolve.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/project/resolve.ts)_
+_See code: [src/commands/project/resolve.ts](https://github.com/rockset/rockset-js/blob/v0.2.0/src/commands/project/resolve.ts)_
 
 ## `rockset project:serve`
 
@@ -2381,7 +2381,7 @@ DESCRIPTION
   Start a development server that allows you to execute Query Lambdas from your local project from a development UI.
 ```
 
-_See code: [src/commands/project/serve.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/project/serve.ts)_
+_See code: [src/commands/project/serve.ts](https://github.com/rockset/rockset-js/blob/v0.2.0/src/commands/project/serve.ts)_
 
 ## `rockset sql [SQL]`
 
@@ -2428,7 +2428,7 @@ EXAMPLE
      rockset sql -e
 ```
 
-_See code: [src/commands/sql.ts](https://github.com/rockset/rockset-js/blob/v0.1.3/src/commands/sql.ts)_
+_See code: [src/commands/sql.ts](https://github.com/rockset/rockset-js/blob/v0.2.0/src/commands/sql.ts)_
 
 ## `rockset update [CHANNEL]`
 
