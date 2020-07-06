@@ -37,27 +37,27 @@ of navigating the Rock CLI tool.
 
 ```
 // Print autocomplete instructions for bash
-rockset autocomplete
+rock autocomplete
 
 // Print autocomplete instructions for ZSH
-rockset autocomplete:zsh
+rock autocomplete:zsh
 ```
 
 The new Rockset CLI support 3 core workflows.
 
-1. Authentication (`rockset auth`)
-1. REST API support (`rockset api`)
+1. Authentication (`rock auth`)
+1. REST API support (`rock api`)
     1. API calls have been modified to closely model the Rockset API Documentation
     1. Load test functionality has been added for select routes
     1. This section of the CLI tool is a thin wrapper around Rockset's REST API. See full documentation for the REST API at 
 https://docs.rockset.com/rest-api
-1. Query Lambda Project support (`rockset project`)
+1. Query Lambda Project support (`rock project`)
     1. A tool that allows you to manage your Query Lambdas from your file system
     1. Download your Query Lambdas to your local project
     1. Edit your query lambdas and commit to git
     1. Deploy your query lambdas to Rockset
 
-You can also update the Rockset CLI using `rockset update`.
+You can also update the Rockset CLI using `rock update`.
 
 # Usage
 ```sh-session
@@ -65,24 +65,24 @@ You can also update the Rockset CLI using `rockset update`.
 $ curl https://rockset-cli-artifacts.s3-us-west-2.amazonaws.com/install-standalone.sh | bash 
 
 // open a new shell
-$ rockset -h
-$ rockset -v
+$ rock -h
+$ rock -v
 
 // Set up autocomplete
-$ rockset autocomplete
+$ rock autocomplete
 
 // Add authentication information
-$ rockset auth:add apikey [apiserver]
+$ rock auth:add apikey [apiserver]
 
-// Update rockset cli
-$ rockset update
+// Update rock cli
+$ rock update
 
-$ rockset COMMAND
+$ rock COMMAND
 running command...
 @rockset/cli/0.0.28 darwin-x64 node-v12.16.3
-$ rockset --help [COMMAND]
+$ rock --help [COMMAND]
 USAGE
-  $ rockset COMMAND
+  $ rock COMMAND
 ...
 ```
 # Commands

@@ -10,6 +10,7 @@ import {
   AbsolutePath,
   throwOnError,
   parseAbsolutePath,
+  LambdaEntity,
 } from '../types';
 
 // This is the only package that is allowed to access the file system
@@ -119,6 +120,18 @@ export function resolveQualifiedNameFromPath(
     const name = base.replace(new RegExp(getEntityExt(entityName) + '$'), '');
     return tuple(getQualifiedName(ws, name), entityName);
   }
+}
+
+export function getLambdaPathsFromEntity(
+  srcPath: AbsolutePath,
+  entity: LambdaEntity
+) {
+  const fullPath = join(
+    srcPath,
+    resolvePathFromQualifiedName(entity.fullName, 'lambda')
+  );
+  const sqlPath = join(dirname(fullPath), entity.config.sql_path);
+  return { sqlPath, fullPath };
 }
 
 export function isDefinitionPath(

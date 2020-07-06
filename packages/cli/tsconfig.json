@@ -7,7 +7,8 @@
     "rootDir": "src",
     "strict": true,
     "target": "es2017",
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "types": ["node", "jest"],                           /* Type declaration files to be included in compilation. */
   },
   "include": [
     "src/**/*"

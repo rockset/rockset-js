@@ -17,16 +17,15 @@ import {
 import RockDataTable from './RockDataTable';
 
 export const StylesWrapper = styled.div<{ isSubTable?: boolean }>`
-  margin-left: ${(props: { isSubTable: any }) =>
-    props.isSubTable ? '5px' : '0px'};
+  margin-left: ${(props) => (props.isSubTable ? '5px' : '0px')};
   .ReactTable {
-    border-left: ${(props: { isSubTable: any }) =>
+    border-left: ${(props) =>
       props.isSubTable ? '2px solid #175d8d' : '0px solid transparent'};
-    border-bottom: ${(props: { isSubTable: any }) =>
+    border-bottom: ${(props) =>
       props.isSubTable
         ? '0px solid transparent'
         : '1px solid rgba(0, 0, 0, 0.1)'};
-    border-right: ${(props: { isSubTable: any }) =>
+    border-right: ${(props) =>
       props.isSubTable
         ? '0px solid transparent'
         : '1px solid rgba(0, 0, 0, 0.1)'};
@@ -88,12 +87,11 @@ export const StylesWrapper = styled.div<{ isSubTable?: boolean }>`
 `;
 
 const Cell = styled.div<{ expandable?: boolean; isExpanded?: boolean }>`
-  cursor: ${(props: { expandable: any }) =>
-    props.expandable ? 'pointer' : 'auto'};
+  cursor: ${(props) => (props.expandable ? 'pointer' : 'auto')};
   padding: 4px 4px 4px 8px;
   overflow: hidden;
   text-overflow: ellipsis;
-  background-color: ${(props: { isExpanded: any }) =>
+  background-color: ${(props) =>
     props.isExpanded ? 'rgba(85, 150, 230, 0.1)' : 'transparent'};
   border: 1px solid transparent !important;
   :hover {
@@ -107,11 +105,9 @@ const Cell = styled.div<{ expandable?: boolean; isExpanded?: boolean }>`
 
 const IconWrapper = styled.span<{ expandable?: boolean; isExpanded?: boolean }>`
   font-size: 10px;
-  display: ${(props: { expandable: any }) =>
-    props.expandable ? 'inline-block' : 'none'};
+  display: ${(props) => (props.expandable ? 'inline-block' : 'none')};
   margin-right: 7px;
-  color: ${(props: { isExpanded: any }) =>
-    props.isExpanded ? '#175d8d' : '#dadfe2'};
+  color: ${(props) => (props.isExpanded ? '#175d8d' : '#dadfe2')};
 `;
 
 // Computes the max char length of [all data, header]

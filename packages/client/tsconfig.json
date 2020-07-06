@@ -11,7 +11,8 @@
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "noImplicitAny": true,
-    "declaration": true
+    "declaration": true,
+    "types": ["node", "jest"],                           /* Type declaration files to be included in compilation. */
   },
   "include": [ "src/**/*" ]
 }

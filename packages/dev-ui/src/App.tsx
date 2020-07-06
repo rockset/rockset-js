@@ -1,40 +1,61 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import RockDataTable from './RockComponents/RockDataTable';
-import rocksetConfigure from 'rockset';
+import rocksetConfigure from '@rockset/client';
 import * as _ from 'lodash';
 
 import {
-  BrowserRouter as Router,
   Switch,
   Route,
-  Link,
   useParams,
+  BrowserRouter as Router,
+  Link,
 } from 'react-router-dom';
+import { RockTabs } from './RockComponents/RockTabs';
+import { QueryParams } from './QueryParams';
+import { PebbleButton } from 'components';
+import { Param } from 'QueryParams.hooks';
 
 // declare function useParams(): { workspace?: string; queryLambda?: string };
 
 const client = rocksetConfigure('', '');
 
 function App() {
+  const [apiserver, setApiserver] = React.useState('[apiserver]');
+  const [lambdas, setLambdas] = React.useState<Lambda[]>([]);
+
+  useEffect(() => {
+    fetch('/lambdas')
+      .then((res) => res.json())
+      .then((l: LambdaResponse) => {
+        console.log(l);
+        setLambdas(l.lambdas);
+        setApiserver(l.apiserver);
+        return true;
+      })
+      .catch((e) => console.error(e));
+  }, []);
+
   return (
     <div
       style={{
         padding: '30px',
-        height: '100vh',
-        width: '100vw',
+        height: '95vh',
+        width: '95vw',
         overflow: 'hidden',
         display: 'flex',
         flexDirection: 'column',
+        fontFamily: 'Source Sans Pro',
       }}
+      id="rockset-body"
     >
       <Router>
         <Switch>
           <Route path="/v1/orgs/self/ws/:workspace/lambdas/:queryLambda">
-            <Page />
+            <Page apiserver={apiserver} lambdas={lambdas} />
           </Route>
           <Route path="/">
             {' '}
-            <Index></Index>{' '}
+            <Index lambdas={lambdas}></Index>{' '}
           </Route>
         </Switch>
       </Router>
@@ -42,20 +63,29 @@ function App() {
   );
 }
 
-const Index = () => {
-  const [lambdas, setLambdas] = React.useState([]);
+interface Lambda {
+  name: string;
+  ws: string;
+  path: {
+    sqlPath: string;
+    fullPath: string;
+  };
+}
+interface LambdaResponse {
+  lambdas: Lambda[];
+  apiserver: string;
+}
 
-  useEffect(() => {
-    fetch('/lambdas')
-      .then((res) => res.json())
-      .then((l) => setLambdas(l))
-      .catch((e) => console.error(e));
-  }, []);
+interface Props {
+  apiserver: string;
+  lambdas: Lambda[];
+}
 
+const Index = ({ lambdas }: { lambdas: Lambda[] }) => {
   return (
     <>
       <h2>Query Lambdas </h2>
-      {lambdas.map(({ name, ws }) => (
+      {lambdas?.map(({ name, ws }) => (
         <>
           <Link to={`/v1/orgs/self/ws/${ws}/lambdas/${name}`}>
             {ws}.{name}
@@ -72,14 +102,54 @@ const useEffectOnce = (effect) => {
   useEffect(effect, []);
 };
 
-const Page = () => {
+const Results = ({ data, err }: { data: unknown[]; err: unknown }) => {
+  return data && data.length > 0 ? (
+    <div
+      style={{
+        display: 'flex',
+        overflow: 'hidden',
+        flex: 1,
+        flexDirection: 'column',
+      }}
+    >
+      <div
+        style={{
+          flex: 1,
+          height: '50%',
+          overflow: 'scroll',
+          border: '1px solid #dadfe2',
+        }}
+      >
+        <RockDataTable data={data} />
+      </div>
+      <div
+        style={{
+          flex: 1,
+          overflow: 'scroll',
+        }}
+      >
+        <ResultsJson resultsJson={JSON.stringify(data, null, 2)} />
+      </div>
+    </div>
+  ) : err ? (
+    <ResultsJson resultsJson={JSON.stringify(err, null, 2)} />
+  ) : null;
+};
+
+const Page = ({ apiserver, lambdas }: Props) => {
   const { workspace, queryLambda } = (useParams as () => {
     workspace?: string;
     queryLambda?: string;
   })();
 
+  const lambda = lambdas.filter(
+    (x) => x.name === queryLambda && x.ws === workspace
+  )[0];
+
   const [data, setData] = React.useState([]);
   const [err, setErr] = React.useState();
+  const [activeTab, setActiveTab] = React.useState<number>(0);
+  const [params, setParams] = useState<Record<string, Param>>();
 
   const execute = async () => {
     setData([]);
@@ -88,11 +158,20 @@ const Page = () => {
       const data = await client.queryLambdas.executeQueryLambda(
         workspace,
         queryLambda,
-        '1'
+        '1',
+        {
+          parameters: _.values(params).map(({ name, value, type }) => ({
+            name,
+            value,
+            type,
+          })),
+        }
       );
       setData(data.results);
     } catch (e) {
       setErr(e);
+    } finally {
+      setActiveTab(0);
     }
   };
 
@@ -100,48 +179,43 @@ const Page = () => {
     execute().catch(console.error);
   });
 
+  const tabs = [
+    {
+      header: 'Results',
+      content: <Results {...{ data, err }} />,
+    },
+    {
+      header: 'Parameters',
+      content: <QueryParams {...{ params, setParams }} />,
+    },
+    {
+      header: 'Details',
+      content: <QueryConfig {...{ apiserver, lambda }} />,
+    },
+  ] as const;
+
+  const headers = tabs.map((tab) => tab.header);
+  const content = tabs.map((tab) => tab.content);
+
   return (
     <>
-      <h2>Rockset Query Lambda</h2>
-      <pre>
-        <code>
-          POST: /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/versions/1
-        </code>
-      </pre>
-      <button onClick={execute} style={{ margin: '10px', width: '100px' }}>
-        Execute
-      </button>
-      {data && data.length > 0 ? (
-        <div
-          style={{
-            display: 'flex',
-            overflow: 'hidden',
-            flex: 1,
-            flexDirection: 'column',
-          }}
-        >
-          <div
-            style={{
-              flex: 1,
-              height: '50%',
-              overflow: 'scroll',
-              border: '1px solid #dadfe2',
-            }}
-          >
-            <RockDataTable data={data} />
-          </div>
-          <div
-            style={{
-              flex: 1,
-              overflow: 'scroll',
-            }}
-          >
-            <ResultsJson resultsJson={JSON.stringify(data, null, 2)} />
-          </div>
-        </div>
-      ) : err ? (
-        <ResultsJson resultsJson={JSON.stringify(err, null, 2)} />
-      ) : null}
+      <h2>
+        Query Lambda: {workspace}.{queryLambda}
+      </h2>
+      <PebbleButton
+        onClick={execute}
+        style={{ margin: '10px 0px', width: '100px' }}
+      >
+        Run Lambda
+      </PebbleButton>
+      <RockTabs
+        activeIdx={activeTab}
+        ids={headers}
+        headers={headers}
+        onClickTab={setActiveTab}
+        centerAllTabs={true}
+      />
+      {content[activeTab]}
     </>
   );
 };
@@ -169,6 +243,34 @@ const ResultsJson = ({ resultsJson }) => {
         </code>
       </pre>
     </div>
+  );
+};
+
+const QueryConfig = ({
+  apiserver,
+  lambda: { name, ws, path },
+}: {
+  apiserver: string;
+  lambda: Lambda;
+}) => {
+  return (
+    <>
+      <pre>
+        <code>
+          POST: /v1/orgs/self/ws/{ws}/lambdas/
+          {name}
+          /versions/YOUR_VERSION <br />
+          Rockset Apiserver: {apiserver} <br />
+          File System Configuration Path: {path.fullPath}
+          <br />
+          SQL File Path: {path.sqlPath}
+          <br />
+          Executing lambdas on this page will execute the corresponding lambda
+          from your file system. The request will be forwarded using the rockset
+          cli tool.
+        </code>
+      </pre>
+    </>
   );
 };
 
