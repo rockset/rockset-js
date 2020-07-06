@@ -5,8 +5,12 @@ import { ErrorModel, QueryLambdaVersionResponse } from '../codegen/api';
 const basePath = process.env.ROCKSET_APISERVER;
 const apikey = process.env.ROCKSET_APIKEY as string;
 
-if (!apikey || !basePath) {
+if (!apikey) {
   throw 'No ROCKSET_APIKEY specified. Please specify an environment variable ROCKSET_APIKEY with your Rockset key. eg: $ export ROCKSET_APIKEY=...';
+}
+
+if (!basePath) {
+  throw 'No ROCKSET_APISERVER specified. Please specify an environment variable ROCKSET_APISERVER with your Rockset key. eg: $ export ROCKSET_APISERVER=...';
 }
 
 console.log('Specified apiserver to hit:', basePath);

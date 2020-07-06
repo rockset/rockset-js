@@ -2098,11 +2098,43 @@ export interface QueryResponse {
      */
     warnings?: Array<string>;
     /**
+     * errors that occurred during the streaming of the query results
+     * @Type{Array<QueryError>}
+     * @memberof QueryResponse
+     */
+    query_errors?: Array<QueryError>;
+    /**
      * meta information about each column in the result set
      * @type {Array<QueryFieldType>}
      * @memberof QueryResponse
      */
     column_fields?: Array<QueryFieldType>;
+}
+
+/**
+ *
+ * @export
+ * @interface QueryError
+ */
+export interface QueryError {
+  /**
+   * a human readable description of the error
+   * @Type {string}
+   * @memberof QueryError
+   */
+  message?: string;
+  /**
+   * the type of error encountered
+   * @Type {string}
+   * @memberof QueryError
+   */
+  type?: string;
+  /**
+   * the status code of the error
+   * @Type {number}
+   * @memberof QueryError
+   */
+  status_code?: number;
 }
 
 /**
@@ -4652,6 +4684,15 @@ export const QueriesApiFetchParamCreator = function (configuration?: Configurati
     }
 };
 
+const processQueryResponse = async function(response: Response) {
+    const queryResponse: QueryResponse = (await response.json()) ?? {};
+    if (queryResponse.query_errors && queryResponse.query_errors.length > 0) {
+        throw queryResponse.query_errors[0];
+    }
+
+    return queryResponse;
+}
+
 /**
  * QueriesApi - functional programming interface
  * @export
@@ -4670,7 +4711,8 @@ export const QueriesApiFp = function(configuration?: Configuration) {
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
-                        return response.json();
+                        return processQueryResponse(response);
+
                     } else {
                         throw response;
                     }
@@ -5449,7 +5491,8 @@ export const QueryLambdasApiFp = function(configuration?: Configuration) {
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
-                        return response.json();
+                        return processQueryResponse(response);
+
                     } else {
                         throw response;
                     }
@@ -5471,7 +5514,8 @@ export const QueryLambdasApiFp = function(configuration?: Configuration) {
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
-                        return response.json();
+                        return processQueryResponse(response);
+
                     } else {
                         throw response;
                     }
