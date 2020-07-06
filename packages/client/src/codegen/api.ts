@@ -2098,11 +2098,43 @@ export interface QueryResponse {
      */
     warnings?: Array<string>;
     /**
+     * errors that occurred during the streaming of the query results
+     * @Type{Array<QueryError>}
+     * @memberof QueryResponse
+     */
+    query_errors?: Array<QueryError>;
+    /**
      * meta information about each column in the result set
      * @type {Array<QueryFieldType>}
      * @memberof QueryResponse
      */
     column_fields?: Array<QueryFieldType>;
+}
+
+/**
+ *
+ * @export
+ * @interface QueryError
+ */
+export interface QueryError {
+  /**
+   * a human readable description of the error
+   * @Type {string}
+   * @memberof QueryError
+   */
+  message?: string;
+  /**
+   * the type of error encountered
+   * @Type {string}
+   * @memberof QueryError
+   */
+  type?: string;
+  /**
+   * the status code of the error
+   * @Type {number}
+   * @memberof QueryError
+   */
+  status_code?: number;
 }
 
 /**
