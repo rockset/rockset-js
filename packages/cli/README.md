@@ -7,6 +7,7 @@ Official Rockset CLI
 [![Version](https://img.shields.io/npm/v/@rockset/cli.svg)](https://npmjs.org/package/@rockset/cli)
 [![Downloads/week](https://img.shields.io/npm/dw/@rockset/cli.svg)](https://npmjs.org/package/@rockset/cli)
 [![License](https://img.shields.io/npm/l/@rockset/cli.svg)](https://github.com/rockset/rockset-js/blob/master/package.json)
+![Build|Lint|Test](https://github.com/rockset/rockset-js/workflows/Build%7CLint%7CTest/badge.svg)
 
 <!-- toc -->
 * [Installation](#installation)
@@ -33,31 +34,31 @@ npm install -g @rockset/cli
 
 
 The first thing you should do after installing is to set up Autocomplete. This will greatly ease the process
-of navigating the Rock CLI tool.
+of navigating the Rockset CLI tool.
 
 ```
 // Print autocomplete instructions for bash
-rock autocomplete
+rockset autocomplete
 
 // Print autocomplete instructions for ZSH
-rock autocomplete:zsh
+rockset autocomplete:zsh
 ```
 
 The new Rockset CLI support 3 core workflows.
 
-1. Authentication (`rock auth`)
-1. REST API support (`rock api`)
+1. Authentication (`rockset auth`)
+1. REST API support (`rockset api`)
     1. API calls have been modified to closely model the Rockset API Documentation
     1. Load test functionality has been added for select routes
     1. This section of the CLI tool is a thin wrapper around Rockset's REST API. See full documentation for the REST API at 
 https://docs.rockset.com/rest-api
-1. Query Lambda Project support (`rock project`)
+1. Query Lambda Project support (`rockset project`)
     1. A tool that allows you to manage your Query Lambdas from your file system
     1. Download your Query Lambdas to your local project
     1. Edit your query lambdas and commit to git
     1. Deploy your query lambdas to Rockset
 
-You can also update the Rockset CLI using `rock update`.
+You can also update the Rockset CLI using `rockset update`.
 
 # Usage
 ```sh-session
@@ -65,24 +66,24 @@ You can also update the Rockset CLI using `rock update`.
 $ curl https://rockset-cli-artifacts.s3-us-west-2.amazonaws.com/install-standalone.sh | bash 
 
 // open a new shell
-$ rock -h
-$ rock -v
+$ rockset -h
+$ rockset -v
 
 // Set up autocomplete
-$ rock autocomplete
+$ rockset autocomplete
 
 // Add authentication information
-$ rock auth:add apikey [apiserver]
+$ rockset auth:add default apikey [apiserver]
 
-// Update rock cli
-$ rock update
+// Update rockset cli
+$ rockset update
 
-$ rock COMMAND
+$ rockset COMMAND
 running command...
 @rockset/cli/0.0.28 darwin-x64 node-v12.16.3
-$ rock --help [COMMAND]
+$ rockset --help [COMMAND]
 USAGE
-  $ rock COMMAND
+  $ rockset COMMAND
 ...
 ```
 # Commands

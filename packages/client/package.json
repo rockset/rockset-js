@@ -30,16 +30,18 @@
     "jest-cli": "^24.9.0",
     "ts-jest": "^24.1.0",
     "typedoc": "^0.17.7",
+    "tsc-watch": "^4.2.9",
     "typescript": "^3.8.3"
   },
   "repository": "https://github.com/rockset/rockset-node-client/tree/v2",
   "scripts": {
+    "start": "tsc-watch --onSuccess 'cp src/codegen/custom.d.ts dist/codegen/custom.d.ts'",
     "test": "jest --setupFiles dotenv/config",
     "build": "genversion src/version.ts --es6 --semi && tsc && cp src/codegen/custom.d.ts dist/codegen/custom.d.ts",
     "clean": "rm -r dist",
     "lint": "eslint 'src/**/*.ts'",
     "docs": "rm -rf docs && typedoc --out docs/ --ignoreCompilerErrors  src/index.ts --mode modules",
-    "prepublishOnly": "npm run clean && npm run build"
+    "prepublishOnly": "yarn run clean && yarn run build"
   },
   "author": "Rockset Inc",
   "keywords": [

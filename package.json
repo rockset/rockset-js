@@ -19,6 +19,7 @@
     "packages/*"
   ],
   "scripts": {
+    "start": "lerna run --parallel start",
     "build": "lerna run build",
     "lint": "lerna run lint",
     "all": "lerna run build && lerna run lint && lerna run test",
