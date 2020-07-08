@@ -70,7 +70,6 @@ export function activate(context: vscode.ExtensionContext) {
         return;
       }
       const text = activeEditor.document.getText();
-      console.log(text);
 
       try {
         const r = await client.queries.query({ sql: { query: text } });

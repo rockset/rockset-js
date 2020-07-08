@@ -14,7 +14,8 @@
     "Other"
   ],
   "activationEvents": [
-    "onLanguage:rsql"
+    "onLanguage:rsql",
+    "onCommand:extension.rocksetRun"
   ],
   "main": "./out/extension.js",
   "contributes": {
@@ -103,10 +104,10 @@
     ]
   },
   "scripts": {
-    "vscode:prepublish": "yarn run compile",
-    "compile": "tsc -p ./",
+    "vscode:prepublish": "webpack --mode production",
+    "compile": "webpack --mode none",
     "build": "vsce package --yarn",
-    "watch": "tsc -watch -p ./",
+    "watch": "webpack --mode none --watch",
     "test": "echo 'no tests'",
     "lint": "eslint 'src/**/*.ts'"
   },
@@ -121,18 +122,17 @@
     "eslint": "^7.0.0",
     "eslint-plugin-promise": "^4.2.1",
     "glob": "^7.1.4",
+    "handlebars": "^4.7.6",
+    "ts-loader": "^8.0.0",
+    "ts-node": "^8.10.2",
     "typescript": "^3.8.3",
     "vsce": "^1.77.0",
-    "vscode-test": "^1.2.0"
+    "vscode-test": "^1.2.0",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.12"
   },
   "dependencies": {
     "@rockset/client": "0.2.1",
-    "@types/sql-formatter": "^2.3.0",
-    "axios": "^0.19.0",
-    "handlebars": "^4.7.6",
-    "lodash": "^4.17.15",
-    "mustache": "^4.0.1",
-    "sql-formatter": "^2.3.3",
-    "ts-node": "^8.10.2"
+    "sql-formatter": "^2.3.3"
   }
 }
