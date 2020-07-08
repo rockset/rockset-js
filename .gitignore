@@ -1,7 +1,6 @@
 node_modules
 .vscode
 dist
-lib
 lerna-debug.log
 yarn-error.log
 .DS_Store
