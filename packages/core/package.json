@@ -9,7 +9,8 @@
     "lodash.get": "^4.4.2",
     "newtype-ts": "^0.3.4",
     "prettier": "^2.0.5",
-    "prompts": "^2.3.2"
+    "prompts": "^2.3.2",
+    "yaml": "^1.10.0"
   },
   "name": "@rockset/core",
   "version": "0.2.1",

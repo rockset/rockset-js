@@ -156,6 +156,45 @@ paths:
           description: "Query Lambdas listed successfully"
           schema:
             $ref: "#/definitions/ListQueryLambdasResponse"
+  /v1/orgs/self/lambdas/tags:
+    get:
+      tags:
+      - "Query Lambdas"
+      summary: "List Query Lambda Tags"
+      description: "List all tags in an organization"
+      operationId: "listOrganizationTags"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "tags listed successfully"
+          schema:
+            $ref: "#/definitions/ListQueryLambdaTagsResponse"
+  /v1/orgs/self/lambdas/tags/{tag}:
+    get:
+      tags:
+      - "Query Lambdas"
+      summary: "List Query Lambda Tag Versions"
+      description: "List all Query Lambda versions associated with a tag"
+      operationId: "listQueryLambdaTagVersions"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "tag"
+        in: "path"
+        description: "name of the tag"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "versions listed successfully"
+          schema:
+            $ref: "#/definitions/ListQueryLambdaVersionsResponse"
   /v1/orgs/self/queries:
     post:
       tags:
@@ -708,7 +747,7 @@ paths:
         200:
           description: "Query Lambdas fetched successfully"
           schema:
-            $ref: "#/definitions/ListQueryLambdasResponse"
+            $ref: "#/definitions/ListQueryLambdaVersionsResponse"
   /v1/orgs/self/ws/{workspace}/lambdas:
     get:
       tags:
@@ -759,7 +798,7 @@ paths:
         200:
           description: "Query Lambda created successfully"
           schema:
-            $ref: "#/definitions/CreateQueryLambdaResponse"
+            $ref: "#/definitions/QueryLambdaVersionResponse"
   /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}:
     delete:
       tags:
@@ -788,6 +827,205 @@ paths:
           description: "Query Lambda deleted successfully"
           schema:
             $ref: "#/definitions/DeleteQueryLambdaResponse"
+  /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/tags:
+    get:
+      tags:
+      - "Query Lambdas"
+      summary: "List Query Lambda Tags"
+      description: "List all tags associated with a Query Lambda"
+      operationId: "listQueryLambdaTags"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "workspace"
+        in: "path"
+        description: "name of the workspace"
+        required: true
+        type: "string"
+        default: "commons"
+      - name: "queryLambda"
+        in: "path"
+        description: "name of the Query Lambda"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "tags listed successfully"
+          schema:
+            $ref: "#/definitions/ListQueryLambdaTagsResponse"
+    post:
+      tags:
+      - "Query Lambdas"
+      summary: "Create Query Lambda Tag"
+      description: "Create a tag for a specific Query Lambda version, or update if\
+        \ it exists"
+      operationId: "createQueryLambdaTag"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "workspace"
+        in: "path"
+        description: "name of the workspace"
+        required: true
+        type: "string"
+        default: "commons"
+      - name: "queryLambda"
+        in: "path"
+        description: "name of the Query Lambda"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        description: "JSON object"
+        required: true
+        schema:
+          $ref: "#/definitions/CreateQueryLambdaTagRequest"
+      responses:
+        200:
+          description: "tag created successfully"
+          schema:
+            $ref: "#/definitions/QueryLambdaTagResponse"
+  /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/tags/{tag}:
+    get:
+      tags:
+      - "Query Lambdas"
+      summary: "Get Query Lambda Tag"
+      description: "Get the specific Query Lambda version associated with a given\
+        \ tag"
+      operationId: "getQueryLambdaTagVersion"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "workspace"
+        in: "path"
+        description: "name of the workspace"
+        required: true
+        type: "string"
+        default: "commons"
+      - name: "queryLambda"
+        in: "path"
+        description: "name of the Query Lambda"
+        required: true
+        type: "string"
+      - name: "tag"
+        in: "path"
+        description: "name of the tag"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "version retrieved successfully"
+          schema:
+            $ref: "#/definitions/QueryLambdaTagResponse"
+    post:
+      tags:
+      - "Query Lambdas"
+      summary: "Run Query Lambda By Tag"
+      description: "Run the Query Lambda version associated with a given tag."
+      operationId: "executeQueryLambdaByTag"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "workspace"
+        in: "path"
+        description: "name of the workspace"
+        required: true
+        type: "string"
+        default: "commons"
+      - name: "queryLambda"
+        in: "path"
+        description: "name of the Query Lambda"
+        required: true
+        type: "string"
+      - name: "tag"
+        in: "path"
+        description: "tag"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        description: "JSON object"
+        required: false
+        schema:
+          $ref: "#/definitions/ExecuteQueryLambdaRequest"
+      responses:
+        200:
+          description: "Query Lambda executed successfully"
+          schema:
+            $ref: "#/definitions/QueryResponse"
+    delete:
+      tags:
+      - "Query Lambdas"
+      summary: "Delete Query Lambda Tag Version"
+      description: "Delete a tag for a specific Query Lambda"
+      operationId: "deleteQueryLambdaTag"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "workspace"
+        in: "path"
+        description: "name of the workspace"
+        required: true
+        type: "string"
+        default: "commons"
+      - name: "queryLambda"
+        in: "path"
+        description: "name of the Query Lambda"
+        required: true
+        type: "string"
+      - name: "tag"
+        in: "path"
+        description: "name of the tag"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "tag deleted successfully"
+          schema:
+            $ref: "#/definitions/QueryLambdaTagResponse"
+  /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/version/{version}:
+    delete:
+      tags:
+      - "Query Lambdas"
+      summary: "Delete Query Lambda Version"
+      description: "Delete a Query Lambda version."
+      operationId: "deleteQueryLambdaVersion"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "workspace"
+        in: "path"
+        description: "name of the workspace"
+        required: true
+        type: "string"
+        default: "commons"
+      - name: "queryLambda"
+        in: "path"
+        description: "name of the Query Lambda"
+        required: true
+        type: "string"
+      - name: "version"
+        in: "path"
+        description: "version"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Query Lambda version deleted successfully"
+          schema:
+            $ref: "#/definitions/QueryLambdaVersionResponse"
   /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/versions:
     get:
       tags:
@@ -815,7 +1053,7 @@ paths:
         200:
           description: "versions listed successfully"
           schema:
-            $ref: "#/definitions/ListQueryLambdasResponse"
+            $ref: "#/definitions/ListQueryLambdaVersionsResponse"
     post:
       tags:
       - "Query Lambdas"
@@ -844,11 +1082,15 @@ paths:
         required: true
         schema:
           $ref: "#/definitions/UpdateQueryLambdaRequest"
+      - name: "create"
+        in: "query"
+        required: false
+        type: "boolean"
       responses:
         200:
           description: "Query Lambda updated successfully"
           schema:
-            $ref: "#/definitions/UpdateQueryLambdaResponse"
+            $ref: "#/definitions/QueryLambdaVersionResponse"
   /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/versions/{version}:
     get:
       tags:
@@ -876,13 +1118,12 @@ paths:
         in: "path"
         description: "version"
         required: true
-        type: "integer"
-        format: "int32"
+        type: "string"
       responses:
         200:
           description: "Query Lambda retrieved successfully"
           schema:
-            $ref: "#/definitions/GetQueryLambdaResponse"
+            $ref: "#/definitions/QueryLambdaVersionResponse"
     post:
       tags:
       - "Query Lambdas"
@@ -909,8 +1150,7 @@ paths:
         in: "path"
         description: "version"
         required: true
-        type: "integer"
-        format: "int32"
+        type: "string"
       - in: "body"
         name: "body"
         description: "JSON object"
@@ -982,6 +1222,10 @@ definitions:
         type: "string"
         example: "aB35kDjg93J5nsf4GjwMeErAVd832F7ad4vhsW1S02kfZiab42sTsfW5Sxt25asT"
         description: "string of 64 alphanumeric characters"
+      last_access_time:
+        type: "string"
+        example: "2001-08-28T00:23:41Z"
+        description: "ISO-8601 date "
     description: "API keys are used to authenticate requests to Rockset's API. An\
       \ API key is tied to the user who creates it. A new API key can be created for\
       \ each use case, with a maximum of 10 API keys per user."
@@ -1075,37 +1319,62 @@ definitions:
         format: "int64"
         example: 2145
         description: "number of documents in the collection"
-      total_size:
+      purged_doc_count:
         type: "integer"
         format: "int64"
-        example: 123456
-        description: "total collection size in bytes"
+        example: 2145
+        description: "number of documents purged from the collection"
       fill_progress:
         type: "number"
         format: "double"
         example: 0.6
         description: "number between 0 and 1 that indicates progress of collection\
           \ creation"
-      purged_doc_count:
-        type: "integer"
-        format: "int64"
-        example: 2145
-        description: "number of documents purged from the collection"
-      purged_doc_size:
-        type: "integer"
-        format: "int64"
-        example: 123456
-        description: "total collection size in bytes purged"
-      last_updated_ms:
-        type: "integer"
-        format: "int64"
-        example: 1535101094433
-        description: "milliseconds since Unix epoch Jan 1, 1970"
       last_queried_ms:
         type: "integer"
         format: "int64"
         example: 1535101119334
         description: "milliseconds since Unix epoch Jan 1, 1970"
+      last_updated_ms:
+        type: "integer"
+        format: "int64"
+        example: 1535101094433
+        description: "milliseconds since Unix epoch Jan 1, 1970"
+      total_size:
+        type: "integer"
+        format: "int64"
+        example: 123456
+        description: "total collection size in bytes"
+      total_index_size:
+        type: "integer"
+        format: "int64"
+        example: 123456
+        description: "total collection index size in bytes"
+      row_index_size:
+        type: "integer"
+        format: "int64"
+        example: 123456
+        description: "total collection row index size in bytes"
+      column_index_size:
+        type: "integer"
+        format: "int64"
+        example: 123456
+        description: "total collection column index size in bytes"
+      inverted_index_size:
+        type: "integer"
+        format: "int64"
+        example: 123456
+        description: "total collection inverted index size in bytes"
+      range_index_size:
+        type: "integer"
+        format: "int64"
+        example: 123456
+        description: "total collection range index size in bytes"
+      purged_doc_size:
+        type: "integer"
+        format: "int64"
+        example: 123456
+        description: "total size of bytes purged in bytes"
       bytes_inserted:
         type: "integer"
         format: "int64"
@@ -1216,6 +1485,7 @@ definitions:
     type: "object"
     required:
     - "name"
+    - "sql"
     properties:
       name:
         type: "string"
@@ -1228,12 +1498,17 @@ definitions:
       sql:
         description: "Query Lambda SQL query"
         $ref: "#/definitions/QueryLambdaSql"
-  CreateQueryLambdaResponse:
+  CreateQueryLambdaTagRequest:
     type: "object"
     properties:
-      data:
-        description: "Query Lambda data"
-        $ref: "#/definitions/QueryLambda"
+      tag_name:
+        type: "string"
+        example: "production"
+        description: "name of Query Lambda tag"
+      version:
+        type: "string"
+        example: "123ABC"
+        description: "hash identifying a Query Lambda tag"
   CreateUserRequest:
     type: "object"
     required:
@@ -1442,6 +1717,7 @@ definitions:
         - "NOTIMPLEMENTEDYET"
         - "RESOURCEEXCEEDED"
         - "ALREADYEXISTS"
+        - "NOTALLOWED"
         - "NOTFOUND"
         - "DEPENDENTRESOURCES"
         - "QUERY_ERROR"
@@ -1465,6 +1741,9 @@ definitions:
       trace_id:
         type: "string"
         description: "Internal trace ID to help with debugging"
+      error_id:
+        type: "string"
+        description: "ID of the error"
     description: "Describes details about an error"
   EventTimeInfo:
     type: "object"
@@ -1580,16 +1859,6 @@ definitions:
       data:
         description: "integration object"
         $ref: "#/definitions/Integration"
-      collections:
-        type: "array"
-        items:
-          $ref: "#/definitions/Collection"
-  GetQueryLambdaResponse:
-    type: "object"
-    properties:
-      data:
-        description: "Query Lambda details"
-        $ref: "#/definitions/QueryLambda"
   GetWorkspaceResponse:
     type: "object"
     properties:
@@ -1632,6 +1901,11 @@ definitions:
         type: "string"
         example: "AWS account with event data for the data science team."
         description: "longer explanation for the integration"
+      collections:
+        type: "array"
+        description: "list of collections that use the integration"
+        items:
+          $ref: "#/definitions/Collection"
       created_by:
         type: "string"
         example: "hello@rockset.com"
@@ -1730,6 +2004,22 @@ definitions:
         description: "list of integration objects"
         items:
           $ref: "#/definitions/Integration"
+  ListQueryLambdaTagsResponse:
+    type: "object"
+    properties:
+      data:
+        type: "array"
+        description: "list of all tags associated with a Query Lambda"
+        items:
+          $ref: "#/definitions/QueryLambdaTag"
+  ListQueryLambdaVersionsResponse:
+    type: "object"
+    properties:
+      data:
+        type: "array"
+        description: "list of all versions for a particular Query Lambda"
+        items:
+          $ref: "#/definitions/QueryLambdaVersion"
   ListQueryLambdasResponse:
     type: "object"
     properties:
@@ -1763,6 +2053,40 @@ definitions:
         type: "string"
         example: "mongodb+srv://<username>:<password>@server.example.com/"
         description: "MongoDB connection URI string"
+  OrgMembership:
+    type: "object"
+    required:
+    - "created_at"
+    - "expires_at"
+    - "invite_state"
+    - "invited_by"
+    - "organization"
+    - "roles"
+    properties:
+      organization:
+        $ref: "#/definitions/Organization"
+      roles:
+        type: "array"
+        items:
+          type: "string"
+      invite_state:
+        type: "string"
+        enum:
+        - "PENDING"
+        - "ACCEPTED"
+        - "EXPIRED"
+        - "CANCELLED"
+      invited_by:
+        type: "string"
+      expires_at:
+        type: "string"
+        example: "2001-08-29T00:23:41Z"
+        description: "ISO-8601 date"
+        readOnly: true
+      created_at:
+        type: "string"
+        example: "2001-08-28T00:23:41Z"
+        description: "ISO-8601 date"
   Organization:
     type: "object"
     properties:
@@ -1799,6 +2123,11 @@ definitions:
         - "TRIAL_EXPIRED"
         - "TRIAL_DEPLETED"
         - "DELETED"
+      num_dedicated_pods:
+        type: "integer"
+        format: "int32"
+        example: 2
+        description: "number of dedicated pods"
     description: "An organization in Rockset is a container for users and collections."
   OrganizationResponse:
     type: "object"
@@ -1889,6 +2218,24 @@ definitions:
         type: "string"
         description: "JSON-Pointer referencing a location in the target document.Required\
           \ for copy and move operations"
+  QueryError:
+    type: "object"
+    properties:
+      type:
+        type: "string"
+        example: "ResourceExceeded"
+        description: "The type of error"
+      message:
+        type: "string"
+        example: "Too many rows"
+        description: "A message associated with the error, containing more information\
+          \ about it"
+      status_code:
+        type: "integer"
+        format: "int32"
+        example: 429
+        description: "The HTTP status code associated with this error, had it been\
+          \ sent as the response status code"
   QueryFieldType:
     type: "object"
     required:
@@ -1910,45 +2257,31 @@ definitions:
         type: "string"
         example: "commons"
         description: "workspace of this Query Lambda"
-      created_by:
+      last_updated_by:
         type: "string"
         example: "..@rockset.com"
         description: "user that created this Query Lambda"
-      created_at:
+      last_updated:
         type: "string"
         example: "2001-08-28T00:23:41Z"
-        description: "ISO-8601 date of when Query Lambda was created"
+        description: "ISO-8601 date of when Query Lambda was last updated"
       name:
         type: "string"
         example: "myQuery"
         description: "Query Lambda name"
-      version:
+      version_count:
         type: "integer"
         format: "int32"
         example: 1
-        description: "Query Lambda version"
-      description:
-        type: "string"
-        example: "production version foo"
-        description: "optional description"
-      sql:
-        description: "Query Lambda SQL query"
-        $ref: "#/definitions/QueryLambdaSql"
+        description: "number of Query Lambda versions"
       collections:
         type: "array"
         description: "collections queried by underlying SQL query"
         items:
           type: "string"
-      state:
-        type: "string"
-        example: "ACTIVE"
-        description: "status of this Query Lambda"
-        enum:
-        - "ACTIVE"
-        - "ARCHIVED"
-      stats:
-        description: "stats related to this Query Lambda"
-        $ref: "#/definitions/QueryLambdaStats"
+      latest_version:
+        description: "Query Lambda version details for most recently created version"
+        $ref: "#/definitions/QueryLambdaVersion"
   QueryLambdaSql:
     type: "object"
     required:
@@ -1982,6 +2315,74 @@ definitions:
         type: "string"
         example: "[error message]"
         description: "error message associated with last failed execution"
+  QueryLambdaTag:
+    type: "object"
+    properties:
+      tag_name:
+        type: "string"
+        example: "production"
+        description: "name of Query Lambda tag"
+      version:
+        example: "b1d7c9a34b50cd"
+        description: "query lambda version"
+        $ref: "#/definitions/QueryLambdaVersion"
+  QueryLambdaTagResponse:
+    type: "object"
+    properties:
+      data:
+        description: "updated Query Lambda tag"
+        $ref: "#/definitions/QueryLambdaTag"
+  QueryLambdaVersion:
+    type: "object"
+    properties:
+      workspace:
+        type: "string"
+        example: "commons"
+        description: "workspace of this Query Lambda"
+      created_by:
+        type: "string"
+        example: "..@rockset.com"
+        description: "user that created this Query Lambda"
+      created_at:
+        type: "string"
+        example: "2001-08-28T00:23:41Z"
+        description: "ISO-8601 date of when Query Lambda was created"
+      name:
+        type: "string"
+        example: "myQuery"
+        description: "Query Lambda name"
+      version:
+        type: "string"
+        example: "acb99feg92bcaf"
+        description: "Query Lambda version"
+      description:
+        type: "string"
+        example: "production version foo"
+        description: "optional description"
+      sql:
+        description: "Query Lambda SQL query"
+        $ref: "#/definitions/QueryLambdaSql"
+      collections:
+        type: "array"
+        description: "collections queried by underlying SQL query"
+        items:
+          type: "string"
+      state:
+        type: "string"
+        example: "ACTIVE"
+        description: "status of this Query Lambda"
+        enum:
+        - "ACTIVE"
+        - "INVALID_SQL"
+      stats:
+        description: "stats related to this Query Lambda"
+        $ref: "#/definitions/QueryLambdaStats"
+  QueryLambdaVersionResponse:
+    type: "object"
+    properties:
+      data:
+        description: "Query Lambda version details"
+        $ref: "#/definitions/QueryLambdaVersion"
   QueryParameter:
     type: "object"
     required:
@@ -2055,6 +2456,11 @@ definitions:
         description: "warnings received from the query"
         items:
           type: "string"
+      query_errors:
+        type: "array"
+        description: "errors encountered while streaming the query"
+        items:
+          $ref: "#/definitions/QueryError"
       column_fields:
         type: "array"
         description: "meta information about each column in the result set"
@@ -2487,12 +2893,6 @@ definitions:
       sql:
         description: "Query Lambda SQL query"
         $ref: "#/definitions/QueryLambdaSql"
-  UpdateQueryLambdaResponse:
-    type: "object"
-    properties:
-      data:
-        description: "Query Lambda data"
-        $ref: "#/definitions/QueryLambda"
   User:
     type: "object"
     required:
@@ -2526,6 +2926,21 @@ definitions:
         description: "state of user - NEW / ACTIVE"
       org:
         type: "string"
+      invite_state:
+        type: "string"
+        enum:
+        - "PENDING"
+        - "ACCEPTED"
+        - "EXPIRED"
+        - "CANCELLED"
+      orgs:
+        type: "array"
+        items:
+          $ref: "#/definitions/Organization"
+      org_memberships:
+        type: "array"
+        items:
+          $ref: "#/definitions/OrgMembership"
   Workspace:
     type: "object"
     properties:

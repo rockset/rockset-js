@@ -12,7 +12,9 @@ Official Rockset CLI
 <!-- toc -->
 * [Installation](#installation)
 * [Getting Started](#getting-started)
-* [Usage](#usage)
+* [Usage Overview](#usage-overview)
+* [API Usage Details](#api-usage-details)
+* [Project Usage Details](#project-usage-details)
 * [Commands](#commands)
 <!-- tocstop -->
 
@@ -23,6 +25,8 @@ Mac/Linux installation (recommended):
 curl https://rockset-cli-artifacts.s3-us-west-2.amazonaws.com/install-standalone.sh | bash 
 ```
 
+**Make sure you restart your terminal to complete installation**
+
 You can also install the `@rockset/cli` package directly from NPM. This isn't recommended, as the 
 package will not be able to autoupdate. Make sure you are on Node 10.x or 12.x before attempting this.
 
@@ -32,21 +36,33 @@ npm install -g @rockset/cli
 
 # Getting Started
 
+The following steps will help you configure the CLI tool correctly for usage
 
-The first thing you should do after installing is to set up Autocomplete. This will greatly ease the process
-of navigating the Rockset CLI tool.
+```bash
+
+#. View available commands
+$ rockset -h
+
+#.  The first thing you should do after installing is to set up Autocomplete
+#.  Print autocomplete instructions for bash
+$ rockset autocomplete
+
+#. Print autocomplete instructions for ZSH
+$ rockset autocomplete:zsh
+
+#. Add authentication information
+$ rockset auth:add default [apikey] [apiserver]
 
 ```
-// Print autocomplete instructions for bash
-rockset autocomplete
 
-// Print autocomplete instructions for ZSH
-rockset autocomplete:zsh
-```
+**Make sure you restart your terminal to ensure autocomplete works**
 
-The new Rockset CLI support 3 core workflows.
+# Usage Overview
+
+The new Rockset CLI support 4 core workflows.
 
 1. Authentication (`rockset auth`)
+1. Rockset SQL Execution Support (`rockset sql`)
 1. REST API support (`rockset api`)
     1. API calls have been modified to closely model the Rockset API Documentation
     1. Load test functionality has been added for select routes
@@ -60,32 +76,385 @@ https://docs.rockset.com/rest-api
 
 You can also update the Rockset CLI using `rockset update`.
 
-# Usage
-```sh-session
-// This will require a password
-$ curl https://rockset-cli-artifacts.s3-us-west-2.amazonaws.com/install-standalone.sh | bash 
-
-// open a new shell
-$ rockset -h
-$ rockset -v
-
-// Set up autocomplete
-$ rockset autocomplete
-
-// Add authentication information
-$ rockset auth:add default apikey [apiserver]
-
-// Update rockset cli
-$ rockset update
-
-$ rockset COMMAND
-running command...
-@rockset/cli/0.0.28 darwin-x64 node-v12.16.3
-$ rockset --help [COMMAND]
+```bash
+#. Get specific help for a command
+$ rockset -h [COMMAND]
 USAGE
   $ rockset COMMAND
+
+#. View different auth profiles
+$ rockset auth:list
+
+#. Use a different auth profile
+$ rockset auth:use
+
+#. Run a SQL query
+$ rockset sql "select count(*) from _events"
+
+#. List all query lambdas in "commons" workspace
+$ rockset api:queryLambdas:listQueryLambdasInWorkspace commons
+
+#. Initialize a Rockset Project in the current directory
+$ rockset project:init
+
+#. Download your query lambdas
+$ rockset project:download
+
+#. Serve the Rockset Project Development Server and UI
+$ rockset project:serve
+
+$ rockset project:deploy
+
+#. Update rockset cli
+$ rockset update
+
+```
+
+# API Usage Details
+
+## Organization
+
+The API tool is contained in `rockset api`. This tool is designed to very closely match the layout of our REST API endpoints and Documentation. This section will provides examples for using this tool.
+
+The API calls are further broken into subcommands based on the resource that the command affects. This reflects the breakdown of our API Documentation.
+
+* apikeys
+* collections
+* documents
+* integrations
+* orgs
+* queries
+* queryLambdas
+* users
+* workspaces
+
+For example, all endpoints for creating, deleting, and managing Collections will appear under the `rockset api:collections` path.
+
+To view all available endpoints for a resource, use the `-h` flag.
+
+```
+$ rockset api:collections -h
+
+USAGE
+  $ rockset api:collections:COMMAND
+
+DESCRIPTION
+  Create Collection
+
+  Create new collection in a workspace.
+
+  Endpoint: POST: /v1/orgs/self/ws/{workspace}/collections
+
+  Endpoint Documentation: https://docs.rockset.com/rest-api#createcollection
+
+  This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
+
+
+
+COMMANDS
+  api:collections:createCollection
+  api:collections:deleteCollection
+  api:collections:getCollection
+  api:collections:listCollections
+  api:collections:listQueryLambdasInCollection
+  api:collections:workspaceCollections
+
+```
+
+## Input Arguments Examples
+
+Each API command will accept positional arguments that translate to the URL parameters of the REST endpoint that they wrap. API Commands that wrap POST requests will additionally accept a JSON string for the Body of the POST request. This JSON string will be passed directly to the API Endpoint, and should thus match the API specification.
+
+```bash
+#. GET All Collections
+$ rockset api:collections:listCollections
+[INFO]: GET: /v1/orgs/self/collections
+[INFO]: Arguments:
+[INFO]: {}
+Created at           Created by                    Name                  Description
+2020-06-24T00:12:30Z scott@rockset.com             Collections           null          
+2020-06-30T17:24:03Z ben@rockset.com               Collections2          null                                         
+2020-07-01T21:03:07Z joe@rockset.com               JoeTest               null                                         
+
+#. GET One Collection
+$ rockset api:collections:getCollection commons Collections
+[INFO]: GET: /v1/orgs/self/ws/{workspace}/collections/{collection}
+[INFO]: Arguments:
+[INFO]: {
+  "workspace": "commons",
+  "collection": "Collections"
+}
+{
+  "created_at": "2020-06-24T00:12:30Z",
+  "created_by": "scott@rockset.com",
+  "name": "Collections",
+  "description": null,
+  ...
+}
+```
+
+Arguments can also be passed in as a JSON file specification using the `-f` flag. This is especially useful for POST requests that may require large specifications. 
+
+1. Each top level key in the file is passed as the parameter of the corresponding name, ignoring case
+2. The Body parameter for post requests can be passed in two ways. Either a top level key called "body" can be used with the JSON body, or all of the keys required in the body can be added directly to the top level. In other words, once step 1 has completed, all remaining keys are passed as the body.
+
+```bash
+#. The following two JSON files are treated identically
+#. Commons.foo is a query lambda with text 'Select :foo'
+
+$ cat spec1.json
+{
+  "workspace": "commons",
+  "querylambda": "foo",
+  "tag": "test",
+  "body": {
+    "parameters": [
+      {
+        "name": "foo",
+        "type": "string",
+        "value": "bar"
+      }
+    ]
+  }
+}
+
+$ cat spec2.json
+{
+  "workspace": "commons",
+  "querylambda": "foo",
+  "tag": "test",
+  "parameters": [
+    {
+      "name": "foo",
+      "type": "string",
+      "value": "bar"
+    }
+  ]
+}
+
+#. These two produce the same output
+$ rockset api:queryLambdas:executeQueryLambdaByTag -f spec2.json
+$ rockset api:queryLambdas:executeQueryLambdaByTag -f spec1.json
+[INFO]: POST: /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/tags/{tag}
+[INFO]: Arguments:
+[INFO]: {
+  "workspace": "commons",
+  "queryLambda": "foo",
+  "tag": "test",
+  "body": {
+    "parameters": [
+      {
+        "name": "foo",
+        "type": "string",
+        "value": "bar"
+      }
+    ]
+  }
+}
+Foo
+bar
+
+```
+
+
+## Output Format
+
+All API Commands by default will intelligently grab the most relevant part of the response data and display it for you in a table. The most commonly used flags are shown below. The full set of flags can be found by setting the `-h` flag.
+
+```
+  --columns=columns              only show provided columns (comma-separated)
+
+  --filter=filter                filter property by partial string matching, ex: name=foo
+
+  --full                         Show the full results JSON object
+
+  --no-header                    hide table header from output
+
+  --output=csv|json|yaml         output in a more machine friendly format
+
+  --sort=sort                    property to sort by (prepend '-' for descending)
+```
+
+## Load Testing
+
+Some API commands support running load tests to test the performance of your queries under real load. Currently this includes API commands in the following categories.
+
+* queries
+* queryLambdas
+* documents
+
+To run a load test, run the command as usual and pass the `-l` flag with the number of requests you wish to make per second.
+
+```bash
+
+#. Run a load test against Query Lambda commons.foo, with text 'Select :foo'
+$ cat spec2.json
+{
+  "workspace": "commons",
+  "querylambda": "foo",
+  "tag": "test",
+  "parameters": [
+    {
+      "name": "foo",
+      "type": "string",
+      "value": "bar"
+    }
+  ]
+}
+
+#. Start load test
+$ rockset api:queryLambdas:executeQueryLambdaByTag -f spec2.json -l 5
+[INFO]: POST: /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/tags/{tag}
+[INFO]: Arguments:
+[INFO]: {
+  "workspace": "commons",
+  "queryLambda": "foo",
+  "tag": "test",
+  "body": {
+    "parameters": [
+      {
+        "name": "foo",
+        "type": "string",
+        "value": "bar"
+      }
+    ]
+  }
+}
+? Please confirm that you would like to send 5 API requests per second to the endpoint show above.
+Sending huge amounts of requests may cause performance issues for the rest of your organization. Please be careful › (y/N) ... yes
+
+****
+Sent: 0
+Success: 0
+Failure: 0
+Pending: 0
+Average Success Latency: NaN ms
+Average Failure Latency: NaN ms
+
+
+
+****
+Sent: 5
+Success: 5
+Failure: 0
+Pending: 0
+Average Success Latency: 257 ms
+Average Failure Latency: NaN ms
+
+
+
+****
+Sent: 10
+Success: 10
+Failure: 0
+Pending: 0
+Average Success Latency: 168 ms
+Average Failure Latency: NaN ms
+
+
+
+****
+Sent: 15
+Success: 15
+Failure: 0
+Pending: 0
+Average Success Latency: 140 ms
+Average Failure Latency: NaN ms
+
+...
+
+#. Load test will continue to run until it is killed
+```
+
+
+## More Examples
+
+**Create a Collection**
+
+```yaml
+#. YAML Spec for this collection
+name: footest
+workspace: commons
+sources:
+- s3:
+    access_key: ''
+    secret_access: ''
+    prefix: partial-cities
+    region: us-west-2
+    bucket: rockset-public-datasets
+    prefixes:
+    - partial-cities
+    mappings: []
+  format: JSON
+retention_secs: 100000
+field_mappings:
+- name: transformation538cvdohk
+  is_drop_all_fields:
+  input_fields:
+  - field_name: fields.country
+    if_missing: PASS
+    is_drop: true
+    param: country
+  output_field:
+    field_name: lenCountry
+    value:
+      sql: LENGTH(:country)
+    on_error: SKIP
+```
+
+```bash
+$ rockset api:collections:createCollection -f spec.yaml
+[INFO]: POST: /v1/orgs/self/ws/{workspace}/collections
+[INFO]: Arguments:
+[INFO]: {
+  "workspace": "commons",
+  "body": {
+    "name": "footest",
+    "sources": [
+      {
+        "s3": {
+          "access_key": "",
+          "secret_access": "",
+          "prefix": "partial-cities",
+          "region": "us-west-2",
+          "bucket": "rockset-public-datasets",
+          "prefixes": [
+            "partial-cities"
+          ],
+          "mappings": []
+        },
+        "format": "JSON"
+      }
+    ],
+    "retention_secs": 100000,
+    "field_mappings": [
+      {
+        "name": "transformation538cvdohk",
+        "is_drop_all_fields": null,
+        "input_fields": [
+          {
+            "field_name": "fields.country",
+            "if_missing": "PASS",
+            "is_drop": true,
+            "param": "country"
+          }
+        ],
+        "output_field": {
+          "field_name": "lenCountry",
+          "value": {
+            "sql": "LENGTH(:country)"
+          },
+          "on_error": "SKIP"
+        }
+      }
+    ]
+  }
+}
 ...
 ```
+
+# Project Usage Details
+
 # Commands
 <!-- commands -->
 * [`rockset api:apikeys:createApiKey [BODY]`](#rockset-apiapikeyscreateapikey-body)
@@ -110,13 +479,21 @@ USAGE
 * [`rockset api:orgs:getOrganization`](#rockset-apiorgsgetorganization)
 * [`rockset api:queries:query [BODY]`](#rockset-apiqueriesquery-body)
 * [`rockset api:queryLambdas:createQueryLambda [WORKSPACE] [BODY]`](#rockset-apiquerylambdascreatequerylambda-workspace-body)
+* [`rockset api:queryLambdas:createQueryLambdaTag [WORKSPACE] [QUERYLAMBDA] [BODY]`](#rockset-apiquerylambdascreatequerylambdatag-workspace-querylambda-body)
 * [`rockset api:queryLambdas:deleteQueryLambda [WORKSPACE] [QUERYLAMBDA]`](#rockset-apiquerylambdasdeletequerylambda-workspace-querylambda)
+* [`rockset api:queryLambdas:deleteQueryLambdaTag [WORKSPACE] [QUERYLAMBDA] [TAG]`](#rockset-apiquerylambdasdeletequerylambdatag-workspace-querylambda-tag)
+* [`rockset api:queryLambdas:deleteQueryLambdaVersion [WORKSPACE] [QUERYLAMBDA] [VERSION]`](#rockset-apiquerylambdasdeletequerylambdaversion-workspace-querylambda-version)
 * [`rockset api:queryLambdas:executeQueryLambda [WORKSPACE] [QUERYLAMBDA] [VERSION] [BODY]`](#rockset-apiquerylambdasexecutequerylambda-workspace-querylambda-version-body)
+* [`rockset api:queryLambdas:executeQueryLambdaByTag [WORKSPACE] [QUERYLAMBDA] [TAG] [BODY]`](#rockset-apiquerylambdasexecutequerylambdabytag-workspace-querylambda-tag-body)
+* [`rockset api:queryLambdas:getQueryLambdaTagVersion [WORKSPACE] [QUERYLAMBDA] [TAG]`](#rockset-apiquerylambdasgetquerylambdatagversion-workspace-querylambda-tag)
 * [`rockset api:queryLambdas:getQueryLambdaVersion [WORKSPACE] [QUERYLAMBDA] [VERSION]`](#rockset-apiquerylambdasgetquerylambdaversion-workspace-querylambda-version)
 * [`rockset api:queryLambdas:listAllQueryLambdas`](#rockset-apiquerylambdaslistallquerylambdas)
+* [`rockset api:queryLambdas:listOrganizationTags`](#rockset-apiquerylambdaslistorganizationtags)
+* [`rockset api:queryLambdas:listQueryLambdaTagVersions [TAG]`](#rockset-apiquerylambdaslistquerylambdatagversions-tag)
+* [`rockset api:queryLambdas:listQueryLambdaTags [WORKSPACE] [QUERYLAMBDA]`](#rockset-apiquerylambdaslistquerylambdatags-workspace-querylambda)
 * [`rockset api:queryLambdas:listQueryLambdaVersions [WORKSPACE] [QUERYLAMBDA]`](#rockset-apiquerylambdaslistquerylambdaversions-workspace-querylambda)
 * [`rockset api:queryLambdas:listQueryLambdasInWorkspace [WORKSPACE]`](#rockset-apiquerylambdaslistquerylambdasinworkspace-workspace)
-* [`rockset api:queryLambdas:updateQueryLambda [WORKSPACE] [QUERYLAMBDA] [BODY]`](#rockset-apiquerylambdasupdatequerylambda-workspace-querylambda-body)
+* [`rockset api:queryLambdas:updateQueryLambda [WORKSPACE] [QUERYLAMBDA] [BODY] [CREATE]`](#rockset-apiquerylambdasupdatequerylambda-workspace-querylambda-body-create)
 * [`rockset api:users:createUser [BODY]`](#rockset-apiuserscreateuser-body)
 * [`rockset api:users:deleteUser [USER]`](#rockset-apiusersdeleteuser-user)
 * [`rockset api:users:getCurrentUser`](#rockset-apiusersgetcurrentuser)
@@ -155,9 +532,9 @@ ARGUMENTS
   BODY  JSON object
 
 OPTIONS
-  -f, --file=file         The config file to execute this command from. Format must be json. Keys are translated into
-                          arguments of the same name. If no BODY argument is specified, the whole object, minus keys
-                          used as other arguments, will be passed in as the BODY.
+  -f, --file=file         The config file to execute this command from. Format must be [json|yaml]. Keys are translated
+                          into arguments of the same name. If no BODY argument is specified, the whole object, minus
+                          keys used as other arguments, will be passed in as the BODY.
 
   -h, --help              show CLI help
 
@@ -206,9 +583,9 @@ ARGUMENTS
   USER
 
 OPTIONS
-  -f, --file=file         The config file to execute this command from. Format must be json. Keys are translated into
-                          arguments of the same name. If no BODY argument is specified, the whole object, minus keys
-                          used as other arguments, will be passed in as the BODY.
+  -f, --file=file         The config file to execute this command from. Format must be [json|yaml]. Keys are translated
+                          into arguments of the same name. If no BODY argument is specified, the whole object, minus
+                          keys used as other arguments, will be passed in as the BODY.
 
   -h, --help              show CLI help
 
@@ -256,9 +633,9 @@ ARGUMENTS
   NAME  name of the API key
 
 OPTIONS
-  -f, --file=file         The config file to execute this command from. Format must be json. Keys are translated into
-                          arguments of the same name. If no BODY argument is specified, the whole object, minus keys
-                          used as other arguments, will be passed in as the BODY.
+  -f, --file=file         The config file to execute this command from. Format must be [json|yaml]. Keys are translated
+                          into arguments of the same name. If no BODY argument is specified, the whole object, minus
+                          keys used as other arguments, will be passed in as the BODY.
 
   -h, --help              show CLI help
 
@@ -307,9 +684,9 @@ ARGUMENTS
   USER
 
 OPTIONS
-  -f, --file=file         The config file to execute this command from. Format must be json. Keys are translated into
-                          arguments of the same name. If no BODY argument is specified, the whole object, minus keys
-                          used as other arguments, will be passed in as the BODY.
+  -f, --file=file         The config file to execute this command from. Format must be [json|yaml]. Keys are translated
+                          into arguments of the same name. If no BODY argument is specified, the whole object, minus
+                          keys used as other arguments, will be passed in as the BODY.
 
   -h, --help              show CLI help
 
@@ -354,9 +731,9 @@ USAGE
   $ rockset api:apikeys:listApiKeys
 
 OPTIONS
-  -f, --file=file         The config file to execute this command from. Format must be json. Keys are translated into
-                          arguments of the same name. If no BODY argument is specified, the whole object, minus keys
-                          used as other arguments, will be passed in as the BODY.
+  -f, --file=file         The config file to execute this command from. Format must be [json|yaml]. Keys are translated
+                          into arguments of the same name. If no BODY argument is specified, the whole object, minus
+                          keys used as other arguments, will be passed in as the BODY.
 
   -h, --help              show CLI help
 
@@ -401,9 +778,9 @@ USAGE
   $ rockset api:apikeys:listApiKeysAdmin [USER]
 
 OPTIONS
-  -f, --file=file         The config file to execute this command from. Format must be json. Keys are translated into
-                          arguments of the same name. If no BODY argument is specified, the whole object, minus keys
-                          used as other arguments, will be passed in as the BODY.
+  -f, --file=file         The config file to execute this command from. Format must be [json|yaml]. Keys are translated
+                          into arguments of the same name. If no BODY argument is specified, the whole object, minus
+                          keys used as other arguments, will be passed in as the BODY.
 
   -h, --help              show CLI help
 
@@ -452,9 +829,9 @@ ARGUMENTS
   BODY       JSON object
 
 OPTIONS
-  -f, --file=file         The config file to execute this command from. Format must be json. Keys are translated into
-                          arguments of the same name. If no BODY argument is specified, the whole object, minus keys
-                          used as other arguments, will be passed in as the BODY.
+  -f, --file=file         The config file to execute this command from. Format must be [json|yaml]. Keys are translated
+                          into arguments of the same name. If no BODY argument is specified, the whole object, minus
+                          keys used as other arguments, will be passed in as the BODY.
 
   -h, --help              show CLI help
 
@@ -503,9 +880,9 @@ ARGUMENTS
   COLLECTION  name of the collection
 
 OPTIONS
-  -f, --file=file         The config file to execute this command from. Format must be json. Keys are translated into
-                          arguments of the same name. If no BODY argument is specified, the whole object, minus keys
-                          used as other arguments, will be passed in as the BODY.
+  -f, --file=file         The config file to execute this command from. Format must be [json|yaml]. Keys are translated
+                          into arguments of the same name. If no BODY argument is specified, the whole object, minus
+                          keys used as other arguments, will be passed in as the BODY.
 
   -h, --help              show CLI help
 
@@ -554,9 +931,9 @@ ARGUMENTS
   COLLECTION  name of the collection
 
 OPTIONS
-  -f, --file=file         The config file to execute this command from. Format must be json. Keys are translated into
-                          arguments of the same name. If no BODY argument is specified, the whole object, minus keys
-                          used as other arguments, will be passed in as the BODY.
+  -f, --file=file         The config file to execute this command from. Format must be [json|yaml]. Keys are translated
+                          into arguments of the same name. If no BODY argument is specified, the whole object, minus
+                          keys used as other arguments, will be passed in as the BODY.
 
   -h, --help              show CLI help
 
@@ -601,9 +978,9 @@ USAGE
   $ rockset api:collections:listCollections
 
 OPTIONS
-  -f, --file=file         The config file to execute this command from. Format must be json. Keys are translated into
-                          arguments of the same name. If no BODY argument is specified, the whole object, minus keys
-                          used as other arguments, will be passed in as the BODY.
+  -f, --file=file         The config file to execute this command from. Format must be [json|yaml]. Keys are translated
+                          into arguments of the same name. If no BODY argument is specified, the whole object, minus
+                          keys used as other arguments, will be passed in as the BODY.
 
   -h, --help              show CLI help
 
@@ -652,9 +1029,9 @@ ARGUMENTS
   COLLECTION  name of the collection
 
 OPTIONS
-  -f, --file=file         The config file to execute this command from. Format must be json. Keys are translated into
-                          arguments of the same name. If no BODY argument is specified, the whole object, minus keys
-                          used as other arguments, will be passed in as the BODY.
+  -f, --file=file         The config file to execute this command from. Format must be [json|yaml]. Keys are translated
+                          into arguments of the same name. If no BODY argument is specified, the whole object, minus
+                          keys used as other arguments, will be passed in as the BODY.
 
   -h, --help              show CLI help
 
@@ -702,9 +1079,9 @@ ARGUMENTS
   WORKSPACE  name of the workspace
 
 OPTIONS
-  -f, --file=file         The config file to execute this command from. Format must be json. Keys are translated into
-                          arguments of the same name. If no BODY argument is specified, the whole object, minus keys
-                          used as other arguments, will be passed in as the BODY.
+  -f, --file=file         The config file to execute this command from. Format must be [json|yaml]. Keys are translated
+                          into arguments of the same name. If no BODY argument is specified, the whole object, minus
+                          keys used as other arguments, will be passed in as the BODY.
 
   -h, --help              show CLI help
 
@@ -754,9 +1131,9 @@ ARGUMENTS
   BODY        JSON object
 
 OPTIONS
-  -f, --file=file                The config file to execute this command from. Format must be json. Keys are translated
-                                 into arguments of the same name. If no BODY argument is specified, the whole object,
-                                 minus keys used as other arguments, will be passed in as the BODY.
+  -f, --file=file                The config file to execute this command from. Format must be [json|yaml]. Keys are
+                                 translated into arguments of the same name. If no BODY argument is specified, the whole
+                                 object, minus keys used as other arguments, will be passed in as the BODY.
 
   -h, --help                     show CLI help
 
@@ -811,9 +1188,9 @@ ARGUMENTS
   BODY        JSON object
 
 OPTIONS
-  -f, --file=file                The config file to execute this command from. Format must be json. Keys are translated
-                                 into arguments of the same name. If no BODY argument is specified, the whole object,
-                                 minus keys used as other arguments, will be passed in as the BODY.
+  -f, --file=file                The config file to execute this command from. Format must be [json|yaml]. Keys are
+                                 translated into arguments of the same name. If no BODY argument is specified, the whole
+                                 object, minus keys used as other arguments, will be passed in as the BODY.
 
   -h, --help                     show CLI help
 
@@ -868,9 +1245,9 @@ ARGUMENTS
   BODY        JSON Patch objects
 
 OPTIONS
-  -f, --file=file                The config file to execute this command from. Format must be json. Keys are translated
-                                 into arguments of the same name. If no BODY argument is specified, the whole object,
-                                 minus keys used as other arguments, will be passed in as the BODY.
+  -f, --file=file                The config file to execute this command from. Format must be [json|yaml]. Keys are
+                                 translated into arguments of the same name. If no BODY argument is specified, the whole
+                                 object, minus keys used as other arguments, will be passed in as the BODY.
 
   -h, --help                     show CLI help
 
@@ -923,9 +1300,9 @@ ARGUMENTS
   BODY  integration credentials
 
 OPTIONS
-  -f, --file=file         The config file to execute this command from. Format must be json. Keys are translated into
-                          arguments of the same name. If no BODY argument is specified, the whole object, minus keys
-                          used as other arguments, will be passed in as the BODY.
+  -f, --file=file         The config file to execute this command from. Format must be [json|yaml]. Keys are translated
+                          into arguments of the same name. If no BODY argument is specified, the whole object, minus
+                          keys used as other arguments, will be passed in as the BODY.
 
   -h, --help              show CLI help
 
@@ -973,9 +1350,9 @@ ARGUMENTS
   INTEGRATION  name of the integration
 
 OPTIONS
-  -f, --file=file         The config file to execute this command from. Format must be json. Keys are translated into
-                          arguments of the same name. If no BODY argument is specified, the whole object, minus keys
-                          used as other arguments, will be passed in as the BODY.
+  -f, --file=file         The config file to execute this command from. Format must be [json|yaml]. Keys are translated
+                          into arguments of the same name. If no BODY argument is specified, the whole object, minus
+                          keys used as other arguments, will be passed in as the BODY.
 
   -h, --help              show CLI help
 
@@ -1023,9 +1400,9 @@ ARGUMENTS
   INTEGRATION  name of the integration
 
 OPTIONS
-  -f, --file=file         The config file to execute this command from. Format must be json. Keys are translated into
-                          arguments of the same name. If no BODY argument is specified, the whole object, minus keys
-                          used as other arguments, will be passed in as the BODY.
+  -f, --file=file         The config file to execute this command from. Format must be [json|yaml]. Keys are translated
+                          into arguments of the same name. If no BODY argument is specified, the whole object, minus
+                          keys used as other arguments, will be passed in as the BODY.
 
   -h, --help              show CLI help
 
@@ -1070,9 +1447,9 @@ USAGE
   $ rockset api:integrations:listIntegrations
 
 OPTIONS
-  -f, --file=file         The config file to execute this command from. Format must be json. Keys are translated into
-                          arguments of the same name. If no BODY argument is specified, the whole object, minus keys
-                          used as other arguments, will be passed in as the BODY.
+  -f, --file=file         The config file to execute this command from. Format must be [json|yaml]. Keys are translated
+                          into arguments of the same name. If no BODY argument is specified, the whole object, minus
+                          keys used as other arguments, will be passed in as the BODY.
 
   -h, --help              show CLI help
 
@@ -1117,9 +1494,9 @@ USAGE
   $ rockset api:orgs:getOrganization
 
 OPTIONS
-  -f, --file=file         The config file to execute this command from. Format must be json. Keys are translated into
-                          arguments of the same name. If no BODY argument is specified, the whole object, minus keys
-                          used as other arguments, will be passed in as the BODY.
+  -f, --file=file         The config file to execute this command from. Format must be [json|yaml]. Keys are translated
+                          into arguments of the same name. If no BODY argument is specified, the whole object, minus
+                          keys used as other arguments, will be passed in as the BODY.
 
   -h, --help              show CLI help
 
@@ -1167,9 +1544,9 @@ ARGUMENTS
   BODY  JSON object
 
 OPTIONS
-  -f, --file=file                The config file to execute this command from. Format must be json. Keys are translated
-                                 into arguments of the same name. If no BODY argument is specified, the whole object,
-                                 minus keys used as other arguments, will be passed in as the BODY.
+  -f, --file=file                The config file to execute this command from. Format must be [json|yaml]. Keys are
+                                 translated into arguments of the same name. If no BODY argument is specified, the whole
+                                 object, minus keys used as other arguments, will be passed in as the BODY.
 
   -h, --help                     show CLI help
 
@@ -1223,9 +1600,9 @@ ARGUMENTS
   BODY       JSON object
 
 OPTIONS
-  -f, --file=file                The config file to execute this command from. Format must be json. Keys are translated
-                                 into arguments of the same name. If no BODY argument is specified, the whole object,
-                                 minus keys used as other arguments, will be passed in as the BODY.
+  -f, --file=file                The config file to execute this command from. Format must be [json|yaml]. Keys are
+                                 translated into arguments of the same name. If no BODY argument is specified, the whole
+                                 object, minus keys used as other arguments, will be passed in as the BODY.
 
   -h, --help                     show CLI help
 
@@ -1266,6 +1643,63 @@ DESCRIPTION
 
 _See code: [src/commands/api/queryLambdas/createQueryLambda.ts](https://github.com/rockset/rockset-js/blob/v0.2.1/src/commands/api/queryLambdas/createQueryLambda.ts)_
 
+## `rockset api:queryLambdas:createQueryLambdaTag [WORKSPACE] [QUERYLAMBDA] [BODY]`
+
+Create Query Lambda Tag
+
+```
+USAGE
+  $ rockset api:queryLambdas:createQueryLambdaTag [WORKSPACE] [QUERYLAMBDA] [BODY]
+
+ARGUMENTS
+  WORKSPACE    name of the workspace
+  QUERYLAMBDA  name of the Query Lambda
+  BODY         JSON object
+
+OPTIONS
+  -f, --file=file                The config file to execute this command from. Format must be [json|yaml]. Keys are
+                                 translated into arguments of the same name. If no BODY argument is specified, the whole
+                                 object, minus keys used as other arguments, will be passed in as the BODY.
+
+  -h, --help                     show CLI help
+
+  -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this apicall. The value
+                                 passed to this flag determines how many requests per second will be sent
+
+  -x, --extended                 show extra columns
+
+  -y, --yes                      Skip all safety prompts
+
+  --columns=columns              only show provided columns (comma-separated)
+
+  --csv                          output is csv format [alias: --output=csv]
+
+  --filter=filter                filter property by partial string matching, ex: name=foo
+
+  --full                         Show the full results JSON object
+
+  --no-header                    hide table header from output
+
+  --no-truncate                  do not truncate output to fit screen
+
+  --output=csv|json|yaml         output in a more machine friendly format
+
+  --sort=sort                    property to sort by (prepend '-' for descending)
+
+DESCRIPTION
+  Create Query Lambda Tag
+
+  Create a tag for a specific Query Lambda version, or update if it exists
+
+  Endpoint: POST: /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/tags
+
+  Endpoint Documentation: https://docs.rockset.com/rest-api#createquerylambdatag
+
+  This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
+```
+
+_See code: [src/commands/api/queryLambdas/createQueryLambdaTag.ts](https://github.com/rockset/rockset-js/blob/v0.2.1/src/commands/api/queryLambdas/createQueryLambdaTag.ts)_
+
 ## `rockset api:queryLambdas:deleteQueryLambda [WORKSPACE] [QUERYLAMBDA]`
 
 Delete Query Lambda
@@ -1279,9 +1713,9 @@ ARGUMENTS
   QUERYLAMBDA  name of the Query Lambda
 
 OPTIONS
-  -f, --file=file                The config file to execute this command from. Format must be json. Keys are translated
-                                 into arguments of the same name. If no BODY argument is specified, the whole object,
-                                 minus keys used as other arguments, will be passed in as the BODY.
+  -f, --file=file                The config file to execute this command from. Format must be [json|yaml]. Keys are
+                                 translated into arguments of the same name. If no BODY argument is specified, the whole
+                                 object, minus keys used as other arguments, will be passed in as the BODY.
 
   -h, --help                     show CLI help
 
@@ -1322,6 +1756,120 @@ DESCRIPTION
 
 _See code: [src/commands/api/queryLambdas/deleteQueryLambda.ts](https://github.com/rockset/rockset-js/blob/v0.2.1/src/commands/api/queryLambdas/deleteQueryLambda.ts)_
 
+## `rockset api:queryLambdas:deleteQueryLambdaTag [WORKSPACE] [QUERYLAMBDA] [TAG]`
+
+Delete Query Lambda Tag Version
+
+```
+USAGE
+  $ rockset api:queryLambdas:deleteQueryLambdaTag [WORKSPACE] [QUERYLAMBDA] [TAG]
+
+ARGUMENTS
+  WORKSPACE    name of the workspace
+  QUERYLAMBDA  name of the Query Lambda
+  TAG          name of the tag
+
+OPTIONS
+  -f, --file=file                The config file to execute this command from. Format must be [json|yaml]. Keys are
+                                 translated into arguments of the same name. If no BODY argument is specified, the whole
+                                 object, minus keys used as other arguments, will be passed in as the BODY.
+
+  -h, --help                     show CLI help
+
+  -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this apicall. The value
+                                 passed to this flag determines how many requests per second will be sent
+
+  -x, --extended                 show extra columns
+
+  -y, --yes                      Skip all safety prompts
+
+  --columns=columns              only show provided columns (comma-separated)
+
+  --csv                          output is csv format [alias: --output=csv]
+
+  --filter=filter                filter property by partial string matching, ex: name=foo
+
+  --full                         Show the full results JSON object
+
+  --no-header                    hide table header from output
+
+  --no-truncate                  do not truncate output to fit screen
+
+  --output=csv|json|yaml         output in a more machine friendly format
+
+  --sort=sort                    property to sort by (prepend '-' for descending)
+
+DESCRIPTION
+  Delete Query Lambda Tag Version
+
+  Delete a tag for a specific Query Lambda
+
+  Endpoint: DELETE: /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/tags/{tag}
+
+  Endpoint Documentation: https://docs.rockset.com/rest-api#deletequerylambdatag
+
+  This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
+```
+
+_See code: [src/commands/api/queryLambdas/deleteQueryLambdaTag.ts](https://github.com/rockset/rockset-js/blob/v0.2.1/src/commands/api/queryLambdas/deleteQueryLambdaTag.ts)_
+
+## `rockset api:queryLambdas:deleteQueryLambdaVersion [WORKSPACE] [QUERYLAMBDA] [VERSION]`
+
+Delete Query Lambda Version
+
+```
+USAGE
+  $ rockset api:queryLambdas:deleteQueryLambdaVersion [WORKSPACE] [QUERYLAMBDA] [VERSION]
+
+ARGUMENTS
+  WORKSPACE    name of the workspace
+  QUERYLAMBDA  name of the Query Lambda
+  VERSION      version
+
+OPTIONS
+  -f, --file=file                The config file to execute this command from. Format must be [json|yaml]. Keys are
+                                 translated into arguments of the same name. If no BODY argument is specified, the whole
+                                 object, minus keys used as other arguments, will be passed in as the BODY.
+
+  -h, --help                     show CLI help
+
+  -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this apicall. The value
+                                 passed to this flag determines how many requests per second will be sent
+
+  -x, --extended                 show extra columns
+
+  -y, --yes                      Skip all safety prompts
+
+  --columns=columns              only show provided columns (comma-separated)
+
+  --csv                          output is csv format [alias: --output=csv]
+
+  --filter=filter                filter property by partial string matching, ex: name=foo
+
+  --full                         Show the full results JSON object
+
+  --no-header                    hide table header from output
+
+  --no-truncate                  do not truncate output to fit screen
+
+  --output=csv|json|yaml         output in a more machine friendly format
+
+  --sort=sort                    property to sort by (prepend '-' for descending)
+
+DESCRIPTION
+  Delete Query Lambda Version
+
+  Delete a Query Lambda version.
+
+  Endpoint: DELETE: /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/version/{version}
+
+  Endpoint Documentation: https://docs.rockset.com/rest-api#deletequerylambdaversion
+
+  This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
+```
+
+_See code: [src/commands/api/queryLambdas/deleteQueryLambdaVersion.ts](https://github.com/rockset/rockset-js/blob/v0.2.1/src/commands/api/queryLambdas/deleteQueryLambdaVersion.ts)_
+
 ## `rockset api:queryLambdas:executeQueryLambda [WORKSPACE] [QUERYLAMBDA] [VERSION] [BODY]`
 
 Run Query Lambda
@@ -1337,9 +1885,9 @@ ARGUMENTS
   BODY         JSON object
 
 OPTIONS
-  -f, --file=file                The config file to execute this command from. Format must be json. Keys are translated
-                                 into arguments of the same name. If no BODY argument is specified, the whole object,
-                                 minus keys used as other arguments, will be passed in as the BODY.
+  -f, --file=file                The config file to execute this command from. Format must be [json|yaml]. Keys are
+                                 translated into arguments of the same name. If no BODY argument is specified, the whole
+                                 object, minus keys used as other arguments, will be passed in as the BODY.
 
   -h, --help                     show CLI help
 
@@ -1380,6 +1928,121 @@ DESCRIPTION
 
 _See code: [src/commands/api/queryLambdas/executeQueryLambda.ts](https://github.com/rockset/rockset-js/blob/v0.2.1/src/commands/api/queryLambdas/executeQueryLambda.ts)_
 
+## `rockset api:queryLambdas:executeQueryLambdaByTag [WORKSPACE] [QUERYLAMBDA] [TAG] [BODY]`
+
+Run Query Lambda By Tag
+
+```
+USAGE
+  $ rockset api:queryLambdas:executeQueryLambdaByTag [WORKSPACE] [QUERYLAMBDA] [TAG] [BODY]
+
+ARGUMENTS
+  WORKSPACE    name of the workspace
+  QUERYLAMBDA  name of the Query Lambda
+  TAG          tag
+  BODY         JSON object
+
+OPTIONS
+  -f, --file=file                The config file to execute this command from. Format must be [json|yaml]. Keys are
+                                 translated into arguments of the same name. If no BODY argument is specified, the whole
+                                 object, minus keys used as other arguments, will be passed in as the BODY.
+
+  -h, --help                     show CLI help
+
+  -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this apicall. The value
+                                 passed to this flag determines how many requests per second will be sent
+
+  -x, --extended                 show extra columns
+
+  -y, --yes                      Skip all safety prompts
+
+  --columns=columns              only show provided columns (comma-separated)
+
+  --csv                          output is csv format [alias: --output=csv]
+
+  --filter=filter                filter property by partial string matching, ex: name=foo
+
+  --full                         Show the full results JSON object
+
+  --no-header                    hide table header from output
+
+  --no-truncate                  do not truncate output to fit screen
+
+  --output=csv|json|yaml         output in a more machine friendly format
+
+  --sort=sort                    property to sort by (prepend '-' for descending)
+
+DESCRIPTION
+  Run Query Lambda By Tag
+
+  Run the Query Lambda version associated with a given tag.
+
+  Endpoint: POST: /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/tags/{tag}
+
+  Endpoint Documentation: https://docs.rockset.com/rest-api#executequerylambdabytag
+
+  This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
+```
+
+_See code: [src/commands/api/queryLambdas/executeQueryLambdaByTag.ts](https://github.com/rockset/rockset-js/blob/v0.2.1/src/commands/api/queryLambdas/executeQueryLambdaByTag.ts)_
+
+## `rockset api:queryLambdas:getQueryLambdaTagVersion [WORKSPACE] [QUERYLAMBDA] [TAG]`
+
+Get Query Lambda Tag
+
+```
+USAGE
+  $ rockset api:queryLambdas:getQueryLambdaTagVersion [WORKSPACE] [QUERYLAMBDA] [TAG]
+
+ARGUMENTS
+  WORKSPACE    name of the workspace
+  QUERYLAMBDA  name of the Query Lambda
+  TAG          name of the tag
+
+OPTIONS
+  -f, --file=file                The config file to execute this command from. Format must be [json|yaml]. Keys are
+                                 translated into arguments of the same name. If no BODY argument is specified, the whole
+                                 object, minus keys used as other arguments, will be passed in as the BODY.
+
+  -h, --help                     show CLI help
+
+  -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this apicall. The value
+                                 passed to this flag determines how many requests per second will be sent
+
+  -x, --extended                 show extra columns
+
+  -y, --yes                      Skip all safety prompts
+
+  --columns=columns              only show provided columns (comma-separated)
+
+  --csv                          output is csv format [alias: --output=csv]
+
+  --filter=filter                filter property by partial string matching, ex: name=foo
+
+  --full                         Show the full results JSON object
+
+  --no-header                    hide table header from output
+
+  --no-truncate                  do not truncate output to fit screen
+
+  --output=csv|json|yaml         output in a more machine friendly format
+
+  --sort=sort                    property to sort by (prepend '-' for descending)
+
+DESCRIPTION
+  Get Query Lambda Tag
+
+  Get the specific Query Lambda version associated with a given tag
+
+  Endpoint: GET: /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/tags/{tag}
+
+  Endpoint Documentation: https://docs.rockset.com/rest-api#getquerylambdatagversion
+
+  This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
+```
+
+_See code: [src/commands/api/queryLambdas/getQueryLambdaTagVersion.ts](https://github.com/rockset/rockset-js/blob/v0.2.1/src/commands/api/queryLambdas/getQueryLambdaTagVersion.ts)_
+
 ## `rockset api:queryLambdas:getQueryLambdaVersion [WORKSPACE] [QUERYLAMBDA] [VERSION]`
 
 Get Query Lambda Version
@@ -1394,9 +2057,9 @@ ARGUMENTS
   VERSION      version
 
 OPTIONS
-  -f, --file=file                The config file to execute this command from. Format must be json. Keys are translated
-                                 into arguments of the same name. If no BODY argument is specified, the whole object,
-                                 minus keys used as other arguments, will be passed in as the BODY.
+  -f, --file=file                The config file to execute this command from. Format must be [json|yaml]. Keys are
+                                 translated into arguments of the same name. If no BODY argument is specified, the whole
+                                 object, minus keys used as other arguments, will be passed in as the BODY.
 
   -h, --help                     show CLI help
 
@@ -1446,9 +2109,9 @@ USAGE
   $ rockset api:queryLambdas:listAllQueryLambdas
 
 OPTIONS
-  -f, --file=file                The config file to execute this command from. Format must be json. Keys are translated
-                                 into arguments of the same name. If no BODY argument is specified, the whole object,
-                                 minus keys used as other arguments, will be passed in as the BODY.
+  -f, --file=file                The config file to execute this command from. Format must be [json|yaml]. Keys are
+                                 translated into arguments of the same name. If no BODY argument is specified, the whole
+                                 object, minus keys used as other arguments, will be passed in as the BODY.
 
   -h, --help                     show CLI help
 
@@ -1489,6 +2152,169 @@ DESCRIPTION
 
 _See code: [src/commands/api/queryLambdas/listAllQueryLambdas.ts](https://github.com/rockset/rockset-js/blob/v0.2.1/src/commands/api/queryLambdas/listAllQueryLambdas.ts)_
 
+## `rockset api:queryLambdas:listOrganizationTags`
+
+List Query Lambda Tags
+
+```
+USAGE
+  $ rockset api:queryLambdas:listOrganizationTags
+
+OPTIONS
+  -f, --file=file                The config file to execute this command from. Format must be [json|yaml]. Keys are
+                                 translated into arguments of the same name. If no BODY argument is specified, the whole
+                                 object, minus keys used as other arguments, will be passed in as the BODY.
+
+  -h, --help                     show CLI help
+
+  -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this apicall. The value
+                                 passed to this flag determines how many requests per second will be sent
+
+  -x, --extended                 show extra columns
+
+  -y, --yes                      Skip all safety prompts
+
+  --columns=columns              only show provided columns (comma-separated)
+
+  --csv                          output is csv format [alias: --output=csv]
+
+  --filter=filter                filter property by partial string matching, ex: name=foo
+
+  --full                         Show the full results JSON object
+
+  --no-header                    hide table header from output
+
+  --no-truncate                  do not truncate output to fit screen
+
+  --output=csv|json|yaml         output in a more machine friendly format
+
+  --sort=sort                    property to sort by (prepend '-' for descending)
+
+DESCRIPTION
+  List Query Lambda Tags
+
+  List all tags in an organization
+
+  Endpoint: GET: /v1/orgs/self/lambdas/tags
+
+  Endpoint Documentation: https://docs.rockset.com/rest-api#listorganizationtags
+
+  This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
+```
+
+_See code: [src/commands/api/queryLambdas/listOrganizationTags.ts](https://github.com/rockset/rockset-js/blob/v0.2.1/src/commands/api/queryLambdas/listOrganizationTags.ts)_
+
+## `rockset api:queryLambdas:listQueryLambdaTagVersions [TAG]`
+
+List Query Lambda Tag Versions
+
+```
+USAGE
+  $ rockset api:queryLambdas:listQueryLambdaTagVersions [TAG]
+
+ARGUMENTS
+  TAG  name of the tag
+
+OPTIONS
+  -f, --file=file                The config file to execute this command from. Format must be [json|yaml]. Keys are
+                                 translated into arguments of the same name. If no BODY argument is specified, the whole
+                                 object, minus keys used as other arguments, will be passed in as the BODY.
+
+  -h, --help                     show CLI help
+
+  -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this apicall. The value
+                                 passed to this flag determines how many requests per second will be sent
+
+  -x, --extended                 show extra columns
+
+  -y, --yes                      Skip all safety prompts
+
+  --columns=columns              only show provided columns (comma-separated)
+
+  --csv                          output is csv format [alias: --output=csv]
+
+  --filter=filter                filter property by partial string matching, ex: name=foo
+
+  --full                         Show the full results JSON object
+
+  --no-header                    hide table header from output
+
+  --no-truncate                  do not truncate output to fit screen
+
+  --output=csv|json|yaml         output in a more machine friendly format
+
+  --sort=sort                    property to sort by (prepend '-' for descending)
+
+DESCRIPTION
+  List Query Lambda Tag Versions
+
+  List all Query Lambda versions associated with a tag
+
+  Endpoint: GET: /v1/orgs/self/lambdas/tags/{tag}
+
+  Endpoint Documentation: https://docs.rockset.com/rest-api#listquerylambdatagversions
+
+  This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
+```
+
+_See code: [src/commands/api/queryLambdas/listQueryLambdaTagVersions.ts](https://github.com/rockset/rockset-js/blob/v0.2.1/src/commands/api/queryLambdas/listQueryLambdaTagVersions.ts)_
+
+## `rockset api:queryLambdas:listQueryLambdaTags [WORKSPACE] [QUERYLAMBDA]`
+
+List Query Lambda Tags
+
+```
+USAGE
+  $ rockset api:queryLambdas:listQueryLambdaTags [WORKSPACE] [QUERYLAMBDA]
+
+ARGUMENTS
+  WORKSPACE    name of the workspace
+  QUERYLAMBDA  name of the Query Lambda
+
+OPTIONS
+  -f, --file=file                The config file to execute this command from. Format must be [json|yaml]. Keys are
+                                 translated into arguments of the same name. If no BODY argument is specified, the whole
+                                 object, minus keys used as other arguments, will be passed in as the BODY.
+
+  -h, --help                     show CLI help
+
+  -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this apicall. The value
+                                 passed to this flag determines how many requests per second will be sent
+
+  -x, --extended                 show extra columns
+
+  -y, --yes                      Skip all safety prompts
+
+  --columns=columns              only show provided columns (comma-separated)
+
+  --csv                          output is csv format [alias: --output=csv]
+
+  --filter=filter                filter property by partial string matching, ex: name=foo
+
+  --full                         Show the full results JSON object
+
+  --no-header                    hide table header from output
+
+  --no-truncate                  do not truncate output to fit screen
+
+  --output=csv|json|yaml         output in a more machine friendly format
+
+  --sort=sort                    property to sort by (prepend '-' for descending)
+
+DESCRIPTION
+  List Query Lambda Tags
+
+  List all tags associated with a Query Lambda
+
+  Endpoint: GET: /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/tags
+
+  Endpoint Documentation: https://docs.rockset.com/rest-api#listquerylambdatags
+
+  This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
+```
+
+_See code: [src/commands/api/queryLambdas/listQueryLambdaTags.ts](https://github.com/rockset/rockset-js/blob/v0.2.1/src/commands/api/queryLambdas/listQueryLambdaTags.ts)_
+
 ## `rockset api:queryLambdas:listQueryLambdaVersions [WORKSPACE] [QUERYLAMBDA]`
 
 List Query Lambda Versions
@@ -1502,9 +2328,9 @@ ARGUMENTS
   QUERYLAMBDA  name of the Query Lambda
 
 OPTIONS
-  -f, --file=file                The config file to execute this command from. Format must be json. Keys are translated
-                                 into arguments of the same name. If no BODY argument is specified, the whole object,
-                                 minus keys used as other arguments, will be passed in as the BODY.
+  -f, --file=file                The config file to execute this command from. Format must be [json|yaml]. Keys are
+                                 translated into arguments of the same name. If no BODY argument is specified, the whole
+                                 object, minus keys used as other arguments, will be passed in as the BODY.
 
   -h, --help                     show CLI help
 
@@ -1557,9 +2383,9 @@ ARGUMENTS
   WORKSPACE  name of the workspace
 
 OPTIONS
-  -f, --file=file                The config file to execute this command from. Format must be json. Keys are translated
-                                 into arguments of the same name. If no BODY argument is specified, the whole object,
-                                 minus keys used as other arguments, will be passed in as the BODY.
+  -f, --file=file                The config file to execute this command from. Format must be [json|yaml]. Keys are
+                                 translated into arguments of the same name. If no BODY argument is specified, the whole
+                                 object, minus keys used as other arguments, will be passed in as the BODY.
 
   -h, --help                     show CLI help
 
@@ -1600,23 +2426,24 @@ DESCRIPTION
 
 _See code: [src/commands/api/queryLambdas/listQueryLambdasInWorkspace.ts](https://github.com/rockset/rockset-js/blob/v0.2.1/src/commands/api/queryLambdas/listQueryLambdasInWorkspace.ts)_
 
-## `rockset api:queryLambdas:updateQueryLambda [WORKSPACE] [QUERYLAMBDA] [BODY]`
+## `rockset api:queryLambdas:updateQueryLambda [WORKSPACE] [QUERYLAMBDA] [BODY] [CREATE]`
 
 Update Query Lambda
 
 ```
 USAGE
-  $ rockset api:queryLambdas:updateQueryLambda [WORKSPACE] [QUERYLAMBDA] [BODY]
+  $ rockset api:queryLambdas:updateQueryLambda [WORKSPACE] [QUERYLAMBDA] [BODY] [CREATE]
 
 ARGUMENTS
   WORKSPACE    name of the workspace
   QUERYLAMBDA  name of the Query Lambda
   BODY         JSON object
+  CREATE
 
 OPTIONS
-  -f, --file=file                The config file to execute this command from. Format must be json. Keys are translated
-                                 into arguments of the same name. If no BODY argument is specified, the whole object,
-                                 minus keys used as other arguments, will be passed in as the BODY.
+  -f, --file=file                The config file to execute this command from. Format must be [json|yaml]. Keys are
+                                 translated into arguments of the same name. If no BODY argument is specified, the whole
+                                 object, minus keys used as other arguments, will be passed in as the BODY.
 
   -h, --help                     show CLI help
 
@@ -1669,9 +2496,9 @@ ARGUMENTS
   BODY  JSON object
 
 OPTIONS
-  -f, --file=file         The config file to execute this command from. Format must be json. Keys are translated into
-                          arguments of the same name. If no BODY argument is specified, the whole object, minus keys
-                          used as other arguments, will be passed in as the BODY.
+  -f, --file=file         The config file to execute this command from. Format must be [json|yaml]. Keys are translated
+                          into arguments of the same name. If no BODY argument is specified, the whole object, minus
+                          keys used as other arguments, will be passed in as the BODY.
 
   -h, --help              show CLI help
 
@@ -1719,9 +2546,9 @@ ARGUMENTS
   USER  user email
 
 OPTIONS
-  -f, --file=file         The config file to execute this command from. Format must be json. Keys are translated into
-                          arguments of the same name. If no BODY argument is specified, the whole object, minus keys
-                          used as other arguments, will be passed in as the BODY.
+  -f, --file=file         The config file to execute this command from. Format must be [json|yaml]. Keys are translated
+                          into arguments of the same name. If no BODY argument is specified, the whole object, minus
+                          keys used as other arguments, will be passed in as the BODY.
 
   -h, --help              show CLI help
 
@@ -1766,9 +2593,9 @@ USAGE
   $ rockset api:users:getCurrentUser
 
 OPTIONS
-  -f, --file=file         The config file to execute this command from. Format must be json. Keys are translated into
-                          arguments of the same name. If no BODY argument is specified, the whole object, minus keys
-                          used as other arguments, will be passed in as the BODY.
+  -f, --file=file         The config file to execute this command from. Format must be [json|yaml]. Keys are translated
+                          into arguments of the same name. If no BODY argument is specified, the whole object, minus
+                          keys used as other arguments, will be passed in as the BODY.
 
   -h, --help              show CLI help
 
@@ -1813,9 +2640,9 @@ USAGE
   $ rockset api:users:listUsers
 
 OPTIONS
-  -f, --file=file         The config file to execute this command from. Format must be json. Keys are translated into
-                          arguments of the same name. If no BODY argument is specified, the whole object, minus keys
-                          used as other arguments, will be passed in as the BODY.
+  -f, --file=file         The config file to execute this command from. Format must be [json|yaml]. Keys are translated
+                          into arguments of the same name. If no BODY argument is specified, the whole object, minus
+                          keys used as other arguments, will be passed in as the BODY.
 
   -h, --help              show CLI help
 
@@ -1863,9 +2690,9 @@ ARGUMENTS
   WORKSPACE  name of the workspace
 
 OPTIONS
-  -f, --file=file         The config file to execute this command from. Format must be json. Keys are translated into
-                          arguments of the same name. If no BODY argument is specified, the whole object, minus keys
-                          used as other arguments, will be passed in as the BODY.
+  -f, --file=file         The config file to execute this command from. Format must be [json|yaml]. Keys are translated
+                          into arguments of the same name. If no BODY argument is specified, the whole object, minus
+                          keys used as other arguments, will be passed in as the BODY.
 
   -h, --help              show CLI help
 
@@ -1913,9 +2740,9 @@ ARGUMENTS
   BODY  workspace details
 
 OPTIONS
-  -f, --file=file         The config file to execute this command from. Format must be json. Keys are translated into
-                          arguments of the same name. If no BODY argument is specified, the whole object, minus keys
-                          used as other arguments, will be passed in as the BODY.
+  -f, --file=file         The config file to execute this command from. Format must be [json|yaml]. Keys are translated
+                          into arguments of the same name. If no BODY argument is specified, the whole object, minus
+                          keys used as other arguments, will be passed in as the BODY.
 
   -h, --help              show CLI help
 
@@ -1963,9 +2790,9 @@ ARGUMENTS
   WORKSPACE  name of the workspace
 
 OPTIONS
-  -f, --file=file         The config file to execute this command from. Format must be json. Keys are translated into
-                          arguments of the same name. If no BODY argument is specified, the whole object, minus keys
-                          used as other arguments, will be passed in as the BODY.
+  -f, --file=file         The config file to execute this command from. Format must be [json|yaml]. Keys are translated
+                          into arguments of the same name. If no BODY argument is specified, the whole object, minus
+                          keys used as other arguments, will be passed in as the BODY.
 
   -h, --help              show CLI help
 
@@ -2013,9 +2840,9 @@ ARGUMENTS
   WORKSPACE  name of the workspace
 
 OPTIONS
-  -f, --file=file         The config file to execute this command from. Format must be json. Keys are translated into
-                          arguments of the same name. If no BODY argument is specified, the whole object, minus keys
-                          used as other arguments, will be passed in as the BODY.
+  -f, --file=file         The config file to execute this command from. Format must be [json|yaml]. Keys are translated
+                          into arguments of the same name. If no BODY argument is specified, the whole object, minus
+                          keys used as other arguments, will be passed in as the BODY.
 
   -h, --help              show CLI help
 
@@ -2060,9 +2887,9 @@ USAGE
   $ rockset api:workspaces:listWorkspaces
 
 OPTIONS
-  -f, --file=file         The config file to execute this command from. Format must be json. Keys are translated into
-                          arguments of the same name. If no BODY argument is specified, the whole object, minus keys
-                          used as other arguments, will be passed in as the BODY.
+  -f, --file=file         The config file to execute this command from. Format must be [json|yaml]. Keys are translated
+                          into arguments of the same name. If no BODY argument is specified, the whole object, minus
+                          keys used as other arguments, will be passed in as the BODY.
 
   -h, --help              show CLI help
 

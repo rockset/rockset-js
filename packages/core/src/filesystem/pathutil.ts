@@ -12,6 +12,7 @@ import {
   parseAbsolutePath,
   LambdaEntity,
 } from '../types';
+import YAML from 'yaml';
 
 // This is the only package that is allowed to access the file system
 // This ensures that we are able to typecheck and unit test all file system input
@@ -52,11 +53,18 @@ export async function resolveRootFile(rootDirectory?: AbsolutePath) {
   return join(rootDir, ROOT_CONFIG);
 }
 
-export async function readConfigFromPath(absolutePath: AbsolutePath) {
+export async function readConfigFromPath(
+  absolutePath: AbsolutePath,
+  format: 'JSON' | 'YAML' = 'JSON'
+) {
   const configStr = (await fs.readFile(absolutePath)).toString();
 
   // TODO(tchordia): support YAML in the future?
-  return JSON.parse(configStr) as unknown;
+  if (format === 'JSON') {
+    return JSON.parse(configStr) as unknown;
+  } else {
+    return YAML.parse(configStr) as unknown;
+  }
 }
 
 export async function readSqlFromPath(

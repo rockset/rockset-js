@@ -14,7 +14,7 @@ class PatchDocuments extends RockCommand {
     file: flags.string({
       char: 'f',
       description:
-        'The config file to execute this command from. Format must be json. Keys are translated into arguments of the same name. If no BODY argument is specified, the whole object, minus keys used as other arguments, will be passed in as the BODY.',
+        'The config file to execute this command from. Format must be [json|yaml]. Keys are translated into arguments of the same name. If no BODY argument is specified, the whole object, minus keys used as other arguments, will be passed in as the BODY.',
     }),
     full: flags.boolean({
       description: 'Show the full results JSON object',

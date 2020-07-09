@@ -42,18 +42,22 @@ export async function runApiCall<A extends any[], Return>(
   if (flags.file) {
     // Load the specified file
 
-    const config: Record<string, unknown> = (await readConfigFromPath(
+    const configRaw: Record<string, unknown> = (await readConfigFromPath(
       join(cwd(), flags.file),
+      'YAML',
     )) as Record<string, string>;
 
+    const config = _.mapKeys(configRaw, (v, key: string) => key.toLowerCase());
+    const argNames = namedArgs.map(({ name }) => name.toLowerCase());
+
     // For each of the named arguments, pull the corresponding key from the object
-    const ordArgs = namedArgs.map((arg) => config[arg.name]).filter((x) => x);
+    const ordArgs = argNames.map((name) => config[name]).filter((x) => x);
 
     // The body parameter wasn't specified: extract it from the config
     if (ordArgs.length !== namedArgs.length && !config.body) {
       const body = _.chain(config)
         .entries()
-        .filter(([key]) => !namedArgs.some(({ name }) => name === key))
+        .filter(([key]) => !argNames.some((name) => name === key))
         .fromPairs()
         .value();
       allArgs = [...ordArgs, body];
@@ -79,8 +83,8 @@ export async function runApiCall<A extends any[], Return>(
   } else {
     type R = Return & { results?: unknown; data?: unknown };
     const data = (await apicall(...(allArgs as A))) as R;
-
-    const unwrapData = flags.full ? data : data?.results ?? data?.data ?? data;
+    const uData = data?.results ?? data?.data ?? data;
+    const unwrapData = flags.full ? data : uData;
 
     if (_.isArray(unwrapData)) {
       const columns = Object.getOwnPropertyNames(unwrapData?.[0]);
@@ -88,7 +92,7 @@ export async function runApiCall<A extends any[], Return>(
 
       cli.table(unwrapData, col, { ...flags });
     } else {
-      log(JSON.stringify(data, null, 2));
+      log(JSON.stringify(unwrapData, null, 2));
     }
   }
 }
