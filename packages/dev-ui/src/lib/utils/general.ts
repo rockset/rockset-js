@@ -315,6 +315,7 @@ export const getSourceType = (collectionSources: Source[]) => {
     kafka: ['Apache Kafka', 'kafka'],
     file: ['File Upload', 'file'],
     mongodb: ['MongoDB', 'mongodb'],
+    unknown: ['Unknown', 'unknown'],
   } as const;
 
   const sources = _.chain(collectionSources)
@@ -343,6 +344,7 @@ export const getSourceType = (collectionSources: Source[]) => {
       if (source.mongodb) {
         return map.mongodb;
       }
+      return map.unknown;
     })
     .uniq()
     .value();

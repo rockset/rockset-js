@@ -36,9 +36,10 @@ export const PebbleModal = ({
   bodyStyle,
 }: Props) => (
   <ModalWrapper
-    onClick={(event) => (
-      closeOnClickOutside && onClose(event), event.stopPropagation()
-    )}
+    onClick={(event) => {
+      closeOnClickOutside && onClose(event);
+      event.stopPropagation();
+    }}
     showModal={showModal}
   >
     <Modal onClick={(event) => event.stopPropagation()} style={style}>

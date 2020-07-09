@@ -182,7 +182,10 @@ export const PebbleTableRow = ({
       {onDelete && !row.notDeletable && (
         <TrashCan
           icon={faTrashAlt}
-          onClick={(event) => (onDelete(row), event.stopPropagation())}
+          onClick={(event) => {
+            onDelete(row);
+            event.stopPropagation();
+          }}
         />
       )}
     </TableCell>

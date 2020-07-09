@@ -50,7 +50,10 @@ export const PebbleOverflowMenu = ({
   return (
     <div ref={node}>
       <PebbleButton
-        onClick={() => (handleEventListener(), setShowMenu(!showMenu))}
+        onClick={() => {
+          handleEventListener();
+          setShowMenu(!showMenu);
+        }}
         {...button}
       />
       {showMenu && (
@@ -59,7 +62,10 @@ export const PebbleOverflowMenu = ({
             return (
               row.content && (
                 <Row
-                  onClick={(event) => (row.onClick(event), setShowMenu(false))}
+                  onClick={(event) => {
+                    row.onClick(event);
+                    setShowMenu(false);
+                  }}
                   danger={row.danger}
                 >
                   {row.icon && (

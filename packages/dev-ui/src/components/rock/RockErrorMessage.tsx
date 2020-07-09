@@ -20,11 +20,6 @@ interface Props
     HTMLDivElement
   > {
   error: RockError | ErrorModel;
-  className?: string;
-  dispatch?: any;
-  alternateCTA?: RockErrorCTAOverride;
-  editorPosition?: EditorPosition;
-  editorPositionOnClick?: () => void;
 }
 
 interface RockErrorCTAOverride {
@@ -85,40 +80,13 @@ export const transformMissingParameterMessage = (message) =>
     ? message + '. Please add the parameter in the parameters tab.'
     : message;
 
-const addEditorPosition = (
-  message: string,
-  position: EditorPosition,
-  editorPositionOnClick: () => void
-) => {
-  return position ? (
-    <>
-      {message}. Position:{' '}
-      <a onClick={editorPositionOnClick}>
-        line: {position[0]}, ch: {position[1]}
-      </a>
-    </>
-  ) : (
-    message
-  );
-};
-
-export const RockErrorMessageImpl: React.SFC<Props> = ({
-  error,
-  editorPosition,
-  editorPositionOnClick,
-}) => {
+export const RockErrorMessageImpl: React.SFC<Props> = ({ error }) => {
   const { type = 'Unknown' } = error;
   let { message = 'Unknown Error' } = error;
   // If for some reason object message sneaks through, at least stringify it and don't show [Object object]
   if (typeof message === 'object') {
     message = JSON.stringify(message);
   }
-
-  const realMessage = addEditorPosition(
-    transformMissingParameterMessage(message),
-    editorPosition,
-    editorPositionOnClick
-  );
 
   return (
     <NotificationWrapper>
@@ -127,7 +95,7 @@ export const RockErrorMessageImpl: React.SFC<Props> = ({
       </div>
       <div style={{ flexGrow: 1, paddingRight: 12, maxWidth: 600 }}>
         <ErrorType>{`Error [${type}]`}</ErrorType>
-        <ErrorMessage>{realMessage}</ErrorMessage>
+        <ErrorMessage>{message}</ErrorMessage>
       </div>
     </NotificationWrapper>
   );
