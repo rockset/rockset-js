@@ -455,6 +455,65 @@ $ rockset api:collections:createCollection -f spec.yaml
 
 # Project Usage Details
 
+The Project tool consists of subcommands of  `rockset project`. This tool is designed to help you easily manage your Query Lambdas and integrate well with versioning tools like Git.
+
+To get started, first set up your Rockset Project by creating a `rockconfig.json` file in your project root. We highly recommend that this directory be under version control. All of the files handled by the tool can be safely checked in.
+
+```bash
+$ rockset project:init
+$ rockset project:init
+✔ Enter the root path for your Query Lambdas … src
+✔ Creating an rockconfig.json file including
+{
+  "source_root": "src"
+}
+Is this okay? … yes
+
+$ cat rockconfig.json
+{
+  "source_root": "src"
+}
+
+# Download your existing query lambdas from Rockset's API Server
+$ rockset project:download
+Downloaded lambda commons.QLBar
+Downloaded lambda commons.QLFoo
+Downloaded lambda frontend.QLFrontend
+
+# Visualize the project structure
+$ tree
+.
+├── rockconfig.json
+└── src
+    ├── commons
+    │   ├── QLBar.lambda.json
+    │   ├── QLFoo.lambda.json
+    │   └── __sql
+    │       ├── QLBar.sql
+    │       └── QLFoo.sql
+    └── frontend
+        ├── QLFrontend.lambda.json
+        └── __sql
+            └── QLFrontend.sql
+```
+
+As you can see, each query lambda is placed in a directory with the same name as its workspace. Each query lambda has two files associated with it.
+
+* `commons/QL.lambda.json` This is the Lambda Definition file. It includes information such as the description and the default parameters of the query lambda.
+    * A Lambda Definition file must use extension `.lambda.json`. The name of the associated QL must be the name of the file
+    * The parent directory of the Lambda Definition file should be its workspace 
+* `commons/__sql/QL.sql` This file contains the SQL associated with the Query Lambda.
+
+You can also use nested workspaces. If we continue the example above:
+
+```bash
+$ 
+
+```
+
+
+
+
 # Commands
 <!-- commands -->
 * [`rockset api:apikeys:createApiKey [BODY]`](#rockset-apiapikeyscreateapikey-body)

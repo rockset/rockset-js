@@ -165,16 +165,18 @@ export async function deleteAllQueryLambdas() {
     isDefinitionPath(srcPath, file, 'lambda')
   );
 
-  lambdaFiles.map(async (file) => {
-    const [qualifiedName] = resolveQualifiedNameFromPath(srcPath, file) ?? [
-      null,
-      null,
-    ];
-    if (qualifiedName) {
-      const lambda = await readLambda(qualifiedName, file);
-      return await deleteLambda(srcPath, file, lambda);
-    }
-  });
+  return await Promise.all(
+    lambdaFiles.map(async (file) => {
+      const [qualifiedName] = resolveQualifiedNameFromPath(srcPath, file) ?? [
+        null,
+        null,
+      ];
+      if (qualifiedName) {
+        const lambda = await readLambda(qualifiedName, file);
+        return await deleteLambda(srcPath, file, lambda);
+      }
+    })
+  );
 }
 
 /**

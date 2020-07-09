@@ -101,7 +101,7 @@ export function resolvePathFromQualifiedName(
   type: EntityType | 'workspace',
   srcPath = ''
 ) {
-  const entity = entityName.replace('.', path.sep);
+  const entity = entityName.replace(/\./g, path.sep);
   const filenameExt = type === 'workspace' ? '' : getEntityExt(type);
   return path.join(srcPath, entity + filenameExt);
 }
