@@ -2,11 +2,17 @@ import { flags } from '@oclif/command';
 import { types, main, helper } from '@rockset/core';
 import { RockCommand } from '../../base-command';
 import { QueryResponse, ErrorModel } from '@rockset/client/dist/codegen/api';
-import { LambdaEntity } from '@rockset/core/dist/types';
+import { LambdaEntity, parseQueryParameterArray } from '@rockset/core/dist/types';
 
 class ExecuteQueryLambda extends RockCommand {
   static flags = {
     help: flags.help({ char: 'h' }),
+    parameters: flags.string({
+      char: 'p',
+      description: 'A JSON string of parameters to execute the query with.',
+      required: false,
+      hidden: false,
+    }),
   };
 
   static args = [
@@ -23,13 +29,14 @@ class ExecuteQueryLambda extends RockCommand {
   
   You must specify the fully qualified name of the Query Lambda: eg. 'commons.foo'.
 
-  You must specify the specific version to execute: eg. 'b1d7c9a34b50cd'.
-
 `;
 
   async run() {
-    const { args } = this.parse(ExecuteQueryLambda);
+    const { args, flags } = this.parse(ExecuteQueryLambda);
 
+    const params = flags.parameters ? parseQueryParameterArray(flags.parameters) : [];
+
+    // This should always be true as name is required
     if (args.name) {
       const qualifiedName = types.parseQualifiedName(args.name);
       await main.executeLocalQueryLambda(
@@ -48,6 +55,7 @@ class ExecuteQueryLambda extends RockCommand {
           },
         },
         qualifiedName,
+        params,
       );
     }
   }

@@ -474,13 +474,15 @@ $ cat rockconfig.json
   "source_root": "src"
 }
 
-# Download your existing query lambdas from Rockset's API Server
+#. Download your existing query lambdas from Rockset's API Server
+#. This will download the latest versions of your query lambdas
+#. You can also download lambdas by tag using the -t flag
 $ rockset project:download
 Downloaded lambda commons.QLBar
 Downloaded lambda commons.QLFoo
 Downloaded lambda frontend.QLFrontend
 
-# Visualize the project structure
+#. Visualize the project structure
 $ tree
 .
 ├── rockconfig.json
@@ -507,9 +509,243 @@ As you can see, each query lambda is placed in a directory with the same name as
 You can also use nested workspaces. If we continue the example above:
 
 ```bash
-$ 
+$ rockset project:add prod.frontend.QLFrontend
+$ tree
+.
+├── rockconfig.json
+└── src
+    ├── commons
+    │   ├── QLBar.lambda.json
+    │   ├── QLFoo.lambda.json
+    │   └── __sql
+    │       ├── QLBar.sql
+    │       └── QLFoo.sql
+    ├── frontend
+    │   ├── QLFrontend.lambda.json
+    │   └── __sql
+    │       └── QLFrontend.sql
+    └── prod
+        └── frontend
+            ├── QLFrontend.lambda.json
+            └── __sql
+                └── QLFrontend.sql
 
 ```
+This yields nested directories to represent the nested workspace `prod.frontend`.
+
+## The Query Lambda Definition File
+
+Let's take a look at the Query Lambda definition file. This file is the source of truth for properties about your Query Lambda.
+
+```bash
+#. `rockset project:resolve` gives the path for a particular Query Lambda given it's Qualified Name
+$ cat `rockset project:resolve prod.frontend.QLFrontend`
+{
+  "sql_path": "__sql/QLFrontend.sql",
+  "default_parameters": [],
+  "description": ""
+}
+```
+
+The definition includes 3 fields:
+* `sql_path` which gives the path of the SQL file relative to the parent of the definition file
+* `default_parameters` which specifies the default parameters that this query lambda will use after it has been deployed
+* `description` The description that will show for this query lambda after it has been deployed
+
+Let's update our query lambda definition to the following.
+
+```json
+{
+  "sql_path": "__sql/QLFrontend.sql",
+  "default_parameters": [
+    {
+      "name": "foo",
+      "type": "string",
+      "value": "my foo"
+    }
+  ],
+  "description": "My foo query lambda"
+}
+```
+
+And then update our Query Lambda SQL to 
+
+```sql
+select :foo
+```
+
+Now we can execute the Query Lambda to see the result.
+
+```bash
+$ rockset project:execute prod.frontend.QLFrontend
+[INFO]: About to execute prod.frontend.QLFrontend from local project...
+[INFO]: SQL: select :foo
+
+[INFO]: Parameters: [
+  {
+    "name": "foo",
+    "type": "string",
+    "value": "my foo"
+  }
+]
+[INFO]: Successfully executed query.
+{
+  "collections": [],
+  "column_fields": [
+    {
+      "name": "?field0",
+      "type": ""
+    }
+  ],
+  "results": [
+    {
+      "?field0": "my foo"
+    }
+  ],
+  "query_id": "d9e2e2ab-75ac-4cfe-a3ca-e8346e4ee4a7:up50MQy:0",
+  "stats": {
+    "elapsed_time_ms": 2
+  }
+}
+
+```
+
+## Editing your Query Lambda SQL
+
+The recommended way to edit your Query Lambdas is with the [Rockset VSCode plugin](../rscode), which provides Syntax Highlighting, Autocomplete, Error Highlighting, and more. VSCode also provides an excellent tools for editing JSON to assist you in editing your Query Lambda definition file. 
+
+However, if you choose not to use the VSCode plugin, you can also easily edit your Query Lambdas using your preferred command line editor.
+
+```bash
+$ rockset project:resolve --sql prod.frontend.QLFrontend
+/Users/tchordia/rockset-js/packages/cli/testLambdas/src/prod/frontend/__sql/QLFrontend.sql
+
+#. open in your preferred editor
+$ $EDITOR `rockset project:resolve --sql prod.frontend.QLFrontend`
+```
+
+## Executing your Rockset Project Query Lambdas
+
+**Note: this section covers executing the local version of your query lambda. This will not help you execute a Query Lambda on Rockset's API Server. For that, please use the API tool described above**
+
+The recommended way to execute your local Query Lambdas is with the [Rockset Project Developer UI](../dev-server). 
+
+```bash
+#. Open a UI to execute local Query Lambdas
+$ rockset project:serve
+```
+
+This will open a UI for you to add parameters and inspect the results of your query. It will also set up a mock of Rockset's API server that can execute query lambdas.
+Please see the [Rockset Project Developer UI Docs](../dev-server) for more information.
+
+You can also execute your Query Lambdas from the CLI tool. The CLI tool will do the following to execute your Query Lambda.
+
+* Resolve SQL text and default_parameters from the qualified name of the query lambda
+* Override the default_parameters with any parameters you pass
+* Execute the SQL text along with the computed parameters
+
+```bash
+#. Print out the text of the query we will run
+$ cat `rockset project:resolve prod.frontend.QLFrontend --sql`
+select :foo
+
+#. Execute the query with parameter "foo" set to value "bar"
+$ rockset project:execute prod.frontend.QLFrontend -p '[{"name": "foo", "type": "string", "value": "bar"}]'
+{
+  "collections": [],
+  "column_fields": [
+    {
+      "name": "?field0",
+      "type": ""
+    }
+  ],
+  "results": [
+    {
+      "?field0": "bar"
+    }
+  ],
+  "query_id": "6f2e8211-dd9e-408d-a8bc-55a498ef5307:5Rtq9NK:0",
+  "stats": {
+    "elapsed_time_ms": 2
+  }
+}
+```
+
+## Deploying your Query Lambdas
+
+When you are ready, you can use `rockset project:deploy` to deploy your Query Lambdas to Rockset's service. At that point, your Query Lambdas are live to any applications that may try to hit them, so please proceed with caution.
+
+```bash
+#. This shows all query lambdas that will be deployed
+$ rockset project:deploy --dryRun
+commons.QLBar
+commons.QLFoo
+frontend.QLFrontend
+frontend.l1
+prod.frontend.QLFrontend
+
+#. You can narrow the list by specifying a workspace
+$ rockset project:deploy -w commons --dryRun
+commons.QLBar
+commons.QLFoo
+ ›   Warning: Skipping: frontend.QLFrontend
+ ›   Warning: Skipping: frontend.l1
+ ›   Warning: Skipping: prod.frontend.QLFrontend
+
+#. You can also specify one lambda to deploy
+$ rockset project:deploy --dryRun -l commons.QLBar
+commons.QLBar
+ ›   Warning: Skipping: commons.QLFoo
+ ›   Warning: Skipping: frontend.QLFrontend
+ ›   Warning: Skipping: frontend.l1
+ ›   Warning: Skipping: prod.frontend.QLFrontend
+
+ #. When you are ready, remove the --dryRun flag to deploy
+ #. In practice, you should always tag your query lambdas, so that your application can execute them by tag
+$ rockset project:deploy -l commons.QLBar -t dev
+ ›   Warning: Skipping: frontend.QLFrontend
+ ›   Warning: Skipping: frontend.l1
+ ›   Warning: Skipping: prod.frontend.QLFrontend
+Successfully updated commons.QLFoo — version bb765a336e5eea9a
+Successfully updated commons.QLBar — version ff631d5e8085613d
+Successfully tagged commons.QLFoo version bb765a336e5eea9a with tag "dev"
+Successfully tagged commons.QLBar version ff631d5e8085613d with tag "dev"
+
+```
+
+Sometimes, you may have added a new Query Lambda in a workspace that doesn't exist yet. In this situation, you should pass the `--createMissingWorkspaces` flag to create any workspaces that you are missing.
+
+The deploy tool deploys lambdas in 2 steps:
+1. Deploy the Lambda text and config, and version the Lambda with its hash
+1. Tag the deployed Lambda with the specified tag
+
+If the specified Query Lambda already exists, the first step is idempotent. Furthermore, the first step is idempotent with respect to your applications: since Query Lambdas are versioned by their hash, no application should be targeting the new Query Lambda yet. When the second step occurs, your application traffic may be redirected through your new Query Lambda. Please be careful: if you tag your Query Lambda with a production tag, it is possible to break your application.
+
+## Integration with Git Version Control and CI/CD
+
+We highly recommend that you check all of your project files into Version Control as you might with any other application files. We also recommend deploying your Query Lambdas automatically in CI/CD. 
+
+```bash
+#. In CI/CD
+rockset project:deploy -t development
+...
+
+#. When you want to deploy to production
+git checkout <commit hash>
+rockset project:deploy -t production
+```
+
+Then, your application can hit Lambda `QLFoo` with tag `development` in development, and hit `QLFoo` with tag `production` in the production environment.
+
+```js
+// JS Application Example
+rockset.queryLambdas.executeQueryLambdaByTag('commons', 'QLFoo', isProduction() ? 'production' : 'development');
+```
+
+
+
+
+
 
 
 
@@ -3126,19 +3362,36 @@ _See code: [src/commands/project/delete.ts](https://github.com/rockset/rockset-j
 
 ## `rockset project:deploy`
 
-Deploy Query Lambda entities to Rockset from your local project.
+Deploy Query Lambda entities to Rockset from your local project. 
 
 ```
 USAGE
   $ rockset project:deploy
 
 OPTIONS
-  -h, --help                                                                show CLI help
-  -t, --tag=
-          Specify a tag name to be applied to these Query Lambda versions.
+  -h, --help                                                                    show CLI help
+
+  -l, --lambda=lambda                                                           The qualified name of the lambda to
+                                                                                deploy
+
+  -t, --tag= Specify a tag name to be applied to these Query Lambda versions.
+
+  -w, --workspace=workspace                                                     The qualified name of the workspace to
+                                                                                deploy
+
+  --createMissingWorkspaces                                                     If a workspace does not exist in the
+                                                                                remote, create it
+
+  --dryRun                                                                      If this flag is set, the tool will print
+                                                                                out the names of the query lambdas it
+                                                                                would deploy and return
 
 DESCRIPTION
-  Deploy Query Lambda entities to Rockset from your local project.
+  Deploy Query Lambda entities to Rockset from your local project. 
+
+  If a workspace parameter is passed, only that workspace will be deployed
+  If a lambda parameter is passed, only that lambda will be deployed
+  These two parameters are mutually exclusive, only one may be passed.
 ```
 
 _See code: [src/commands/project/deploy.ts](https://github.com/rockset/rockset-js/blob/v0.2.1/src/commands/project/deploy.ts)_
@@ -3175,14 +3428,13 @@ ARGUMENTS
   NAME  The fully qualified name of the Query Lambda you wish to execute
 
 OPTIONS
-  -h, --help  show CLI help
+  -h, --help                   show CLI help
+  -p, --parameters=parameters  A JSON string of parameters to execute the query with.
 
 DESCRIPTION
   Execute a specific version of a Query Lambda in the current project.
   
      You must specify the fully qualified name of the Query Lambda: eg. 'commons.foo'.
-
-     You must specify the specific version to execute: eg. 'b1d7c9a34b50cd'.
 ```
 
 _See code: [src/commands/project/execute.ts](https://github.com/rockset/rockset-js/blob/v0.2.1/src/commands/project/execute.ts)_

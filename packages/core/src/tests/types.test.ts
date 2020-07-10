@@ -38,18 +38,16 @@ describe('Testing runtime type validation', () => {
 
   test('parse ws name pair', () => {
     const names = [
-      'abc',
       'abc.abc',
       '1abc123.abc123',
       '1.a.c.b.d',
       'a12_-as.b12.c12_-',
     ];
 
-    const correctWs = ['abc', 'abc', '1abc123', '1.a.c.b', 'a12_-as.b12'];
+    const correctWs = ['abc', '1abc123', '1.a.c.b', 'a12_-as.b12'];
     const qualifiedNames = names.map(parseQualifiedName);
     const nws = qualifiedNames.map(getWsNamePair);
     const ws = nws.map(({ ws }) => ws);
-    const n = nws.map(({ name }) => name);
 
     expect(ws).toEqual(correctWs);
   });

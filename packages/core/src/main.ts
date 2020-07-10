@@ -10,6 +10,7 @@ import {
   QualifiedName,
   parseAbsolutePath,
   ExecuteHooks,
+  QueryParameterArray,
 } from './types';
 import {
   FetchAPI,
@@ -196,6 +197,11 @@ export async function deployQueryLambdas(
     isDefinitionPath(srcPath, file, 'lambda')
   );
 
+  const remoteWorkspaces =
+    (await client.workspaces.listWorkspaces()).data ?? [];
+
+  const remoteWorkspacesMap = _.keyBy(remoteWorkspaces, (ws) => ws.name);
+
   // Construct lambda entities
   const lambdaEntities = (await Promise.all(
     lambdaFiles
@@ -212,33 +218,56 @@ export async function deployQueryLambdas(
       .filter((x) => x != null)
   )) as LambdaEntity[];
 
-  return lambdaEntities.map(async (lambdaEntity) => {
-    const { ws, name: lambda, sql: text } = lambdaEntity;
+  return Promise.all(
+    lambdaEntities.map(async (lambdaEntity) => {
+      const { ws, name: lambda, sql: text, fullName } = lambdaEntity;
 
-    try {
-      const lambdaResponse = await client.queryLambdas.updateQueryLambda(
-        ws,
-        lambda,
-        {
-          sql: {
-            query: text,
-            default_parameters: lambdaEntity.config.default_parameters,
-          },
-        },
-        /* create if not present */ true
-      );
-      hooks.onDeployVersionSuccess?.(lambdaResponse);
-      if (options.tag) {
-        await client.queryLambdas.createQueryLambdaTag(ws, lambda, {
-          tag_name: options.tag,
-          version: lambdaResponse.data?.version,
-        });
-        hooks.onDeployTagSuccess?.(lambdaResponse);
+      if (
+        (!options.workspace && !options.lambda) ||
+        (options.workspace && ws.startsWith(options.workspace)) ||
+        (options.lambda && options.lambda === fullName)
+      ) {
+        // We will now deploy this query lambda
+        hooks.onDeployStart?.(lambdaEntity);
+
+        // If it's a dry run, skip the deploy
+        if (options.dryRun) {
+          return;
+        }
+        try {
+          if (options.createMissingWorkspace && !remoteWorkspacesMap?.[ws]) {
+            await client.workspaces.createWorkspace({
+              name: ws,
+            });
+            hooks.onCreateWorkspace?.(ws);
+          }
+          const lambdaResponse = await client.queryLambdas.updateQueryLambda(
+            ws,
+            lambda,
+            {
+              sql: {
+                query: text,
+                default_parameters: lambdaEntity.config.default_parameters,
+              },
+            },
+            /* create if not present */ true
+          );
+          hooks.onDeployVersionSuccess?.(lambdaResponse);
+          if (options.tag) {
+            await client.queryLambdas.createQueryLambdaTag(ws, lambda, {
+              tag_name: options.tag,
+              version: lambdaResponse.data?.version,
+            });
+            hooks.onDeployTagSuccess?.(lambdaResponse);
+          }
+        } catch (e) {
+          hooks.onDeployError?.(e, lambdaEntity);
+        }
+      } else {
+        hooks.onSkipQueryLambda?.(lambdaEntity.fullName);
       }
-    } catch (e) {
-      hooks.onDeployError?.(e, lambdaEntity);
-    }
-  });
+    })
+  );
 }
 
 /**
@@ -248,7 +277,8 @@ export async function deployQueryLambdas(
 // TODO add tests for this
 export async function executeLocalQueryLambda(
   hooks: ExecuteHooks = {},
-  qualifiedName: QualifiedName
+  qualifiedName: QualifiedName,
+  parameters: QueryParameterArray
 ) {
   const [srcPath, client] = await Promise.all([getSrcPath(), createClient()]);
   const file = parseAbsolutePath(
@@ -259,7 +289,8 @@ export async function executeLocalQueryLambda(
   const lambdaEntity: LambdaEntity = await readLambda(qualifiedName, file);
   const { config, sql } = lambdaEntity;
 
-  const params = config?.default_parameters ?? [];
+  const default_params = config?.default_parameters ?? [];
+  const params = [...default_params, ...parameters];
   hooks.onBeforeExecute?.(sql, params);
 
   try {
