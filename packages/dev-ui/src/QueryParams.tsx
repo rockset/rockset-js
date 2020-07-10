@@ -21,6 +21,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencil, faTrashAlt } from '@fortawesome/pro-regular-svg-icons';
 import * as _ from 'lodash';
 import { ErrorModel, QueryParameter } from '@rockset/client/dist/codegen';
+import * as clipboardImport from 'clipboard-polyfill';
+
+const clipboard = clipboardImport as any;
 
 export const SUPPORTED_PARAMS = [
   'string',
@@ -35,13 +38,13 @@ export const SUPPORTED_PARAMS = [
 export const CommandButton = styled.div`
   display: flex;
   position: relative;
-  margin: 8px 20px;
+  margin: 8px 0px;
 `;
 
 export const SelectWrapper = styled.div`
   min-width: 200px;
-  margin-left: 10px;
   margin-bottom: 10px;
+  margin-right: 10px;
   line-height: 1.2em;
   overflow: hidden;
 
@@ -162,8 +165,8 @@ export const QueryParam = ({
   removeParam,
 }: {
   param: Param;
-  editParam: (param: Param) => void;
-  removeParam: (param: Param) => void;
+  editParam?: (param: Param) => void;
+  removeParam?: (param: Param) => void;
 }) => {
   return (
     <SelectWrapper>
@@ -185,20 +188,28 @@ export const QueryParam = ({
               </span>
             </span>
             <span>
-              <span
-                onClick={() => editParam(param)}
-                style={{ cursor: 'pointer', color: '#175D8D', marginRight: 5 }}
-              >
-                <FontAwesomeIcon icon={faPencil} color="#175D8D" />
-              </span>
-              <span
-                onClick={() => {
-                  removeParam(param);
-                }}
-                style={{ cursor: 'pointer', color: '#E0182D' }}
-              >
-                <FontAwesomeIcon icon={faTrashAlt} color="#E0182D" />
-              </span>
+              {editParam && (
+                <span
+                  onClick={() => editParam(param)}
+                  style={{
+                    cursor: 'pointer',
+                    color: '#175D8D',
+                    marginRight: 5,
+                  }}
+                >
+                  <FontAwesomeIcon icon={faPencil} color="#175D8D" />
+                </span>
+              )}
+              {removeParam && (
+                <span
+                  onClick={() => {
+                    removeParam(param);
+                  }}
+                  style={{ cursor: 'pointer', color: '#E0182D' }}
+                >
+                  <FontAwesomeIcon icon={faTrashAlt} color="#E0182D" />
+                </span>
+              )}
             </span>
           </div>
         }
@@ -212,7 +223,6 @@ export const QueryParam = ({
 const ParamsWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
-  margin-left: 10px;
 `;
 
 export const QueryParams = ({
@@ -279,7 +289,7 @@ export const QueryParams = ({
           err={err}
         />
       )}
-      <div style={{ margin: '20px', fontSize: '14px' }}>
+      <div style={{ margin: '20px 0px', fontSize: '14px' }}>
         Insert parameters into your sql as :myParam.
       </div>
       <ParamsWrapper>
@@ -306,6 +316,22 @@ export const QueryParams = ({
             setModalType(ModalTypes.Add);
             setModalOpen({ ...emptyParam() });
           }}
+        />
+        <PebbleButton
+          text="Copy Parameters as JSON"
+          role="tertiary"
+          onClick={() => {
+            clipboard.writeText(
+              JSON.stringify(
+                _.values(params).map(({ name, value, type }) => ({
+                  name,
+                  value,
+                  type,
+                }))
+              )
+            );
+          }}
+          style={{ marginLeft: 8 }}
         />
       </CommandButton>
     </>

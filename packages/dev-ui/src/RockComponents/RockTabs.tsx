@@ -10,6 +10,9 @@ export const RockTabsAllTabsDiv = styled.div`
   flex-direction: row;
   height: 35px;
   max-height: 35px;
+  width: fit-content;
+  border-left: 1px solid #dadfe2;
+  border-top: 1px solid #dadfe2;
 `;
 
 export const RockTabsIndividualTabDiv = styled.div.attrs<{
@@ -25,7 +28,6 @@ export const RockTabsIndividualTabDiv = styled.div.attrs<{
   fillSpace,
   beta,
   fontWeight: selected ? '600' : '400',
-  borderTop: hideBorderTop ? '0px' : '1px solid #dadfe2',
   borderBottom: selected ? '0px' : '1px solid #dadfe2',
   borderRight: hideBorderRight ? '0px' : '1px solid #dadfe2',
 }))<{
@@ -41,6 +43,7 @@ export const RockTabsIndividualTabDiv = styled.div.attrs<{
   center?: boolean;
   beta?: boolean;
 }>`
+  box-sizing: border-box;
   position: relative;
   height: 100%;
   border-right: ${(props) => props.borderRight};

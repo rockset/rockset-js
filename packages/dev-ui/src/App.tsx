@@ -11,7 +11,7 @@ import {
   Link,
 } from 'react-router-dom';
 import { RockTabs } from './RockComponents/RockTabs';
-import { QueryParams } from './QueryParams';
+import { QueryParams, QueryParam } from './QueryParams';
 import { PebbleButton } from 'components';
 import { Param } from 'QueryParams.hooks';
 
@@ -22,8 +22,9 @@ const client = rocksetConfigure('', '');
 function App() {
   const [apiserver, setApiserver] = React.useState('[apiserver]');
   const [lambdas, setLambdas] = React.useState<Lambda[]>([]);
+  const logo = require('logo.svg');
 
-  useEffect(() => {
+  const fetchLambdas = () => {
     fetch('/lambdas')
       .then((res) => res.json())
       .then((l: LambdaResponse) => {
@@ -33,6 +34,9 @@ function App() {
         return true;
       })
       .catch((e) => console.error(e));
+  };
+  useEffect(() => {
+    fetchLambdas();
   }, []);
 
   return (
@@ -51,11 +55,16 @@ function App() {
       <Router>
         <Switch>
           <Route path="/v1/orgs/self/ws/:workspace/lambdas/:queryLambda">
-            <Page apiserver={apiserver} lambdas={lambdas} />
+            <Page
+              apiserver={apiserver}
+              lambdas={lambdas}
+              logo={logo}
+              refetch={fetchLambdas}
+            />
           </Route>
           <Route path="/">
             {' '}
-            <Index lambdas={lambdas}></Index>{' '}
+            <Index lambdas={lambdas} logo={logo}></Index>{' '}
           </Route>
         </Switch>
       </Router>
@@ -70,6 +79,14 @@ interface Lambda {
     sqlPath: string;
     fullPath: string;
   };
+  sql: string;
+  default_parameters?:
+    | {
+        name: string;
+        value: string;
+        type: string;
+      }[]
+    | undefined;
 }
 interface LambdaResponse {
   lambdas: Lambda[];
@@ -79,11 +96,16 @@ interface LambdaResponse {
 interface Props {
   apiserver: string;
   lambdas: Lambda[];
+  logo: any;
+  refetch: Function;
 }
 
-const Index = ({ lambdas }: { lambdas: Lambda[] }) => {
+const Index = ({ lambdas, logo }: { lambdas: Lambda[]; logo: any }) => {
   return (
     <>
+      <div style={{ display: 'flex' }}>
+        <img src={logo} height={40} />
+      </div>
       <h2>Query Lambdas </h2>
       {lambdas?.map(({ name, ws }) => (
         <>
@@ -136,7 +158,7 @@ const Results = ({ data, err }: { data: unknown[]; err: unknown }) => {
   ) : null;
 };
 
-const Page = ({ apiserver, lambdas }: Props) => {
+const Page = ({ apiserver, lambdas, logo, refetch }: Props) => {
   const { workspace, queryLambda } = (useParams as () => {
     workspace?: string;
     queryLambda?: string;
@@ -199,12 +221,48 @@ const Page = ({ apiserver, lambdas }: Props) => {
 
   return (
     <>
+      <div style={{ display: 'flex', alignItems: 'center' }}>
+        <img src={logo} height={40} style={{ marginRight: 8 }} />
+        <h1>Developer UI</h1>
+      </div>
       <h2>
         Query Lambda: {workspace}.{queryLambda}
       </h2>
+      <div
+        style={{
+          border: '1px solid #dfe3e6',
+          maxHeight: '20vh',
+          overflow: 'auto',
+        }}
+        className="bx--snippet"
+      >
+        <pre className="fs-secret" style={{ margin: 0 }}>
+          <code className="hljs rockjson">{lambda?.sql}</code>
+        </pre>
+      </div>
+      <h3>{`Default Parameters: ${
+        lambda?.default_parameters.length <= 0 ? 'None' : ''
+      }`}</h3>
+      <div style={{ display: 'flex' }}>
+        {lambda?.default_parameters.map((param) => (
+          <QueryParam
+            param={{ id: param.name, ...param }}
+            key={param.name}
+            editParam={null}
+            removeParam={null}
+          />
+        ))}
+      </div>
       <PebbleButton
+        text="Refresh"
+        role="secondary"
+        onClick={() => refetch()}
+        style={{ width: 'fit-content', marginRight: 8 }}
+      />
+      <h3>File System Configuration Path: {lambda?.path.fullPath}</h3>
+      <PebbleButton
+        style={{ width: 'fit-content', margin: '10px 0px' }}
         onClick={execute}
-        style={{ margin: '10px 0px', width: '100px' }}
       >
         Run Lambda
       </PebbleButton>
@@ -235,7 +293,7 @@ const ResultsJson = ({ resultsJson }) => {
     >
       <pre
         className="fs-secret"
-        style={{ minHeight: '56px', maxWidth: '100%' }}
+        style={{ minHeight: '20vh', maxWidth: '100%' }}
       >
         {/* Set max width of rendered JSON as 1m chars */}
         <code className="hljs rockjson">

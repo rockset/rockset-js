@@ -21,6 +21,7 @@
     "carbon-components": "9.82.12",
     "carbon-components-react": "6.99.1",
     "carbon-icons": "^7.0.7",
+    "clipboard-polyfill": "^3.0.0-pre5",
     "lodash": "^4.17.15",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",

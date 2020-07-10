@@ -97,6 +97,8 @@ export async function serve(port = 3001) {
         path: core.pathutil.getLambdaPathsFromEntity(srcPath, entity),
         name: entity.name,
         ws: entity.ws,
+        sql: entity.sql,
+        default_parameters: entity.config.default_parameters,
       }));
       res.send({ lambdas, apiserver });
     } catch (e) {

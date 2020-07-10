@@ -9,6 +9,7 @@ export const InputWrapper = styled.div<SharedProps>`
   width: 100%;
   input {
     height: 40px;
+    box-sizing: border-box;
   }
 
   textarea {
