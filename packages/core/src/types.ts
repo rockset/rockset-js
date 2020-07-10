@@ -121,6 +121,9 @@ export const QueryParameter = type({
   type: string,
 });
 
+export const QueryParameterArray = array(QueryParameter);
+export type QueryParameterArray = TypeOf<typeof QueryParameterArray>;
+
 export type QueryParameter = TypeOf<typeof QueryParameter>;
 
 const LambdaConfigRequired = t.interface({
@@ -167,6 +170,8 @@ export interface CollectionEntity {
 export interface DeployHooks {
   onNoChange?: (e: LambdaEntity) => void;
   onDeployStart?: (e: LambdaEntity) => void;
+  onCreateWorkspace?: (name: string) => void;
+  onSkipQueryLambda?: (name: string) => void;
   onDeployVersionSuccess?: (e: QueryLambdaVersionResponse) => void;
   onDeployTagSuccess?: (e: QueryLambdaVersionResponse) => void;
   onDeployError?: (error: ErrorModel, entity: LambdaEntity) => void;
@@ -190,6 +195,10 @@ export interface LambdaDownloadOptions {
 
 export interface LambdaDeployOptions {
   tag?: string;
+  workspace?: string;
+  lambda?: string;
+  createMissingWorkspace?: boolean;
+  dryRun?: boolean;
 }
 
 // *** Helper functions to parse stuff ***
@@ -241,6 +250,15 @@ export function parseLambdaEntity(obj: unknown): LambdaEntity {
   return throwOnError(LambdaEntity.decode(obj), errorFailedToCreateEntity(obj));
 }
 
+export function parseQueryParameterArray(p: string) {
+  return parseOrThrowFromJSON(
+    QueryParameterArray,
+    p,
+    RockClientErrorTypes.ERROR_MALFORMED_PARAMETERS,
+    `The parameters string ${p} is malformed. Please check that it is a valid JSON string, containing an array of Query Parameters, which each have keys 'name', 'type', and 'value'`
+  );
+}
+
 export function notEmpty<TValue>(
   value: TValue | null | undefined
 ): value is TValue {
@@ -260,7 +278,7 @@ export function createEmptyQLEntity(fullName: QualifiedName, description = '') {
       default_parameters: [],
       description,
     },
-    sql: `// Your SQL here
+    sql: `-- Your SQL here
 `,
   });
 }

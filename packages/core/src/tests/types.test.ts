@@ -1,6 +1,7 @@
 import { parseQualifiedName, parseAbsolutePath } from '../types';
 import { RockClientErrorTypes } from '../exception/exception';
 import { expectException } from './testUtil';
+import { getWsNamePair } from '../filesystem/pathutil';
 
 describe('Testing runtime type validation', () => {
   test('parse qualified name', () => {
@@ -33,6 +34,22 @@ describe('Testing runtime type validation', () => {
         expectException(RockClientErrorTypes.ERROR_INVALID_QUALIFIED_NAME, e);
       }
     });
+  });
+
+  test('parse ws name pair', () => {
+    const names = [
+      'abc.abc',
+      '1abc123.abc123',
+      '1.a.c.b.d',
+      'a12_-as.b12.c12_-',
+    ];
+
+    const correctWs = ['abc', '1abc123', '1.a.c.b', 'a12_-as.b12'];
+    const qualifiedNames = names.map(parseQualifiedName);
+    const nws = qualifiedNames.map(getWsNamePair);
+    const ws = nws.map(({ ws }) => ws);
+
+    expect(ws).toEqual(correctWs);
   });
 
   test('parse absolute path', () => {

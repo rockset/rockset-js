@@ -15,6 +15,7 @@ export enum RockClientErrorTypes {
   ERROR_AUTH_CONFIG_NOT_FOUND,
   ERROR_AUTH_PROFILE_NOT_FOUND,
   ERROR_AUTH_PROFILE_EXISTS,
+  ERROR_MALFORMED_PARAMETERS,
 }
 
 export class RockClientException extends Error {
