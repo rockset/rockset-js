@@ -74,17 +74,22 @@ const constructLambdaEntity = (
 
   const fullName = getQualifiedName(ws, name);
   const sql = networkLambda.sql?.query ?? '';
-  const default_parameters = networkLambda.sql?.default_parameters ?? [];
+  const description = networkLambda.description;
+
+  const config = {
+    sql_path: relativeSQLPath(name),
+    default_parameters: networkLambda.sql?.default_parameters ?? [],
+  };
+
+  description && _.set(config, 'description', description);
+
   return {
     type: 'lambda',
     name,
     ws,
     fullName,
     sql,
-    config: {
-      sql_path: relativeSQLPath(name),
-      default_parameters,
-    },
+    config: config,
   };
 };
 
@@ -218,6 +223,7 @@ export async function deployQueryLambdas(
         ws,
         lambda,
         {
+          description: lambdaEntity.config.description,
           sql: {
             query: text,
             default_parameters: lambdaEntity.config.default_parameters,
