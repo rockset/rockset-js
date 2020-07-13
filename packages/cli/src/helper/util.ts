@@ -2,6 +2,8 @@
 import * as Parser from '@oclif/parser';
 import * as _ from 'lodash';
 import { readConfigFromPath, join, cwd } from '@rockset/core/dist/filesystem/pathutil';
+import { exists } from '@rockset/core/dist/filesystem/fileutil';
+import { parseAbsolutePath } from '@rockset/core/dist/types';
 import { RockCommand } from '../base-command';
 import { performance } from 'perf_hooks';
 import { wait } from '@rockset/core/dist/helper';
@@ -43,7 +45,7 @@ export async function runApiCall<A extends any[], Return>(
     // Load the specified file
 
     const configRaw: Record<string, unknown> = (await readConfigFromPath(
-      join(cwd(), flags.file),
+      exists(flags.file) ? parseAbsolutePath(flags.file) : join(cwd(), flags.file),
       'YAML',
     )) as Record<string, string>;
 
