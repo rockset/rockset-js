@@ -11,6 +11,7 @@ import {
   parseAbsolutePath,
   ExecuteHooks,
   QueryParameterArray,
+  LambdaDeleteOptions,
 } from './types';
 import {
   FetchAPI,
@@ -164,7 +165,7 @@ export async function downloadQueryLambdas(
   });
 }
 
-export async function deleteAllQueryLambdas() {
+export async function deleteQueryLambdas(options: LambdaDeleteOptions) {
   const srcPath = await getSrcPath();
   const allFiles = await getFiles(srcPath);
   const lambdaFiles = allFiles.filter((file) =>
@@ -179,7 +180,15 @@ export async function deleteAllQueryLambdas() {
       ];
       if (qualifiedName) {
         const lambda = await readLambda(qualifiedName, file);
-        return await deleteLambda(srcPath, file, lambda);
+        if (
+          (options.workspace && lambda.ws?.startsWith(options.workspace)) ||
+          (options.lambda && options.lambda === lambda.fullName) ||
+          (!options.workspace && !options.lambda)
+        ) {
+          return await deleteLambda(srcPath, file, lambda);
+        } else {
+          return;
+        }
       }
     })
   );

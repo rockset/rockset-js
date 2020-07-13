@@ -193,6 +193,11 @@ export interface LambdaDownloadOptions {
   useLambdaTag?: string;
 }
 
+export interface LambdaDeleteOptions {
+  workspace?: string;
+  lambda?: string;
+}
+
 export interface LambdaDeployOptions {
   tag?: string;
   workspace?: string;

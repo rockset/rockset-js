@@ -11,26 +11,42 @@ class CleanEntities extends RockCommand {
       default: false,
       description: 'Bypass the safety checks, and automatically engage in dangerous actions.',
     }),
+    workspace: flags.string({
+      char: 'w',
+      description: 'The qualified name of the workspace to delete',
+    }),
+    lambda: flags.string({
+      char: 'l',
+      description: 'The qualified name of the lambda to delete',
+      exclusive: ['workspace'],
+    }),
   };
 
   static description = `
 Delete all query lambdas from the project.
+
+If a workspace parameter is passed, only that workspace will be deleted.
+If a lambda parameter is passed, only that lambda will be deleted.
+These two parameters are mutually exclusive, only one may be passed.
+
 `;
 
   async run() {
     const { flags } = this.parse(CleanEntities);
     if (flags.yes) {
-      await main.deleteAllQueryLambdas();
+      await main.deleteQueryLambdas({ workspace: flags.workspace, lambda: flags.lambda });
     } else {
       const { c } = (await prompts({
         type: 'confirm',
         name: 'c',
         initial: false,
-        message: `WARNING: This will delete all query lambda objects in the current project and can result in loss of work. Are you sure?`,
+        message: `WARNING: This will delete ${flags.lambda ?? `all query lambda objects`} in ${
+          flags.workspace ?? `the current project`
+        } and can result in loss of work. Are you sure?`,
       })) as { c: boolean };
 
       if (c) {
-        await main.deleteAllQueryLambdas();
+        await main.deleteQueryLambdas({ workspace: flags.workspace, lambda: flags.lambda });
       }
     }
   }

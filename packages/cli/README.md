@@ -3351,11 +3351,17 @@ USAGE
   $ rockset project:delete
 
 OPTIONS
-  -h, --help  show CLI help
-  -y, --yes   Bypass the safety checks, and automatically engage in dangerous actions.
+  -h, --help                 show CLI help
+  -l, --lambda=lambda        The qualified name of the lambda to delete
+  -w, --workspace=workspace  The qualified name of the workspace to delete
+  -y, --yes                  Bypass the safety checks, and automatically engage in dangerous actions.
 
 DESCRIPTION
   Delete all query lambdas from the project.
+
+  If a workspace parameter is passed, only that workspace will be deleted.
+  If a lambda parameter is passed, only that lambda will be deleted.
+  These two parameters are mutually exclusive, only one may be passed.
 ```
 
 _See code: [src/commands/project/delete.ts](https://github.com/rockset/rockset-js/blob/v0.2.1/src/commands/project/delete.ts)_
@@ -3389,8 +3395,8 @@ OPTIONS
 DESCRIPTION
   Deploy Query Lambda entities to Rockset from your local project. 
 
-  If a workspace parameter is passed, only that workspace will be deployed
-  If a lambda parameter is passed, only that lambda will be deployed
+  If a workspace parameter is passed, only that workspace will be deployed.
+  If a lambda parameter is passed, only that lambda will be deployed.
   These two parameters are mutually exclusive, only one may be passed.
 ```
 

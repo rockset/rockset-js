@@ -35,8 +35,8 @@ class DeployQueryLambda extends RockCommand {
   static description = `
 Deploy Query Lambda entities to Rockset from your local project. 
 
-If a workspace parameter is passed, only that workspace will be deployed
-If a lambda parameter is passed, only that lambda will be deployed
+If a workspace parameter is passed, only that workspace will be deployed.
+If a lambda parameter is passed, only that lambda will be deployed.
 These two parameters are mutually exclusive, only one may be passed.
 
 `;

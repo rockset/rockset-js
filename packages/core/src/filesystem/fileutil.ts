@@ -70,8 +70,7 @@ export async function deleteLambda(
   entityPath: AbsolutePath,
   entity: LambdaEntity
 ) {
-  const sqlPath = join(entityPath, entity.config.sql_path);
-
+  const sqlPath = join(dirname(entityPath), entity.config.sql_path);
   return await Promise.all([
     deleteFileSafe(srcPath, entityPath),
     deleteFileSafe(srcPath, sqlPath),
