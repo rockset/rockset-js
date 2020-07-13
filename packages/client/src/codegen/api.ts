@@ -129,6 +129,12 @@ export interface ApiKey {
      * @memberof ApiKey
      */
     key: string;
+    /**
+     * ISO-8601 date 
+     * @type {string}
+     * @memberof ApiKey
+     */
+    last_access_time?: string;
 }
 
 /**
@@ -269,11 +275,11 @@ export interface CollectionStats {
      */
     doc_count?: number;
     /**
-     * total collection size in bytes
+     * number of documents purged from the collection
      * @type {number}
      * @memberof CollectionStats
      */
-    total_size?: number;
+    purged_doc_count?: number;
     /**
      * number between 0 and 1 that indicates progress of collection creation
      * @type {number}
@@ -281,17 +287,11 @@ export interface CollectionStats {
      */
     fill_progress?: number;
     /**
-     * number of documents purged from the collection
+     * milliseconds since Unix epoch Jan 1, 1970
      * @type {number}
      * @memberof CollectionStats
      */
-    purged_doc_count?: number;
-    /**
-     * total collection size in bytes purged
-     * @type {number}
-     * @memberof CollectionStats
-     */
-    purged_doc_size?: number;
+    last_queried_ms?: number;
     /**
      * milliseconds since Unix epoch Jan 1, 1970
      * @type {number}
@@ -299,11 +299,47 @@ export interface CollectionStats {
      */
     last_updated_ms?: number;
     /**
-     * milliseconds since Unix epoch Jan 1, 1970
+     * total collection size in bytes
      * @type {number}
      * @memberof CollectionStats
      */
-    last_queried_ms?: number;
+    total_size?: number;
+    /**
+     * total collection index size in bytes
+     * @type {number}
+     * @memberof CollectionStats
+     */
+    total_index_size?: number;
+    /**
+     * total collection row index size in bytes
+     * @type {number}
+     * @memberof CollectionStats
+     */
+    row_index_size?: number;
+    /**
+     * total collection column index size in bytes
+     * @type {number}
+     * @memberof CollectionStats
+     */
+    column_index_size?: number;
+    /**
+     * total collection inverted index size in bytes
+     * @type {number}
+     * @memberof CollectionStats
+     */
+    inverted_index_size?: number;
+    /**
+     * total collection range index size in bytes
+     * @type {number}
+     * @memberof CollectionStats
+     */
+    range_index_size?: number;
+    /**
+     * total size of bytes purged in bytes
+     * @type {number}
+     * @memberof CollectionStats
+     */
+    purged_doc_size?: number;
     /**
      * total number of bytes inserted into the collection
      * @type {number}
@@ -912,6 +948,12 @@ export interface ErrorModel {
      * @memberof ErrorModel
      */
     trace_id?: string;
+    /**
+     * ID of the error
+     * @type {string}
+     * @memberof ErrorModel
+     */
+    error_id?: string;
 }
 
 /**
@@ -1159,12 +1201,6 @@ export interface GetIntegrationResponse {
      * @memberof GetIntegrationResponse
      */
     data?: Integration;
-    /**
-     * 
-     * @type {Array<Collection>}
-     * @memberof GetIntegrationResponse
-     */
-    collections?: Array<Collection>;
 }
 
 /**
@@ -1508,6 +1544,67 @@ export interface MongoDbIntegration {
 }
 
 /**
+ * 
+ * @export
+ * @interface OrgMembership
+ */
+export interface OrgMembership {
+    /**
+     * 
+     * @type {Organization}
+     * @memberof OrgMembership
+     */
+    organization: Organization;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof OrgMembership
+     */
+    roles: Array<string>;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrgMembership
+     */
+    invite_state: OrgMembership.InviteStateEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof OrgMembership
+     */
+    invited_by: string;
+    /**
+     * ISO-8601 date
+     * @type {string}
+     * @memberof OrgMembership
+     */
+    expires_at: string;
+    /**
+     * ISO-8601 date
+     * @type {string}
+     * @memberof OrgMembership
+     */
+    created_at: string;
+}
+
+/**
+ * @export
+ * @namespace OrgMembership
+ */
+export namespace OrgMembership {
+    /**
+     * @export
+     * @enum {string}
+     */
+    export enum InviteStateEnum {
+        PENDING = <any> 'PENDING',
+        ACCEPTED = <any> 'ACCEPTED',
+        EXPIRED = <any> 'EXPIRED',
+        CANCELLED = <any> 'CANCELLED'
+    }
+}
+
+/**
  * An organization in Rockset is a container for users and collections.
  * @export
  * @interface Organization
@@ -1555,6 +1652,12 @@ export interface Organization {
      * @memberof Organization
      */
     state?: Organization.StateEnum;
+    /**
+     * number of dedicated pods
+     * @type {number}
+     * @memberof Organization
+     */
+    num_dedicated_pods?: number;
 }
 
 /**
@@ -1728,6 +1831,32 @@ export namespace PatchOperation {
         MOVE = <any> 'MOVE',
         TEST = <any> 'TEST'
     }
+}
+
+/**
+ * 
+ * @export
+ * @interface QueryError
+ */
+export interface QueryError {
+    /**
+     * The type of error
+     * @type {string}
+     * @memberof QueryError
+     */
+    type?: string;
+    /**
+     * A message associated with the error, containing more information about it
+     * @type {string}
+     * @memberof QueryError
+     */
+    message?: string;
+    /**
+     * The HTTP status code associated with this error, had it been sent as the response status code
+     * @type {number}
+     * @memberof QueryError
+     */
+    status_code?: number;
 }
 
 /**
@@ -2097,6 +2226,12 @@ export interface QueryResponse {
      * @memberof QueryResponse
      */
     warnings?: Array<string>;
+    /**
+     * errors encountered while streaming the query
+     * @type {Array<QueryError>}
+     * @memberof QueryResponse
+     */
+    query_errors?: Array<QueryError>;
     /**
      * meta information about each column in the result set
      * @type {Array<QueryFieldType>}
@@ -2855,10 +2990,39 @@ export interface User {
     org?: string;
     /**
      * 
+     * @type {string}
+     * @memberof User
+     */
+    invite_state?: User.InviteStateEnum;
+    /**
+     * 
      * @type {Array<Organization>}
      * @memberof User
      */
     orgs?: Array<Organization>;
+    /**
+     * 
+     * @type {Array<OrgMembership>}
+     * @memberof User
+     */
+    org_memberships?: Array<OrgMembership>;
+}
+
+/**
+ * @export
+ * @namespace User
+ */
+export namespace User {
+    /**
+     * @export
+     * @enum {string}
+     */
+    export enum InviteStateEnum {
+        PENDING = <any> 'PENDING',
+        ACCEPTED = <any> 'ACCEPTED',
+        EXPIRED = <any> 'EXPIRED',
+        CANCELLED = <any> 'CANCELLED'
+    }
 }
 
 /**

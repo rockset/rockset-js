@@ -41,7 +41,7 @@ const rocksetConfigure = (
       },
     };
 
-    // Override the custom fetch so that the user doesn't see .json issues
+    // Override the custom fetch so that the user doesn't see .json() issues
     if (customFetch) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       const out = await customFetch(url as string, newOptions);
@@ -64,6 +64,29 @@ const rocksetConfigure = (
       }
     }
   };
+  
+  const queryFetch = async (url: string, options: any) => {
+    const response = await authFetch(url, options);
+    
+    const queryResponse: api.QueryResponse = (await response.json()) ?? {};
+
+    // We can sometimes have a query exception that occurs after sending the status code,
+    // so catch that here.
+    // The server only sends one error for now so just look at the first one in the list.
+    if (queryResponse.query_errors && queryResponse.query_errors.length > 0) {
+      const queryError = queryResponse.query_errors[0];
+      const err: api.ErrorModel = {
+        message: queryError.message,
+      };
+
+      throw err;
+    }
+
+    return {
+      json: () => queryResponse,
+      status: 200,
+    } as Response;
+  };
 
   return {
     users: new api.UsersApi({}, host, authFetch),
@@ -73,8 +96,8 @@ const rocksetConfigure = (
     documents: new api.DocumentsApi({}, host, authFetch),
     integrations: new api.IntegrationsApi({}, host, authFetch),
     orgs: new api.OrganizationsApi({}, host, authFetch),
-    queries: new api.QueriesApi({}, host, authFetch),
-    queryLambdas: new api.QueryLambdasApi({}, host, authFetch),
+    queries: new api.QueriesApi({}, host, queryFetch),
+    queryLambdas: new api.QueryLambdasApi({}, host, queryFetch),
   };
 };
 
