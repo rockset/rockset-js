@@ -104,7 +104,7 @@ const Index = ({ lambdas, logo }: { lambdas: Lambda[]; logo: any }) => {
   return (
     <>
       <div style={{ display: 'flex' }}>
-        <img src={logo} height={40} />
+        <img src={logo} height={40} alt="Rockset Logo" />
       </div>
       <h2>Query Lambdas </h2>
       {lambdas?.map(({ name, ws }) => (
@@ -222,7 +222,12 @@ const Page = ({ apiserver, lambdas, logo, refetch }: Props) => {
   return (
     <>
       <div style={{ display: 'flex', alignItems: 'center' }}>
-        <img src={logo} height={40} style={{ marginRight: 8 }} />
+        <img
+          src={logo}
+          height={40}
+          style={{ marginRight: 8 }}
+          alt="Rockset Logo"
+        />
         <h1>Developer UI</h1>
       </div>
       <h2>
