@@ -1,7 +1,12 @@
 {
   "name": "rockset-vscode",
   "displayName": "Rockset",
-  "description": "This extension provides syntax highlighting for Rockset SQL in VSCode.",
+  "description": "Rockset SQL Language Support - Syntax Highlighting, Error Diagnostics, Executing Queries and more",
+  "icon": "assets/rockset.png",
+  "galleryBanner": {
+    "color": "#5c008d",
+    "theme": "light"
+  },
   "version": "0.2.1",
   "license": "MIT",
   "publisher": "RocksetInc",
@@ -19,23 +24,6 @@
   ],
   "main": "./out/extension.js",
   "contributes": {
-    "viewsContainers": {
-      "activitybar": [
-        {
-          "id": "rs-tree-container",
-          "title": "Rockset Tree Container",
-          "icon": "./logo.svg"
-        }
-      ]
-    },
-    "views": {
-      "rs-tree-container": [
-        {
-          "id": "rs-tree-view",
-          "name": "Rockset Collection View"
-        }
-      ]
-    },
     "configuration": {
       "title": "rockset",
       "properties": {
@@ -54,27 +42,19 @@
     "commands": [
       {
         "command": "extension.rocksetRun",
-        "title": "Rockset Run"
-      }
-    ],
-    "keybindings": [
-      {
-        "command": "extension.rocksetRun",
-        "key": "ctrl+shift+r",
-        "mac": "cmd+shift+r",
-        "when": "editorTextFocus"
+        "title": "Rockset Run Query"
       }
     ],
     "languages": [
       {
         "id": "rsql",
         "aliases": [
-          "RockSQL",
+          "RocksetSQL",
           "rsql"
         ],
         "extensions": [
-          ".rsql",
-          ".sql"
+          ".sql",
+          ".rsql"
         ],
         "configuration": "./language-configuration.json"
       }
@@ -133,6 +113,7 @@
   },
   "dependencies": {
     "@rockset/client": "0.2.1",
+    "@rockset/core": "^0.2.1",
     "sql-formatter": "^2.3.3"
   }
 }

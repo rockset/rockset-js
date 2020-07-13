@@ -3026,6 +3026,32 @@ export namespace User {
 }
 
 /**
+ * 
+ * @export
+ * @interface ValidateQueryResponse
+ */
+export interface ValidateQueryResponse {
+    /**
+     * list of collection specified in query
+     * @type {Array<string>}
+     * @memberof ValidateQueryResponse
+     */
+    name: Array<string>;
+    /**
+     * list of collection specified in query
+     * @type {Array<string>}
+     * @memberof ValidateQueryResponse
+     */
+    collections: Array<string>;
+    /**
+     * list of parameters specified in query
+     * @type {Array<string>}
+     * @memberof ValidateQueryResponse
+     */
+    parameters: Array<string>;
+}
+
+/**
  * Workspaces are organizational containers for collections.
  * @export
  * @interface Workspace
@@ -4813,6 +4839,43 @@ export const QueriesApiFetchParamCreator = function (configuration?: Configurati
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * Validate a SQL query with Rockset's parser and planner.
+         * @summary Validate Query
+         * @param {QueryRequest} body JSON object
+         * @param {boolean} [parameters] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        validate(body: QueryRequest, parameters?: boolean, options: any = {}): FetchArgs {
+            // verify required parameter 'body' is not null or undefined
+            if (body === null || body === undefined) {
+                throw new RequiredError('body','Required parameter body was null or undefined when calling validate.');
+            }
+            const localVarPath = `/v1/orgs/self/queries/validations`;
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (parameters !== undefined) {
+                localVarQueryParameter['parameters'] = parameters;
+            }
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"QueryRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -4831,6 +4894,26 @@ export const QueriesApiFp = function(configuration?: Configuration) {
          */
         query(body: QueryRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<QueryResponse> {
             const localVarFetchArgs = QueriesApiFetchParamCreator(configuration).query(body, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * Validate a SQL query with Rockset's parser and planner.
+         * @summary Validate Query
+         * @param {QueryRequest} body JSON object
+         * @param {boolean} [parameters] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        validate(body: QueryRequest, parameters?: boolean, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ValidateQueryResponse> {
+            const localVarFetchArgs = QueriesApiFetchParamCreator(configuration).validate(body, parameters, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -4860,6 +4943,17 @@ export const QueriesApiFactory = function (configuration?: Configuration, fetch?
         query(body: QueryRequest, options?: any) {
             return QueriesApiFp(configuration).query(body, options)(fetch, basePath);
         },
+        /**
+         * Validate a SQL query with Rockset's parser and planner.
+         * @summary Validate Query
+         * @param {QueryRequest} body JSON object
+         * @param {boolean} [parameters] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        validate(body: QueryRequest, parameters?: boolean, options?: any) {
+            return QueriesApiFp(configuration).validate(body, parameters, options)(fetch, basePath);
+        },
     };
 };
 
@@ -4880,6 +4974,19 @@ export class QueriesApi extends BaseAPI {
      */
     public query(body: QueryRequest, options?: any) {
         return QueriesApiFp(this.configuration).query(body, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * Validate a SQL query with Rockset's parser and planner.
+     * @summary Validate Query
+     * @param {QueryRequest} body JSON object
+     * @param {boolean} [parameters] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof QueriesApi
+     */
+    public validate(body: QueryRequest, parameters?: boolean, options?: any) {
+        return QueriesApiFp(this.configuration).validate(body, parameters, options)(this.fetch, this.basePath);
     }
 
 }

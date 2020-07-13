@@ -311,6 +311,10 @@
         <key>include</key>
         <string>#regexps</string>
       </dict>
+      <dict>
+        <key>include</key>
+        <string>#parameters</string>
+      </dict>
     </array>
     <key>repository</key>
     <dict>
@@ -432,6 +436,13 @@
         <string>\\.</string>
         <key>name</key>
         <string>constant.character.escape.sql</string>
+      </dict>
+      <key>parameters</key>
+      <dict>
+        <key>match</key>
+        <string>\s:\S+\s</string>
+        <key>name</key>
+        <string>variable.parameters.sql</string>
       </dict>
       <key>string_interpolation</key>
       <dict>
@@ -608,43 +619,12 @@
               </dict>
             </array>
           </dict>
-          <dict>
-            <key>begin</key>
-            <string>%\{</string>
-            <key>beginCaptures</key>
-            <dict>
-              <key>0</key>
-              <dict>
-                <key>name</key>
-                <string>punctuation.definition.string.begin.sql</string>
-              </dict>
-            </dict>
-            <key>end</key>
-            <string>\}</string>
-            <key>endCaptures</key>
-            <dict>
-              <key>0</key>
-              <dict>
-                <key>name</key>
-                <string>punctuation.definition.string.end.sql</string>
-              </dict>
-            </dict>
-            <key>name</key>
-            <string>string.other.quoted.brackets.sql</string>
-            <key>patterns</key>
-            <array>
-              <dict>
-                <key>include</key>
-                <string>#string_interpolation</string>
-              </dict>
-            </array>
-          </dict>
         </array>
       </dict>
     </dict>
     <key>scopeName</key>
     <string>source.sql</string>
     <key>uuid</key>
-    <string>A41BE23A-7EF9-11E5-857F-40167E632F0F</string>
+    <string>12ade774-c30c-11ea-87d0-0242ac130003</string>
   </dict>
 </plist>

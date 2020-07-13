@@ -1,9 +1,11 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
+import { Diagnostic } from 'vscode';
 const sqlFormatter = require('sql-formatter') as {
   format: (s: string, config?: unknown) => string;
 };
+import { helper } from '@rockset/core';
 
 import keywords from './keywords';
 import functions from './functions';
@@ -24,8 +26,73 @@ export function activate(context: vscode.ExtensionContext) {
   const apiserver = configuration.get('apiserver') as string;
   const client = rocksetConfigure(apikey, apiserver);
 
-  const collections: string[] = [];
-  const allFields: string[] = [];
+  let collections: string[] = [];
+  let parameters: string[] = [];
+
+  // Grab all of the collections so we can later suggest them
+  client.collections
+    .listCollections()
+    .then((c) => {
+      collections =
+        c.data?.map((c) =>
+          helper.escapePath(
+            `${c.workspace}.${c.name}`,
+            helper.EscapeOptions.ESCAPE_IF_NECCESSARY
+          )
+        ) ?? [];
+      return collections;
+    })
+    .catch(() =>
+      vscode.window.showWarningMessage(
+        'Failed to fetch collections in your Rockset Account'
+      )
+    );
+
+  const diagnosticsCollection = vscode.languages.createDiagnosticCollection(
+    'rsql'
+  );
+
+  const setDiagnostic = (uri: vscode.Uri, error: ErrorModel | undefined) => {
+    const { line, column, message } = error ?? {};
+
+    if (line && column && message) {
+      const diagnostics: Diagnostic[] = [
+        new Diagnostic(
+          new vscode.Range(line - 1, column - 1, line - 1, column + 1),
+          error?.message ?? 'Unknown Error',
+          vscode.DiagnosticSeverity.Error
+        ),
+      ];
+      diagnosticsCollection.set(uri, diagnostics);
+    } else {
+      diagnosticsCollection.set(uri, []);
+    }
+  };
+
+  /**
+   * This enables validation and error highlighting
+   */
+  vscode.workspace.onDidChangeTextDocument(async (document) => {
+    if (document.document.languageId === 'rsql') {
+      try {
+        const result = await client.queries.validate(
+          {
+            sql: {
+              query: document.document.getText(),
+              profiling_enabled: true,
+            },
+          },
+          true
+        );
+        parameters = result.parameters;
+
+        diagnosticsCollection.set(document.document.uri, []);
+      } catch (e) {
+        const error: ErrorModel = e as ErrorModel;
+        setDiagnostic(document.document.uri, error);
+      }
+    }
+  });
 
   /**
    * This enables formatting
@@ -54,22 +121,18 @@ export function activate(context: vscode.ExtensionContext) {
     }
   );
 
-  let activeDecoration: vscode.TextEditorDecorationType | null = null;
   // The command has been defined in the package.json file
-  // Now provide the implementation of the command with registerCommand
   // The commandId parameter must match the command field in package.json
-  const disposable = vscode.commands.registerCommand(
+  // This function is called when this command id is run
+  const disposable = vscode.commands.registerTextEditorCommand(
     'extension.rocksetRun',
-    async () => {
-      // The code you place here will be executed every time your command is executed
-
-      // Display a message box to the user
-      await vscode.window.showInformationMessage('Running rs query!');
-      const activeEditor = vscode.window.activeTextEditor;
-      if (!activeEditor) {
-        return;
-      }
+    async (activeEditor) => {
       const text = activeEditor.document.getText();
+      channel.append(`
+*** Rockset Query Text: ***
+${text}
+
+`);
 
       try {
         const r = await client.queries.query({ sql: { query: text } });
@@ -78,33 +141,14 @@ export function activate(context: vscode.ExtensionContext) {
 `);
         channel.append(JSON.stringify(r?.results ?? {}, null, 2) + '\n');
         channel.show();
-
-        if (activeDecoration && activeDecoration.dispose) {
-          activeDecoration.dispose();
-        }
       } catch (e) {
         const error = e as ErrorModel;
         const message = error?.message ?? '';
         channel.append(message);
         channel.show();
-        activeDecoration = vscode.window.createTextEditorDecorationType({
-          textDecoration: 'underline red dotted',
-        });
 
-        const { line, column } = error;
-        if (line != null && column != null) {
-          activeEditor.setDecorations(activeDecoration, [
-            {
-              hoverMessage: message,
-              range: new vscode.Range(
-                line - 1,
-                column - 1,
-                line - 1,
-                column + 1
-              ),
-            },
-          ]);
-        }
+        setDiagnostic(activeEditor.document.uri, error);
+        await vscode.window.showErrorMessage(message);
       }
     }
   );
@@ -113,18 +157,22 @@ export function activate(context: vscode.ExtensionContext) {
     { language: 'rsql' },
     {
       provideCompletionItems() {
-        const items = keywords
-          .map(
-            (keyword: string) =>
-              new vscode.CompletionItem(
-                keyword,
-                vscode.CompletionItemKind.Keyword
-              )
-          )
+        const items = parameters
+          .map((p) => {
+            const item = new vscode.CompletionItem(
+              ':' + p,
+              vscode.CompletionItemKind.Variable
+            );
+            item.insertText = p;
+            return item;
+          })
           .concat(
-            functions.map(
-              (f) =>
-                new vscode.CompletionItem(f, vscode.CompletionItemKind.Function)
+            keywords.map(
+              (keyword: string) =>
+                new vscode.CompletionItem(
+                  keyword,
+                  vscode.CompletionItemKind.Keyword
+                )
             )
           )
           .concat(
@@ -134,15 +182,19 @@ export function activate(context: vscode.ExtensionContext) {
             )
           )
           .concat(
-            allFields.map(
-              (c) =>
-                new vscode.CompletionItem(c, vscode.CompletionItemKind.Field)
-            )
+            functions.map((f) => {
+              const item = new vscode.CompletionItem(
+                f,
+                vscode.CompletionItemKind.Function
+              );
+              return item;
+            })
           );
         return items.length > 0 ? items : undefined;
       },
     },
-    '.' // triggered whenever a '.' is being typed
+    '.', // triggered whenever a '.' is being typed
+    ':'
   );
   context.subscriptions.push(disposable, rocksetAutoComplete);
 }
