@@ -7,7 +7,7 @@ import {
   PebbleModal,
   RockErrorMessage,
   Space,
-} from './components';
+} from 'components';
 
 import styled from 'styled-components';
 import { useState } from 'react';
@@ -22,6 +22,7 @@ import { faPencil, faTrashAlt } from '@fortawesome/pro-regular-svg-icons';
 import * as _ from 'lodash';
 import { ErrorModel, QueryParameter } from '@rockset/client/dist/codegen';
 import * as clipboardImport from 'clipboard-polyfill';
+import { uuid } from 'lib/utils/general';
 
 const clipboard = clipboardImport as any;
 
@@ -54,7 +55,7 @@ export const SelectWrapper = styled.div`
 `;
 
 const emptyParam = () => ({
-  id: _.uniqueId('param_'),
+  id: uuid('param_'),
   name: '',
   type: 'string',
   value: '',
@@ -269,7 +270,17 @@ export const QueryParams = ({
         return;
       }
 
-      setParams((p) => ({ ...p, [param.id]: param }));
+      setParams((p) => {
+        const value = _.chain(p)
+          .values()
+          .find(({ name }) => name === param.name)
+          .value();
+        if (value) {
+          return { ...p, [value.id]: { ...param, id: value.id } };
+        } else {
+          return { ...p, [param.id]: param };
+        }
+      });
       setModalOpen(null);
     },
     [setParams]

@@ -1,4 +1,6 @@
 import * as _ from 'lodash';
+import { useState, useEffect } from 'react';
+import { tuple } from 'lib/utils/general';
 
 export interface QueryParameter {
   name: string;
@@ -64,4 +66,31 @@ export function switchWith<K extends keyof M, M extends object, D>(
   def: D = null
 ) {
   return _.get<M, K, D>(map, key, def);
+}
+
+export function usePersistedState<T>(key: string) {
+  const [state, setState] = useState<T>(() => {
+    try {
+      const data = JSON.parse(localStorage.getItem(key));
+      return data;
+    } catch (e) {
+      return null;
+    }
+  });
+
+  // We only want this effect to run when the STATE changes. If the key changes, we want to run the effect below instead
+  useEffect(() => {
+    localStorage.setItem(key, JSON.stringify(state));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state]);
+
+  useEffect(() => {
+    try {
+      const data = JSON.parse(localStorage.getItem(key));
+      return setState(data);
+    } catch (e) {
+      return setState(null);
+    }
+  }, [key]);
+  return tuple(state, setState);
 }

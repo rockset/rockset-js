@@ -14,7 +14,7 @@ Official Rockset CLI
 * [Getting Started](#getting-started)
 * [Usage Overview](#usage-overview)
 * [API Usage Details](#api-usage-details)
-* [Project Usage Details](#project-usage-details)
+* [Rockset Projects Usage Details](#rockset-projects-usage-details)
 * [Commands](#commands)
 <!-- tocstop -->
 
@@ -453,9 +453,9 @@ $ rockset api:collections:createCollection -f spec.yaml
 ...
 ```
 
-# Project Usage Details
+# Rockset Projects Usage Details
 
-The Project tool consists of subcommands of  `rockset project`. This tool is designed to help you easily manage your Query Lambdas and integrate well with versioning tools like Git.
+Rockset Projects is an ecosystem of developer focused tools to help you work with your Query Lambdas. The Project CLI tool consists of subcommands of  `rockset project`. This tool is designed to help you easily manage your Query Lambdas and integrate well with versioning tools like Git.
 
 To get started, first set up your Rockset Project by creating a `rockconfig.json` file in your project root. We highly recommend that this directory be under version control. All of the files handled by the tool can be safely checked in.
 
@@ -474,8 +474,8 @@ $ cat rockconfig.json
   "source_root": "src"
 }
 
-#. Download your existing query lambdas from Rockset's API Server
-#. This will download the latest versions of your query lambdas
+#. Download your existing Query Lambdas from Rockset's API Server
+#. This will download the latest versions of your Query Lambdas
 #. You can also download lambdas by tag using the -t flag
 $ rockset project:download
 Downloaded lambda commons.QLBar
@@ -501,10 +501,10 @@ $ tree
 
 As you can see, each Query Lambda is placed in a directory with the same name as its workspace. Each query lambda has two files associated with it.
 
-* `commons/QL.lambda.json` This is the Lambda Definition file. It includes information such as the description and the default parameters of the query lambda.
+* `<workspace/path>/QL.lambda.json` This is the Lambda Definition file. It includes information such as the description and the default parameters of the query lambda.
     * A Lambda Definition file must use extension `.lambda.json`. The name of the associated QL must be the name of the file
     * The parent directory of the Lambda Definition file should be its workspace 
-* `commons/__sql/QL.sql` This file contains the SQL associated with the Query Lambda.
+* `<workspace/path>/__sql/QL.sql` This file contains the SQL associated with the Query Lambda.
 
 You can also use nested workspaces. If we continue the example above:
 
