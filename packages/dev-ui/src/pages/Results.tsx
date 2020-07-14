@@ -34,7 +34,18 @@ export const Results = ({ data, err }: { data: unknown[]; err: unknown }) => {
     </div>
   ) : err ? (
     <ResultsJson resultsJson={JSON.stringify(err, null, 2)} isErr={true} />
-  ) : null;
+  ) : (
+    <div
+      style={{
+        flex: 1,
+        height: '50%',
+        overflow: 'scroll',
+        margin: '10px 10px 10px 0px',
+      }}
+    >
+      Please hit run to execute this lambda from your Rockset Project.
+    </div>
+  );
 };
 
 const ResultsJson = ({ resultsJson, isErr = false }) => {

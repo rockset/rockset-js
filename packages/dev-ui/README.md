@@ -1,3 +1,3 @@
 # Rockset Projects UI
 
-This is the home of the Rockset Projects UI. For usage information, please see [Rockset Projects Server](../dev-server) Documentation. 
+This is the home of the Rockset Projects UI. All documentation for the Rockset Projects UI is consolidated at [Rockset Projects Server](../dev-server). 

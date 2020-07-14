@@ -24,8 +24,14 @@ All Lerna packages are in [packages](./packages) directory. Each individual proj
 
 To get started, please ensure that you are on Node v12. 
 
-```
+```bash
+# install dependencies
 yarn
+
+# Watch all files for changes
+yarn start
+
+# Build production versions
 yarn run build
 ```
 
@@ -36,4 +42,6 @@ The publishing o all of the above projects is handled automatically through Gith
 ```
 ./release
 ```
+
+The exception to the above is the VSCode plugin, which currently has to be manually deployed.
 

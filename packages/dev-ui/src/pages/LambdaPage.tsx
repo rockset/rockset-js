@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import _ from 'lodash';
 import { Lambda } from './index.types';
 import { useParams } from 'react-router';
@@ -16,11 +16,6 @@ export interface Props {
   logo: any;
   refetch: () => void;
 }
-
-const useEffectOnce = (effect) => {
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(effect, []);
-};
 
 export const Page = ({ lambdas, refetch }: Props) => {
   const { workspace, queryLambda } = (useParams as () => {
@@ -59,10 +54,6 @@ export const Page = ({ lambdas, refetch }: Props) => {
       setActiveTab(0);
     }
   };
-
-  useEffectOnce(() => {
-    execute().catch(console.error);
-  });
 
   const tabs = [
     {
