@@ -30,7 +30,7 @@
         "rockset.apikey": {
           "type": "string",
           "default": "<insert your api key>",
-          "description": "Apikey is required to access rockset. You can find it in the rockset console."
+          "description": "An API key is required to access your Rockset account. You can find it in the Rockset Console."
         },
         "rockset.apiserver": {
           "type": "string",
@@ -42,7 +42,7 @@
     "commands": [
       {
         "command": "extension.rocksetRun",
-        "title": "Rockset Run Query"
+        "title": "Execute Rockset Query"
       }
     ],
     "languages": [

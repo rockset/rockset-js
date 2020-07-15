@@ -36,45 +36,41 @@ npm install -g @rockset/cli
 
 # Getting Started
 
-The following steps will help you configure the CLI tool correctly for usage
+The following steps will help you configure the CLI tool.
 
 ```bash
 
 #. View available commands
 $ rockset -h
 
-#.  The first thing you should do after installing is to set up Autocomplete
-#.  Print autocomplete instructions for bash
+#.  The first thing you should do after installing is to set up autocomplete
+#.  Print autocomplete instructions (automatically detects shell)
 $ rockset autocomplete
-
-#. Print autocomplete instructions for ZSH
-$ rockset autocomplete:zsh
 
 #. Add authentication information
 $ rockset auth:add default [apikey] [apiserver]
 
 ```
 
-**Make sure you restart your terminal to ensure autocomplete works**
+_You may need to restart your terminal to enable autocomplete after installing._
+
+You can also update the Rockset CLI to the latest version at any time using `rockset update`.
 
 # Usage Overview
 
-The new Rockset CLI support 4 core workflows.
+The new Rockset CLI supports 4 core workflows.
 
 1. Authentication (`rockset auth`)
 1. Rockset SQL Execution Support (`rockset sql`)
 1. REST API support (`rockset api`)
-    1. API calls have been modified to closely model the Rockset API Documentation
-    1. Load test functionality has been added for select routes
-    1. This section of the CLI tool is a thin wrapper around Rockset's REST API. See full documentation for the REST API at 
-https://docs.rockset.com/rest-api
+    1. Execute any endpoint in the [Rockset REST API](https://docs.rockset.com/rest-api)
+    1. Load test select routes
 1. Query Lambda Project support (`rockset project`)
-    1. A tool that allows you to manage your Query Lambdas from your file system
-    1. Download your Query Lambdas to your local project
-    1. Edit your query lambdas and commit to git
-    1. Deploy your query lambdas to Rockset
+    1. Download your Query Lambdas to your local file system
+    1. Edit your Query Lambdas and commit to git (or the version control system of your choice)
+    1. Deploy your Query Lambdas to Rockset
 
-You can also update the Rockset CLI using `rockset update`.
+Basic usage is demonstrated below:
 
 ```bash
 #. Get specific help for a command
@@ -89,23 +85,24 @@ $ rockset auth:list
 $ rockset auth:use
 
 #. Run a SQL query
-$ rockset sql "select count(*) from _events"
+$ rockset sql "SELECT 'hello, world!"
 
-#. List all query lambdas in "commons" workspace
+#. List all Query Lambdas in "commons" workspace
 $ rockset api:queryLambdas:listQueryLambdasInWorkspace commons
 
 #. Initialize a Rockset Project in the current directory
 $ rockset project:init
 
-#. Download your query lambdas
+#. Download your Query Lambdas
 $ rockset project:download
 
-#. Serve the Rockset Project Development Server and UI
+#. Serve the Rockset Project Development Server and UI to test your local Query Lambdas
 $ rockset project:serve
 
+#. Deploy your local Query Lambdas to Rockset
 $ rockset project:deploy
 
-#. Update rockset cli
+#. Update to the latest CLI version
 $ rockset update
 
 ```
@@ -114,7 +111,7 @@ $ rockset update
 
 ## Organization
 
-The API tool is contained in `rockset api`. This tool is designed to very closely match the layout of our REST API endpoints and Documentation. This section will provides examples for using this tool.
+The API tool is contained in `rockset api`. This tool is designed to very closely match the layout of our [REST API endpoints](https://docs.rockset.com/rest-api). This remainder of this section provides examples for using these commands.
 
 The API calls are further broken into subcommands based on the resource that the command affects. This reflects the breakdown of our API Documentation.
 
@@ -232,7 +229,7 @@ $ cat spec2.json
   ]
 }
 
-#. These two produce the same output
+#. These two commands likewise produce the same output
 $ rockset api:queryLambdas:executeQueryLambdaByTag -f spec2.json
 $ rockset api:queryLambdas:executeQueryLambdaByTag -f spec1.json
 [INFO]: POST: /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/tags/{tag}
@@ -253,7 +250,6 @@ $ rockset api:queryLambdas:executeQueryLambdaByTag -f spec1.json
 }
 Foo
 bar
-
 ```
 
 

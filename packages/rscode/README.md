@@ -19,7 +19,7 @@ After installation, please first set the following two properties in your VSCode
 - `rockset.apiserver`: The Rockset API server to use with this extension
 - `rockset.apikey`: the Rockset apikey to use with this extension
 
-The recommended way to get started with SQL files is to use [Rockset CLI v2](../cli).
+The recommended way to get started with SQL files is to use [Rockset CLI v2](/packages/cli).
 
 ```sh
 
@@ -52,7 +52,7 @@ The Rockset VSCode Extension comes with a formatter. The simplest way to use the
 
 ## Executing Queries
 
-The recommended way to execute queries is with the [Rockset Projects Development UI](../dev-server), which comes with the [Rockset CLI](../cli). Please follow the documentation to install and set up these tools.
+The recommended way to execute queries is with the [Rockset Projects Development UI](/packages/dev-server), which comes with the [Rockset CLI](/packages/cli). Please follow the documentation to install and set up these tools.
 
 ```sh
 # After following the setup instructions above
@@ -61,7 +61,7 @@ rockset project:serve
 
 This will open up a UI which will allow you to set parameters and test your local Query Lambdas.
 
-You can also execute simple queries directly in VSCode. open the Command Palette in VSCode (`CTRL-SHIFT-P` or `CMD-SHIFT-P`) and execute the command `Rockset Run Query`. This will execute the Query Lambda text raw and _will not pass any parameters_.
+You can also execute simple queries directly in VSCode. open the Command Palette in VSCode (`CTRL-SHIFT-P` or `CMD-SHIFT-P`) and execute the command `Execute Rockset Query`. This will execute the Query Lambda text raw and _will not pass any parameters_. At this point, it is not possible to run parametrized queries directly from VSCode (this is however available in the [Rockset Projects Development UI](/packages/dev-server)).
 
 ## Extension Settings
 
@@ -72,8 +72,8 @@ This extension contributes the following settings:
 
 ## Release Notes
 
-Users appreciate release notes as you update your extension.
+### 0.3.0
 
-### 0.1.3
-
-Supports syntax highlighting, executing a query, and formatting
+- syntax highlighting for Rockset's SQL dialect
+- basic query execution in VsCode
+- autoformatting for .sql files
