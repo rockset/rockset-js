@@ -2,9 +2,9 @@
   "name": "rockset-vscode",
   "displayName": "Rockset",
   "description": "Rockset SQL Language Support - Syntax Highlighting, Error Diagnostics, Executing Queries and more",
-  "icon": "assets/rockset.png",
+  "icon": "assets/logo-white.png",
   "galleryBanner": {
-    "color": "#5c008d",
+    "color": "#660099",
     "theme": "light"
   },
   "version": "0.3.0",
