@@ -8,9 +8,15 @@ enum KeyState {
   ACTIVE = '*',
   INACTIVE = '',
 }
+
+const censorApiKey = (key: string | undefined) => {
+  return key?.replace(key?.substring(4, key?.length - 4), '*********');
+};
+
 class ListProfiles extends RockCommand {
   static flags = {
     help: flags.help({ char: 'h' }),
+    showKeys: flags.boolean({ char: 's', description: 'Uncensor all API Keys' }),
   };
 
   static description = `
@@ -18,7 +24,7 @@ class ListProfiles extends RockCommand {
 `;
 
   async run() {
-    this.parse(ListProfiles);
+    const { flags } = this.parse(ListProfiles);
     // First check if there is a profile active at all
     const allAuth = await auth.listAuthProfiles();
 
@@ -51,8 +57,11 @@ ROCKSET_APIKEY
 ROCKSET_APISERVER
         `);
     }
+    const censoredKeys = flags.showKeys
+      ? rows
+      : rows.map(({ api_key, ...rest }) => ({ api_key: censorApiKey(api_key), ...rest }));
     if (rows.length > 0) {
-      cli.table(rows, {
+      cli.table(censoredKeys, {
         active: {},
         name: {},
         api_server: {

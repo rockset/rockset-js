@@ -20,7 +20,7 @@ import { PathReporter } from 'io-ts/lib/PathReporter';
 import { getWsNamePair, relativeSQLPath } from './filesystem/pathutil';
 import { pipe } from 'fp-ts/lib/pipeable';
 
-export const ROOT_CONFIG = 'rockconfig.json' as const;
+export const ROOT_CONFIG = 'rockset.config.json' as const;
 
 const AuthProfile = type({
   apikey: string,
