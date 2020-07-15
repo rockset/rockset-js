@@ -4,7 +4,7 @@
   "description": "Rockset SQL Language Support - Syntax Highlighting, Error Diagnostics, Executing Queries and more",
   "icon": "assets/logo-white.png",
   "galleryBanner": {
-    "color": "#660099",
+    "color": "#DEEDF7",
     "theme": "light"
   },
   "version": "0.3.0",

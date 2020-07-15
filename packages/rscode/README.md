@@ -6,7 +6,7 @@
 - Autocomplete
 - Formatting
 
-![gif failed to load](./assets/vscode-readme.gif)
+![gif failed to load](/packages/rscode/assets/vscode-readme.gif)
 
 ## Installation
 
@@ -41,7 +41,7 @@ $ code .
 
 Then, open `myLambda.sql` in VSCode. You should confirm that the language of your SQL file is set to RocksetSQL to activate this extension. You may also want to set RocksetSQL as the default language for '.sql' file extensions. See the [VSCode documentation](https://code.visualstudio.com/docs/languages/overview#_changing-the-language-for-the-selected-file) for more information about configuring languages for your files.
 
-![Image failed to load](./assets/rockset-sql.png)
+![Image failed to load](/packages/rscode/assets/rockset-sql.png)
 
 ### Formatting documents
 
