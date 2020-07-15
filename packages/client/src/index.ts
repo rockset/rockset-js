@@ -64,11 +64,13 @@ const rocksetConfigure = (
       }
     }
   };
-  
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const queryFetch = async (url: string, options: any) => {
     const response = await authFetch(url, options);
-    
-    const queryResponse: api.QueryResponse = (await response.json()) ?? {};
+
+    const queryResponse: api.QueryResponse =
+      ((await response.json()) as api.QueryResponse) ?? {};
 
     // We can sometimes have a query exception that occurs after sending the status code,
     // so catch that here.

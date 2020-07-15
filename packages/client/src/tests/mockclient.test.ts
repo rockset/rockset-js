@@ -47,20 +47,26 @@ test('simple query', async () => {
 });
 
 test('query with midstream query exception', async () => {
-  const fetchWithMidstreamException = jest.fn(async (url: string, options: unknown) => ({
-    url,
-    options,
-    query_errors: [
-      {
-        type: "ResourceExceeded",
-        message: "You have exceeded your resources",
-        status_code: 429,
-      }
-    ]
-  }));
+  const fetchWithMidstreamException = jest.fn(
+    async (url: string, options: unknown) => ({
+      url,
+      options,
+      query_errors: [
+        {
+          type: 'ResourceExceeded',
+          message: 'You have exceeded your resources',
+          status_code: 429,
+        },
+      ],
+    })
+  );
 
   try {
-    const rockset = rocksetConfigure(apikey, basePath, fetchWithMidstreamException);
+    const rockset = rocksetConfigure(
+      apikey,
+      basePath,
+      fetchWithMidstreamException
+    );
     await rockset.queries.query({
       sql: {
         query: 'Select count(*) from _events;',
@@ -68,7 +74,7 @@ test('query with midstream query exception', async () => {
     });
   } catch (e) {
     expect(e).toMatchObject({
-      message: "You have exceeded your resources",
+      message: 'You have exceeded your resources',
     });
   }
 
