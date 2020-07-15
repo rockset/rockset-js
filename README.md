@@ -17,8 +17,8 @@ All Lerna packages are in [packages](./packages) directory. Each individual proj
 * [Rockset JS SDK](./packages/client)
 * [Rockset CLI](./packages/cli)
 * [Rockset VSCode Plugin](./packages/rscode)
-* [Rockset IDE Sidecar Server](./packages/dev-server)
-* [Rockset IDE Sidecar UI](./packages/dev-ui)
+* [Rockset Projects Development Server](./packages/dev-server)
+* [Rockset Projects Development UI](./packages/dev-ui)
 
 ## Contributing
 

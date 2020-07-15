@@ -457,19 +457,17 @@ $ rockset api:collections:createCollection -f spec.yaml
 
 Rockset Projects is an ecosystem of developer focused tools to help you work with your Query Lambdas. The Project CLI tool consists of subcommands of  `rockset project`. This tool is designed to help you easily manage your Query Lambdas and integrate well with versioning tools like Git.
 
-To get started, first set up your Rockset Project by creating a `rockconfig.json` file in your project root. We highly recommend that this directory be under version control. All of the files handled by the tool can be safely checked in.
+To get started, first set up your Rockset Project by creating a `rockset.config.json` file in your project root. We highly recommend that this directory be under version control. All of the files handled by the tool can be safely checked in.
 
 ```bash
 $ rockset project:init
-$ rockset project:init
 ✔ Enter the root path for your Query Lambdas … src
-✔ Creating an rockconfig.json file including
+✔ Creating an rockset.config.json file including
 {
   "source_root": "src"
 }
 Is this okay? … yes
-
-$ cat rockconfig.json
+$ cat rockset.config.json
 {
   "source_root": "src"
 }

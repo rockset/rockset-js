@@ -9,7 +9,7 @@ import {
 
 export const getMockFS = () => ({
   root: {
-    'rockconfig.json': `
+    [types.ROOT_CONFIG]: `
     {
       "source_root": "src"
     }
@@ -24,10 +24,10 @@ export const getMockFS = () => ({
     'abd.txt': 'some data',
   },
   badRoot: {
-    'rockconfig.json': '{"bad": "bad"}',
+    [types.ROOT_CONFIG]: '{"bad": "bad"}',
   },
   emptyRoot: {
-    'rockconfig.json': `
+    [types.ROOT_CONFIG]: `
     {
       "source_root": "src"
     }
