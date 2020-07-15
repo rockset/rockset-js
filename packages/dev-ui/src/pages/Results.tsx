@@ -2,7 +2,25 @@ import React from 'react';
 import RockDataTable from 'RockComponents/RockDataTable';
 import _ from 'lodash';
 import { pebbleTheme } from 'styles/pebbleTheme';
-export const Results = ({ data, err }: { data: unknown[]; err: unknown }) => {
+import { PebbleSkeleton } from 'components';
+
+export const Results = ({
+  data,
+  err,
+  loading,
+}: {
+  loading: boolean;
+  data: unknown[];
+  err: unknown;
+}) => {
+  if (loading) {
+    return (
+      <div style={{ margin: '20px 20px', height: '100px' }}>
+        <PebbleSkeleton style={{ display: 'inline-block' }} />
+      </div>
+    );
+  }
+
   return data && data.length > 0 ? (
     <div
       style={{

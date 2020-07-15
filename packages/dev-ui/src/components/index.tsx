@@ -52,6 +52,7 @@ import {
 import { PebbleTabs } from 'components/pebble/tabs/PebbleTabs';
 import { PebbleTile } from 'components/pebble/tile/PebbleTile';
 import { PebbleTag } from 'components/pebble/tag/PebbleTag';
+export { PebbleSkeleton } from 'components/pebble/skeleton/PebbleSkeleton';
 
 export {
   RockUnclosableInlineNotification,

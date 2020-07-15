@@ -25,6 +25,7 @@ export const Page = ({ lambdas, refetch }: Props) => {
 
   const [data, setData] = React.useState([]);
   const [err, setErr] = React.useState();
+  const [loading, setLoading] = React.useState<boolean>();
   const [activeTab, setActiveTab] = React.useState<number>(0);
   const [params, setParams] = usePersistedState<Record<string, Param>>(
     `QUERY_PARAMS_${workspace}_${queryLambda}`
@@ -34,6 +35,7 @@ export const Page = ({ lambdas, refetch }: Props) => {
     refetch();
     setData([]);
     setErr(null);
+    setLoading(true);
     try {
       const data = await client.queryLambdas.executeQueryLambda(
         workspace,
@@ -47,8 +49,10 @@ export const Page = ({ lambdas, refetch }: Props) => {
           })),
         }
       );
+      setLoading(false);
       setData(data.results);
     } catch (e) {
+      setLoading(false);
       setErr(e);
     } finally {
       setActiveTab(0);
@@ -58,7 +62,7 @@ export const Page = ({ lambdas, refetch }: Props) => {
   const tabs = [
     {
       header: 'Results',
-      content: <Results {...{ data, err }} />,
+      content: <Results {...{ data, err, loading }} />,
     },
     {
       header: 'Parameters',
