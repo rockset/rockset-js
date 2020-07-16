@@ -7,7 +7,7 @@
     "color": "#DEEDF7",
     "theme": "light"
   },
-  "version": "0.3.1",
+  "version": "0.4.0",
   "license": "MIT",
   "publisher": "RocksetInc",
   "repository": "https://github.com/rockset/rockset-js/tree/master/packages/rscode",
@@ -92,7 +92,7 @@
     "lint": "eslint 'src/**/*.ts'"
   },
   "devDependencies": {
-    "@rockset/eslint-config": "0.3.0",
+    "@rockset/eslint-config": "0.4.0",
     "@types/axios": "^0.14.0",
     "@types/glob": "^7.1.1",
     "@types/lodash": "^4.14.141",
@@ -112,8 +112,8 @@
     "webpack-cli": "^3.3.12"
   },
   "dependencies": {
-    "@rockset/client": "0.3.1",
-    "@rockset/core": "0.3.1",
+    "@rockset/client": "0.4.0",
+    "@rockset/core": "0.4.0",
     "sql-formatter": "^2.3.3"
   }
 }
