@@ -3246,7 +3246,8 @@ USAGE
   $ rockset auth:list
 
 OPTIONS
-  -h, --help  show CLI help
+  -h, --help      show CLI help
+  -s, --showKeys  Uncensor all API Keys
 
 DESCRIPTION
   List all of the available profiles.

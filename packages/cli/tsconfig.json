@@ -8,6 +8,7 @@
     "strict": true,
     "target": "es2017",
     "resolveJsonModule": true,
+    "lib": ["DOM"],
     "types": ["node", "jest"],                           /* Type declaration files to be included in compilation. */
   },
   "include": [

@@ -12,6 +12,7 @@ export interface MainApi {
   orgs: api.OrganizationsApi;
   queries: api.QueriesApi;
   queryLambdas: api.QueryLambdasApi;
+  _fetch: api.FetchAPI;
 }
 
 /**
@@ -100,6 +101,7 @@ const rocksetConfigure = (
     orgs: new api.OrganizationsApi({}, host, authFetch),
     queries: new api.QueriesApi({}, host, queryFetch),
     queryLambdas: new api.QueryLambdasApi({}, host, queryFetch),
+    _fetch: authFetch,
   };
 };
 
