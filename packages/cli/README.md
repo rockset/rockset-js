@@ -736,7 +736,11 @@ Then, your application can hit Lambda `QLFoo` with tag `development` in developm
 rockset.queryLambdas.executeQueryLambdaByTag('commons', 'QLFoo', isProduction() ? 'production' : 'development');
 ```
 
+# Telemetry
 
+The Rockset CLI includes a telemetry feature that collects some usage data. This feature is enabled by default.
+
+To opt out of telemetry, set the ROCKSET_CLI_TELEMETRY_OPTOUT environment variable to 1 or true.
 
 
 
