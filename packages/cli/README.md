@@ -20,7 +20,7 @@ Official Rockset CLI
 
 # Download & Installation Instructions
 
-## Using `curl` (Recommended):
+### Using `curl` (Recommended):
 
 This standalone installation is ideal for most environments as it contains its own Node.js binary and automatically updates. However, it is **not Windows compatible**. 
 
@@ -30,7 +30,7 @@ curl https://rockset-cli-artifacts.s3-us-west-2.amazonaws.com/install-standalone
 
 Running this script requires sudo access. **Be sure to restart your command line one the installation is completed.**
 
-## Using `npm` (Not Recommended):
+### Using `npm` (Not Recommended):
 
 As a standalone Node.js binary, you can also install the `@rockset/cli` package directly from `npm`. However, it is strongly recommended that you use another installation method as the package will not be able to autoupdate and requires you to use your system's version of Node.js. If you choose to use this installation method, ensure you are on Node.js 10.x or 12.x before attempting it.
 
