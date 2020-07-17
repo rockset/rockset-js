@@ -42,7 +42,6 @@ npm install -g @rockset/cli
 To verify that your installation was completed successfully, you may run `rockset --version` in your command line.
 ```
 $ rockset --version
-@rockset/cli/0.4.0 darwin-x64 node-v12.18.2
 ```
 
 # Getting Started
@@ -79,7 +78,7 @@ To use the Rockset CLI tool, you will need to create an authentication profile u
 Once you have successfully obtained your API key, run the `rockset auth:add` command to create your authentication profile. Running the following command will create an authentication profile named `default`:
 
 ```
-$ rockset auth:add default [apikey]
+$ rockset auth:add default [API Key]
 ```
 
 # Usage Overview
