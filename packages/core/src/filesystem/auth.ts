@@ -115,6 +115,17 @@ export async function createAuthProfile(
   }
 }
 
+export async function deleteAuthProfile(name: string) {
+  const config = await readConfigurationFile().catch(() => null);
+  if (config?.profiles.hasOwnProperty(name)) {
+    delete config.profiles[name];
+    const nConfig = { ...config, profiles: config.profiles };
+    return await writeConfigurationFile(nConfig);
+  } else {
+    throw errorAuthProfileNotFound(name);
+  }
+}
+
 export async function listAuthProfiles() {
   const config = await readConfigurationFile().catch(() => null);
   const configList = _.map(config?.profiles, (v, k) => ({ ...v, name: k }));

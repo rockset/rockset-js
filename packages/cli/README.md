@@ -823,6 +823,7 @@ To opt out of telemetry, set the ROCKSET_CLI_TELEMETRY_OPTOUT environment variab
 * [`rockset api:workspaces:getWorkspace [WORKSPACE]`](#rockset-apiworkspacesgetworkspace-workspace)
 * [`rockset api:workspaces:listWorkspaces`](#rockset-apiworkspaceslistworkspaces)
 * [`rockset auth:add NAME APIKEY [APISERVER]`](#rockset-authadd-name-apikey-apiserver)
+* [`rockset auth:delete NAME`](#rockset-authdelete-name)
 * [`rockset auth:list`](#rockset-authlist)
 * [`rockset auth:use NAME`](#rockset-authuse-name)
 * [`rockset autocomplete [SHELL]`](#rockset-autocomplete-shell)
@@ -3266,6 +3267,26 @@ DESCRIPTION
 ```
 
 _See code: [src/commands/auth/add.ts](https://github.com/rockset/rockset-js/blob/v0.4.0/src/commands/auth/add.ts)_
+
+## `rockset auth:delete NAME`
+
+Delete a profile with the specified name.
+
+```
+USAGE
+  $ rockset auth:delete NAME
+
+ARGUMENTS
+  NAME  The name of the profile you wish to delete.
+
+OPTIONS
+  -h, --help  show CLI help
+
+DESCRIPTION
+  Delete a profile with the specified name.
+```
+
+_See code: [src/commands/auth/delete.ts](https://github.com/rockset/rockset-js/blob/v0.4.0/src/commands/auth/delete.ts)_
 
 ## `rockset auth:list`
 
