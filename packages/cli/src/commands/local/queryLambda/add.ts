@@ -1,16 +1,11 @@
 import { flags } from '@oclif/command';
-import { types, fileutil } from '@rockset/core';
+import { types, fileutil, pathutil } from '@rockset/core';
 import { RockCommand } from '../../../base-command';
+import { CLIError } from '@oclif/errors';
 
 class AddEntity extends RockCommand {
   static flags = {
     help: flags.help({ char: 'h' }),
-    entity: flags.string({
-      char: 'e',
-      options: ['lambda'],
-      default: 'lambda',
-      description: 'the type of entity you wish to add',
-    }),
   };
 
   static args = [
@@ -18,29 +13,36 @@ class AddEntity extends RockCommand {
       name: 'name',
       required: true,
       hidden: false,
-      description: 'The fully qualified name of the entity you wish to resolve',
+      description: 'The fully qualified name of the lambda you wish to add',
     },
   ];
 
   static description = `
-  Add an empty entity with the specified name to the project. The path for the entity is the same
-  as would be created with 'rockset local:resolve'
-
-
+    Add an empty lambda with the specified name to the project. The path for the lambda is the same
+    as would be created with 'rockset local:resolve'.
 `;
 
   async run() {
-    const { args, flags } = this.parse(AddEntity);
+    const { args } = this.parse(AddEntity);
 
     // Will throw for invalid qualified name
     const qualifiedName = types.parseQualifiedName(args.name as string);
 
-    if (flags.entity === 'lambda' && args.name) {
-      const entity = await types.createEmptyQLEntity(qualifiedName);
-      await fileutil.writeLambda(entity);
-    } else {
-      this.error(`Unsupported entity type: ${flags.entity}`);
+    const { ws, name } = pathutil.getWsNamePair(qualifiedName);
+    if (ws?.length <= 0 || name?.length <= 0)
+      this.error(`Invalid qualified lambda name ${qualifiedName}.`);
+
+    try {
+      const lambda = await fileutil.readLambdaFromQualifiedName(qualifiedName);
+      if (lambda) this.error(`${qualifiedName} already exists.`);
+    } catch (err) {
+      if (err instanceof CLIError) {
+        this.error(err);
+      }
     }
+
+    const entity = await types.createEmptyQLEntity(qualifiedName);
+    await fileutil.writeLambda(entity);
   }
 }
 

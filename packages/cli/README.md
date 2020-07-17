@@ -3416,6 +3416,10 @@ OPTIONS
           Specify a value to download all Query Lambda versions tagged with this tag. 
           Query Lambdas that do not have a version with this tag name will be skipped.
 
+  -y, --yes                                                                             Bypass the safety checks, and
+                                                                                        automatically engage in
+                                                                                        dangerous actions.
+
 DESCRIPTION
   Download Query Lambda entities from Rockset to your local project.
 ```
@@ -3443,22 +3447,21 @@ _See code: [src/commands/local/init.ts](https://github.com/rockset/rockset-js/bl
 
 ## `rockset local:queryLambda:add NAME`
 
-Add an empty entity with the specified name to the project. The path for the entity is the same
+Add an empty lambda with the specified name to the project. The path for the lambda is the same
 
 ```
 USAGE
   $ rockset local:queryLambda:add NAME
 
 ARGUMENTS
-  NAME  The fully qualified name of the entity you wish to resolve
+  NAME  The fully qualified name of the lambda you wish to add
 
 OPTIONS
-  -e, --entity=lambda  [default: lambda] the type of entity you wish to add
-  -h, --help           show CLI help
+  -h, --help  show CLI help
 
 DESCRIPTION
-  Add an empty entity with the specified name to the project. The path for the entity is the same
-     as would be created with 'rockset local:resolve'
+  Add an empty lambda with the specified name to the project. The path for the lambda is the same
+       as would be created with 'rockset local:resolve'.
 ```
 
 _See code: [src/commands/local/queryLambda/add.ts](https://github.com/rockset/rockset-js/blob/v0.4.0/src/commands/local/queryLambda/add.ts)_
