@@ -10,7 +10,7 @@ Official Rockset CLI
 ![Build|Lint|Test](https://github.com/rockset/rockset-js/workflows/Build%7CLint%7CTest/badge.svg)
 
 <!-- toc -->
-* [Installation](#installation)
+* [Download & Installation Instructions](#download--installation-instructions)
 * [Getting Started](#getting-started)
 * [Usage Overview](#usage-overview)
 * [API Usage Details](#api-usage-details)
