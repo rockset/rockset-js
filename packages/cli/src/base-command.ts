@@ -7,6 +7,18 @@ import { ErrorModel } from '@rockset/client/dist/codegen/api';
 import { main, auth } from '@rockset/core';
 import AbortController from 'abort-controller';
 
+// Globally handle all unhandled promise rejections
+process.on('unhandledRejection', function (reason, p) {
+  // If we aren't in debug mode, swallow unhandled promise rejections
+  if (process.env.ROCKSET_CLI_DEBUG_MODE) {
+    // Log unhandled promise errors if we are in debug mode
+    console.error('Unhandled', reason, p);
+    console.error(
+      'This is likely a bug in the Rockset CLI. Please contact Rockset Support with the error message to resolve this issue.',
+    );
+  }
+});
+
 type ThrownError = string | Error | CLIError | ErrorModel | unknown;
 export abstract class RockCommand extends Command {
   async catch(err: ThrownError) {
