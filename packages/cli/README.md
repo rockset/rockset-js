@@ -15,6 +15,7 @@ Official Rockset CLI
 * [Usage Overview](#usage-overview)
 * [API Usage Details](#api-usage-details)
 * [Rockset Projects Usage Details](#rockset-projects-usage-details)
+* [Telemetry](#telemetry)
 * [Commands](#commands)
 <!-- tocstop -->
 
@@ -90,7 +91,7 @@ The new Rockset CLI supports 4 core workflows.
 1. REST API support (`rockset api`)
     1. Execute any endpoint in the [Rockset REST API](https://docs.rockset.com/rest-api)
     1. Load test select routes
-1. Query Lambda Project support (`rockset project`)
+1. Local support for Query Lambdas(`rockset local`)
     1. Download your Query Lambdas to your local file system
     1. Edit your Query Lambdas and commit to git (or the version control system of your choice)
     1. Deploy your Query Lambdas to Rockset
@@ -116,16 +117,16 @@ $ rockset sql "SELECT 'hello, world!"
 $ rockset api:queryLambdas:listQueryLambdasInWorkspace commons
 
 #. Initialize a Rockset Project in the current directory
-$ rockset project:init
+$ rockset local:init
 
 #. Download your Query Lambdas
-$ rockset project:download
+$ rockset local:download
 
 #. Serve the Rockset Project Development Server and UI to test your local Query Lambdas
-$ rockset project:serve
+$ rockset local:serve
 
 #. Deploy your local Query Lambdas to Rockset
-$ rockset project:deploy
+$ rockset local:deploy
 
 #. Update to the latest CLI version
 $ rockset update
@@ -476,12 +477,12 @@ $ rockset api:collections:createCollection -f spec.yaml
 
 # Rockset Projects Usage Details
 
-Rockset Projects is an ecosystem of developer focused tools to help you work with your Query Lambdas. The Project CLI tool consists of subcommands of  `rockset project`. This tool is designed to help you easily manage your Query Lambdas and integrate well with versioning tools like Git.
+Rockset Projects is an ecosystem of developer focused tools to help you work with your Query Lambdas. The Project CLI tool consists of subcommands of  `rockset local`. This tool is designed to help you easily manage your Query Lambdas and integrate well with versioning tools like Git.
 
 To get started, first set up your Rockset Project by creating a `rockset.config.json` file in your project root. We highly recommend that this directory be under version control. All of the files handled by the tool can be safely checked in.
 
 ```bash
-$ rockset project:init
+$ rockset local:init
 ✔ Enter the root path for your Query Lambdas … src
 ✔ Creating an rockset.config.json file including
 {
@@ -496,7 +497,7 @@ $ cat rockset.config.json
 #. Download your existing Query Lambdas from Rockset's API Server
 #. This will download the latest versions of your Query Lambdas
 #. You can also download lambdas by tag using the -t flag
-$ rockset project:download
+$ rockset local:download
 Downloaded lambda commons.QLBar
 Downloaded lambda commons.QLFoo
 Downloaded lambda frontend.QLFrontend
@@ -528,7 +529,7 @@ As you can see, each Query Lambda is placed in a directory with the same name as
 You can also use nested workspaces. If we continue the example above:
 
 ```bash
-$ rockset project:add prod.frontend.QLFrontend
+$ rockset local:queryLambda:add prod.frontend.QLFrontend
 $ tree
 .
 ├── rockconfig.json
@@ -557,8 +558,8 @@ This yields nested directories to represent the nested workspace `prod.frontend`
 Let's take a look at the Query Lambda definition file. This file is the source of truth for properties about your Query Lambda.
 
 ```bash
-#. `rockset project:resolve` gives the path for a particular Query Lambda given it's Qualified Name
-$ cat `rockset project:resolve prod.frontend.QLFrontend`
+#. `rockset local:resolve` gives the path for a particular Query Lambda given it's Qualified Name
+$ cat `rockset local:resolve prod.frontend.QLFrontend`
 {
   "sql_path": "__sql/QLFrontend.sql",
   "default_parameters": [],
@@ -596,7 +597,7 @@ select :foo
 Now we can execute the Query Lambda to see the result.
 
 ```bash
-$ rockset project:execute prod.frontend.QLFrontend
+$ rockset local:queryLambda:execute prod.frontend.QLFrontend
 [INFO]: About to execute prod.frontend.QLFrontend from local project...
 [INFO]: SQL: select :foo
 
@@ -636,11 +637,11 @@ The recommended way to edit your Query Lambdas is with the [Rockset VSCode plugi
 However, if you choose not to use the VSCode plugin, you can also easily edit your Query Lambdas using your preferred command line editor.
 
 ```bash
-$ rockset project:resolve --sql prod.frontend.QLFrontend
+$ rockset local:resolve --sql prod.frontend.QLFrontend
 /Users/tchordia/rockset-js/packages/cli/testLambdas/src/prod/frontend/__sql/QLFrontend.sql
 
 #. open in your preferred editor
-$ $EDITOR `rockset project:resolve --sql prod.frontend.QLFrontend`
+$ $EDITOR `rockset local:resolve --sql prod.frontend.QLFrontend`
 ```
 
 ## Executing your Rockset Project Query Lambdas
@@ -651,7 +652,7 @@ The recommended way to execute your local Query Lambdas is with the [Rockset Pro
 
 ```bash
 #. Open a UI to execute local Query Lambdas
-$ rockset project:serve
+$ rockset local:serve
 ```
 
 This will open a UI for you to add parameters and inspect the results of your query. It will also set up a mock of Rockset's API server that can execute query lambdas.
@@ -665,11 +666,11 @@ You can also execute your Query Lambdas from the CLI tool. The CLI tool will do 
 
 ```bash
 #. Print out the text of the query we will run
-$ cat `rockset project:resolve prod.frontend.QLFrontend --sql`
+$ cat `rockset local:resolve prod.frontend.QLFrontend --sql`
 select :foo
 
 #. Execute the query with parameter "foo" set to value "bar"
-$ rockset project:execute prod.frontend.QLFrontend -p '[{"name": "foo", "type": "string", "value": "bar"}]'
+$ rockset local:queryLambda:execute prod.frontend.QLFrontend -p '[{"name": "foo", "type": "string", "value": "bar"}]'
 {
   "collections": [],
   "column_fields": [
@@ -692,11 +693,11 @@ $ rockset project:execute prod.frontend.QLFrontend -p '[{"name": "foo", "type": 
 
 ## Deploying your Query Lambdas
 
-When you are ready, you can use `rockset project:deploy` to deploy your Query Lambdas to Rockset's service. At that point, your Query Lambdas are live to any applications that may try to hit them, so please proceed with caution.
+When you are ready, you can use `rockset local:deploy` to deploy your Query Lambdas to Rockset's service. At that point, your Query Lambdas are live to any applications that may try to hit them, so please proceed with caution.
 
 ```bash
 #. This shows all query lambdas that will be deployed
-$ rockset project:deploy --dryRun
+$ rockset local:deploy --dryRun
 commons.QLBar
 commons.QLFoo
 frontend.QLFrontend
@@ -704,7 +705,7 @@ frontend.l1
 prod.frontend.QLFrontend
 
 #. You can narrow the list by specifying a workspace
-$ rockset project:deploy -w commons --dryRun
+$ rockset local:deploy -w commons --dryRun
 commons.QLBar
 commons.QLFoo
  ›   Warning: Skipping: frontend.QLFrontend
@@ -712,7 +713,7 @@ commons.QLFoo
  ›   Warning: Skipping: prod.frontend.QLFrontend
 
 #. You can also specify one lambda to deploy
-$ rockset project:deploy --dryRun -l commons.QLBar
+$ rockset local:deploy --dryRun -l commons.QLBar
 commons.QLBar
  ›   Warning: Skipping: commons.QLFoo
  ›   Warning: Skipping: frontend.QLFrontend
@@ -721,7 +722,7 @@ commons.QLBar
 
  #. When you are ready, remove the --dryRun flag to deploy
  #. In practice, you should always tag your query lambdas, so that your application can execute them by tag
-$ rockset project:deploy -l commons.QLBar -t dev
+$ rockset local:deploy -l commons.QLBar -t dev
  ›   Warning: Skipping: frontend.QLFrontend
  ›   Warning: Skipping: frontend.l1
  ›   Warning: Skipping: prod.frontend.QLFrontend
@@ -746,12 +747,12 @@ We highly recommend that you check all of your project files into Version Contro
 
 ```bash
 #. In CI/CD
-rockset project:deploy -t development
+rockset local:deploy -t development
 ...
 
 #. When you want to deploy to production
 git checkout <commit hash>
-rockset project:deploy -t production
+rockset local:deploy -t production
 ```
 
 Then, your application can hit Lambda `QLFoo` with tag `development` in development, and hit `QLFoo` with tag `production` in the production environment.
@@ -826,15 +827,15 @@ To opt out of telemetry, set the ROCKSET_CLI_TELEMETRY_OPTOUT environment variab
 * [`rockset auth:use NAME`](#rockset-authuse-name)
 * [`rockset autocomplete [SHELL]`](#rockset-autocomplete-shell)
 * [`rockset help [COMMAND]`](#rockset-help-command)
-* [`rockset project:add NAME`](#rockset-projectadd-name)
-* [`rockset project:delete`](#rockset-projectdelete)
-* [`rockset project:deploy`](#rockset-projectdeploy)
-* [`rockset project:download`](#rockset-projectdownload)
-* [`rockset project:execute NAME`](#rockset-projectexecute-name)
-* [`rockset project:init`](#rockset-projectinit)
-* [`rockset project:list`](#rockset-projectlist)
-* [`rockset project:resolve NAME`](#rockset-projectresolve-name)
-* [`rockset project:serve`](#rockset-projectserve)
+* [`rockset local:deploy`](#rockset-localdeploy)
+* [`rockset local:download`](#rockset-localdownload)
+* [`rockset local:init`](#rockset-localinit)
+* [`rockset local:queryLambda:add NAME`](#rockset-localquerylambdaadd-name)
+* [`rockset local:queryLambda:delete`](#rockset-localquerylambdadelete)
+* [`rockset local:queryLambda:execute NAME`](#rockset-localquerylambdaexecute-name)
+* [`rockset local:queryLambda:list`](#rockset-localquerylambdalist)
+* [`rockset local:resolve NAME`](#rockset-localresolve-name)
+* [`rockset local:serve`](#rockset-localserve)
 * [`rockset sql [SQL]`](#rockset-sql-sql)
 * [`rockset update [CHANNEL]`](#rockset-update-channel)
 
@@ -3344,59 +3345,13 @@ OPTIONS
 
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v2.2.3/src/commands/help.ts)_
 
-## `rockset project:add NAME`
-
-Add an empty entity with the specified name to the project. The path for the entity is the same
-
-```
-USAGE
-  $ rockset project:add NAME
-
-ARGUMENTS
-  NAME  The fully qualified name of the entity you wish to resolve
-
-OPTIONS
-  -e, --entity=lambda  [default: lambda] the type of entity you wish to add
-  -h, --help           show CLI help
-
-DESCRIPTION
-  Add an empty entity with the specified name to the project. The path for the entity is the same
-     as would be created with 'rockset project:resolve'
-```
-
-_See code: [src/commands/project/add.ts](https://github.com/rockset/rockset-js/blob/v0.4.0/src/commands/project/add.ts)_
-
-## `rockset project:delete`
-
-Delete all query lambdas from the project.
-
-```
-USAGE
-  $ rockset project:delete
-
-OPTIONS
-  -h, --help                 show CLI help
-  -l, --lambda=lambda        The qualified name of the lambda to delete
-  -w, --workspace=workspace  The qualified name of the workspace to delete
-  -y, --yes                  Bypass the safety checks, and automatically engage in dangerous actions.
-
-DESCRIPTION
-  Delete all query lambdas from the project.
-
-  If a workspace parameter is passed, only that workspace will be deleted.
-  If a lambda parameter is passed, only that lambda will be deleted.
-  These two parameters are mutually exclusive, only one may be passed.
-```
-
-_See code: [src/commands/project/delete.ts](https://github.com/rockset/rockset-js/blob/v0.4.0/src/commands/project/delete.ts)_
-
-## `rockset project:deploy`
+## `rockset local:deploy`
 
 Deploy Query Lambda entities to Rockset from your local project. 
 
 ```
 USAGE
-  $ rockset project:deploy
+  $ rockset local:deploy
 
 OPTIONS
   -h, --help                                                                    show CLI help
@@ -3424,15 +3379,15 @@ DESCRIPTION
   These two parameters are mutually exclusive, only one may be passed.
 ```
 
-_See code: [src/commands/project/deploy.ts](https://github.com/rockset/rockset-js/blob/v0.4.0/src/commands/project/deploy.ts)_
+_See code: [src/commands/local/deploy.ts](https://github.com/rockset/rockset-js/blob/v0.4.0/src/commands/local/deploy.ts)_
 
-## `rockset project:download`
+## `rockset local:download`
 
 Download Query Lambda entities from Rockset to your local project.
 
 ```
 USAGE
-  $ rockset project:download
+  $ rockset local:download
 
 OPTIONS
   -h, --help                                                                            show CLI help
@@ -3444,15 +3399,80 @@ DESCRIPTION
   Download Query Lambda entities from Rockset to your local project.
 ```
 
-_See code: [src/commands/project/download.ts](https://github.com/rockset/rockset-js/blob/v0.4.0/src/commands/project/download.ts)_
+_See code: [src/commands/local/download.ts](https://github.com/rockset/rockset-js/blob/v0.4.0/src/commands/local/download.ts)_
 
-## `rockset project:execute NAME`
+## `rockset local:init`
+
+Initialize your project.
+
+```
+USAGE
+  $ rockset local:init
+
+OPTIONS
+  -h, --help  show CLI help
+
+DESCRIPTION
+  Initialize your project.
+
+  This command initializes your project with a rockconfig.json file.
+```
+
+_See code: [src/commands/local/init.ts](https://github.com/rockset/rockset-js/blob/v0.4.0/src/commands/local/init.ts)_
+
+## `rockset local:queryLambda:add NAME`
+
+Add an empty entity with the specified name to the project. The path for the entity is the same
+
+```
+USAGE
+  $ rockset local:queryLambda:add NAME
+
+ARGUMENTS
+  NAME  The fully qualified name of the entity you wish to resolve
+
+OPTIONS
+  -e, --entity=lambda  [default: lambda] the type of entity you wish to add
+  -h, --help           show CLI help
+
+DESCRIPTION
+  Add an empty entity with the specified name to the project. The path for the entity is the same
+     as would be created with 'rockset local:resolve'
+```
+
+_See code: [src/commands/local/queryLambda/add.ts](https://github.com/rockset/rockset-js/blob/v0.4.0/src/commands/local/queryLambda/add.ts)_
+
+## `rockset local:queryLambda:delete`
+
+Delete all query lambdas from the project.
+
+```
+USAGE
+  $ rockset local:queryLambda:delete
+
+OPTIONS
+  -h, --help                 show CLI help
+  -l, --lambda=lambda        The qualified name of the lambda to delete
+  -w, --workspace=workspace  The qualified name of the workspace to delete
+  -y, --yes                  Bypass the safety checks, and automatically engage in dangerous actions.
+
+DESCRIPTION
+  Delete all query lambdas from the project.
+
+  If a workspace parameter is passed, only that workspace will be deleted.
+  If a lambda parameter is passed, only that lambda will be deleted.
+  These two parameters are mutually exclusive, only one may be passed.
+```
+
+_See code: [src/commands/local/queryLambda/delete.ts](https://github.com/rockset/rockset-js/blob/v0.4.0/src/commands/local/queryLambda/delete.ts)_
+
+## `rockset local:queryLambda:execute NAME`
 
 Execute a specific version of a Query Lambda in the current project.
 
 ```
 USAGE
-  $ rockset project:execute NAME
+  $ rockset local:queryLambda:execute NAME
 
 ARGUMENTS
   NAME  The fully qualified name of the Query Lambda you wish to execute
@@ -3467,34 +3487,15 @@ DESCRIPTION
      You must specify the fully qualified name of the Query Lambda: eg. 'commons.foo'.
 ```
 
-_See code: [src/commands/project/execute.ts](https://github.com/rockset/rockset-js/blob/v0.4.0/src/commands/project/execute.ts)_
+_See code: [src/commands/local/queryLambda/execute.ts](https://github.com/rockset/rockset-js/blob/v0.4.0/src/commands/local/queryLambda/execute.ts)_
 
-## `rockset project:init`
-
-Initialize your project.
-
-```
-USAGE
-  $ rockset project:init
-
-OPTIONS
-  -h, --help  show CLI help
-
-DESCRIPTION
-  Initialize your project.
-
-  This command initializes your project with a rockconfig.json file.
-```
-
-_See code: [src/commands/project/init.ts](https://github.com/rockset/rockset-js/blob/v0.4.0/src/commands/project/init.ts)_
-
-## `rockset project:list`
+## `rockset local:queryLambda:list`
 
 List all of the entities in the current project. Note: this does not list entities on remote. For that, please use
 
 ```
 USAGE
-  $ rockset project:list
+  $ rockset local:queryLambda:list
 
 OPTIONS
   -e, --entity=lambda  [default: lambda] the type of entity you wish to list
@@ -3505,15 +3506,15 @@ DESCRIPTION
      the API endpoints present in 'rockset api:...'
 ```
 
-_See code: [src/commands/project/list.ts](https://github.com/rockset/rockset-js/blob/v0.4.0/src/commands/project/list.ts)_
+_See code: [src/commands/local/queryLambda/list.ts](https://github.com/rockset/rockset-js/blob/v0.4.0/src/commands/local/queryLambda/list.ts)_
 
-## `rockset project:resolve NAME`
+## `rockset local:resolve NAME`
 
 Resolve the absolute path of an entity in the current project.
 
 ```
 USAGE
-  $ rockset project:resolve NAME
+  $ rockset local:resolve NAME
 
 ARGUMENTS
   NAME  The fully qualified name of the entity you wish to resolve
@@ -3532,15 +3533,15 @@ DESCRIPTION
      You must specify the type of entity that will be resolved.
 ```
 
-_See code: [src/commands/project/resolve.ts](https://github.com/rockset/rockset-js/blob/v0.4.0/src/commands/project/resolve.ts)_
+_See code: [src/commands/local/resolve.ts](https://github.com/rockset/rockset-js/blob/v0.4.0/src/commands/local/resolve.ts)_
 
-## `rockset project:serve`
+## `rockset local:serve`
 
 Start a development server that allows you to execute Query Lambdas from your local project from a development UI.
 
 ```
 USAGE
-  $ rockset project:serve
+  $ rockset local:serve
 
 OPTIONS
   -h, --help       show CLI help
@@ -3550,7 +3551,7 @@ DESCRIPTION
   Start a development server that allows you to execute Query Lambdas from your local project from a development UI.
 ```
 
-_See code: [src/commands/project/serve.ts](https://github.com/rockset/rockset-js/blob/v0.4.0/src/commands/project/serve.ts)_
+_See code: [src/commands/local/serve.ts](https://github.com/rockset/rockset-js/blob/v0.4.0/src/commands/local/serve.ts)_
 
 ## `rockset sql [SQL]`
 

@@ -1,6 +1,6 @@
 import { flags } from '@oclif/command';
 import { listEntityNames } from '@rockset/core/dist/main';
-import { RockCommand } from '../../base-command';
+import { RockCommand } from '../../../base-command';
 
 class ListEntities extends RockCommand {
   static flags = {

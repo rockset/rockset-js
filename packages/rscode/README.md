@@ -27,9 +27,9 @@ The recommended way to get started with SQL files is to use [Rockset CLI v2](/pa
 $ rockset auth:add default <apikey>
 
 # Populate your Query Lambda SQL from Rockset
-$ rockset project:init
-$ rockset project:download
-$ rockset project:add commons.myLambda
+$ rockset local:init
+$ rockset local:download
+$ rockset local:queryLambda:add commons.myLambda
 
 # Open the current directory in VSCode (if you have the VSCode cli tools)
 $ code .
@@ -56,7 +56,7 @@ The recommended way to execute queries is with the [Rockset Projects Development
 
 ```sh
 # After following the setup instructions above
-rockset project:serve
+rockset local:serve
 ```
 
 This will open up a UI which will allow you to set parameters and test your local Query Lambdas.

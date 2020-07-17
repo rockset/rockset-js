@@ -12,14 +12,14 @@ The Rockset Projects Dev UI is bundled with the Rockset CLI. Please first instal
 
 ```bash
 # Initialize your rockset project
-$ rockset project:init
+$ rockset local:init
 
 # Download your query lambdas
-$ rockset project:download
+$ rockset local:download
 
 # Serve the IDE Sidecar
 # Make sure you run this command in a valid Rockset Project.
-$ rockset project:serve -p PORT
+$ rockset local:serve -p PORT
 ```
 
 This will launch a development server on `localhost:PORT`. Whenever a request to execute a query lambda is sent to the server, it will grab the associated Query Lambda text from the file system and execute it with any parameters.

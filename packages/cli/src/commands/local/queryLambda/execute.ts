@@ -1,6 +1,6 @@
 import { flags } from '@oclif/command';
 import { types, main, helper } from '@rockset/core';
-import { RockCommand } from '../../base-command';
+import { RockCommand } from '../../../base-command';
 import { QueryResponse, ErrorModel } from '@rockset/client/dist/codegen/api';
 import { LambdaEntity, parseQueryParameterArray } from '@rockset/core/dist/types';
 

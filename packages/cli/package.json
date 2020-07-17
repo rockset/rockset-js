@@ -74,9 +74,14 @@
       "api": {
         "description": "Wrappers for Rockset's API endpoints. You can view full documentation for the API at https://docs.rockset.com"
       },
-      "project": {
+      "local": {
         "description": "Download, Manage, and Deploy your Query Lambdas."
+
+      },
+      "local:queryLambda": {
+        "description": "Add, delete, execute, and list your Query Lambdas"
       }
+      
     },
     "commands": "./lib/commands",
     "update": {

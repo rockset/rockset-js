@@ -1,6 +1,6 @@
 import { flags } from '@oclif/command';
 import { main } from '@rockset/core';
-import { RockCommand } from '../../base-command';
+import { RockCommand } from '../../../base-command';
 import * as prompts from 'prompts';
 
 class CleanEntities extends RockCommand {

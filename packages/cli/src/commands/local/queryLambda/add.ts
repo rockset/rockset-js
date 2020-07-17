@@ -1,6 +1,6 @@
 import { flags } from '@oclif/command';
 import { types, fileutil } from '@rockset/core';
-import { RockCommand } from '../../base-command';
+import { RockCommand } from '../../../base-command';
 
 class AddEntity extends RockCommand {
   static flags = {
@@ -24,7 +24,7 @@ class AddEntity extends RockCommand {
 
   static description = `
   Add an empty entity with the specified name to the project. The path for the entity is the same
-  as would be created with 'rockset project:resolve'
+  as would be created with 'rockset local:resolve'
 
 
 `;
