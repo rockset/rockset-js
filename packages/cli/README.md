@@ -28,7 +28,7 @@ This standalone installation is ideal for most environments as it contains its o
 curl https://rockset-cli-artifacts.s3-us-west-2.amazonaws.com/install-standalone.sh | bash 
 ```
 
-Running this script requires sudo access. **Be sure to restart your command line one the installation is completed.**
+Running this script requires sudo access. **Be sure to restart your command line once the installation is completed.**
 
 ### Using `npm` (Not Recommended):
 
@@ -36,6 +36,13 @@ As a standalone Node.js binary, you can also install the `@rockset/cli` package 
 
 ```
 npm install -g @rockset/cli
+```
+
+### Verify Your Installation
+To verify that your installation was completed successfully, you may run `rockset --version` in your command line.
+```
+$ rockset --version
+@rockset/cli/0.4.0 darwin-x64 node-v12.18.2
 ```
 
 # Getting Started
