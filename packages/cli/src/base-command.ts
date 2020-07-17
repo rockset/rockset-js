@@ -50,23 +50,6 @@ ${err}
       const readable = new Date();
       const timestampReadable = readable.toUTCString();
       const type = errorId ? 'ERROR' : 'INFO';
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const { args, flags } = this.parse(this.constructor as any);
-
-      // Remove all user data before we log args and flags: we only want the names of the args and flags included
-      const argsTrimmed = _.isObject(args)
-        ? _.chain(args)
-            .keys()
-            .filter((k) => Boolean((args as Record<string, unknown>)[k]))
-            .value()
-        : null;
-
-      const flagsTrimmed = _.isObject(flags)
-        ? _.chain(flags)
-            .keys()
-            .filter((k) => Boolean((flags as Record<string, unknown>)[k]))
-            .value()
-        : null;
 
       const allTelemetrics = {
         commandClassName,
@@ -78,8 +61,6 @@ ${err}
         timestamp,
         timestampReadable,
         type,
-        argsTrimmed,
-        flagsTrimmed,
         errorId,
       };
 
