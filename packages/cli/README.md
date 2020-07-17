@@ -69,9 +69,8 @@ To install this feature, update the CLI and run `rockset autocomplete` in your c
 ```
 $ rockset update
 $ rockset autocomplete
-
 ```
-You may need to restart your command to enable the autocomplete feature after installation.
+You may need to restart your command line to enable the autocomplete feature after installation.
 
 ### Setting Up Authentication
 
