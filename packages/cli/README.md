@@ -20,7 +20,7 @@ Official Rockset CLI
 
 # Download & Installation Instructions
 
-### Using `curl` (Recommended):
+### Install using `curl` (Recommended)
 
 This standalone installation is ideal for most environments as it contains its own Node.js binary and automatically updates. However, it is **not Windows compatible**. 
 
@@ -30,7 +30,7 @@ curl https://rockset-cli-artifacts.s3-us-west-2.amazonaws.com/install-standalone
 
 Running this script requires sudo access. **Be sure to restart your command line once the installation is completed.**
 
-### Using `npm` (Not Recommended):
+### Install using `npm` (Not Recommended)
 
 As a standalone Node.js binary, you can also install the `@rockset/cli` package directly from `npm`. However, it is strongly recommended that you use another installation method as the package will not be able to autoupdate and requires you to use your system's version of Node.js. If you choose to use this installation method, ensure you are on Node.js 10.x or 12.x before attempting it.
 
@@ -49,23 +49,39 @@ $ rockset --version
 
 The following steps will help you configure the CLI tool.
 
-```bash
-
-#. View available commands
+To view the list of available commands, run `rockset -h` in your command line.
+```
 $ rockset -h
-
-#.  The first thing you should do after installing is to set up autocomplete
-#.  Print autocomplete instructions (automatically detects shell)
-$ rockset autocomplete
-
-#. Add authentication information
-$ rockset auth:add default [apikey] [apiserver]
-
 ```
 
-_You may need to restart your terminal to enable autocomplete after installing._
+### Updating the Rockset CLI
 
-You can also update the Rockset CLI to the latest version at any time using `rockset update`.
+You can update the Rockset CLI to the latest version at any time using `rockset update`.
+```
+$ rockset update
+```
+
+### Installing Autocomplete
+
+The Rockset CLI Autocomplete feature allows you to preview and complete commands using your tab key. It is currently only compatible on bash and zsh, and we have no plans to support other shells at this time.
+
+To install this feature, update the CLI and run `rockset autocomplete` in your command line. You will receive different instructions depending on which shell you are using.
+```
+$ rockset update
+$ rockset autocomplete
+
+```
+You may need to restart your command to enable the autocomplete feature after installation.
+
+### Setting Up Authentication
+
+To use the Rockset CLI tool, you will need to create an authentication profile using your API Key which can be created and found in the [Rockset Console](https://console.rockset.com/apikeys).
+
+Once you have successfully obtained your API key, run the `rockset auth:add` command to create your authentication profile. Running the following command will create an authentication profile named `default`:
+
+```
+$ rockset auth:add default [apikey]
+```
 
 # Usage Overview
 
