@@ -23,6 +23,7 @@ import * as _ from 'lodash';
 import { ErrorModel, QueryParameter } from '@rockset/client/dist/codegen';
 import * as clipboardImport from 'clipboard-polyfill';
 import { uuid } from 'lib/utils/general';
+import { pebbleTheme } from 'styles/pebbleTheme';
 
 const clipboard = clipboardImport as any;
 
@@ -289,7 +290,13 @@ export const QueryParams = ({
   const parametersArray = _.values(params);
 
   return (
-    <>
+    <div
+      style={{
+        border: `1px solid ${pebbleTheme.baseColors.gray11}`,
+        marginRight: 10,
+        padding: 10,
+      }}
+    >
       {modalInitializer && (
         <ParamModal
           modalType={modalType}
@@ -345,6 +352,6 @@ export const QueryParams = ({
           style={{ marginLeft: 8 }}
         />
       </CommandButton>
-    </>
+    </div>
   );
 };

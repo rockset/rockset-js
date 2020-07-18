@@ -17,6 +17,7 @@ export const Notification = styled.div<{
 export const InlineHeading = styled(PebbleH4)`
   display: flex;
   align-items: center;
+  margin: 0;
   margin-right: 6px;
   min-height: 18px;
 `;

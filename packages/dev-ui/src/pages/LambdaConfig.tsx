@@ -3,9 +3,12 @@ import { HorzFlex } from 'components/helper/util';
 import { Space, PebbleButton } from 'components';
 import styled from 'styled-components';
 import { Lambda } from './index.types';
+import { pebbleTheme } from 'styles/pebbleTheme';
 
 const Wrapper = styled.div`
   padding: 10px;
+  border: 1px solid ${pebbleTheme.baseColors.gray11};
+  margin-right: 10px;
 
   h3 {
     font-weight: 600;
@@ -65,7 +68,9 @@ export const LambdaConfig = ({
       </div>
       <h3>System Paths </h3>
       <strong>Lambda Definition Path: </strong>
-      {lambda?.path.fullPath} <br />
+      {lambda?.path.fullPath}
+      <br />
+      <br />
       <strong>Lambda SQL Path: </strong>
       {lambda?.path.sqlPath}
       <br /> <br />

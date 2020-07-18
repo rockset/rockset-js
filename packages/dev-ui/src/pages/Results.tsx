@@ -2,7 +2,7 @@ import React from 'react';
 import RockDataTable from 'RockComponents/RockDataTable';
 import _ from 'lodash';
 import { pebbleTheme } from 'styles/pebbleTheme';
-import { PebbleSkeleton } from 'components';
+import { PebbleSkeleton, PebbleNotification } from 'components';
 
 export const Results = ({
   data,
@@ -51,7 +51,15 @@ export const Results = ({
       </div>
     </div>
   ) : err ? (
-    <ResultsJson resultsJson={JSON.stringify(err, null, 2)} isErr={true} />
+    <>
+      <PebbleNotification
+        kind="danger"
+        title={(err as any)?.type}
+        subtitle={(err as any)?.message}
+        style={{ width: 'fit-content', marginTop: 10 }}
+      />
+      <ResultsJson resultsJson={JSON.stringify(err, null, 2)} isErr={true} />
+    </>
   ) : (
     <div
       style={{

@@ -23,6 +23,7 @@ export const Modal = styled.div`
   background-color: ${pebbleTheme.baseColors.white};
   margin: auto;
   border-style: solid;
+  border-width: 0px;
   border-top-width: 4px;
   border-color: ${pebbleTheme.baseColors.blue8};
   max-height: 1000px;
