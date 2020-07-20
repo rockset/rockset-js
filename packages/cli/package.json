@@ -76,12 +76,10 @@
       },
       "local": {
         "description": "manage your local Query Lambdas"
-
       },
       "local:queryLambda": {
         "description": "add, delete, execute, and list your Query Lambdas"
       }
-      
     },
     "commands": "./lib/commands",
     "update": {

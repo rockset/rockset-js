@@ -35,9 +35,9 @@ class AddEntity extends RockCommand {
     try {
       const lambda = await fileutil.readLambdaFromQualifiedName(qualifiedName);
       if (lambda) this.error(`${qualifiedName} already exists.`);
-    } catch (err) {
-      if (err instanceof CLIError) {
-        this.error(err);
+    } catch (error) {
+      if (error instanceof CLIError) {
+        this.error(error);
       }
     }
 
