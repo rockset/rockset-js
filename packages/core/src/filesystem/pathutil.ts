@@ -117,7 +117,7 @@ export function resolveQualifiedNameFromPath(
   const relative = path.relative(srcPath, absolutePath);
 
   const { dir, base } = path.parse(relative);
-  const ws = dir.replace(path.sep, '.');
+  const ws = dir.replace(new RegExp(path.sep, 'g'), '.');
   const entityName = ENTITIES.find((entity) => {
     return base.endsWith(getEntityExt(entity));
   });

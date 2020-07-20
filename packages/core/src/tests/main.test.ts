@@ -12,10 +12,16 @@ describe('Main external facing functions', () => {
       // Write a lambda to commons.foo, and expect to see it listed
       const entity = createEmptyQLEntity(parseQualifiedName('commons.foo'));
       const entit2 = createEmptyQLEntity(parseQualifiedName('commons.foo.boo'));
-      await Promise.all([writeLambda(entity), writeLambda(entit2)]);
+      const entit3 = createEmptyQLEntity(parseQualifiedName('a.b.c.d.e.f.g.h'));
+      await Promise.all([
+        writeLambda(entity),
+        writeLambda(entit2),
+        writeLambda(entit3),
+      ]);
       const { lambdas } = await main.listEntityNames();
       const sL = _.sortBy(lambdas, (l) => l[0]);
       expect(sL).toEqual([
+        ['a.b.c.d.e.f.g.h', 'lambda'],
         ['commons.foo', 'lambda'],
         ['commons.foo.boo', 'lambda'],
       ]);
