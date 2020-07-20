@@ -32,7 +32,10 @@ async function generate() {
         const parameters = pp(
           (get.parameters ?? []).map(({ name, description }) => ({
             name,
-            description,
+            description:
+              name.toLowerCase() === 'body'
+                ? `JSON Body for this POST request. Full schema at https://docs.rockset.com/rest-api#${operation.toLowerCase()} `
+                : description,
             required: false,
             hidden: false,
           })),

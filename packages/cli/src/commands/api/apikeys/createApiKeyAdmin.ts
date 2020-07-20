@@ -25,7 +25,8 @@ class CreateApiKeyAdmin extends RockCommand {
   static args = [
     {
       name: 'body',
-      description: 'JSON object',
+      description:
+        'JSON Body for this POST request. Full schema at https://docs.rockset.com/rest-api#createapikeyadmin ',
       required: false,
       hidden: false,
     },

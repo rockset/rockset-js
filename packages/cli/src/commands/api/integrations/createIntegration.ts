@@ -25,7 +25,8 @@ class CreateIntegration extends RockCommand {
   static args = [
     {
       name: 'body',
-      description: 'integration credentials',
+      description:
+        'JSON Body for this POST request. Full schema at https://docs.rockset.com/rest-api#createintegration ',
       required: false,
       hidden: false,
     },

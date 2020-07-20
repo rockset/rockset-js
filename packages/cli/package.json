@@ -69,17 +69,22 @@
   "oclif": {
     "topics": {
       "auth": {
-        "description": "Manage your authentication profiles"
+        "description": "manage your authentication profiles"
       },
       "api": {
-        "description": "Wrappers for Rockset's API endpoints. You can view full documentation for the API at https://docs.rockset.com"
+        "description": "wrappers for Rockset's API endpoints. Full documentation for the API at https://docs.rockset.com/rest-api"
       },
+<<<<<<< HEAD
       "local": {
-        "description": "Download, Manage, and Deploy your Query Lambdas."
+        "description": "manage your local Query Lambdas"
 
       },
       "local:queryLambda": {
-        "description": "Add, delete, execute, and list your Query Lambdas"
+        "description": "add, delete, execute, and list your Query Lambdas"
+=======
+      "project": {
+        "description": "manage your local Query Lambdas"
+>>>>>>> update docs
       }
       
     },

@@ -47,7 +47,8 @@ class PatchDocuments extends RockCommand {
     },
     {
       name: 'body',
-      description: 'JSON Patch objects',
+      description:
+        'JSON Body for this POST request. Full schema at https://docs.rockset.com/rest-api#patchdocuments ',
       required: false,
       hidden: false,
     },

@@ -36,9 +36,7 @@ class SQL extends RockCommand {
   `,
   ];
 
-  static description = `
-Execute a SQL expression.
-`;
+  static description = `execute a SQL expression`;
 
   async run() {
     const { args, flags } = this.parse(SQL);
