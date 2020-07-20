@@ -61,6 +61,8 @@ You can update the Rockset CLI to the latest version at any time using `rockset 
 $ rockset update
 ```
 
+After an update, you will need to run `rockset autocomplete -r` to rebuild the autocomplete cache. 
+
 ### Installing Autocomplete
 
 The Rockset CLI Autocomplete feature allows you to preview and complete commands using your tab key. It is currently only compatible on bash and zsh, and we have no plans to support other shells at this time.
@@ -764,7 +766,7 @@ rockset.queryLambdas.executeQueryLambdaByTag('commons', 'QLFoo', isProduction() 
 
 # Telemetry
 
-The Rockset CLI includes a telemetry feature that collects some usage data. This feature is enabled by default.
+The Rockset CLI includes a telemetry feature that collects some usage data. This feature is enabled by default. We never log any sensitive data, query text, or query result data.
 
 To opt out of telemetry, set the ROCKSET_CLI_TELEMETRY_OPTOUT environment variable to 1 or true.
 
