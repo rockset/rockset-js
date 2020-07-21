@@ -13,6 +13,7 @@ Official Rockset CLI
 * [Download & Installation Instructions](#download--installation-instructions)
 * [Getting Started](#getting-started)
 * [Usage Overview](#usage-overview)
+* [Query Lambda Hello World Example](#query-lambda-hello-world-example)
 * [API Usage Details](#api-usage-details)
 * [Rockset Projects Usage Details](#rockset-projects-usage-details)
 * [Telemetry](#telemetry)
@@ -113,7 +114,7 @@ $ rockset auth:list
 $ rockset auth:use
 
 #. Run a SQL query
-$ rockset sql "SELECT 'hello, world!"
+$ rockset sql "SELECT 'hello, world!'"
 
 #. List all Query Lambdas in "commons" workspace
 $ rockset api:queryLambdas:listQueryLambdasInWorkspace commons
@@ -134,6 +135,69 @@ $ rockset local:deploy
 $ rockset update
 
 ```
+
+# Query Lambda Hello World Example
+
+If you want to get live Query Lambdas working as quickly as possible, this Hello World example will get you there. Please start in an empty directory. This guide assumes you have set up authentication successfully above.
+
+```bash
+
+#. Initialize your local rockset project, skipping confirmation messages
+$ rockset local:init -y
+
+#. Add a query lambda to your project
+$ rockset local:queryLambda:add commons.helloWorld
+
+#. Write text to your Query Lambda
+$ echo "Select 'hello, world' \"Hello World\"" > `rockset local:resolve --sql commons.helloWorld`
+
+#. Execute your Query Lambda, and select the result
+$ rockset local:queryLambda:execute commons.helloWorld | jq '.results'
+[INFO]: About to execute commons.helloWorld from local project...
+[INFO]: SQL: Select 'hello, world' "Hello World"
+
+[INFO]: Parameters: []
+[INFO]: Successfully executed query.
+[
+  {
+    "Hello World": "hello, world"
+  }
+]
+
+#. Deploy your Query Lambda, and tag it with the dev tag
+$ rockset local:deploy -l commons.helloWorld -t dev
+Successfully updated commons.helloWorld — version e71f9de16aa66e3c
+Successfully tagged commons.helloWorld version e71f9de16aa66e3c with tag "dev"
+
+#. Your Query Lambda is now live!
+#. Execute your Query Lambda from the API
+$ rockset api:queryLambdas:executeQueryLambdaByTag commons helloWorld dev
+[INFO]: POST: /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/tags/{tag}
+[INFO]: Arguments:
+[INFO]: {
+  "workspace": "commons",
+  "queryLambda": "helloWorld",
+  "tag": "dev"
+}
+Hello World
+hello, world
+
+#. Alternatively, execute your Query Lambda with cURL
+$ curl --request POST \
+  --url https://api.rs2.usw2.rockset.com/v1/orgs/self/ws/commons/lambdas/helloWorld/tags/dev \
+  -H 'Authorization: ApiKey [your apikey]' \
+  -H 'Content-Type: application/json' | jq '.results'
+% Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100   202  100   202    0     0   1004      0 --:--:-- --:--:-- --:--:--  1004
+[
+  {
+    "Hello World": "hello, world"
+  }
+]
+```
+
+Congratulation, you have finished setting up your Hello World Query Lambda! For a more detailed discussion of how to develop more complex Query Lambdas with Parameters, please see the [Rockset Developer Toolkit Usage Details](#rockset-developer-toolkit-usage-details).
 
 # API Usage Details
 
