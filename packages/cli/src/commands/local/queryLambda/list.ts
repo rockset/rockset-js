@@ -5,12 +5,6 @@ import { RockCommand } from '../../../base-command';
 class ListEntities extends RockCommand {
   static flags = {
     help: flags.help({ char: 'h' }),
-    entity: flags.string({
-      char: 'e',
-      options: ['lambda'],
-      default: 'lambda',
-      description: 'the type of entity you wish to list',
-    }),
   };
 
   static description = `
@@ -21,16 +15,12 @@ class ListEntities extends RockCommand {
 `;
 
   async run() {
-    const { flags } = this.parse(ListEntities);
+    this.parse(ListEntities);
 
     // Will throw for invalid qualified name
 
-    if (flags.entity === 'lambda') {
-      const { lambdas } = await listEntityNames();
-      this.log(lambdas.map((lambda) => lambda[0]).join('\n'));
-    } else {
-      this.error(`Unsupported entity type: ${flags.entity}`);
-    }
+    const { lambdas } = await listEntityNames();
+    this.log(lambdas.map((lambda) => lambda[0]).join('\n'));
   }
 }
 
