@@ -50,11 +50,9 @@ export async function serve(port = 3001) {
   app.post('/validate', async (req, res) => {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     const param = req.body?.param as QueryParameter;
-    console.log(req.body);
     const client = await core.main.createClient();
     try {
-      // TODO(tchordia): Don't actually execute this query, just validate it in the future
-      await client.queries.query({
+      await client.queries.validate({
         sql: {
           query: `Select :"${param.name}"`,
           parameters: [param],
@@ -83,7 +81,6 @@ export async function serve(port = 3001) {
       const lambdaEntities = (
         await Promise.all(
           entityNames.lambdas.map(async ([name]) => {
-            console.log(name);
             try {
               return await core.fileutil.readLambdaFromQualifiedName(name);
             } catch (e) {
@@ -102,7 +99,7 @@ export async function serve(port = 3001) {
       }));
       res.send({ lambdas, apiserver });
     } catch (e) {
-      console.log(e);
+      console.error(e);
       res.status(500);
       res.send(e);
     }
@@ -114,7 +111,7 @@ export async function serve(port = 3001) {
   });
 
   app.listen(port, () =>
-    console.error(`QL dev server listening at http://localhost:${port}`)
+    console.log(`QL dev server listening at http://localhost:${port}`)
   );
   await open(`http://localhost:${port}`);
 }
