@@ -5,6 +5,7 @@ import { main } from '@rockset/core';
 import * as _ from 'lodash';
 import * as inquirer from 'inquirer';
 import { cli } from 'cli-ux';
+import { showTable } from '../helper/util';
 
 class SQL extends RockCommand {
   static flags = {
@@ -53,10 +54,7 @@ class SQL extends RockCommand {
           },
         });
         const unwrapData = data?.results ?? [];
-        const columns = Object.getOwnPropertyNames(unwrapData?.[0]);
-        const col = columns.reduce((obj, cur) => ({ ...obj, [cur]: {} }), {});
-
-        cli.table(unwrapData, col, { ...flags });
+        showTable(unwrapData, flags);
       }
     };
 

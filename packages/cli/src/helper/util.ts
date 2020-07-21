@@ -17,7 +17,25 @@ export interface Flags {
   yes?: boolean;
   full?: boolean;
 }
+interface Options {
+  [key: string]: unknown;
+  sort?: string;
+  filter?: string;
+  columns?: string;
+  extended?: boolean;
+  'no-truncate'?: boolean;
+  output?: string;
+  'no-header'?: boolean;
+  printLine?(s: unknown): unknown;
+}
 export type Apicall<A extends unknown[], Return> = (...a: A) => Promise<Return>;
+
+export function showTable(data: object[], flags: Options) {
+  const columns = Object.getOwnPropertyNames(data?.[0]);
+  const col = columns.reduce((obj, cur) => ({ ...obj, [cur]: { header: cur } }), {});
+
+  cli.table(data, col, { ...flags });
+}
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function runApiCall<A extends any[], Return>(
@@ -89,10 +107,7 @@ export async function runApiCall<A extends any[], Return>(
     const unwrapData = flags.full ? data : uData;
 
     if (_.isArray(unwrapData)) {
-      const columns = Object.getOwnPropertyNames(unwrapData?.[0]);
-      const col = columns.reduce((obj, cur) => ({ ...obj, [cur]: {} }), {});
-
-      cli.table(unwrapData, col, { ...flags });
+      showTable(unwrapData, { ...flags });
     } else {
       log(JSON.stringify(unwrapData, null, 2));
     }
