@@ -9,6 +9,8 @@ import { PebbleButton } from 'components';
 import { RockTabs } from 'RockComponents/RockTabs';
 import { client } from 'lib/utils/client';
 import { LambdaConfig } from './LambdaConfig';
+import styled from 'styled-components';
+import { QueryResponse } from '@rockset/client/dist/codegen';
 
 export interface Props {
   apiserver: string;
@@ -17,13 +19,30 @@ export interface Props {
   refetch: () => void;
 }
 
+const QueryTime = styled.div`
+  z-index: 1;
+  font-size: 14px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-left: 20px;
+  width: 100%;
+  overflow: hidden;
+  text-align: left;
+`;
+
+const QueryTimeWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`;
+
 export const Page = ({ lambdas, refetch }: Props) => {
   const { workspace, queryLambda } = (useParams as () => {
     workspace?: string;
     queryLambda?: string;
   })();
 
-  const [data, setData] = React.useState([]);
+  const [data, setData] = React.useState<QueryResponse>();
   const [err, setErr] = React.useState();
   const [loading, setLoading] = React.useState<boolean>();
   const [activeTab, setActiveTab] = React.useState<number>(0);
@@ -33,7 +52,7 @@ export const Page = ({ lambdas, refetch }: Props) => {
 
   const execute = async () => {
     refetch();
-    setData([]);
+    setData(null);
     setErr(null);
     setLoading(true);
     try {
@@ -50,7 +69,7 @@ export const Page = ({ lambdas, refetch }: Props) => {
         }
       );
       setLoading(false);
-      setData(data.results);
+      setData(data);
     } catch (e) {
       setLoading(false);
       setErr(e);
@@ -59,10 +78,12 @@ export const Page = ({ lambdas, refetch }: Props) => {
     }
   };
 
+  const results = data?.results ?? [];
+
   const tabs = [
     {
       header: 'Results',
-      content: <Results {...{ data, err, loading }} />,
+      content: <Results {...{ data: results, err, loading }} />,
     },
     {
       header: 'Parameters',
@@ -80,6 +101,7 @@ export const Page = ({ lambdas, refetch }: Props) => {
 
   const headers = tabs.map((tab) => tab.header);
   const content = tabs.map((tab) => tab.content);
+  const numResults = data?.results?.length;
 
   return (
     <>
@@ -95,14 +117,29 @@ export const Page = ({ lambdas, refetch }: Props) => {
       >
         Run
       </PebbleButton>
-      <RockTabs
-        activeIdx={activeTab}
-        ids={headers}
-        headers={headers}
-        onClickTab={setActiveTab}
-        centerAllTabs={true}
-        includeFiller={true}
-      />
+      <QueryTimeWrapper>
+        <RockTabs
+          activeIdx={activeTab}
+          ids={headers}
+          headers={headers}
+          onClickTab={setActiveTab}
+          centerAllTabs={true}
+          includeFiller={true}
+        />
+        {data?.results && (
+          <QueryTime>
+            <strong>
+              {workspace}.{queryLambda}
+            </strong>{' '}
+            took <strong>{data?.stats?.elapsed_time_ms ?? 0}ms</strong> and
+            returned{' '}
+            <strong>
+              {numResults} {numResults !== 1 ? 'rows' : 'row'}
+            </strong>
+            .
+          </QueryTime>
+        )}
+      </QueryTimeWrapper>
       {content[activeTab]}
     </>
   );
