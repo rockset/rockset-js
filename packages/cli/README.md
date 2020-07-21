@@ -851,7 +851,7 @@ USAGE
   $ rockset api:apikeys:createApiKey [BODY]
 
 ARGUMENTS
-  BODY  JSON object
+  BODY  JSON Body for this POST request. Full schema at https://docs.rockset.com/rest-api#createapikey
 
 OPTIONS
   -f, --file=file         The config file to execute this command from. Format must be [json|yaml]. Keys are translated
@@ -901,7 +901,7 @@ USAGE
   $ rockset api:apikeys:createApiKeyAdmin [BODY] [USER]
 
 ARGUMENTS
-  BODY  JSON object
+  BODY  JSON Body for this POST request. Full schema at https://docs.rockset.com/rest-api#createapikeyadmin
   USER
 
 OPTIONS
@@ -1148,7 +1148,7 @@ USAGE
 
 ARGUMENTS
   WORKSPACE  name of the workspace
-  BODY       JSON object
+  BODY       JSON Body for this POST request. Full schema at https://docs.rockset.com/rest-api#createcollection
 
 OPTIONS
   -f, --file=file         The config file to execute this command from. Format must be [json|yaml]. Keys are translated
@@ -1450,7 +1450,7 @@ USAGE
 ARGUMENTS
   WORKSPACE   name of the workspace
   COLLECTION  name of the collection
-  BODY        JSON object
+  BODY        JSON Body for this POST request. Full schema at https://docs.rockset.com/rest-api#adddocuments
 
 OPTIONS
   -f, --file=file                The config file to execute this command from. Format must be [json|yaml]. Keys are
@@ -1507,7 +1507,7 @@ USAGE
 ARGUMENTS
   WORKSPACE   name of the workspace
   COLLECTION  name of the collection
-  BODY        JSON object
+  BODY        JSON Body for this POST request. Full schema at https://docs.rockset.com/rest-api#deletedocuments
 
 OPTIONS
   -f, --file=file                The config file to execute this command from. Format must be [json|yaml]. Keys are
@@ -1564,7 +1564,7 @@ USAGE
 ARGUMENTS
   WORKSPACE   name of the workspace
   COLLECTION  name of the collection
-  BODY        JSON Patch objects
+  BODY        JSON Body for this POST request. Full schema at https://docs.rockset.com/rest-api#patchdocuments
 
 OPTIONS
   -f, --file=file                The config file to execute this command from. Format must be [json|yaml]. Keys are
@@ -1619,7 +1619,7 @@ USAGE
   $ rockset api:integrations:createIntegration [BODY]
 
 ARGUMENTS
-  BODY  integration credentials
+  BODY  JSON Body for this POST request. Full schema at https://docs.rockset.com/rest-api#createintegration
 
 OPTIONS
   -f, --file=file         The config file to execute this command from. Format must be [json|yaml]. Keys are translated
@@ -1863,7 +1863,7 @@ USAGE
   $ rockset api:queries:query [BODY]
 
 ARGUMENTS
-  BODY  JSON object
+  BODY  JSON Body for this POST request. Full schema at https://docs.rockset.com/rest-api#query
 
 OPTIONS
   -f, --file=file                The config file to execute this command from. Format must be [json|yaml]. Keys are
@@ -1919,7 +1919,7 @@ USAGE
 
 ARGUMENTS
   WORKSPACE  name of the workspace
-  BODY       JSON object
+  BODY       JSON Body for this POST request. Full schema at https://docs.rockset.com/rest-api#createquerylambda
 
 OPTIONS
   -f, --file=file                The config file to execute this command from. Format must be [json|yaml]. Keys are
@@ -1976,7 +1976,7 @@ USAGE
 ARGUMENTS
   WORKSPACE    name of the workspace
   QUERYLAMBDA  name of the Query Lambda
-  BODY         JSON object
+  BODY         JSON Body for this POST request. Full schema at https://docs.rockset.com/rest-api#createquerylambdatag
 
 OPTIONS
   -f, --file=file                The config file to execute this command from. Format must be [json|yaml]. Keys are
@@ -2204,7 +2204,7 @@ ARGUMENTS
   WORKSPACE    name of the workspace
   QUERYLAMBDA  name of the Query Lambda
   VERSION      version
-  BODY         JSON object
+  BODY         JSON Body for this POST request. Full schema at https://docs.rockset.com/rest-api#executequerylambda
 
 OPTIONS
   -f, --file=file                The config file to execute this command from. Format must be [json|yaml]. Keys are
@@ -2262,7 +2262,7 @@ ARGUMENTS
   WORKSPACE    name of the workspace
   QUERYLAMBDA  name of the Query Lambda
   TAG          tag
-  BODY         JSON object
+  BODY         JSON Body for this POST request. Full schema at https://docs.rockset.com/rest-api#executequerylambdabytag
 
 OPTIONS
   -f, --file=file                The config file to execute this command from. Format must be [json|yaml]. Keys are
@@ -2759,7 +2759,7 @@ USAGE
 ARGUMENTS
   WORKSPACE    name of the workspace
   QUERYLAMBDA  name of the Query Lambda
-  BODY         JSON object
+  BODY         JSON Body for this POST request. Full schema at https://docs.rockset.com/rest-api#updatequerylambda
   CREATE
 
 OPTIONS
@@ -2815,7 +2815,7 @@ USAGE
   $ rockset api:users:createUser [BODY]
 
 ARGUMENTS
-  BODY  JSON object
+  BODY  JSON Body for this POST request. Full schema at https://docs.rockset.com/rest-api#createuser
 
 OPTIONS
   -f, --file=file         The config file to execute this command from. Format must be [json|yaml]. Keys are translated
@@ -3059,7 +3059,7 @@ USAGE
   $ rockset api:workspaces:createWorkspace [BODY]
 
 ARGUMENTS
-  BODY  workspace details
+  BODY  JSON Body for this POST request. Full schema at https://docs.rockset.com/rest-api#createworkspace
 
 OPTIONS
   -f, --file=file         The config file to execute this command from. Format must be [json|yaml]. Keys are translated
@@ -3581,7 +3581,7 @@ _See code: [src/commands/local/serve.ts](https://github.com/rockset/rockset-js/b
 
 ## `rockset sql [SQL]`
 
-Execute a SQL expression.
+execute a SQL expression
 
 ```
 USAGE
@@ -3611,9 +3611,6 @@ OPTIONS
   --output=csv|json|yaml           output in a more machine friendly format
 
   --sort=sort                      property to sort by (prepend '-' for descending)
-
-DESCRIPTION
-  Execute a SQL expression.
 
 EXAMPLE
 
