@@ -4,7 +4,7 @@ import {
   RockClientErrorTypes,
   RockClientException,
 } from '../exception/exception';
-import { createEmptyQLEntity, parseQualifiedName } from '../types';
+import { createEmptyQLEntity, parseLambdaQualifiedName } from '../types';
 import {
   writeLambda,
   readLambdaFromQualifiedName,
@@ -82,7 +82,9 @@ describe('Reading and writing QLs should be symmetrical', () => {
   test(
     'Adding new QL',
     mfs('emptyRoot', async () => {
-      const entity = createEmptyQLEntity(parseQualifiedName('commons.foo'));
+      const entity = createEmptyQLEntity(
+        parseLambdaQualifiedName('commons.foo')
+      );
       await writeLambda(entity);
       const config = await readLambdaFromQualifiedName(entity.fullName);
       expect(config).toEqual(entity);
@@ -93,7 +95,9 @@ describe('Reading and writing QLs should be symmetrical', () => {
     'Adding a bad new QL',
     mfs('emptyRoot', async () => {
       try {
-        const entity = createEmptyQLEntity(parseQualifiedName('commons.foo.'));
+        const entity = createEmptyQLEntity(
+          parseLambdaQualifiedName('commons.foo.')
+        );
         await writeLambda(entity);
         fail('Should have failed to write invalid QL');
       } catch (e) {

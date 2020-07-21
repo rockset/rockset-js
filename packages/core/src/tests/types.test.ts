@@ -1,12 +1,11 @@
-import { parseQualifiedName, parseAbsolutePath } from '../types';
+import { parseLambdaQualifiedName, parseAbsolutePath } from '../types';
 import { RockClientErrorTypes } from '../exception/exception';
 import { expectException } from './testUtil';
 import { getWsNamePair } from '../filesystem/pathutil';
 
 describe('Testing runtime type validation', () => {
-  test('parse qualified name', () => {
+  test('parse lambda qualified name', () => {
     const names = [
-      'abc',
       'abc.abc',
       '1abc123.abc123',
       '1.a.c.b.d',
@@ -14,6 +13,7 @@ describe('Testing runtime type validation', () => {
     ];
 
     const badNames = [
+      'abc',
       '-a',
       '_a',
       '..',
@@ -23,12 +23,44 @@ describe('Testing runtime type validation', () => {
       'commons.foo..',
     ];
 
-    const qualifiedNames = names.map(parseQualifiedName);
+    const qualifiedNames = names.map(parseLambdaQualifiedName);
     expect(qualifiedNames).toEqual(names);
 
     badNames.forEach((x) => {
       try {
-        parseQualifiedName(x);
+        parseLambdaQualifiedName(x);
+        fail(`Should have thrown for invalid qualified name ${x}`);
+      } catch (e) {
+        expectException(RockClientErrorTypes.ERROR_INVALID_QUALIFIED_NAME, e);
+      }
+    });
+  });
+
+  test('parse qualified name', () => {
+    const names = [
+      'abc.abc',
+      '1abc123.abc123',
+      '1.a.c.b.d',
+      'a12_-as.b12.c12_-',
+    ];
+
+    const badNames = [
+      'abc',
+      '-a',
+      '_a',
+      '..',
+      "'Select",
+      'commons.foo.-a',
+      'commons.foo._',
+      'commons.foo..',
+    ];
+
+    const qualifiedNames = names.map(parseLambdaQualifiedName);
+    expect(qualifiedNames).toEqual(names);
+
+    badNames.forEach((x) => {
+      try {
+        parseLambdaQualifiedName(x);
         fail(`Should have thrown for invalid qualified name ${x}`);
       } catch (e) {
         expectException(RockClientErrorTypes.ERROR_INVALID_QUALIFIED_NAME, e);
@@ -45,7 +77,7 @@ describe('Testing runtime type validation', () => {
     ];
 
     const correctWs = ['abc', '1abc123', '1.a.c.b', 'a12_-as.b12'];
-    const qualifiedNames = names.map(parseQualifiedName);
+    const qualifiedNames = names.map(parseLambdaQualifiedName);
     const nws = qualifiedNames.map(getWsNamePair);
     const ws = nws.map(({ ws }) => ws);
 

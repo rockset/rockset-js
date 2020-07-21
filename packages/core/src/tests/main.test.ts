@@ -1,6 +1,6 @@
 import { main } from '..';
 import {} from '../exception/exception';
-import { createEmptyQLEntity, parseQualifiedName } from '../types';
+import { createEmptyQLEntity, parseLambdaQualifiedName } from '../types';
 import { writeLambda } from '../filesystem/fileutil';
 import { mfs } from './testUtil';
 import _ from 'lodash';
@@ -10,9 +10,15 @@ describe('Main external facing functions', () => {
     'Test list entities',
     mfs('emptyRoot', async () => {
       // Write a lambda to commons.foo, and expect to see it listed
-      const entity = createEmptyQLEntity(parseQualifiedName('commons.foo'));
-      const entit2 = createEmptyQLEntity(parseQualifiedName('commons.foo.boo'));
-      const entit3 = createEmptyQLEntity(parseQualifiedName('a.b.c.d.e.f.g.h'));
+      const entity = createEmptyQLEntity(
+        parseLambdaQualifiedName('commons.foo')
+      );
+      const entit2 = createEmptyQLEntity(
+        parseLambdaQualifiedName('commons.foo.boo')
+      );
+      const entit3 = createEmptyQLEntity(
+        parseLambdaQualifiedName('a.b.c.d.e.f.g.h')
+      );
       await Promise.all([
         writeLambda(entity),
         writeLambda(entit2),

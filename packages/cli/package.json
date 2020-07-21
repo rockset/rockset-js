@@ -44,8 +44,9 @@
     "generate": "^0.14.0",
     "generate-license": "^1.0.0",
     "globby": "^10.0.2",
-    "jest": "^26.0.1",
+    "jest": "^26.1.0",
     "js-yaml": "^3.14.0",
+    "ts-jest": "^26.1.3",
     "ts-node": "^8.10.1",
     "typescript": "^3.8.3"
   },
@@ -98,7 +99,7 @@
   "scripts": {
     "postpack": "rm -f oclif.manifest.json",
     "prepack": "rm -rf lib && tsc -b && oclif-dev manifest && oclif-dev readme",
-    "test": "echo NO TESTS",
+    "test": "rm -rf testLambdas && mkdir -p testLambdas && jest",
     "version": "oclif-dev readme && git add README.md",
     "build": "npm run prepack",
     "lint": "eslint 'src/**/*.ts'",

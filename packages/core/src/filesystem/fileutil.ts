@@ -13,7 +13,7 @@ import {
 import * as path from 'path';
 import {
   RootConfig,
-  QualifiedName,
+  LambdaQualifiedName,
   LambdaEntity,
   CollectionEntity,
   AbsolutePath,
@@ -77,14 +77,14 @@ export async function deleteLambda(
   ]);
 }
 
-export async function readLambdaFromQualifiedName(name: QualifiedName) {
+export async function readLambdaFromQualifiedName(name: LambdaQualifiedName) {
   const srcPath = await getSrcPath();
   const fullPath = join(srcPath, resolvePathFromQualifiedName(name, 'lambda'));
   return readLambda(name, fullPath);
 }
 
 export async function readLambda(
-  fullName: QualifiedName,
+  fullName: LambdaQualifiedName,
   fullPath: AbsolutePath
 ) {
   const rawConfig = await readConfigFromPath(fullPath);
@@ -111,7 +111,9 @@ export async function readLambda(
   );
 }
 
-export async function getLambdaSqlPathFromQualifiedName(name: QualifiedName) {
+export async function getLambdaSqlPathFromQualifiedName(
+  name: LambdaQualifiedName
+) {
   const srcPath = await getSrcPath();
   const fullPath = join(srcPath, resolvePathFromQualifiedName(name, 'lambda'));
   const entity = await readLambda(name, fullPath);

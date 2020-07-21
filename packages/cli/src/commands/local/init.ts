@@ -7,6 +7,7 @@ import { RockCommand } from '../../base-command';
 class InitializeProject extends RockCommand {
   static flags = {
     help: flags.help({ char: 'h' }),
+    yes: flags.boolean({ char: 'y' }),
   };
 
   static description = `
@@ -16,7 +17,14 @@ This command initializes your project with a rockconfig.json file.
 `;
 
   async run() {
+    const { flags } = this.parse(InitializeProject);
     try {
+      if (flags.yes) {
+        await fileutil.writeRootConfig({
+          source_root: 'src',
+        });
+        return;
+      }
       const { root } = (await prompts({
         type: 'text',
         name: 'root',

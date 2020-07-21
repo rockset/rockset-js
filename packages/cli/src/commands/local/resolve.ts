@@ -15,6 +15,8 @@ class ResolvePath extends RockCommand {
 
     exists: flags.boolean({
       description: 'Return with an error if file does not exist',
+      default: true,
+      allowNo: true,
     }),
 
     sql: flags.boolean({
@@ -43,31 +45,42 @@ class ResolvePath extends RockCommand {
   async run() {
     const { args, flags } = this.parse(ResolvePath);
 
-    // Will throw for invalid qualified name
-    const qualifiedName = types.parseQualifiedName(args.name as string);
+    // These must be specified, as they are marked required above
+    const entity = flags.entity as 'lambda' | 'workspace';
+    const name = args.name as string;
 
-    if ((flags.entity === 'lambda' || flags.entity === 'workspace') && args.name) {
-      if (flags.entity === 'lambda' && flags.sql) {
-        try {
-          const path = await fileutil.getLambdaSqlPathFromQualifiedName(qualifiedName);
-          this.log(path);
-        } catch (error) {
-          this.error(
-            'There was an error parsing the lambda config. Are you sure this lambda exists and is specified correctly?',
-            error,
-          );
-        }
+    // Report the path to the user
+    const reportPath = async (p: string) => {
+      if ((await fileutil.exists(p)) || !flags.exists) {
+        this.log(p);
+      } else {
+        this.error(`The entity "${name}" resolves to path '${p}', which does not exist.`);
+      }
+    };
+
+    // In the case of a lambda
+    if (entity === 'lambda') {
+      const qualifiedName = types.parseLambdaQualifiedName(name);
+      if (flags.sql) {
+        const path = await fileutil
+          .getLambdaSqlPathFromQualifiedName(qualifiedName)
+          .catch((error: unknown) => {
+            this.error(
+              `There was an error while trying to parse your lambda config. Are you sure this lambda exists and is formatted correctly? ${error}`,
+            );
+          });
+        await reportPath(path);
       } else {
         const srcPath = await getSrcPath();
-        const p = pathutil.resolvePathFromQualifiedName(qualifiedName, flags.entity, srcPath);
-        if ((await fileutil.exists(p)) || !flags.exists) {
-          this.log(p);
-        } else {
-          this.error(`The entity "${args.name}" resolves to path '${p}', which does not exist.`);
-        }
+        const p = pathutil.resolvePathFromQualifiedName(qualifiedName, entity, srcPath);
+        await reportPath(p);
       }
     } else {
-      this.error(`Unsupported entity type: ${flags.entity}`);
+      // This is a workspace
+      const qualifiedName = types.parseWorkspaceQualifiedName(name);
+      const srcPath = await getSrcPath();
+      const p = pathutil.resolvePathFromQualifiedName(qualifiedName, entity, srcPath);
+      await reportPath(p);
     }
   }
 }

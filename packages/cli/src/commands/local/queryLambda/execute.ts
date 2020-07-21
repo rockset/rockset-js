@@ -38,7 +38,7 @@ class ExecuteQueryLambda extends RockCommand {
 
     // This should always be true as name is required
     if (args.name) {
-      const qualifiedName = types.parseQualifiedName(args.name);
+      const qualifiedName = types.parseLambdaQualifiedName(args.name);
       await main.executeLocalQueryLambda(
         {
           onBeforeExecute: (sql, params) => {

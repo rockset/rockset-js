@@ -3502,6 +3502,7 @@ USAGE
 
 OPTIONS
   -h, --help  show CLI help
+  -y, --yes
 
 DESCRIPTION
   Initialize your project.
@@ -3520,7 +3521,8 @@ USAGE
   $ rockset local:queryLambda:add NAME
 
 ARGUMENTS
-  NAME  The fully qualified name of the lambda you wish to add
+  NAME  The fully qualified name of the lambda you wish to add. A Qualified Name is a string formatted like
+        "{ws}.{name}".
 
 OPTIONS
   -h, --help  show CLI help
@@ -3528,6 +3530,10 @@ OPTIONS
 DESCRIPTION
   Add an empty lambda with the specified name to the project. The path for the lambda is the same
        as would be created with 'rockset local:resolve'.
+
+EXAMPLE
+    $ rockset local:queryLambda:add commons.helloWorld
+  Successfully added Query Lambda commons.helloWorld to path /Users/tchordia/rockset/src/commons/helloWorld.lambda.json
 ```
 
 _See code: [src/commands/local/queryLambda/add.ts](https://github.com/rockset/rockset-js/blob/v0.4.0/src/commands/local/queryLambda/add.ts)_
@@ -3612,7 +3618,7 @@ ARGUMENTS
 OPTIONS
   -e, --entity=lambda|workspace  [default: lambda] the type of entity you wish to resolve
   -h, --help                     show CLI help
-  --exists                       Return with an error if file does not exist
+  --[no-]exists                  Return with an error if file does not exist
   --sql                          Return the SQL file path. Only for Query Lambdas.
 
 DESCRIPTION

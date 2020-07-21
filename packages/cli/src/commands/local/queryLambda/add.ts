@@ -1,7 +1,7 @@
 import { flags } from '@oclif/command';
 import { types, fileutil, pathutil } from '@rockset/core';
 import { RockCommand } from '../../../base-command';
-import { CLIError } from '@oclif/errors';
+import * as chalk from 'chalk';
 
 class AddEntity extends RockCommand {
   static flags = {
@@ -13,8 +13,15 @@ class AddEntity extends RockCommand {
       name: 'name',
       required: true,
       hidden: false,
-      description: 'The fully qualified name of the lambda you wish to add',
+      description:
+        'The fully qualified name of the lambda you wish to add. A Qualified Name is a string formatted like "{ws}.{name}". ',
     },
+  ];
+
+  static examples = [
+    ` $ rockset local:queryLambda:add commons.helloWorld
+Successfully added Query Lambda commons.helloWorld to path /Users/tchordia/rockset/src/commons/helloWorld.lambda.json
+  `,
   ];
 
   static description = `
@@ -26,23 +33,21 @@ class AddEntity extends RockCommand {
     const { args } = this.parse(AddEntity);
 
     // Will throw for invalid qualified name
-    const qualifiedName = types.parseQualifiedName(args.name as string);
+    const qualifiedName = types.parseLambdaQualifiedName(args.name as string);
 
-    const { ws, name } = pathutil.getWsNamePair(qualifiedName);
-    if (ws?.length <= 0 || name?.length <= 0)
-      this.error(`Invalid qualified lambda name ${qualifiedName}.`);
+    const srcPath = await fileutil.getSrcPath();
+    const lambda = await pathutil.resolvePathFromQualifiedName(qualifiedName, 'lambda', srcPath);
 
-    try {
-      const lambda = await fileutil.readLambdaFromQualifiedName(qualifiedName);
-      if (lambda) this.error(`${qualifiedName} already exists.`);
-    } catch (error) {
-      if (error instanceof CLIError) {
-        this.error(error);
-      }
+    const lambdaExists = await fileutil.exists(lambda);
+    if (lambdaExists) {
+      this.error(`${qualifiedName} already exists.`);
     }
 
     const entity = await types.createEmptyQLEntity(qualifiedName);
     await fileutil.writeLambda(entity);
+    this.log(
+      chalk`Successfully added Query Lambda {green ${qualifiedName}} to path {green ${lambda}}`,
+    );
   }
 }
 

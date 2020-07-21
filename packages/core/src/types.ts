@@ -77,13 +77,44 @@ const JSONType = new t.Type<JSONType, string, string>(
   JSON.stringify
 );
 
-export interface QualifiedNameBrand {
-  readonly QualifiedName: unique symbol;
+export interface LambdaQualifiedNameBrand {
+  readonly LambdaQualifiedName: unique symbol;
 }
-export type QualifiedName = t.Branded<string, QualifiedNameBrand>;
-export const QualifiedName: t.Type<QualifiedName, string, unknown> = t.brand(
+export type LambdaQualifiedName = t.Branded<string, LambdaQualifiedNameBrand>;
+export const LambdaQualifiedName: t.Type<
+  LambdaQualifiedName,
+  string,
+  unknown
+> = t.brand(
   t.string,
-  (s): s is QualifiedName => {
+  (s): s is LambdaQualifiedName => {
+    // Must be a string
+    if (typeof s === 'string') {
+      const pieces = s.split('.');
+      return (
+        pieces.length > 1 &&
+        pieces.every((piece) => piece.match(/^[a-zA-Z0-9][\w-]*$/))
+      );
+    }
+    return false;
+  },
+  'LambdaQualifiedName'
+);
+
+export interface WorkspaceQualifiedNameBrand {
+  readonly WorkspaceQualifiedName: unique symbol;
+}
+export type WorkspaceQualifiedName = t.Branded<
+  string,
+  WorkspaceQualifiedNameBrand
+>;
+export const WorkspaceQualifiedName: t.Type<
+  WorkspaceQualifiedName,
+  string,
+  unknown
+> = t.brand(
+  t.string,
+  (s): s is WorkspaceQualifiedName => {
     // Must be a string
     if (typeof s === 'string') {
       const pieces = s.split('.');
@@ -91,7 +122,7 @@ export const QualifiedName: t.Type<QualifiedName, string, unknown> = t.brand(
     }
     return false;
   },
-  'QualifiedName'
+  'WorkspaceQualifiedName'
 );
 
 export interface AbsolutePathBrand {
@@ -150,7 +181,7 @@ export const ENTITIES = ['lambda', 'collection'] as const;
 export type EntityType = typeof ENTITIES[number];
 
 export const LambdaEntity = type({
-  fullName: QualifiedName,
+  fullName: LambdaQualifiedName,
   ws: string,
   name: string,
   type: t.literal('lambda'),
@@ -161,7 +192,7 @@ export const LambdaEntity = type({
 export type LambdaEntity = TypeOf<typeof LambdaEntity>;
 
 export interface CollectionEntity {
-  fullName: QualifiedName;
+  fullName: LambdaQualifiedName;
   ws: string;
   name: string;
   type: 'collection';
@@ -247,8 +278,14 @@ export function parseAbsolutePath(p: string): AbsolutePath {
   return throwOnError(AbsolutePath.decode(p), errorInvalidAbsolutePath);
 }
 
-export function parseQualifiedName(p: string): QualifiedName {
-  return throwOnError(QualifiedName.decode(p), errorInvalidQualifiedName);
+export function parseLambdaQualifiedName(p: string): LambdaQualifiedName {
+  return throwOnError(LambdaQualifiedName.decode(p), errorInvalidQualifiedName);
+}
+export function parseWorkspaceQualifiedName(p: string): WorkspaceQualifiedName {
+  return throwOnError(
+    WorkspaceQualifiedName.decode(p),
+    errorInvalidQualifiedName
+  );
 }
 
 export function parseLambdaEntity(obj: unknown): LambdaEntity {
@@ -271,7 +308,10 @@ export function notEmpty<TValue>(
 }
 
 // Helper function to create default values for types
-export function createEmptyQLEntity(fullName: QualifiedName, description = '') {
+export function createEmptyQLEntity(
+  fullName: LambdaQualifiedName,
+  description = ''
+) {
   const { ws, name } = getWsNamePair(fullName);
   return parseLambdaEntity({
     ws,

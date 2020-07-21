@@ -7,7 +7,7 @@ import {
   LambdaDownloadOptions,
   notEmpty,
   LambdaDeployOptions,
-  QualifiedName,
+  LambdaQualifiedName,
   parseAbsolutePath,
   ExecuteHooks,
   QueryParameterArray,
@@ -292,7 +292,7 @@ export async function deployQueryLambdas(
 // TODO add tests for this
 export async function executeLocalQueryLambda(
   hooks: ExecuteHooks = {},
-  qualifiedName: QualifiedName,
+  qualifiedName: LambdaQualifiedName,
   parameters: QueryParameterArray
 ) {
   const [srcPath, client] = await Promise.all([getSrcPath(), createClient()]);

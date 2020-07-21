@@ -4,13 +4,14 @@ import {
 } from '../exception/exception';
 import {
   ROOT_CONFIG,
-  QualifiedName,
+  LambdaQualifiedName,
   EntityType,
   ENTITIES,
   AbsolutePath,
   throwOnError,
   parseAbsolutePath,
   LambdaEntity,
+  WorkspaceQualifiedName,
 } from '../types';
 import YAML from 'yaml';
 
@@ -97,7 +98,18 @@ export async function getFiles(dir: string): Promise<AbsolutePath[]> {
  * @param entityName
  */
 export function resolvePathFromQualifiedName(
-  entityName: QualifiedName,
+  entityName: LambdaQualifiedName,
+  type: EntityType,
+  srcPath?: string
+): AbsolutePath;
+export function resolvePathFromQualifiedName(
+  entityName: WorkspaceQualifiedName,
+  type: 'workspace',
+  srcPath?: string
+): AbsolutePath;
+
+export function resolvePathFromQualifiedName(
+  entityName: LambdaQualifiedName | WorkspaceQualifiedName,
   type: EntityType | 'workspace',
   srcPath = ''
 ) {
@@ -109,7 +121,7 @@ export function resolvePathFromQualifiedName(
 export function resolveQualifiedNameFromPath(
   srcPath: AbsolutePath,
   absolutePath: AbsolutePath
-): [QualifiedName, EntityType] | null {
+): [LambdaQualifiedName, EntityType] | null {
   // Src path must be a parent of this path
   if (!isParent(srcPath, absolutePath)) {
     return null;
@@ -156,16 +168,22 @@ export function getEntityExt(entityType: EntityType) {
 }
 
 /*** Translating qualified names into ws/name pairs and vice versa ***/
-export function getWsNamePair(fullName: QualifiedName) {
+export function getWsNamePair(fullName: LambdaQualifiedName) {
   const pieces = fullName.split('.');
   const name = pieces.pop() as string;
   const ws = pieces.join('.');
   return { name, ws };
 }
 
-export function getQualifiedName(ws: string, name: string): QualifiedName {
+export function getQualifiedName(
+  ws: string,
+  name: string
+): LambdaQualifiedName {
   const rawName = [ws, name].join('.');
-  return throwOnError(QualifiedName.decode(rawName), errorInvalidQualifiedName);
+  return throwOnError(
+    LambdaQualifiedName.decode(rawName),
+    errorInvalidQualifiedName
+  );
 }
 
 /*** Helpers */

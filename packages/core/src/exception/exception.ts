@@ -1,4 +1,4 @@
-import { ROOT_CONFIG, AbsolutePath, QualifiedName } from '../types';
+import { ROOT_CONFIG, AbsolutePath, LambdaQualifiedName } from '../types';
 import { prettyPrint } from '../helper';
 
 // *** Error types below ***
@@ -59,7 +59,7 @@ Please check that any value you are attempting to write to the root config is al
 export const errorInvalidQualifiedName = (message: string) => {
   return new RockClientException(
     RockClientErrorTypes.ERROR_INVALID_QUALIFIED_NAME,
-    `Parsing qualified name failed. Please ensure that all workspaces and entity names are properly formatted.
+    `Parsing qualified name failed. Please ensure that all workspaces and entity names are properly formatted. Lambda Qualified Names must be formatted as "{ws}.{name}", for example, "commons.foo". Workspace Qualified Names must include a sequeunce of subworkspaces, separated by periods. For example: "common", "commons.subWorkspace".
     ${message}
     `
   );
@@ -73,7 +73,7 @@ export const errorInvalidAbsolutePath = (message: string) => {
 };
 
 export const errorFailedToParseLambdaConfig = (
-  name: QualifiedName,
+  name: LambdaQualifiedName,
   path: AbsolutePath
 ) => (message: string) => {
   return new RockClientException(
