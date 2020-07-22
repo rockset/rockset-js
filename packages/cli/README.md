@@ -73,7 +73,13 @@ To install this feature, update the CLI and run `rockset autocomplete` in your c
 $ rockset update
 $ rockset autocomplete
 ```
-You may need to restart your command line to enable the autocomplete feature after installation.
+**Note: If you are installing autocomplete on the Mac and using it from a login shell, you may also need to run the following**
+```bash
+$ echo 'source ~/.bashrc' >> ~/.bash_profile
+```
+
+You may need to restart your command line after all steps to enable the autocomplete feature after installation.
+
 
 ### Setting Up Authentication
 
