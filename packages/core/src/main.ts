@@ -73,7 +73,7 @@ const constructLambdaEntity = (
   const ws = networkLambda.workspace;
   const name = networkLambda.name;
 
-  // if workspace and name aren't defined, this query lambda object is broken
+  // if workspace and name aren't defined, this Query Lambda object is broken
   if (!ws || !name) {
     return null;
   }
@@ -103,7 +103,7 @@ export const constructCollectionEntity = (networkCollection: Collection) => {
   const ws = networkCollection.workspace;
   const name = networkCollection.name;
 
-  // if workspace and name aren't defined, this query lambda object is broken
+  // if workspace and name aren't defined, this Query Lambda object is broken
   if (!ws || !name) {
     return null;
   }
@@ -240,7 +240,7 @@ export async function deployQueryLambdas(
         (options.workspace && ws.startsWith(options.workspace)) ||
         (options.lambda && options.lambda === fullName)
       ) {
-        // We will now deploy this query lambda
+        // We will now deploy this Query Lambda
         hooks.onDeployStart?.(lambdaEntity);
 
         // If it's a dry run, skip the deploy

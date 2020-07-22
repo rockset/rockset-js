@@ -199,7 +199,7 @@ describe('Rockset Unit Tests', function () {
   });
 
   // This test also tests that errors are converted to JSON before being thrown
-  test("Running a query lambda that doesn't exist", async () => {
+  test("Running a Query Lambda that doesn't exist", async () => {
     try {
       await rockset.queryLambdas.executeQueryLambda(
         'commons.fake.workspace',

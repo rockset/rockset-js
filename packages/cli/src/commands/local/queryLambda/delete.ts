@@ -23,7 +23,7 @@ class CleanEntities extends RockCommand {
   };
 
   static description = `
-Delete all query lambdas from the project.
+Delete all Query Lambdas from the project.
 
 If a workspace parameter is passed, only that workspace will be deleted.
 If a lambda parameter is passed, only that lambda will be deleted.

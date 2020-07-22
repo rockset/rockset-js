@@ -28,7 +28,6 @@ export interface Flags extends Options {
   loadTestRps?: number;
   yes?: boolean;
   raw?: boolean;
-  output?: 'json' | 'yaml' | 'csv';
 }
 export type Apicall<A extends unknown[], Return> = (...a: A) => Promise<Return>;
 

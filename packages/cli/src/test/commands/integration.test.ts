@@ -133,21 +133,21 @@ describe('local command test suite', () => {
     expect(await fileutil.exists(types.ROOT_CONFIG)).toBe(true);
   });
 
-  // Add query lambdas failure
-  test('Add query lambda without ws failure', async () => {
+  // Add Query Lambdas failure
+  test('Add Query Lambda without ws failure', async () => {
     const name = 'commons';
     await expectError(async () => {
       await AddEntity.run([name]);
     });
   });
 
-  // Add query lambdas
-  test('Add query lambda successful', async () => {
+  // Add Query Lambdas
+  test('Add Query Lambda successful', async () => {
     await mapAll(([name, file]) => testAdd(name, file));
   });
 
-  // List query lambdas
-  test('List query lambda successful', async () => {
+  // List Query Lambdas
+  test('List Query Lambda successful', async () => {
     const spy = jest.spyOn(process.stdout, 'write');
     await ListEntities.run();
     const result = lambdas.join('\n') + '\n';
@@ -168,15 +168,15 @@ describe('local command test suite', () => {
     await mapAll(testResolveFailure);
   });
 
-  // List query lambdas: should list nothing
-  test('List query lambda successful', async () => {
+  // List Query Lambdas: should list nothing
+  test('List Query Lambda successful', async () => {
     const spy = jest.spyOn(process.stdout, 'write');
     await ListEntities.run();
     expect(spy).toHaveBeenCalledWith('\n');
   });
 
-  // Add back query lambdas
-  test('Add query lambda successful', async () => {
+  // Add back Query Lambdas
+  test('Add Query Lambda successful', async () => {
     await mapAll(([name, file]) => testAdd(name, file));
   });
 

@@ -159,7 +159,7 @@ export async function writeFileSafe(
   data: string | Uint8Array
 ) {
   if (!isParent(srcPath, fullPath)) {
-    throw errorFailToWriteFileOutsideProject();
+    throw errorFailToWriteFileOutsideProject(fullPath);
   }
 
   await fs.mkdir(path.dirname(fullPath), { recursive: true });

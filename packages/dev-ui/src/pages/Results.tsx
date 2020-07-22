@@ -69,7 +69,7 @@ export const Results = ({
         margin: '10px 10px 10px 0px',
       }}
     >
-      Please hit run to execute this lambda from your Rockset Project.
+      Please hit run to execute this lambda from your local project.
     </div>
   );
 };

@@ -17,12 +17,11 @@ All Lerna packages are in [packages](./packages) directory. Each individual proj
 * [Rockset JS SDK](./packages/client)
 * [Rockset CLI](./packages/cli)
 * [Rockset VSCode Plugin](./packages/rscode)
-* [Rockset Projects Development Server](./packages/dev-server)
-* [Rockset Projects Development UI](./packages/dev-ui)
+* [Rockset Developer UI](./packages/dev-server)
 
 ## Contributing
 
-To get started, please ensure that you are on Node v12. 
+To get started, please ensure that you are on Node.js 12.x. 
 
 ```bash
 # install dependencies

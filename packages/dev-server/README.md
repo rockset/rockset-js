@@ -1,6 +1,6 @@
-# Rockset Projects Developer UI
+# Rockset Developer UI
 
-The Official Home of the Rockset Projects Developer UI.
+The Official Home of the Rockset Developer UI.
 
 ![Build|Lint|Test](https://github.com/rockset/rockset-js/workflows/Build%7CLint%7CTest/badge.svg)
 
@@ -8,21 +8,20 @@ The Official Home of the Rockset Projects Developer UI.
 
 ## Getting Started
 
-The Rockset Projects Dev UI is bundled with the Rockset CLI. Please first install and setup up the [Rockset CLI](../cli). It is intended to be used in a Rockset Project. Please see the CLI documentation for more information about setting up your Rockset Project.
+The Rockset Dev UI is bundled with the Rockset CLI. Please first install and setup up the [Rockset CLI](../cli). It is intended to be used in a local Rockset project. Please see the CLI documentation for more information about downloading Query Lambdas and setting up a local project.
 
 ```bash
-# Initialize your rockset project
+# Initialize your local project
 $ rockset local:init
 
-# Download your query lambdas
+# Download your Query Lambdas
 $ rockset local:download
 
-# Serve the IDE Sidecar
-# Make sure you run this command in a valid Rockset Project.
+# Serve the Rockset Developer UI
 $ rockset local:serve -p PORT
 ```
 
-This will launch a development server on `localhost:PORT`. Whenever a request to execute a query lambda is sent to the server, it will grab the associated Query Lambda text from the file system and execute it with any parameters.
+This will launch a development server on `localhost:PORT`. Whenever a request to execute a Query Lambda is sent to the server, it will grab the associated Query Lambda text from the file system and execute it with any parameters.
 
 The Projects Dev UI is tested and fully supported on the latest version of Google Chrome. You may experience bugginess on other browsers.
 
@@ -30,7 +29,7 @@ The Projects Dev UI is tested and fully supported on the latest version of Googl
 
 Once you have started the development server, navigate to `localhost:PORT` in your browser.
 
-You should see a listing of all of the different Query Lambdas in your Rockset Project. Select one of the Query Lambdas to start executing it.
+You should see a listing of all of the different Query Lambdas in your local project. Select one of the Query Lambdas to start executing it.
 
 ### Executing a Lambda
 
@@ -45,4 +44,4 @@ This means that all queries will execute the version in the local file system. F
 
 ### Using Parameters
 
-Rockset SQL supports adding Query Parameters to parameterize a Query. To add parameters in the Rockset Development UI, click into the Parameters Tab and then click the "Add Parameters" button. You can also add default values for your Parameters in the Lambda Definition File. Please see the [Rockset CLI Documentation](../cli) for more information about adding default parameters.
+Rockset SQL supports adding Query Parameters to parameterize a query. To add parameters in the Rockset Developer UI, click into the Parameters Tab and then click the "Add Parameters" button. You can also add default values for your Parameters in the Lambda Definition File. Please see the [Rockset CLI Documentation](../cli) for more information about adding default parameters.

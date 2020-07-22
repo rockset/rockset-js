@@ -27,7 +27,7 @@ class DeployQueryLambda extends RockCommand {
     }),
     dryRun: flags.boolean({
       description:
-        'If this flag is set, the tool will print out the names of the query lambdas it would deploy and return',
+        'If this flag is set, the tool will print out the names of the Query Lambdas it would deploy and return',
       default: false,
     }),
   };

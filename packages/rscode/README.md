@@ -47,12 +47,11 @@ Then, open `myLambda.sql` in VSCode. You should confirm that the language of you
 
 The Rockset VSCode Extension comes with a formatter. The simplest way to use the formatter is by running `Format Document` in the VSCode Command Palette (`CTRL-Shift-P` or `CMD-Shift-P`), in any RocksetSQL document. We recommend adding the following to your VSCode preferences:
 
-- Set `rockset-vscode` as your default formatter for your Rockset Projects Workspace.
 - Turn on `editor.formatOnSave`. This will automatically format your document whenever you save it.
 
 ## Executing Queries
 
-The recommended way to execute queries is with the [Rockset Projects Development UI](/packages/dev-server), which comes with the [Rockset CLI](/packages/cli). Please follow the documentation to install and set up these tools.
+The recommended way to execute queries is with the [Rockset Developer UI](/packages/dev-server), which comes with the [Rockset CLI](/packages/cli). Please follow the documentation to install and set up these tools.
 
 ```sh
 # After following the setup instructions above
@@ -61,7 +60,7 @@ rockset local:serve
 
 This will open up a UI which will allow you to set parameters and test your local Query Lambdas.
 
-You can also execute simple queries directly in VSCode. open the Command Palette in VSCode (`CTRL-SHIFT-P` or `CMD-SHIFT-P`) and execute the command `Execute Rockset Query`. This will execute the Query Lambda text raw and _will not pass any parameters_. At this point, it is not possible to run parametrized queries directly from VSCode (this is however available in the [Rockset Projects Development UI](/packages/dev-server)).
+You can also execute simple queries directly in VSCode. Open the Command Palette in VSCode (`CTRL-SHIFT-P` or `CMD-SHIFT-P`) and execute the command `Execute Rockset Query`. This will execute the Query Lambda text raw and _will not pass any parameters_. At this point, it is not possible to run parameterized queries directly from VSCode (this is available in the [Rockset Developer UI](/packages/dev-server)).
 
 ## Extension Settings
 

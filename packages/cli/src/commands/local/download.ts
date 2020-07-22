@@ -48,7 +48,7 @@ Download Query Lambda entities from Rockset to your local project.
         type: 'confirm',
         name: 'c',
         initial: false,
-        message: `WARNING: This will overwrite all query lambda objects downloaded to the current project, and can result in loss of work. Are you sure?`,
+        message: `WARNING: This will overwrite all Query Lambda objects downloaded to the current project, and can result in loss of work. Are you sure?`,
       })) as { c: boolean };
 
       if (c) {

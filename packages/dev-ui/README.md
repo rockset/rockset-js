@@ -1,3 +1,3 @@
-# Rockset Projects UI
+# Rockset Developer UI
 
-This is the home of the Rockset Projects UI. All documentation for the Rockset Projects UI is consolidated at [Rockset Projects Server](../dev-server). 
+This is the React code for the Rockset Developer UI. All documentation for the Rockset Developer UI is consolidated [here](../dev-server). 
