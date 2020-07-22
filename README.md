@@ -1,7 +1,7 @@
 rockset-js
 ============
 
-The Official Home for all of Rockset's JS/TS Developer Tooling.
+The Official Home for all of Rockset's JS/TS Developer Tools.
 
 ![Build|Lint|Test](https://github.com/rockset/rockset-js/workflows/Build%7CLint%7CTest/badge.svg)
 [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lerna.js.org/)
