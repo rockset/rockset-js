@@ -26,6 +26,7 @@ import {
 // This ensures that we are able to typecheck and unit test all file system input
 // eslint-disable-next-line no-restricted-imports
 import { promises as fs, constants as fsconstants } from 'fs';
+import fse from 'fs-extra';
 
 import { prettyPrint } from '../helper';
 import {
@@ -72,8 +73,8 @@ export async function deleteLambda(
 ) {
   const sqlPath = join(dirname(entityPath), entity.config.sql_path);
   return await Promise.all([
-    deleteFileSafe(srcPath, entityPath),
-    deleteFileSafe(srcPath, sqlPath),
+    deletePathSafe(srcPath, entityPath),
+    deletePathSafe(srcPath, sqlPath),
   ]);
 }
 
@@ -165,21 +166,37 @@ export async function writeFileSafe(
   await fs.writeFile(fullPath, data);
 }
 
-export async function deleteFileSafe(
+export async function deletePathSafe(
   srcPath: AbsolutePath,
   fullPath: AbsolutePath
 ) {
   if (!isParent(srcPath, fullPath)) {
-    throw errorFailToDeleteFileOutsideProject();
+    throw errorFailToDeleteFileOutsideProject(fullPath);
   }
 
   try {
-    return await fs.unlink(fullPath);
+    return await fse.remove(fullPath);
   } catch (e) {
     // Probably failed because the file doesn't exist or we don't have permissions.
     // Return null and let the parent determine what to do in this case
     return null;
   }
+}
+
+/**
+ * Empty the source directory. This will delete all files in the source directory if it has any
+ */
+export async function emptySrcDir() {
+  const srcDir = await getSrcPath();
+  return await fse.emptyDir(srcDir);
+}
+
+/**
+ * Ensure the source directory exists, otherwise create it.
+ */
+export async function ensureSrcDir() {
+  const srcDir = await getSrcPath();
+  return await fse.ensureDir(srcDir);
 }
 
 /**

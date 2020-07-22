@@ -12,6 +12,8 @@ import {
   ExecuteHooks,
   QueryParameterArray,
   LambdaDeleteOptions,
+  parseWorkspaceQualifiedName,
+  parseLambdaQualifiedName,
 } from './types';
 import {
   FetchAPI,
@@ -32,6 +34,8 @@ import {
   readLambda,
   writeLambda,
   writeCollection,
+  deletePathSafe,
+  emptySrcDir,
   deleteLambda,
 } from './filesystem/fileutil';
 import _ from 'lodash';
@@ -167,31 +171,26 @@ export async function downloadQueryLambdas(
 
 export async function deleteQueryLambdas(options: LambdaDeleteOptions) {
   const srcPath = await getSrcPath();
-  const allFiles = await getFiles(srcPath);
-  const lambdaFiles = allFiles.filter((file) =>
-    isDefinitionPath(srcPath, file, 'lambda')
-  );
+  if (options.workspace) {
+    const p = await resolvePathFromQualifiedName(
+      parseWorkspaceQualifiedName(options.workspace),
+      'workspace',
+      srcPath
+    );
+    return await deletePathSafe(srcPath, p);
+  } else if (options.lambda) {
+    const qualifiedName = parseLambdaQualifiedName(options.lambda);
+    const file = await resolvePathFromQualifiedName(
+      qualifiedName,
+      'lambda',
+      srcPath
+    );
+    const lambda = await readLambda(qualifiedName, file);
 
-  return await Promise.all(
-    lambdaFiles.map(async (file) => {
-      const [qualifiedName] = resolveQualifiedNameFromPath(srcPath, file) ?? [
-        null,
-        null,
-      ];
-      if (qualifiedName) {
-        const lambda = await readLambda(qualifiedName, file);
-        if (
-          (options.workspace && lambda.ws?.startsWith(options.workspace)) ||
-          (options.lambda && options.lambda === lambda.fullName) ||
-          (!options.workspace && !options.lambda)
-        ) {
-          return await deleteLambda(srcPath, file, lambda);
-        } else {
-          return;
-        }
-      }
-    })
-  );
+    return await deleteLambda(srcPath, file, lambda);
+  } else {
+    return await emptySrcDir();
+  }
 }
 
 /**

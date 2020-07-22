@@ -27,15 +27,7 @@ class SQL extends RockCommand {
     },
   ];
 
-  static examples = [
-    `
-  // Runs a sql query passed as a string
-  rockset sql QUERY
-
-  // Opens your default editor to edit more complex queries
-  rockset sql -e
-  `,
-  ];
+  static examples = [`rockset sql "Select 'hello world'"`, `rockset sql`];
 
   static description = `execute a SQL expression`;
 

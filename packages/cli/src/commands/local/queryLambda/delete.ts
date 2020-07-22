@@ -36,13 +36,16 @@ These two parameters are mutually exclusive, only one may be passed.
     if (flags.yes) {
       await main.deleteQueryLambdas({ workspace: flags.workspace, lambda: flags.lambda });
     } else {
+      const lambdaMessage = `WARNING: This operation will delete ${flags.lambda}, and all associated files in the current project, and can result in a loss of work. Are you sure you would like to proceed?`;
+      const wsMessage = `WARNING: This operation will delete ${flags.workspace}, and all files contained within the associated directory, and can result in a loss of work. Are you sure you would like to proceed?`;
+      const allMessage = `WARNING: This operation will completely empty the source directory of your project and can result in a loss of work. Are you sure you would like to proceed?`;
+
+      const message = flags.lambda ? lambdaMessage : flags.workspace ? wsMessage : allMessage;
       const { c } = (await prompts({
         type: 'confirm',
         name: 'c',
         initial: false,
-        message: `WARNING: This will delete ${flags.lambda ?? `all query lambda objects`} in ${
-          flags.workspace ?? `the current project`
-        } and can result in loss of work. Are you sure?`,
+        message,
       })) as { c: boolean };
 
       if (c) {

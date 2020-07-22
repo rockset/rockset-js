@@ -24,6 +24,8 @@ class ExecuteQueryLambda extends RockCommand {
     },
   ];
 
+  static examples = [`$ rockset local:queryLambda:execute commons.helloWorld`];
+
   static description = `
   Execute a specific version of a Query Lambda in the current project.
   

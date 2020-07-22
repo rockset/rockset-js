@@ -1,8 +1,10 @@
 import { flags } from '@oclif/command';
 import * as prompts from 'prompts';
-import { helper, types, fileutil } from '@rockset/core';
-import { RootConfig } from '@rockset/core/dist/types';
+import { types, fileutil } from '@rockset/core';
 import { RockCommand } from '../../base-command';
+import chalk = require('chalk');
+
+export const DEFAULT_SOURCE_ROOT = 'src';
 
 class InitializeProject extends RockCommand {
   static flags = {
@@ -13,45 +15,34 @@ class InitializeProject extends RockCommand {
   static description = `
 Initialize your project.
 
-This command initializes your project with a rockconfig.json file.
+This command initializes your project with a ${types.ROOT_CONFIG} file.
 `;
 
   async run() {
     const { flags } = this.parse(InitializeProject);
-    try {
-      if (flags.yes) {
-        await fileutil.writeRootConfig({
-          source_root: 'src',
-        });
-        return;
-      }
-      const { root } = (await prompts({
-        type: 'text',
-        name: 'root',
-        message: 'Enter the root path for your Query Lambdas',
-        initial: 'src',
-      })) as { root: string };
+    const writeRootConfig = async (source_root: string = DEFAULT_SOURCE_ROOT) => {
+      await fileutil.writeRootConfig({
+        source_root,
+      });
+      this.log(chalk`Created root config at {green ${types.ROOT_CONFIG}}`);
+      await fileutil.ensureSrcDir();
+    };
 
-      const config: RootConfig = {
-        source_root: root,
-      };
+    if (flags.yes) {
+      return writeRootConfig();
+    }
 
-      const { c } = (await prompts({
-        type: 'confirm',
-        name: 'c',
-        initial: true,
-        message: `Creating an ${types.ROOT_CONFIG} file including
-${helper.prettyPrint(config)}
-Is this okay?`,
-      })) as { c: boolean };
-
-      if (c) {
-        await fileutil.writeRootConfig(config);
-      } else {
-        this.log(`Did not create ${types.ROOT_CONFIG}`);
-      }
-    } catch (error) {
-      this.log(error);
+    // Ask the user to choose the root path
+    const { root } = (await prompts({
+      type: 'text',
+      name: 'root',
+      message: 'Enter the root path for your Query Lambdas',
+      initial: DEFAULT_SOURCE_ROOT,
+    })) as { root: string };
+    if (root) {
+      await writeRootConfig(root);
+    } else {
+      this.log('Did not write config file');
     }
   }
 }

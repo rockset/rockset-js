@@ -14,8 +14,7 @@ class DownloadQueryLambda extends RockCommand {
     }),
     tag: flags.string({
       char: 't',
-      helpValue: `
-        Specify a value to download all Query Lambda versions tagged with this tag. 
+      helpValue: `Specify a value to download all Query Lambda versions tagged with this tag. 
         Query Lambdas that do not have a version with this tag name will be skipped.
       `,
     }),

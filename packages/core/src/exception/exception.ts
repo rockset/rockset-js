@@ -33,17 +33,17 @@ export const errorNotValidProject = () => {
   );
 };
 
-export const errorFailToWriteFileOutsideProject = () => {
+export const errorFailToWriteFileOutsideProject = (path: AbsolutePath) => {
   return new RockClientException(
     RockClientErrorTypes.ERROR_NOT_IN_SRC_ROOT,
-    `This file is not in the source root defined in your project, and will not be written`
+    `The path ${path} is not in the source root defined in your project, and will not be written`
   );
 };
 
-export const errorFailToDeleteFileOutsideProject = () => {
+export const errorFailToDeleteFileOutsideProject = (p: AbsolutePath) => {
   return new RockClientException(
     RockClientErrorTypes.ERROR_NOT_IN_SRC_ROOT,
-    `This file is not in the source root defined in your project, and will not be deleted`
+    `This file ${p} is not in the source root defined in your project, and will not be deleted`
   );
 };
 
