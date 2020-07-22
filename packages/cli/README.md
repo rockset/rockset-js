@@ -197,7 +197,7 @@ $ curl --request POST \
 ]
 ```
 
-Congratulation, you have finished setting up your Hello World Query Lambda! For a more detailed discussion of how to develop more complex Query Lambdas with Parameters, please see the [Rockset Developer Toolkit Usage Details](#rockset-developer-toolkit-usage-details).
+Congratulations, you have finished setting up your Hello World Query Lambda! For a more detailed discussion of how to develop more complex Query Lambdas with Parameters, please see the [Rockset Developer Toolkit Usage Details](#rockset-developer-toolkit-usage-details).
 
 # API Usage Details
 
