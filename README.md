@@ -36,11 +36,11 @@ yarn run build
 
 ## Publishing
 
-The publishing o all of the above projects is handled automatically through Github Actions CI/CD. Simply run the following in the repo root, and then monitor the deploy in Github Actions.
+The publishing of all of the above projects is handled automatically through Github Actions. Simply run the following in the repository root, and then monitor the deployment in Github Actions.
 
 ```
 ./release
 ```
 
-The exception to the above is the VSCode plugin, which currently has to be manually deployed.
+The only exception to the above is the VSCode plugin, which currently is manually deployed.
 
