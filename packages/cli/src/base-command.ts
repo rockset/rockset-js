@@ -6,6 +6,7 @@ import { CLIError } from '@oclif/errors';
 import { ErrorModel } from '@rockset/client/dist/codegen/api';
 import { main, auth } from '@rockset/core';
 import AbortController from 'abort-controller';
+import * as chalk from 'chalk';
 
 // Globally handle all unhandled promise rejections
 process.on('unhandledRejection', function (reason, p) {
@@ -39,8 +40,8 @@ ${err}
     this.error(finalErr);
   }
 
-  info(...params: Parameters<typeof console.error>) {
-    console.error('[INFO]:', ...params);
+  info(param: string) {
+    console.error(chalk.gray`[INFO]: ${param}`);
   }
 
   async init() {

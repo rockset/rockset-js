@@ -6,17 +6,12 @@ import { exists } from '@rockset/core/dist/filesystem/fileutil';
 import { parseAbsolutePath } from '@rockset/core/dist/types';
 import { RockCommand } from '../base-command';
 import { performance } from 'perf_hooks';
-import { wait } from '@rockset/core/dist/helper';
+import { wait, prettyPrint } from '@rockset/core/dist/helper';
 import { cli } from 'cli-ux';
+import * as YAML from 'yaml';
 import prompts = require('prompts');
 
 export type Args = Parser.args.Input;
-export interface Flags {
-  file?: string;
-  loadTestRps?: number;
-  yes?: boolean;
-  full?: boolean;
-}
 interface Options {
   [key: string]: unknown;
   sort?: string;
@@ -27,6 +22,13 @@ interface Options {
   output?: string;
   'no-header'?: boolean;
   printLine?(s: unknown): unknown;
+}
+export interface Flags extends Options {
+  file?: string;
+  loadTestRps?: number;
+  yes?: boolean;
+  raw?: boolean;
+  output?: 'json' | 'yaml' | 'csv';
 }
 export type Apicall<A extends unknown[], Return> = (...a: A) => Promise<Return>;
 
@@ -57,6 +59,18 @@ export async function runApiCall<A extends any[], Return>(
   },
 ) {
   const log = this.log.bind(this) ?? console.log;
+
+  // This function shows a regular object in a table by wrapping it in an array
+  // Special case when the output is set to JSON or YAML (otherwise there will be an extra bracket in the output)
+  function showObjectAsTable(data: object, flags: Options) {
+    if (flags.output === 'json') {
+      log(prettyPrint(data));
+    } else if (flags.output === 'yaml') {
+      log(YAML.stringify(data));
+    } else {
+      showTable([data], flags);
+    }
+  }
   let allArgs: unknown[] = [];
 
   if (flags.file) {
@@ -90,12 +104,13 @@ export async function runApiCall<A extends any[], Return>(
   }
 
   this.info(`${method}: ${endpoint}`);
-  this.info('Arguments:');
   const argObj = _.zipObject(
     namedArgs.map((arg) => arg.name),
     allArgs,
   );
-  this.info(JSON.stringify(argObj, null, 2));
+  if (!_.isEmpty(argObj)) {
+    this.info(`Arguments: \n${JSON.stringify(argObj, null, 2)}`);
+  }
 
   const loadTestRps = flags.loadTestRps;
   if (loadTestRps) {
@@ -104,12 +119,14 @@ export async function runApiCall<A extends any[], Return>(
     type R = Return & { results?: unknown; data?: unknown };
     const data = (await apicall(...(allArgs as A))) as R;
     const uData = data?.results ?? data?.data ?? data;
-    const unwrapData = flags.full ? data : uData;
+    const unwrapData = flags.raw ? data : uData;
 
     if (_.isArray(unwrapData)) {
       showTable(unwrapData, { ...flags });
+    } else if (_.isObject(unwrapData)) {
+      showObjectAsTable(unwrapData, flags);
     } else {
-      log(JSON.stringify(unwrapData, null, 2));
+      log(prettyPrint(unwrapData));
     }
   }
 }

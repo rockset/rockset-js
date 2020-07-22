@@ -43,7 +43,7 @@ class ExecuteQueryLambda extends RockCommand {
         {
           onBeforeExecute: (sql, params) => {
             this.info(`About to execute ${args.name} from local project...`);
-            this.info(`SQL: ${sql}`);
+            this.info(`SQL: \n${sql}`);
             this.info(`Parameters: ${helper.prettyPrint(params)}`);
           },
           onExecuteSuccess: (response: QueryResponse) => {
