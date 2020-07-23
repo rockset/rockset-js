@@ -3538,7 +3538,7 @@ ARGUMENTS
         "{ws}.{name}".
 
 OPTIONS
-  -d, --description=description  set the description for the new query lambda
+  -d, --description=description  Set the description for the new query lambda
   -h, --help                     show CLI help
 
 DESCRIPTION
