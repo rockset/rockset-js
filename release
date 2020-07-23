@@ -1,7 +1,7 @@
 #!/bin/bash 
 
 while true; do
-    read -p "This will deploy the CLI tool to NPM and upload all artifacts publically. ARE YOU SURE YOU WANT TO PROCEED?" yn
+    read -p "This will deploy the CLI tool to NPM and upload all artifacts publically. ARE YOU SURE YOU WANT TO PROCEED? " yn
     case $yn in
         [Yy]* ) yarn run release-all "$@" && echo "Please monitor the deploy at https://github.com/rockset/rockset-js/actions?query=workflow%3ADeploy";  break;;
         [Nn]* ) exit;;
