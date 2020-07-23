@@ -25,7 +25,7 @@ npm i @rockset/client
 
 ## Documentation
 
-Full API Reference of the Javascript SDK can be found in the [Rockset Docs](https://docs.rockset.com/nodejs/).
+Full API Reference of the Javascript SDK can be found [here](https://docs.rockset.com/client/node/docs/).
 
 ## Usage
 
