@@ -211,3 +211,7 @@ export function dirname(root: AbsolutePath): AbsolutePath {
   // dirname of an absolute path is an absolute path
   return path.dirname(root) as AbsolutePath;
 }
+
+export function makeAbsolute(p: string): AbsolutePath {
+  return path.isAbsolute(p) ? parseAbsolutePath(p) : join(cwd(), p);
+}
