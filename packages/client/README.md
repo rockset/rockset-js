@@ -263,7 +263,7 @@ Unit tests are available in the [tests](tests) folder.
 Set ROCKSET_APIKEY and ROCKSET_HOST endpoint in the environment variables. To run tests:
 
 ```
-npm test
+yarn test
 ```
 
 This runs unit tests and integration tests.
