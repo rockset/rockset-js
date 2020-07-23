@@ -209,7 +209,7 @@ Congratulations, you have finished setting up your Hello World Query Lambda! For
 
 ## Organization
 
-The API tool is contained in `rockset api`. This tool is designed to very closely match the layout of our [REST API endpoints](https://docs.rockset.com/rest-api). This remainder of this section provides examples for using these commands.
+The API tool is contained in `rockset api`. This tool is designed to very closely match the layout of our [REST API endpoints](https://docs.rockset.com/rest-api). The remainder of this section provides examples for using these commands.
 
 The API calls are further broken into subcommands based on the resource that the command affects. This reflects the breakdown of our API Documentation.
 
