@@ -21,8 +21,9 @@ class DeployQueryLambda extends RockCommand {
       description: 'The qualified name of the lambda to deploy',
       exclusive: ['workspace'],
     }),
-    createMissingWorkspaces: flags.boolean({
-      description: 'If a workspace does not exist in the remote, create it',
+    failOnMissingWorkspace: flags.boolean({
+      description:
+        'If a workspace does not exist in the remote, the deploy will fail instead of creating one',
       default: false,
     }),
     dryRun: flags.boolean({
@@ -72,7 +73,7 @@ These two parameters are mutually exclusive, only one may be passed.
         workspace: flags.workspace,
         lambda: flags.lambda,
         dryRun: flags.dryRun,
-        createMissingWorkspace: flags.createMissingWorkspaces,
+        createMissingWorkspace: !flags.failOnMissingWorkspace,
       },
     );
   }

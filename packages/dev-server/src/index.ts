@@ -6,9 +6,19 @@ import open from 'open';
 import path from 'path';
 import morgan from 'morgan';
 import { QueryParameter } from '@rockset/core/dist/types';
+import * as _ from 'lodash';
 
 function notEmpty<TValue>(value: TValue | null | undefined): value is TValue {
   return value !== null && value !== undefined;
+}
+
+function mergeParameters(
+  defaultParameters: QueryParameter[],
+  overrideParameters: QueryParameter[]
+) {
+  const defObj = _.keyBy(defaultParameters, (obj) => obj.name);
+  const overrideObj = _.keyBy(overrideParameters, (obj) => obj.name);
+  return _.values({ ...defObj, ...overrideObj });
 }
 
 export async function serve(port = 3001) {
@@ -32,10 +42,10 @@ export async function serve(port = 3001) {
         const result = await client.queries.query({
           sql: {
             query: lambda.sql,
-            parameters: [
-              ...(lambda.config.default_parameters ?? []),
-              ...params,
-            ],
+            parameters: mergeParameters(
+              lambda.config.default_parameters ?? [],
+              params
+            ),
           },
         });
         res.send(result);
