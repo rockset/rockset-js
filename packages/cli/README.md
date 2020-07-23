@@ -3699,7 +3699,7 @@ OPTIONS
   --sort=sort                      property to sort by (prepend '-' for descending)
 
 EXAMPLES
-  rockset sql "SELECT 'hello world'"
+  rockset sql "Select 'hello world'"
   rockset sql
 ```
 
