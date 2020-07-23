@@ -14,11 +14,13 @@ import * as path from 'path';
 import * as os from 'os';
 import { prettyPrint } from '../helper';
 import _ from 'lodash';
+import fse from 'fs-extra';
 
 export const AUTH_CONFIG_FILE = '.rockset/credentials' as const;
 
 export const getAuthConfigPath = () =>
   path.join(os.homedir(), AUTH_CONFIG_FILE);
+
 /**
  * io-ts runtime type definitions
  */
@@ -168,6 +170,13 @@ export async function readConfigurationFile() {
   return parseAuthConfiguration(jsonStr);
 }
 
+/**
+ *
+ * @param config The auth configuration to write
+ */
 async function writeConfigurationFile(config: AuthConfiguration) {
-  return await fs.writeFile(getAuthConfigPath(), prettyPrint(config));
+  const configFile = getAuthConfigPath();
+  const dirName = path.dirname(configFile);
+  await fse.ensureDir(dirName);
+  return await fs.writeFile(configFile, prettyPrint(config));
 }
