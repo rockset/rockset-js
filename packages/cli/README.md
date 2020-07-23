@@ -163,12 +163,12 @@ $ rockset local:init -y
 $ rockset local:queryLambda:add commons.helloWorld
 
 #. Write text to your Query Lambda
-$ echo "Select 'hello, world' \"Hello World\"" > `rockset local:resolve --sql commons.helloWorld`
+$ echo "SELECT 'hello, world' \"Hello World\"" > `rockset local:resolve --sql commons.helloWorld`
 
 #. Execute your Query Lambda, and select the result
 $ rockset local:queryLambda:execute commons.helloWorld | jq '.results'
 [INFO]: About to execute commons.helloWorld from local project...
-[INFO]: SQL: Select 'hello, world' "Hello World"
+[INFO]: SQL: SELECT 'hello, world' "Hello World"
 
 [INFO]: Parameters: []
 [INFO]: Successfully executed query.
@@ -303,7 +303,7 @@ Arguments can also be passed in as a JSON file specification using the `-f` flag
 
 ```bash
 #. The following two JSON files are treated identically
-#. Commons.foo is a Query Lambda with text 'Select :foo'
+#. Commons.foo is a Query Lambda with text 'SELECT :foo'
 
 $ cat spec1.json
 {
@@ -389,7 +389,7 @@ To run a load test, run the command as usual and pass the `-l` flag with the num
 
 ```bash
 
-#. Run a load test against Query Lambda commons.foo, with text 'Select :foo'
+#. Run a load test against Query Lambda commons.foo, with text 'SELECT :foo'
 $ cat spec2.json
 {
   "workspace": "commons",
@@ -3699,7 +3699,7 @@ OPTIONS
   --sort=sort                      property to sort by (prepend '-' for descending)
 
 EXAMPLES
-  rockset sql "Select 'hello world'"
+  rockset sql "SELECT 'hello world'"
   rockset sql
 ```
 
