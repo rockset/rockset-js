@@ -10,6 +10,7 @@ import * as _ from 'lodash';
 import * as os from 'os';
 import * as fse from 'fs-extra';
 import { getSrcPath } from '@rockset/core/dist/filesystem/fileutil';
+import { parseLambdaQualifiedName, parseAbsolutePath } from '@rockset/core/dist/types';
 
 /**
  * NOTE: all tests in this file are run on the user's real file system
@@ -178,6 +179,29 @@ describe('local command test suite', () => {
   // Add back Query Lambdas
   test('Add Query Lambda successful', async () => {
     await mapAll(([name, file]) => testAdd(name, file));
+  });
+
+  test('Add query lambda with description', async () => {
+    const expectedPath = relative('description/commons/test.lambda.json');
+    const name = 'description.commons.test';
+    const description = 'my description';
+    await expectToNotExist(expectedPath);
+    await AddEntity.run([name, '-d', 'my description']);
+    await expectToExist(expectedPath);
+    const sqlPath = await fileutil.getLambdaSqlPathFromQualifiedName(
+      types.parseLambdaQualifiedName(name),
+    );
+    await expectToExist(sqlPath);
+
+    const lambdaEntity = await fileutil.readLambda(
+      parseLambdaQualifiedName(name),
+      parseAbsolutePath(expectedPath),
+    );
+
+    expect(lambdaEntity.config.description).toEqual(description);
+
+    // This should fail
+    await expectError(async () => AddEntity.run([name]));
   });
 
   // Test that deleting a workspace works as expected
