@@ -9,16 +9,24 @@ Official Rockset CLI
 [![License](https://img.shields.io/npm/l/@rockset/cli.svg)](https://github.com/rockset/rockset-js/blob/master/package.json)
 ![Build|Lint|Test](https://github.com/rockset/rockset-js/workflows/Build%7CLint%7CTest/badge.svg)
 
-<!-- toc -->
 * [Download & Installation Instructions](#download--installation-instructions)
 * [Getting Started](#getting-started)
 * [Usage Overview](#usage-overview)
 * [Query Lambda Hello World Example](#query-lambda-hello-world-example)
 * [API Usage Details](#api-usage-details)
+    * [Organization](#organization)
+    * [Input Arguments Examples](#input-arguments-examples)
+    * [Output Format](#output-format)
+    * [Load Testing](#load-testing)
+    * [More Examples](#more-examples)
 * [Local Query Lambda Development Details](#local-query-lambda-development-details)
+    * [The Query Lambda Definition File](#the-query-lambda-definition-file)
+    * [Editing your Query Lambda SQL](#editing-your-query-lambda-sql)
+    * [Executing your local project Query Lambdas](#executing-your-local-project-query-lambdas)
+    * [Deploying your Query Lambdas](#deploying-your-query-lambdas)
+    * [Integration with Git Version Control and CI/CD](#integration-with-git-version-control-and-cicd)
 * [Telemetry](#telemetry)
-* [Commands](#commands)
-<!-- tocstop -->
+* [All Commands](#all-commands)
 
 # Download & Installation Instructions
 
@@ -845,7 +853,7 @@ To opt out of telemetry, set the ROCKSET_CLI_TELEMETRY_OPTOUT environment variab
 
 
 
-# Commands
+# All Commands
 <!-- commands -->
 * [`rockset api:apikeys:createApiKey [BODY]`](#rockset-apiapikeyscreateapikey-body)
 * [`rockset api:apikeys:createApiKeyAdmin [BODY] [USER]`](#rockset-apiapikeyscreateapikeyadmin-body-user)
