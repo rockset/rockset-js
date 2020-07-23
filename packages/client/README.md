@@ -8,21 +8,20 @@
 
 Official Rockset Javascript/Typescript SDK.
 
-```
-npm i rockset
-```
-
-## What's new
-
-Supports ES6 promises and Typescript out of the box.
-
 ## Requirements
 
-At least Node v10
+Node 10+
 
 If you are using Webpack, you should have ES6 support.
 
 Optionally use Typescript for type checking.
+
+## Installation
+
+```
+npm i @rockset/client
+```
+
 
 ## Documentation
 
@@ -169,6 +168,17 @@ client.queryLambdas
 Execute a Query Lambda using the `client` object.
 
 ```ts
+// Run a Query Lambda by tag with default parameters (or no parameters)
+client.queryLambdas
+  .executeQueryLambdaByTag(
+    /* workspace */ "commons",
+    /* queryName */ "myQuery",
+    /* tag */ "dev"
+  )
+  .then(console.log)
+  .catch(console.error);
+
+
 // Run a Query Lambda with default parameters (or no parameters)
 client.queryLambdas
   .executeQueryLambda(
