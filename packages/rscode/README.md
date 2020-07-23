@@ -14,12 +14,12 @@ The Rockset VSCode plugin is available to install on the [VSCode Extension Marke
 
 ## Setup
 
-After installation, please first set the following two properties in your VSCode preferences (CMD-,).
+After installation, first set the following two properties in your VSCode preferences (CMD-,).
 
 - `rockset.apiserver`: The Rockset API server to use with this extension
-- `rockset.apikey`: the Rockset apikey to use with this extension
+- `rockset.apikey`: the Rockset API key to use with this extension
 
-The recommended way to get started with SQL files is to use [Rockset CLI v2](/packages/cli).
+The recommended way to get started with SQL files is to use [Rockset CLI](/packages/cli).
 
 ```sh
 
@@ -31,13 +31,13 @@ $ rockset local:init
 $ rockset local:download
 $ rockset local:queryLambda:add commons.myLambda
 
-# Open the current directory in VSCode (if you have the VSCode cli tools)
+# Open the current directory in VSCode (if you have the VSCode CLI tools)
 $ code .
 
 # Alternatively, simply open the current directory using the VSCode UI
 ```
 
-### Configuration a language
+### Configuring RocksetSQL language
 
 Then, open `myLambda.sql` in VSCode. You should confirm that the language of your SQL file is set to RocksetSQL to activate this extension. You may also want to set RocksetSQL as the default language for '.sql' file extensions. See the [VSCode documentation](https://code.visualstudio.com/docs/languages/overview#_changing-the-language-for-the-selected-file) for more information about configuring languages for your files.
 
@@ -67,7 +67,7 @@ You can also execute simple queries directly in VSCode. Open the Command Palette
 This extension contributes the following settings:
 
 - `rockset.apiserver`: The Rockset API server to use with this extension
-- `rockset.apikey`: the Rockset apikey to use with this extension
+- `rockset.apikey`: the Rockset API key to use with this extension
 
 ## Release Notes
 
