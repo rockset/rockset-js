@@ -35,10 +35,10 @@ You should see a listing of all of the different Query Lambdas in your local pro
 
 When you hit the Run button, the following happens:
 
-1. The UI sends a request to the development server to run the associated query 
-1. The development server loads the SQL text and Default Parameters for the Query Lambda from your local file system 
+1. The UI sends a request to the development server to run the associated query.
+1. The development server loads the SQL text and Default Parameters for the Query Lambda from your local file system.
 1. The development server sends a request to Rockset's remote API Server, using the active credentials configured for the CLI tool. 
-1. The development server passes the response to the UI
+1. The development server passes the response to the UI.
 
 This means that all queries will execute the version in the local file system. Furthermore, the queries will be executed in the account associated with the CLI tool's current active profile. 
 
