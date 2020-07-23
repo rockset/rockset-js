@@ -95,7 +95,8 @@
       "@oclif/plugin-help",
       "@oclif/plugin-autocomplete",
       "@oclif/plugin-update"
-    ]
+    ],
+    "repositoryPrefix": "./<%- commandPath %>"
   },
   "repository": "https://github.com/rockset/rockset-js",
   "scripts": {
