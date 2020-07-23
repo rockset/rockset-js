@@ -1,6 +1,6 @@
 ## Features
 
-- Syntax highlighting
+- Syntax Highlighting
 - Execute Queries
 - Error Highlighting
 - Autocomplete
@@ -17,7 +17,7 @@ The Rockset VSCode plugin is available to install on the [VSCode Extension Marke
 After installation, first set the following two properties in your VSCode preferences (CMD-,).
 
 - `rockset.apiserver`: The Rockset API server to use with this extension
-- `rockset.apikey`: the Rockset API key to use with this extension
+- `rockset.apikey`: The Rockset API key to use with this extension
 
 The recommended way to get started with SQL files is to use [Rockset CLI](/packages/cli).
 
