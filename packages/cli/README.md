@@ -3464,12 +3464,13 @@ OPTIONS
   -w, --workspace=workspace                                                     The qualified name of the workspace to
                                                                                 deploy
 
-  --createMissingWorkspaces                                                     If a workspace does not exist in the
-                                                                                remote, create it
-
   --dryRun                                                                      If this flag is set, the tool will print
                                                                                 out the names of the Query Lambdas it
                                                                                 would deploy and return
+
+  --failOnMissingWorkspace                                                      If a workspace does not exist in the
+                                                                                remote, the deploy will fail instead of
+                                                                                creating one
 
 DESCRIPTION
   Deploy Query Lambda entities to Rockset from your local project. 
@@ -3537,7 +3538,8 @@ ARGUMENTS
         "{ws}.{name}".
 
 OPTIONS
-  -h, --help  show CLI help
+  -d, --description=description  set the description for the new query lambda
+  -h, --help                     show CLI help
 
 DESCRIPTION
   Add an empty lambda with the specified name to the project. The path for the lambda is the same

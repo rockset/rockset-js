@@ -6,6 +6,10 @@ import * as chalk from 'chalk';
 class AddEntity extends RockCommand {
   static flags = {
     help: flags.help({ char: 'h' }),
+    description: flags.string({
+      char: 'd',
+      description: 'Set the description for the new query lambda',
+    }),
   };
 
   static args = [
@@ -30,7 +34,7 @@ Successfully added Query Lambda commons.helloWorld to path /Users/tchordia/rocks
 `;
 
   async run() {
-    const { args } = this.parse(AddEntity);
+    const { args, flags } = this.parse(AddEntity);
 
     // Will throw for invalid qualified name
     const qualifiedName = types.parseLambdaQualifiedName(args.name as string);
@@ -43,7 +47,7 @@ Successfully added Query Lambda commons.helloWorld to path /Users/tchordia/rocks
       this.error(`${qualifiedName} already exists.`);
     }
 
-    const entity = await types.createEmptyQLEntity(qualifiedName);
+    const entity = await types.createEmptyQLEntity(qualifiedName, flags?.description);
     await fileutil.writeLambda(entity);
     this.log(
       chalk`Successfully added Query Lambda {green ${qualifiedName}} to path {green ${lambda}}`,
