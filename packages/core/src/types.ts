@@ -21,6 +21,7 @@ import { getWsNamePair, relativeSQLPath } from './filesystem/pathutil';
 import { pipe } from 'fp-ts/lib/pipeable';
 
 export const ROOT_CONFIG = 'rockset.config.json' as const;
+import * as _ from 'lodash';
 
 const AuthProfile = type({
   apikey: string,
@@ -326,4 +327,13 @@ export function createEmptyQLEntity(
     sql: `-- Your SQL here
 `,
   });
+}
+
+export function mergeParameters(
+  defaultParameters: QueryParameter[],
+  overrideParameters: QueryParameter[]
+) {
+  const defObj = _.keyBy(defaultParameters, (obj) => obj.name);
+  const overrideObj = _.keyBy(overrideParameters, (obj) => obj.name);
+  return _.values({ ...defObj, ...overrideObj });
 }

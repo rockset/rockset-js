@@ -5,20 +5,10 @@ import { getQualifiedName } from '@rockset/core/dist/filesystem/pathutil';
 import open from 'open';
 import path from 'path';
 import morgan from 'morgan';
-import { QueryParameter } from '@rockset/core/dist/types';
-import * as _ from 'lodash';
+import { QueryParameter, mergeParameters } from '@rockset/core/dist/types';
 
 function notEmpty<TValue>(value: TValue | null | undefined): value is TValue {
   return value !== null && value !== undefined;
-}
-
-function mergeParameters(
-  defaultParameters: QueryParameter[],
-  overrideParameters: QueryParameter[]
-) {
-  const defObj = _.keyBy(defaultParameters, (obj) => obj.name);
-  const overrideObj = _.keyBy(overrideParameters, (obj) => obj.name);
-  return _.values({ ...defObj, ...overrideObj });
 }
 
 export async function serve(port = 3001) {

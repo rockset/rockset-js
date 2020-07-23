@@ -8,12 +8,12 @@ import {
   notEmpty,
   LambdaDeployOptions,
   LambdaQualifiedName,
-  parseAbsolutePath,
   ExecuteHooks,
   QueryParameterArray,
   LambdaDeleteOptions,
   parseWorkspaceQualifiedName,
   parseLambdaQualifiedName,
+  mergeParameters,
 } from './types';
 import {
   FetchAPI,
@@ -37,6 +37,7 @@ import {
   deletePathSafe,
   emptySrcDir,
   deleteLambda,
+  readLambdaFromQualifiedName,
 } from './filesystem/fileutil';
 import _ from 'lodash';
 import { getAuthProfile } from './filesystem/auth';
@@ -294,17 +295,16 @@ export async function executeLocalQueryLambda(
   qualifiedName: LambdaQualifiedName,
   parameters: QueryParameterArray
 ) {
-  const [srcPath, client] = await Promise.all([getSrcPath(), createClient()]);
-  const file = parseAbsolutePath(
-    resolvePathFromQualifiedName(qualifiedName, 'lambda', srcPath)
-  );
+  const [lambdaEntity, client] = await Promise.all([
+    readLambdaFromQualifiedName(qualifiedName),
+    createClient(),
+  ]);
 
   // Construct lambda entity
-  const lambdaEntity: LambdaEntity = await readLambda(qualifiedName, file);
   const { config, sql } = lambdaEntity;
 
   const default_params = config?.default_parameters ?? [];
-  const params = [...default_params, ...parameters];
+  const params = mergeParameters(default_params, parameters);
   hooks.onBeforeExecute?.(sql, params);
 
   try {
