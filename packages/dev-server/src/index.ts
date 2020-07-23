@@ -105,13 +105,12 @@ export async function serve(port = 3001) {
     }
   });
 
-  // This turns off the 304 cache policy
-  app.disable('etag');
+  app.use(express.static(path.join(__dirname, 'ui')));
+
   app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'ui', 'index.html'));
   });
 
-  app.use(express.static(path.join(__dirname, 'ui')));
   app.listen(port, () =>
     console.log(`QL dev server listening at http://localhost:${port}`)
   );
