@@ -41,7 +41,7 @@ npm install -g @rockset/cli
 ```
 
 ### Verify Your Installation
-To verify that your installation was completed successfully, you may run `rockset --version` in your command line.
+To verify that your installation was completed successfully, run `rockset --version` in your command line.
 ```
 $ rockset --version
 ```
@@ -62,13 +62,13 @@ You can update the Rockset CLI to the latest version at any time using `rockset 
 $ rockset update
 ```
 
-After an update, you will need to run `rockset autocomplete -r` to rebuild the autocomplete cache. 
+After an update, run `rockset autocomplete -r` to rebuild the autocomplete cache. 
 
 ### Installing Autocomplete
 
-The Rockset CLI Autocomplete feature allows you to preview and complete commands using your tab key. It is currently only compatible on bash and zsh, and we have no plans to support other shells at this time.
+The Rockset CLI Autocomplete feature allows you to preview and complete commands using the tab key. It is currently compatible with bash and zsh.
 
-To install this feature, update the CLI and run `rockset autocomplete` in your command line. You will receive different instructions depending on which shell you are using.
+To install this feature, run `rockset autocomplete` in your command line. You will receive different instructions depending on which shell you are using.
 ```
 $ rockset update
 $ rockset autocomplete
