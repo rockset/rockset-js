@@ -23,15 +23,12 @@ class AddEntity extends RockCommand {
   ];
 
   static examples = [
-    ` $ rockset local:queryLambda:add commons.helloWorld
+    ` $ rockset local:queryLambda:add commons.helloWorld -d "my lambda"
 Successfully added Query Lambda commons.helloWorld to path /Users/tchordia/rockset/src/commons/helloWorld.lambda.json
   `,
   ];
 
-  static description = `
-    Add an empty lambda with the specified name to the project. The path for the lambda is the same
-    as would be created with 'rockset local:resolve'.
-`;
+  static description = `Add an empty lambda with the specified name to the project`;
 
   async run() {
     const { args, flags } = this.parse(AddEntity);

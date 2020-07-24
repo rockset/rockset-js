@@ -49,7 +49,7 @@ const testAdd = async (name: string, expectedPath: string) => {
 
 const testDelete = async (name: string, expectedPath: string) => {
   await expectToExist(expectedPath);
-  await CleanEntities.run(['-l', name, '-y']);
+  await CleanEntities.run([name, '-y']);
   await expectToNotExist(expectedPath);
 };
 
@@ -202,30 +202,5 @@ describe('local command test suite', () => {
 
     // This should fail
     await expectError(async () => AddEntity.run([name]));
-  });
-
-  // Test that deleting a workspace works as expected
-  test('Delete a workspace', async () => {
-    // Expect commons to exist
-    await expectToExist(relative('commons'));
-    await CleanEntities.run(['-y', '-w', 'commons']);
-
-    // Expect commons to be deleted
-    await expectToNotExist(relative('commons'));
-
-    // Expect 'a' to exist
-    await expectToExist(relative('a'));
-    const srcPath = await getSrcPath();
-
-    // Expect the source directory to not be empty
-    expect(await isDirEmpty(srcPath)).toBeFalsy();
-  });
-
-  // Test delete all Query Lambdas
-  test('Delete Query Lambdas', async () => {
-    await CleanEntities.run(['-y']);
-    await mapAll(([, file]) => expectToNotExist(file));
-    const srcPath = await getSrcPath();
-    expect(await isDirEmpty(srcPath)).toBeTruthy();
   });
 });

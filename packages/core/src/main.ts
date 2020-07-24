@@ -172,7 +172,9 @@ export async function downloadQueryLambdas(
 
 export async function deleteQueryLambdas(options: LambdaDeleteOptions) {
   const srcPath = await getSrcPath();
-  if (options.workspace) {
+  if (options.all) {
+    return await emptySrcDir();
+  } else if (options.workspace) {
     const p = await resolvePathFromQualifiedName(
       parseWorkspaceQualifiedName(options.workspace),
       'workspace',
@@ -189,8 +191,6 @@ export async function deleteQueryLambdas(options: LambdaDeleteOptions) {
     const lambda = await readLambda(qualifiedName, file);
 
     return await deleteLambda(srcPath, file, lambda);
-  } else {
-    return await emptySrcDir();
   }
 }
 

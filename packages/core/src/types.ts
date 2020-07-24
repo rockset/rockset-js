@@ -228,6 +228,7 @@ export interface LambdaDownloadOptions {
 export interface LambdaDeleteOptions {
   workspace?: string;
   lambda?: string;
+  all?: boolean;
 }
 
 export interface LambdaDeployOptions {
