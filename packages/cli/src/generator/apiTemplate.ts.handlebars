@@ -11,12 +11,16 @@ import { cli } from 'cli-ux';
 class {{{className}}} extends RockCommand {
   static flags = {
     help: flags.help({ char: 'h' }),
+    {{#if isFileRequired}}
     file: flags.string({
       char: 'f',
+      required: true,
       description: 'The config file to execute this command from. Format must be [json|yaml]. Keys are translated into arguments of the same name. If no BODY argument is specified, the whole object, minus keys used as other arguments, will be passed in as the BODY.',
     }),
+    {{/if}}
+
     raw: flags.boolean({
-      description: 'Print the raw JSON object returned from the server.'
+      description: 'Show the raw output from the server, instead of grabbing the results. Usually used in conjunction with --output=json'
     }),
     ...cli.table.flags(),
     {{#if loadTest}}
@@ -34,6 +38,7 @@ class {{{className}}} extends RockCommand {
 
   static args = {{{args}}};
   static description = `{{{description}}}`;
+  {{{usage}}}
 
   async run() {
     const { args, flags } = this.parse({{{className}}});
@@ -41,8 +46,8 @@ class {{{className}}} extends RockCommand {
     // Rockset client object
     const client = await main.createClient();
 
-    // Arguments
-    const namedArgs :Args = {{{className}}}.args;
+    // Arguments for API call. These arguments are the same as {{{className}}}.args for a GET request
+    const namedArgs :Args = {{{apiCallArgs}}};
 
     // apicall 
     const apicall = {{{apicall}}};

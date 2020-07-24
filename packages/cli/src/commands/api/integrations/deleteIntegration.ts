@@ -11,13 +11,10 @@ import { cli } from 'cli-ux';
 class DeleteIntegration extends RockCommand {
   static flags = {
     help: flags.help({ char: 'h' }),
-    file: flags.string({
-      char: 'f',
+
+    raw: flags.boolean({
       description:
-        'The config file to execute this command from. Format must be [json|yaml]. Keys are translated into arguments of the same name. If no BODY argument is specified, the whole object, minus keys used as other arguments, will be passed in as the BODY.',
-    }),
-    full: flags.boolean({
-      description: 'Show the full results JSON object',
+        'Show the raw output from the server, instead of grabbing the results. Usually used in conjunction with --output=json',
     }),
     ...cli.table.flags(),
   };
@@ -26,7 +23,7 @@ class DeleteIntegration extends RockCommand {
     {
       name: 'integration',
       description: 'name of the integration',
-      required: false,
+      required: true,
       hidden: false,
     },
   ];
@@ -50,8 +47,15 @@ This command is a simple wrapper around the above endpoint. Please view further 
     // Rockset client object
     const client = await main.createClient();
 
-    // Arguments
-    const namedArgs: Args = DeleteIntegration.args;
+    // Arguments for API call. These arguments are the same as DeleteIntegration.args for a GET request
+    const namedArgs: Args = [
+      {
+        name: 'integration',
+        description: 'name of the integration',
+        required: true,
+        hidden: false,
+      },
+    ];
 
     // apicall
     const apicall = client.integrations.deleteIntegration.bind(client.integrations);

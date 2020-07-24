@@ -13,30 +13,19 @@ class CreateCollection extends RockCommand {
     help: flags.help({ char: 'h' }),
     file: flags.string({
       char: 'f',
+      required: true,
       description:
         'The config file to execute this command from. Format must be [json|yaml]. Keys are translated into arguments of the same name. If no BODY argument is specified, the whole object, minus keys used as other arguments, will be passed in as the BODY.',
     }),
-    full: flags.boolean({
-      description: 'Show the full results JSON object',
+
+    raw: flags.boolean({
+      description:
+        'Show the raw output from the server, instead of grabbing the results. Usually used in conjunction with --output=json',
     }),
     ...cli.table.flags(),
   };
 
-  static args = [
-    {
-      name: 'workspace',
-      description: 'name of the workspace',
-      required: false,
-      hidden: false,
-    },
-    {
-      name: 'body',
-      description:
-        'JSON Body for this POST request. Full schema at https://docs.rockset.com/rest-api#createcollection ',
-      required: false,
-      hidden: false,
-    },
-  ];
+  static args = [];
 
   static description = `
 Create Collection
@@ -51,14 +40,30 @@ This command is a simple wrapper around the above endpoint. Please view further 
 
 `;
 
+  static usage = 'api:collections:createCollection -f request.yaml';
+
   async run() {
     const { args, flags } = this.parse(CreateCollection);
 
     // Rockset client object
     const client = await main.createClient();
 
-    // Arguments
-    const namedArgs: Args = CreateCollection.args;
+    // Arguments for API call. These arguments are the same as CreateCollection.args for a GET request
+    const namedArgs: Args = [
+      {
+        name: 'workspace',
+        description: 'name of the workspace',
+        required: true,
+        hidden: false,
+      },
+      {
+        name: 'body',
+        description:
+          'JSON Body for this POST request. Full schema at https://docs.rockset.com/rest-api#createcollection ',
+        required: true,
+        hidden: false,
+      },
+    ];
 
     // apicall
     const apicall = client.collections.createCollection.bind(client.collections);

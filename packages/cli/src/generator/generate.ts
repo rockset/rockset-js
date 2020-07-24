@@ -29,17 +29,22 @@ async function generate() {
           .replace(/organizations/, 'orgs');
         const operation = get.operationId;
         const apicall = `client.${tag}.${operation}.bind(client.${tag})`;
-        const parameters = pp(
+        const rawRequestParams = get.parameters ?? [];
+        const hasBody = rawRequestParams.some((x) => x.name.toLowerCase() === 'body');
+        const apiCallArgs = pp(
           (get.parameters ?? []).map(({ name, description }) => ({
             name,
             description:
               name.toLowerCase() === 'body'
                 ? `JSON Body for this POST request. Full schema at https://docs.rockset.com/rest-api#${operation.toLowerCase()} `
                 : description,
-            required: false,
+            required: true,
             hidden: false,
           })),
         );
+        const parameters = hasBody ? pp([]) : apiCallArgs;
+        const usage =
+          method === 'POST' ? `static usage = "api:${tag}:${operation} -f request.yaml"` : '';
 
         // These are the tags that we want to support load testing for
         const loadTest = ['queryLambdas', 'queries', 'documents'].includes(tag);
@@ -48,7 +53,7 @@ ${get.summary}
 
 ${get.description}
 
-Endpoint: ${method.toUpperCase()}: ${endpoint}
+Endpoint: ${method}: ${endpoint}
 
 Endpoint Documentation: https://docs.rockset.com/rest-api#${operation.toLowerCase()}
 
@@ -58,12 +63,15 @@ This command is a simple wrapper around the above endpoint. Please view further 
 
         const output = template({
           apicall,
+          apiCallArgs,
           description,
           args: parameters,
           endpoint,
           method,
           className: capitalize(operation),
           loadTest,
+          usage,
+          isFileRequired: hasBody,
         });
         return { topic: tag, filename: operation, value: output };
       }),

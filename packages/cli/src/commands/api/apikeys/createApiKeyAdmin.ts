@@ -13,29 +13,19 @@ class CreateApiKeyAdmin extends RockCommand {
     help: flags.help({ char: 'h' }),
     file: flags.string({
       char: 'f',
+      required: true,
       description:
         'The config file to execute this command from. Format must be [json|yaml]. Keys are translated into arguments of the same name. If no BODY argument is specified, the whole object, minus keys used as other arguments, will be passed in as the BODY.',
     }),
-    full: flags.boolean({
-      description: 'Show the full results JSON object',
+
+    raw: flags.boolean({
+      description:
+        'Show the raw output from the server, instead of grabbing the results. Usually used in conjunction with --output=json',
     }),
     ...cli.table.flags(),
   };
 
-  static args = [
-    {
-      name: 'body',
-      description:
-        'JSON Body for this POST request. Full schema at https://docs.rockset.com/rest-api#createapikeyadmin ',
-      required: false,
-      hidden: false,
-    },
-    {
-      name: 'user',
-      required: false,
-      hidden: false,
-    },
-  ];
+  static args = [];
 
   static description = `
 Create API Key for any user (admin only)
@@ -50,14 +40,29 @@ This command is a simple wrapper around the above endpoint. Please view further 
 
 `;
 
+  static usage = 'api:apikeys:createApiKeyAdmin -f request.yaml';
+
   async run() {
     const { args, flags } = this.parse(CreateApiKeyAdmin);
 
     // Rockset client object
     const client = await main.createClient();
 
-    // Arguments
-    const namedArgs: Args = CreateApiKeyAdmin.args;
+    // Arguments for API call. These arguments are the same as CreateApiKeyAdmin.args for a GET request
+    const namedArgs: Args = [
+      {
+        name: 'body',
+        description:
+          'JSON Body for this POST request. Full schema at https://docs.rockset.com/rest-api#createapikeyadmin ',
+        required: true,
+        hidden: false,
+      },
+      {
+        name: 'user',
+        required: true,
+        hidden: false,
+      },
+    ];
 
     // apicall
     const apicall = client.apikeys.createApiKeyAdmin.bind(client.apikeys);

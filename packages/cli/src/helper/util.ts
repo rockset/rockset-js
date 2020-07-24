@@ -70,9 +70,9 @@ export async function runApiCall<A extends any[], Return>(
   }
   let allArgs: unknown[] = [];
 
+  // This path is only taken for POST requests
   if (flags.file) {
     // Load the specified file
-
     const configRaw: Record<string, unknown> = (await readConfigFromPath(
       makeAbsolute(flags.file),
       'YAML',
@@ -96,6 +96,7 @@ export async function runApiCall<A extends any[], Return>(
       allArgs = ordArgs;
     }
   } else {
+    // This path is only taken for GET requests
     // Pass the arguments directly into the api call
     allArgs = namedArgs.map((arg) => args[arg.name]);
   }
