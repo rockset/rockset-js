@@ -9,7 +9,6 @@ import ListEntities from '../../commands/local/queryLambda/list';
 import * as _ from 'lodash';
 import * as os from 'os';
 import * as fse from 'fs-extra';
-import { getSrcPath } from '@rockset/core/dist/filesystem/fileutil';
 import { parseLambdaQualifiedName, parseAbsolutePath } from '@rockset/core/dist/types';
 
 /**
@@ -18,11 +17,6 @@ import { parseLambdaQualifiedName, parseAbsolutePath } from '@rockset/core/dist/
  *
  * DO NOT invoke any auth commands here, as they will actually modify the user's real auth configuration file
  */
-
-async function isDirEmpty(dirname: string) {
-  const files = await fse.promises.readdir(dirname);
-  return files.length === 0;
-}
 
 const expectToExist = async (p: string | types.AbsolutePath) =>
   expect(await fileutil.exists(p)).toBeTruthy();

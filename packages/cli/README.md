@@ -855,51 +855,51 @@ To opt out of telemetry, set the ROCKSET_CLI_TELEMETRY_OPTOUT environment variab
 
 # All Commands
 <!-- commands -->
-* [`rockset api:apikeys:createApiKey [BODY]`](#rockset-apiapikeyscreateapikey-body)
-* [`rockset api:apikeys:createApiKeyAdmin [BODY] [USER]`](#rockset-apiapikeyscreateapikeyadmin-body-user)
-* [`rockset api:apikeys:deleteApiKey [NAME]`](#rockset-apiapikeysdeleteapikey-name)
-* [`rockset api:apikeys:deleteApiKeyAdmin [NAME] [USER]`](#rockset-apiapikeysdeleteapikeyadmin-name-user)
+* [`rockset api:apikeys:createApiKey -f request.yaml`](#rockset-apiapikeyscreateapikey--f-requestyaml)
+* [`rockset api:apikeys:createApiKeyAdmin -f request.yaml`](#rockset-apiapikeyscreateapikeyadmin--f-requestyaml)
+* [`rockset api:apikeys:deleteApiKey NAME`](#rockset-apiapikeysdeleteapikey-name)
+* [`rockset api:apikeys:deleteApiKeyAdmin NAME USER`](#rockset-apiapikeysdeleteapikeyadmin-name-user)
 * [`rockset api:apikeys:listApiKeys`](#rockset-apiapikeyslistapikeys)
-* [`rockset api:apikeys:listApiKeysAdmin [USER]`](#rockset-apiapikeyslistapikeysadmin-user)
-* [`rockset api:collections:createCollection [WORKSPACE] [BODY]`](#rockset-apicollectionscreatecollection-workspace-body)
-* [`rockset api:collections:deleteCollection [WORKSPACE] [COLLECTION]`](#rockset-apicollectionsdeletecollection-workspace-collection)
-* [`rockset api:collections:getCollection [WORKSPACE] [COLLECTION]`](#rockset-apicollectionsgetcollection-workspace-collection)
+* [`rockset api:apikeys:listApiKeysAdmin USER`](#rockset-apiapikeyslistapikeysadmin-user)
+* [`rockset api:collections:createCollection -f request.yaml`](#rockset-apicollectionscreatecollection--f-requestyaml)
+* [`rockset api:collections:deleteCollection WORKSPACE COLLECTION`](#rockset-apicollectionsdeletecollection-workspace-collection)
+* [`rockset api:collections:getCollection WORKSPACE COLLECTION`](#rockset-apicollectionsgetcollection-workspace-collection)
 * [`rockset api:collections:listCollections`](#rockset-apicollectionslistcollections)
-* [`rockset api:collections:listQueryLambdasInCollection [WORKSPACE] [COLLECTION]`](#rockset-apicollectionslistquerylambdasincollection-workspace-collection)
-* [`rockset api:collections:workspaceCollections [WORKSPACE]`](#rockset-apicollectionsworkspacecollections-workspace)
-* [`rockset api:documents:addDocuments [WORKSPACE] [COLLECTION] [BODY]`](#rockset-apidocumentsadddocuments-workspace-collection-body)
-* [`rockset api:documents:deleteDocuments [WORKSPACE] [COLLECTION] [BODY]`](#rockset-apidocumentsdeletedocuments-workspace-collection-body)
-* [`rockset api:documents:patchDocuments [WORKSPACE] [COLLECTION] [BODY]`](#rockset-apidocumentspatchdocuments-workspace-collection-body)
-* [`rockset api:integrations:createIntegration [BODY]`](#rockset-apiintegrationscreateintegration-body)
-* [`rockset api:integrations:deleteIntegration [INTEGRATION]`](#rockset-apiintegrationsdeleteintegration-integration)
-* [`rockset api:integrations:getIntegration [INTEGRATION]`](#rockset-apiintegrationsgetintegration-integration)
+* [`rockset api:collections:listQueryLambdasInCollection WORKSPACE COLLECTION`](#rockset-apicollectionslistquerylambdasincollection-workspace-collection)
+* [`rockset api:collections:workspaceCollections WORKSPACE`](#rockset-apicollectionsworkspacecollections-workspace)
+* [`rockset api:documents:addDocuments -f request.yaml`](#rockset-apidocumentsadddocuments--f-requestyaml)
+* [`rockset api:documents:deleteDocuments`](#rockset-apidocumentsdeletedocuments)
+* [`rockset api:documents:patchDocuments`](#rockset-apidocumentspatchdocuments)
+* [`rockset api:integrations:createIntegration -f request.yaml`](#rockset-apiintegrationscreateintegration--f-requestyaml)
+* [`rockset api:integrations:deleteIntegration INTEGRATION`](#rockset-apiintegrationsdeleteintegration-integration)
+* [`rockset api:integrations:getIntegration INTEGRATION`](#rockset-apiintegrationsgetintegration-integration)
 * [`rockset api:integrations:listIntegrations`](#rockset-apiintegrationslistintegrations)
 * [`rockset api:orgs:getOrganization`](#rockset-apiorgsgetorganization)
-* [`rockset api:queries:query [BODY]`](#rockset-apiqueriesquery-body)
-* [`rockset api:queryLambdas:createQueryLambda [WORKSPACE] [BODY]`](#rockset-apiquerylambdascreatequerylambda-workspace-body)
-* [`rockset api:queryLambdas:createQueryLambdaTag [WORKSPACE] [QUERYLAMBDA] [BODY]`](#rockset-apiquerylambdascreatequerylambdatag-workspace-querylambda-body)
-* [`rockset api:queryLambdas:deleteQueryLambda [WORKSPACE] [QUERYLAMBDA]`](#rockset-apiquerylambdasdeletequerylambda-workspace-querylambda)
-* [`rockset api:queryLambdas:deleteQueryLambdaTag [WORKSPACE] [QUERYLAMBDA] [TAG]`](#rockset-apiquerylambdasdeletequerylambdatag-workspace-querylambda-tag)
-* [`rockset api:queryLambdas:deleteQueryLambdaVersion [WORKSPACE] [QUERYLAMBDA] [VERSION]`](#rockset-apiquerylambdasdeletequerylambdaversion-workspace-querylambda-version)
-* [`rockset api:queryLambdas:executeQueryLambda [WORKSPACE] [QUERYLAMBDA] [VERSION] [BODY]`](#rockset-apiquerylambdasexecutequerylambda-workspace-querylambda-version-body)
-* [`rockset api:queryLambdas:executeQueryLambdaByTag [WORKSPACE] [QUERYLAMBDA] [TAG] [BODY]`](#rockset-apiquerylambdasexecutequerylambdabytag-workspace-querylambda-tag-body)
-* [`rockset api:queryLambdas:getQueryLambdaTagVersion [WORKSPACE] [QUERYLAMBDA] [TAG]`](#rockset-apiquerylambdasgetquerylambdatagversion-workspace-querylambda-tag)
-* [`rockset api:queryLambdas:getQueryLambdaVersion [WORKSPACE] [QUERYLAMBDA] [VERSION]`](#rockset-apiquerylambdasgetquerylambdaversion-workspace-querylambda-version)
+* [`rockset api:queries:query -f request.yaml`](#rockset-apiqueriesquery--f-requestyaml)
+* [`rockset api:queryLambdas:createQueryLambda -f request.yaml`](#rockset-apiquerylambdascreatequerylambda--f-requestyaml)
+* [`rockset api:queryLambdas:createQueryLambdaTag -f request.yaml`](#rockset-apiquerylambdascreatequerylambdatag--f-requestyaml)
+* [`rockset api:queryLambdas:deleteQueryLambda WORKSPACE QUERYLAMBDA`](#rockset-apiquerylambdasdeletequerylambda-workspace-querylambda)
+* [`rockset api:queryLambdas:deleteQueryLambdaTag WORKSPACE QUERYLAMBDA TAG`](#rockset-apiquerylambdasdeletequerylambdatag-workspace-querylambda-tag)
+* [`rockset api:queryLambdas:deleteQueryLambdaVersion WORKSPACE QUERYLAMBDA VERSION`](#rockset-apiquerylambdasdeletequerylambdaversion-workspace-querylambda-version)
+* [`rockset api:queryLambdas:executeQueryLambda -f request.yaml`](#rockset-apiquerylambdasexecutequerylambda--f-requestyaml)
+* [`rockset api:queryLambdas:executeQueryLambdaByTag -f request.yaml`](#rockset-apiquerylambdasexecutequerylambdabytag--f-requestyaml)
+* [`rockset api:queryLambdas:getQueryLambdaTagVersion WORKSPACE QUERYLAMBDA TAG`](#rockset-apiquerylambdasgetquerylambdatagversion-workspace-querylambda-tag)
+* [`rockset api:queryLambdas:getQueryLambdaVersion WORKSPACE QUERYLAMBDA VERSION`](#rockset-apiquerylambdasgetquerylambdaversion-workspace-querylambda-version)
 * [`rockset api:queryLambdas:listAllQueryLambdas`](#rockset-apiquerylambdaslistallquerylambdas)
 * [`rockset api:queryLambdas:listOrganizationTags`](#rockset-apiquerylambdaslistorganizationtags)
-* [`rockset api:queryLambdas:listQueryLambdaTagVersions [TAG]`](#rockset-apiquerylambdaslistquerylambdatagversions-tag)
-* [`rockset api:queryLambdas:listQueryLambdaTags [WORKSPACE] [QUERYLAMBDA]`](#rockset-apiquerylambdaslistquerylambdatags-workspace-querylambda)
-* [`rockset api:queryLambdas:listQueryLambdaVersions [WORKSPACE] [QUERYLAMBDA]`](#rockset-apiquerylambdaslistquerylambdaversions-workspace-querylambda)
-* [`rockset api:queryLambdas:listQueryLambdasInWorkspace [WORKSPACE]`](#rockset-apiquerylambdaslistquerylambdasinworkspace-workspace)
-* [`rockset api:queryLambdas:updateQueryLambda [WORKSPACE] [QUERYLAMBDA] [BODY] [CREATE]`](#rockset-apiquerylambdasupdatequerylambda-workspace-querylambda-body-create)
-* [`rockset api:users:createUser [BODY]`](#rockset-apiuserscreateuser-body)
-* [`rockset api:users:deleteUser [USER]`](#rockset-apiusersdeleteuser-user)
+* [`rockset api:queryLambdas:listQueryLambdaTagVersions TAG`](#rockset-apiquerylambdaslistquerylambdatagversions-tag)
+* [`rockset api:queryLambdas:listQueryLambdaTags WORKSPACE QUERYLAMBDA`](#rockset-apiquerylambdaslistquerylambdatags-workspace-querylambda)
+* [`rockset api:queryLambdas:listQueryLambdaVersions WORKSPACE QUERYLAMBDA`](#rockset-apiquerylambdaslistquerylambdaversions-workspace-querylambda)
+* [`rockset api:queryLambdas:listQueryLambdasInWorkspace WORKSPACE`](#rockset-apiquerylambdaslistquerylambdasinworkspace-workspace)
+* [`rockset api:queryLambdas:updateQueryLambda -f request.yaml`](#rockset-apiquerylambdasupdatequerylambda--f-requestyaml)
+* [`rockset api:users:createUser -f request.yaml`](#rockset-apiuserscreateuser--f-requestyaml)
+* [`rockset api:users:deleteUser USER`](#rockset-apiusersdeleteuser-user)
 * [`rockset api:users:getCurrentUser`](#rockset-apiusersgetcurrentuser)
 * [`rockset api:users:listUsers`](#rockset-apiuserslistusers)
-* [`rockset api:workspaces:childWorkspaces [WORKSPACE]`](#rockset-apiworkspaceschildworkspaces-workspace)
-* [`rockset api:workspaces:createWorkspace [BODY]`](#rockset-apiworkspacescreateworkspace-body)
-* [`rockset api:workspaces:deleteWorkspace [WORKSPACE]`](#rockset-apiworkspacesdeleteworkspace-workspace)
-* [`rockset api:workspaces:getWorkspace [WORKSPACE]`](#rockset-apiworkspacesgetworkspace-workspace)
+* [`rockset api:workspaces:childWorkspaces WORKSPACE`](#rockset-apiworkspaceschildworkspaces-workspace)
+* [`rockset api:workspaces:createWorkspace -f request.yaml`](#rockset-apiworkspacescreateworkspace--f-requestyaml)
+* [`rockset api:workspaces:deleteWorkspace WORKSPACE`](#rockset-apiworkspacesdeleteworkspace-workspace)
+* [`rockset api:workspaces:getWorkspace WORKSPACE`](#rockset-apiworkspacesgetworkspace-workspace)
 * [`rockset api:workspaces:listWorkspaces`](#rockset-apiworkspaceslistworkspaces)
 * [`rockset auth:add NAME APIKEY [APISERVER]`](#rockset-authadd-name-apikey-apiserver)
 * [`rockset auth:delete NAME`](#rockset-authdelete-name)
@@ -911,7 +911,7 @@ To opt out of telemetry, set the ROCKSET_CLI_TELEMETRY_OPTOUT environment variab
 * [`rockset local:download`](#rockset-localdownload)
 * [`rockset local:init`](#rockset-localinit)
 * [`rockset local:queryLambda:add NAME`](#rockset-localquerylambdaadd-name)
-* [`rockset local:queryLambda:delete`](#rockset-localquerylambdadelete)
+* [`rockset local:queryLambda:delete NAME`](#rockset-localquerylambdadelete-name)
 * [`rockset local:queryLambda:execute NAME`](#rockset-localquerylambdaexecute-name)
 * [`rockset local:queryLambda:list`](#rockset-localquerylambdalist)
 * [`rockset local:resolve NAME`](#rockset-localresolve-name)
@@ -919,21 +919,18 @@ To opt out of telemetry, set the ROCKSET_CLI_TELEMETRY_OPTOUT environment variab
 * [`rockset sql [SQL]`](#rockset-sql-sql)
 * [`rockset update [CHANNEL]`](#rockset-update-channel)
 
-## `rockset api:apikeys:createApiKey [BODY]`
+## `rockset api:apikeys:createApiKey -f request.yaml`
 
 Create API Key
 
 ```
 USAGE
-  $ rockset api:apikeys:createApiKey [BODY]
-
-ARGUMENTS
-  BODY  JSON Body for this POST request. Full schema at https://docs.rockset.com/rest-api#createapikey
+  $ rockset api:apikeys:createApiKey -f request.yaml
 
 OPTIONS
-  -f, --file=file         The config file to execute this command from. Format must be [json|yaml]. Keys are translated
-                          into arguments of the same name. If no BODY argument is specified, the whole object, minus
-                          keys used as other arguments, will be passed in as the BODY.
+  -f, --file=file         (required) The config file to execute this command from. Format must be [json|yaml]. Keys are
+                          translated into arguments of the same name. If no BODY argument is specified, the whole
+                          object, minus keys used as other arguments, will be passed in as the BODY.
 
   -h, --help              show CLI help
 
@@ -945,13 +942,14 @@ OPTIONS
 
   --filter=filter         filter property by partial string matching, ex: name=foo
 
-  --full                  Show the full results JSON object
-
   --no-header             hide table header from output
 
   --no-truncate           do not truncate output to fit screen
 
   --output=csv|json|yaml  output in a more machine friendly format
+
+  --raw                   Show the raw output from the server, instead of grabbing the results. Usually used in
+                          conjunction with --output=json
 
   --sort=sort             property to sort by (prepend '-' for descending)
 
@@ -969,22 +967,18 @@ DESCRIPTION
 
 _See code: [src/commands/api/apikeys/createApiKey.ts](./src/commands/api/apikeys/createApiKey.ts)_
 
-## `rockset api:apikeys:createApiKeyAdmin [BODY] [USER]`
+## `rockset api:apikeys:createApiKeyAdmin -f request.yaml`
 
 Create API Key for any user (admin only)
 
 ```
 USAGE
-  $ rockset api:apikeys:createApiKeyAdmin [BODY] [USER]
-
-ARGUMENTS
-  BODY  JSON Body for this POST request. Full schema at https://docs.rockset.com/rest-api#createapikeyadmin
-  USER
+  $ rockset api:apikeys:createApiKeyAdmin -f request.yaml
 
 OPTIONS
-  -f, --file=file         The config file to execute this command from. Format must be [json|yaml]. Keys are translated
-                          into arguments of the same name. If no BODY argument is specified, the whole object, minus
-                          keys used as other arguments, will be passed in as the BODY.
+  -f, --file=file         (required) The config file to execute this command from. Format must be [json|yaml]. Keys are
+                          translated into arguments of the same name. If no BODY argument is specified, the whole
+                          object, minus keys used as other arguments, will be passed in as the BODY.
 
   -h, --help              show CLI help
 
@@ -996,13 +990,14 @@ OPTIONS
 
   --filter=filter         filter property by partial string matching, ex: name=foo
 
-  --full                  Show the full results JSON object
-
   --no-header             hide table header from output
 
   --no-truncate           do not truncate output to fit screen
 
   --output=csv|json|yaml  output in a more machine friendly format
+
+  --raw                   Show the raw output from the server, instead of grabbing the results. Usually used in
+                          conjunction with --output=json
 
   --sort=sort             property to sort by (prepend '-' for descending)
 
@@ -1020,39 +1015,29 @@ DESCRIPTION
 
 _See code: [src/commands/api/apikeys/createApiKeyAdmin.ts](./src/commands/api/apikeys/createApiKeyAdmin.ts)_
 
-## `rockset api:apikeys:deleteApiKey [NAME]`
+## `rockset api:apikeys:deleteApiKey NAME`
 
 Delete API Key
 
 ```
 USAGE
-  $ rockset api:apikeys:deleteApiKey [NAME]
+  $ rockset api:apikeys:deleteApiKey NAME
 
 ARGUMENTS
   NAME  name of the API key
 
 OPTIONS
-  -f, --file=file         The config file to execute this command from. Format must be [json|yaml]. Keys are translated
-                          into arguments of the same name. If no BODY argument is specified, the whole object, minus
-                          keys used as other arguments, will be passed in as the BODY.
-
   -h, --help              show CLI help
-
   -x, --extended          show extra columns
-
   --columns=columns       only show provided columns (comma-separated)
-
   --csv                   output is csv format [alias: --output=csv]
-
   --filter=filter         filter property by partial string matching, ex: name=foo
-
-  --full                  Show the full results JSON object
-
   --no-header             hide table header from output
-
   --no-truncate           do not truncate output to fit screen
-
   --output=csv|json|yaml  output in a more machine friendly format
+
+  --raw                   Show the raw output from the server, instead of grabbing the results. Usually used in
+                          conjunction with --output=json
 
   --sort=sort             property to sort by (prepend '-' for descending)
 
@@ -1070,40 +1055,30 @@ DESCRIPTION
 
 _See code: [src/commands/api/apikeys/deleteApiKey.ts](./src/commands/api/apikeys/deleteApiKey.ts)_
 
-## `rockset api:apikeys:deleteApiKeyAdmin [NAME] [USER]`
+## `rockset api:apikeys:deleteApiKeyAdmin NAME USER`
 
 Delete API Key for any user (admin only)
 
 ```
 USAGE
-  $ rockset api:apikeys:deleteApiKeyAdmin [NAME] [USER]
+  $ rockset api:apikeys:deleteApiKeyAdmin NAME USER
 
 ARGUMENTS
   NAME  name of the API key
   USER
 
 OPTIONS
-  -f, --file=file         The config file to execute this command from. Format must be [json|yaml]. Keys are translated
-                          into arguments of the same name. If no BODY argument is specified, the whole object, minus
-                          keys used as other arguments, will be passed in as the BODY.
-
   -h, --help              show CLI help
-
   -x, --extended          show extra columns
-
   --columns=columns       only show provided columns (comma-separated)
-
   --csv                   output is csv format [alias: --output=csv]
-
   --filter=filter         filter property by partial string matching, ex: name=foo
-
-  --full                  Show the full results JSON object
-
   --no-header             hide table header from output
-
   --no-truncate           do not truncate output to fit screen
-
   --output=csv|json|yaml  output in a more machine friendly format
+
+  --raw                   Show the raw output from the server, instead of grabbing the results. Usually used in
+                          conjunction with --output=json
 
   --sort=sort             property to sort by (prepend '-' for descending)
 
@@ -1130,27 +1105,17 @@ USAGE
   $ rockset api:apikeys:listApiKeys
 
 OPTIONS
-  -f, --file=file         The config file to execute this command from. Format must be [json|yaml]. Keys are translated
-                          into arguments of the same name. If no BODY argument is specified, the whole object, minus
-                          keys used as other arguments, will be passed in as the BODY.
-
   -h, --help              show CLI help
-
   -x, --extended          show extra columns
-
   --columns=columns       only show provided columns (comma-separated)
-
   --csv                   output is csv format [alias: --output=csv]
-
   --filter=filter         filter property by partial string matching, ex: name=foo
-
-  --full                  Show the full results JSON object
-
   --no-header             hide table header from output
-
   --no-truncate           do not truncate output to fit screen
-
   --output=csv|json|yaml  output in a more machine friendly format
+
+  --raw                   Show the raw output from the server, instead of grabbing the results. Usually used in
+                          conjunction with --output=json
 
   --sort=sort             property to sort by (prepend '-' for descending)
 
@@ -1168,36 +1133,26 @@ DESCRIPTION
 
 _See code: [src/commands/api/apikeys/listApiKeys.ts](./src/commands/api/apikeys/listApiKeys.ts)_
 
-## `rockset api:apikeys:listApiKeysAdmin [USER]`
+## `rockset api:apikeys:listApiKeysAdmin USER`
 
 List API Keys for any user (admin only)
 
 ```
 USAGE
-  $ rockset api:apikeys:listApiKeysAdmin [USER]
+  $ rockset api:apikeys:listApiKeysAdmin USER
 
 OPTIONS
-  -f, --file=file         The config file to execute this command from. Format must be [json|yaml]. Keys are translated
-                          into arguments of the same name. If no BODY argument is specified, the whole object, minus
-                          keys used as other arguments, will be passed in as the BODY.
-
   -h, --help              show CLI help
-
   -x, --extended          show extra columns
-
   --columns=columns       only show provided columns (comma-separated)
-
   --csv                   output is csv format [alias: --output=csv]
-
   --filter=filter         filter property by partial string matching, ex: name=foo
-
-  --full                  Show the full results JSON object
-
   --no-header             hide table header from output
-
   --no-truncate           do not truncate output to fit screen
-
   --output=csv|json|yaml  output in a more machine friendly format
+
+  --raw                   Show the raw output from the server, instead of grabbing the results. Usually used in
+                          conjunction with --output=json
 
   --sort=sort             property to sort by (prepend '-' for descending)
 
@@ -1215,22 +1170,18 @@ DESCRIPTION
 
 _See code: [src/commands/api/apikeys/listApiKeysAdmin.ts](./src/commands/api/apikeys/listApiKeysAdmin.ts)_
 
-## `rockset api:collections:createCollection [WORKSPACE] [BODY]`
+## `rockset api:collections:createCollection -f request.yaml`
 
 Create Collection
 
 ```
 USAGE
-  $ rockset api:collections:createCollection [WORKSPACE] [BODY]
-
-ARGUMENTS
-  WORKSPACE  name of the workspace
-  BODY       JSON Body for this POST request. Full schema at https://docs.rockset.com/rest-api#createcollection
+  $ rockset api:collections:createCollection -f request.yaml
 
 OPTIONS
-  -f, --file=file         The config file to execute this command from. Format must be [json|yaml]. Keys are translated
-                          into arguments of the same name. If no BODY argument is specified, the whole object, minus
-                          keys used as other arguments, will be passed in as the BODY.
+  -f, --file=file         (required) The config file to execute this command from. Format must be [json|yaml]. Keys are
+                          translated into arguments of the same name. If no BODY argument is specified, the whole
+                          object, minus keys used as other arguments, will be passed in as the BODY.
 
   -h, --help              show CLI help
 
@@ -1242,13 +1193,14 @@ OPTIONS
 
   --filter=filter         filter property by partial string matching, ex: name=foo
 
-  --full                  Show the full results JSON object
-
   --no-header             hide table header from output
 
   --no-truncate           do not truncate output to fit screen
 
   --output=csv|json|yaml  output in a more machine friendly format
+
+  --raw                   Show the raw output from the server, instead of grabbing the results. Usually used in
+                          conjunction with --output=json
 
   --sort=sort             property to sort by (prepend '-' for descending)
 
@@ -1266,40 +1218,30 @@ DESCRIPTION
 
 _See code: [src/commands/api/collections/createCollection.ts](./src/commands/api/collections/createCollection.ts)_
 
-## `rockset api:collections:deleteCollection [WORKSPACE] [COLLECTION]`
+## `rockset api:collections:deleteCollection WORKSPACE COLLECTION`
 
 Delete Collection
 
 ```
 USAGE
-  $ rockset api:collections:deleteCollection [WORKSPACE] [COLLECTION]
+  $ rockset api:collections:deleteCollection WORKSPACE COLLECTION
 
 ARGUMENTS
   WORKSPACE   name of the workspace
   COLLECTION  name of the collection
 
 OPTIONS
-  -f, --file=file         The config file to execute this command from. Format must be [json|yaml]. Keys are translated
-                          into arguments of the same name. If no BODY argument is specified, the whole object, minus
-                          keys used as other arguments, will be passed in as the BODY.
-
   -h, --help              show CLI help
-
   -x, --extended          show extra columns
-
   --columns=columns       only show provided columns (comma-separated)
-
   --csv                   output is csv format [alias: --output=csv]
-
   --filter=filter         filter property by partial string matching, ex: name=foo
-
-  --full                  Show the full results JSON object
-
   --no-header             hide table header from output
-
   --no-truncate           do not truncate output to fit screen
-
   --output=csv|json|yaml  output in a more machine friendly format
+
+  --raw                   Show the raw output from the server, instead of grabbing the results. Usually used in
+                          conjunction with --output=json
 
   --sort=sort             property to sort by (prepend '-' for descending)
 
@@ -1317,40 +1259,30 @@ DESCRIPTION
 
 _See code: [src/commands/api/collections/deleteCollection.ts](./src/commands/api/collections/deleteCollection.ts)_
 
-## `rockset api:collections:getCollection [WORKSPACE] [COLLECTION]`
+## `rockset api:collections:getCollection WORKSPACE COLLECTION`
 
 Get Collection
 
 ```
 USAGE
-  $ rockset api:collections:getCollection [WORKSPACE] [COLLECTION]
+  $ rockset api:collections:getCollection WORKSPACE COLLECTION
 
 ARGUMENTS
   WORKSPACE   name of the workspace
   COLLECTION  name of the collection
 
 OPTIONS
-  -f, --file=file         The config file to execute this command from. Format must be [json|yaml]. Keys are translated
-                          into arguments of the same name. If no BODY argument is specified, the whole object, minus
-                          keys used as other arguments, will be passed in as the BODY.
-
   -h, --help              show CLI help
-
   -x, --extended          show extra columns
-
   --columns=columns       only show provided columns (comma-separated)
-
   --csv                   output is csv format [alias: --output=csv]
-
   --filter=filter         filter property by partial string matching, ex: name=foo
-
-  --full                  Show the full results JSON object
-
   --no-header             hide table header from output
-
   --no-truncate           do not truncate output to fit screen
-
   --output=csv|json|yaml  output in a more machine friendly format
+
+  --raw                   Show the raw output from the server, instead of grabbing the results. Usually used in
+                          conjunction with --output=json
 
   --sort=sort             property to sort by (prepend '-' for descending)
 
@@ -1377,27 +1309,17 @@ USAGE
   $ rockset api:collections:listCollections
 
 OPTIONS
-  -f, --file=file         The config file to execute this command from. Format must be [json|yaml]. Keys are translated
-                          into arguments of the same name. If no BODY argument is specified, the whole object, minus
-                          keys used as other arguments, will be passed in as the BODY.
-
   -h, --help              show CLI help
-
   -x, --extended          show extra columns
-
   --columns=columns       only show provided columns (comma-separated)
-
   --csv                   output is csv format [alias: --output=csv]
-
   --filter=filter         filter property by partial string matching, ex: name=foo
-
-  --full                  Show the full results JSON object
-
   --no-header             hide table header from output
-
   --no-truncate           do not truncate output to fit screen
-
   --output=csv|json|yaml  output in a more machine friendly format
+
+  --raw                   Show the raw output from the server, instead of grabbing the results. Usually used in
+                          conjunction with --output=json
 
   --sort=sort             property to sort by (prepend '-' for descending)
 
@@ -1415,40 +1337,30 @@ DESCRIPTION
 
 _See code: [src/commands/api/collections/listCollections.ts](./src/commands/api/collections/listCollections.ts)_
 
-## `rockset api:collections:listQueryLambdasInCollection [WORKSPACE] [COLLECTION]`
+## `rockset api:collections:listQueryLambdasInCollection WORKSPACE COLLECTION`
 
 Get Query Lambdas
 
 ```
 USAGE
-  $ rockset api:collections:listQueryLambdasInCollection [WORKSPACE] [COLLECTION]
+  $ rockset api:collections:listQueryLambdasInCollection WORKSPACE COLLECTION
 
 ARGUMENTS
   WORKSPACE   name of the workspace
   COLLECTION  name of the collection
 
 OPTIONS
-  -f, --file=file         The config file to execute this command from. Format must be [json|yaml]. Keys are translated
-                          into arguments of the same name. If no BODY argument is specified, the whole object, minus
-                          keys used as other arguments, will be passed in as the BODY.
-
   -h, --help              show CLI help
-
   -x, --extended          show extra columns
-
   --columns=columns       only show provided columns (comma-separated)
-
   --csv                   output is csv format [alias: --output=csv]
-
   --filter=filter         filter property by partial string matching, ex: name=foo
-
-  --full                  Show the full results JSON object
-
   --no-header             hide table header from output
-
   --no-truncate           do not truncate output to fit screen
-
   --output=csv|json|yaml  output in a more machine friendly format
+
+  --raw                   Show the raw output from the server, instead of grabbing the results. Usually used in
+                          conjunction with --output=json
 
   --sort=sort             property to sort by (prepend '-' for descending)
 
@@ -1466,39 +1378,29 @@ DESCRIPTION
 
 _See code: [src/commands/api/collections/listQueryLambdasInCollection.ts](./src/commands/api/collections/listQueryLambdasInCollection.ts)_
 
-## `rockset api:collections:workspaceCollections [WORKSPACE]`
+## `rockset api:collections:workspaceCollections WORKSPACE`
 
 List Collections for Workspace
 
 ```
 USAGE
-  $ rockset api:collections:workspaceCollections [WORKSPACE]
+  $ rockset api:collections:workspaceCollections WORKSPACE
 
 ARGUMENTS
   WORKSPACE  name of the workspace
 
 OPTIONS
-  -f, --file=file         The config file to execute this command from. Format must be [json|yaml]. Keys are translated
-                          into arguments of the same name. If no BODY argument is specified, the whole object, minus
-                          keys used as other arguments, will be passed in as the BODY.
-
   -h, --help              show CLI help
-
   -x, --extended          show extra columns
-
   --columns=columns       only show provided columns (comma-separated)
-
   --csv                   output is csv format [alias: --output=csv]
-
   --filter=filter         filter property by partial string matching, ex: name=foo
-
-  --full                  Show the full results JSON object
-
   --no-header             hide table header from output
-
   --no-truncate           do not truncate output to fit screen
-
   --output=csv|json|yaml  output in a more machine friendly format
+
+  --raw                   Show the raw output from the server, instead of grabbing the results. Usually used in
+                          conjunction with --output=json
 
   --sort=sort             property to sort by (prepend '-' for descending)
 
@@ -1516,23 +1418,18 @@ DESCRIPTION
 
 _See code: [src/commands/api/collections/workspaceCollections.ts](./src/commands/api/collections/workspaceCollections.ts)_
 
-## `rockset api:documents:addDocuments [WORKSPACE] [COLLECTION] [BODY]`
+## `rockset api:documents:addDocuments -f request.yaml`
 
 Add Documents
 
 ```
 USAGE
-  $ rockset api:documents:addDocuments [WORKSPACE] [COLLECTION] [BODY]
-
-ARGUMENTS
-  WORKSPACE   name of the workspace
-  COLLECTION  name of the collection
-  BODY        JSON Body for this POST request. Full schema at https://docs.rockset.com/rest-api#adddocuments
+  $ rockset api:documents:addDocuments -f request.yaml
 
 OPTIONS
-  -f, --file=file                The config file to execute this command from. Format must be [json|yaml]. Keys are
-                                 translated into arguments of the same name. If no BODY argument is specified, the whole
-                                 object, minus keys used as other arguments, will be passed in as the BODY.
+  -f, --file=file                (required) The config file to execute this command from. Format must be [json|yaml].
+                                 Keys are translated into arguments of the same name. If no BODY argument is specified,
+                                 the whole object, minus keys used as other arguments, will be passed in as the BODY.
 
   -h, --help                     show CLI help
 
@@ -1549,13 +1446,14 @@ OPTIONS
 
   --filter=filter                filter property by partial string matching, ex: name=foo
 
-  --full                         Show the full results JSON object
-
   --no-header                    hide table header from output
 
   --no-truncate                  do not truncate output to fit screen
 
   --output=csv|json|yaml         output in a more machine friendly format
+
+  --raw                          Show the raw output from the server, instead of grabbing the results. Usually used in
+                                 conjunction with --output=json
 
   --sort=sort                    property to sort by (prepend '-' for descending)
 
@@ -1573,23 +1471,18 @@ DESCRIPTION
 
 _See code: [src/commands/api/documents/addDocuments.ts](./src/commands/api/documents/addDocuments.ts)_
 
-## `rockset api:documents:deleteDocuments [WORKSPACE] [COLLECTION] [BODY]`
+## `rockset api:documents:deleteDocuments`
 
 Delete Documents
 
 ```
 USAGE
-  $ rockset api:documents:deleteDocuments [WORKSPACE] [COLLECTION] [BODY]
-
-ARGUMENTS
-  WORKSPACE   name of the workspace
-  COLLECTION  name of the collection
-  BODY        JSON Body for this POST request. Full schema at https://docs.rockset.com/rest-api#deletedocuments
+  $ rockset api:documents:deleteDocuments
 
 OPTIONS
-  -f, --file=file                The config file to execute this command from. Format must be [json|yaml]. Keys are
-                                 translated into arguments of the same name. If no BODY argument is specified, the whole
-                                 object, minus keys used as other arguments, will be passed in as the BODY.
+  -f, --file=file                (required) The config file to execute this command from. Format must be [json|yaml].
+                                 Keys are translated into arguments of the same name. If no BODY argument is specified,
+                                 the whole object, minus keys used as other arguments, will be passed in as the BODY.
 
   -h, --help                     show CLI help
 
@@ -1606,13 +1499,14 @@ OPTIONS
 
   --filter=filter                filter property by partial string matching, ex: name=foo
 
-  --full                         Show the full results JSON object
-
   --no-header                    hide table header from output
 
   --no-truncate                  do not truncate output to fit screen
 
   --output=csv|json|yaml         output in a more machine friendly format
+
+  --raw                          Show the raw output from the server, instead of grabbing the results. Usually used in
+                                 conjunction with --output=json
 
   --sort=sort                    property to sort by (prepend '-' for descending)
 
@@ -1630,23 +1524,18 @@ DESCRIPTION
 
 _See code: [src/commands/api/documents/deleteDocuments.ts](./src/commands/api/documents/deleteDocuments.ts)_
 
-## `rockset api:documents:patchDocuments [WORKSPACE] [COLLECTION] [BODY]`
+## `rockset api:documents:patchDocuments`
 
 Patch Documents
 
 ```
 USAGE
-  $ rockset api:documents:patchDocuments [WORKSPACE] [COLLECTION] [BODY]
-
-ARGUMENTS
-  WORKSPACE   name of the workspace
-  COLLECTION  name of the collection
-  BODY        JSON Body for this POST request. Full schema at https://docs.rockset.com/rest-api#patchdocuments
+  $ rockset api:documents:patchDocuments
 
 OPTIONS
-  -f, --file=file                The config file to execute this command from. Format must be [json|yaml]. Keys are
-                                 translated into arguments of the same name. If no BODY argument is specified, the whole
-                                 object, minus keys used as other arguments, will be passed in as the BODY.
+  -f, --file=file                (required) The config file to execute this command from. Format must be [json|yaml].
+                                 Keys are translated into arguments of the same name. If no BODY argument is specified,
+                                 the whole object, minus keys used as other arguments, will be passed in as the BODY.
 
   -h, --help                     show CLI help
 
@@ -1663,13 +1552,14 @@ OPTIONS
 
   --filter=filter                filter property by partial string matching, ex: name=foo
 
-  --full                         Show the full results JSON object
-
   --no-header                    hide table header from output
 
   --no-truncate                  do not truncate output to fit screen
 
   --output=csv|json|yaml         output in a more machine friendly format
+
+  --raw                          Show the raw output from the server, instead of grabbing the results. Usually used in
+                                 conjunction with --output=json
 
   --sort=sort                    property to sort by (prepend '-' for descending)
 
@@ -1687,21 +1577,18 @@ DESCRIPTION
 
 _See code: [src/commands/api/documents/patchDocuments.ts](./src/commands/api/documents/patchDocuments.ts)_
 
-## `rockset api:integrations:createIntegration [BODY]`
+## `rockset api:integrations:createIntegration -f request.yaml`
 
 Create Integration
 
 ```
 USAGE
-  $ rockset api:integrations:createIntegration [BODY]
-
-ARGUMENTS
-  BODY  JSON Body for this POST request. Full schema at https://docs.rockset.com/rest-api#createintegration
+  $ rockset api:integrations:createIntegration -f request.yaml
 
 OPTIONS
-  -f, --file=file         The config file to execute this command from. Format must be [json|yaml]. Keys are translated
-                          into arguments of the same name. If no BODY argument is specified, the whole object, minus
-                          keys used as other arguments, will be passed in as the BODY.
+  -f, --file=file         (required) The config file to execute this command from. Format must be [json|yaml]. Keys are
+                          translated into arguments of the same name. If no BODY argument is specified, the whole
+                          object, minus keys used as other arguments, will be passed in as the BODY.
 
   -h, --help              show CLI help
 
@@ -1713,13 +1600,14 @@ OPTIONS
 
   --filter=filter         filter property by partial string matching, ex: name=foo
 
-  --full                  Show the full results JSON object
-
   --no-header             hide table header from output
 
   --no-truncate           do not truncate output to fit screen
 
   --output=csv|json|yaml  output in a more machine friendly format
+
+  --raw                   Show the raw output from the server, instead of grabbing the results. Usually used in
+                          conjunction with --output=json
 
   --sort=sort             property to sort by (prepend '-' for descending)
 
@@ -1737,39 +1625,29 @@ DESCRIPTION
 
 _See code: [src/commands/api/integrations/createIntegration.ts](./src/commands/api/integrations/createIntegration.ts)_
 
-## `rockset api:integrations:deleteIntegration [INTEGRATION]`
+## `rockset api:integrations:deleteIntegration INTEGRATION`
 
 Delete Integration
 
 ```
 USAGE
-  $ rockset api:integrations:deleteIntegration [INTEGRATION]
+  $ rockset api:integrations:deleteIntegration INTEGRATION
 
 ARGUMENTS
   INTEGRATION  name of the integration
 
 OPTIONS
-  -f, --file=file         The config file to execute this command from. Format must be [json|yaml]. Keys are translated
-                          into arguments of the same name. If no BODY argument is specified, the whole object, minus
-                          keys used as other arguments, will be passed in as the BODY.
-
   -h, --help              show CLI help
-
   -x, --extended          show extra columns
-
   --columns=columns       only show provided columns (comma-separated)
-
   --csv                   output is csv format [alias: --output=csv]
-
   --filter=filter         filter property by partial string matching, ex: name=foo
-
-  --full                  Show the full results JSON object
-
   --no-header             hide table header from output
-
   --no-truncate           do not truncate output to fit screen
-
   --output=csv|json|yaml  output in a more machine friendly format
+
+  --raw                   Show the raw output from the server, instead of grabbing the results. Usually used in
+                          conjunction with --output=json
 
   --sort=sort             property to sort by (prepend '-' for descending)
 
@@ -1787,39 +1665,29 @@ DESCRIPTION
 
 _See code: [src/commands/api/integrations/deleteIntegration.ts](./src/commands/api/integrations/deleteIntegration.ts)_
 
-## `rockset api:integrations:getIntegration [INTEGRATION]`
+## `rockset api:integrations:getIntegration INTEGRATION`
 
 Get Integration
 
 ```
 USAGE
-  $ rockset api:integrations:getIntegration [INTEGRATION]
+  $ rockset api:integrations:getIntegration INTEGRATION
 
 ARGUMENTS
   INTEGRATION  name of the integration
 
 OPTIONS
-  -f, --file=file         The config file to execute this command from. Format must be [json|yaml]. Keys are translated
-                          into arguments of the same name. If no BODY argument is specified, the whole object, minus
-                          keys used as other arguments, will be passed in as the BODY.
-
   -h, --help              show CLI help
-
   -x, --extended          show extra columns
-
   --columns=columns       only show provided columns (comma-separated)
-
   --csv                   output is csv format [alias: --output=csv]
-
   --filter=filter         filter property by partial string matching, ex: name=foo
-
-  --full                  Show the full results JSON object
-
   --no-header             hide table header from output
-
   --no-truncate           do not truncate output to fit screen
-
   --output=csv|json|yaml  output in a more machine friendly format
+
+  --raw                   Show the raw output from the server, instead of grabbing the results. Usually used in
+                          conjunction with --output=json
 
   --sort=sort             property to sort by (prepend '-' for descending)
 
@@ -1846,27 +1714,17 @@ USAGE
   $ rockset api:integrations:listIntegrations
 
 OPTIONS
-  -f, --file=file         The config file to execute this command from. Format must be [json|yaml]. Keys are translated
-                          into arguments of the same name. If no BODY argument is specified, the whole object, minus
-                          keys used as other arguments, will be passed in as the BODY.
-
   -h, --help              show CLI help
-
   -x, --extended          show extra columns
-
   --columns=columns       only show provided columns (comma-separated)
-
   --csv                   output is csv format [alias: --output=csv]
-
   --filter=filter         filter property by partial string matching, ex: name=foo
-
-  --full                  Show the full results JSON object
-
   --no-header             hide table header from output
-
   --no-truncate           do not truncate output to fit screen
-
   --output=csv|json|yaml  output in a more machine friendly format
+
+  --raw                   Show the raw output from the server, instead of grabbing the results. Usually used in
+                          conjunction with --output=json
 
   --sort=sort             property to sort by (prepend '-' for descending)
 
@@ -1893,27 +1751,17 @@ USAGE
   $ rockset api:orgs:getOrganization
 
 OPTIONS
-  -f, --file=file         The config file to execute this command from. Format must be [json|yaml]. Keys are translated
-                          into arguments of the same name. If no BODY argument is specified, the whole object, minus
-                          keys used as other arguments, will be passed in as the BODY.
-
   -h, --help              show CLI help
-
   -x, --extended          show extra columns
-
   --columns=columns       only show provided columns (comma-separated)
-
   --csv                   output is csv format [alias: --output=csv]
-
   --filter=filter         filter property by partial string matching, ex: name=foo
-
-  --full                  Show the full results JSON object
-
   --no-header             hide table header from output
-
   --no-truncate           do not truncate output to fit screen
-
   --output=csv|json|yaml  output in a more machine friendly format
+
+  --raw                   Show the raw output from the server, instead of grabbing the results. Usually used in
+                          conjunction with --output=json
 
   --sort=sort             property to sort by (prepend '-' for descending)
 
@@ -1931,21 +1779,18 @@ DESCRIPTION
 
 _See code: [src/commands/api/orgs/getOrganization.ts](./src/commands/api/orgs/getOrganization.ts)_
 
-## `rockset api:queries:query [BODY]`
+## `rockset api:queries:query -f request.yaml`
 
 Query
 
 ```
 USAGE
-  $ rockset api:queries:query [BODY]
-
-ARGUMENTS
-  BODY  JSON Body for this POST request. Full schema at https://docs.rockset.com/rest-api#query
+  $ rockset api:queries:query -f request.yaml
 
 OPTIONS
-  -f, --file=file                The config file to execute this command from. Format must be [json|yaml]. Keys are
-                                 translated into arguments of the same name. If no BODY argument is specified, the whole
-                                 object, minus keys used as other arguments, will be passed in as the BODY.
+  -f, --file=file                (required) The config file to execute this command from. Format must be [json|yaml].
+                                 Keys are translated into arguments of the same name. If no BODY argument is specified,
+                                 the whole object, minus keys used as other arguments, will be passed in as the BODY.
 
   -h, --help                     show CLI help
 
@@ -1962,13 +1807,14 @@ OPTIONS
 
   --filter=filter                filter property by partial string matching, ex: name=foo
 
-  --full                         Show the full results JSON object
-
   --no-header                    hide table header from output
 
   --no-truncate                  do not truncate output to fit screen
 
   --output=csv|json|yaml         output in a more machine friendly format
+
+  --raw                          Show the raw output from the server, instead of grabbing the results. Usually used in
+                                 conjunction with --output=json
 
   --sort=sort                    property to sort by (prepend '-' for descending)
 
@@ -1986,22 +1832,18 @@ DESCRIPTION
 
 _See code: [src/commands/api/queries/query.ts](./src/commands/api/queries/query.ts)_
 
-## `rockset api:queryLambdas:createQueryLambda [WORKSPACE] [BODY]`
+## `rockset api:queryLambdas:createQueryLambda -f request.yaml`
 
 Create Query Lambda
 
 ```
 USAGE
-  $ rockset api:queryLambdas:createQueryLambda [WORKSPACE] [BODY]
-
-ARGUMENTS
-  WORKSPACE  name of the workspace
-  BODY       JSON Body for this POST request. Full schema at https://docs.rockset.com/rest-api#createquerylambda
+  $ rockset api:queryLambdas:createQueryLambda -f request.yaml
 
 OPTIONS
-  -f, --file=file                The config file to execute this command from. Format must be [json|yaml]. Keys are
-                                 translated into arguments of the same name. If no BODY argument is specified, the whole
-                                 object, minus keys used as other arguments, will be passed in as the BODY.
+  -f, --file=file                (required) The config file to execute this command from. Format must be [json|yaml].
+                                 Keys are translated into arguments of the same name. If no BODY argument is specified,
+                                 the whole object, minus keys used as other arguments, will be passed in as the BODY.
 
   -h, --help                     show CLI help
 
@@ -2018,13 +1860,14 @@ OPTIONS
 
   --filter=filter                filter property by partial string matching, ex: name=foo
 
-  --full                         Show the full results JSON object
-
   --no-header                    hide table header from output
 
   --no-truncate                  do not truncate output to fit screen
 
   --output=csv|json|yaml         output in a more machine friendly format
+
+  --raw                          Show the raw output from the server, instead of grabbing the results. Usually used in
+                                 conjunction with --output=json
 
   --sort=sort                    property to sort by (prepend '-' for descending)
 
@@ -2042,23 +1885,18 @@ DESCRIPTION
 
 _See code: [src/commands/api/queryLambdas/createQueryLambda.ts](./src/commands/api/queryLambdas/createQueryLambda.ts)_
 
-## `rockset api:queryLambdas:createQueryLambdaTag [WORKSPACE] [QUERYLAMBDA] [BODY]`
+## `rockset api:queryLambdas:createQueryLambdaTag -f request.yaml`
 
 Create Query Lambda Tag
 
 ```
 USAGE
-  $ rockset api:queryLambdas:createQueryLambdaTag [WORKSPACE] [QUERYLAMBDA] [BODY]
-
-ARGUMENTS
-  WORKSPACE    name of the workspace
-  QUERYLAMBDA  name of the Query Lambda
-  BODY         JSON Body for this POST request. Full schema at https://docs.rockset.com/rest-api#createquerylambdatag
+  $ rockset api:queryLambdas:createQueryLambdaTag -f request.yaml
 
 OPTIONS
-  -f, --file=file                The config file to execute this command from. Format must be [json|yaml]. Keys are
-                                 translated into arguments of the same name. If no BODY argument is specified, the whole
-                                 object, minus keys used as other arguments, will be passed in as the BODY.
+  -f, --file=file                (required) The config file to execute this command from. Format must be [json|yaml].
+                                 Keys are translated into arguments of the same name. If no BODY argument is specified,
+                                 the whole object, minus keys used as other arguments, will be passed in as the BODY.
 
   -h, --help                     show CLI help
 
@@ -2075,13 +1913,14 @@ OPTIONS
 
   --filter=filter                filter property by partial string matching, ex: name=foo
 
-  --full                         Show the full results JSON object
-
   --no-header                    hide table header from output
 
   --no-truncate                  do not truncate output to fit screen
 
   --output=csv|json|yaml         output in a more machine friendly format
+
+  --raw                          Show the raw output from the server, instead of grabbing the results. Usually used in
+                                 conjunction with --output=json
 
   --sort=sort                    property to sort by (prepend '-' for descending)
 
@@ -2099,23 +1938,19 @@ DESCRIPTION
 
 _See code: [src/commands/api/queryLambdas/createQueryLambdaTag.ts](./src/commands/api/queryLambdas/createQueryLambdaTag.ts)_
 
-## `rockset api:queryLambdas:deleteQueryLambda [WORKSPACE] [QUERYLAMBDA]`
+## `rockset api:queryLambdas:deleteQueryLambda WORKSPACE QUERYLAMBDA`
 
 Delete Query Lambda
 
 ```
 USAGE
-  $ rockset api:queryLambdas:deleteQueryLambda [WORKSPACE] [QUERYLAMBDA]
+  $ rockset api:queryLambdas:deleteQueryLambda WORKSPACE QUERYLAMBDA
 
 ARGUMENTS
   WORKSPACE    name of the workspace
   QUERYLAMBDA  name of the Query Lambda
 
 OPTIONS
-  -f, --file=file                The config file to execute this command from. Format must be [json|yaml]. Keys are
-                                 translated into arguments of the same name. If no BODY argument is specified, the whole
-                                 object, minus keys used as other arguments, will be passed in as the BODY.
-
   -h, --help                     show CLI help
 
   -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this apicall. The value
@@ -2131,13 +1966,14 @@ OPTIONS
 
   --filter=filter                filter property by partial string matching, ex: name=foo
 
-  --full                         Show the full results JSON object
-
   --no-header                    hide table header from output
 
   --no-truncate                  do not truncate output to fit screen
 
   --output=csv|json|yaml         output in a more machine friendly format
+
+  --raw                          Show the raw output from the server, instead of grabbing the results. Usually used in
+                                 conjunction with --output=json
 
   --sort=sort                    property to sort by (prepend '-' for descending)
 
@@ -2155,13 +1991,13 @@ DESCRIPTION
 
 _See code: [src/commands/api/queryLambdas/deleteQueryLambda.ts](./src/commands/api/queryLambdas/deleteQueryLambda.ts)_
 
-## `rockset api:queryLambdas:deleteQueryLambdaTag [WORKSPACE] [QUERYLAMBDA] [TAG]`
+## `rockset api:queryLambdas:deleteQueryLambdaTag WORKSPACE QUERYLAMBDA TAG`
 
 Delete Query Lambda Tag Version
 
 ```
 USAGE
-  $ rockset api:queryLambdas:deleteQueryLambdaTag [WORKSPACE] [QUERYLAMBDA] [TAG]
+  $ rockset api:queryLambdas:deleteQueryLambdaTag WORKSPACE QUERYLAMBDA TAG
 
 ARGUMENTS
   WORKSPACE    name of the workspace
@@ -2169,10 +2005,6 @@ ARGUMENTS
   TAG          name of the tag
 
 OPTIONS
-  -f, --file=file                The config file to execute this command from. Format must be [json|yaml]. Keys are
-                                 translated into arguments of the same name. If no BODY argument is specified, the whole
-                                 object, minus keys used as other arguments, will be passed in as the BODY.
-
   -h, --help                     show CLI help
 
   -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this apicall. The value
@@ -2188,13 +2020,14 @@ OPTIONS
 
   --filter=filter                filter property by partial string matching, ex: name=foo
 
-  --full                         Show the full results JSON object
-
   --no-header                    hide table header from output
 
   --no-truncate                  do not truncate output to fit screen
 
   --output=csv|json|yaml         output in a more machine friendly format
+
+  --raw                          Show the raw output from the server, instead of grabbing the results. Usually used in
+                                 conjunction with --output=json
 
   --sort=sort                    property to sort by (prepend '-' for descending)
 
@@ -2212,13 +2045,13 @@ DESCRIPTION
 
 _See code: [src/commands/api/queryLambdas/deleteQueryLambdaTag.ts](./src/commands/api/queryLambdas/deleteQueryLambdaTag.ts)_
 
-## `rockset api:queryLambdas:deleteQueryLambdaVersion [WORKSPACE] [QUERYLAMBDA] [VERSION]`
+## `rockset api:queryLambdas:deleteQueryLambdaVersion WORKSPACE QUERYLAMBDA VERSION`
 
 Delete Query Lambda Version
 
 ```
 USAGE
-  $ rockset api:queryLambdas:deleteQueryLambdaVersion [WORKSPACE] [QUERYLAMBDA] [VERSION]
+  $ rockset api:queryLambdas:deleteQueryLambdaVersion WORKSPACE QUERYLAMBDA VERSION
 
 ARGUMENTS
   WORKSPACE    name of the workspace
@@ -2226,10 +2059,6 @@ ARGUMENTS
   VERSION      version
 
 OPTIONS
-  -f, --file=file                The config file to execute this command from. Format must be [json|yaml]. Keys are
-                                 translated into arguments of the same name. If no BODY argument is specified, the whole
-                                 object, minus keys used as other arguments, will be passed in as the BODY.
-
   -h, --help                     show CLI help
 
   -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this apicall. The value
@@ -2245,13 +2074,14 @@ OPTIONS
 
   --filter=filter                filter property by partial string matching, ex: name=foo
 
-  --full                         Show the full results JSON object
-
   --no-header                    hide table header from output
 
   --no-truncate                  do not truncate output to fit screen
 
   --output=csv|json|yaml         output in a more machine friendly format
+
+  --raw                          Show the raw output from the server, instead of grabbing the results. Usually used in
+                                 conjunction with --output=json
 
   --sort=sort                    property to sort by (prepend '-' for descending)
 
@@ -2269,24 +2099,18 @@ DESCRIPTION
 
 _See code: [src/commands/api/queryLambdas/deleteQueryLambdaVersion.ts](./src/commands/api/queryLambdas/deleteQueryLambdaVersion.ts)_
 
-## `rockset api:queryLambdas:executeQueryLambda [WORKSPACE] [QUERYLAMBDA] [VERSION] [BODY]`
+## `rockset api:queryLambdas:executeQueryLambda -f request.yaml`
 
 Run Query Lambda
 
 ```
 USAGE
-  $ rockset api:queryLambdas:executeQueryLambda [WORKSPACE] [QUERYLAMBDA] [VERSION] [BODY]
-
-ARGUMENTS
-  WORKSPACE    name of the workspace
-  QUERYLAMBDA  name of the Query Lambda
-  VERSION      version
-  BODY         JSON Body for this POST request. Full schema at https://docs.rockset.com/rest-api#executequerylambda
+  $ rockset api:queryLambdas:executeQueryLambda -f request.yaml
 
 OPTIONS
-  -f, --file=file                The config file to execute this command from. Format must be [json|yaml]. Keys are
-                                 translated into arguments of the same name. If no BODY argument is specified, the whole
-                                 object, minus keys used as other arguments, will be passed in as the BODY.
+  -f, --file=file                (required) The config file to execute this command from. Format must be [json|yaml].
+                                 Keys are translated into arguments of the same name. If no BODY argument is specified,
+                                 the whole object, minus keys used as other arguments, will be passed in as the BODY.
 
   -h, --help                     show CLI help
 
@@ -2303,13 +2127,14 @@ OPTIONS
 
   --filter=filter                filter property by partial string matching, ex: name=foo
 
-  --full                         Show the full results JSON object
-
   --no-header                    hide table header from output
 
   --no-truncate                  do not truncate output to fit screen
 
   --output=csv|json|yaml         output in a more machine friendly format
+
+  --raw                          Show the raw output from the server, instead of grabbing the results. Usually used in
+                                 conjunction with --output=json
 
   --sort=sort                    property to sort by (prepend '-' for descending)
 
@@ -2327,24 +2152,18 @@ DESCRIPTION
 
 _See code: [src/commands/api/queryLambdas/executeQueryLambda.ts](./src/commands/api/queryLambdas/executeQueryLambda.ts)_
 
-## `rockset api:queryLambdas:executeQueryLambdaByTag [WORKSPACE] [QUERYLAMBDA] [TAG] [BODY]`
+## `rockset api:queryLambdas:executeQueryLambdaByTag -f request.yaml`
 
 Run Query Lambda By Tag
 
 ```
 USAGE
-  $ rockset api:queryLambdas:executeQueryLambdaByTag [WORKSPACE] [QUERYLAMBDA] [TAG] [BODY]
-
-ARGUMENTS
-  WORKSPACE    name of the workspace
-  QUERYLAMBDA  name of the Query Lambda
-  TAG          tag
-  BODY         JSON Body for this POST request. Full schema at https://docs.rockset.com/rest-api#executequerylambdabytag
+  $ rockset api:queryLambdas:executeQueryLambdaByTag -f request.yaml
 
 OPTIONS
-  -f, --file=file                The config file to execute this command from. Format must be [json|yaml]. Keys are
-                                 translated into arguments of the same name. If no BODY argument is specified, the whole
-                                 object, minus keys used as other arguments, will be passed in as the BODY.
+  -f, --file=file                (required) The config file to execute this command from. Format must be [json|yaml].
+                                 Keys are translated into arguments of the same name. If no BODY argument is specified,
+                                 the whole object, minus keys used as other arguments, will be passed in as the BODY.
 
   -h, --help                     show CLI help
 
@@ -2361,13 +2180,14 @@ OPTIONS
 
   --filter=filter                filter property by partial string matching, ex: name=foo
 
-  --full                         Show the full results JSON object
-
   --no-header                    hide table header from output
 
   --no-truncate                  do not truncate output to fit screen
 
   --output=csv|json|yaml         output in a more machine friendly format
+
+  --raw                          Show the raw output from the server, instead of grabbing the results. Usually used in
+                                 conjunction with --output=json
 
   --sort=sort                    property to sort by (prepend '-' for descending)
 
@@ -2385,13 +2205,13 @@ DESCRIPTION
 
 _See code: [src/commands/api/queryLambdas/executeQueryLambdaByTag.ts](./src/commands/api/queryLambdas/executeQueryLambdaByTag.ts)_
 
-## `rockset api:queryLambdas:getQueryLambdaTagVersion [WORKSPACE] [QUERYLAMBDA] [TAG]`
+## `rockset api:queryLambdas:getQueryLambdaTagVersion WORKSPACE QUERYLAMBDA TAG`
 
 Get Query Lambda Tag
 
 ```
 USAGE
-  $ rockset api:queryLambdas:getQueryLambdaTagVersion [WORKSPACE] [QUERYLAMBDA] [TAG]
+  $ rockset api:queryLambdas:getQueryLambdaTagVersion WORKSPACE QUERYLAMBDA TAG
 
 ARGUMENTS
   WORKSPACE    name of the workspace
@@ -2399,10 +2219,6 @@ ARGUMENTS
   TAG          name of the tag
 
 OPTIONS
-  -f, --file=file                The config file to execute this command from. Format must be [json|yaml]. Keys are
-                                 translated into arguments of the same name. If no BODY argument is specified, the whole
-                                 object, minus keys used as other arguments, will be passed in as the BODY.
-
   -h, --help                     show CLI help
 
   -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this apicall. The value
@@ -2418,13 +2234,14 @@ OPTIONS
 
   --filter=filter                filter property by partial string matching, ex: name=foo
 
-  --full                         Show the full results JSON object
-
   --no-header                    hide table header from output
 
   --no-truncate                  do not truncate output to fit screen
 
   --output=csv|json|yaml         output in a more machine friendly format
+
+  --raw                          Show the raw output from the server, instead of grabbing the results. Usually used in
+                                 conjunction with --output=json
 
   --sort=sort                    property to sort by (prepend '-' for descending)
 
@@ -2442,13 +2259,13 @@ DESCRIPTION
 
 _See code: [src/commands/api/queryLambdas/getQueryLambdaTagVersion.ts](./src/commands/api/queryLambdas/getQueryLambdaTagVersion.ts)_
 
-## `rockset api:queryLambdas:getQueryLambdaVersion [WORKSPACE] [QUERYLAMBDA] [VERSION]`
+## `rockset api:queryLambdas:getQueryLambdaVersion WORKSPACE QUERYLAMBDA VERSION`
 
 Get Query Lambda Version
 
 ```
 USAGE
-  $ rockset api:queryLambdas:getQueryLambdaVersion [WORKSPACE] [QUERYLAMBDA] [VERSION]
+  $ rockset api:queryLambdas:getQueryLambdaVersion WORKSPACE QUERYLAMBDA VERSION
 
 ARGUMENTS
   WORKSPACE    name of the workspace
@@ -2456,10 +2273,6 @@ ARGUMENTS
   VERSION      version
 
 OPTIONS
-  -f, --file=file                The config file to execute this command from. Format must be [json|yaml]. Keys are
-                                 translated into arguments of the same name. If no BODY argument is specified, the whole
-                                 object, minus keys used as other arguments, will be passed in as the BODY.
-
   -h, --help                     show CLI help
 
   -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this apicall. The value
@@ -2475,13 +2288,14 @@ OPTIONS
 
   --filter=filter                filter property by partial string matching, ex: name=foo
 
-  --full                         Show the full results JSON object
-
   --no-header                    hide table header from output
 
   --no-truncate                  do not truncate output to fit screen
 
   --output=csv|json|yaml         output in a more machine friendly format
+
+  --raw                          Show the raw output from the server, instead of grabbing the results. Usually used in
+                                 conjunction with --output=json
 
   --sort=sort                    property to sort by (prepend '-' for descending)
 
@@ -2508,10 +2322,6 @@ USAGE
   $ rockset api:queryLambdas:listAllQueryLambdas
 
 OPTIONS
-  -f, --file=file                The config file to execute this command from. Format must be [json|yaml]. Keys are
-                                 translated into arguments of the same name. If no BODY argument is specified, the whole
-                                 object, minus keys used as other arguments, will be passed in as the BODY.
-
   -h, --help                     show CLI help
 
   -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this apicall. The value
@@ -2527,13 +2337,14 @@ OPTIONS
 
   --filter=filter                filter property by partial string matching, ex: name=foo
 
-  --full                         Show the full results JSON object
-
   --no-header                    hide table header from output
 
   --no-truncate                  do not truncate output to fit screen
 
   --output=csv|json|yaml         output in a more machine friendly format
+
+  --raw                          Show the raw output from the server, instead of grabbing the results. Usually used in
+                                 conjunction with --output=json
 
   --sort=sort                    property to sort by (prepend '-' for descending)
 
@@ -2560,10 +2371,6 @@ USAGE
   $ rockset api:queryLambdas:listOrganizationTags
 
 OPTIONS
-  -f, --file=file                The config file to execute this command from. Format must be [json|yaml]. Keys are
-                                 translated into arguments of the same name. If no BODY argument is specified, the whole
-                                 object, minus keys used as other arguments, will be passed in as the BODY.
-
   -h, --help                     show CLI help
 
   -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this apicall. The value
@@ -2579,13 +2386,14 @@ OPTIONS
 
   --filter=filter                filter property by partial string matching, ex: name=foo
 
-  --full                         Show the full results JSON object
-
   --no-header                    hide table header from output
 
   --no-truncate                  do not truncate output to fit screen
 
   --output=csv|json|yaml         output in a more machine friendly format
+
+  --raw                          Show the raw output from the server, instead of grabbing the results. Usually used in
+                                 conjunction with --output=json
 
   --sort=sort                    property to sort by (prepend '-' for descending)
 
@@ -2603,22 +2411,18 @@ DESCRIPTION
 
 _See code: [src/commands/api/queryLambdas/listOrganizationTags.ts](./src/commands/api/queryLambdas/listOrganizationTags.ts)_
 
-## `rockset api:queryLambdas:listQueryLambdaTagVersions [TAG]`
+## `rockset api:queryLambdas:listQueryLambdaTagVersions TAG`
 
 List Query Lambda Tag Versions
 
 ```
 USAGE
-  $ rockset api:queryLambdas:listQueryLambdaTagVersions [TAG]
+  $ rockset api:queryLambdas:listQueryLambdaTagVersions TAG
 
 ARGUMENTS
   TAG  name of the tag
 
 OPTIONS
-  -f, --file=file                The config file to execute this command from. Format must be [json|yaml]. Keys are
-                                 translated into arguments of the same name. If no BODY argument is specified, the whole
-                                 object, minus keys used as other arguments, will be passed in as the BODY.
-
   -h, --help                     show CLI help
 
   -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this apicall. The value
@@ -2634,13 +2438,14 @@ OPTIONS
 
   --filter=filter                filter property by partial string matching, ex: name=foo
 
-  --full                         Show the full results JSON object
-
   --no-header                    hide table header from output
 
   --no-truncate                  do not truncate output to fit screen
 
   --output=csv|json|yaml         output in a more machine friendly format
+
+  --raw                          Show the raw output from the server, instead of grabbing the results. Usually used in
+                                 conjunction with --output=json
 
   --sort=sort                    property to sort by (prepend '-' for descending)
 
@@ -2658,23 +2463,19 @@ DESCRIPTION
 
 _See code: [src/commands/api/queryLambdas/listQueryLambdaTagVersions.ts](./src/commands/api/queryLambdas/listQueryLambdaTagVersions.ts)_
 
-## `rockset api:queryLambdas:listQueryLambdaTags [WORKSPACE] [QUERYLAMBDA]`
+## `rockset api:queryLambdas:listQueryLambdaTags WORKSPACE QUERYLAMBDA`
 
 List Query Lambda Tags
 
 ```
 USAGE
-  $ rockset api:queryLambdas:listQueryLambdaTags [WORKSPACE] [QUERYLAMBDA]
+  $ rockset api:queryLambdas:listQueryLambdaTags WORKSPACE QUERYLAMBDA
 
 ARGUMENTS
   WORKSPACE    name of the workspace
   QUERYLAMBDA  name of the Query Lambda
 
 OPTIONS
-  -f, --file=file                The config file to execute this command from. Format must be [json|yaml]. Keys are
-                                 translated into arguments of the same name. If no BODY argument is specified, the whole
-                                 object, minus keys used as other arguments, will be passed in as the BODY.
-
   -h, --help                     show CLI help
 
   -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this apicall. The value
@@ -2690,13 +2491,14 @@ OPTIONS
 
   --filter=filter                filter property by partial string matching, ex: name=foo
 
-  --full                         Show the full results JSON object
-
   --no-header                    hide table header from output
 
   --no-truncate                  do not truncate output to fit screen
 
   --output=csv|json|yaml         output in a more machine friendly format
+
+  --raw                          Show the raw output from the server, instead of grabbing the results. Usually used in
+                                 conjunction with --output=json
 
   --sort=sort                    property to sort by (prepend '-' for descending)
 
@@ -2714,23 +2516,19 @@ DESCRIPTION
 
 _See code: [src/commands/api/queryLambdas/listQueryLambdaTags.ts](./src/commands/api/queryLambdas/listQueryLambdaTags.ts)_
 
-## `rockset api:queryLambdas:listQueryLambdaVersions [WORKSPACE] [QUERYLAMBDA]`
+## `rockset api:queryLambdas:listQueryLambdaVersions WORKSPACE QUERYLAMBDA`
 
 List Query Lambda Versions
 
 ```
 USAGE
-  $ rockset api:queryLambdas:listQueryLambdaVersions [WORKSPACE] [QUERYLAMBDA]
+  $ rockset api:queryLambdas:listQueryLambdaVersions WORKSPACE QUERYLAMBDA
 
 ARGUMENTS
   WORKSPACE    name of the workspace
   QUERYLAMBDA  name of the Query Lambda
 
 OPTIONS
-  -f, --file=file                The config file to execute this command from. Format must be [json|yaml]. Keys are
-                                 translated into arguments of the same name. If no BODY argument is specified, the whole
-                                 object, minus keys used as other arguments, will be passed in as the BODY.
-
   -h, --help                     show CLI help
 
   -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this apicall. The value
@@ -2746,13 +2544,14 @@ OPTIONS
 
   --filter=filter                filter property by partial string matching, ex: name=foo
 
-  --full                         Show the full results JSON object
-
   --no-header                    hide table header from output
 
   --no-truncate                  do not truncate output to fit screen
 
   --output=csv|json|yaml         output in a more machine friendly format
+
+  --raw                          Show the raw output from the server, instead of grabbing the results. Usually used in
+                                 conjunction with --output=json
 
   --sort=sort                    property to sort by (prepend '-' for descending)
 
@@ -2770,22 +2569,18 @@ DESCRIPTION
 
 _See code: [src/commands/api/queryLambdas/listQueryLambdaVersions.ts](./src/commands/api/queryLambdas/listQueryLambdaVersions.ts)_
 
-## `rockset api:queryLambdas:listQueryLambdasInWorkspace [WORKSPACE]`
+## `rockset api:queryLambdas:listQueryLambdasInWorkspace WORKSPACE`
 
 List Query Lambdas
 
 ```
 USAGE
-  $ rockset api:queryLambdas:listQueryLambdasInWorkspace [WORKSPACE]
+  $ rockset api:queryLambdas:listQueryLambdasInWorkspace WORKSPACE
 
 ARGUMENTS
   WORKSPACE  name of the workspace
 
 OPTIONS
-  -f, --file=file                The config file to execute this command from. Format must be [json|yaml]. Keys are
-                                 translated into arguments of the same name. If no BODY argument is specified, the whole
-                                 object, minus keys used as other arguments, will be passed in as the BODY.
-
   -h, --help                     show CLI help
 
   -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this apicall. The value
@@ -2801,13 +2596,14 @@ OPTIONS
 
   --filter=filter                filter property by partial string matching, ex: name=foo
 
-  --full                         Show the full results JSON object
-
   --no-header                    hide table header from output
 
   --no-truncate                  do not truncate output to fit screen
 
   --output=csv|json|yaml         output in a more machine friendly format
+
+  --raw                          Show the raw output from the server, instead of grabbing the results. Usually used in
+                                 conjunction with --output=json
 
   --sort=sort                    property to sort by (prepend '-' for descending)
 
@@ -2825,24 +2621,18 @@ DESCRIPTION
 
 _See code: [src/commands/api/queryLambdas/listQueryLambdasInWorkspace.ts](./src/commands/api/queryLambdas/listQueryLambdasInWorkspace.ts)_
 
-## `rockset api:queryLambdas:updateQueryLambda [WORKSPACE] [QUERYLAMBDA] [BODY] [CREATE]`
+## `rockset api:queryLambdas:updateQueryLambda -f request.yaml`
 
 Update Query Lambda
 
 ```
 USAGE
-  $ rockset api:queryLambdas:updateQueryLambda [WORKSPACE] [QUERYLAMBDA] [BODY] [CREATE]
-
-ARGUMENTS
-  WORKSPACE    name of the workspace
-  QUERYLAMBDA  name of the Query Lambda
-  BODY         JSON Body for this POST request. Full schema at https://docs.rockset.com/rest-api#updatequerylambda
-  CREATE
+  $ rockset api:queryLambdas:updateQueryLambda -f request.yaml
 
 OPTIONS
-  -f, --file=file                The config file to execute this command from. Format must be [json|yaml]. Keys are
-                                 translated into arguments of the same name. If no BODY argument is specified, the whole
-                                 object, minus keys used as other arguments, will be passed in as the BODY.
+  -f, --file=file                (required) The config file to execute this command from. Format must be [json|yaml].
+                                 Keys are translated into arguments of the same name. If no BODY argument is specified,
+                                 the whole object, minus keys used as other arguments, will be passed in as the BODY.
 
   -h, --help                     show CLI help
 
@@ -2859,13 +2649,14 @@ OPTIONS
 
   --filter=filter                filter property by partial string matching, ex: name=foo
 
-  --full                         Show the full results JSON object
-
   --no-header                    hide table header from output
 
   --no-truncate                  do not truncate output to fit screen
 
   --output=csv|json|yaml         output in a more machine friendly format
+
+  --raw                          Show the raw output from the server, instead of grabbing the results. Usually used in
+                                 conjunction with --output=json
 
   --sort=sort                    property to sort by (prepend '-' for descending)
 
@@ -2883,21 +2674,18 @@ DESCRIPTION
 
 _See code: [src/commands/api/queryLambdas/updateQueryLambda.ts](./src/commands/api/queryLambdas/updateQueryLambda.ts)_
 
-## `rockset api:users:createUser [BODY]`
+## `rockset api:users:createUser -f request.yaml`
 
 Create User
 
 ```
 USAGE
-  $ rockset api:users:createUser [BODY]
-
-ARGUMENTS
-  BODY  JSON Body for this POST request. Full schema at https://docs.rockset.com/rest-api#createuser
+  $ rockset api:users:createUser -f request.yaml
 
 OPTIONS
-  -f, --file=file         The config file to execute this command from. Format must be [json|yaml]. Keys are translated
-                          into arguments of the same name. If no BODY argument is specified, the whole object, minus
-                          keys used as other arguments, will be passed in as the BODY.
+  -f, --file=file         (required) The config file to execute this command from. Format must be [json|yaml]. Keys are
+                          translated into arguments of the same name. If no BODY argument is specified, the whole
+                          object, minus keys used as other arguments, will be passed in as the BODY.
 
   -h, --help              show CLI help
 
@@ -2909,13 +2697,14 @@ OPTIONS
 
   --filter=filter         filter property by partial string matching, ex: name=foo
 
-  --full                  Show the full results JSON object
-
   --no-header             hide table header from output
 
   --no-truncate           do not truncate output to fit screen
 
   --output=csv|json|yaml  output in a more machine friendly format
+
+  --raw                   Show the raw output from the server, instead of grabbing the results. Usually used in
+                          conjunction with --output=json
 
   --sort=sort             property to sort by (prepend '-' for descending)
 
@@ -2933,39 +2722,29 @@ DESCRIPTION
 
 _See code: [src/commands/api/users/createUser.ts](./src/commands/api/users/createUser.ts)_
 
-## `rockset api:users:deleteUser [USER]`
+## `rockset api:users:deleteUser USER`
 
 Delete User
 
 ```
 USAGE
-  $ rockset api:users:deleteUser [USER]
+  $ rockset api:users:deleteUser USER
 
 ARGUMENTS
   USER  user email
 
 OPTIONS
-  -f, --file=file         The config file to execute this command from. Format must be [json|yaml]. Keys are translated
-                          into arguments of the same name. If no BODY argument is specified, the whole object, minus
-                          keys used as other arguments, will be passed in as the BODY.
-
   -h, --help              show CLI help
-
   -x, --extended          show extra columns
-
   --columns=columns       only show provided columns (comma-separated)
-
   --csv                   output is csv format [alias: --output=csv]
-
   --filter=filter         filter property by partial string matching, ex: name=foo
-
-  --full                  Show the full results JSON object
-
   --no-header             hide table header from output
-
   --no-truncate           do not truncate output to fit screen
-
   --output=csv|json|yaml  output in a more machine friendly format
+
+  --raw                   Show the raw output from the server, instead of grabbing the results. Usually used in
+                          conjunction with --output=json
 
   --sort=sort             property to sort by (prepend '-' for descending)
 
@@ -2992,27 +2771,17 @@ USAGE
   $ rockset api:users:getCurrentUser
 
 OPTIONS
-  -f, --file=file         The config file to execute this command from. Format must be [json|yaml]. Keys are translated
-                          into arguments of the same name. If no BODY argument is specified, the whole object, minus
-                          keys used as other arguments, will be passed in as the BODY.
-
   -h, --help              show CLI help
-
   -x, --extended          show extra columns
-
   --columns=columns       only show provided columns (comma-separated)
-
   --csv                   output is csv format [alias: --output=csv]
-
   --filter=filter         filter property by partial string matching, ex: name=foo
-
-  --full                  Show the full results JSON object
-
   --no-header             hide table header from output
-
   --no-truncate           do not truncate output to fit screen
-
   --output=csv|json|yaml  output in a more machine friendly format
+
+  --raw                   Show the raw output from the server, instead of grabbing the results. Usually used in
+                          conjunction with --output=json
 
   --sort=sort             property to sort by (prepend '-' for descending)
 
@@ -3039,27 +2808,17 @@ USAGE
   $ rockset api:users:listUsers
 
 OPTIONS
-  -f, --file=file         The config file to execute this command from. Format must be [json|yaml]. Keys are translated
-                          into arguments of the same name. If no BODY argument is specified, the whole object, minus
-                          keys used as other arguments, will be passed in as the BODY.
-
   -h, --help              show CLI help
-
   -x, --extended          show extra columns
-
   --columns=columns       only show provided columns (comma-separated)
-
   --csv                   output is csv format [alias: --output=csv]
-
   --filter=filter         filter property by partial string matching, ex: name=foo
-
-  --full                  Show the full results JSON object
-
   --no-header             hide table header from output
-
   --no-truncate           do not truncate output to fit screen
-
   --output=csv|json|yaml  output in a more machine friendly format
+
+  --raw                   Show the raw output from the server, instead of grabbing the results. Usually used in
+                          conjunction with --output=json
 
   --sort=sort             property to sort by (prepend '-' for descending)
 
@@ -3077,39 +2836,29 @@ DESCRIPTION
 
 _See code: [src/commands/api/users/listUsers.ts](./src/commands/api/users/listUsers.ts)_
 
-## `rockset api:workspaces:childWorkspaces [WORKSPACE]`
+## `rockset api:workspaces:childWorkspaces WORKSPACE`
 
 List Workspaces
 
 ```
 USAGE
-  $ rockset api:workspaces:childWorkspaces [WORKSPACE]
+  $ rockset api:workspaces:childWorkspaces WORKSPACE
 
 ARGUMENTS
   WORKSPACE  name of the workspace
 
 OPTIONS
-  -f, --file=file         The config file to execute this command from. Format must be [json|yaml]. Keys are translated
-                          into arguments of the same name. If no BODY argument is specified, the whole object, minus
-                          keys used as other arguments, will be passed in as the BODY.
-
   -h, --help              show CLI help
-
   -x, --extended          show extra columns
-
   --columns=columns       only show provided columns (comma-separated)
-
   --csv                   output is csv format [alias: --output=csv]
-
   --filter=filter         filter property by partial string matching, ex: name=foo
-
-  --full                  Show the full results JSON object
-
   --no-header             hide table header from output
-
   --no-truncate           do not truncate output to fit screen
-
   --output=csv|json|yaml  output in a more machine friendly format
+
+  --raw                   Show the raw output from the server, instead of grabbing the results. Usually used in
+                          conjunction with --output=json
 
   --sort=sort             property to sort by (prepend '-' for descending)
 
@@ -3127,21 +2876,18 @@ DESCRIPTION
 
 _See code: [src/commands/api/workspaces/childWorkspaces.ts](./src/commands/api/workspaces/childWorkspaces.ts)_
 
-## `rockset api:workspaces:createWorkspace [BODY]`
+## `rockset api:workspaces:createWorkspace -f request.yaml`
 
 Create Workspace
 
 ```
 USAGE
-  $ rockset api:workspaces:createWorkspace [BODY]
-
-ARGUMENTS
-  BODY  JSON Body for this POST request. Full schema at https://docs.rockset.com/rest-api#createworkspace
+  $ rockset api:workspaces:createWorkspace -f request.yaml
 
 OPTIONS
-  -f, --file=file         The config file to execute this command from. Format must be [json|yaml]. Keys are translated
-                          into arguments of the same name. If no BODY argument is specified, the whole object, minus
-                          keys used as other arguments, will be passed in as the BODY.
+  -f, --file=file         (required) The config file to execute this command from. Format must be [json|yaml]. Keys are
+                          translated into arguments of the same name. If no BODY argument is specified, the whole
+                          object, minus keys used as other arguments, will be passed in as the BODY.
 
   -h, --help              show CLI help
 
@@ -3153,13 +2899,14 @@ OPTIONS
 
   --filter=filter         filter property by partial string matching, ex: name=foo
 
-  --full                  Show the full results JSON object
-
   --no-header             hide table header from output
 
   --no-truncate           do not truncate output to fit screen
 
   --output=csv|json|yaml  output in a more machine friendly format
+
+  --raw                   Show the raw output from the server, instead of grabbing the results. Usually used in
+                          conjunction with --output=json
 
   --sort=sort             property to sort by (prepend '-' for descending)
 
@@ -3177,39 +2924,29 @@ DESCRIPTION
 
 _See code: [src/commands/api/workspaces/createWorkspace.ts](./src/commands/api/workspaces/createWorkspace.ts)_
 
-## `rockset api:workspaces:deleteWorkspace [WORKSPACE]`
+## `rockset api:workspaces:deleteWorkspace WORKSPACE`
 
 Delete Workspace
 
 ```
 USAGE
-  $ rockset api:workspaces:deleteWorkspace [WORKSPACE]
+  $ rockset api:workspaces:deleteWorkspace WORKSPACE
 
 ARGUMENTS
   WORKSPACE  name of the workspace
 
 OPTIONS
-  -f, --file=file         The config file to execute this command from. Format must be [json|yaml]. Keys are translated
-                          into arguments of the same name. If no BODY argument is specified, the whole object, minus
-                          keys used as other arguments, will be passed in as the BODY.
-
   -h, --help              show CLI help
-
   -x, --extended          show extra columns
-
   --columns=columns       only show provided columns (comma-separated)
-
   --csv                   output is csv format [alias: --output=csv]
-
   --filter=filter         filter property by partial string matching, ex: name=foo
-
-  --full                  Show the full results JSON object
-
   --no-header             hide table header from output
-
   --no-truncate           do not truncate output to fit screen
-
   --output=csv|json|yaml  output in a more machine friendly format
+
+  --raw                   Show the raw output from the server, instead of grabbing the results. Usually used in
+                          conjunction with --output=json
 
   --sort=sort             property to sort by (prepend '-' for descending)
 
@@ -3227,39 +2964,29 @@ DESCRIPTION
 
 _See code: [src/commands/api/workspaces/deleteWorkspace.ts](./src/commands/api/workspaces/deleteWorkspace.ts)_
 
-## `rockset api:workspaces:getWorkspace [WORKSPACE]`
+## `rockset api:workspaces:getWorkspace WORKSPACE`
 
 Get Workspace
 
 ```
 USAGE
-  $ rockset api:workspaces:getWorkspace [WORKSPACE]
+  $ rockset api:workspaces:getWorkspace WORKSPACE
 
 ARGUMENTS
   WORKSPACE  name of the workspace
 
 OPTIONS
-  -f, --file=file         The config file to execute this command from. Format must be [json|yaml]. Keys are translated
-                          into arguments of the same name. If no BODY argument is specified, the whole object, minus
-                          keys used as other arguments, will be passed in as the BODY.
-
   -h, --help              show CLI help
-
   -x, --extended          show extra columns
-
   --columns=columns       only show provided columns (comma-separated)
-
   --csv                   output is csv format [alias: --output=csv]
-
   --filter=filter         filter property by partial string matching, ex: name=foo
-
-  --full                  Show the full results JSON object
-
   --no-header             hide table header from output
-
   --no-truncate           do not truncate output to fit screen
-
   --output=csv|json|yaml  output in a more machine friendly format
+
+  --raw                   Show the raw output from the server, instead of grabbing the results. Usually used in
+                          conjunction with --output=json
 
   --sort=sort             property to sort by (prepend '-' for descending)
 
@@ -3286,27 +3013,17 @@ USAGE
   $ rockset api:workspaces:listWorkspaces
 
 OPTIONS
-  -f, --file=file         The config file to execute this command from. Format must be [json|yaml]. Keys are translated
-                          into arguments of the same name. If no BODY argument is specified, the whole object, minus
-                          keys used as other arguments, will be passed in as the BODY.
-
   -h, --help              show CLI help
-
   -x, --extended          show extra columns
-
   --columns=columns       only show provided columns (comma-separated)
-
   --csv                   output is csv format [alias: --output=csv]
-
   --filter=filter         filter property by partial string matching, ex: name=foo
-
-  --full                  Show the full results JSON object
-
   --no-header             hide table header from output
-
   --no-truncate           do not truncate output to fit screen
-
   --output=csv|json|yaml  output in a more machine friendly format
+
+  --raw                   Show the raw output from the server, instead of grabbing the results. Usually used in
+                          conjunction with --output=json
 
   --sort=sort             property to sort by (prepend '-' for descending)
 
@@ -3527,7 +3244,7 @@ _See code: [src/commands/local/init.ts](./src/commands/local/init.ts)_
 
 ## `rockset local:queryLambda:add NAME`
 
-Add an empty lambda with the specified name to the project. The path for the lambda is the same
+Add an empty lambda with the specified name to the project
 
 ```
 USAGE
@@ -3541,37 +3258,33 @@ OPTIONS
   -d, --description=description  Set the description for the new query lambda
   -h, --help                     show CLI help
 
-DESCRIPTION
-  Add an empty lambda with the specified name to the project. The path for the lambda is the same
-       as would be created with 'rockset local:resolve'.
-
 EXAMPLE
-    $ rockset local:queryLambda:add commons.helloWorld
+    $ rockset local:queryLambda:add commons.helloWorld -d "my lambda"
   Successfully added Query Lambda commons.helloWorld to path /Users/tchordia/rockset/src/commons/helloWorld.lambda.json
 ```
 
 _See code: [src/commands/local/queryLambda/add.ts](./src/commands/local/queryLambda/add.ts)_
 
-## `rockset local:queryLambda:delete`
+## `rockset local:queryLambda:delete NAME`
 
-Delete all Query Lambdas from the project.
+Delete a lambda with the specified name from the project
 
 ```
 USAGE
-  $ rockset local:queryLambda:delete
+  $ rockset local:queryLambda:delete NAME
+
+ARGUMENTS
+  NAME  The fully qualified name of the lambda you wish to add. A Qualified Name is a string formatted like
+        "{ws}.{name}".
 
 OPTIONS
-  -h, --help                 show CLI help
-  -l, --lambda=lambda        The qualified name of the lambda to delete
-  -w, --workspace=workspace  The qualified name of the workspace to delete
-  -y, --yes                  Bypass the safety checks, and automatically engage in dangerous actions.
+  -h, --help  show CLI help
+  -y, --yes   Bypass the safety checks, and automatically engage in dangerous actions.
 
-DESCRIPTION
-  Delete all Query Lambdas from the project.
-
-  If a workspace parameter is passed, only that workspace will be deleted.
-  If a lambda parameter is passed, only that lambda will be deleted.
-  These two parameters are mutually exclusive, only one may be passed.
+EXAMPLE
+  $ rockset local:queryLambda:delete commons.foo
+  ✔ WARNING: This operation will delete commons.foo, and all associated files in the current project, and can result in 
+  a loss of work. Are you sure you would like to proceed? … no
 ```
 
 _See code: [src/commands/local/queryLambda/delete.ts](./src/commands/local/queryLambda/delete.ts)_
