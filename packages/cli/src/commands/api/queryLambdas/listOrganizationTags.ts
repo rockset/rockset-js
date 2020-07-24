@@ -6,7 +6,10 @@ import { main } from '@rockset/core';
 import { runApiCall, Args } from '../../../helper/util';
 import { RockCommand } from '../../../base-command';
 
+import * as chalk from 'chalk';
 import { cli } from 'cli-ux';
+
+const bodySchema = ``;
 
 class ListOrganizationTags extends RockCommand {
   static flags = {
@@ -16,11 +19,11 @@ class ListOrganizationTags extends RockCommand {
       description:
         'Show the raw output from the server, instead of grabbing the results. Usually used in conjunction with --output=json',
     }),
-    ...cli.table.flags(),
+    ...cli.table.flags({ only: ['columns', 'output'] }),
     loadTestRps: flags.integer({
       char: 'l',
       description:
-        'If this flag is active, a load test will be conducted using this apicall. The value passed to this flag determines how many requests per second will be sent',
+        'If this flag is active, a load test will be conducted using this endpoint. The value passed to this flag determines how many requests per second will be sent',
     }),
     yes: flags.boolean({
       char: 'y',
@@ -32,17 +35,19 @@ class ListOrganizationTags extends RockCommand {
   static args = [];
 
   static description = `
-List Query Lambda Tags
+Arguments to this command will be passed as URL parameters to ${chalk.bold(
+    `GET: /v1/orgs/self/lambdas/tags`,
+  )}
 
+
+Endpoint Reference
+GET: /v1/orgs/self/lambdas/tags
+List Query Lambda Tags
 List all tags in an organization
 
-Endpoint: GET: /v1/orgs/self/lambdas/tags
+More documentation at ${chalk.underline(`https://docs.rockset.com/rest-api#listorganizationtags`)}`;
 
-Endpoint Documentation: https://docs.rockset.com/rest-api#listorganizationtags
-
-This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
-
-`;
+  static examples = ['$ rockset api:queryLambdas:listOrganizationTags '];
 
   async run() {
     const { args, flags } = this.parse(ListOrganizationTags);
@@ -50,8 +55,7 @@ This command is a simple wrapper around the above endpoint. Please view further 
     // Rockset client object
     const client = await main.createClient();
 
-    // Arguments for API call. These arguments are the same as ListOrganizationTags.args for a GET request
-    const namedArgs: Args = [];
+    const namedArgs: Args = ListOrganizationTags.args;
 
     // apicall
     const apicall = client.queryLambdas.listOrganizationTags.bind(client.queryLambdas);
@@ -60,7 +64,7 @@ This command is a simple wrapper around the above endpoint. Please view further 
     const endpoint = '/v1/orgs/self/lambdas/tags';
     const method = 'GET';
 
-    await runApiCall.bind(this)({ args, flags, namedArgs, apicall, method, endpoint });
+    await runApiCall.bind(this)({ args, flags, namedArgs, apicall, method, endpoint, bodySchema });
   }
 }
 

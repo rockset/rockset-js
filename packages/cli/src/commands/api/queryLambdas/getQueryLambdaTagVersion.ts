@@ -6,7 +6,10 @@ import { main } from '@rockset/core';
 import { runApiCall, Args } from '../../../helper/util';
 import { RockCommand } from '../../../base-command';
 
+import * as chalk from 'chalk';
 import { cli } from 'cli-ux';
+
+const bodySchema = ``;
 
 class GetQueryLambdaTagVersion extends RockCommand {
   static flags = {
@@ -16,11 +19,11 @@ class GetQueryLambdaTagVersion extends RockCommand {
       description:
         'Show the raw output from the server, instead of grabbing the results. Usually used in conjunction with --output=json',
     }),
-    ...cli.table.flags(),
+    ...cli.table.flags({ only: ['columns', 'output'] }),
     loadTestRps: flags.integer({
       char: 'l',
       description:
-        'If this flag is active, a load test will be conducted using this apicall. The value passed to this flag determines how many requests per second will be sent',
+        'If this flag is active, a load test will be conducted using this endpoint. The value passed to this flag determines how many requests per second will be sent',
     }),
     yes: flags.boolean({
       char: 'y',
@@ -51,17 +54,23 @@ class GetQueryLambdaTagVersion extends RockCommand {
   ];
 
   static description = `
-Get Query Lambda Tag
+Arguments to this command will be passed as URL parameters to ${chalk.bold(
+    `GET: /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/tags/{tag}`,
+  )}
 
+
+Endpoint Reference
+GET: /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/tags/{tag}
+Get Query Lambda Tag
 Get the specific Query Lambda version associated with a given tag
 
-Endpoint: GET: /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/tags/{tag}
+More documentation at ${chalk.underline(
+    `https://docs.rockset.com/rest-api#getquerylambdatagversion`,
+  )}`;
 
-Endpoint Documentation: https://docs.rockset.com/rest-api#getquerylambdatagversion
-
-This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
-
-`;
+  static examples = [
+    '$ rockset api:queryLambdas:getQueryLambdaTagVersion WORKSPACE QUERYLAMBDA TAG',
+  ];
 
   async run() {
     const { args, flags } = this.parse(GetQueryLambdaTagVersion);
@@ -69,27 +78,7 @@ This command is a simple wrapper around the above endpoint. Please view further 
     // Rockset client object
     const client = await main.createClient();
 
-    // Arguments for API call. These arguments are the same as GetQueryLambdaTagVersion.args for a GET request
-    const namedArgs: Args = [
-      {
-        name: 'workspace',
-        description: 'name of the workspace',
-        required: true,
-        hidden: false,
-      },
-      {
-        name: 'queryLambda',
-        description: 'name of the Query Lambda',
-        required: true,
-        hidden: false,
-      },
-      {
-        name: 'tag',
-        description: 'name of the tag',
-        required: true,
-        hidden: false,
-      },
-    ];
+    const namedArgs: Args = GetQueryLambdaTagVersion.args;
 
     // apicall
     const apicall = client.queryLambdas.getQueryLambdaTagVersion.bind(client.queryLambdas);
@@ -98,7 +87,7 @@ This command is a simple wrapper around the above endpoint. Please view further 
     const endpoint = '/v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/tags/{tag}';
     const method = 'GET';
 
-    await runApiCall.bind(this)({ args, flags, namedArgs, apicall, method, endpoint });
+    await runApiCall.bind(this)({ args, flags, namedArgs, apicall, method, endpoint, bodySchema });
   }
 }
 

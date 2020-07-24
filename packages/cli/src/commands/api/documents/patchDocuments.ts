@@ -6,27 +6,36 @@ import { main } from '@rockset/core';
 import { runApiCall, Args } from '../../../helper/util';
 import { RockCommand } from '../../../base-command';
 
+import * as chalk from 'chalk';
 import { cli } from 'cli-ux';
+
+const bodySchema = `data:
+  - _id: ca2d6832-1bfd-f88f-0620-d2aa27a5d86c
+    patch:
+      - op: add
+        path: /foo/bar
+        value: baz
+        from: null
+`;
 
 class PatchDocuments extends RockCommand {
   static flags = {
     help: flags.help({ char: 'h' }),
-    file: flags.string({
-      char: 'f',
+    body: flags.string({
       required: true,
       description:
-        'The config file to execute this command from. Format must be [json|yaml]. Keys are translated into arguments of the same name. If no BODY argument is specified, the whole object, minus keys used as other arguments, will be passed in as the BODY.',
+        'Path to a file whose contents will be passed as the POST body of this request. Format must be [json|yaml]. An example schema is shown below.',
     }),
 
     raw: flags.boolean({
       description:
         'Show the raw output from the server, instead of grabbing the results. Usually used in conjunction with --output=json',
     }),
-    ...cli.table.flags(),
+    ...cli.table.flags({ only: ['columns', 'output'] }),
     loadTestRps: flags.integer({
       char: 'l',
       description:
-        'If this flag is active, a load test will be conducted using this apicall. The value passed to this flag determines how many requests per second will be sent',
+        'If this flag is active, a load test will be conducted using this endpoint. The value passed to this flag determines how many requests per second will be sent',
     }),
     yes: flags.boolean({
       char: 'y',
@@ -35,20 +44,47 @@ class PatchDocuments extends RockCommand {
     }),
   };
 
-  static args = [];
+  static args = [
+    {
+      name: 'workspace',
+      description: 'name of the workspace',
+      required: true,
+      hidden: false,
+    },
+    {
+      name: 'collection',
+      description: 'name of the collection',
+      required: true,
+      hidden: false,
+    },
+  ];
 
   static description = `
-Patch Documents
+Arguments to this command will be passed as URL parameters to ${chalk.bold(
+    `PATCH: /v1/orgs/self/ws/{workspace}/collections/{collection}/docs`,
+  )}
+${chalk.bold(`This endpoint REQUIRES a PATCH body. To specify a PATCH body, please pass a JSON or YAML file to the --body flag.
+       `)}
+Example Body:
+data:
+  - _id: ca2d6832-1bfd-f88f-0620-d2aa27a5d86c
+    patch:
+      - op: add
+        path: /foo/bar
+        value: baz
+        from: null
 
+
+Endpoint Reference
+PATCH: /v1/orgs/self/ws/{workspace}/collections/{collection}/docs
+Patch Documents
 Patch documents in a collection
 
-Endpoint: PATCH: /v1/orgs/self/ws/{workspace}/collections/{collection}/docs
+More documentation at ${chalk.underline(`https://docs.rockset.com/rest-api#patchdocuments`)}`;
 
-Endpoint Documentation: https://docs.rockset.com/rest-api#patchdocuments
-
-This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
-
-`;
+  static examples = [
+    '$ rockset api:documents:patchDocuments WORKSPACE COLLECTION --body body.yaml\n$ cat body.yaml\ndata:\n  - _id: ca2d6832-1bfd-f88f-0620-d2aa27a5d86c\n    patch:\n      - op: add\n        path: /foo/bar\n        value: baz\n        from: null\n\n',
+  ];
 
   async run() {
     const { args, flags } = this.parse(PatchDocuments);
@@ -56,28 +92,7 @@ This command is a simple wrapper around the above endpoint. Please view further 
     // Rockset client object
     const client = await main.createClient();
 
-    // Arguments for API call. These arguments are the same as PatchDocuments.args for a GET request
-    const namedArgs: Args = [
-      {
-        name: 'workspace',
-        description: 'name of the workspace',
-        required: true,
-        hidden: false,
-      },
-      {
-        name: 'collection',
-        description: 'name of the collection',
-        required: true,
-        hidden: false,
-      },
-      {
-        name: 'body',
-        description:
-          'JSON Body for this POST request. Full schema at https://docs.rockset.com/rest-api#patchdocuments ',
-        required: true,
-        hidden: false,
-      },
-    ];
+    const namedArgs: Args = PatchDocuments.args;
 
     // apicall
     const apicall = client.documents.patchDocuments.bind(client.documents);
@@ -86,7 +101,7 @@ This command is a simple wrapper around the above endpoint. Please view further 
     const endpoint = '/v1/orgs/self/ws/{workspace}/collections/{collection}/docs';
     const method = 'PATCH';
 
-    await runApiCall.bind(this)({ args, flags, namedArgs, apicall, method, endpoint });
+    await runApiCall.bind(this)({ args, flags, namedArgs, apicall, method, endpoint, bodySchema });
   }
 }
 

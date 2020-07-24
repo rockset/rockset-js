@@ -6,7 +6,10 @@ import { main } from '@rockset/core';
 import { runApiCall, Args } from '../../../helper/util';
 import { RockCommand } from '../../../base-command';
 
+import * as chalk from 'chalk';
 import { cli } from 'cli-ux';
+
+const bodySchema = ``;
 
 class DeleteWorkspace extends RockCommand {
   static flags = {
@@ -16,7 +19,7 @@ class DeleteWorkspace extends RockCommand {
       description:
         'Show the raw output from the server, instead of grabbing the results. Usually used in conjunction with --output=json',
     }),
-    ...cli.table.flags(),
+    ...cli.table.flags({ only: ['columns', 'output'] }),
   };
 
   static args = [
@@ -29,17 +32,19 @@ class DeleteWorkspace extends RockCommand {
   ];
 
   static description = `
-Delete Workspace
+Arguments to this command will be passed as URL parameters to ${chalk.bold(
+    `DELETE: /v1/orgs/self/ws/{workspace}`,
+  )}
 
+
+Endpoint Reference
+DELETE: /v1/orgs/self/ws/{workspace}
+Delete Workspace
 Remove a workspace.
 
-Endpoint: DELETE: /v1/orgs/self/ws/{workspace}
+More documentation at ${chalk.underline(`https://docs.rockset.com/rest-api#deleteworkspace`)}`;
 
-Endpoint Documentation: https://docs.rockset.com/rest-api#deleteworkspace
-
-This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
-
-`;
+  static examples = ['$ rockset api:workspaces:deleteWorkspace WORKSPACE'];
 
   async run() {
     const { args, flags } = this.parse(DeleteWorkspace);
@@ -47,15 +52,7 @@ This command is a simple wrapper around the above endpoint. Please view further 
     // Rockset client object
     const client = await main.createClient();
 
-    // Arguments for API call. These arguments are the same as DeleteWorkspace.args for a GET request
-    const namedArgs: Args = [
-      {
-        name: 'workspace',
-        description: 'name of the workspace',
-        required: true,
-        hidden: false,
-      },
-    ];
+    const namedArgs: Args = DeleteWorkspace.args;
 
     // apicall
     const apicall = client.workspaces.deleteWorkspace.bind(client.workspaces);
@@ -64,7 +61,7 @@ This command is a simple wrapper around the above endpoint. Please view further 
     const endpoint = '/v1/orgs/self/ws/{workspace}';
     const method = 'DELETE';
 
-    await runApiCall.bind(this)({ args, flags, namedArgs, apicall, method, endpoint });
+    await runApiCall.bind(this)({ args, flags, namedArgs, apicall, method, endpoint, bodySchema });
   }
 }
 

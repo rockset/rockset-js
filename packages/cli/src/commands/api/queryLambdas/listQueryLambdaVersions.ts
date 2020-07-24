@@ -6,7 +6,10 @@ import { main } from '@rockset/core';
 import { runApiCall, Args } from '../../../helper/util';
 import { RockCommand } from '../../../base-command';
 
+import * as chalk from 'chalk';
 import { cli } from 'cli-ux';
+
+const bodySchema = ``;
 
 class ListQueryLambdaVersions extends RockCommand {
   static flags = {
@@ -16,11 +19,11 @@ class ListQueryLambdaVersions extends RockCommand {
       description:
         'Show the raw output from the server, instead of grabbing the results. Usually used in conjunction with --output=json',
     }),
-    ...cli.table.flags(),
+    ...cli.table.flags({ only: ['columns', 'output'] }),
     loadTestRps: flags.integer({
       char: 'l',
       description:
-        'If this flag is active, a load test will be conducted using this apicall. The value passed to this flag determines how many requests per second will be sent',
+        'If this flag is active, a load test will be conducted using this endpoint. The value passed to this flag determines how many requests per second will be sent',
     }),
     yes: flags.boolean({
       char: 'y',
@@ -45,17 +48,21 @@ class ListQueryLambdaVersions extends RockCommand {
   ];
 
   static description = `
-List Query Lambda Versions
+Arguments to this command will be passed as URL parameters to ${chalk.bold(
+    `GET: /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/versions`,
+  )}
 
+
+Endpoint Reference
+GET: /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/versions
+List Query Lambda Versions
 List all versions of a Query Lambda.
 
-Endpoint: GET: /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/versions
+More documentation at ${chalk.underline(
+    `https://docs.rockset.com/rest-api#listquerylambdaversions`,
+  )}`;
 
-Endpoint Documentation: https://docs.rockset.com/rest-api#listquerylambdaversions
-
-This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
-
-`;
+  static examples = ['$ rockset api:queryLambdas:listQueryLambdaVersions WORKSPACE QUERYLAMBDA'];
 
   async run() {
     const { args, flags } = this.parse(ListQueryLambdaVersions);
@@ -63,21 +70,7 @@ This command is a simple wrapper around the above endpoint. Please view further 
     // Rockset client object
     const client = await main.createClient();
 
-    // Arguments for API call. These arguments are the same as ListQueryLambdaVersions.args for a GET request
-    const namedArgs: Args = [
-      {
-        name: 'workspace',
-        description: 'name of the workspace',
-        required: true,
-        hidden: false,
-      },
-      {
-        name: 'queryLambda',
-        description: 'name of the Query Lambda',
-        required: true,
-        hidden: false,
-      },
-    ];
+    const namedArgs: Args = ListQueryLambdaVersions.args;
 
     // apicall
     const apicall = client.queryLambdas.listQueryLambdaVersions.bind(client.queryLambdas);
@@ -86,7 +79,7 @@ This command is a simple wrapper around the above endpoint. Please view further 
     const endpoint = '/v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/versions';
     const method = 'GET';
 
-    await runApiCall.bind(this)({ args, flags, namedArgs, apicall, method, endpoint });
+    await runApiCall.bind(this)({ args, flags, namedArgs, apicall, method, endpoint, bodySchema });
   }
 }
 

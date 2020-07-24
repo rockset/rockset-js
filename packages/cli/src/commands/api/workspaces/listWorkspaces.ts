@@ -6,7 +6,10 @@ import { main } from '@rockset/core';
 import { runApiCall, Args } from '../../../helper/util';
 import { RockCommand } from '../../../base-command';
 
+import * as chalk from 'chalk';
 import { cli } from 'cli-ux';
+
+const bodySchema = ``;
 
 class ListWorkspaces extends RockCommand {
   static flags = {
@@ -16,23 +19,23 @@ class ListWorkspaces extends RockCommand {
       description:
         'Show the raw output from the server, instead of grabbing the results. Usually used in conjunction with --output=json',
     }),
-    ...cli.table.flags(),
+    ...cli.table.flags({ only: ['columns', 'output'] }),
   };
 
   static args = [];
 
   static description = `
-List Workspaces
+Arguments to this command will be passed as URL parameters to ${chalk.bold(`GET: /v1/orgs/self/ws`)}
 
+
+Endpoint Reference
+GET: /v1/orgs/self/ws
+List Workspaces
 List all workspaces.
 
-Endpoint: GET: /v1/orgs/self/ws
+More documentation at ${chalk.underline(`https://docs.rockset.com/rest-api#listworkspaces`)}`;
 
-Endpoint Documentation: https://docs.rockset.com/rest-api#listworkspaces
-
-This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
-
-`;
+  static examples = ['$ rockset api:workspaces:listWorkspaces '];
 
   async run() {
     const { args, flags } = this.parse(ListWorkspaces);
@@ -40,8 +43,7 @@ This command is a simple wrapper around the above endpoint. Please view further 
     // Rockset client object
     const client = await main.createClient();
 
-    // Arguments for API call. These arguments are the same as ListWorkspaces.args for a GET request
-    const namedArgs: Args = [];
+    const namedArgs: Args = ListWorkspaces.args;
 
     // apicall
     const apicall = client.workspaces.listWorkspaces.bind(client.workspaces);
@@ -50,7 +52,7 @@ This command is a simple wrapper around the above endpoint. Please view further 
     const endpoint = '/v1/orgs/self/ws';
     const method = 'GET';
 
-    await runApiCall.bind(this)({ args, flags, namedArgs, apicall, method, endpoint });
+    await runApiCall.bind(this)({ args, flags, namedArgs, apicall, method, endpoint, bodySchema });
   }
 }
 

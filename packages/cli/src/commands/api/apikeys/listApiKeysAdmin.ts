@@ -6,7 +6,10 @@ import { main } from '@rockset/core';
 import { runApiCall, Args } from '../../../helper/util';
 import { RockCommand } from '../../../base-command';
 
+import * as chalk from 'chalk';
 import { cli } from 'cli-ux';
+
+const bodySchema = ``;
 
 class ListApiKeysAdmin extends RockCommand {
   static flags = {
@@ -16,7 +19,7 @@ class ListApiKeysAdmin extends RockCommand {
       description:
         'Show the raw output from the server, instead of grabbing the results. Usually used in conjunction with --output=json',
     }),
-    ...cli.table.flags(),
+    ...cli.table.flags({ only: ['columns', 'output'] }),
   };
 
   static args = [
@@ -28,17 +31,19 @@ class ListApiKeysAdmin extends RockCommand {
   ];
 
   static description = `
-List API Keys for any user (admin only)
+Arguments to this command will be passed as URL parameters to ${chalk.bold(
+    `GET: /v1/orgs/self/users/{user}/apikeys`,
+  )}
 
+
+Endpoint Reference
+GET: /v1/orgs/self/users/{user}/apikeys
+List API Keys for any user (admin only)
 List all API keys for any user (admin only).
 
-Endpoint: GET: /v1/orgs/self/users/{user}/apikeys
+More documentation at ${chalk.underline(`https://docs.rockset.com/rest-api#listapikeysadmin`)}`;
 
-Endpoint Documentation: https://docs.rockset.com/rest-api#listapikeysadmin
-
-This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
-
-`;
+  static examples = ['$ rockset api:apikeys:listApiKeysAdmin USER'];
 
   async run() {
     const { args, flags } = this.parse(ListApiKeysAdmin);
@@ -46,14 +51,7 @@ This command is a simple wrapper around the above endpoint. Please view further 
     // Rockset client object
     const client = await main.createClient();
 
-    // Arguments for API call. These arguments are the same as ListApiKeysAdmin.args for a GET request
-    const namedArgs: Args = [
-      {
-        name: 'user',
-        required: true,
-        hidden: false,
-      },
-    ];
+    const namedArgs: Args = ListApiKeysAdmin.args;
 
     // apicall
     const apicall = client.apikeys.listApiKeysAdmin.bind(client.apikeys);
@@ -62,7 +60,7 @@ This command is a simple wrapper around the above endpoint. Please view further 
     const endpoint = '/v1/orgs/self/users/{user}/apikeys';
     const method = 'GET';
 
-    await runApiCall.bind(this)({ args, flags, namedArgs, apicall, method, endpoint });
+    await runApiCall.bind(this)({ args, flags, namedArgs, apicall, method, endpoint, bodySchema });
   }
 }
 

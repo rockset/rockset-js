@@ -6,7 +6,10 @@ import { main } from '@rockset/core';
 import { runApiCall, Args } from '../../../helper/util';
 import { RockCommand } from '../../../base-command';
 
+import * as chalk from 'chalk';
 import { cli } from 'cli-ux';
+
+const bodySchema = ``;
 
 class WorkspaceCollections extends RockCommand {
   static flags = {
@@ -16,7 +19,7 @@ class WorkspaceCollections extends RockCommand {
       description:
         'Show the raw output from the server, instead of grabbing the results. Usually used in conjunction with --output=json',
     }),
-    ...cli.table.flags(),
+    ...cli.table.flags({ only: ['columns', 'output'] }),
   };
 
   static args = [
@@ -29,17 +32,19 @@ class WorkspaceCollections extends RockCommand {
   ];
 
   static description = `
-List Collections for Workspace
+Arguments to this command will be passed as URL parameters to ${chalk.bold(
+    `GET: /v1/orgs/self/ws/{workspace}/collections`,
+  )}
 
+
+Endpoint Reference
+GET: /v1/orgs/self/ws/{workspace}/collections
+List Collections for Workspace
 Retrieve all collections in a workspace.
 
-Endpoint: GET: /v1/orgs/self/ws/{workspace}/collections
+More documentation at ${chalk.underline(`https://docs.rockset.com/rest-api#workspacecollections`)}`;
 
-Endpoint Documentation: https://docs.rockset.com/rest-api#workspacecollections
-
-This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
-
-`;
+  static examples = ['$ rockset api:collections:workspaceCollections WORKSPACE'];
 
   async run() {
     const { args, flags } = this.parse(WorkspaceCollections);
@@ -47,15 +52,7 @@ This command is a simple wrapper around the above endpoint. Please view further 
     // Rockset client object
     const client = await main.createClient();
 
-    // Arguments for API call. These arguments are the same as WorkspaceCollections.args for a GET request
-    const namedArgs: Args = [
-      {
-        name: 'workspace',
-        description: 'name of the workspace',
-        required: true,
-        hidden: false,
-      },
-    ];
+    const namedArgs: Args = WorkspaceCollections.args;
 
     // apicall
     const apicall = client.collections.workspaceCollections.bind(client.collections);
@@ -64,7 +61,7 @@ This command is a simple wrapper around the above endpoint. Please view further 
     const endpoint = '/v1/orgs/self/ws/{workspace}/collections';
     const method = 'GET';
 
-    await runApiCall.bind(this)({ args, flags, namedArgs, apicall, method, endpoint });
+    await runApiCall.bind(this)({ args, flags, namedArgs, apicall, method, endpoint, bodySchema });
   }
 }
 

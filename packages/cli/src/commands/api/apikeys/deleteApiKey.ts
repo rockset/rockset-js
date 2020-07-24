@@ -6,7 +6,10 @@ import { main } from '@rockset/core';
 import { runApiCall, Args } from '../../../helper/util';
 import { RockCommand } from '../../../base-command';
 
+import * as chalk from 'chalk';
 import { cli } from 'cli-ux';
+
+const bodySchema = ``;
 
 class DeleteApiKey extends RockCommand {
   static flags = {
@@ -16,7 +19,7 @@ class DeleteApiKey extends RockCommand {
       description:
         'Show the raw output from the server, instead of grabbing the results. Usually used in conjunction with --output=json',
     }),
-    ...cli.table.flags(),
+    ...cli.table.flags({ only: ['columns', 'output'] }),
   };
 
   static args = [
@@ -29,17 +32,19 @@ class DeleteApiKey extends RockCommand {
   ];
 
   static description = `
-Delete API Key
+Arguments to this command will be passed as URL parameters to ${chalk.bold(
+    `DELETE: /v1/orgs/self/users/self/apikeys/{name}`,
+  )}
 
+
+Endpoint Reference
+DELETE: /v1/orgs/self/users/self/apikeys/{name}
+Delete API Key
 Delete an API key for the authenticated user.
 
-Endpoint: DELETE: /v1/orgs/self/users/self/apikeys/{name}
+More documentation at ${chalk.underline(`https://docs.rockset.com/rest-api#deleteapikey`)}`;
 
-Endpoint Documentation: https://docs.rockset.com/rest-api#deleteapikey
-
-This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
-
-`;
+  static examples = ['$ rockset api:apikeys:deleteApiKey NAME'];
 
   async run() {
     const { args, flags } = this.parse(DeleteApiKey);
@@ -47,15 +52,7 @@ This command is a simple wrapper around the above endpoint. Please view further 
     // Rockset client object
     const client = await main.createClient();
 
-    // Arguments for API call. These arguments are the same as DeleteApiKey.args for a GET request
-    const namedArgs: Args = [
-      {
-        name: 'name',
-        description: 'name of the API key',
-        required: true,
-        hidden: false,
-      },
-    ];
+    const namedArgs: Args = DeleteApiKey.args;
 
     // apicall
     const apicall = client.apikeys.deleteApiKey.bind(client.apikeys);
@@ -64,7 +61,7 @@ This command is a simple wrapper around the above endpoint. Please view further 
     const endpoint = '/v1/orgs/self/users/self/apikeys/{name}';
     const method = 'DELETE';
 
-    await runApiCall.bind(this)({ args, flags, namedArgs, apicall, method, endpoint });
+    await runApiCall.bind(this)({ args, flags, namedArgs, apicall, method, endpoint, bodySchema });
   }
 }
 

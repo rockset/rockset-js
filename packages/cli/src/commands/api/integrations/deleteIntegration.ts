@@ -6,7 +6,10 @@ import { main } from '@rockset/core';
 import { runApiCall, Args } from '../../../helper/util';
 import { RockCommand } from '../../../base-command';
 
+import * as chalk from 'chalk';
 import { cli } from 'cli-ux';
+
+const bodySchema = ``;
 
 class DeleteIntegration extends RockCommand {
   static flags = {
@@ -16,7 +19,7 @@ class DeleteIntegration extends RockCommand {
       description:
         'Show the raw output from the server, instead of grabbing the results. Usually used in conjunction with --output=json',
     }),
-    ...cli.table.flags(),
+    ...cli.table.flags({ only: ['columns', 'output'] }),
   };
 
   static args = [
@@ -29,17 +32,19 @@ class DeleteIntegration extends RockCommand {
   ];
 
   static description = `
-Delete Integration
+Arguments to this command will be passed as URL parameters to ${chalk.bold(
+    `DELETE: /v1/orgs/self/integrations/{integration}`,
+  )}
 
+
+Endpoint Reference
+DELETE: /v1/orgs/self/integrations/{integration}
+Delete Integration
 Remove an integration.
 
-Endpoint: DELETE: /v1/orgs/self/integrations/{integration}
+More documentation at ${chalk.underline(`https://docs.rockset.com/rest-api#deleteintegration`)}`;
 
-Endpoint Documentation: https://docs.rockset.com/rest-api#deleteintegration
-
-This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
-
-`;
+  static examples = ['$ rockset api:integrations:deleteIntegration INTEGRATION'];
 
   async run() {
     const { args, flags } = this.parse(DeleteIntegration);
@@ -47,15 +52,7 @@ This command is a simple wrapper around the above endpoint. Please view further 
     // Rockset client object
     const client = await main.createClient();
 
-    // Arguments for API call. These arguments are the same as DeleteIntegration.args for a GET request
-    const namedArgs: Args = [
-      {
-        name: 'integration',
-        description: 'name of the integration',
-        required: true,
-        hidden: false,
-      },
-    ];
+    const namedArgs: Args = DeleteIntegration.args;
 
     // apicall
     const apicall = client.integrations.deleteIntegration.bind(client.integrations);
@@ -64,7 +61,7 @@ This command is a simple wrapper around the above endpoint. Please view further 
     const endpoint = '/v1/orgs/self/integrations/{integration}';
     const method = 'DELETE';
 
-    await runApiCall.bind(this)({ args, flags, namedArgs, apicall, method, endpoint });
+    await runApiCall.bind(this)({ args, flags, namedArgs, apicall, method, endpoint, bodySchema });
   }
 }
 

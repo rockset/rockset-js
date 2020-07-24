@@ -6,7 +6,10 @@ import { main } from '@rockset/core';
 import { runApiCall, Args } from '../../../helper/util';
 import { RockCommand } from '../../../base-command';
 
+import * as chalk from 'chalk';
 import { cli } from 'cli-ux';
+
+const bodySchema = ``;
 
 class DeleteUser extends RockCommand {
   static flags = {
@@ -16,7 +19,7 @@ class DeleteUser extends RockCommand {
       description:
         'Show the raw output from the server, instead of grabbing the results. Usually used in conjunction with --output=json',
     }),
-    ...cli.table.flags(),
+    ...cli.table.flags({ only: ['columns', 'output'] }),
   };
 
   static args = [
@@ -29,17 +32,19 @@ class DeleteUser extends RockCommand {
   ];
 
   static description = `
-Delete User
+Arguments to this command will be passed as URL parameters to ${chalk.bold(
+    `DELETE: /v1/orgs/self/users/{user}`,
+  )}
 
+
+Endpoint Reference
+DELETE: /v1/orgs/self/users/{user}
+Delete User
 Delete a user from an organization.
 
-Endpoint: DELETE: /v1/orgs/self/users/{user}
+More documentation at ${chalk.underline(`https://docs.rockset.com/rest-api#deleteuser`)}`;
 
-Endpoint Documentation: https://docs.rockset.com/rest-api#deleteuser
-
-This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
-
-`;
+  static examples = ['$ rockset api:users:deleteUser USER'];
 
   async run() {
     const { args, flags } = this.parse(DeleteUser);
@@ -47,15 +52,7 @@ This command is a simple wrapper around the above endpoint. Please view further 
     // Rockset client object
     const client = await main.createClient();
 
-    // Arguments for API call. These arguments are the same as DeleteUser.args for a GET request
-    const namedArgs: Args = [
-      {
-        name: 'user',
-        description: 'user email',
-        required: true,
-        hidden: false,
-      },
-    ];
+    const namedArgs: Args = DeleteUser.args;
 
     // apicall
     const apicall = client.users.deleteUser.bind(client.users);
@@ -64,7 +61,7 @@ This command is a simple wrapper around the above endpoint. Please view further 
     const endpoint = '/v1/orgs/self/users/{user}';
     const method = 'DELETE';
 
-    await runApiCall.bind(this)({ args, flags, namedArgs, apicall, method, endpoint });
+    await runApiCall.bind(this)({ args, flags, namedArgs, apicall, method, endpoint, bodySchema });
   }
 }
 

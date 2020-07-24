@@ -22,7 +22,7 @@ interface Options {
   printLine?(s: unknown): unknown;
 }
 export interface Flags extends Options {
-  file?: string;
+  body?: string;
   loadTestRps?: number;
   yes?: boolean;
   raw?: boolean;
@@ -53,6 +53,7 @@ export async function runApiCall<A extends any[], Return>(
     apicall: Apicall<A, Return>;
     method: string;
     endpoint: string;
+    bodySchema: string;
   },
 ) {
   const log = this.log.bind(this) ?? console.log;
@@ -68,37 +69,20 @@ export async function runApiCall<A extends any[], Return>(
       showTable([data], flags);
     }
   }
-  let allArgs: unknown[] = [];
+
+  // Pass the URL arguments directly into the api call
+  const allArgs: unknown[] = namedArgs
+    .filter((arg) => arg.name !== 'body')
+    .map((arg) => args[arg.name]);
 
   // This path is only taken for POST requests
-  if (flags.file) {
+  if (flags.body) {
     // Load the specified file
     const configRaw: Record<string, unknown> = (await readConfigFromPath(
-      makeAbsolute(flags.file),
+      makeAbsolute(flags.body),
       'YAML',
     )) as Record<string, string>;
-
-    const config = _.mapKeys(configRaw, (v, key: string) => key.toLowerCase());
-    const argNames = namedArgs.map(({ name }) => name.toLowerCase());
-
-    // For each of the named arguments, pull the corresponding key from the object
-    const ordArgs = argNames.map((name) => config[name]).filter((x) => x);
-
-    // The body parameter wasn't specified: extract it from the config
-    if (ordArgs.length !== namedArgs.length && !config.body) {
-      const body = _.chain(config)
-        .entries()
-        .filter(([key]) => !argNames.some((name) => name === key))
-        .fromPairs()
-        .value();
-      allArgs = [...ordArgs, body];
-    } else {
-      allArgs = ordArgs;
-    }
-  } else {
-    // This path is only taken for GET requests
-    // Pass the arguments directly into the api call
-    allArgs = namedArgs.map((arg) => args[arg.name]);
+    allArgs.push(configRaw);
   }
 
   this.info(`${method}: ${endpoint}`);

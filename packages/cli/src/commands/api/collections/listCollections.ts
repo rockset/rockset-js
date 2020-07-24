@@ -6,7 +6,10 @@ import { main } from '@rockset/core';
 import { runApiCall, Args } from '../../../helper/util';
 import { RockCommand } from '../../../base-command';
 
+import * as chalk from 'chalk';
 import { cli } from 'cli-ux';
+
+const bodySchema = ``;
 
 class ListCollections extends RockCommand {
   static flags = {
@@ -16,23 +19,25 @@ class ListCollections extends RockCommand {
       description:
         'Show the raw output from the server, instead of grabbing the results. Usually used in conjunction with --output=json',
     }),
-    ...cli.table.flags(),
+    ...cli.table.flags({ only: ['columns', 'output'] }),
   };
 
   static args = [];
 
   static description = `
-List Collections
+Arguments to this command will be passed as URL parameters to ${chalk.bold(
+    `GET: /v1/orgs/self/collections`,
+  )}
 
+
+Endpoint Reference
+GET: /v1/orgs/self/collections
+List Collections
 Retrieve all collections in an organization.
 
-Endpoint: GET: /v1/orgs/self/collections
+More documentation at ${chalk.underline(`https://docs.rockset.com/rest-api#listcollections`)}`;
 
-Endpoint Documentation: https://docs.rockset.com/rest-api#listcollections
-
-This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
-
-`;
+  static examples = ['$ rockset api:collections:listCollections '];
 
   async run() {
     const { args, flags } = this.parse(ListCollections);
@@ -40,8 +45,7 @@ This command is a simple wrapper around the above endpoint. Please view further 
     // Rockset client object
     const client = await main.createClient();
 
-    // Arguments for API call. These arguments are the same as ListCollections.args for a GET request
-    const namedArgs: Args = [];
+    const namedArgs: Args = ListCollections.args;
 
     // apicall
     const apicall = client.collections.listCollections.bind(client.collections);
@@ -50,7 +54,7 @@ This command is a simple wrapper around the above endpoint. Please view further 
     const endpoint = '/v1/orgs/self/collections';
     const method = 'GET';
 
-    await runApiCall.bind(this)({ args, flags, namedArgs, apicall, method, endpoint });
+    await runApiCall.bind(this)({ args, flags, namedArgs, apicall, method, endpoint, bodySchema });
   }
 }
 

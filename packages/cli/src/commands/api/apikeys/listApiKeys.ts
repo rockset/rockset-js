@@ -6,7 +6,10 @@ import { main } from '@rockset/core';
 import { runApiCall, Args } from '../../../helper/util';
 import { RockCommand } from '../../../base-command';
 
+import * as chalk from 'chalk';
 import { cli } from 'cli-ux';
+
+const bodySchema = ``;
 
 class ListApiKeys extends RockCommand {
   static flags = {
@@ -16,23 +19,25 @@ class ListApiKeys extends RockCommand {
       description:
         'Show the raw output from the server, instead of grabbing the results. Usually used in conjunction with --output=json',
     }),
-    ...cli.table.flags(),
+    ...cli.table.flags({ only: ['columns', 'output'] }),
   };
 
   static args = [];
 
   static description = `
-List API Keys
+Arguments to this command will be passed as URL parameters to ${chalk.bold(
+    `GET: /v1/orgs/self/users/self/apikeys`,
+  )}
 
+
+Endpoint Reference
+GET: /v1/orgs/self/users/self/apikeys
+List API Keys
 List all API keys for the authenticated user.
 
-Endpoint: GET: /v1/orgs/self/users/self/apikeys
+More documentation at ${chalk.underline(`https://docs.rockset.com/rest-api#listapikeys`)}`;
 
-Endpoint Documentation: https://docs.rockset.com/rest-api#listapikeys
-
-This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
-
-`;
+  static examples = ['$ rockset api:apikeys:listApiKeys '];
 
   async run() {
     const { args, flags } = this.parse(ListApiKeys);
@@ -40,8 +45,7 @@ This command is a simple wrapper around the above endpoint. Please view further 
     // Rockset client object
     const client = await main.createClient();
 
-    // Arguments for API call. These arguments are the same as ListApiKeys.args for a GET request
-    const namedArgs: Args = [];
+    const namedArgs: Args = ListApiKeys.args;
 
     // apicall
     const apicall = client.apikeys.listApiKeys.bind(client.apikeys);
@@ -50,7 +54,7 @@ This command is a simple wrapper around the above endpoint. Please view further 
     const endpoint = '/v1/orgs/self/users/self/apikeys';
     const method = 'GET';
 
-    await runApiCall.bind(this)({ args, flags, namedArgs, apicall, method, endpoint });
+    await runApiCall.bind(this)({ args, flags, namedArgs, apicall, method, endpoint, bodySchema });
   }
 }
 

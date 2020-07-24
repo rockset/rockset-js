@@ -6,41 +6,52 @@ import { main } from '@rockset/core';
 import { runApiCall, Args } from '../../../helper/util';
 import { RockCommand } from '../../../base-command';
 
+import * as chalk from 'chalk';
 import { cli } from 'cli-ux';
+
+const bodySchema = `name: event_logs
+description: Datasets of system logs for the ops team.
+`;
 
 class CreateWorkspace extends RockCommand {
   static flags = {
     help: flags.help({ char: 'h' }),
-    file: flags.string({
-      char: 'f',
+    body: flags.string({
       required: true,
       description:
-        'The config file to execute this command from. Format must be [json|yaml]. Keys are translated into arguments of the same name. If no BODY argument is specified, the whole object, minus keys used as other arguments, will be passed in as the BODY.',
+        'Path to a file whose contents will be passed as the POST body of this request. Format must be [json|yaml]. An example schema is shown below.',
     }),
 
     raw: flags.boolean({
       description:
         'Show the raw output from the server, instead of grabbing the results. Usually used in conjunction with --output=json',
     }),
-    ...cli.table.flags(),
+    ...cli.table.flags({ only: ['columns', 'output'] }),
   };
 
   static args = [];
 
   static description = `
-Create Workspace
+Arguments to this command will be passed as URL parameters to ${chalk.bold(
+    `POST: /v1/orgs/self/ws`,
+  )}
+${chalk.bold(`This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
+       `)}
+Example Body:
+name: event_logs
+description: Datasets of system logs for the ops team.
 
+
+Endpoint Reference
+POST: /v1/orgs/self/ws
+Create Workspace
 Create a new workspace in your org.
 
-Endpoint: POST: /v1/orgs/self/ws
+More documentation at ${chalk.underline(`https://docs.rockset.com/rest-api#createworkspace`)}`;
 
-Endpoint Documentation: https://docs.rockset.com/rest-api#createworkspace
-
-This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
-
-`;
-
-  static usage = 'api:workspaces:createWorkspace -f request.yaml';
+  static examples = [
+    '$ rockset api:workspaces:createWorkspace  --body body.yaml\n$ cat body.yaml\nname: event_logs\ndescription: Datasets of system logs for the ops team.\n\n',
+  ];
 
   async run() {
     const { args, flags } = this.parse(CreateWorkspace);
@@ -48,16 +59,7 @@ This command is a simple wrapper around the above endpoint. Please view further 
     // Rockset client object
     const client = await main.createClient();
 
-    // Arguments for API call. These arguments are the same as CreateWorkspace.args for a GET request
-    const namedArgs: Args = [
-      {
-        name: 'body',
-        description:
-          'JSON Body for this POST request. Full schema at https://docs.rockset.com/rest-api#createworkspace ',
-        required: true,
-        hidden: false,
-      },
-    ];
+    const namedArgs: Args = CreateWorkspace.args;
 
     // apicall
     const apicall = client.workspaces.createWorkspace.bind(client.workspaces);
@@ -66,7 +68,7 @@ This command is a simple wrapper around the above endpoint. Please view further 
     const endpoint = '/v1/orgs/self/ws';
     const method = 'POST';
 
-    await runApiCall.bind(this)({ args, flags, namedArgs, apicall, method, endpoint });
+    await runApiCall.bind(this)({ args, flags, namedArgs, apicall, method, endpoint, bodySchema });
   }
 }
 

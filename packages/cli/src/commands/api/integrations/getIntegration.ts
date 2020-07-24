@@ -6,7 +6,10 @@ import { main } from '@rockset/core';
 import { runApiCall, Args } from '../../../helper/util';
 import { RockCommand } from '../../../base-command';
 
+import * as chalk from 'chalk';
 import { cli } from 'cli-ux';
+
+const bodySchema = ``;
 
 class GetIntegration extends RockCommand {
   static flags = {
@@ -16,7 +19,7 @@ class GetIntegration extends RockCommand {
       description:
         'Show the raw output from the server, instead of grabbing the results. Usually used in conjunction with --output=json',
     }),
-    ...cli.table.flags(),
+    ...cli.table.flags({ only: ['columns', 'output'] }),
   };
 
   static args = [
@@ -29,17 +32,19 @@ class GetIntegration extends RockCommand {
   ];
 
   static description = `
-Get Integration
+Arguments to this command will be passed as URL parameters to ${chalk.bold(
+    `GET: /v1/orgs/self/integrations/{integration}`,
+  )}
 
+
+Endpoint Reference
+GET: /v1/orgs/self/integrations/{integration}
+Get Integration
 Get information about a single integration.
 
-Endpoint: GET: /v1/orgs/self/integrations/{integration}
+More documentation at ${chalk.underline(`https://docs.rockset.com/rest-api#getintegration`)}`;
 
-Endpoint Documentation: https://docs.rockset.com/rest-api#getintegration
-
-This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
-
-`;
+  static examples = ['$ rockset api:integrations:getIntegration INTEGRATION'];
 
   async run() {
     const { args, flags } = this.parse(GetIntegration);
@@ -47,15 +52,7 @@ This command is a simple wrapper around the above endpoint. Please view further 
     // Rockset client object
     const client = await main.createClient();
 
-    // Arguments for API call. These arguments are the same as GetIntegration.args for a GET request
-    const namedArgs: Args = [
-      {
-        name: 'integration',
-        description: 'name of the integration',
-        required: true,
-        hidden: false,
-      },
-    ];
+    const namedArgs: Args = GetIntegration.args;
 
     // apicall
     const apicall = client.integrations.getIntegration.bind(client.integrations);
@@ -64,7 +61,7 @@ This command is a simple wrapper around the above endpoint. Please view further 
     const endpoint = '/v1/orgs/self/integrations/{integration}';
     const method = 'GET';
 
-    await runApiCall.bind(this)({ args, flags, namedArgs, apicall, method, endpoint });
+    await runApiCall.bind(this)({ args, flags, namedArgs, apicall, method, endpoint, bodySchema });
   }
 }
 
