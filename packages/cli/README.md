@@ -162,10 +162,19 @@ $ rockset local:init -y
 #. Add a Query Lambda to your project
 $ rockset local:queryLambda:add commons.helloWorld
 
+#. View the SQL file associated with your query lambda
+rockset local:resolve --sql commons.helloWorld
+
+#. We recommend editing the SQL file using our VSCode plugin for the best support
+#. Alternatively, you can edit in your favorite editor, or write text from the command line as below 
 #. Write text to your Query Lambda
 $ echo "SELECT 'hello, world' \"Hello World\"" > `rockset local:resolve --sql commons.helloWorld`
 
 #. Execute your Query Lambda, and select the result
+#. Using the local development ui
+$ rockset local:serve
+
+#. Or execute from the command line
 $ rockset local:queryLambda:execute commons.helloWorld | jq '.results'
 [INFO]: About to execute commons.helloWorld from local project...
 [INFO]: SQL: SELECT 'hello, world' "Hello World"
