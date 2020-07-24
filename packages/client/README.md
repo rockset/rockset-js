@@ -32,7 +32,7 @@ Full API Reference of the Javascript SDK can be found [here](https://docs.rockse
 ### Import Using Require
 
 ```ts
-const rockset = require("rockset").default(
+const rockset = require("@rockset/client").default(
   apikey,
   "https://api.rs2.usw2.rockset.com"
 );
@@ -45,7 +45,7 @@ await rockset.queries.query({
 ### Import Using ES6 Syntax
 
 ```ts
-import rocksetConfigure from "rockset";
+import rocksetConfigure from "@rockset/client";
 const rockset = rocksetConfigure(apikey, "https://api.rs2.usw2.rockset.com");
 
 await rockset.queries.query({
@@ -214,7 +214,7 @@ _Note this does not cancel the API request on Rockset's servers_
 
 ```ts
 import axios from "axios";
-import rocksetConfigure from "rockset";
+import rocksetConfigure from "@rockset/client";
 
 // Super simple fetch with axios: axios docs show how to check for errors, cancel requests etc.
 const customFetchAxios = async (
