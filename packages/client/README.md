@@ -29,7 +29,7 @@ Full API Reference of the Javascript SDK can be found [here](https://docs.rockse
 
 ## Usage
 
-### Import Using Require
+### Import
 
 ```ts
 const rockset = require("@rockset/client").default(
@@ -42,7 +42,7 @@ await rockset.queries.query({
 });
 ```
 
-### Import Using ES6 Syntax
+### Import (ES6 Syntax)
 
 ```ts
 import rocksetConfigure from "@rockset/client";
@@ -52,6 +52,8 @@ await rockset.queries.query({
   sql: { query: "SELECT count(*) FROM _events" },
 });
 ```
+
+Note: you can import using CommonJS syntax.
 
 ### Create a Collection
 
