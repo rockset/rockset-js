@@ -3,7 +3,7 @@
   "version": "0.6.2",
   "main": "dist/index.js",
   "description": "Client for querying Rockset and interacting with the Rockset API.",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "directories": {
     "test": "tests"
   },

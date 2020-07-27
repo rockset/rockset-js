@@ -52,6 +52,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "license": "MIT",
+  "license": "Apache-2.0",
   "gitHead": "a995e39183da8c1641b9b16917dfb5067e258893"
 }

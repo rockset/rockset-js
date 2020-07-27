@@ -1,6 +1,7 @@
 {
   "name": "rockset",
   "private": true,
+  "license": "Apache-2.0",
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^2.32.0",
     "@typescript-eslint/parser": "^2.32.0",
