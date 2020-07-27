@@ -23,9 +23,9 @@ npm i @rockset/client
 ```
 
 
-## Documentation
+## Complete Reference
 
-Full API Reference of the Javascript SDK can be found [here](https://docs.rockset.com/client/node/docs/).
+A complete reference of this library (powered by [TypeDoc](https://typedoc.org/) can be found [here](https://docs.rockset.com/client/node/docs/).
 
 ## Usage
 
