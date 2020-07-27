@@ -9,9 +9,10 @@ class ExecuteQueryLambda extends RockCommand {
     help: flags.help({ char: 'h' }),
     parameters: flags.string({
       char: 'p',
-      description: 'A JSON string of parameters to execute the query with.',
+      description: 'a JSON string of parameters to execute the query with.',
       required: false,
       hidden: false,
+      helpValue: `[{"name":"param","value":"foo","type":"string"}]`,
     }),
   };
 
@@ -20,18 +21,14 @@ class ExecuteQueryLambda extends RockCommand {
       name: 'name',
       required: true,
       hidden: false,
-      description: 'The fully qualified name of the Query Lambda you wish to execute',
+      description:
+        'the fully qualified name of the lambda you wish to execute (eg. "{workspace}.{name}") ',
     },
   ];
 
   static examples = [`$ rockset local:queryLambda:execute commons.helloWorld`];
 
-  static description = `
-  Execute a specific version of a Query Lambda in the current project.
-  
-  You must specify the fully qualified name of the Query Lambda: eg. 'commons.foo'.
-
-`;
+  static description = `execute a Query Lambda in the current project`;
 
   async run() {
     const { args, flags } = this.parse(ExecuteQueryLambda);

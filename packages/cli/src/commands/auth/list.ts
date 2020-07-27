@@ -16,12 +16,10 @@ const censorApiKey = (key: string | undefined) => {
 class ListProfiles extends RockCommand {
   static flags = {
     help: flags.help({ char: 'h' }),
-    showKeys: flags.boolean({ char: 's', description: 'Uncensor all API Keys' }),
+    showKeys: flags.boolean({ char: 's', description: 'uncensor all API Keys' }),
   };
 
-  static description = `
-  List all of the available profiles.
-`;
+  static description = `list all of the available profiles, and show the active profile`;
 
   async run() {
     const { flags } = this.parse(ListProfiles);

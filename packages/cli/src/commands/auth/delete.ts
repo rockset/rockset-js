@@ -12,13 +12,11 @@ class AddProfile extends RockCommand {
       name: 'name',
       required: true,
       hidden: false,
-      description: 'The name of the profile you wish to delete.',
+      description: 'the name of the profile you wish to delete',
     },
   ];
 
-  static description = `
-  Delete a profile with the specified name.
-`;
+  static description = `delete a profile with the specified name`;
 
   async run() {
     const { args } = this.parse(AddProfile);

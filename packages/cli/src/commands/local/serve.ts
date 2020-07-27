@@ -8,15 +8,11 @@ class ServeQls extends RockCommand {
     port: flags.integer({
       char: 'p',
       default: 3001,
-      description: 'The port to start the server at',
+      description: 'the port to listen at',
     }),
   };
 
-  static description = `
-  Start a development server that allows you to execute Query Lambdas from your local project from a development UI.
-
-
-`;
+  static description = `start development server and open the Developer UI. Used to configure parameters and execute SQL files in your local project`;
 
   async run() {
     const { flags } = this.parse(ServeQls);

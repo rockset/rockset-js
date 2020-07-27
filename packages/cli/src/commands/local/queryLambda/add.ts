@@ -8,7 +8,7 @@ class AddEntity extends RockCommand {
     help: flags.help({ char: 'h' }),
     description: flags.string({
       char: 'd',
-      description: 'Set the description for the new query lambda',
+      description: 'set the description for the Query Lambda',
     }),
   };
 
@@ -18,7 +18,7 @@ class AddEntity extends RockCommand {
       required: true,
       hidden: false,
       description:
-        'The fully qualified name of the lambda you wish to add. A Qualified Name is a string formatted like "{ws}.{name}". ',
+        'the fully qualified name of the lambda you wish to add (eg. "{workspace}.{name}") ',
     },
   ];
 
@@ -28,7 +28,7 @@ Successfully added Query Lambda commons.helloWorld to path /Users/tchordia/rocks
   `,
   ];
 
-  static description = `Add an empty lambda with the specified name to the project`;
+  static description = `add a Query Lambda to the current project`;
 
   async run() {
     const { args, flags } = this.parse(AddEntity);

@@ -7,12 +7,7 @@ class ListEntities extends RockCommand {
     help: flags.help({ char: 'h' }),
   };
 
-  static description = `
-  List all of the entities in the current project. Note: this does not list entities on remote. For that, please use
-  the API endpoints present in 'rockset api:...'
-
-
-`;
+  static description = `list all of the Query Lambdas in the current project`;
 
   async run() {
     this.parse(ListEntities);

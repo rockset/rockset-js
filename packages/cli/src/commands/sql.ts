@@ -13,15 +13,15 @@ class SQL extends RockCommand {
     defaultLimit: flags.integer({
       char: 'l',
       description:
-        'Set the default row limit property on the query. This will set a default limit on the query that can be overrided by a limit in the SQL text.',
+        'set the default row limit property on the query. This will set a default limit on the query that can be overrided by a limit in the SQL text.',
     }),
-    ...cli.table.flags(),
+    ...cli.table.flags({ only: ['columns', 'output'] }),
   };
 
   static args = [
     {
       name: 'sql',
-      description: 'Rockset SQL string to execute',
+      description: 'rockset SQL string to execute',
       required: false,
       hidden: false,
     },

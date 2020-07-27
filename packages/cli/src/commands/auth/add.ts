@@ -2,6 +2,7 @@ import { flags } from '@oclif/command';
 import { auth } from '@rockset/core';
 import { parseAuthProfile } from '@rockset/core/dist/filesystem/auth';
 import { RockCommand } from '../../base-command';
+import * as chalk from 'chalk';
 
 class AddProfile extends RockCommand {
   static flags = {
@@ -9,7 +10,8 @@ class AddProfile extends RockCommand {
     activate: flags.boolean({
       char: 'a',
       default: true,
-      description: 'Whether to activate the profile after creating it',
+      description: 'whether to activate the profile after creating it',
+      allowNo: true,
     }),
   };
 
@@ -18,26 +20,27 @@ class AddProfile extends RockCommand {
       name: 'name',
       required: true,
       hidden: false,
-      description: 'The name of the profile you wish to create.',
+      description: 'the name of the profile you wish to create',
     },
     {
       name: 'apikey',
       required: true,
       hidden: false,
-      description: 'The apikey for your account',
+      description: 'the apikey for your account',
     },
     {
       name: 'apiserver',
       required: false,
       hidden: false,
-      description: 'The url for the apiserver to include in this profile',
+      description: 'the url for the Rockset API server to use',
       default: 'https://api.rs2.usw2.rockset.com',
     },
   ];
 
-  static description = `
-  Create a new profile with the specified name and apikey.
-`;
+  static description = chalk`create a new profile with the specified name and apikey.
+  
+  You can find an API Key for your account in the Rockset Console. {underline https://console.rockset.com/apikeys}
+  `;
 
   async run() {
     const { args, flags } = this.parse(AddProfile);
