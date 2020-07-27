@@ -23,7 +23,7 @@ export interface MainApi {
  */
 const rocksetConfigure = (
   apikey: string,
-  host: string,
+  host = 'https://api.rs2.usw2.rockset.com',
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   customFetch?: (url: string, request: any) => Promise<any>
 ): MainApi => {
