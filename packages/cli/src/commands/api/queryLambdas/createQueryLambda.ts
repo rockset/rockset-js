@@ -54,13 +54,13 @@ class CreateQueryLambda extends RockCommand {
     },
   ];
 
-  static description = `
+  static description = `create a query lambda in given workspace
 Arguments to this command will be passed as URL parameters to ${chalk.bold(
     `POST: /v1/orgs/self/ws/{workspace}/lambdas`,
   )}
 ${chalk.bold(`This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
        `)}
-Example Body:
+Example Body (YAML):
 name: myQueryLambda
 description: production version foo
 sql:

@@ -31,7 +31,7 @@ class DeleteApiKey extends RockCommand {
     },
   ];
 
-  static description = `
+  static description = `delete an api key for the authenticated user
 Arguments to this command will be passed as URL parameters to ${chalk.bold(
     `DELETE: /v1/orgs/self/users/self/apikeys/{name}`,
   )}

@@ -202,7 +202,7 @@ ${bodySchema}
       )
     : '';
 
-  return `
+  return `${get.description.toLowerCase().trim().replace(/\.$/, '')}
 Arguments to this command will be passed as URL parameters to ${genChalkString(
     'bold',
     `${method}: ${endpoint}`,

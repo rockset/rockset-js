@@ -2,7 +2,7 @@ import { flags } from '@oclif/command';
 import * as prompts from 'prompts';
 import { types, fileutil } from '@rockset/core';
 import { RockCommand } from '../../base-command';
-import chalk = require('chalk');
+import * as chalk from 'chalk';
 
 export const DEFAULT_SOURCE_ROOT = 'src';
 
@@ -12,11 +12,7 @@ class InitializeProject extends RockCommand {
     yes: flags.boolean({ char: 'y' }),
   };
 
-  static description = `
-Initialize your project.
-
-This command initializes your project with a ${types.ROOT_CONFIG} file.
-`;
+  static description = `initialize your project with a ${chalk.green(types.ROOT_CONFIG)} file.`;
 
   async run() {
     const { flags } = this.parse(InitializeProject);

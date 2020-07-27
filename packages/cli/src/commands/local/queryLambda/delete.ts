@@ -9,7 +9,7 @@ class CleanEntities extends RockCommand {
     yes: flags.boolean({
       char: 'y',
       default: false,
-      description: 'Bypass the safety checks, and automatically engage in dangerous actions.',
+      description: 'bypass the safety checks, and automatically engage in dangerous actions',
     }),
   };
 
@@ -19,11 +19,11 @@ class CleanEntities extends RockCommand {
       required: true,
       hidden: false,
       description:
-        'The fully qualified name of the lambda you wish to add. A Qualified Name is a string formatted like "{ws}.{name}". ',
+        'the fully qualified name of the lambda you wish to delete (eg. "{workspace}.{name}") ',
     },
   ];
 
-  static description = `Delete a lambda with the specified name from the project`;
+  static description = `delete a Query Lambda from the current project`;
 
   static examples = [
     `$ rockset local:queryLambda:delete commons.foo

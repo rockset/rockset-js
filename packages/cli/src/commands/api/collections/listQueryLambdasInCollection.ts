@@ -37,7 +37,7 @@ class ListQueryLambdasInCollection extends RockCommand {
     },
   ];
 
-  static description = `
+  static description = `get all query lambdas that hit a specific rockset collection
 Arguments to this command will be passed as URL parameters to ${chalk.bold(
     `GET: /v1/orgs/self/ws/{workspace}/collections/{collection}/lambdas`,
   )}

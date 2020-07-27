@@ -31,7 +31,7 @@ class DeleteWorkspace extends RockCommand {
     },
   ];
 
-  static description = `
+  static description = `remove a workspace
 Arguments to this command will be passed as URL parameters to ${chalk.bold(
     `DELETE: /v1/orgs/self/ws/{workspace}`,
   )}

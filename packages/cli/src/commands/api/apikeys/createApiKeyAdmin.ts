@@ -36,13 +36,13 @@ class CreateApiKeyAdmin extends RockCommand {
     },
   ];
 
-  static description = `
+  static description = `create a new api key for any user (admin only)
 Arguments to this command will be passed as URL parameters to ${chalk.bold(
     `POST: /v1/orgs/self/users/{user}/apikeys`,
   )}
 ${chalk.bold(`This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
        `)}
-Example Body:
+Example Body (YAML):
 name: event-logger
 
 

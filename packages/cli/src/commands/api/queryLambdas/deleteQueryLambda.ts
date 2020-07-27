@@ -47,7 +47,7 @@ class DeleteQueryLambda extends RockCommand {
     },
   ];
 
-  static description = `
+  static description = `delete a query lambda
 Arguments to this command will be passed as URL parameters to ${chalk.bold(
     `DELETE: /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}`,
   )}

@@ -24,7 +24,7 @@ class ListApiKeys extends RockCommand {
 
   static args = [];
 
-  static description = `
+  static description = `list all api keys for the authenticated user
 Arguments to this command will be passed as URL parameters to ${chalk.bold(
     `GET: /v1/orgs/self/users/self/apikeys`,
   )}

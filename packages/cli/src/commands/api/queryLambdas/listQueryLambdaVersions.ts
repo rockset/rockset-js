@@ -47,7 +47,7 @@ class ListQueryLambdaVersions extends RockCommand {
     },
   ];
 
-  static description = `
+  static description = `list all versions of a query lambda
 Arguments to this command will be passed as URL parameters to ${chalk.bold(
     `GET: /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/versions`,
   )}

@@ -75,13 +75,40 @@
         "description": "manage your authentication profiles"
       },
       "api": {
-        "description": "wrappers for Rockset's API endpoints. Full documentation for the API at https://docs.rockset.com/rest-api"
+        "description": "wrappers for Rockset's API endpoints (full documentation at https://docs.rockset.com/rest-api)"
       },
       "local": {
         "description": "manage your local Query Lambdas"
       },
       "local:queryLambda": {
         "description": "add, delete, execute, and list your Query Lambdas"
+      },
+      "api:apikeys"       : {
+        "description": "apikey API"
+      },
+      "api:collections"   : {
+        "description": "collections API"
+      },
+      "api:documents"     : {
+        "description": "documents API"
+      },
+      "api:integrations"  : {
+        "description": "integrations API"
+      },
+      "api:orgs"          : {
+        "description": "organizations API"
+      },
+      "api:queries"       : {
+        "description": "query execution API"
+      },
+      "api:queryLambdas"  : {
+        "description": "Query Lambda API"
+      },
+      "api:users"         : {
+        "description": "users API"
+      },
+      "api:workspaces"    : {
+        "description": "workspaces API"
       }
     },
     "commands": "./lib/commands",

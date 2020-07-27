@@ -31,7 +31,7 @@ class GetIntegration extends RockCommand {
     },
   ];
 
-  static description = `
+  static description = `get information about a single integration
 Arguments to this command will be passed as URL parameters to ${chalk.bold(
     `GET: /v1/orgs/self/integrations/{integration}`,
   )}

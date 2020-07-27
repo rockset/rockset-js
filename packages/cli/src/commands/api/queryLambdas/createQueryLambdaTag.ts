@@ -54,13 +54,13 @@ class CreateQueryLambdaTag extends RockCommand {
     },
   ];
 
-  static description = `
+  static description = `create a tag for a specific query lambda version, or update if it exists
 Arguments to this command will be passed as URL parameters to ${chalk.bold(
     `POST: /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/tags`,
   )}
 ${chalk.bold(`This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
        `)}
-Example Body:
+Example Body (YAML):
 tag_name: production
 version: 123ABC
 

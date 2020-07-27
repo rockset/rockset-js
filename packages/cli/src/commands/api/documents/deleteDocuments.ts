@@ -54,13 +54,13 @@ class DeleteDocuments extends RockCommand {
     },
   ];
 
-  static description = `
+  static description = `delete documents from a collection in rockset
 Arguments to this command will be passed as URL parameters to ${chalk.bold(
     `DELETE: /v1/orgs/self/ws/{workspace}/collections/{collection}/docs`,
   )}
 ${chalk.bold(`This endpoint REQUIRES a DELETE body. To specify a DELETE body, please pass a JSON or YAML file to the --body flag.
        `)}
-Example Body:
+Example Body (YAML):
 data:
   - _id: 2cd61e3b
 

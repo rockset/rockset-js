@@ -16,10 +16,7 @@ class UseProfile extends RockCommand {
     },
   ];
 
-  static description = `
-  Use a specific authentication profile.
-  
-`;
+  static description = `use a specific authentication profile`;
 
   async run() {
     const { args } = this.parse(UseProfile);

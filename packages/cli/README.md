@@ -864,34 +864,34 @@ To opt out of telemetry, set the ROCKSET_CLI_TELEMETRY_OPTOUT environment variab
 
 # All Commands
 <!-- commands -->
-* [`rockset api:apikeys:createApiKey -f request.yaml`](#rockset-apiapikeyscreateapikey--f-requestyaml)
-* [`rockset api:apikeys:createApiKeyAdmin -f request.yaml`](#rockset-apiapikeyscreateapikeyadmin--f-requestyaml)
+* [`rockset api:apikeys:createApiKey`](#rockset-apiapikeyscreateapikey)
+* [`rockset api:apikeys:createApiKeyAdmin USER`](#rockset-apiapikeyscreateapikeyadmin-user)
 * [`rockset api:apikeys:deleteApiKey NAME`](#rockset-apiapikeysdeleteapikey-name)
 * [`rockset api:apikeys:deleteApiKeyAdmin NAME USER`](#rockset-apiapikeysdeleteapikeyadmin-name-user)
 * [`rockset api:apikeys:listApiKeys`](#rockset-apiapikeyslistapikeys)
 * [`rockset api:apikeys:listApiKeysAdmin USER`](#rockset-apiapikeyslistapikeysadmin-user)
-* [`rockset api:collections:createCollection -f request.yaml`](#rockset-apicollectionscreatecollection--f-requestyaml)
+* [`rockset api:collections:createCollection WORKSPACE`](#rockset-apicollectionscreatecollection-workspace)
 * [`rockset api:collections:deleteCollection WORKSPACE COLLECTION`](#rockset-apicollectionsdeletecollection-workspace-collection)
 * [`rockset api:collections:getCollection WORKSPACE COLLECTION`](#rockset-apicollectionsgetcollection-workspace-collection)
 * [`rockset api:collections:listCollections`](#rockset-apicollectionslistcollections)
 * [`rockset api:collections:listQueryLambdasInCollection WORKSPACE COLLECTION`](#rockset-apicollectionslistquerylambdasincollection-workspace-collection)
 * [`rockset api:collections:workspaceCollections WORKSPACE`](#rockset-apicollectionsworkspacecollections-workspace)
-* [`rockset api:documents:addDocuments -f request.yaml`](#rockset-apidocumentsadddocuments--f-requestyaml)
-* [`rockset api:documents:deleteDocuments`](#rockset-apidocumentsdeletedocuments)
-* [`rockset api:documents:patchDocuments`](#rockset-apidocumentspatchdocuments)
-* [`rockset api:integrations:createIntegration -f request.yaml`](#rockset-apiintegrationscreateintegration--f-requestyaml)
+* [`rockset api:documents:addDocuments WORKSPACE COLLECTION`](#rockset-apidocumentsadddocuments-workspace-collection)
+* [`rockset api:documents:deleteDocuments WORKSPACE COLLECTION`](#rockset-apidocumentsdeletedocuments-workspace-collection)
+* [`rockset api:documents:patchDocuments WORKSPACE COLLECTION`](#rockset-apidocumentspatchdocuments-workspace-collection)
+* [`rockset api:integrations:createIntegration`](#rockset-apiintegrationscreateintegration)
 * [`rockset api:integrations:deleteIntegration INTEGRATION`](#rockset-apiintegrationsdeleteintegration-integration)
 * [`rockset api:integrations:getIntegration INTEGRATION`](#rockset-apiintegrationsgetintegration-integration)
 * [`rockset api:integrations:listIntegrations`](#rockset-apiintegrationslistintegrations)
 * [`rockset api:orgs:getOrganization`](#rockset-apiorgsgetorganization)
-* [`rockset api:queries:query -f request.yaml`](#rockset-apiqueriesquery--f-requestyaml)
-* [`rockset api:queryLambdas:createQueryLambda -f request.yaml`](#rockset-apiquerylambdascreatequerylambda--f-requestyaml)
-* [`rockset api:queryLambdas:createQueryLambdaTag -f request.yaml`](#rockset-apiquerylambdascreatequerylambdatag--f-requestyaml)
+* [`rockset api:queries:query`](#rockset-apiqueriesquery)
+* [`rockset api:queryLambdas:createQueryLambda WORKSPACE`](#rockset-apiquerylambdascreatequerylambda-workspace)
+* [`rockset api:queryLambdas:createQueryLambdaTag WORKSPACE QUERYLAMBDA`](#rockset-apiquerylambdascreatequerylambdatag-workspace-querylambda)
 * [`rockset api:queryLambdas:deleteQueryLambda WORKSPACE QUERYLAMBDA`](#rockset-apiquerylambdasdeletequerylambda-workspace-querylambda)
 * [`rockset api:queryLambdas:deleteQueryLambdaTag WORKSPACE QUERYLAMBDA TAG`](#rockset-apiquerylambdasdeletequerylambdatag-workspace-querylambda-tag)
 * [`rockset api:queryLambdas:deleteQueryLambdaVersion WORKSPACE QUERYLAMBDA VERSION`](#rockset-apiquerylambdasdeletequerylambdaversion-workspace-querylambda-version)
-* [`rockset api:queryLambdas:executeQueryLambda -f request.yaml`](#rockset-apiquerylambdasexecutequerylambda--f-requestyaml)
-* [`rockset api:queryLambdas:executeQueryLambdaByTag -f request.yaml`](#rockset-apiquerylambdasexecutequerylambdabytag--f-requestyaml)
+* [`rockset api:queryLambdas:executeQueryLambda WORKSPACE QUERYLAMBDA VERSION`](#rockset-apiquerylambdasexecutequerylambda-workspace-querylambda-version)
+* [`rockset api:queryLambdas:executeQueryLambdaByTag WORKSPACE QUERYLAMBDA TAG`](#rockset-apiquerylambdasexecutequerylambdabytag-workspace-querylambda-tag)
 * [`rockset api:queryLambdas:getQueryLambdaTagVersion WORKSPACE QUERYLAMBDA TAG`](#rockset-apiquerylambdasgetquerylambdatagversion-workspace-querylambda-tag)
 * [`rockset api:queryLambdas:getQueryLambdaVersion WORKSPACE QUERYLAMBDA VERSION`](#rockset-apiquerylambdasgetquerylambdaversion-workspace-querylambda-version)
 * [`rockset api:queryLambdas:listAllQueryLambdas`](#rockset-apiquerylambdaslistallquerylambdas)
@@ -900,13 +900,13 @@ To opt out of telemetry, set the ROCKSET_CLI_TELEMETRY_OPTOUT environment variab
 * [`rockset api:queryLambdas:listQueryLambdaTags WORKSPACE QUERYLAMBDA`](#rockset-apiquerylambdaslistquerylambdatags-workspace-querylambda)
 * [`rockset api:queryLambdas:listQueryLambdaVersions WORKSPACE QUERYLAMBDA`](#rockset-apiquerylambdaslistquerylambdaversions-workspace-querylambda)
 * [`rockset api:queryLambdas:listQueryLambdasInWorkspace WORKSPACE`](#rockset-apiquerylambdaslistquerylambdasinworkspace-workspace)
-* [`rockset api:queryLambdas:updateQueryLambda -f request.yaml`](#rockset-apiquerylambdasupdatequerylambda--f-requestyaml)
-* [`rockset api:users:createUser -f request.yaml`](#rockset-apiuserscreateuser--f-requestyaml)
+* [`rockset api:queryLambdas:updateQueryLambda WORKSPACE QUERYLAMBDA CREATE`](#rockset-apiquerylambdasupdatequerylambda-workspace-querylambda-create)
+* [`rockset api:users:createUser`](#rockset-apiuserscreateuser)
 * [`rockset api:users:deleteUser USER`](#rockset-apiusersdeleteuser-user)
 * [`rockset api:users:getCurrentUser`](#rockset-apiusersgetcurrentuser)
 * [`rockset api:users:listUsers`](#rockset-apiuserslistusers)
 * [`rockset api:workspaces:childWorkspaces WORKSPACE`](#rockset-apiworkspaceschildworkspaces-workspace)
-* [`rockset api:workspaces:createWorkspace -f request.yaml`](#rockset-apiworkspacescreateworkspace--f-requestyaml)
+* [`rockset api:workspaces:createWorkspace`](#rockset-apiworkspacescreateworkspace)
 * [`rockset api:workspaces:deleteWorkspace WORKSPACE`](#rockset-apiworkspacesdeleteworkspace-workspace)
 * [`rockset api:workspaces:getWorkspace WORKSPACE`](#rockset-apiworkspacesgetworkspace-workspace)
 * [`rockset api:workspaces:listWorkspaces`](#rockset-apiworkspaceslistworkspaces)
@@ -928,105 +928,97 @@ To opt out of telemetry, set the ROCKSET_CLI_TELEMETRY_OPTOUT environment variab
 * [`rockset sql [SQL]`](#rockset-sql-sql)
 * [`rockset update [CHANNEL]`](#rockset-update-channel)
 
-## `rockset api:apikeys:createApiKey -f request.yaml`
+## `rockset api:apikeys:createApiKey`
 
-Create API Key
+create a new api key for the authenticated user
 
 ```
 USAGE
-  $ rockset api:apikeys:createApiKey -f request.yaml
+  $ rockset api:apikeys:createApiKey
 
 OPTIONS
-  -f, --file=file         (required) The config file to execute this command from. Format must be [json|yaml]. Keys are
-                          translated into arguments of the same name. If no BODY argument is specified, the whole
-                          object, minus keys used as other arguments, will be passed in as the BODY.
-
   -h, --help              show CLI help
 
-  -x, --extended          show extra columns
+  --body=body             (required) Path to a file whose contents will be passed as the POST body of this request.
+                          Format must be [json|yaml]. An example schema is shown below.
 
   --columns=columns       only show provided columns (comma-separated)
-
-  --csv                   output is csv format [alias: --output=csv]
-
-  --filter=filter         filter property by partial string matching, ex: name=foo
-
-  --no-header             hide table header from output
-
-  --no-truncate           do not truncate output to fit screen
 
   --output=csv|json|yaml  output in a more machine friendly format
 
   --raw                   Show the raw output from the server, instead of grabbing the results. Usually used in
                           conjunction with --output=json
 
-  --sort=sort             property to sort by (prepend '-' for descending)
-
 DESCRIPTION
-  Create API Key
+  Arguments to this command will be passed as URL parameters to POST: /v1/orgs/self/users/self/apikeys
+  This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
+         
+  Example Body (YAML):
+  name: event-logger
 
+
+  Endpoint Reference
+  POST: /v1/orgs/self/users/self/apikeys
+  Create API Key
   Create a new API key for the authenticated user.
 
-  Endpoint: POST: /v1/orgs/self/users/self/apikeys
+  More documentation at https://docs.rockset.com/rest-api#createapikey
 
-  Endpoint Documentation: https://docs.rockset.com/rest-api#createapikey
-
-  This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
+EXAMPLE
+  $ rockset api:apikeys:createApiKey  --body body.yaml
+  $ cat body.yaml
+  name: event-logger
 ```
 
 _See code: [src/commands/api/apikeys/createApiKey.ts](./src/commands/api/apikeys/createApiKey.ts)_
 
-## `rockset api:apikeys:createApiKeyAdmin -f request.yaml`
+## `rockset api:apikeys:createApiKeyAdmin USER`
 
-Create API Key for any user (admin only)
+create a new api key for any user (admin only)
 
 ```
 USAGE
-  $ rockset api:apikeys:createApiKeyAdmin -f request.yaml
+  $ rockset api:apikeys:createApiKeyAdmin USER
 
 OPTIONS
-  -f, --file=file         (required) The config file to execute this command from. Format must be [json|yaml]. Keys are
-                          translated into arguments of the same name. If no BODY argument is specified, the whole
-                          object, minus keys used as other arguments, will be passed in as the BODY.
-
   -h, --help              show CLI help
 
-  -x, --extended          show extra columns
+  --body=body             (required) Path to a file whose contents will be passed as the POST body of this request.
+                          Format must be [json|yaml]. An example schema is shown below.
 
   --columns=columns       only show provided columns (comma-separated)
-
-  --csv                   output is csv format [alias: --output=csv]
-
-  --filter=filter         filter property by partial string matching, ex: name=foo
-
-  --no-header             hide table header from output
-
-  --no-truncate           do not truncate output to fit screen
 
   --output=csv|json|yaml  output in a more machine friendly format
 
   --raw                   Show the raw output from the server, instead of grabbing the results. Usually used in
                           conjunction with --output=json
 
-  --sort=sort             property to sort by (prepend '-' for descending)
-
 DESCRIPTION
-  Create API Key for any user (admin only)
+  Arguments to this command will be passed as URL parameters to POST: /v1/orgs/self/users/{user}/apikeys
+  This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
+         
+  Example Body (YAML):
+  name: event-logger
 
+
+  Endpoint Reference
+  POST: /v1/orgs/self/users/{user}/apikeys
+  Create API Key for any user (admin only)
   Create a new API key for any user (admin only).
 
-  Endpoint: POST: /v1/orgs/self/users/{user}/apikeys
+  More documentation at https://docs.rockset.com/rest-api#createapikeyadmin
 
-  Endpoint Documentation: https://docs.rockset.com/rest-api#createapikeyadmin
-
-  This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
+EXAMPLE
+  $ rockset api:apikeys:createApiKeyAdmin USER --body body.yaml
+  $ cat body.yaml
+  name: event-logger
 ```
 
 _See code: [src/commands/api/apikeys/createApiKeyAdmin.ts](./src/commands/api/apikeys/createApiKeyAdmin.ts)_
 
 ## `rockset api:apikeys:deleteApiKey NAME`
 
-Delete API Key
+delete an api key for the authenticated user
 
 ```
 USAGE
@@ -1037,36 +1029,32 @@ ARGUMENTS
 
 OPTIONS
   -h, --help              show CLI help
-  -x, --extended          show extra columns
   --columns=columns       only show provided columns (comma-separated)
-  --csv                   output is csv format [alias: --output=csv]
-  --filter=filter         filter property by partial string matching, ex: name=foo
-  --no-header             hide table header from output
-  --no-truncate           do not truncate output to fit screen
   --output=csv|json|yaml  output in a more machine friendly format
 
   --raw                   Show the raw output from the server, instead of grabbing the results. Usually used in
                           conjunction with --output=json
 
-  --sort=sort             property to sort by (prepend '-' for descending)
-
 DESCRIPTION
-  Delete API Key
+  Arguments to this command will be passed as URL parameters to DELETE: /v1/orgs/self/users/self/apikeys/{name}
 
+
+  Endpoint Reference
+  DELETE: /v1/orgs/self/users/self/apikeys/{name}
+  Delete API Key
   Delete an API key for the authenticated user.
 
-  Endpoint: DELETE: /v1/orgs/self/users/self/apikeys/{name}
+  More documentation at https://docs.rockset.com/rest-api#deleteapikey
 
-  Endpoint Documentation: https://docs.rockset.com/rest-api#deleteapikey
-
-  This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
+EXAMPLE
+  $ rockset api:apikeys:deleteApiKey NAME
 ```
 
 _See code: [src/commands/api/apikeys/deleteApiKey.ts](./src/commands/api/apikeys/deleteApiKey.ts)_
 
 ## `rockset api:apikeys:deleteApiKeyAdmin NAME USER`
 
-Delete API Key for any user (admin only)
+delete an api key for any user (admin only)
 
 ```
 USAGE
@@ -1078,36 +1066,32 @@ ARGUMENTS
 
 OPTIONS
   -h, --help              show CLI help
-  -x, --extended          show extra columns
   --columns=columns       only show provided columns (comma-separated)
-  --csv                   output is csv format [alias: --output=csv]
-  --filter=filter         filter property by partial string matching, ex: name=foo
-  --no-header             hide table header from output
-  --no-truncate           do not truncate output to fit screen
   --output=csv|json|yaml  output in a more machine friendly format
 
   --raw                   Show the raw output from the server, instead of grabbing the results. Usually used in
                           conjunction with --output=json
 
-  --sort=sort             property to sort by (prepend '-' for descending)
-
 DESCRIPTION
-  Delete API Key for any user (admin only)
+  Arguments to this command will be passed as URL parameters to DELETE: /v1/orgs/self/users/{user}/apikeys/{name}
 
+
+  Endpoint Reference
+  DELETE: /v1/orgs/self/users/{user}/apikeys/{name}
+  Delete API Key for any user (admin only)
   Delete an API key for any user (admin only).
 
-  Endpoint: DELETE: /v1/orgs/self/users/{user}/apikeys/{name}
+  More documentation at https://docs.rockset.com/rest-api#deleteapikeyadmin
 
-  Endpoint Documentation: https://docs.rockset.com/rest-api#deleteapikeyadmin
-
-  This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
+EXAMPLE
+  $ rockset api:apikeys:deleteApiKeyAdmin NAME USER
 ```
 
 _See code: [src/commands/api/apikeys/deleteApiKeyAdmin.ts](./src/commands/api/apikeys/deleteApiKeyAdmin.ts)_
 
 ## `rockset api:apikeys:listApiKeys`
 
-List API Keys
+list all api keys for the authenticated user
 
 ```
 USAGE
@@ -1115,36 +1099,32 @@ USAGE
 
 OPTIONS
   -h, --help              show CLI help
-  -x, --extended          show extra columns
   --columns=columns       only show provided columns (comma-separated)
-  --csv                   output is csv format [alias: --output=csv]
-  --filter=filter         filter property by partial string matching, ex: name=foo
-  --no-header             hide table header from output
-  --no-truncate           do not truncate output to fit screen
   --output=csv|json|yaml  output in a more machine friendly format
 
   --raw                   Show the raw output from the server, instead of grabbing the results. Usually used in
                           conjunction with --output=json
 
-  --sort=sort             property to sort by (prepend '-' for descending)
-
 DESCRIPTION
-  List API Keys
+  Arguments to this command will be passed as URL parameters to GET: /v1/orgs/self/users/self/apikeys
 
+
+  Endpoint Reference
+  GET: /v1/orgs/self/users/self/apikeys
+  List API Keys
   List all API keys for the authenticated user.
 
-  Endpoint: GET: /v1/orgs/self/users/self/apikeys
+  More documentation at https://docs.rockset.com/rest-api#listapikeys
 
-  Endpoint Documentation: https://docs.rockset.com/rest-api#listapikeys
-
-  This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
+EXAMPLE
+  $ rockset api:apikeys:listApiKeys
 ```
 
 _See code: [src/commands/api/apikeys/listApiKeys.ts](./src/commands/api/apikeys/listApiKeys.ts)_
 
 ## `rockset api:apikeys:listApiKeysAdmin USER`
 
-List API Keys for any user (admin only)
+list all api keys for any user (admin only)
 
 ```
 USAGE
@@ -1152,84 +1132,73 @@ USAGE
 
 OPTIONS
   -h, --help              show CLI help
-  -x, --extended          show extra columns
   --columns=columns       only show provided columns (comma-separated)
-  --csv                   output is csv format [alias: --output=csv]
-  --filter=filter         filter property by partial string matching, ex: name=foo
-  --no-header             hide table header from output
-  --no-truncate           do not truncate output to fit screen
   --output=csv|json|yaml  output in a more machine friendly format
 
   --raw                   Show the raw output from the server, instead of grabbing the results. Usually used in
                           conjunction with --output=json
 
-  --sort=sort             property to sort by (prepend '-' for descending)
-
 DESCRIPTION
-  List API Keys for any user (admin only)
+  Arguments to this command will be passed as URL parameters to GET: /v1/orgs/self/users/{user}/apikeys
 
+
+  Endpoint Reference
+  GET: /v1/orgs/self/users/{user}/apikeys
+  List API Keys for any user (admin only)
   List all API keys for any user (admin only).
 
-  Endpoint: GET: /v1/orgs/self/users/{user}/apikeys
+  More documentation at https://docs.rockset.com/rest-api#listapikeysadmin
 
-  Endpoint Documentation: https://docs.rockset.com/rest-api#listapikeysadmin
-
-  This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
+EXAMPLE
+  $ rockset api:apikeys:listApiKeysAdmin USER
 ```
 
 _See code: [src/commands/api/apikeys/listApiKeysAdmin.ts](./src/commands/api/apikeys/listApiKeysAdmin.ts)_
 
-## `rockset api:collections:createCollection -f request.yaml`
+## `rockset api:collections:createCollection WORKSPACE`
 
-Create Collection
+create new collection in a workspace
 
 ```
 USAGE
-  $ rockset api:collections:createCollection -f request.yaml
+  $ rockset api:collections:createCollection WORKSPACE
+
+ARGUMENTS
+  WORKSPACE  name of the workspace
 
 OPTIONS
-  -f, --file=file         (required) The config file to execute this command from. Format must be [json|yaml]. Keys are
-                          translated into arguments of the same name. If no BODY argument is specified, the whole
-                          object, minus keys used as other arguments, will be passed in as the BODY.
-
   -h, --help              show CLI help
 
-  -x, --extended          show extra columns
+  --body=body             (required) Path to a file whose contents will be passed as the POST body of this request.
+                          Format must be [json|yaml]. An example schema is shown below.
 
   --columns=columns       only show provided columns (comma-separated)
-
-  --csv                   output is csv format [alias: --output=csv]
-
-  --filter=filter         filter property by partial string matching, ex: name=foo
-
-  --no-header             hide table header from output
-
-  --no-truncate           do not truncate output to fit screen
 
   --output=csv|json|yaml  output in a more machine friendly format
 
   --raw                   Show the raw output from the server, instead of grabbing the results. Usually used in
                           conjunction with --output=json
 
-  --sort=sort             property to sort by (prepend '-' for descending)
-
 DESCRIPTION
-  Create Collection
+  Arguments to this command will be passed as URL parameters to POST: /v1/orgs/self/ws/{workspace}/collections
+  This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
+         
+  The POST body request schema has been omitted because it is too long. Please view the documentation at 
+  https://docs.rockset.com/rest-api#createcollection to see the example.
 
+  Endpoint Reference
+  POST: /v1/orgs/self/ws/{workspace}/collections
+  Create Collection
   Create new collection in a workspace.
 
-  Endpoint: POST: /v1/orgs/self/ws/{workspace}/collections
-
-  Endpoint Documentation: https://docs.rockset.com/rest-api#createcollection
-
-  This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
+  More documentation at https://docs.rockset.com/rest-api#createcollection
 ```
 
 _See code: [src/commands/api/collections/createCollection.ts](./src/commands/api/collections/createCollection.ts)_
 
 ## `rockset api:collections:deleteCollection WORKSPACE COLLECTION`
 
-Delete Collection
+delete a collection and all its documents from rockset
 
 ```
 USAGE
@@ -1241,36 +1210,33 @@ ARGUMENTS
 
 OPTIONS
   -h, --help              show CLI help
-  -x, --extended          show extra columns
   --columns=columns       only show provided columns (comma-separated)
-  --csv                   output is csv format [alias: --output=csv]
-  --filter=filter         filter property by partial string matching, ex: name=foo
-  --no-header             hide table header from output
-  --no-truncate           do not truncate output to fit screen
   --output=csv|json|yaml  output in a more machine friendly format
 
   --raw                   Show the raw output from the server, instead of grabbing the results. Usually used in
                           conjunction with --output=json
 
-  --sort=sort             property to sort by (prepend '-' for descending)
-
 DESCRIPTION
-  Delete Collection
+  Arguments to this command will be passed as URL parameters to DELETE: 
+  /v1/orgs/self/ws/{workspace}/collections/{collection}
 
+
+  Endpoint Reference
+  DELETE: /v1/orgs/self/ws/{workspace}/collections/{collection}
+  Delete Collection
   Delete a collection and all its documents from Rockset.
 
-  Endpoint: DELETE: /v1/orgs/self/ws/{workspace}/collections/{collection}
+  More documentation at https://docs.rockset.com/rest-api#deletecollection
 
-  Endpoint Documentation: https://docs.rockset.com/rest-api#deletecollection
-
-  This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
+EXAMPLE
+  $ rockset api:collections:deleteCollection WORKSPACE COLLECTION
 ```
 
 _See code: [src/commands/api/collections/deleteCollection.ts](./src/commands/api/collections/deleteCollection.ts)_
 
 ## `rockset api:collections:getCollection WORKSPACE COLLECTION`
 
-Get Collection
+get details about a collection
 
 ```
 USAGE
@@ -1282,36 +1248,33 @@ ARGUMENTS
 
 OPTIONS
   -h, --help              show CLI help
-  -x, --extended          show extra columns
   --columns=columns       only show provided columns (comma-separated)
-  --csv                   output is csv format [alias: --output=csv]
-  --filter=filter         filter property by partial string matching, ex: name=foo
-  --no-header             hide table header from output
-  --no-truncate           do not truncate output to fit screen
   --output=csv|json|yaml  output in a more machine friendly format
 
   --raw                   Show the raw output from the server, instead of grabbing the results. Usually used in
                           conjunction with --output=json
 
-  --sort=sort             property to sort by (prepend '-' for descending)
-
 DESCRIPTION
-  Get Collection
+  Arguments to this command will be passed as URL parameters to GET: 
+  /v1/orgs/self/ws/{workspace}/collections/{collection}
 
+
+  Endpoint Reference
+  GET: /v1/orgs/self/ws/{workspace}/collections/{collection}
+  Get Collection
   Get details about a collection.
 
-  Endpoint: GET: /v1/orgs/self/ws/{workspace}/collections/{collection}
+  More documentation at https://docs.rockset.com/rest-api#getcollection
 
-  Endpoint Documentation: https://docs.rockset.com/rest-api#getcollection
-
-  This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
+EXAMPLE
+  $ rockset api:collections:getCollection WORKSPACE COLLECTION
 ```
 
 _See code: [src/commands/api/collections/getCollection.ts](./src/commands/api/collections/getCollection.ts)_
 
 ## `rockset api:collections:listCollections`
 
-List Collections
+retrieve all collections in an organization
 
 ```
 USAGE
@@ -1319,36 +1282,32 @@ USAGE
 
 OPTIONS
   -h, --help              show CLI help
-  -x, --extended          show extra columns
   --columns=columns       only show provided columns (comma-separated)
-  --csv                   output is csv format [alias: --output=csv]
-  --filter=filter         filter property by partial string matching, ex: name=foo
-  --no-header             hide table header from output
-  --no-truncate           do not truncate output to fit screen
   --output=csv|json|yaml  output in a more machine friendly format
 
   --raw                   Show the raw output from the server, instead of grabbing the results. Usually used in
                           conjunction with --output=json
 
-  --sort=sort             property to sort by (prepend '-' for descending)
-
 DESCRIPTION
-  List Collections
+  Arguments to this command will be passed as URL parameters to GET: /v1/orgs/self/collections
 
+
+  Endpoint Reference
+  GET: /v1/orgs/self/collections
+  List Collections
   Retrieve all collections in an organization.
 
-  Endpoint: GET: /v1/orgs/self/collections
+  More documentation at https://docs.rockset.com/rest-api#listcollections
 
-  Endpoint Documentation: https://docs.rockset.com/rest-api#listcollections
-
-  This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
+EXAMPLE
+  $ rockset api:collections:listCollections
 ```
 
 _See code: [src/commands/api/collections/listCollections.ts](./src/commands/api/collections/listCollections.ts)_
 
 ## `rockset api:collections:listQueryLambdasInCollection WORKSPACE COLLECTION`
 
-Get Query Lambdas
+get all query lambdas that hit a specific rockset collection
 
 ```
 USAGE
@@ -1360,36 +1319,33 @@ ARGUMENTS
 
 OPTIONS
   -h, --help              show CLI help
-  -x, --extended          show extra columns
   --columns=columns       only show provided columns (comma-separated)
-  --csv                   output is csv format [alias: --output=csv]
-  --filter=filter         filter property by partial string matching, ex: name=foo
-  --no-header             hide table header from output
-  --no-truncate           do not truncate output to fit screen
   --output=csv|json|yaml  output in a more machine friendly format
 
   --raw                   Show the raw output from the server, instead of grabbing the results. Usually used in
                           conjunction with --output=json
 
-  --sort=sort             property to sort by (prepend '-' for descending)
-
 DESCRIPTION
-  Get Query Lambdas
+  Arguments to this command will be passed as URL parameters to GET: 
+  /v1/orgs/self/ws/{workspace}/collections/{collection}/lambdas
 
+
+  Endpoint Reference
+  GET: /v1/orgs/self/ws/{workspace}/collections/{collection}/lambdas
+  Get Query Lambdas
   Get all Query Lambdas that hit a specific Rockset Collection.
 
-  Endpoint: GET: /v1/orgs/self/ws/{workspace}/collections/{collection}/lambdas
+  More documentation at https://docs.rockset.com/rest-api#listquerylambdasincollection
 
-  Endpoint Documentation: https://docs.rockset.com/rest-api#listquerylambdasincollection
-
-  This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
+EXAMPLE
+  $ rockset api:collections:listQueryLambdasInCollection WORKSPACE COLLECTION
 ```
 
 _See code: [src/commands/api/collections/listQueryLambdasInCollection.ts](./src/commands/api/collections/listQueryLambdasInCollection.ts)_
 
 ## `rockset api:collections:workspaceCollections WORKSPACE`
 
-List Collections for Workspace
+retrieve all collections in a workspace
 
 ```
 USAGE
@@ -1400,243 +1356,248 @@ ARGUMENTS
 
 OPTIONS
   -h, --help              show CLI help
-  -x, --extended          show extra columns
   --columns=columns       only show provided columns (comma-separated)
-  --csv                   output is csv format [alias: --output=csv]
-  --filter=filter         filter property by partial string matching, ex: name=foo
-  --no-header             hide table header from output
-  --no-truncate           do not truncate output to fit screen
   --output=csv|json|yaml  output in a more machine friendly format
 
   --raw                   Show the raw output from the server, instead of grabbing the results. Usually used in
                           conjunction with --output=json
 
-  --sort=sort             property to sort by (prepend '-' for descending)
-
 DESCRIPTION
-  List Collections for Workspace
+  Arguments to this command will be passed as URL parameters to GET: /v1/orgs/self/ws/{workspace}/collections
 
+
+  Endpoint Reference
+  GET: /v1/orgs/self/ws/{workspace}/collections
+  List Collections for Workspace
   Retrieve all collections in a workspace.
 
-  Endpoint: GET: /v1/orgs/self/ws/{workspace}/collections
+  More documentation at https://docs.rockset.com/rest-api#workspacecollections
 
-  Endpoint Documentation: https://docs.rockset.com/rest-api#workspacecollections
-
-  This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
+EXAMPLE
+  $ rockset api:collections:workspaceCollections WORKSPACE
 ```
 
 _See code: [src/commands/api/collections/workspaceCollections.ts](./src/commands/api/collections/workspaceCollections.ts)_
 
-## `rockset api:documents:addDocuments -f request.yaml`
+## `rockset api:documents:addDocuments WORKSPACE COLLECTION`
 
-Add Documents
+add documents to a collection in rockset
 
 ```
 USAGE
-  $ rockset api:documents:addDocuments -f request.yaml
+  $ rockset api:documents:addDocuments WORKSPACE COLLECTION
+
+ARGUMENTS
+  WORKSPACE   name of the workspace
+  COLLECTION  name of the collection
 
 OPTIONS
-  -f, --file=file                (required) The config file to execute this command from. Format must be [json|yaml].
-                                 Keys are translated into arguments of the same name. If no BODY argument is specified,
-                                 the whole object, minus keys used as other arguments, will be passed in as the BODY.
-
   -h, --help                     show CLI help
 
-  -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this apicall. The value
+  -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this endpoint. The value
                                  passed to this flag determines how many requests per second will be sent
-
-  -x, --extended                 show extra columns
 
   -y, --yes                      Skip all safety prompts
 
+  --body=body                    (required) Path to a file whose contents will be passed as the POST body of this
+                                 request. Format must be [json|yaml]. An example schema is shown below.
+
   --columns=columns              only show provided columns (comma-separated)
-
-  --csv                          output is csv format [alias: --output=csv]
-
-  --filter=filter                filter property by partial string matching, ex: name=foo
-
-  --no-header                    hide table header from output
-
-  --no-truncate                  do not truncate output to fit screen
 
   --output=csv|json|yaml         output in a more machine friendly format
 
   --raw                          Show the raw output from the server, instead of grabbing the results. Usually used in
                                  conjunction with --output=json
 
-  --sort=sort                    property to sort by (prepend '-' for descending)
-
 DESCRIPTION
-  Add Documents
+  Arguments to this command will be passed as URL parameters to POST: 
+  /v1/orgs/self/ws/{workspace}/collections/{collection}/docs
+  This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
+         
+  Example Body (YAML):
+  data:
+     - {}
 
+
+  Endpoint Reference
+  POST: /v1/orgs/self/ws/{workspace}/collections/{collection}/docs
+  Add Documents
   Add documents to a collection in Rockset.
 
-  Endpoint: POST: /v1/orgs/self/ws/{workspace}/collections/{collection}/docs
+  More documentation at https://docs.rockset.com/rest-api#adddocuments
 
-  Endpoint Documentation: https://docs.rockset.com/rest-api#adddocuments
-
-  This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
+EXAMPLE
+  $ rockset api:documents:addDocuments WORKSPACE COLLECTION --body body.yaml
+  $ cat body.yaml
+  data:
+     - {}
 ```
 
 _See code: [src/commands/api/documents/addDocuments.ts](./src/commands/api/documents/addDocuments.ts)_
 
-## `rockset api:documents:deleteDocuments`
+## `rockset api:documents:deleteDocuments WORKSPACE COLLECTION`
 
-Delete Documents
+delete documents from a collection in rockset
 
 ```
 USAGE
-  $ rockset api:documents:deleteDocuments
+  $ rockset api:documents:deleteDocuments WORKSPACE COLLECTION
+
+ARGUMENTS
+  WORKSPACE   name of the workspace
+  COLLECTION  name of the collection
 
 OPTIONS
-  -f, --file=file                (required) The config file to execute this command from. Format must be [json|yaml].
-                                 Keys are translated into arguments of the same name. If no BODY argument is specified,
-                                 the whole object, minus keys used as other arguments, will be passed in as the BODY.
-
   -h, --help                     show CLI help
 
-  -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this apicall. The value
+  -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this endpoint. The value
                                  passed to this flag determines how many requests per second will be sent
-
-  -x, --extended                 show extra columns
 
   -y, --yes                      Skip all safety prompts
 
+  --body=body                    (required) Path to a file whose contents will be passed as the POST body of this
+                                 request. Format must be [json|yaml]. An example schema is shown below.
+
   --columns=columns              only show provided columns (comma-separated)
-
-  --csv                          output is csv format [alias: --output=csv]
-
-  --filter=filter                filter property by partial string matching, ex: name=foo
-
-  --no-header                    hide table header from output
-
-  --no-truncate                  do not truncate output to fit screen
 
   --output=csv|json|yaml         output in a more machine friendly format
 
   --raw                          Show the raw output from the server, instead of grabbing the results. Usually used in
                                  conjunction with --output=json
 
-  --sort=sort                    property to sort by (prepend '-' for descending)
-
 DESCRIPTION
-  Delete Documents
+  Arguments to this command will be passed as URL parameters to DELETE: 
+  /v1/orgs/self/ws/{workspace}/collections/{collection}/docs
+  This endpoint REQUIRES a DELETE body. To specify a DELETE body, please pass a JSON or YAML file to the --body flag.
+         
+  Example Body (YAML):
+  data:
+     - _id: 2cd61e3b
 
+
+  Endpoint Reference
+  DELETE: /v1/orgs/self/ws/{workspace}/collections/{collection}/docs
+  Delete Documents
   Delete documents from a collection in Rockset.
 
-  Endpoint: DELETE: /v1/orgs/self/ws/{workspace}/collections/{collection}/docs
+  More documentation at https://docs.rockset.com/rest-api#deletedocuments
 
-  Endpoint Documentation: https://docs.rockset.com/rest-api#deletedocuments
-
-  This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
+EXAMPLE
+  $ rockset api:documents:deleteDocuments WORKSPACE COLLECTION --body body.yaml
+  $ cat body.yaml
+  data:
+     - _id: 2cd61e3b
 ```
 
 _See code: [src/commands/api/documents/deleteDocuments.ts](./src/commands/api/documents/deleteDocuments.ts)_
 
-## `rockset api:documents:patchDocuments`
+## `rockset api:documents:patchDocuments WORKSPACE COLLECTION`
 
-Patch Documents
+patch documents in a collection
 
 ```
 USAGE
-  $ rockset api:documents:patchDocuments
+  $ rockset api:documents:patchDocuments WORKSPACE COLLECTION
+
+ARGUMENTS
+  WORKSPACE   name of the workspace
+  COLLECTION  name of the collection
 
 OPTIONS
-  -f, --file=file                (required) The config file to execute this command from. Format must be [json|yaml].
-                                 Keys are translated into arguments of the same name. If no BODY argument is specified,
-                                 the whole object, minus keys used as other arguments, will be passed in as the BODY.
-
   -h, --help                     show CLI help
 
-  -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this apicall. The value
+  -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this endpoint. The value
                                  passed to this flag determines how many requests per second will be sent
-
-  -x, --extended                 show extra columns
 
   -y, --yes                      Skip all safety prompts
 
+  --body=body                    (required) Path to a file whose contents will be passed as the POST body of this
+                                 request. Format must be [json|yaml]. An example schema is shown below.
+
   --columns=columns              only show provided columns (comma-separated)
-
-  --csv                          output is csv format [alias: --output=csv]
-
-  --filter=filter                filter property by partial string matching, ex: name=foo
-
-  --no-header                    hide table header from output
-
-  --no-truncate                  do not truncate output to fit screen
 
   --output=csv|json|yaml         output in a more machine friendly format
 
   --raw                          Show the raw output from the server, instead of grabbing the results. Usually used in
                                  conjunction with --output=json
 
-  --sort=sort                    property to sort by (prepend '-' for descending)
-
 DESCRIPTION
-  Patch Documents
+  Arguments to this command will be passed as URL parameters to PATCH: 
+  /v1/orgs/self/ws/{workspace}/collections/{collection}/docs
+  This endpoint REQUIRES a PATCH body. To specify a PATCH body, please pass a JSON or YAML file to the --body flag.
+         
+  Example Body (YAML):
+  data:
+     - _id: ca2d6832-1bfd-f88f-0620-d2aa27a5d86c
+       patch:
+         - op: add
+           path: /foo/bar
+           value: baz
+           from: null
 
+
+  Endpoint Reference
+  PATCH: /v1/orgs/self/ws/{workspace}/collections/{collection}/docs
+  Patch Documents
   Patch documents in a collection
 
-  Endpoint: PATCH: /v1/orgs/self/ws/{workspace}/collections/{collection}/docs
+  More documentation at https://docs.rockset.com/rest-api#patchdocuments
 
-  Endpoint Documentation: https://docs.rockset.com/rest-api#patchdocuments
-
-  This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
+EXAMPLE
+  $ rockset api:documents:patchDocuments WORKSPACE COLLECTION --body body.yaml
+  $ cat body.yaml
+  data:
+     - _id: ca2d6832-1bfd-f88f-0620-d2aa27a5d86c
+       patch:
+         - op: add
+           path: /foo/bar
+           value: baz
+           from: null
 ```
 
 _See code: [src/commands/api/documents/patchDocuments.ts](./src/commands/api/documents/patchDocuments.ts)_
 
-## `rockset api:integrations:createIntegration -f request.yaml`
+## `rockset api:integrations:createIntegration`
 
-Create Integration
+create a new integration with rockset
 
 ```
 USAGE
-  $ rockset api:integrations:createIntegration -f request.yaml
+  $ rockset api:integrations:createIntegration
 
 OPTIONS
-  -f, --file=file         (required) The config file to execute this command from. Format must be [json|yaml]. Keys are
-                          translated into arguments of the same name. If no BODY argument is specified, the whole
-                          object, minus keys used as other arguments, will be passed in as the BODY.
-
   -h, --help              show CLI help
 
-  -x, --extended          show extra columns
+  --body=body             (required) Path to a file whose contents will be passed as the POST body of this request.
+                          Format must be [json|yaml]. An example schema is shown below.
 
   --columns=columns       only show provided columns (comma-separated)
-
-  --csv                   output is csv format [alias: --output=csv]
-
-  --filter=filter         filter property by partial string matching, ex: name=foo
-
-  --no-header             hide table header from output
-
-  --no-truncate           do not truncate output to fit screen
 
   --output=csv|json|yaml  output in a more machine friendly format
 
   --raw                   Show the raw output from the server, instead of grabbing the results. Usually used in
                           conjunction with --output=json
 
-  --sort=sort             property to sort by (prepend '-' for descending)
-
 DESCRIPTION
-  Create Integration
+  Arguments to this command will be passed as URL parameters to POST: /v1/orgs/self/integrations
+  This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
+         
+  The POST body request schema has been omitted because it is too long. Please view the documentation at 
+  https://docs.rockset.com/rest-api#createintegration to see the example.
 
+  Endpoint Reference
+  POST: /v1/orgs/self/integrations
+  Create Integration
   Create a new integration with Rockset.
 
-  Endpoint: POST: /v1/orgs/self/integrations
-
-  Endpoint Documentation: https://docs.rockset.com/rest-api#createintegration
-
-  This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
+  More documentation at https://docs.rockset.com/rest-api#createintegration
 ```
 
 _See code: [src/commands/api/integrations/createIntegration.ts](./src/commands/api/integrations/createIntegration.ts)_
 
 ## `rockset api:integrations:deleteIntegration INTEGRATION`
 
-Delete Integration
+remove an integration
 
 ```
 USAGE
@@ -1647,36 +1608,32 @@ ARGUMENTS
 
 OPTIONS
   -h, --help              show CLI help
-  -x, --extended          show extra columns
   --columns=columns       only show provided columns (comma-separated)
-  --csv                   output is csv format [alias: --output=csv]
-  --filter=filter         filter property by partial string matching, ex: name=foo
-  --no-header             hide table header from output
-  --no-truncate           do not truncate output to fit screen
   --output=csv|json|yaml  output in a more machine friendly format
 
   --raw                   Show the raw output from the server, instead of grabbing the results. Usually used in
                           conjunction with --output=json
 
-  --sort=sort             property to sort by (prepend '-' for descending)
-
 DESCRIPTION
-  Delete Integration
+  Arguments to this command will be passed as URL parameters to DELETE: /v1/orgs/self/integrations/{integration}
 
+
+  Endpoint Reference
+  DELETE: /v1/orgs/self/integrations/{integration}
+  Delete Integration
   Remove an integration.
 
-  Endpoint: DELETE: /v1/orgs/self/integrations/{integration}
+  More documentation at https://docs.rockset.com/rest-api#deleteintegration
 
-  Endpoint Documentation: https://docs.rockset.com/rest-api#deleteintegration
-
-  This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
+EXAMPLE
+  $ rockset api:integrations:deleteIntegration INTEGRATION
 ```
 
 _See code: [src/commands/api/integrations/deleteIntegration.ts](./src/commands/api/integrations/deleteIntegration.ts)_
 
 ## `rockset api:integrations:getIntegration INTEGRATION`
 
-Get Integration
+get information about a single integration
 
 ```
 USAGE
@@ -1687,36 +1644,32 @@ ARGUMENTS
 
 OPTIONS
   -h, --help              show CLI help
-  -x, --extended          show extra columns
   --columns=columns       only show provided columns (comma-separated)
-  --csv                   output is csv format [alias: --output=csv]
-  --filter=filter         filter property by partial string matching, ex: name=foo
-  --no-header             hide table header from output
-  --no-truncate           do not truncate output to fit screen
   --output=csv|json|yaml  output in a more machine friendly format
 
   --raw                   Show the raw output from the server, instead of grabbing the results. Usually used in
                           conjunction with --output=json
 
-  --sort=sort             property to sort by (prepend '-' for descending)
-
 DESCRIPTION
-  Get Integration
+  Arguments to this command will be passed as URL parameters to GET: /v1/orgs/self/integrations/{integration}
 
+
+  Endpoint Reference
+  GET: /v1/orgs/self/integrations/{integration}
+  Get Integration
   Get information about a single integration.
 
-  Endpoint: GET: /v1/orgs/self/integrations/{integration}
+  More documentation at https://docs.rockset.com/rest-api#getintegration
 
-  Endpoint Documentation: https://docs.rockset.com/rest-api#getintegration
-
-  This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
+EXAMPLE
+  $ rockset api:integrations:getIntegration INTEGRATION
 ```
 
 _See code: [src/commands/api/integrations/getIntegration.ts](./src/commands/api/integrations/getIntegration.ts)_
 
 ## `rockset api:integrations:listIntegrations`
 
-List Integrations
+list all integrations for organization
 
 ```
 USAGE
@@ -1724,36 +1677,32 @@ USAGE
 
 OPTIONS
   -h, --help              show CLI help
-  -x, --extended          show extra columns
   --columns=columns       only show provided columns (comma-separated)
-  --csv                   output is csv format [alias: --output=csv]
-  --filter=filter         filter property by partial string matching, ex: name=foo
-  --no-header             hide table header from output
-  --no-truncate           do not truncate output to fit screen
   --output=csv|json|yaml  output in a more machine friendly format
 
   --raw                   Show the raw output from the server, instead of grabbing the results. Usually used in
                           conjunction with --output=json
 
-  --sort=sort             property to sort by (prepend '-' for descending)
-
 DESCRIPTION
-  List Integrations
+  Arguments to this command will be passed as URL parameters to GET: /v1/orgs/self/integrations
 
+
+  Endpoint Reference
+  GET: /v1/orgs/self/integrations
+  List Integrations
   List all integrations for organization.
 
-  Endpoint: GET: /v1/orgs/self/integrations
+  More documentation at https://docs.rockset.com/rest-api#listintegrations
 
-  Endpoint Documentation: https://docs.rockset.com/rest-api#listintegrations
-
-  This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
+EXAMPLE
+  $ rockset api:integrations:listIntegrations
 ```
 
 _See code: [src/commands/api/integrations/listIntegrations.ts](./src/commands/api/integrations/listIntegrations.ts)_
 
 ## `rockset api:orgs:getOrganization`
 
-Get Organization
+retrieve information about current organization
 
 ```
 USAGE
@@ -1761,195 +1710,219 @@ USAGE
 
 OPTIONS
   -h, --help              show CLI help
-  -x, --extended          show extra columns
   --columns=columns       only show provided columns (comma-separated)
-  --csv                   output is csv format [alias: --output=csv]
-  --filter=filter         filter property by partial string matching, ex: name=foo
-  --no-header             hide table header from output
-  --no-truncate           do not truncate output to fit screen
   --output=csv|json|yaml  output in a more machine friendly format
 
   --raw                   Show the raw output from the server, instead of grabbing the results. Usually used in
                           conjunction with --output=json
 
-  --sort=sort             property to sort by (prepend '-' for descending)
-
 DESCRIPTION
-  Get Organization
+  Arguments to this command will be passed as URL parameters to GET: /v1/orgs/self
 
+
+  Endpoint Reference
+  GET: /v1/orgs/self
+  Get Organization
   Retrieve information about current organization.
 
-  Endpoint: GET: /v1/orgs/self
+  More documentation at https://docs.rockset.com/rest-api#getorganization
 
-  Endpoint Documentation: https://docs.rockset.com/rest-api#getorganization
-
-  This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
+EXAMPLE
+  $ rockset api:orgs:getOrganization
 ```
 
 _See code: [src/commands/api/orgs/getOrganization.ts](./src/commands/api/orgs/getOrganization.ts)_
 
-## `rockset api:queries:query -f request.yaml`
+## `rockset api:queries:query`
 
-Query
+make a sql query to rockset
 
 ```
 USAGE
-  $ rockset api:queries:query -f request.yaml
+  $ rockset api:queries:query
 
 OPTIONS
-  -f, --file=file                (required) The config file to execute this command from. Format must be [json|yaml].
-                                 Keys are translated into arguments of the same name. If no BODY argument is specified,
-                                 the whole object, minus keys used as other arguments, will be passed in as the BODY.
-
   -h, --help                     show CLI help
 
-  -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this apicall. The value
+  -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this endpoint. The value
                                  passed to this flag determines how many requests per second will be sent
-
-  -x, --extended                 show extra columns
 
   -y, --yes                      Skip all safety prompts
 
+  --body=body                    (required) Path to a file whose contents will be passed as the POST body of this
+                                 request. Format must be [json|yaml]. An example schema is shown below.
+
   --columns=columns              only show provided columns (comma-separated)
-
-  --csv                          output is csv format [alias: --output=csv]
-
-  --filter=filter                filter property by partial string matching, ex: name=foo
-
-  --no-header                    hide table header from output
-
-  --no-truncate                  do not truncate output to fit screen
 
   --output=csv|json|yaml         output in a more machine friendly format
 
   --raw                          Show the raw output from the server, instead of grabbing the results. Usually used in
                                  conjunction with --output=json
 
-  --sort=sort                    property to sort by (prepend '-' for descending)
-
 DESCRIPTION
-  Query
+  Arguments to this command will be passed as URL parameters to POST: /v1/orgs/self/queries
+  This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
+         
+  Example Body (YAML):
+  sql:
+     parameters:
+       - name: _id
+         type: string
+         value: 85beb391
+     query: SELECT * FROM foo where _id = :_id
+     default_row_limit: null
+     generate_warnings: null
+     profiling_enabled: null
 
+
+  Endpoint Reference
+  POST: /v1/orgs/self/queries
+  Query
   Make a SQL query to Rockset.
 
-  Endpoint: POST: /v1/orgs/self/queries
+  More documentation at https://docs.rockset.com/rest-api#query
 
-  Endpoint Documentation: https://docs.rockset.com/rest-api#query
-
-  This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
+EXAMPLE
+  $ rockset api:queries:query  --body body.yaml
+  $ cat body.yaml
+  sql:
+     parameters:
+       - name: _id
+         type: string
+         value: 85beb391
+     query: SELECT * FROM foo where _id = :_id
+     default_row_limit: null
+     generate_warnings: null
+     profiling_enabled: null
 ```
 
 _See code: [src/commands/api/queries/query.ts](./src/commands/api/queries/query.ts)_
 
-## `rockset api:queryLambdas:createQueryLambda -f request.yaml`
+## `rockset api:queryLambdas:createQueryLambda WORKSPACE`
 
-Create Query Lambda
+create a query lambda in given workspace
 
 ```
 USAGE
-  $ rockset api:queryLambdas:createQueryLambda -f request.yaml
+  $ rockset api:queryLambdas:createQueryLambda WORKSPACE
+
+ARGUMENTS
+  WORKSPACE  name of the workspace
 
 OPTIONS
-  -f, --file=file                (required) The config file to execute this command from. Format must be [json|yaml].
-                                 Keys are translated into arguments of the same name. If no BODY argument is specified,
-                                 the whole object, minus keys used as other arguments, will be passed in as the BODY.
-
   -h, --help                     show CLI help
 
-  -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this apicall. The value
+  -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this endpoint. The value
                                  passed to this flag determines how many requests per second will be sent
-
-  -x, --extended                 show extra columns
 
   -y, --yes                      Skip all safety prompts
 
+  --body=body                    (required) Path to a file whose contents will be passed as the POST body of this
+                                 request. Format must be [json|yaml]. An example schema is shown below.
+
   --columns=columns              only show provided columns (comma-separated)
-
-  --csv                          output is csv format [alias: --output=csv]
-
-  --filter=filter                filter property by partial string matching, ex: name=foo
-
-  --no-header                    hide table header from output
-
-  --no-truncate                  do not truncate output to fit screen
 
   --output=csv|json|yaml         output in a more machine friendly format
 
   --raw                          Show the raw output from the server, instead of grabbing the results. Usually used in
                                  conjunction with --output=json
 
-  --sort=sort                    property to sort by (prepend '-' for descending)
-
 DESCRIPTION
-  Create Query Lambda
+  Arguments to this command will be passed as URL parameters to POST: /v1/orgs/self/ws/{workspace}/lambdas
+  This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
+         
+  Example Body (YAML):
+  name: myQueryLambda
+  description: production version foo
+  sql:
+     query: SELECT 'Foo'
+     default_parameters:
+       - name: _id
+         type: string
+         value: 85beb391
 
+
+  Endpoint Reference
+  POST: /v1/orgs/self/ws/{workspace}/lambdas
+  Create Query Lambda
   Create a Query Lambda in given workspace.
 
-  Endpoint: POST: /v1/orgs/self/ws/{workspace}/lambdas
+  More documentation at https://docs.rockset.com/rest-api#createquerylambda
 
-  Endpoint Documentation: https://docs.rockset.com/rest-api#createquerylambda
-
-  This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
+EXAMPLE
+  $ rockset api:queryLambdas:createQueryLambda WORKSPACE --body body.yaml
+  $ cat body.yaml
+  name: myQueryLambda
+  description: production version foo
+  sql:
+     query: SELECT 'Foo'
+     default_parameters:
+       - name: _id
+         type: string
+         value: 85beb391
 ```
 
 _See code: [src/commands/api/queryLambdas/createQueryLambda.ts](./src/commands/api/queryLambdas/createQueryLambda.ts)_
 
-## `rockset api:queryLambdas:createQueryLambdaTag -f request.yaml`
+## `rockset api:queryLambdas:createQueryLambdaTag WORKSPACE QUERYLAMBDA`
 
-Create Query Lambda Tag
+create a tag for a specific query lambda version, or update if it exists
 
 ```
 USAGE
-  $ rockset api:queryLambdas:createQueryLambdaTag -f request.yaml
+  $ rockset api:queryLambdas:createQueryLambdaTag WORKSPACE QUERYLAMBDA
+
+ARGUMENTS
+  WORKSPACE    name of the workspace
+  QUERYLAMBDA  name of the Query Lambda
 
 OPTIONS
-  -f, --file=file                (required) The config file to execute this command from. Format must be [json|yaml].
-                                 Keys are translated into arguments of the same name. If no BODY argument is specified,
-                                 the whole object, minus keys used as other arguments, will be passed in as the BODY.
-
   -h, --help                     show CLI help
 
-  -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this apicall. The value
+  -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this endpoint. The value
                                  passed to this flag determines how many requests per second will be sent
-
-  -x, --extended                 show extra columns
 
   -y, --yes                      Skip all safety prompts
 
+  --body=body                    (required) Path to a file whose contents will be passed as the POST body of this
+                                 request. Format must be [json|yaml]. An example schema is shown below.
+
   --columns=columns              only show provided columns (comma-separated)
-
-  --csv                          output is csv format [alias: --output=csv]
-
-  --filter=filter                filter property by partial string matching, ex: name=foo
-
-  --no-header                    hide table header from output
-
-  --no-truncate                  do not truncate output to fit screen
 
   --output=csv|json|yaml         output in a more machine friendly format
 
   --raw                          Show the raw output from the server, instead of grabbing the results. Usually used in
                                  conjunction with --output=json
 
-  --sort=sort                    property to sort by (prepend '-' for descending)
-
 DESCRIPTION
-  Create Query Lambda Tag
+  Arguments to this command will be passed as URL parameters to POST: 
+  /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/tags
+  This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
+         
+  Example Body (YAML):
+  tag_name: production
+  version: 123ABC
 
+
+  Endpoint Reference
+  POST: /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/tags
+  Create Query Lambda Tag
   Create a tag for a specific Query Lambda version, or update if it exists
 
-  Endpoint: POST: /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/tags
+  More documentation at https://docs.rockset.com/rest-api#createquerylambdatag
 
-  Endpoint Documentation: https://docs.rockset.com/rest-api#createquerylambdatag
-
-  This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
+EXAMPLE
+  $ rockset api:queryLambdas:createQueryLambdaTag WORKSPACE QUERYLAMBDA --body body.yaml
+  $ cat body.yaml
+  tag_name: production
+  version: 123ABC
 ```
 
 _See code: [src/commands/api/queryLambdas/createQueryLambdaTag.ts](./src/commands/api/queryLambdas/createQueryLambdaTag.ts)_
 
 ## `rockset api:queryLambdas:deleteQueryLambda WORKSPACE QUERYLAMBDA`
 
-Delete Query Lambda
+delete a query lambda
 
 ```
 USAGE
@@ -1962,47 +1935,39 @@ ARGUMENTS
 OPTIONS
   -h, --help                     show CLI help
 
-  -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this apicall. The value
+  -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this endpoint. The value
                                  passed to this flag determines how many requests per second will be sent
-
-  -x, --extended                 show extra columns
 
   -y, --yes                      Skip all safety prompts
 
   --columns=columns              only show provided columns (comma-separated)
-
-  --csv                          output is csv format [alias: --output=csv]
-
-  --filter=filter                filter property by partial string matching, ex: name=foo
-
-  --no-header                    hide table header from output
-
-  --no-truncate                  do not truncate output to fit screen
 
   --output=csv|json|yaml         output in a more machine friendly format
 
   --raw                          Show the raw output from the server, instead of grabbing the results. Usually used in
                                  conjunction with --output=json
 
-  --sort=sort                    property to sort by (prepend '-' for descending)
-
 DESCRIPTION
-  Delete Query Lambda
+  Arguments to this command will be passed as URL parameters to DELETE: 
+  /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}
 
+
+  Endpoint Reference
+  DELETE: /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}
+  Delete Query Lambda
   Delete a Query Lambda.
 
-  Endpoint: DELETE: /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}
+  More documentation at https://docs.rockset.com/rest-api#deletequerylambda
 
-  Endpoint Documentation: https://docs.rockset.com/rest-api#deletequerylambda
-
-  This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
+EXAMPLE
+  $ rockset api:queryLambdas:deleteQueryLambda WORKSPACE QUERYLAMBDA
 ```
 
 _See code: [src/commands/api/queryLambdas/deleteQueryLambda.ts](./src/commands/api/queryLambdas/deleteQueryLambda.ts)_
 
 ## `rockset api:queryLambdas:deleteQueryLambdaTag WORKSPACE QUERYLAMBDA TAG`
 
-Delete Query Lambda Tag Version
+delete a tag for a specific query lambda
 
 ```
 USAGE
@@ -2016,47 +1981,39 @@ ARGUMENTS
 OPTIONS
   -h, --help                     show CLI help
 
-  -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this apicall. The value
+  -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this endpoint. The value
                                  passed to this flag determines how many requests per second will be sent
-
-  -x, --extended                 show extra columns
 
   -y, --yes                      Skip all safety prompts
 
   --columns=columns              only show provided columns (comma-separated)
-
-  --csv                          output is csv format [alias: --output=csv]
-
-  --filter=filter                filter property by partial string matching, ex: name=foo
-
-  --no-header                    hide table header from output
-
-  --no-truncate                  do not truncate output to fit screen
 
   --output=csv|json|yaml         output in a more machine friendly format
 
   --raw                          Show the raw output from the server, instead of grabbing the results. Usually used in
                                  conjunction with --output=json
 
-  --sort=sort                    property to sort by (prepend '-' for descending)
-
 DESCRIPTION
-  Delete Query Lambda Tag Version
+  Arguments to this command will be passed as URL parameters to DELETE: 
+  /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/tags/{tag}
 
+
+  Endpoint Reference
+  DELETE: /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/tags/{tag}
+  Delete Query Lambda Tag Version
   Delete a tag for a specific Query Lambda
 
-  Endpoint: DELETE: /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/tags/{tag}
+  More documentation at https://docs.rockset.com/rest-api#deletequerylambdatag
 
-  Endpoint Documentation: https://docs.rockset.com/rest-api#deletequerylambdatag
-
-  This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
+EXAMPLE
+  $ rockset api:queryLambdas:deleteQueryLambdaTag WORKSPACE QUERYLAMBDA TAG
 ```
 
 _See code: [src/commands/api/queryLambdas/deleteQueryLambdaTag.ts](./src/commands/api/queryLambdas/deleteQueryLambdaTag.ts)_
 
 ## `rockset api:queryLambdas:deleteQueryLambdaVersion WORKSPACE QUERYLAMBDA VERSION`
 
-Delete Query Lambda Version
+delete a query lambda version
 
 ```
 USAGE
@@ -2070,153 +2027,173 @@ ARGUMENTS
 OPTIONS
   -h, --help                     show CLI help
 
-  -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this apicall. The value
+  -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this endpoint. The value
                                  passed to this flag determines how many requests per second will be sent
-
-  -x, --extended                 show extra columns
 
   -y, --yes                      Skip all safety prompts
 
   --columns=columns              only show provided columns (comma-separated)
-
-  --csv                          output is csv format [alias: --output=csv]
-
-  --filter=filter                filter property by partial string matching, ex: name=foo
-
-  --no-header                    hide table header from output
-
-  --no-truncate                  do not truncate output to fit screen
 
   --output=csv|json|yaml         output in a more machine friendly format
 
   --raw                          Show the raw output from the server, instead of grabbing the results. Usually used in
                                  conjunction with --output=json
 
-  --sort=sort                    property to sort by (prepend '-' for descending)
-
 DESCRIPTION
-  Delete Query Lambda Version
+  Arguments to this command will be passed as URL parameters to DELETE: 
+  /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/version/{version}
 
+
+  Endpoint Reference
+  DELETE: /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/version/{version}
+  Delete Query Lambda Version
   Delete a Query Lambda version.
 
-  Endpoint: DELETE: /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/version/{version}
+  More documentation at https://docs.rockset.com/rest-api#deletequerylambdaversion
 
-  Endpoint Documentation: https://docs.rockset.com/rest-api#deletequerylambdaversion
-
-  This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
+EXAMPLE
+  $ rockset api:queryLambdas:deleteQueryLambdaVersion WORKSPACE QUERYLAMBDA VERSION
 ```
 
 _See code: [src/commands/api/queryLambdas/deleteQueryLambdaVersion.ts](./src/commands/api/queryLambdas/deleteQueryLambdaVersion.ts)_
 
-## `rockset api:queryLambdas:executeQueryLambda -f request.yaml`
+## `rockset api:queryLambdas:executeQueryLambda WORKSPACE QUERYLAMBDA VERSION`
 
-Run Query Lambda
+run a particular version of a query lambda
 
 ```
 USAGE
-  $ rockset api:queryLambdas:executeQueryLambda -f request.yaml
+  $ rockset api:queryLambdas:executeQueryLambda WORKSPACE QUERYLAMBDA VERSION
+
+ARGUMENTS
+  WORKSPACE    name of the workspace
+  QUERYLAMBDA  name of the Query Lambda
+  VERSION      version
 
 OPTIONS
-  -f, --file=file                (required) The config file to execute this command from. Format must be [json|yaml].
-                                 Keys are translated into arguments of the same name. If no BODY argument is specified,
-                                 the whole object, minus keys used as other arguments, will be passed in as the BODY.
-
   -h, --help                     show CLI help
 
-  -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this apicall. The value
+  -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this endpoint. The value
                                  passed to this flag determines how many requests per second will be sent
-
-  -x, --extended                 show extra columns
 
   -y, --yes                      Skip all safety prompts
 
+  --body=body                    Path to a file whose contents will be passed as the POST body of this request. Format
+                                 must be [json|yaml]. An example schema is shown below.
+
   --columns=columns              only show provided columns (comma-separated)
-
-  --csv                          output is csv format [alias: --output=csv]
-
-  --filter=filter                filter property by partial string matching, ex: name=foo
-
-  --no-header                    hide table header from output
-
-  --no-truncate                  do not truncate output to fit screen
 
   --output=csv|json|yaml         output in a more machine friendly format
 
   --raw                          Show the raw output from the server, instead of grabbing the results. Usually used in
                                  conjunction with --output=json
 
-  --sort=sort                    property to sort by (prepend '-' for descending)
-
 DESCRIPTION
-  Run Query Lambda
+  Arguments to this command will be passed as URL parameters to POST: 
+  /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/versions/{version}
+  This endpoint optionally accepts a POST body. To specify a POST body, please pass a JSON or YAML file to the --body 
+  flag.
+         
+  Example Body (YAML):
+  parameters:
+     - name: _id
+       type: string
+       value: 85beb391
+  default_row_limit: null
+  generate_warnings: null
 
+
+  Endpoint Reference
+  POST: /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/versions/{version}
+  Run Query Lambda
   Run a particular version of a Query Lambda.
 
-  Endpoint: POST: /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/versions/{version}
+  More documentation at https://docs.rockset.com/rest-api#executequerylambda
 
-  Endpoint Documentation: https://docs.rockset.com/rest-api#executequerylambda
-
-  This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
+EXAMPLES
+  $ rockset api:queryLambdas:executeQueryLambda WORKSPACE QUERYLAMBDA VERSION
+  $ rockset api:queryLambdas:executeQueryLambda WORKSPACE QUERYLAMBDA VERSION --body body.yaml
+  $ cat body.yaml
+  parameters:
+     - name: _id
+       type: string
+       value: 85beb391
+  default_row_limit: null
+  generate_warnings: null
 ```
 
 _See code: [src/commands/api/queryLambdas/executeQueryLambda.ts](./src/commands/api/queryLambdas/executeQueryLambda.ts)_
 
-## `rockset api:queryLambdas:executeQueryLambdaByTag -f request.yaml`
+## `rockset api:queryLambdas:executeQueryLambdaByTag WORKSPACE QUERYLAMBDA TAG`
 
-Run Query Lambda By Tag
+run the query lambda version associated with a given tag
 
 ```
 USAGE
-  $ rockset api:queryLambdas:executeQueryLambdaByTag -f request.yaml
+  $ rockset api:queryLambdas:executeQueryLambdaByTag WORKSPACE QUERYLAMBDA TAG
+
+ARGUMENTS
+  WORKSPACE    name of the workspace
+  QUERYLAMBDA  name of the Query Lambda
+  TAG          tag
 
 OPTIONS
-  -f, --file=file                (required) The config file to execute this command from. Format must be [json|yaml].
-                                 Keys are translated into arguments of the same name. If no BODY argument is specified,
-                                 the whole object, minus keys used as other arguments, will be passed in as the BODY.
-
   -h, --help                     show CLI help
 
-  -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this apicall. The value
+  -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this endpoint. The value
                                  passed to this flag determines how many requests per second will be sent
-
-  -x, --extended                 show extra columns
 
   -y, --yes                      Skip all safety prompts
 
+  --body=body                    Path to a file whose contents will be passed as the POST body of this request. Format
+                                 must be [json|yaml]. An example schema is shown below.
+
   --columns=columns              only show provided columns (comma-separated)
-
-  --csv                          output is csv format [alias: --output=csv]
-
-  --filter=filter                filter property by partial string matching, ex: name=foo
-
-  --no-header                    hide table header from output
-
-  --no-truncate                  do not truncate output to fit screen
 
   --output=csv|json|yaml         output in a more machine friendly format
 
   --raw                          Show the raw output from the server, instead of grabbing the results. Usually used in
                                  conjunction with --output=json
 
-  --sort=sort                    property to sort by (prepend '-' for descending)
-
 DESCRIPTION
-  Run Query Lambda By Tag
+  Arguments to this command will be passed as URL parameters to POST: 
+  /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/tags/{tag}
+  This endpoint optionally accepts a POST body. To specify a POST body, please pass a JSON or YAML file to the --body 
+  flag.
+         
+  Example Body (YAML):
+  parameters:
+     - name: _id
+       type: string
+       value: 85beb391
+  default_row_limit: null
+  generate_warnings: null
 
+
+  Endpoint Reference
+  POST: /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/tags/{tag}
+  Run Query Lambda By Tag
   Run the Query Lambda version associated with a given tag.
 
-  Endpoint: POST: /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/tags/{tag}
+  More documentation at https://docs.rockset.com/rest-api#executequerylambdabytag
 
-  Endpoint Documentation: https://docs.rockset.com/rest-api#executequerylambdabytag
-
-  This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
+EXAMPLES
+  $ rockset api:queryLambdas:executeQueryLambdaByTag WORKSPACE QUERYLAMBDA TAG
+  $ rockset api:queryLambdas:executeQueryLambdaByTag WORKSPACE QUERYLAMBDA TAG --body body.yaml
+  $ cat body.yaml
+  parameters:
+     - name: _id
+       type: string
+       value: 85beb391
+  default_row_limit: null
+  generate_warnings: null
 ```
 
 _See code: [src/commands/api/queryLambdas/executeQueryLambdaByTag.ts](./src/commands/api/queryLambdas/executeQueryLambdaByTag.ts)_
 
 ## `rockset api:queryLambdas:getQueryLambdaTagVersion WORKSPACE QUERYLAMBDA TAG`
 
-Get Query Lambda Tag
+get the specific query lambda version associated with a given tag
 
 ```
 USAGE
@@ -2230,47 +2207,39 @@ ARGUMENTS
 OPTIONS
   -h, --help                     show CLI help
 
-  -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this apicall. The value
+  -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this endpoint. The value
                                  passed to this flag determines how many requests per second will be sent
-
-  -x, --extended                 show extra columns
 
   -y, --yes                      Skip all safety prompts
 
   --columns=columns              only show provided columns (comma-separated)
-
-  --csv                          output is csv format [alias: --output=csv]
-
-  --filter=filter                filter property by partial string matching, ex: name=foo
-
-  --no-header                    hide table header from output
-
-  --no-truncate                  do not truncate output to fit screen
 
   --output=csv|json|yaml         output in a more machine friendly format
 
   --raw                          Show the raw output from the server, instead of grabbing the results. Usually used in
                                  conjunction with --output=json
 
-  --sort=sort                    property to sort by (prepend '-' for descending)
-
 DESCRIPTION
-  Get Query Lambda Tag
+  Arguments to this command will be passed as URL parameters to GET: 
+  /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/tags/{tag}
 
+
+  Endpoint Reference
+  GET: /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/tags/{tag}
+  Get Query Lambda Tag
   Get the specific Query Lambda version associated with a given tag
 
-  Endpoint: GET: /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/tags/{tag}
+  More documentation at https://docs.rockset.com/rest-api#getquerylambdatagversion
 
-  Endpoint Documentation: https://docs.rockset.com/rest-api#getquerylambdatagversion
-
-  This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
+EXAMPLE
+  $ rockset api:queryLambdas:getQueryLambdaTagVersion WORKSPACE QUERYLAMBDA TAG
 ```
 
 _See code: [src/commands/api/queryLambdas/getQueryLambdaTagVersion.ts](./src/commands/api/queryLambdas/getQueryLambdaTagVersion.ts)_
 
 ## `rockset api:queryLambdas:getQueryLambdaVersion WORKSPACE QUERYLAMBDA VERSION`
 
-Get Query Lambda Version
+get a specific version of a query lambda
 
 ```
 USAGE
@@ -2284,47 +2253,39 @@ ARGUMENTS
 OPTIONS
   -h, --help                     show CLI help
 
-  -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this apicall. The value
+  -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this endpoint. The value
                                  passed to this flag determines how many requests per second will be sent
-
-  -x, --extended                 show extra columns
 
   -y, --yes                      Skip all safety prompts
 
   --columns=columns              only show provided columns (comma-separated)
-
-  --csv                          output is csv format [alias: --output=csv]
-
-  --filter=filter                filter property by partial string matching, ex: name=foo
-
-  --no-header                    hide table header from output
-
-  --no-truncate                  do not truncate output to fit screen
 
   --output=csv|json|yaml         output in a more machine friendly format
 
   --raw                          Show the raw output from the server, instead of grabbing the results. Usually used in
                                  conjunction with --output=json
 
-  --sort=sort                    property to sort by (prepend '-' for descending)
-
 DESCRIPTION
-  Get Query Lambda Version
+  Arguments to this command will be passed as URL parameters to GET: 
+  /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/versions/{version}
 
+
+  Endpoint Reference
+  GET: /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/versions/{version}
+  Get Query Lambda Version
   Get a specific version of a Query Lambda
 
-  Endpoint: GET: /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/versions/{version}
+  More documentation at https://docs.rockset.com/rest-api#getquerylambdaversion
 
-  Endpoint Documentation: https://docs.rockset.com/rest-api#getquerylambdaversion
-
-  This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
+EXAMPLE
+  $ rockset api:queryLambdas:getQueryLambdaVersion WORKSPACE QUERYLAMBDA VERSION
 ```
 
 _See code: [src/commands/api/queryLambdas/getQueryLambdaVersion.ts](./src/commands/api/queryLambdas/getQueryLambdaVersion.ts)_
 
 ## `rockset api:queryLambdas:listAllQueryLambdas`
 
-List Query Lambdas
+list all query lambdas
 
 ```
 USAGE
@@ -2333,47 +2294,38 @@ USAGE
 OPTIONS
   -h, --help                     show CLI help
 
-  -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this apicall. The value
+  -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this endpoint. The value
                                  passed to this flag determines how many requests per second will be sent
-
-  -x, --extended                 show extra columns
 
   -y, --yes                      Skip all safety prompts
 
   --columns=columns              only show provided columns (comma-separated)
-
-  --csv                          output is csv format [alias: --output=csv]
-
-  --filter=filter                filter property by partial string matching, ex: name=foo
-
-  --no-header                    hide table header from output
-
-  --no-truncate                  do not truncate output to fit screen
 
   --output=csv|json|yaml         output in a more machine friendly format
 
   --raw                          Show the raw output from the server, instead of grabbing the results. Usually used in
                                  conjunction with --output=json
 
-  --sort=sort                    property to sort by (prepend '-' for descending)
-
 DESCRIPTION
-  List Query Lambdas
+  Arguments to this command will be passed as URL parameters to GET: /v1/orgs/self/lambdas
 
+
+  Endpoint Reference
+  GET: /v1/orgs/self/lambdas
+  List Query Lambdas
   List all Query Lambdas.
 
-  Endpoint: GET: /v1/orgs/self/lambdas
+  More documentation at https://docs.rockset.com/rest-api#listallquerylambdas
 
-  Endpoint Documentation: https://docs.rockset.com/rest-api#listallquerylambdas
-
-  This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
+EXAMPLE
+  $ rockset api:queryLambdas:listAllQueryLambdas
 ```
 
 _See code: [src/commands/api/queryLambdas/listAllQueryLambdas.ts](./src/commands/api/queryLambdas/listAllQueryLambdas.ts)_
 
 ## `rockset api:queryLambdas:listOrganizationTags`
 
-List Query Lambda Tags
+list all tags in an organization
 
 ```
 USAGE
@@ -2382,47 +2334,38 @@ USAGE
 OPTIONS
   -h, --help                     show CLI help
 
-  -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this apicall. The value
+  -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this endpoint. The value
                                  passed to this flag determines how many requests per second will be sent
-
-  -x, --extended                 show extra columns
 
   -y, --yes                      Skip all safety prompts
 
   --columns=columns              only show provided columns (comma-separated)
-
-  --csv                          output is csv format [alias: --output=csv]
-
-  --filter=filter                filter property by partial string matching, ex: name=foo
-
-  --no-header                    hide table header from output
-
-  --no-truncate                  do not truncate output to fit screen
 
   --output=csv|json|yaml         output in a more machine friendly format
 
   --raw                          Show the raw output from the server, instead of grabbing the results. Usually used in
                                  conjunction with --output=json
 
-  --sort=sort                    property to sort by (prepend '-' for descending)
-
 DESCRIPTION
-  List Query Lambda Tags
+  Arguments to this command will be passed as URL parameters to GET: /v1/orgs/self/lambdas/tags
 
+
+  Endpoint Reference
+  GET: /v1/orgs/self/lambdas/tags
+  List Query Lambda Tags
   List all tags in an organization
 
-  Endpoint: GET: /v1/orgs/self/lambdas/tags
+  More documentation at https://docs.rockset.com/rest-api#listorganizationtags
 
-  Endpoint Documentation: https://docs.rockset.com/rest-api#listorganizationtags
-
-  This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
+EXAMPLE
+  $ rockset api:queryLambdas:listOrganizationTags
 ```
 
 _See code: [src/commands/api/queryLambdas/listOrganizationTags.ts](./src/commands/api/queryLambdas/listOrganizationTags.ts)_
 
 ## `rockset api:queryLambdas:listQueryLambdaTagVersions TAG`
 
-List Query Lambda Tag Versions
+list all query lambda versions associated with a tag
 
 ```
 USAGE
@@ -2434,47 +2377,38 @@ ARGUMENTS
 OPTIONS
   -h, --help                     show CLI help
 
-  -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this apicall. The value
+  -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this endpoint. The value
                                  passed to this flag determines how many requests per second will be sent
-
-  -x, --extended                 show extra columns
 
   -y, --yes                      Skip all safety prompts
 
   --columns=columns              only show provided columns (comma-separated)
-
-  --csv                          output is csv format [alias: --output=csv]
-
-  --filter=filter                filter property by partial string matching, ex: name=foo
-
-  --no-header                    hide table header from output
-
-  --no-truncate                  do not truncate output to fit screen
 
   --output=csv|json|yaml         output in a more machine friendly format
 
   --raw                          Show the raw output from the server, instead of grabbing the results. Usually used in
                                  conjunction with --output=json
 
-  --sort=sort                    property to sort by (prepend '-' for descending)
-
 DESCRIPTION
-  List Query Lambda Tag Versions
+  Arguments to this command will be passed as URL parameters to GET: /v1/orgs/self/lambdas/tags/{tag}
 
+
+  Endpoint Reference
+  GET: /v1/orgs/self/lambdas/tags/{tag}
+  List Query Lambda Tag Versions
   List all Query Lambda versions associated with a tag
 
-  Endpoint: GET: /v1/orgs/self/lambdas/tags/{tag}
+  More documentation at https://docs.rockset.com/rest-api#listquerylambdatagversions
 
-  Endpoint Documentation: https://docs.rockset.com/rest-api#listquerylambdatagversions
-
-  This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
+EXAMPLE
+  $ rockset api:queryLambdas:listQueryLambdaTagVersions TAG
 ```
 
 _See code: [src/commands/api/queryLambdas/listQueryLambdaTagVersions.ts](./src/commands/api/queryLambdas/listQueryLambdaTagVersions.ts)_
 
 ## `rockset api:queryLambdas:listQueryLambdaTags WORKSPACE QUERYLAMBDA`
 
-List Query Lambda Tags
+list all tags associated with a query lambda
 
 ```
 USAGE
@@ -2487,47 +2421,39 @@ ARGUMENTS
 OPTIONS
   -h, --help                     show CLI help
 
-  -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this apicall. The value
+  -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this endpoint. The value
                                  passed to this flag determines how many requests per second will be sent
-
-  -x, --extended                 show extra columns
 
   -y, --yes                      Skip all safety prompts
 
   --columns=columns              only show provided columns (comma-separated)
-
-  --csv                          output is csv format [alias: --output=csv]
-
-  --filter=filter                filter property by partial string matching, ex: name=foo
-
-  --no-header                    hide table header from output
-
-  --no-truncate                  do not truncate output to fit screen
 
   --output=csv|json|yaml         output in a more machine friendly format
 
   --raw                          Show the raw output from the server, instead of grabbing the results. Usually used in
                                  conjunction with --output=json
 
-  --sort=sort                    property to sort by (prepend '-' for descending)
-
 DESCRIPTION
-  List Query Lambda Tags
+  Arguments to this command will be passed as URL parameters to GET: 
+  /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/tags
 
+
+  Endpoint Reference
+  GET: /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/tags
+  List Query Lambda Tags
   List all tags associated with a Query Lambda
 
-  Endpoint: GET: /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/tags
+  More documentation at https://docs.rockset.com/rest-api#listquerylambdatags
 
-  Endpoint Documentation: https://docs.rockset.com/rest-api#listquerylambdatags
-
-  This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
+EXAMPLE
+  $ rockset api:queryLambdas:listQueryLambdaTags WORKSPACE QUERYLAMBDA
 ```
 
 _See code: [src/commands/api/queryLambdas/listQueryLambdaTags.ts](./src/commands/api/queryLambdas/listQueryLambdaTags.ts)_
 
 ## `rockset api:queryLambdas:listQueryLambdaVersions WORKSPACE QUERYLAMBDA`
 
-List Query Lambda Versions
+list all versions of a query lambda
 
 ```
 USAGE
@@ -2540,47 +2466,39 @@ ARGUMENTS
 OPTIONS
   -h, --help                     show CLI help
 
-  -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this apicall. The value
+  -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this endpoint. The value
                                  passed to this flag determines how many requests per second will be sent
-
-  -x, --extended                 show extra columns
 
   -y, --yes                      Skip all safety prompts
 
   --columns=columns              only show provided columns (comma-separated)
-
-  --csv                          output is csv format [alias: --output=csv]
-
-  --filter=filter                filter property by partial string matching, ex: name=foo
-
-  --no-header                    hide table header from output
-
-  --no-truncate                  do not truncate output to fit screen
 
   --output=csv|json|yaml         output in a more machine friendly format
 
   --raw                          Show the raw output from the server, instead of grabbing the results. Usually used in
                                  conjunction with --output=json
 
-  --sort=sort                    property to sort by (prepend '-' for descending)
-
 DESCRIPTION
-  List Query Lambda Versions
+  Arguments to this command will be passed as URL parameters to GET: 
+  /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/versions
 
+
+  Endpoint Reference
+  GET: /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/versions
+  List Query Lambda Versions
   List all versions of a Query Lambda.
 
-  Endpoint: GET: /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/versions
+  More documentation at https://docs.rockset.com/rest-api#listquerylambdaversions
 
-  Endpoint Documentation: https://docs.rockset.com/rest-api#listquerylambdaversions
-
-  This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
+EXAMPLE
+  $ rockset api:queryLambdas:listQueryLambdaVersions WORKSPACE QUERYLAMBDA
 ```
 
 _See code: [src/commands/api/queryLambdas/listQueryLambdaVersions.ts](./src/commands/api/queryLambdas/listQueryLambdaVersions.ts)_
 
 ## `rockset api:queryLambdas:listQueryLambdasInWorkspace WORKSPACE`
 
-List Query Lambdas
+list all query lambdas under given workspace
 
 ```
 USAGE
@@ -2592,148 +2510,157 @@ ARGUMENTS
 OPTIONS
   -h, --help                     show CLI help
 
-  -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this apicall. The value
+  -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this endpoint. The value
                                  passed to this flag determines how many requests per second will be sent
-
-  -x, --extended                 show extra columns
 
   -y, --yes                      Skip all safety prompts
 
   --columns=columns              only show provided columns (comma-separated)
-
-  --csv                          output is csv format [alias: --output=csv]
-
-  --filter=filter                filter property by partial string matching, ex: name=foo
-
-  --no-header                    hide table header from output
-
-  --no-truncate                  do not truncate output to fit screen
 
   --output=csv|json|yaml         output in a more machine friendly format
 
   --raw                          Show the raw output from the server, instead of grabbing the results. Usually used in
                                  conjunction with --output=json
 
-  --sort=sort                    property to sort by (prepend '-' for descending)
-
 DESCRIPTION
-  List Query Lambdas
+  Arguments to this command will be passed as URL parameters to GET: /v1/orgs/self/ws/{workspace}/lambdas
 
+
+  Endpoint Reference
+  GET: /v1/orgs/self/ws/{workspace}/lambdas
+  List Query Lambdas
   List all Query Lambdas under given workspace.
 
-  Endpoint: GET: /v1/orgs/self/ws/{workspace}/lambdas
+  More documentation at https://docs.rockset.com/rest-api#listquerylambdasinworkspace
 
-  Endpoint Documentation: https://docs.rockset.com/rest-api#listquerylambdasinworkspace
-
-  This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
+EXAMPLE
+  $ rockset api:queryLambdas:listQueryLambdasInWorkspace WORKSPACE
 ```
 
 _See code: [src/commands/api/queryLambdas/listQueryLambdasInWorkspace.ts](./src/commands/api/queryLambdas/listQueryLambdasInWorkspace.ts)_
 
-## `rockset api:queryLambdas:updateQueryLambda -f request.yaml`
+## `rockset api:queryLambdas:updateQueryLambda WORKSPACE QUERYLAMBDA CREATE`
 
-Update Query Lambda
+create a new version of a query lambda in given workspace
 
 ```
 USAGE
-  $ rockset api:queryLambdas:updateQueryLambda -f request.yaml
+  $ rockset api:queryLambdas:updateQueryLambda WORKSPACE QUERYLAMBDA CREATE
+
+ARGUMENTS
+  WORKSPACE    name of the workspace
+  QUERYLAMBDA  name of the Query Lambda
+  CREATE
 
 OPTIONS
-  -f, --file=file                (required) The config file to execute this command from. Format must be [json|yaml].
-                                 Keys are translated into arguments of the same name. If no BODY argument is specified,
-                                 the whole object, minus keys used as other arguments, will be passed in as the BODY.
-
   -h, --help                     show CLI help
 
-  -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this apicall. The value
+  -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this endpoint. The value
                                  passed to this flag determines how many requests per second will be sent
-
-  -x, --extended                 show extra columns
 
   -y, --yes                      Skip all safety prompts
 
+  --body=body                    (required) Path to a file whose contents will be passed as the POST body of this
+                                 request. Format must be [json|yaml]. An example schema is shown below.
+
   --columns=columns              only show provided columns (comma-separated)
-
-  --csv                          output is csv format [alias: --output=csv]
-
-  --filter=filter                filter property by partial string matching, ex: name=foo
-
-  --no-header                    hide table header from output
-
-  --no-truncate                  do not truncate output to fit screen
 
   --output=csv|json|yaml         output in a more machine friendly format
 
   --raw                          Show the raw output from the server, instead of grabbing the results. Usually used in
                                  conjunction with --output=json
 
-  --sort=sort                    property to sort by (prepend '-' for descending)
-
 DESCRIPTION
-  Update Query Lambda
+  Arguments to this command will be passed as URL parameters to POST: 
+  /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/versions
+  This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
+         
+  Example Body (YAML):
+  description: production version foo
+  sql:
+     query: SELECT 'Foo'
+     default_parameters:
+       - name: _id
+         type: string
+         value: 85beb391
 
+
+  Endpoint Reference
+  POST: /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/versions
+  Update Query Lambda
   Create a new version of a Query Lambda in given workspace.
 
-  Endpoint: POST: /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/versions
+  More documentation at https://docs.rockset.com/rest-api#updatequerylambda
 
-  Endpoint Documentation: https://docs.rockset.com/rest-api#updatequerylambda
-
-  This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
+EXAMPLE
+  $ rockset api:queryLambdas:updateQueryLambda WORKSPACE QUERYLAMBDA CREATE --body body.yaml
+  $ cat body.yaml
+  description: production version foo
+  sql:
+     query: SELECT 'Foo'
+     default_parameters:
+       - name: _id
+         type: string
+         value: 85beb391
 ```
 
 _See code: [src/commands/api/queryLambdas/updateQueryLambda.ts](./src/commands/api/queryLambdas/updateQueryLambda.ts)_
 
-## `rockset api:users:createUser -f request.yaml`
+## `rockset api:users:createUser`
 
-Create User
+create a new user for an organization
 
 ```
 USAGE
-  $ rockset api:users:createUser -f request.yaml
+  $ rockset api:users:createUser
 
 OPTIONS
-  -f, --file=file         (required) The config file to execute this command from. Format must be [json|yaml]. Keys are
-                          translated into arguments of the same name. If no BODY argument is specified, the whole
-                          object, minus keys used as other arguments, will be passed in as the BODY.
-
   -h, --help              show CLI help
 
-  -x, --extended          show extra columns
+  --body=body             (required) Path to a file whose contents will be passed as the POST body of this request.
+                          Format must be [json|yaml]. An example schema is shown below.
 
   --columns=columns       only show provided columns (comma-separated)
-
-  --csv                   output is csv format [alias: --output=csv]
-
-  --filter=filter         filter property by partial string matching, ex: name=foo
-
-  --no-header             hide table header from output
-
-  --no-truncate           do not truncate output to fit screen
 
   --output=csv|json|yaml  output in a more machine friendly format
 
   --raw                   Show the raw output from the server, instead of grabbing the results. Usually used in
                           conjunction with --output=json
 
-  --sort=sort             property to sort by (prepend '-' for descending)
-
 DESCRIPTION
-  Create User
+  Arguments to this command will be passed as URL parameters to POST: /v1/orgs/self/users
+  This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
+         
+  Example Body (YAML):
+  email: hello@rockset.com
+  roles:
+     - admin
+     - member
+     - read-only
 
+
+  Endpoint Reference
+  POST: /v1/orgs/self/users
+  Create User
   Create a new user for an organization.
 
-  Endpoint: POST: /v1/orgs/self/users
+  More documentation at https://docs.rockset.com/rest-api#createuser
 
-  Endpoint Documentation: https://docs.rockset.com/rest-api#createuser
-
-  This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
+EXAMPLE
+  $ rockset api:users:createUser  --body body.yaml
+  $ cat body.yaml
+  email: hello@rockset.com
+  roles:
+     - admin
+     - member
+     - read-only
 ```
 
 _See code: [src/commands/api/users/createUser.ts](./src/commands/api/users/createUser.ts)_
 
 ## `rockset api:users:deleteUser USER`
 
-Delete User
+delete a user from an organization
 
 ```
 USAGE
@@ -2744,36 +2671,32 @@ ARGUMENTS
 
 OPTIONS
   -h, --help              show CLI help
-  -x, --extended          show extra columns
   --columns=columns       only show provided columns (comma-separated)
-  --csv                   output is csv format [alias: --output=csv]
-  --filter=filter         filter property by partial string matching, ex: name=foo
-  --no-header             hide table header from output
-  --no-truncate           do not truncate output to fit screen
   --output=csv|json|yaml  output in a more machine friendly format
 
   --raw                   Show the raw output from the server, instead of grabbing the results. Usually used in
                           conjunction with --output=json
 
-  --sort=sort             property to sort by (prepend '-' for descending)
-
 DESCRIPTION
-  Delete User
+  Arguments to this command will be passed as URL parameters to DELETE: /v1/orgs/self/users/{user}
 
+
+  Endpoint Reference
+  DELETE: /v1/orgs/self/users/{user}
+  Delete User
   Delete a user from an organization.
 
-  Endpoint: DELETE: /v1/orgs/self/users/{user}
+  More documentation at https://docs.rockset.com/rest-api#deleteuser
 
-  Endpoint Documentation: https://docs.rockset.com/rest-api#deleteuser
-
-  This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
+EXAMPLE
+  $ rockset api:users:deleteUser USER
 ```
 
 _See code: [src/commands/api/users/deleteUser.ts](./src/commands/api/users/deleteUser.ts)_
 
 ## `rockset api:users:getCurrentUser`
 
-Get Current User
+retrieve currently active user
 
 ```
 USAGE
@@ -2781,36 +2704,32 @@ USAGE
 
 OPTIONS
   -h, --help              show CLI help
-  -x, --extended          show extra columns
   --columns=columns       only show provided columns (comma-separated)
-  --csv                   output is csv format [alias: --output=csv]
-  --filter=filter         filter property by partial string matching, ex: name=foo
-  --no-header             hide table header from output
-  --no-truncate           do not truncate output to fit screen
   --output=csv|json|yaml  output in a more machine friendly format
 
   --raw                   Show the raw output from the server, instead of grabbing the results. Usually used in
                           conjunction with --output=json
 
-  --sort=sort             property to sort by (prepend '-' for descending)
-
 DESCRIPTION
-  Get Current User
+  Arguments to this command will be passed as URL parameters to GET: /v1/orgs/self/users/self
 
+
+  Endpoint Reference
+  GET: /v1/orgs/self/users/self
+  Get Current User
   Retrieve currently active user.
 
-  Endpoint: GET: /v1/orgs/self/users/self
+  More documentation at https://docs.rockset.com/rest-api#getcurrentuser
 
-  Endpoint Documentation: https://docs.rockset.com/rest-api#getcurrentuser
-
-  This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
+EXAMPLE
+  $ rockset api:users:getCurrentUser
 ```
 
 _See code: [src/commands/api/users/getCurrentUser.ts](./src/commands/api/users/getCurrentUser.ts)_
 
 ## `rockset api:users:listUsers`
 
-List Users
+retrieve all users for an organization
 
 ```
 USAGE
@@ -2818,36 +2737,32 @@ USAGE
 
 OPTIONS
   -h, --help              show CLI help
-  -x, --extended          show extra columns
   --columns=columns       only show provided columns (comma-separated)
-  --csv                   output is csv format [alias: --output=csv]
-  --filter=filter         filter property by partial string matching, ex: name=foo
-  --no-header             hide table header from output
-  --no-truncate           do not truncate output to fit screen
   --output=csv|json|yaml  output in a more machine friendly format
 
   --raw                   Show the raw output from the server, instead of grabbing the results. Usually used in
                           conjunction with --output=json
 
-  --sort=sort             property to sort by (prepend '-' for descending)
-
 DESCRIPTION
-  List Users
+  Arguments to this command will be passed as URL parameters to GET: /v1/orgs/self/users
 
+
+  Endpoint Reference
+  GET: /v1/orgs/self/users
+  List Users
   Retrieve all users for an organization.
 
-  Endpoint: GET: /v1/orgs/self/users
+  More documentation at https://docs.rockset.com/rest-api#listusers
 
-  Endpoint Documentation: https://docs.rockset.com/rest-api#listusers
-
-  This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
+EXAMPLE
+  $ rockset api:users:listUsers
 ```
 
 _See code: [src/commands/api/users/listUsers.ts](./src/commands/api/users/listUsers.ts)_
 
 ## `rockset api:workspaces:childWorkspaces WORKSPACE`
 
-List Workspaces
+list workspaces under given workspace
 
 ```
 USAGE
@@ -2858,84 +2773,78 @@ ARGUMENTS
 
 OPTIONS
   -h, --help              show CLI help
-  -x, --extended          show extra columns
   --columns=columns       only show provided columns (comma-separated)
-  --csv                   output is csv format [alias: --output=csv]
-  --filter=filter         filter property by partial string matching, ex: name=foo
-  --no-header             hide table header from output
-  --no-truncate           do not truncate output to fit screen
   --output=csv|json|yaml  output in a more machine friendly format
 
   --raw                   Show the raw output from the server, instead of grabbing the results. Usually used in
                           conjunction with --output=json
 
-  --sort=sort             property to sort by (prepend '-' for descending)
-
 DESCRIPTION
-  List Workspaces
+  Arguments to this command will be passed as URL parameters to GET: /v1/orgs/self/ws/{workspace}/ws
 
+
+  Endpoint Reference
+  GET: /v1/orgs/self/ws/{workspace}/ws
+  List Workspaces
   List workspaces under given workspace.
 
-  Endpoint: GET: /v1/orgs/self/ws/{workspace}/ws
+  More documentation at https://docs.rockset.com/rest-api#childworkspaces
 
-  Endpoint Documentation: https://docs.rockset.com/rest-api#childworkspaces
-
-  This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
+EXAMPLE
+  $ rockset api:workspaces:childWorkspaces WORKSPACE
 ```
 
 _See code: [src/commands/api/workspaces/childWorkspaces.ts](./src/commands/api/workspaces/childWorkspaces.ts)_
 
-## `rockset api:workspaces:createWorkspace -f request.yaml`
+## `rockset api:workspaces:createWorkspace`
 
-Create Workspace
+create a new workspace in your org
 
 ```
 USAGE
-  $ rockset api:workspaces:createWorkspace -f request.yaml
+  $ rockset api:workspaces:createWorkspace
 
 OPTIONS
-  -f, --file=file         (required) The config file to execute this command from. Format must be [json|yaml]. Keys are
-                          translated into arguments of the same name. If no BODY argument is specified, the whole
-                          object, minus keys used as other arguments, will be passed in as the BODY.
-
   -h, --help              show CLI help
 
-  -x, --extended          show extra columns
+  --body=body             (required) Path to a file whose contents will be passed as the POST body of this request.
+                          Format must be [json|yaml]. An example schema is shown below.
 
   --columns=columns       only show provided columns (comma-separated)
-
-  --csv                   output is csv format [alias: --output=csv]
-
-  --filter=filter         filter property by partial string matching, ex: name=foo
-
-  --no-header             hide table header from output
-
-  --no-truncate           do not truncate output to fit screen
 
   --output=csv|json|yaml  output in a more machine friendly format
 
   --raw                   Show the raw output from the server, instead of grabbing the results. Usually used in
                           conjunction with --output=json
 
-  --sort=sort             property to sort by (prepend '-' for descending)
-
 DESCRIPTION
-  Create Workspace
+  Arguments to this command will be passed as URL parameters to POST: /v1/orgs/self/ws
+  This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
+         
+  Example Body (YAML):
+  name: event_logs
+  description: Datasets of system logs for the ops team.
 
+
+  Endpoint Reference
+  POST: /v1/orgs/self/ws
+  Create Workspace
   Create a new workspace in your org.
 
-  Endpoint: POST: /v1/orgs/self/ws
+  More documentation at https://docs.rockset.com/rest-api#createworkspace
 
-  Endpoint Documentation: https://docs.rockset.com/rest-api#createworkspace
-
-  This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
+EXAMPLE
+  $ rockset api:workspaces:createWorkspace  --body body.yaml
+  $ cat body.yaml
+  name: event_logs
+  description: Datasets of system logs for the ops team.
 ```
 
 _See code: [src/commands/api/workspaces/createWorkspace.ts](./src/commands/api/workspaces/createWorkspace.ts)_
 
 ## `rockset api:workspaces:deleteWorkspace WORKSPACE`
 
-Delete Workspace
+remove a workspace
 
 ```
 USAGE
@@ -2946,36 +2855,32 @@ ARGUMENTS
 
 OPTIONS
   -h, --help              show CLI help
-  -x, --extended          show extra columns
   --columns=columns       only show provided columns (comma-separated)
-  --csv                   output is csv format [alias: --output=csv]
-  --filter=filter         filter property by partial string matching, ex: name=foo
-  --no-header             hide table header from output
-  --no-truncate           do not truncate output to fit screen
   --output=csv|json|yaml  output in a more machine friendly format
 
   --raw                   Show the raw output from the server, instead of grabbing the results. Usually used in
                           conjunction with --output=json
 
-  --sort=sort             property to sort by (prepend '-' for descending)
-
 DESCRIPTION
-  Delete Workspace
+  Arguments to this command will be passed as URL parameters to DELETE: /v1/orgs/self/ws/{workspace}
 
+
+  Endpoint Reference
+  DELETE: /v1/orgs/self/ws/{workspace}
+  Delete Workspace
   Remove a workspace.
 
-  Endpoint: DELETE: /v1/orgs/self/ws/{workspace}
+  More documentation at https://docs.rockset.com/rest-api#deleteworkspace
 
-  Endpoint Documentation: https://docs.rockset.com/rest-api#deleteworkspace
-
-  This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
+EXAMPLE
+  $ rockset api:workspaces:deleteWorkspace WORKSPACE
 ```
 
 _See code: [src/commands/api/workspaces/deleteWorkspace.ts](./src/commands/api/workspaces/deleteWorkspace.ts)_
 
 ## `rockset api:workspaces:getWorkspace WORKSPACE`
 
-Get Workspace
+get information about a single workspace
 
 ```
 USAGE
@@ -2986,36 +2891,32 @@ ARGUMENTS
 
 OPTIONS
   -h, --help              show CLI help
-  -x, --extended          show extra columns
   --columns=columns       only show provided columns (comma-separated)
-  --csv                   output is csv format [alias: --output=csv]
-  --filter=filter         filter property by partial string matching, ex: name=foo
-  --no-header             hide table header from output
-  --no-truncate           do not truncate output to fit screen
   --output=csv|json|yaml  output in a more machine friendly format
 
   --raw                   Show the raw output from the server, instead of grabbing the results. Usually used in
                           conjunction with --output=json
 
-  --sort=sort             property to sort by (prepend '-' for descending)
-
 DESCRIPTION
-  Get Workspace
+  Arguments to this command will be passed as URL parameters to GET: /v1/orgs/self/ws/{workspace}
 
+
+  Endpoint Reference
+  GET: /v1/orgs/self/ws/{workspace}
+  Get Workspace
   Get information about a single workspace.
 
-  Endpoint: GET: /v1/orgs/self/ws/{workspace}
+  More documentation at https://docs.rockset.com/rest-api#getworkspace
 
-  Endpoint Documentation: https://docs.rockset.com/rest-api#getworkspace
-
-  This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
+EXAMPLE
+  $ rockset api:workspaces:getWorkspace WORKSPACE
 ```
 
 _See code: [src/commands/api/workspaces/getWorkspace.ts](./src/commands/api/workspaces/getWorkspace.ts)_
 
 ## `rockset api:workspaces:listWorkspaces`
 
-List Workspaces
+list all workspaces
 
 ```
 USAGE
@@ -3023,79 +2924,72 @@ USAGE
 
 OPTIONS
   -h, --help              show CLI help
-  -x, --extended          show extra columns
   --columns=columns       only show provided columns (comma-separated)
-  --csv                   output is csv format [alias: --output=csv]
-  --filter=filter         filter property by partial string matching, ex: name=foo
-  --no-header             hide table header from output
-  --no-truncate           do not truncate output to fit screen
   --output=csv|json|yaml  output in a more machine friendly format
 
   --raw                   Show the raw output from the server, instead of grabbing the results. Usually used in
                           conjunction with --output=json
 
-  --sort=sort             property to sort by (prepend '-' for descending)
-
 DESCRIPTION
-  List Workspaces
+  Arguments to this command will be passed as URL parameters to GET: /v1/orgs/self/ws
 
+
+  Endpoint Reference
+  GET: /v1/orgs/self/ws
+  List Workspaces
   List all workspaces.
 
-  Endpoint: GET: /v1/orgs/self/ws
+  More documentation at https://docs.rockset.com/rest-api#listworkspaces
 
-  Endpoint Documentation: https://docs.rockset.com/rest-api#listworkspaces
-
-  This command is a simple wrapper around the above endpoint. Please view further documentation at the url above.
+EXAMPLE
+  $ rockset api:workspaces:listWorkspaces
 ```
 
 _See code: [src/commands/api/workspaces/listWorkspaces.ts](./src/commands/api/workspaces/listWorkspaces.ts)_
 
 ## `rockset auth:add NAME APIKEY [APISERVER]`
 
-Create a new profile with the specified name and apikey.
+create a new profile with the specified name and apikey.
 
 ```
 USAGE
   $ rockset auth:add NAME APIKEY [APISERVER]
 
 ARGUMENTS
-  NAME       The name of the profile you wish to create.
-  APIKEY     The apikey for your account
-  APISERVER  [default: https://api.rs2.usw2.rockset.com] The url for the apiserver to include in this profile
+  NAME       the name of the profile you wish to create
+  APIKEY     the apikey for your account
+  APISERVER  [default: https://api.rs2.usw2.rockset.com] the url for the Rockset API server to use
 
 OPTIONS
-  -a, --activate  Whether to activate the profile after creating it
-  -h, --help      show CLI help
+  -a, --[no-]activate  whether to activate the profile after creating it
+  -h, --help           show CLI help
 
 DESCRIPTION
-  Create a new profile with the specified name and apikey.
+  You can find an API Key for your account in the Rockset Console. https://console.rockset.com/apikeys
 ```
 
 _See code: [src/commands/auth/add.ts](./src/commands/auth/add.ts)_
 
 ## `rockset auth:delete NAME`
 
-Delete a profile with the specified name.
+delete a profile with the specified name
 
 ```
 USAGE
   $ rockset auth:delete NAME
 
 ARGUMENTS
-  NAME  The name of the profile you wish to delete.
+  NAME  the name of the profile you wish to delete
 
 OPTIONS
   -h, --help  show CLI help
-
-DESCRIPTION
-  Delete a profile with the specified name.
 ```
 
 _See code: [src/commands/auth/delete.ts](./src/commands/auth/delete.ts)_
 
 ## `rockset auth:list`
 
-List all of the available profiles.
+list all of the available profiles, and show the active profile
 
 ```
 USAGE
@@ -3103,17 +2997,14 @@ USAGE
 
 OPTIONS
   -h, --help      show CLI help
-  -s, --showKeys  Uncensor all API Keys
-
-DESCRIPTION
-  List all of the available profiles.
+  -s, --showKeys  uncensor all API Keys
 ```
 
 _See code: [src/commands/auth/list.ts](./src/commands/auth/list.ts)_
 
 ## `rockset auth:use NAME`
 
-Use a specific authentication profile.
+use a specific authentication profile
 
 ```
 USAGE
@@ -3124,9 +3015,6 @@ ARGUMENTS
 
 OPTIONS
   -h, --help  show CLI help
-
-DESCRIPTION
-  Use a specific authentication profile.
 ```
 
 _See code: [src/commands/auth/use.ts](./src/commands/auth/use.ts)_
@@ -3173,7 +3061,7 @@ _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v2.2.3
 
 ## `rockset local:deploy`
 
-Deploy Query Lambda entities to Rockset from your local project. 
+deploy Query Lambda entities to Rockset
 
 ```
 USAGE
@@ -3182,58 +3070,47 @@ USAGE
 OPTIONS
   -h, --help                                                                    show CLI help
 
-  -l, --lambda=lambda                                                           The qualified name of the lambda to
+  -l, --lambda=lambda                                                           the qualified name of the lambda to
                                                                                 deploy
 
-  -t, --tag= Specify a tag name to be applied to these Query Lambda versions.
+  -t, --tag=specify a tag name to be applied to deployed Query Lambda versions
 
-  -w, --workspace=workspace                                                     The qualified name of the workspace to
+  -w, --workspace=workspace                                                     the qualified name of the workspace to
                                                                                 deploy
 
-  --dryRun                                                                      If this flag is set, the tool will print
-                                                                                out the names of the Query Lambdas it
-                                                                                would deploy and return
+  --dryRun                                                                      print out the names of the Query Lambdas
+                                                                                that would be deployed and return
 
-  --failOnMissingWorkspace                                                      If a workspace does not exist in the
+  --failOnMissingWorkspace                                                      if a workspace does not exist in the
                                                                                 remote, the deploy will fail instead of
                                                                                 creating one
 
 DESCRIPTION
-  Deploy Query Lambda entities to Rockset from your local project. 
-
-  If a workspace parameter is passed, only that workspace will be deployed.
-  If a lambda parameter is passed, only that lambda will be deployed.
-  These two parameters are mutually exclusive, only one may be passed.
+  If a workspace parameter is passed, only Query Lambdas in that workspace will be deployed.
+  If a lambda parameter is passed, only that Query Lambda will be deployed.
 ```
 
 _See code: [src/commands/local/deploy.ts](./src/commands/local/deploy.ts)_
 
 ## `rockset local:download`
 
-Download Query Lambda entities from Rockset to your local project.
+download Query Lambda entities from Rockset to your local project
 
 ```
 USAGE
   $ rockset local:download
 
 OPTIONS
-  -h, --help                                                                              show CLI help
-  -t, --tag=Specify a value to download all Query Lambda versions tagged with this tag. 
-          Query Lambdas that do not have a version with this tag name will be skipped.
-
-  -y, --yes                                                                               Bypass the safety checks, and
-                                                                                          automatically engage in
-                                                                                          dangerous actions.
-
-DESCRIPTION
-  Download Query Lambda entities from Rockset to your local project.
+  -h, --help            show CLI help
+  -t, --tag=production  only download Query Lambda versions marked with this tag
+  -y, --yes             bypass the safety checks, and automatically engage in dangerous actions
 ```
 
 _See code: [src/commands/local/download.ts](./src/commands/local/download.ts)_
 
 ## `rockset local:init`
 
-Initialize your project.
+initialize your project with a [32mrockset.config.json[39m file.
 
 ```
 USAGE
@@ -3242,29 +3119,23 @@ USAGE
 OPTIONS
   -h, --help  show CLI help
   -y, --yes
-
-DESCRIPTION
-  Initialize your project.
-
-  This command initializes your project with a rockset.config.json file.
 ```
 
 _See code: [src/commands/local/init.ts](./src/commands/local/init.ts)_
 
 ## `rockset local:queryLambda:add NAME`
 
-Add an empty lambda with the specified name to the project
+add a Query Lambda to the current project
 
 ```
 USAGE
   $ rockset local:queryLambda:add NAME
 
 ARGUMENTS
-  NAME  The fully qualified name of the lambda you wish to add. A Qualified Name is a string formatted like
-        "{ws}.{name}".
+  NAME  the fully qualified name of the lambda you wish to add (eg. "{workspace}.{name}")
 
 OPTIONS
-  -d, --description=description  Set the description for the new query lambda
+  -d, --description=description  set the description for the Query Lambda
   -h, --help                     show CLI help
 
 EXAMPLE
@@ -3276,19 +3147,18 @@ _See code: [src/commands/local/queryLambda/add.ts](./src/commands/local/queryLam
 
 ## `rockset local:queryLambda:delete NAME`
 
-Delete a lambda with the specified name from the project
+delete a Query Lambda from the current project
 
 ```
 USAGE
   $ rockset local:queryLambda:delete NAME
 
 ARGUMENTS
-  NAME  The fully qualified name of the lambda you wish to add. A Qualified Name is a string formatted like
-        "{ws}.{name}".
+  NAME  the fully qualified name of the lambda you wish to delete (eg. "{workspace}.{name}")
 
 OPTIONS
   -h, --help  show CLI help
-  -y, --yes   Bypass the safety checks, and automatically engage in dangerous actions.
+  -y, --yes   bypass the safety checks, and automatically engage in dangerous actions
 
 EXAMPLE
   $ rockset local:queryLambda:delete commons.foo
@@ -3300,23 +3170,20 @@ _See code: [src/commands/local/queryLambda/delete.ts](./src/commands/local/query
 
 ## `rockset local:queryLambda:execute NAME`
 
-Execute a specific version of a Query Lambda in the current project.
+execute a Query Lambda in the current project
 
 ```
 USAGE
   $ rockset local:queryLambda:execute NAME
 
 ARGUMENTS
-  NAME  The fully qualified name of the Query Lambda you wish to execute
+  NAME  the fully qualified name of the lambda you wish to execute (eg. "{workspace}.{name}")
 
 OPTIONS
-  -h, --help                   show CLI help
-  -p, --parameters=parameters  A JSON string of parameters to execute the query with.
+  -h, --help                                                         show CLI help
 
-DESCRIPTION
-  Execute a specific version of a Query Lambda in the current project.
-  
-     You must specify the fully qualified name of the Query Lambda: eg. 'commons.foo'.
+  -p, --parameters=[{"name":"param","value":"foo","type":"string"}]  a JSON string of parameters to execute the query
+                                                                     with.
 
 EXAMPLE
   $ rockset local:queryLambda:execute commons.helloWorld
@@ -3326,7 +3193,7 @@ _See code: [src/commands/local/queryLambda/execute.ts](./src/commands/local/quer
 
 ## `rockset local:queryLambda:list`
 
-List all of the entities in the current project. Note: this does not list entities on remote. For that, please use
+list all of the Query Lambdas in the current project
 
 ```
 USAGE
@@ -3334,44 +3201,37 @@ USAGE
 
 OPTIONS
   -h, --help  show CLI help
-
-DESCRIPTION
-  List all of the entities in the current project. Note: this does not list entities on remote. For that, please use
-     the API endpoints present in 'rockset api:...'
 ```
 
 _See code: [src/commands/local/queryLambda/list.ts](./src/commands/local/queryLambda/list.ts)_
 
 ## `rockset local:resolve NAME`
 
-Resolve the absolute path of an entity in the current project.
+resolve the absolute path of an entity in the current project
 
 ```
 USAGE
   $ rockset local:resolve NAME
 
 ARGUMENTS
-  NAME  The fully qualified name of the entity you wish to resolve
+  NAME  the fully qualified name of the lambda you wish to resolve (eg. "{workspace}.{name}")
 
 OPTIONS
   -e, --entity=lambda|workspace  [default: lambda] the type of entity you wish to resolve
   -h, --help                     show CLI help
-  --[no-]exists                  Return with an error if file does not exist
-  --sql                          Return the SQL file path. Only for Query Lambdas.
+  --[no-]exists                  return with an error if file does not exist
+  --sql                          return the SQL file path (only for Query Lambdas)
 
-DESCRIPTION
-  Resolve the absolute path of an entity in the current project.
-  
-     You must specify the fully qualified name of the entity: eg. 'commons.foo'.
-
-     You must specify the type of entity that will be resolved.
+EXAMPLES
+  $ rockset local:resolve commons.myLambda
+  $ rockset local:resolve commons.myLambda --sql
 ```
 
 _See code: [src/commands/local/resolve.ts](./src/commands/local/resolve.ts)_
 
 ## `rockset local:serve`
 
-Start a development server that allows you to execute Query Lambdas from your local project from a development UI.
+start development server and open the Developer UI. Used to configure parameters and execute SQL files in your local project
 
 ```
 USAGE
@@ -3379,10 +3239,7 @@ USAGE
 
 OPTIONS
   -h, --help       show CLI help
-  -p, --port=port  [default: 3001] The port to start the server at
-
-DESCRIPTION
-  Start a development server that allows you to execute Query Lambdas from your local project from a development UI.
+  -p, --port=port  [default: 3001] the port to listen at
 ```
 
 _See code: [src/commands/local/serve.ts](./src/commands/local/serve.ts)_
@@ -3396,29 +3253,17 @@ USAGE
   $ rockset sql [SQL]
 
 ARGUMENTS
-  SQL  Rockset SQL string to execute
+  SQL  rockset SQL string to execute
 
 OPTIONS
   -h, --help                       show CLI help
 
-  -l, --defaultLimit=defaultLimit  Set the default row limit property on the query. This will set a default limit on the
+  -l, --defaultLimit=defaultLimit  set the default row limit property on the query. This will set a default limit on the
                                    query that can be overrided by a limit in the SQL text.
-
-  -x, --extended                   show extra columns
 
   --columns=columns                only show provided columns (comma-separated)
 
-  --csv                            output is csv format [alias: --output=csv]
-
-  --filter=filter                  filter property by partial string matching, ex: name=foo
-
-  --no-header                      hide table header from output
-
-  --no-truncate                    do not truncate output to fit screen
-
   --output=csv|json|yaml           output in a more machine friendly format
-
-  --sort=sort                      property to sort by (prepend '-' for descending)
 
 EXAMPLES
   rockset sql "Select 'hello world'"

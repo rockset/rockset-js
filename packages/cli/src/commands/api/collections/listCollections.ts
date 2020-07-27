@@ -24,7 +24,7 @@ class ListCollections extends RockCommand {
 
   static args = [];
 
-  static description = `
+  static description = `retrieve all collections in an organization
 Arguments to this command will be passed as URL parameters to ${chalk.bold(
     `GET: /v1/orgs/self/collections`,
   )}

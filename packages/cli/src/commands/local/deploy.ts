@@ -10,36 +10,32 @@ class DeployQueryLambda extends RockCommand {
     help: flags.help({ char: 'h' }),
     tag: flags.string({
       char: 't',
-      helpValue: ` Specify a tag name to be applied to these Query Lambda versions. `,
+      helpValue: `specify a tag name to be applied to deployed Query Lambda versions`,
     }),
     workspace: flags.string({
       char: 'w',
-      description: 'The qualified name of the workspace to deploy',
+      description: 'the qualified name of the workspace to deploy',
     }),
     lambda: flags.string({
       char: 'l',
-      description: 'The qualified name of the lambda to deploy',
+      description: 'the qualified name of the lambda to deploy',
       exclusive: ['workspace'],
     }),
     failOnMissingWorkspace: flags.boolean({
       description:
-        'If a workspace does not exist in the remote, the deploy will fail instead of creating one',
+        'if a workspace does not exist in the remote, the deploy will fail instead of creating one',
       default: false,
     }),
     dryRun: flags.boolean({
-      description:
-        'If this flag is set, the tool will print out the names of the Query Lambdas it would deploy and return',
+      description: 'print out the names of the Query Lambdas that would be deployed and return',
       default: false,
     }),
   };
 
-  static description = `
-Deploy Query Lambda entities to Rockset from your local project. 
+  static description = `deploy Query Lambda entities to Rockset
 
-If a workspace parameter is passed, only that workspace will be deployed.
-If a lambda parameter is passed, only that lambda will be deployed.
-These two parameters are mutually exclusive, only one may be passed.
-
+If a workspace parameter is passed, only Query Lambdas in that workspace will be deployed.
+If a lambda parameter is passed, only that Query Lambda will be deployed.
 `;
 
   async run() {

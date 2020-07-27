@@ -135,7 +135,7 @@ class CreateCollection extends RockCommand {
     },
   ];
 
-  static description = `
+  static description = `create new collection in a workspace
 Arguments to this command will be passed as URL parameters to ${chalk.bold(
     `POST: /v1/orgs/self/ws/{workspace}/collections`,
   )}

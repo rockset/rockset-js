@@ -37,7 +37,7 @@ class GetCollection extends RockCommand {
     },
   ];
 
-  static description = `
+  static description = `get details about a collection
 Arguments to this command will be passed as URL parameters to ${chalk.bold(
     `GET: /v1/orgs/self/ws/{workspace}/collections/{collection}`,
   )}

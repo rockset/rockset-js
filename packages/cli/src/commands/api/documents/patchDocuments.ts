@@ -59,13 +59,13 @@ class PatchDocuments extends RockCommand {
     },
   ];
 
-  static description = `
+  static description = `patch documents in a collection
 Arguments to this command will be passed as URL parameters to ${chalk.bold(
     `PATCH: /v1/orgs/self/ws/{workspace}/collections/{collection}/docs`,
   )}
 ${chalk.bold(`This endpoint REQUIRES a PATCH body. To specify a PATCH body, please pass a JSON or YAML file to the --body flag.
        `)}
-Example Body:
+Example Body (YAML):
 data:
   - _id: ca2d6832-1bfd-f88f-0620-d2aa27a5d86c
     patch:

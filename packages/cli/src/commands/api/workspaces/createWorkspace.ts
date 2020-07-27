@@ -31,13 +31,13 @@ class CreateWorkspace extends RockCommand {
 
   static args = [];
 
-  static description = `
+  static description = `create a new workspace in your org
 Arguments to this command will be passed as URL parameters to ${chalk.bold(
     `POST: /v1/orgs/self/ws`,
   )}
 ${chalk.bold(`This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
        `)}
-Example Body:
+Example Body (YAML):
 name: event_logs
 description: Datasets of system logs for the ops team.
 

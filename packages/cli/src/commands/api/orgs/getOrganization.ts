@@ -24,7 +24,7 @@ class GetOrganization extends RockCommand {
 
   static args = [];
 
-  static description = `
+  static description = `retrieve information about current organization
 Arguments to this command will be passed as URL parameters to ${chalk.bold(`GET: /v1/orgs/self`)}
 
 

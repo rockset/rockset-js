@@ -31,7 +31,7 @@ class DeleteIntegration extends RockCommand {
     },
   ];
 
-  static description = `
+  static description = `remove an integration
 Arguments to this command will be passed as URL parameters to ${chalk.bold(
     `DELETE: /v1/orgs/self/integrations/{integration}`,
   )}

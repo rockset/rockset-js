@@ -14,13 +14,13 @@ class ResolvePath extends RockCommand {
     }),
 
     exists: flags.boolean({
-      description: 'Return with an error if file does not exist',
+      description: 'return with an error if file does not exist',
       default: true,
       allowNo: true,
     }),
 
     sql: flags.boolean({
-      description: 'Return the SQL file path. Only for Query Lambdas.',
+      description: 'return the SQL file path (only for Query Lambdas)',
     }),
   };
 
@@ -29,18 +29,17 @@ class ResolvePath extends RockCommand {
       name: 'name',
       required: true,
       hidden: false,
-      description: 'The fully qualified name of the entity you wish to resolve',
+      description:
+        'the fully qualified name of the lambda you wish to resolve (eg. "{workspace}.{name}") ',
     },
   ];
 
-  static description = `
-  Resolve the absolute path of an entity in the current project.
-  
-  You must specify the fully qualified name of the entity: eg. 'commons.foo'.
+  static description = `resolve the absolute path of an entity in the current project`;
 
-  You must specify the type of entity that will be resolved.
-
-`;
+  static examples = [
+    `$ rockset local:resolve commons.myLambda`,
+    `$ rockset local:resolve commons.myLambda --sql`,
+  ];
 
   async run() {
     const { args, flags } = this.parse(ResolvePath);

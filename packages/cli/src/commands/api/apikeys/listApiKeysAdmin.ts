@@ -30,7 +30,7 @@ class ListApiKeysAdmin extends RockCommand {
     },
   ];
 
-  static description = `
+  static description = `list all api keys for any user (admin only)
 Arguments to this command will be passed as URL parameters to ${chalk.bold(
     `GET: /v1/orgs/self/users/{user}/apikeys`,
   )}

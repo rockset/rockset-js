@@ -10,20 +10,16 @@ class DownloadQueryLambda extends RockCommand {
     yes: flags.boolean({
       char: 'y',
       default: false,
-      description: 'Bypass the safety checks, and automatically engage in dangerous actions.',
+      description: 'bypass the safety checks, and automatically engage in dangerous actions',
     }),
     tag: flags.string({
       char: 't',
-      helpValue: `Specify a value to download all Query Lambda versions tagged with this tag. 
-        Query Lambdas that do not have a version with this tag name will be skipped.
-      `,
+      description: `only download Query Lambda versions marked with this tag`,
+      helpValue: 'production',
     }),
   };
 
-  static description = `
-Download Query Lambda entities from Rockset to your local project.
-
-`;
+  static description = `download Query Lambda entities from Rockset to your local project`;
 
   async run() {
     const { flags } = this.parse(DownloadQueryLambda);

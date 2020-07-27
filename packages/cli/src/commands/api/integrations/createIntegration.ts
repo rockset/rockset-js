@@ -71,7 +71,7 @@ class CreateIntegration extends RockCommand {
 
   static args = [];
 
-  static description = `
+  static description = `create a new integration with rockset
 Arguments to this command will be passed as URL parameters to ${chalk.bold(
     `POST: /v1/orgs/self/integrations`,
   )}

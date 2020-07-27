@@ -34,7 +34,7 @@ class ListOrganizationTags extends RockCommand {
 
   static args = [];
 
-  static description = `
+  static description = `list all tags in an organization
 Arguments to this command will be passed as URL parameters to ${chalk.bold(
     `GET: /v1/orgs/self/lambdas/tags`,
   )}

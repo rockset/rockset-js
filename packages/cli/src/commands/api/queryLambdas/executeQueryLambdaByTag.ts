@@ -64,13 +64,13 @@ class ExecuteQueryLambdaByTag extends RockCommand {
     },
   ];
 
-  static description = `
+  static description = `run the query lambda version associated with a given tag
 Arguments to this command will be passed as URL parameters to ${chalk.bold(
     `POST: /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/tags/{tag}`,
   )}
 ${chalk.bold(`This endpoint optionally accepts a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
        `)}
-Example Body:
+Example Body (YAML):
 parameters:
   - name: _id
     type: string

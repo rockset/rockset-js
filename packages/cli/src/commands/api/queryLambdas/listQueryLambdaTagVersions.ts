@@ -41,7 +41,7 @@ class ListQueryLambdaTagVersions extends RockCommand {
     },
   ];
 
-  static description = `
+  static description = `list all query lambda versions associated with a tag
 Arguments to this command will be passed as URL parameters to ${chalk.bold(
     `GET: /v1/orgs/self/lambdas/tags/{tag}`,
   )}

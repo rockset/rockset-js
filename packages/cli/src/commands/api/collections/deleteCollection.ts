@@ -37,7 +37,7 @@ class DeleteCollection extends RockCommand {
     },
   ];
 
-  static description = `
+  static description = `delete a collection and all its documents from rockset
 Arguments to this command will be passed as URL parameters to ${chalk.bold(
     `DELETE: /v1/orgs/self/ws/{workspace}/collections/{collection}`,
   )}

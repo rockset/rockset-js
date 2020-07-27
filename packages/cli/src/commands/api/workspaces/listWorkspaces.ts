@@ -24,7 +24,7 @@ class ListWorkspaces extends RockCommand {
 
   static args = [];
 
-  static description = `
+  static description = `list all workspaces
 Arguments to this command will be passed as URL parameters to ${chalk.bold(`GET: /v1/orgs/self/ws`)}
 
 
