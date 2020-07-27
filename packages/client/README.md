@@ -25,7 +25,7 @@ npm i @rockset/client
 
 ## Complete Reference
 
-A complete reference of this library (powered by [TypeDoc](https://typedoc.org/) can be found [here](https://docs.rockset.com/client/node/docs/).
+A complete reference of this library (powered by [TypeDoc](https://typedoc.org/)) can be found [here](https://docs.rockset.com/client/node/docs/).
 
 ## Usage Examples
 
