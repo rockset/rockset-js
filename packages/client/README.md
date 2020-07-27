@@ -27,7 +27,7 @@ npm i @rockset/client
 
 A complete reference of this library (powered by [TypeDoc](https://typedoc.org/) can be found [here](https://docs.rockset.com/client/node/docs/).
 
-## Usage
+## Usage Examples
 
 ### Import (ES6 Syntax)
 
