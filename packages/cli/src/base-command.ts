@@ -23,9 +23,12 @@ process.on('unhandledRejection', function (reason, p) {
 type ThrownError = string | Error | CLIError | ErrorModel | unknown;
 export abstract class RockCommand extends Command {
   async catch(err: ThrownError) {
-    // This is necessary because oclif seems to throw errors sometimes to exit logic early...
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-    if (err instanceof CLIError && err?.oclif?.exit === 0) {
+    if (err instanceof CLIError) {
+      // This is necessary because oclif seems to throw errors sometimes to exit logic early...
+      if (err?.code !== 'EEXIT') {
+        // Log the error by itself. Skip logging the error object because it is totally unhelpful
+        this.error(err);
+      }
       return;
     }
 
@@ -36,7 +39,7 @@ export abstract class RockCommand extends Command {
 ${_.truncate(prettyPrint(err), { length: 500 })}
 
 ${err}
-    `;
+`;
     this.error(finalErr);
   }
 
