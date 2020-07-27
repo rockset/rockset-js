@@ -29,19 +29,6 @@ Full API Reference of the Javascript SDK can be found [here](https://docs.rockse
 
 ## Usage
 
-### Import
-
-```ts
-const rockset = require("@rockset/client").default(
-  apikey,
-  "https://api.rs2.usw2.rockset.com"
-);
-
-await rockset.queries.query({
-  sql: { query: "SELECT count(*) FROM _events" },
-});
-```
-
 ### Import (ES6 Syntax)
 
 ```ts
