@@ -72,13 +72,13 @@
   "oclif": {
     "topics": {
       "auth": {
-        "description": "manage your authentication profiles"
+        "description": "Manage your authentication profiles."
       },
       "api": {
         "description": "wrappers for Rockset's API endpoints (full documentation at https://docs.rockset.com/rest-api)"
       },
       "local": {
-        "description": "manage your local Query Lambdas"
+        "description": "Manage your local Query Lambdas."
       },
       "local:queryLambda": {
         "description": "add, delete, execute, and list your Query Lambdas"
@@ -123,15 +123,16 @@
       "@oclif/plugin-autocomplete",
       "@oclif/plugin-update"
     ],
-    "repositoryPrefix": "./<%- commandPath %>"
+    "repositoryPrefix": "../<%- commandPath %>"
   },
   "repository": "https://github.com/rockset/rockset-js",
   "scripts": {
     "postpack": "rm -f oclif.manifest.json",
-    "prepack": "rm -rf lib && tsc -b && oclif-dev manifest && oclif-dev readme",
+    "prepack": "rm -rf lib && tsc -b && oclif-dev manifest && yarn run build-docs",
+    "build-docs": "rm -rf reference && mkdir reference && oclif-dev readme --multi --dir reference",
     "test": "rm -rf testLambdas && mkdir -p testLambdas && jest",
-    "version": "oclif-dev readme && git add README.md",
-    "build": "npm run prepack",
+    "version": "yarn run build-docs && git add README.md",
+    "build": "yarn run prepack",
     "lint": "eslint 'src/**/*.ts'",
     "codegen-swagger": "js-yaml src/generator/swagger-generated.yaml > src/generator/swagger-generated.json",
     "codegen": "yarn run codegen-swagger && rm -rf src/commands/api/ && ts-node src/generator/generate.ts && eslint --fix src/commands/api/**/*.ts --no-ignore",
