@@ -1,3 +1,4 @@
+**Note: The Rockset VSCode extension is currently in a beta release. Please report any bugs to Rockset Customer Support**
 ## Features
 
 - Syntax Highlighting

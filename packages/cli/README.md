@@ -3,6 +3,9 @@
 
 Official Rockset CLI
 
+**Note: The Rockset CLI is currently in a beta release. Please report any bugs to Rockset Customer Support**
+
+![Release](https://img.shields.io/badge/release-beta-yellow)
 [![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
 [![Version](https://img.shields.io/npm/v/@rockset/cli.svg)](https://npmjs.org/package/@rockset/cli)
 [![Downloads/week](https://img.shields.io/npm/dw/@rockset/cli.svg)](https://npmjs.org/package/@rockset/cli)
