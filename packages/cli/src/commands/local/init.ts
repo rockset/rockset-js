@@ -12,7 +12,7 @@ class InitializeProject extends RockCommand {
     yes: flags.boolean({ char: 'y' }),
   };
 
-  static description = `initialize your project with a ${chalk.green(types.ROOT_CONFIG)} file.`;
+  static description = `initialize your project with a ${types.ROOT_CONFIG} file.`;
 
   async run() {
     const { flags } = this.parse(InitializeProject);
