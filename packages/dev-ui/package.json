@@ -2,7 +2,6 @@
   "name": "@rockset/dev-ui",
   "version": "0.6.3",
   "private": true,
-  "homepage": ".",
   "dependencies": {
     "@fortawesome/fontawesome-pro": "^5.13.0",
     "@fortawesome/fontawesome-svg-core": "^1.2.28",
@@ -37,7 +36,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build && npx gulp",
     "test": "echo 'no tests'",
     "eject": "react-scripts eject",
     "lint": "eslint 'src/**/*.ts'"
@@ -57,6 +56,9 @@
   "proxy": "http://localhost:3001",
   "devDependencies": {
     "@types/carbon-components-react": "^7.10.6",
-    "@types/react-select": "^3.0.14"
+    "@types/react-select": "^3.0.14",
+    "gulp": "^4.0.2",
+    "gulp-inline-source": "^4.0.0",
+    "gulp-replace": "^1.0.0"
   }
 }

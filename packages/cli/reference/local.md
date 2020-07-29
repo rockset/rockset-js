@@ -64,7 +64,7 @@ _See code: [src/commands/local/download.ts](../src/commands/local/download.ts)_
 
 ## `rockset local:init`
 
-initialize your project with a [32mrockset.config.json[39m file.
+initialize your project with a rockset.config.json file.
 
 ```
 USAGE
