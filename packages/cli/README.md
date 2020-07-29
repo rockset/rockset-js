@@ -15,6 +15,7 @@ Official Rockset CLI
 * [Download & Installation Instructions](#download--installation-instructions)
 * [Authentication and Profile Management (`rockset auth`)](#authentication-and-profile-management-rockset-auth)
 * [Create and Deploy Query Lambdas (`rockset local`)](#create-and-deploy-query-lambdas-rockset-local)
+    * [Hello World Tutorial](/packages/cli/tutorials/queryLambdaHelloWorld.md)
     * [Set Up Query Lambdas Source Directory](#set-up-query-lambdas-source-directory)
     * [Download Existing Query Lambdas from Rockset](#download-existing-query-lambdas-from-rockset)
     * [Add a New Query Lambda](#add-a-new-query-lambda)
@@ -105,6 +106,8 @@ You can find a complete reference for all supported `rockset:auth` commands [her
 The `rockset local` commands allow you to create Query Lambdas locally, include them in your source code and deploy them to Rockset.
 
 You can find a complete reference for all supported `rockset local` commands [here](/packages/cli/reference/local.md).
+
+You can find a 'Hello world' tutorial [here](/packages/cli/tutorials/queryLambdaHelloWorld.md).
 
 ### Set Up Query Lambdas Source Directory
 

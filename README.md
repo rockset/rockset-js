@@ -12,6 +12,10 @@ The Official Home for all of Rockset's JS/TS Developer Tools
 
 This repo is managed by [lerna](https://github.com/lerna/lerna) and [yarn workspaces](https://classic.yarnpkg.com/en/docs/workspaces/).
 
+## Live Demo
+
+You can view a live demo that covers all of these tools [here](https://www.youtube.com/watch?v=WhRueFicCUg).
+
 ## Packages
 
 All Lerna packages are in [packages](./packages) directory. Each individual project has detailed documentation about its usage.
