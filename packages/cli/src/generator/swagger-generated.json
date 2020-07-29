@@ -329,6 +329,47 @@
         }
       }
     },
+    "/v1/orgs/self/queries/validations": {
+      "post": {
+        "tags": [
+          "Queries"
+        ],
+        "summary": "Validate Query",
+        "description": "Validate a SQL query with Rockset's parser and planner.",
+        "operationId": "validate",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "JSON object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/QueryRequest"
+            }
+          },
+          {
+            "name": "parameters",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "query validated successfully",
+            "schema": {
+              "$ref": "#/definitions/ValidateQueryResponse"
+            }
+          }
+        }
+      }
+    },
     "/v1/orgs/self/users": {
       "get": {
         "tags": [
@@ -2997,6 +3038,7 @@
             "TRIAL",
             "TRIAL_EXPIRED",
             "TRIAL_DEPLETED",
+            "INACTIVE",
             "DELETED"
           ]
         },
@@ -4079,6 +4121,40 @@
           "type": "array",
           "items": {
             "$ref": "#/definitions/OrgMembership"
+          }
+        }
+      }
+    },
+    "ValidateQueryResponse": {
+      "type": "object",
+      "required": [
+        "collections",
+        "name",
+        "parameters"
+      ],
+      "properties": {
+        "name": {
+          "type": "array",
+          "example": "['commons.foo']",
+          "description": "list of collection specified in query",
+          "items": {
+            "type": "string"
+          }
+        },
+        "collections": {
+          "type": "array",
+          "example": "['commons.foo']",
+          "description": "list of collection specified in query",
+          "items": {
+            "type": "string"
+          }
+        },
+        "parameters": {
+          "type": "array",
+          "example": "['foo']",
+          "description": "list of parameters specified in query",
+          "items": {
+            "type": "string"
           }
         }
       }

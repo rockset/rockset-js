@@ -24,6 +24,7 @@ wrappers for Rockset's API endpoints (full documentation at https://docs.rockset
 * [`rockset api:integrations:listIntegrations`](#rockset-apiintegrationslistintegrations)
 * [`rockset api:orgs:getOrganization`](#rockset-apiorgsgetorganization)
 * [`rockset api:queries:query`](#rockset-apiqueriesquery)
+* [`rockset api:queries:validate PARAMETERS`](#rockset-apiqueriesvalidate-parameters)
 * [`rockset api:queryLambdas:createQueryLambda WORKSPACE`](#rockset-apiquerylambdascreatequerylambda-workspace)
 * [`rockset api:queryLambdas:createQueryLambdaTag WORKSPACE QUERYLAMBDA`](#rockset-apiquerylambdascreatequerylambdatag-workspace-querylambda)
 * [`rockset api:queryLambdas:deleteQueryLambda WORKSPACE QUERYLAMBDA`](#rockset-apiquerylambdasdeletequerylambda-workspace-querylambda)
@@ -74,7 +75,7 @@ OPTIONS
 DESCRIPTION
   Arguments to this command will be passed as URL parameters to POST: /v1/orgs/self/users/self/apikeys
   This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
-         
+       
   Example Body (YAML):
   name: event-logger
 
@@ -118,7 +119,7 @@ OPTIONS
 DESCRIPTION
   Arguments to this command will be passed as URL parameters to POST: /v1/orgs/self/users/{user}/apikeys
   This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
-         
+       
   Example Body (YAML):
   name: event-logger
 
@@ -304,7 +305,7 @@ OPTIONS
 DESCRIPTION
   Arguments to this command will be passed as URL parameters to POST: /v1/orgs/self/ws/{workspace}/collections
   This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
-         
+       
   The POST body request schema has been omitted because it is too long. Please view the documentation at 
   https://docs.rockset.com/rest-api#createcollection to see the example.
 
@@ -535,7 +536,7 @@ DESCRIPTION
   Arguments to this command will be passed as URL parameters to POST: 
   /v1/orgs/self/ws/{workspace}/collections/{collection}/docs
   This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
-         
+       
   Example Body (YAML):
   data:
      - {}
@@ -591,7 +592,7 @@ DESCRIPTION
   Arguments to this command will be passed as URL parameters to DELETE: 
   /v1/orgs/self/ws/{workspace}/collections/{collection}/docs
   This endpoint REQUIRES a DELETE body. To specify a DELETE body, please pass a JSON or YAML file to the --body flag.
-         
+       
   Example Body (YAML):
   data:
      - _id: 2cd61e3b
@@ -647,7 +648,7 @@ DESCRIPTION
   Arguments to this command will be passed as URL parameters to PATCH: 
   /v1/orgs/self/ws/{workspace}/collections/{collection}/docs
   This endpoint REQUIRES a PATCH body. To specify a PATCH body, please pass a JSON or YAML file to the --body flag.
-         
+       
   Example Body (YAML):
   data:
      - _id: ca2d6832-1bfd-f88f-0620-d2aa27a5d86c
@@ -703,7 +704,7 @@ OPTIONS
 DESCRIPTION
   Arguments to this command will be passed as URL parameters to POST: /v1/orgs/self/integrations
   This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
-         
+       
   The POST body request schema has been omitted because it is too long. Please view the documentation at 
   https://docs.rockset.com/rest-api#createintegration to see the example.
 
@@ -884,7 +885,7 @@ OPTIONS
 DESCRIPTION
   Arguments to this command will be passed as URL parameters to POST: /v1/orgs/self/queries
   This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
-         
+       
   Example Body (YAML):
   sql:
      parameters:
@@ -920,6 +921,71 @@ EXAMPLE
 
 _See code: [src/commands/api/queries/query.ts](../src/commands/api/queries/query.ts)_
 
+## `rockset api:queries:validate PARAMETERS`
+
+validate a sql query with rockset's parser and planner
+
+```
+USAGE
+  $ rockset api:queries:validate PARAMETERS
+
+OPTIONS
+  -h, --help                     show CLI help
+
+  -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this endpoint. The value
+                                 passed to this flag determines how many requests per second will be sent
+
+  -y, --yes                      Skip all safety prompts
+
+  --body=body                    (required) Path to a file whose contents will be passed as the POST body of this
+                                 request. Format must be [json|yaml]. An example schema is shown below.
+
+  --columns=columns              only show provided columns (comma-separated)
+
+  --output=csv|json|yaml         output in a more machine friendly format
+
+  --raw                          Show the raw output from the server, instead of grabbing the results. Usually used in
+                                 conjunction with --output=json
+
+DESCRIPTION
+  Arguments to this command will be passed as URL parameters to POST: /v1/orgs/self/queries/validations
+  This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
+       
+  Example Body (YAML):
+  sql:
+     parameters:
+       - name: _id
+         type: string
+         value: 85beb391
+     query: SELECT * FROM foo where _id = :_id
+     default_row_limit: null
+     generate_warnings: null
+     profiling_enabled: null
+
+
+  Endpoint Reference
+  POST: /v1/orgs/self/queries/validations
+  Validate Query
+  Validate a SQL query with Rockset's parser and planner.
+
+  More documentation at https://docs.rockset.com/rest-api#validate
+
+EXAMPLE
+  $ rockset api:queries:validate PARAMETERS --body body.yaml
+  $ cat body.yaml
+  sql:
+     parameters:
+       - name: _id
+         type: string
+         value: 85beb391
+     query: SELECT * FROM foo where _id = :_id
+     default_row_limit: null
+     generate_warnings: null
+     profiling_enabled: null
+```
+
+_See code: [src/commands/api/queries/validate.ts](../src/commands/api/queries/validate.ts)_
+
 ## `rockset api:queryLambdas:createQueryLambda WORKSPACE`
 
 create a query lambda in given workspace
@@ -952,7 +1018,7 @@ OPTIONS
 DESCRIPTION
   Arguments to this command will be passed as URL parameters to POST: /v1/orgs/self/ws/{workspace}/lambdas
   This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
-         
+       
   Example Body (YAML):
   name: myQueryLambda
   description: production version foo
@@ -1020,7 +1086,7 @@ DESCRIPTION
   Arguments to this command will be passed as URL parameters to POST: 
   /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/tags
   This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
-         
+       
   Example Body (YAML):
   tag_name: production
   version: 123ABC
@@ -1215,7 +1281,7 @@ DESCRIPTION
   /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/versions/{version}
   This endpoint optionally accepts a POST body. To specify a POST body, please pass a JSON or YAML file to the --body 
   flag.
-         
+       
   Example Body (YAML):
   parameters:
      - name: _id
@@ -1282,7 +1348,7 @@ DESCRIPTION
   /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/tags/{tag}
   This endpoint optionally accepts a POST body. To specify a POST body, please pass a JSON or YAML file to the --body 
   flag.
-         
+       
   Example Body (YAML):
   parameters:
      - name: _id
@@ -1696,7 +1762,7 @@ DESCRIPTION
   Arguments to this command will be passed as URL parameters to POST: 
   /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/versions
   This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
-         
+       
   Example Body (YAML):
   description: production version foo
   sql:
@@ -1752,7 +1818,7 @@ OPTIONS
 DESCRIPTION
   Arguments to this command will be passed as URL parameters to POST: /v1/orgs/self/users
   This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
-         
+       
   Example Body (YAML):
   email: hello@rockset.com
   roles:
@@ -1942,7 +2008,7 @@ OPTIONS
 DESCRIPTION
   Arguments to this command will be passed as URL parameters to POST: /v1/orgs/self/ws
   This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
-         
+       
   Example Body (YAML):
   name: event_logs
   description: Datasets of system logs for the ops team.

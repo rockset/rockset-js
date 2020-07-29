@@ -1675,6 +1675,7 @@ export namespace Organization {
         TRIAL = <any> 'TRIAL',
         TRIALEXPIRED = <any> 'TRIAL_EXPIRED',
         TRIALDEPLETED = <any> 'TRIAL_DEPLETED',
+        INACTIVE = <any> 'INACTIVE',
         DELETED = <any> 'DELETED'
     }
 }
