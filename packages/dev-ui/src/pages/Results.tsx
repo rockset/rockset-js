@@ -70,6 +70,9 @@ export const Results = ({
       }}
     >
       Please hit run to execute this lambda from your local project.
+      <br />
+      <br />
+      Clicking run will always execute the latest SQL from the file system.
     </div>
   );
 };

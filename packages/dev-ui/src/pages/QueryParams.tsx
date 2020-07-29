@@ -24,6 +24,8 @@ import { ErrorModel, QueryParameter } from '@rockset/client/dist/codegen';
 import * as clipboardImport from 'clipboard-polyfill';
 import { uuid } from 'lib/utils/general';
 import { pebbleTheme } from 'styles/pebbleTheme';
+import { Lambda } from './index.types';
+import { DefaultParams } from './DefaultParams';
 
 const clipboard = clipboardImport as any;
 
@@ -228,9 +230,11 @@ const ParamsWrapper = styled.div`
 `;
 
 export const QueryParams = ({
+  lambda,
   params,
   setParams,
 }: {
+  lambda: Lambda;
   params: Record<string, Param>;
   setParams: React.Dispatch<React.SetStateAction<Record<string, Param>>>;
 }) => {
@@ -309,6 +313,10 @@ export const QueryParams = ({
       )}
       <div style={{ margin: '20px 0px', fontSize: '14px' }}>
         Insert parameters into your sql as :myParam.
+        <br />
+        <br />
+        Set local execution parameters below. Changing parameters here will NOT
+        update your Lambda configuration file.
       </div>
       <ParamsWrapper>
         {params &&
@@ -352,6 +360,7 @@ export const QueryParams = ({
           style={{ marginLeft: 8 }}
         />
       </CommandButton>
+      <DefaultParams lambda={lambda} />
     </div>
   );
 };

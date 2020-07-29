@@ -80,6 +80,10 @@ export const Page = ({ lambdas, refetch }: Props) => {
 
   const results = data?.results ?? [];
 
+  const lambda = lambdas.filter(
+    (x) => x.name === queryLambda && x.ws === workspace
+  )[0];
+
   const tabs = [
     {
       header: 'Results',
@@ -87,13 +91,13 @@ export const Page = ({ lambdas, refetch }: Props) => {
     },
     {
       header: 'Parameters',
-      content: <QueryParams {...{ params, setParams }} />,
+      content: <QueryParams {...{ lambda, params, setParams }} />,
     },
     {
       header: 'Lambda',
       content: (
         <LambdaConfig
-          {...{ lambdas, workspace, queryLambda, refresh: refetch }}
+          {...{ lambda, workspace, queryLambda, refresh: refetch }}
         />
       ),
     },

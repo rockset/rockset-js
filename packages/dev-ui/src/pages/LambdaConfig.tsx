@@ -1,40 +1,30 @@
 import React from 'react';
-import { HorzFlex } from 'components/helper/util';
-import { Space, PebbleButton } from 'components';
+import { PebbleButton } from 'components';
 import styled from 'styled-components';
 import { Lambda } from './index.types';
 import { pebbleTheme } from 'styles/pebbleTheme';
+import { DefaultParams } from './DefaultParams';
 
 const Wrapper = styled.div`
   padding: 10px;
   border: 1px solid ${pebbleTheme.baseColors.gray11};
   margin-right: 10px;
+`;
 
-  h3 {
-    font-weight: 600;
-    font-size: 16;
-  }
+const H3 = styled.h3`
+  font-weight: 600;
+  font-size: 16px;
 `;
 
 interface Props {
-  workspace: string;
-  queryLambda: string;
-  lambdas: Lambda[];
+  lambda: Lambda;
   refresh: () => void;
 }
 
-export const LambdaConfig = ({
-  workspace,
-  queryLambda,
-  lambdas,
-  refresh,
-}: Props) => {
-  const lambda = lambdas.filter(
-    (x) => x.name === queryLambda && x.ws === workspace
-  )[0];
+export const LambdaConfig = ({ lambda, refresh }: Props) => {
   return (
     <Wrapper>
-      <h3>Lambda Definition</h3>
+      <H3>Lambda Definition</H3>
       <div
         style={{
           border: '1px solid #dfe3e6',
@@ -47,26 +37,8 @@ export const LambdaConfig = ({
           <code className="hljs rockjson">{lambda?.sql}</code>
         </pre>
       </div>
-      <div
-        style={{
-          display: 'flex',
-          padding: '10px 0px',
-          flexDirection: 'column',
-        }}
-      >
-        <h3>Default Parameters</h3>
-        {lambda?.default_parameters.length <= 0 ? 'None' : ''}
-        <HorzFlex>
-          {lambda?.default_parameters.map((p) => (
-            <>
-              <strong>{p.name}:</strong> <Space width="2px" />
-              {p.value}
-              <Space width="10px" />
-            </>
-          ))}
-        </HorzFlex>
-      </div>
-      <h3>System Paths </h3>
+      <DefaultParams lambda={lambda} />
+      <H3>System Paths </H3>
       <strong>Lambda Definition Path: </strong>
       {lambda?.path.fullPath}
       <br />
