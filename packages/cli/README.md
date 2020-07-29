@@ -106,6 +106,8 @@ The `rockset local` commands allow you to create Query Lambdas locally, include 
 
 You can find a complete reference for all supported `rockset local` commands [here](/packages/cli/reference/local.md).
 
+You can find a 'Hello world' tutorial [here](/packages/cli/tutorials/queryLambdaHelloWorld.md).
+
 ### Set Up Query Lambdas Source Directory
 
 Before you can proceed with any of the following steps, run `rockset local:init` to configure the source directory for your Query Lambdas.
