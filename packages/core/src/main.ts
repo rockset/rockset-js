@@ -41,6 +41,7 @@ import {
 } from './filesystem/fileutil';
 import _ from 'lodash';
 import { getAuthProfile } from './filesystem/auth';
+import { isCaseInsensitiveFS } from './helper';
 
 /**
  *
@@ -81,14 +82,13 @@ const constructLambdaEntity = (
 
   const fullName = getQualifiedName(ws, name);
   const sql = networkLambda.sql?.query ?? '';
-  const description = networkLambda.description;
+  const description = networkLambda.description ?? '';
 
   const config = {
     sql_path: relativeSQLPath(name),
     default_parameters: networkLambda.sql?.default_parameters ?? [],
+    description,
   };
-
-  description && _.set(config, 'description', description);
 
   return {
     type: 'lambda',
@@ -96,7 +96,7 @@ const constructLambdaEntity = (
     ws,
     fullName,
     sql,
-    config: config,
+    config,
   };
 };
 
@@ -161,13 +161,40 @@ export async function downloadQueryLambdas(
   if (lambdas.length === 0) {
     hooks.onNoOp?.();
   }
-  lambdas.forEach(async (lambda: QueryLambdaVersion) => {
-    const qlEntity = constructLambdaEntity(lambda);
-    if (qlEntity) {
-      await writeLambda(qlEntity);
-      hooks.onWriteLambda?.(qlEntity);
-    }
-  });
+
+  const entities = findNonDuplicateEntities(lambdas, hooks);
+
+  entities
+    // Filter duplicate keys
+    .forEach(async (qlEntity) => {
+      if (qlEntity) {
+        await writeLambda(qlEntity);
+        hooks.onWriteLambda?.(qlEntity);
+      }
+    });
+}
+
+function findNonDuplicateEntities(
+  lambdas: QueryLambdaVersion[],
+  hooks: DownloadHooks
+) {
+  const entities = _.compact(lambdas.map(constructLambdaEntity));
+  const duplicates = _.chain(entities)
+    .groupBy((e) => e?.fullName.toLowerCase())
+    .pickBy((x) => x.length > 1)
+    .mapValues((all) => _.compact(all?.map((e) => e?.fullName)));
+
+  const duplicateValues = duplicates.values().compact().value() || [];
+  const duplicateKeys = duplicates.keys().compact().value() || [];
+
+  if (isCaseInsensitiveFS() && duplicateValues.length > 0) {
+    hooks?.onDuplicateLambdas?.(duplicateValues);
+    return entities.filter(
+      (x) => !duplicateKeys.some((y) => y === x?.fullName.toLowerCase())
+    );
+  } else {
+    return entities;
+  }
 }
 
 export async function deleteQueryLambdas(options: LambdaDeleteOptions) {

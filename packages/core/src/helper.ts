@@ -18,6 +18,10 @@ export function tuple<T extends unknown[]>(...data: T) {
   return data;
 }
 
+export function isCaseInsensitiveFS() {
+  return ['darwin', 'win32'].includes(process.platform);
+}
+
 export enum EscapeOptions {
   ESCAPE_ALL,
   ESCAPE_IF_NECCESSARY,

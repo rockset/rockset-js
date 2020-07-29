@@ -213,6 +213,7 @@ export interface DownloadHooks {
   onNoOp?: () => void;
   onWriteLambda?: (e: LambdaEntity) => void;
   onWriteCollection?: (e: CollectionEntity) => void;
+  onDuplicateLambdas?: (e: string[][]) => void;
 }
 
 export interface ExecuteHooks {

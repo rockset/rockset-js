@@ -58,6 +58,11 @@ OPTIONS
   -h, --help            show CLI help
   -t, --tag=production  only download Query Lambda versions marked with this tag
   -y, --yes             bypass the safety checks, and automatically engage in dangerous actions
+
+DESCRIPTION
+  Note: For operating systems that are case insensitive (eg. MacOS and Windows), it is possible that two different Query 
+  Lambdas from the server will be associated with the same paths on disk. This command will skip Query Lambdas that 
+  would otherwise overwrite each other.
 ```
 
 _See code: [src/commands/local/download.ts](../src/commands/local/download.ts)_
