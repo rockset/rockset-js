@@ -15,7 +15,7 @@ The Rockset Dev UI is bundled with the Rockset CLI. Please first install and set
 $ rockset local:init
 
 # Download your Query Lambdas
-$ rockset local:add commons.myLambda
+$ rockset local:queryLambda:add commons.myLambda
 
 # Serve the Rockset Developer UI
 $ rockset local:serve -p PORT
