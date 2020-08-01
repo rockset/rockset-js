@@ -1,0 +1,36 @@
+{
+  "name": "@rockset/parser",
+  "version": "0.7.0",
+  "description": "SQL Parser Implementation in JS",
+  "main": "./dist/index.js",
+  "types": "dist/index.d.ts",
+  "devDependencies": {
+    "eslint": "^7.0.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "jest": "^26.0.1",
+    "ts-jest": "^25.5.1",
+    "typescript": "^3.8.3"
+  },
+  "scripts": {
+    "test": "jest",
+    "start": "tsc --watch",
+    "clean": "rm -rf dist",
+    "build": "yarn run clearn && yarn run antlr && tsc",
+    "lint": "eslint 'src/**/*.ts'",
+    "antlr-raw": "java -jar artifacts/antlr-4.8-complete.jar -visitor -Dlanguage=JavaScript artifacts/Sql.g4 -o src/codegen/",
+    "antlr": "yarn run antlr-raw > /dev/null 2> tmp.err.txt || node artifacts/fixSql.js"
+  },
+  "files": [
+    "/dist"
+  ],
+  "author": "Rockset",
+  "publishConfig": {
+    "access": "public"
+  },
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@types/antlr4": "^4.7.2",
+    "antlr4": "^4.8.0",
+    "lodash": "^4.17.19"
+  }
+}
