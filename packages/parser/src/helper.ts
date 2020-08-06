@@ -37,8 +37,15 @@ export const normalize = (text: string) => {
   const defaultws = text.includes('.') ? '' : 'commons.';
   return defaultws + noQuotesText;
 };
-export const addQuotes = (text: string) => `"${text}"`;
-export const addOuterQuotes = (text: string) => addQuotes(normalize(text));
+export const escapeCollectionName = (text: string) =>
+  text
+    .split('.')
+    // address aggregator bug where the first workspace can't be escaped
+    .map((x) => `"${x}"`)
+    .join('.');
+
+export const addOuterQuotes = (text: string) =>
+  escapeCollectionName(normalize(text));
 export const replaceRange = (sql: string, sub: SubIndex, repl: string) =>
   sql.substring(0, sub.start) + repl + sql.substring(sub.stop);
 

@@ -22,7 +22,7 @@ describe('Test Replace', () => {
     replace(
       'select * from _events',
       { _events: 'commons.foo' },
-      'select * from "commons.foo"'
+      'select * from "commons"."foo"'
     )
   );
 
@@ -31,7 +31,7 @@ describe('Test Replace', () => {
     replace(
       'select * from _events a, _events b limit 100',
       { 'commons._events': 'SampleCities' },
-      'select * from "commons.SampleCities" a, "commons.SampleCities" b limit 100'
+      'select * from "commons"."SampleCities" a, "commons"."SampleCities" b limit 100'
     )
   );
 
@@ -40,7 +40,7 @@ describe('Test Replace', () => {
     replace(
       'select * from "_events" a, _events b limit 100',
       { 'commons."_events"': 'SampleCities' },
-      'select * from "commons.SampleCities" a, "commons.SampleCities" b limit 100'
+      'select * from "commons"."SampleCities" a, "commons"."SampleCities" b limit 100'
     )
   );
 
@@ -55,7 +55,7 @@ describe('Test Replace', () => {
       `
       -- _events
       -- commons._events
-      select 'commons._events' abc, :"_events" event from "commons.SampleCities" a, "commons.SampleCities" b limit 100`
+      select 'commons._events' abc, :"_events" event from "commons"."SampleCities" a, "commons"."SampleCities" b limit 100`
     )
   );
 });
