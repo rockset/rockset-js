@@ -15,7 +15,7 @@
     "test": "jest",
     "start": "tsc --watch",
     "clean": "rm -rf dist",
-    "build": "yarn run clean && yarn run antlr && tsc",
+    "build": "yarn run clean && tsc",
     "lint": "eslint 'src/**/*.ts'"
   },
   "files": [
