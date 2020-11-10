@@ -97,7 +97,7 @@ describe('Rockset Unit Tests', function () {
           retention_secs: null,
           sources: [],
           stats: null,
-          status: 'DELETED',
+          status: null,
           workspace: 'commons',
         },
       });
