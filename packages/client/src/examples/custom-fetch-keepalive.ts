@@ -5,7 +5,8 @@
  * such as writing documents to collections at a high rate.
  */
 
-import rockset from "@rockset/client";
+import rockset from '..';
+// import rockset from "@rockset/client";  // replace above line if using outside repo
 import axios from "axios";
 import * as HttpAgent from "agentkeepalive";
 
@@ -42,13 +43,11 @@ const rocksetClient = rockset(apikey, basePath, customFetchKeepAlive);
 const writeData = async (data: any) => {
   const res = await rocksetClient.documents.addDocuments("commons", "asdfasdf", {
     data
-  }).catch(err => {
-    console.log(err.code)
-  });
+  }).catch(console.log);
   return res;
 }
 
 // call write from your application:
 // ...
-// writeData([{ 'some': 'data' }]);
+writeData([{ 'some': 'data' }]);
 // ...
