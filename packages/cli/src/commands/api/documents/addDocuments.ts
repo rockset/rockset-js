@@ -54,7 +54,7 @@ class AddDocuments extends RockCommand {
     },
   ];
 
-  static description = `add documents to a collection in rockset
+  static description = `add documents to a collection
 Arguments to this command will be passed as URL parameters to ${chalk.bold(
     `POST: /v1/orgs/self/ws/{workspace}/collections/{collection}/docs`,
   )}
@@ -68,7 +68,7 @@ data:
 Endpoint Reference
 POST: /v1/orgs/self/ws/{workspace}/collections/{collection}/docs
 Add Documents
-Add documents to a collection in Rockset.
+Add documents to a collection.
 
 More documentation at ${chalk.underline(`https://docs.rockset.com/rest-api#adddocuments`)}`;
 

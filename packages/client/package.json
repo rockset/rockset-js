@@ -39,7 +39,7 @@
     "start": "tsc-watch --onSuccess 'cp src/codegen/custom.d.ts dist/codegen/custom.d.ts'",
     "test": "jest --setupFiles dotenv/config",
     "build": "genversion src/version.ts --es6 --semi && tsc && cp src/codegen/custom.d.ts dist/codegen/custom.d.ts",
-    "clean": "rm -r dist",
+    "clean": "rm -rf dist",
     "lint": "eslint 'src/**/*.ts'",
     "docs": "rm -rf docs && typedoc --out docs/ --ignoreCompilerErrors  src/index.ts --mode modules",
     "prepublishOnly": "yarn run clean && yarn run build"

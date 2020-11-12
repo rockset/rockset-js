@@ -14,9 +14,20 @@ description: transactions from stores worldwide
 sources:
   - integration_name: aws-integration
     s3:
+      access_key: AKIAIOSFODNN7EXAMPLE
+      secret_access: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
       prefix: prefix/to/keys
       pattern: prefix/to/**/keys/*.format
+      region: us-west-2
       bucket: s3://customer-account-info
+      prefixes: "['/transactions', '/stores']"
+      format: none
+      mappings:
+        - input_path:
+            - null
+          mask:
+            name: null
+            args: {}
     kinesis:
       stream_name: click_stream
       aws_region: us-east-2

@@ -24,14 +24,14 @@ class ListWorkspaces extends RockCommand {
 
   static args = [];
 
-  static description = `list all workspaces
+  static description = `list all workspaces in an organization
 Arguments to this command will be passed as URL parameters to ${chalk.bold(`GET: /v1/orgs/self/ws`)}
 
 
 Endpoint Reference
 GET: /v1/orgs/self/ws
 List Workspaces
-List all workspaces.
+List all workspaces in an organization.
 
 More documentation at ${chalk.underline(`https://docs.rockset.com/rest-api#listworkspaces`)}`;
 

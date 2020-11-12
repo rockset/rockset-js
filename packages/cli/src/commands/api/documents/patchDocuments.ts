@@ -59,7 +59,7 @@ class PatchDocuments extends RockCommand {
     },
   ];
 
-  static description = `patch documents in a collection
+  static description = `update existing documents in a collection
 Arguments to this command will be passed as URL parameters to ${chalk.bold(
     `PATCH: /v1/orgs/self/ws/{workspace}/collections/{collection}/docs`,
   )}
@@ -78,7 +78,7 @@ data:
 Endpoint Reference
 PATCH: /v1/orgs/self/ws/{workspace}/collections/{collection}/docs
 Patch Documents
-Patch documents in a collection
+Update existing documents in a collection.
 
 More documentation at ${chalk.underline(`https://docs.rockset.com/rest-api#patchdocuments`)}`;
 

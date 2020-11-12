@@ -54,7 +54,7 @@ class CreateQueryLambdaTag extends RockCommand {
     },
   ];
 
-  static description = `create a tag for a specific query lambda version, or update if it exists
+  static description = `create a tag for a specific query lambda version, or update that tag if it already exists
 Arguments to this command will be passed as URL parameters to ${chalk.bold(
     `POST: /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/tags`,
   )}
@@ -68,7 +68,7 @@ version: 123ABC
 Endpoint Reference
 POST: /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/tags
 Create Query Lambda Tag
-Create a tag for a specific Query Lambda version, or update if it exists
+Create a tag for a specific Query Lambda version, or update that tag if it already exists.
 
 More documentation at ${chalk.underline(`https://docs.rockset.com/rest-api#createquerylambdatag`)}`;
 

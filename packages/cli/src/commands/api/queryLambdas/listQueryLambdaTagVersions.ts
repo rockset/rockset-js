@@ -41,7 +41,7 @@ class ListQueryLambdaTagVersions extends RockCommand {
     },
   ];
 
-  static description = `list all query lambda versions associated with a tag
+  static description = `list all query lambda versions associated with a given tag
 Arguments to this command will be passed as URL parameters to ${chalk.bold(
     `GET: /v1/orgs/self/lambdas/tags/{tag}`,
   )}
@@ -50,7 +50,7 @@ Arguments to this command will be passed as URL parameters to ${chalk.bold(
 Endpoint Reference
 GET: /v1/orgs/self/lambdas/tags/{tag}
 List Query Lambda Tag Versions
-List all Query Lambda versions associated with a tag
+List all Query Lambda versions associated with a given tag.
 
 More documentation at ${chalk.underline(
     `https://docs.rockset.com/rest-api#listquerylambdatagversions`,

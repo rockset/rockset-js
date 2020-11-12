@@ -64,7 +64,7 @@ class ExecuteQueryLambda extends RockCommand {
     },
   ];
 
-  static description = `run a particular version of a query lambda
+  static description = `execute a particular version of a query lambda
 Arguments to this command will be passed as URL parameters to ${chalk.bold(
     `POST: /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/versions/{version}`,
   )}
@@ -81,8 +81,8 @@ generate_warnings: null
 
 Endpoint Reference
 POST: /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/versions/{version}
-Run Query Lambda
-Run a particular version of a Query Lambda.
+Execute Query Lambda
+Execute a particular version of a Query Lambda.
 
 More documentation at ${chalk.underline(`https://docs.rockset.com/rest-api#executequerylambda`)}`;
 

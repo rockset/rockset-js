@@ -8,6 +8,9 @@
   "host": "api.rs2.usw2.rockset.com",
   "tags": [
     {
+      "name": "Aliases"
+    },
+    {
       "name": "ApiKeys"
     },
     {
@@ -64,6 +67,56 @@
         }
       }
     },
+    "/v1/orgs/self/activity": {
+      "get": {
+        "tags": [
+          "Organizations"
+        ],
+        "summary": "Get Organization Recent Activity",
+        "description": "Get information about organization's recent activity.",
+        "operationId": "getOrganizationRecentActivity",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "organization recent activity retrieved successfully",
+            "schema": {
+              "$ref": "#/definitions/OrgRecentActivityResponse"
+            }
+          }
+        }
+      }
+    },
+    "/v1/orgs/self/aliases": {
+      "get": {
+        "tags": [
+          "Aliases"
+        ],
+        "summary": "List Aliases",
+        "description": "Retrieve all aliases in an organization",
+        "operationId": "listAliases",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "aliases retrieved successfully",
+            "schema": {
+              "$ref": "#/definitions/ListAliasesResponse"
+            }
+          }
+        }
+      }
+    },
     "/v1/orgs/self/collections": {
       "get": {
         "tags": [
@@ -95,7 +148,7 @@
           "Integrations"
         ],
         "summary": "List Integrations",
-        "description": "List all integrations for organization.",
+        "description": "List all integrations in an organization.",
         "operationId": "listIntegrations",
         "consumes": [
           "application/json"
@@ -118,7 +171,7 @@
           "Integrations"
         ],
         "summary": "Create Integration",
-        "description": "Create a new integration with Rockset.",
+        "description": "Create a new integration.",
         "operationId": "createIntegration",
         "consumes": [
           "application/json"
@@ -217,7 +270,7 @@
           "Query Lambdas"
         ],
         "summary": "List Query Lambdas",
-        "description": "List all Query Lambdas.",
+        "description": "List all Query Lambdas in an organization.",
         "operationId": "listAllQueryLambdas",
         "consumes": [
           "application/json"
@@ -241,8 +294,8 @@
         "tags": [
           "Query Lambdas"
         ],
-        "summary": "List Query Lambda Tags",
-        "description": "List all tags in an organization",
+        "summary": "List All Query Lambda Tags",
+        "description": "List all distinct Query Lambda tags in an organization.",
         "operationId": "listOrganizationTags",
         "consumes": [
           "application/json"
@@ -267,7 +320,7 @@
           "Query Lambdas"
         ],
         "summary": "List Query Lambda Tag Versions",
-        "description": "List all Query Lambda versions associated with a tag",
+        "description": "List all Query Lambda versions associated with a given tag.",
         "operationId": "listQueryLambdaTagVersions",
         "consumes": [
           "application/json"
@@ -434,7 +487,7 @@
           "Users"
         ],
         "summary": "Get Current User",
-        "description": "Retrieve currently active user.",
+        "description": "Retrieve currently authenticated user.",
         "operationId": "getCurrentUser",
         "consumes": [
           "application/json"
@@ -582,8 +635,8 @@
         "tags": [
           "ApiKeys"
         ],
-        "summary": "List API Keys for any user (admin only)",
-        "description": "List all API keys for any user (admin only).",
+        "summary": "List API Keys (any user)",
+        "description": "List all API keys for any user in your organization. Accessible to Admin users only.",
         "operationId": "listApiKeysAdmin",
         "consumes": [
           "application/json"
@@ -595,6 +648,7 @@
           {
             "name": "user",
             "in": "path",
+            "description": "user email",
             "required": true,
             "type": "string"
           }
@@ -612,8 +666,8 @@
         "tags": [
           "ApiKeys"
         ],
-        "summary": "Create API Key for any user (admin only)",
-        "description": "Create a new API key for any user (admin only).",
+        "summary": "Create API Key (any user)",
+        "description": "Create a new API key for any user in your organization. Accessible to Admin users only.",
         "operationId": "createApiKeyAdmin",
         "consumes": [
           "application/json"
@@ -634,6 +688,7 @@
           {
             "name": "user",
             "in": "path",
+            "description": "user email",
             "required": true,
             "type": "string"
           }
@@ -653,8 +708,8 @@
         "tags": [
           "ApiKeys"
         ],
-        "summary": "Delete API Key for any user (admin only)",
-        "description": "Delete an API key for any user (admin only).",
+        "summary": "Delete API Key (any user)",
+        "description": "Delete an API key for any user in your organization. Accessible to Admin users only.",
         "operationId": "deleteApiKeyAdmin",
         "consumes": [
           "application/json"
@@ -673,6 +728,7 @@
           {
             "name": "user",
             "in": "path",
+            "description": "user email",
             "required": true,
             "type": "string"
           }
@@ -693,7 +749,7 @@
           "Workspaces"
         ],
         "summary": "List Workspaces",
-        "description": "List all workspaces.",
+        "description": "List all workspaces in an organization.",
         "operationId": "listWorkspaces",
         "consumes": [
           "application/json"
@@ -716,7 +772,7 @@
           "Workspaces"
         ],
         "summary": "Create Workspace",
-        "description": "Create a new workspace in your org.",
+        "description": "Create a new workspace.",
         "operationId": "createWorkspace",
         "consumes": [
           "application/json"
@@ -806,6 +862,247 @@
             "description": "workspace deleted successfully",
             "schema": {
               "$ref": "#/definitions/DeleteWorkspaceResponse"
+            }
+          }
+        }
+      }
+    },
+    "/v1/orgs/self/ws/{workspace}/aliases": {
+      "get": {
+        "tags": [
+          "Aliases"
+        ],
+        "summary": "List Aliases for Workspace",
+        "description": "Retrieve all aliases in a workspace.",
+        "operationId": "workspaceAliases",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "workspace",
+            "in": "path",
+            "description": "name of the workspace",
+            "required": true,
+            "type": "string",
+            "default": "commons"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "aliases retrieved successfully",
+            "schema": {
+              "$ref": "#/definitions/ListAliasesResponse"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Aliases"
+        ],
+        "summary": "Create alias",
+        "description": "Create new alias in a workspace.",
+        "operationId": "createAlias",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "workspace",
+            "in": "path",
+            "description": "name of the workspace",
+            "required": true,
+            "type": "string",
+            "default": "commons"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "JSON object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateAliasRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "alias created successfully",
+            "schema": {
+              "$ref": "#/definitions/CreateAliasResponse"
+            }
+          }
+        }
+      }
+    },
+    "/v1/orgs/self/ws/{workspace}/aliases/{alias}": {
+      "get": {
+        "tags": [
+          "Aliases"
+        ],
+        "summary": "Get Alias",
+        "description": "Get details about a alias",
+        "operationId": "getAlias",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "workspace",
+            "in": "path",
+            "description": "name of the workspace",
+            "required": true,
+            "type": "string",
+            "default": "commons"
+          },
+          {
+            "name": "alias",
+            "in": "path",
+            "description": "name of the alias",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "alias retrieved successfully",
+            "schema": {
+              "$ref": "#/definitions/GetAliasResponse"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Aliases"
+        ],
+        "summary": "Update alias",
+        "description": "Update alias in a workspace.",
+        "operationId": "updateAlias",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "workspace",
+            "in": "path",
+            "description": "name of the workspace",
+            "required": true,
+            "type": "string",
+            "default": "commons"
+          },
+          {
+            "name": "alias",
+            "in": "path",
+            "description": "name of the alias",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "JSON object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UpdateAliasRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "alias updated successfully",
+            "schema": {
+              "$ref": "#/definitions/GetAliasResponse"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Aliases"
+        ],
+        "summary": "Delete Alias",
+        "description": "Delete an alias.",
+        "operationId": "deleteAlias",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "workspace",
+            "in": "path",
+            "description": "name of the workspace",
+            "required": true,
+            "type": "string",
+            "default": "commons"
+          },
+          {
+            "name": "alias",
+            "in": "path",
+            "description": "name of the alias",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "alias deleted successfully",
+            "schema": {
+              "$ref": "#/definitions/DeleteAliasResponse"
+            }
+          }
+        }
+      }
+    },
+    "/v1/orgs/self/ws/{workspace}/aliases/{alias}/lambdas": {
+      "get": {
+        "tags": [
+          "Aliases"
+        ],
+        "summary": "Get Query Lambdas with Alias",
+        "description": "Get all Query Lambdas that hit a specific Rockset Alias.",
+        "operationId": "listQueryLambdasWithAlias",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "workspace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "alias",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Query Lambdas fetched successfully",
+            "schema": {
+              "$ref": "#/definitions/ListQueryLambdasResponse"
             }
           }
         }
@@ -966,13 +1263,51 @@
         }
       }
     },
+    "/v1/orgs/self/ws/{workspace}/collections/{collection}/aliases": {
+      "get": {
+        "tags": [
+          "Collections"
+        ],
+        "summary": "Get Aliases for Collection",
+        "description": "Get all Aliases for a specific Rockset Collection.",
+        "operationId": "listAliasesForCollection",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "workspace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "collection",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Aliases fetched successfully",
+            "schema": {
+              "$ref": "#/definitions/ListAliasesResponse"
+            }
+          }
+        }
+      }
+    },
     "/v1/orgs/self/ws/{workspace}/collections/{collection}/docs": {
       "post": {
         "tags": [
           "Documents"
         ],
         "summary": "Add Documents",
-        "description": "Add documents to a collection in Rockset.",
+        "description": "Add documents to a collection.",
         "operationId": "addDocuments",
         "consumes": [
           "application/json"
@@ -1020,7 +1355,7 @@
           "Documents"
         ],
         "summary": "Delete Documents",
-        "description": "Delete documents from a collection in Rockset.",
+        "description": "Delete documents from a collection.",
         "operationId": "deleteDocuments",
         "consumes": [
           "application/json"
@@ -1068,7 +1403,7 @@
           "Documents"
         ],
         "summary": "Patch Documents",
-        "description": "Patch documents in a collection",
+        "description": "Update existing documents in a collection.",
         "operationId": "patchDocuments",
         "consumes": [
           "application/json"
@@ -1117,7 +1452,7 @@
         "tags": [
           "Collections"
         ],
-        "summary": "Get Query Lambdas",
+        "summary": "Get Query Lambdas for Collection",
         "description": "Get all Query Lambdas that hit a specific Rockset Collection.",
         "operationId": "listQueryLambdasInCollection",
         "consumes": [
@@ -1158,7 +1493,7 @@
         "tags": [
           "Query Lambdas"
         ],
-        "summary": "List Query Lambdas",
+        "summary": "List Query Lambdas in Workspace",
         "description": "List all Query Lambdas under given workspace.",
         "operationId": "listQueryLambdasInWorkspace",
         "consumes": [
@@ -1314,7 +1649,7 @@
           "Query Lambdas"
         ],
         "summary": "Create Query Lambda Tag",
-        "description": "Create a tag for a specific Query Lambda version, or update if it exists",
+        "description": "Create a tag for a specific Query Lambda version, or update that tag if it already exists.",
         "operationId": "createQueryLambdaTag",
         "consumes": [
           "application/json"
@@ -1364,7 +1699,7 @@
           "Query Lambdas"
         ],
         "summary": "Get Query Lambda Tag",
-        "description": "Get the specific Query Lambda version associated with a given tag",
+        "description": "Get the Query Lambda version associated with a given tag.",
         "operationId": "getQueryLambdaTagVersion",
         "consumes": [
           "application/json"
@@ -1409,8 +1744,8 @@
         "tags": [
           "Query Lambdas"
         ],
-        "summary": "Run Query Lambda By Tag",
-        "description": "Run the Query Lambda version associated with a given tag.",
+        "summary": "Execute Query Lambda By Tag",
+        "description": "Execute the Query Lambda version associated with a given tag.",
         "operationId": "executeQueryLambdaByTag",
         "consumes": [
           "application/json"
@@ -1656,7 +1991,7 @@
           "Query Lambdas"
         ],
         "summary": "Get Query Lambda Version",
-        "description": "Get a specific version of a Query Lambda",
+        "description": "Get details for a specified version of a Query Lambda.",
         "operationId": "getQueryLambdaVersion",
         "consumes": [
           "application/json"
@@ -1701,8 +2036,8 @@
         "tags": [
           "Query Lambdas"
         ],
-        "summary": "Run Query Lambda",
-        "description": "Run a particular version of a Query Lambda.",
+        "summary": "Execute Query Lambda",
+        "description": "Execute a particular version of a Query Lambda.",
         "operationId": "executeQueryLambda",
         "consumes": [
           "application/json"
@@ -1758,7 +2093,7 @@
         "tags": [
           "Workspaces"
         ],
-        "summary": "List Workspaces",
+        "summary": "List Workspaces in Workspace",
         "description": "List workspaces under given workspace.",
         "operationId": "childWorkspaces",
         "consumes": [
@@ -1816,6 +2151,58 @@
         }
       }
     },
+    "Alias": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "demo",
+          "description": "name of the alias"
+        },
+        "description": {
+          "type": "string",
+          "example": "alias referencing collection in workspace",
+          "description": "alias description"
+        },
+        "workspace": {
+          "type": "string",
+          "example": "commons",
+          "description": "name of the workspace"
+        },
+        "creator_email": {
+          "type": "string",
+          "example": "xyz@rockset.com",
+          "description": "email of the creator"
+        },
+        "collections": {
+          "type": "array",
+          "example": "[common.foo, prod.demo]",
+          "description": "list of fully qualified collection names referenced by alias",
+          "items": {
+            "type": "string"
+          }
+        },
+        "state": {
+          "type": "string",
+          "example": "CREATED",
+          "description": "state of the alias",
+          "enum": [
+            "CREATED",
+            "DELETED"
+          ]
+        },
+        "created_at": {
+          "type": "string",
+          "example": "2001-08-28T00:23:41Z",
+          "description": "ISO-8601 date"
+        },
+        "modified_at": {
+          "type": "string",
+          "example": "2001-08-28T00:23:42Z",
+          "description": "ISO-8601 date"
+        }
+      }
+    },
     "ApiKey": {
       "type": "object",
       "required": [
@@ -1841,7 +2228,10 @@
         "last_access_time": {
           "type": "string",
           "example": "2001-08-28T00:23:41Z",
-          "description": "ISO-8601 date "
+          "description": "ISO-8601 date"
+        },
+        "created_by": {
+          "type": "string"
         }
       },
       "description": "API keys are used to authenticate requests to Rockset's API. An API key is tied to the user who creates it. A new API key can be created for each use case, with a maximum of 10 API keys per user."
@@ -1875,6 +2265,45 @@
           "type": "string",
           "example": "arn:aws:iam::2378964092:role/rockset-role",
           "description": "ARN of rockset-role created in your account"
+        }
+      }
+    },
+    "Cluster": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "asdf98-as9df8adf-adsf9asfd",
+          "description": "unique identifier for the cluster"
+        },
+        "cluster_type": {
+          "type": "string",
+          "example": "PRIVATE",
+          "description": "cluster type",
+          "enum": [
+            "PUBLIC",
+            "PRIVATE"
+          ]
+        },
+        "aws_region": {
+          "type": "string",
+          "example": "us-west-2",
+          "description": "aws region"
+        },
+        "domain": {
+          "type": "string",
+          "example": "rockset",
+          "description": "domain of org using cluster"
+        },
+        "top_level_domain": {
+          "type": "string",
+          "example": ".com",
+          "description": "top level domain of org using cluster"
+        },
+        "apiserver_url": {
+          "type": "string",
+          "example": "api.rockset.us-west-2.rockset.com",
+          "description": "api server url for cluster"
         }
       }
     },
@@ -1946,6 +2375,13 @@
           "description": "list of mappings applied on all documents in a collection",
           "items": {
             "$ref": "#/definitions/FieldMappingV2"
+          }
+        },
+        "aliases": {
+          "type": "array",
+          "description": "list of aliases for a collection",
+          "items": {
+            "$ref": "#/definitions/Alias"
           }
         }
       }
@@ -2039,6 +2475,42 @@
         }
       }
     },
+    "CreateAliasRequest": {
+      "type": "object",
+      "required": [
+        "collections",
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "aliasName",
+          "description": "Alias name"
+        },
+        "description": {
+          "type": "string",
+          "example": "version alias",
+          "description": "optional description"
+        },
+        "collections": {
+          "type": "array",
+          "example": "[common.foo, prod.demo]",
+          "description": "list of fully qualified collection names referenced by alias",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "CreateAliasResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "description": "alias that was created",
+          "$ref": "#/definitions/Alias"
+        }
+      }
+    },
     "CreateApiKeyRequest": {
       "type": "object",
       "required": [
@@ -2070,7 +2542,7 @@
         "name": {
           "type": "string",
           "example": "global-transactions",
-          "description": "unique identifer for collection, can contain alphanumeric or dash characters"
+          "description": "unique identifier for collection, can contain alphanumeric or dash characters"
         },
         "description": {
           "type": "string",
@@ -2194,6 +2666,10 @@
     },
     "CreateQueryLambdaTagRequest": {
       "type": "object",
+      "required": [
+        "tag_name",
+        "version"
+      ],
       "properties": {
         "tag_name": {
           "type": "string",
@@ -2210,7 +2686,8 @@
     "CreateUserRequest": {
       "type": "object",
       "required": [
-        "email"
+        "email",
+        "roles"
       ],
       "properties": {
         "email": {
@@ -2320,6 +2797,15 @@
           "type": "string",
           "example": "\\",
           "description": "escape character removes any special meaning from the following character,default is '\\'"
+        }
+      }
+    },
+    "DeleteAliasResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "description": "alias that was deleted",
+          "$ref": "#/definitions/Alias"
         }
       }
     },
@@ -2487,13 +2973,14 @@
             "RESOURCEEXCEEDED",
             "ALREADYEXISTS",
             "NOTALLOWED",
+            "NOTACCEPTABLE",
+            "NOTSUPPORTED",
             "NOTFOUND",
             "DEPENDENTRESOURCES",
             "QUERY_ERROR",
             "NOT_READY",
             "FORBIDDEN",
             "QUERY_TIMEOUT",
-            "INTEGRATION_NOT_FOUND",
             "ROLE_NOT_FOUND",
             "CONNECTION_ERROR",
             "CREATING",
@@ -2665,6 +3152,15 @@
         }
       }
     },
+    "GetAliasResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "description": "alias that was requested",
+          "$ref": "#/definitions/Alias"
+        }
+      }
+    },
     "GetCollectionResponse": {
       "type": "object",
       "properties": {
@@ -2825,7 +3321,7 @@
         },
         "connection_string": {
           "type": "string",
-          "description": "segment connection string",
+          "description": "kafka connection string",
           "readOnly": true
         }
       }
@@ -2840,6 +3336,18 @@
         "aws_role": {
           "description": "details of an AWS cross-account role integration",
           "$ref": "#/definitions/AwsRole"
+        }
+      }
+    },
+    "ListAliasesResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "description": "list of all aliases",
+          "items": {
+            "$ref": "#/definitions/Alias"
+          }
         }
       }
     },
@@ -2984,6 +3492,10 @@
         "invited_by": {
           "type": "string"
         },
+        "email": {
+          "type": "string",
+          "description": "email of the user"
+        },
         "expires_at": {
           "type": "string",
           "example": "2001-08-29T00:23:41Z",
@@ -2994,6 +3506,31 @@
           "type": "string",
           "example": "2001-08-28T00:23:41Z",
           "description": "ISO-8601 date"
+        }
+      }
+    },
+    "OrgRecentActivity": {
+      "type": "object",
+      "properties": {
+        "last_activity_millis": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "activity_type": {
+          "type": "string"
+        },
+        "scheduled_deletion_time_millis": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "OrgRecentActivityResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "description": "OrgRecentActivity object",
+          "$ref": "#/definitions/OrgRecentActivity"
         }
       }
     },
@@ -3042,11 +3579,11 @@
             "DELETED"
           ]
         },
-        "num_dedicated_pods": {
-          "type": "integer",
-          "format": "int32",
-          "example": 2,
-          "description": "number of dedicated pods"
+        "clusters": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Cluster"
+          }
         }
       },
       "description": "An organization in Rockset is a container for users and collections."
@@ -3151,7 +3688,8 @@
             "REMOVE",
             "COPY",
             "MOVE",
-            "TEST"
+            "TEST",
+            "INCREMENT"
           ]
         },
         "path": {
@@ -3162,7 +3700,7 @@
         "value": {
           "type": "object",
           "example": "baz",
-          "description": "Value used in the patch operation. Required for add, replace and test operations"
+          "description": "Value used in the patch operation. Required for add, replace, test, and increment operations"
         },
         "from": {
           "type": "string",
@@ -3241,7 +3779,7 @@
         },
         "collections": {
           "type": "array",
-          "description": "collections queried by underlying SQL query",
+          "description": "collections/aliases queried by underlying SQL query",
           "items": {
             "type": "string"
           }
@@ -3797,9 +4335,22 @@
     "SourceS3": {
       "type": "object",
       "required": [
-        "bucket"
+        "bucket",
+        "prefixes"
       ],
       "properties": {
+        "access_key": {
+          "type": "string",
+          "example": "AKIAIOSFODNN7EXAMPLE",
+          "description": "AWS credential with ListObjects and GetObject access",
+          "readOnly": true
+        },
+        "secret_access": {
+          "type": "string",
+          "example": "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY",
+          "description": "AWS credential with ListObjects and GetObject access",
+          "readOnly": true
+        },
         "prefix": {
           "type": "string",
           "example": "prefix/to/keys",
@@ -3810,10 +4361,39 @@
           "example": "prefix/to/**/keys/*.format",
           "description": "Pattern that selects keys to ingest."
         },
+        "region": {
+          "type": "string",
+          "example": "us-west-2",
+          "description": "AWS region containing source bucket"
+        },
         "bucket": {
           "type": "string",
           "example": "s3://customer-account-info",
           "description": "address of S3 bucket containing data"
+        },
+        "prefixes": {
+          "type": "array",
+          "example": "['/transactions', '/stores']",
+          "description": "list of prefixes to paths from which data should be ingested",
+          "readOnly": true,
+          "items": {
+            "type": "string"
+          }
+        },
+        "format": {
+          "type": "string",
+          "example": "none",
+          "description": "do not use",
+          "enum": [
+            "JSON"
+          ]
+        },
+        "mappings": {
+          "type": "array",
+          "description": "custom transformation on data field",
+          "items": {
+            "$ref": "#/definitions/FieldMask"
+          }
         }
       }
     },
@@ -4043,6 +4623,27 @@
           "format": "int64",
           "example": 100,
           "description": "Number of new records deleted using stream"
+        }
+      }
+    },
+    "UpdateAliasRequest": {
+      "type": "object",
+      "required": [
+        "collections"
+      ],
+      "properties": {
+        "description": {
+          "type": "string",
+          "example": "version alias",
+          "description": "optional description"
+        },
+        "collections": {
+          "type": "array",
+          "example": "[common.foo, prod.demo]",
+          "description": "list of fully qualified collection names referenced by alias",
+          "items": {
+            "type": "string"
+          }
         }
       }
     },

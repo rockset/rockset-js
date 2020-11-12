@@ -45,7 +45,7 @@ Arguments to this command will be passed as URL parameters to ${chalk.bold(
 
 Endpoint Reference
 GET: /v1/orgs/self/ws/{workspace}/collections/{collection}/lambdas
-Get Query Lambdas
+Get Query Lambdas for Collection
 Get all Query Lambdas that hit a specific Rockset Collection.
 
 More documentation at ${chalk.underline(

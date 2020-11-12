@@ -53,7 +53,7 @@ class GetQueryLambdaTagVersion extends RockCommand {
     },
   ];
 
-  static description = `get the specific query lambda version associated with a given tag
+  static description = `get the query lambda version associated with a given tag
 Arguments to this command will be passed as URL parameters to ${chalk.bold(
     `GET: /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/tags/{tag}`,
   )}
@@ -62,7 +62,7 @@ Arguments to this command will be passed as URL parameters to ${chalk.bold(
 Endpoint Reference
 GET: /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/tags/{tag}
 Get Query Lambda Tag
-Get the specific Query Lambda version associated with a given tag
+Get the Query Lambda version associated with a given tag.
 
 More documentation at ${chalk.underline(
     `https://docs.rockset.com/rest-api#getquerylambdatagversion`,

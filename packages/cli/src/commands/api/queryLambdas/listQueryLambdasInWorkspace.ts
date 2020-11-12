@@ -49,7 +49,7 @@ Arguments to this command will be passed as URL parameters to ${chalk.bold(
 
 Endpoint Reference
 GET: /v1/orgs/self/ws/{workspace}/lambdas
-List Query Lambdas
+List Query Lambdas in Workspace
 List all Query Lambdas under given workspace.
 
 More documentation at ${chalk.underline(

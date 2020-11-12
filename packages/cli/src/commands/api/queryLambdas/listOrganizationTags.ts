@@ -34,7 +34,7 @@ class ListOrganizationTags extends RockCommand {
 
   static args = [];
 
-  static description = `list all tags in an organization
+  static description = `list all distinct query lambda tags in an organization
 Arguments to this command will be passed as URL parameters to ${chalk.bold(
     `GET: /v1/orgs/self/lambdas/tags`,
   )}
@@ -42,8 +42,8 @@ Arguments to this command will be passed as URL parameters to ${chalk.bold(
 
 Endpoint Reference
 GET: /v1/orgs/self/lambdas/tags
-List Query Lambda Tags
-List all tags in an organization
+List All Query Lambda Tags
+List all distinct Query Lambda tags in an organization.
 
 More documentation at ${chalk.underline(`https://docs.rockset.com/rest-api#listorganizationtags`)}`;
 
