@@ -1,6 +1,6 @@
 {
   "name": "@rockset/client",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "main": "dist/index.js",
   "description": "Client for querying Rockset and interacting with the Rockset API.",
   "license": "Apache-2.0",
@@ -14,7 +14,7 @@
     "url": "^0.11.0"
   },
   "devDependencies": {
-    "@rockset/eslint-config": "0.7.0",
+    "@rockset/eslint-config": "0.8.0",
     "@types/axios": "^0.14.0",
     "@types/jest": "^24.0.23",
     "@types/lodash": "^4.14.150",
