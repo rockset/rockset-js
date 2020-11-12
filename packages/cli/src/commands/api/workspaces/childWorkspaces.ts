@@ -39,7 +39,7 @@ Arguments to this command will be passed as URL parameters to ${chalk.bold(
 
 Endpoint Reference
 GET: /v1/orgs/self/ws/{workspace}/ws
-List Workspaces
+List Workspaces in Workspace
 List workspaces under given workspace.
 
 More documentation at ${chalk.underline(`https://docs.rockset.com/rest-api#childworkspaces`)}`;

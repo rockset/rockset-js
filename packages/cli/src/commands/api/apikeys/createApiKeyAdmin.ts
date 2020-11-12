@@ -31,12 +31,13 @@ class CreateApiKeyAdmin extends RockCommand {
   static args = [
     {
       name: 'user',
+      description: 'user email',
       required: true,
       hidden: false,
     },
   ];
 
-  static description = `create a new api key for any user (admin only)
+  static description = `create a new api key for any user in your organization. accessible to admin users only
 Arguments to this command will be passed as URL parameters to ${chalk.bold(
     `POST: /v1/orgs/self/users/{user}/apikeys`,
   )}
@@ -48,8 +49,8 @@ name: event-logger
 
 Endpoint Reference
 POST: /v1/orgs/self/users/{user}/apikeys
-Create API Key for any user (admin only)
-Create a new API key for any user (admin only).
+Create API Key (any user)
+Create a new API key for any user in your organization. Accessible to Admin users only.
 
 More documentation at ${chalk.underline(`https://docs.rockset.com/rest-api#createapikeyadmin`)}`;
 

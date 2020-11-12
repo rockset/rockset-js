@@ -11,7 +11,7 @@ import { cli } from 'cli-ux';
 
 const bodySchema = ``;
 
-class ListIntegrations extends RockCommand {
+class DeleteAlias extends RockCommand {
   static flags = {
     help: flags.help({ char: 'h' }),
 
@@ -22,40 +22,53 @@ class ListIntegrations extends RockCommand {
     ...cli.table.flags({ only: ['columns', 'output'] }),
   };
 
-  static args = [];
+  static args = [
+    {
+      name: 'workspace',
+      description: 'name of the workspace',
+      required: true,
+      hidden: false,
+    },
+    {
+      name: 'alias',
+      description: 'name of the alias',
+      required: true,
+      hidden: false,
+    },
+  ];
 
-  static description = `list all integrations in an organization
+  static description = `delete an alias
 Arguments to this command will be passed as URL parameters to ${chalk.bold(
-    `GET: /v1/orgs/self/integrations`,
+    `DELETE: /v1/orgs/self/ws/{workspace}/aliases/{alias}`,
   )}
 
 
 Endpoint Reference
-GET: /v1/orgs/self/integrations
-List Integrations
-List all integrations in an organization.
+DELETE: /v1/orgs/self/ws/{workspace}/aliases/{alias}
+Delete Alias
+Delete an alias.
 
-More documentation at ${chalk.underline(`https://docs.rockset.com/rest-api#listintegrations`)}`;
+More documentation at ${chalk.underline(`https://docs.rockset.com/rest-api#deletealias`)}`;
 
-  static examples = ['$ rockset api:integrations:listIntegrations '];
+  static examples = ['$ rockset api:aliases:deleteAlias WORKSPACE ALIAS'];
 
   async run() {
-    const { args, flags } = this.parse(ListIntegrations);
+    const { args, flags } = this.parse(DeleteAlias);
 
     // Rockset client object
     const client = await main.createClient();
 
-    const namedArgs: Args = ListIntegrations.args;
+    const namedArgs: Args = DeleteAlias.args;
 
     // apicall
-    const apicall = client.integrations.listIntegrations.bind(client.integrations);
+    const apicall = client.aliases.deleteAlias.bind(client.aliases);
 
     // endpoint
-    const endpoint = '/v1/orgs/self/integrations';
-    const method = 'GET';
+    const endpoint = '/v1/orgs/self/ws/{workspace}/aliases/{alias}';
+    const method = 'DELETE';
 
     await runApiCall.bind(this)({ args, flags, namedArgs, apicall, method, endpoint, bodySchema });
   }
 }
 
-export default ListIntegrations;
+export default DeleteAlias;

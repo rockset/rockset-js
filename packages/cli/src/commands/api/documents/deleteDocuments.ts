@@ -54,7 +54,7 @@ class DeleteDocuments extends RockCommand {
     },
   ];
 
-  static description = `delete documents from a collection in rockset
+  static description = `delete documents from a collection
 Arguments to this command will be passed as URL parameters to ${chalk.bold(
     `DELETE: /v1/orgs/self/ws/{workspace}/collections/{collection}/docs`,
   )}
@@ -68,7 +68,7 @@ data:
 Endpoint Reference
 DELETE: /v1/orgs/self/ws/{workspace}/collections/{collection}/docs
 Delete Documents
-Delete documents from a collection in Rockset.
+Delete documents from a collection.
 
 More documentation at ${chalk.underline(`https://docs.rockset.com/rest-api#deletedocuments`)}`;
 

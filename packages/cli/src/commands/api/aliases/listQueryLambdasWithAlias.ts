@@ -11,7 +11,7 @@ import { cli } from 'cli-ux';
 
 const bodySchema = ``;
 
-class DeleteApiKeyAdmin extends RockCommand {
+class ListQueryLambdasWithAlias extends RockCommand {
   static flags = {
     help: flags.help({ char: 'h' }),
 
@@ -24,51 +24,51 @@ class DeleteApiKeyAdmin extends RockCommand {
 
   static args = [
     {
-      name: 'name',
-      description: 'name of the API key',
+      name: 'workspace',
       required: true,
       hidden: false,
     },
     {
-      name: 'user',
-      description: 'user email',
+      name: 'alias',
       required: true,
       hidden: false,
     },
   ];
 
-  static description = `delete an api key for any user in your organization. accessible to admin users only
+  static description = `get all query lambdas that hit a specific rockset alias
 Arguments to this command will be passed as URL parameters to ${chalk.bold(
-    `DELETE: /v1/orgs/self/users/{user}/apikeys/{name}`,
+    `GET: /v1/orgs/self/ws/{workspace}/aliases/{alias}/lambdas`,
   )}
 
 
 Endpoint Reference
-DELETE: /v1/orgs/self/users/{user}/apikeys/{name}
-Delete API Key (any user)
-Delete an API key for any user in your organization. Accessible to Admin users only.
+GET: /v1/orgs/self/ws/{workspace}/aliases/{alias}/lambdas
+Get Query Lambdas with Alias
+Get all Query Lambdas that hit a specific Rockset Alias.
 
-More documentation at ${chalk.underline(`https://docs.rockset.com/rest-api#deleteapikeyadmin`)}`;
+More documentation at ${chalk.underline(
+    `https://docs.rockset.com/rest-api#listquerylambdaswithalias`,
+  )}`;
 
-  static examples = ['$ rockset api:apikeys:deleteApiKeyAdmin NAME USER'];
+  static examples = ['$ rockset api:aliases:listQueryLambdasWithAlias WORKSPACE ALIAS'];
 
   async run() {
-    const { args, flags } = this.parse(DeleteApiKeyAdmin);
+    const { args, flags } = this.parse(ListQueryLambdasWithAlias);
 
     // Rockset client object
     const client = await main.createClient();
 
-    const namedArgs: Args = DeleteApiKeyAdmin.args;
+    const namedArgs: Args = ListQueryLambdasWithAlias.args;
 
     // apicall
-    const apicall = client.apikeys.deleteApiKeyAdmin.bind(client.apikeys);
+    const apicall = client.aliases.listQueryLambdasWithAlias.bind(client.aliases);
 
     // endpoint
-    const endpoint = '/v1/orgs/self/users/{user}/apikeys/{name}';
-    const method = 'DELETE';
+    const endpoint = '/v1/orgs/self/ws/{workspace}/aliases/{alias}/lambdas';
+    const method = 'GET';
 
     await runApiCall.bind(this)({ args, flags, namedArgs, apicall, method, endpoint, bodySchema });
   }
 }
 
-export default DeleteApiKeyAdmin;
+export default ListQueryLambdasWithAlias;

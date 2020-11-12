@@ -71,7 +71,7 @@ class CreateIntegration extends RockCommand {
 
   static args = [];
 
-  static description = `create a new integration with rockset
+  static description = `create a new integration
 Arguments to this command will be passed as URL parameters to ${chalk.bold(
     `POST: /v1/orgs/self/integrations`,
   )}
@@ -84,7 +84,7 @@ The POST body request schema has been omitted because it is too long. Please vie
 Endpoint Reference
 POST: /v1/orgs/self/integrations
 Create Integration
-Create a new integration with Rockset.
+Create a new integration.
 
 More documentation at ${chalk.underline(`https://docs.rockset.com/rest-api#createintegration`)}`;
 

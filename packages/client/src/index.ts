@@ -3,6 +3,7 @@ import { version } from './version';
 require('node-fetch');
 
 export interface MainApi {
+  aliases: api.AliasesApi;
   users: api.UsersApi;
   apikeys: api.ApiKeysApi;
   workspaces: api.WorkspacesApi;
@@ -92,6 +93,7 @@ const rocksetConfigure = (
   };
 
   return {
+    aliases: new api.AliasesApi({}, host, authFetch),
     users: new api.UsersApi({}, host, authFetch),
     apikeys: new api.ApiKeysApi({}, host, authFetch),
     workspaces: new api.WorkspacesApi({}, host, authFetch),

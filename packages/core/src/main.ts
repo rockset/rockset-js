@@ -295,10 +295,10 @@ export async function deployQueryLambdas(
             /* create if not present */ true
           );
           hooks.onDeployVersionSuccess?.(lambdaResponse);
-          if (options.tag) {
+          if (options.tag && lambdaResponse.data?.version) {
             await client.queryLambdas.createQueryLambdaTag(ws, lambda, {
               tag_name: options.tag,
-              version: lambdaResponse.data?.version,
+              version: lambdaResponse.data.version,
             });
             hooks.onDeployTagSuccess?.(lambdaResponse);
           }

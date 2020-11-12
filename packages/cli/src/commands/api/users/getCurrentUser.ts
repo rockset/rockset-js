@@ -24,7 +24,7 @@ class GetCurrentUser extends RockCommand {
 
   static args = [];
 
-  static description = `retrieve currently active user
+  static description = `retrieve currently authenticated user
 Arguments to this command will be passed as URL parameters to ${chalk.bold(
     `GET: /v1/orgs/self/users/self`,
   )}
@@ -33,7 +33,7 @@ Arguments to this command will be passed as URL parameters to ${chalk.bold(
 Endpoint Reference
 GET: /v1/orgs/self/users/self
 Get Current User
-Retrieve currently active user.
+Retrieve currently authenticated user.
 
 More documentation at ${chalk.underline(`https://docs.rockset.com/rest-api#getcurrentuser`)}`;
 

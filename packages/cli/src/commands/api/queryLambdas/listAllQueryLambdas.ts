@@ -34,7 +34,7 @@ class ListAllQueryLambdas extends RockCommand {
 
   static args = [];
 
-  static description = `list all query lambdas
+  static description = `list all query lambdas in an organization
 Arguments to this command will be passed as URL parameters to ${chalk.bold(
     `GET: /v1/orgs/self/lambdas`,
   )}
@@ -43,7 +43,7 @@ Arguments to this command will be passed as URL parameters to ${chalk.bold(
 Endpoint Reference
 GET: /v1/orgs/self/lambdas
 List Query Lambdas
-List all Query Lambdas.
+List all Query Lambdas in an organization.
 
 More documentation at ${chalk.underline(`https://docs.rockset.com/rest-api#listallquerylambdas`)}`;
 

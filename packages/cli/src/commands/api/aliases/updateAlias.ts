@@ -9,11 +9,11 @@ import { RockCommand } from '../../../base-command';
 import * as chalk from 'chalk';
 import { cli } from 'cli-ux';
 
-const bodySchema = `name: event_logs
-description: Datasets of system logs for the ops team.
+const bodySchema = `description: version alias
+collections: "[common.foo, prod.demo]"
 `;
 
-class CreateWorkspace extends RockCommand {
+class UpdateAlias extends RockCommand {
   static flags = {
     help: flags.help({ char: 'h' }),
     body: flags.string({
@@ -29,47 +29,60 @@ class CreateWorkspace extends RockCommand {
     ...cli.table.flags({ only: ['columns', 'output'] }),
   };
 
-  static args = [];
+  static args = [
+    {
+      name: 'workspace',
+      description: 'name of the workspace',
+      required: true,
+      hidden: false,
+    },
+    {
+      name: 'alias',
+      description: 'name of the alias',
+      required: true,
+      hidden: false,
+    },
+  ];
 
-  static description = `create a new workspace
+  static description = `update alias in a workspace
 Arguments to this command will be passed as URL parameters to ${chalk.bold(
-    `POST: /v1/orgs/self/ws`,
+    `POST: /v1/orgs/self/ws/{workspace}/aliases/{alias}`,
   )}
 ${chalk.bold(`This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
        `)}
 Example Body (YAML):
-name: event_logs
-description: Datasets of system logs for the ops team.
+description: version alias
+collections: "[common.foo, prod.demo]"
 
 
 Endpoint Reference
-POST: /v1/orgs/self/ws
-Create Workspace
-Create a new workspace.
+POST: /v1/orgs/self/ws/{workspace}/aliases/{alias}
+Update alias
+Update alias in a workspace.
 
-More documentation at ${chalk.underline(`https://docs.rockset.com/rest-api#createworkspace`)}`;
+More documentation at ${chalk.underline(`https://docs.rockset.com/rest-api#updatealias`)}`;
 
   static examples = [
-    '$ rockset api:workspaces:createWorkspace  --body body.yaml\n$ cat body.yaml\nname: event_logs\ndescription: Datasets of system logs for the ops team.\n\n',
+    '$ rockset api:aliases:updateAlias WORKSPACE ALIAS --body body.yaml\n$ cat body.yaml\ndescription: version alias\ncollections: "[common.foo, prod.demo]"\n\n',
   ];
 
   async run() {
-    const { args, flags } = this.parse(CreateWorkspace);
+    const { args, flags } = this.parse(UpdateAlias);
 
     // Rockset client object
     const client = await main.createClient();
 
-    const namedArgs: Args = CreateWorkspace.args;
+    const namedArgs: Args = UpdateAlias.args;
 
     // apicall
-    const apicall = client.workspaces.createWorkspace.bind(client.workspaces);
+    const apicall = client.aliases.updateAlias.bind(client.aliases);
 
     // endpoint
-    const endpoint = '/v1/orgs/self/ws';
+    const endpoint = '/v1/orgs/self/ws/{workspace}/aliases/{alias}';
     const method = 'POST';
 
     await runApiCall.bind(this)({ args, flags, namedArgs, apicall, method, endpoint, bodySchema });
   }
 }
 
-export default CreateWorkspace;
+export default UpdateAlias;

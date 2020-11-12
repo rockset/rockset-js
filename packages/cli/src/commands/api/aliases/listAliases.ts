@@ -11,7 +11,7 @@ import { cli } from 'cli-ux';
 
 const bodySchema = ``;
 
-class ListIntegrations extends RockCommand {
+class ListAliases extends RockCommand {
   static flags = {
     help: flags.help({ char: 'h' }),
 
@@ -24,38 +24,38 @@ class ListIntegrations extends RockCommand {
 
   static args = [];
 
-  static description = `list all integrations in an organization
+  static description = `retrieve all aliases in an organization
 Arguments to this command will be passed as URL parameters to ${chalk.bold(
-    `GET: /v1/orgs/self/integrations`,
+    `GET: /v1/orgs/self/aliases`,
   )}
 
 
 Endpoint Reference
-GET: /v1/orgs/self/integrations
-List Integrations
-List all integrations in an organization.
+GET: /v1/orgs/self/aliases
+List Aliases
+Retrieve all aliases in an organization
 
-More documentation at ${chalk.underline(`https://docs.rockset.com/rest-api#listintegrations`)}`;
+More documentation at ${chalk.underline(`https://docs.rockset.com/rest-api#listaliases`)}`;
 
-  static examples = ['$ rockset api:integrations:listIntegrations '];
+  static examples = ['$ rockset api:aliases:listAliases '];
 
   async run() {
-    const { args, flags } = this.parse(ListIntegrations);
+    const { args, flags } = this.parse(ListAliases);
 
     // Rockset client object
     const client = await main.createClient();
 
-    const namedArgs: Args = ListIntegrations.args;
+    const namedArgs: Args = ListAliases.args;
 
     // apicall
-    const apicall = client.integrations.listIntegrations.bind(client.integrations);
+    const apicall = client.aliases.listAliases.bind(client.aliases);
 
     // endpoint
-    const endpoint = '/v1/orgs/self/integrations';
+    const endpoint = '/v1/orgs/self/aliases';
     const method = 'GET';
 
     await runApiCall.bind(this)({ args, flags, namedArgs, apicall, method, endpoint, bodySchema });
   }
 }
 
-export default ListIntegrations;
+export default ListAliases;

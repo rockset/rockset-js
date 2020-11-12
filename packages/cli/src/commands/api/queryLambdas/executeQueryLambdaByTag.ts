@@ -64,7 +64,7 @@ class ExecuteQueryLambdaByTag extends RockCommand {
     },
   ];
 
-  static description = `run the query lambda version associated with a given tag
+  static description = `execute the query lambda version associated with a given tag
 Arguments to this command will be passed as URL parameters to ${chalk.bold(
     `POST: /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/tags/{tag}`,
   )}
@@ -81,8 +81,8 @@ generate_warnings: null
 
 Endpoint Reference
 POST: /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/tags/{tag}
-Run Query Lambda By Tag
-Run the Query Lambda version associated with a given tag.
+Execute Query Lambda By Tag
+Execute the Query Lambda version associated with a given tag.
 
 More documentation at ${chalk.underline(
     `https://docs.rockset.com/rest-api#executequerylambdabytag`,

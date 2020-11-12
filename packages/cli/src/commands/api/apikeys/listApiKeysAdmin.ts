@@ -25,12 +25,13 @@ class ListApiKeysAdmin extends RockCommand {
   static args = [
     {
       name: 'user',
+      description: 'user email',
       required: true,
       hidden: false,
     },
   ];
 
-  static description = `list all api keys for any user (admin only)
+  static description = `list all api keys for any user in your organization. accessible to admin users only
 Arguments to this command will be passed as URL parameters to ${chalk.bold(
     `GET: /v1/orgs/self/users/{user}/apikeys`,
   )}
@@ -38,8 +39,8 @@ Arguments to this command will be passed as URL parameters to ${chalk.bold(
 
 Endpoint Reference
 GET: /v1/orgs/self/users/{user}/apikeys
-List API Keys for any user (admin only)
-List all API keys for any user (admin only).
+List API Keys (any user)
+List all API keys for any user in your organization. Accessible to Admin users only.
 
 More documentation at ${chalk.underline(`https://docs.rockset.com/rest-api#listapikeysadmin`)}`;
 

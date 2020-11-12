@@ -11,7 +11,7 @@ import { cli } from 'cli-ux';
 
 const bodySchema = ``;
 
-class ListIntegrations extends RockCommand {
+class GetOrganizationRecentActivity extends RockCommand {
   static flags = {
     help: flags.help({ char: 'h' }),
 
@@ -24,38 +24,40 @@ class ListIntegrations extends RockCommand {
 
   static args = [];
 
-  static description = `list all integrations in an organization
+  static description = `get information about organization's recent activity
 Arguments to this command will be passed as URL parameters to ${chalk.bold(
-    `GET: /v1/orgs/self/integrations`,
+    `GET: /v1/orgs/self/activity`,
   )}
 
 
 Endpoint Reference
-GET: /v1/orgs/self/integrations
-List Integrations
-List all integrations in an organization.
+GET: /v1/orgs/self/activity
+Get Organization Recent Activity
+Get information about organization's recent activity.
 
-More documentation at ${chalk.underline(`https://docs.rockset.com/rest-api#listintegrations`)}`;
+More documentation at ${chalk.underline(
+    `https://docs.rockset.com/rest-api#getorganizationrecentactivity`,
+  )}`;
 
-  static examples = ['$ rockset api:integrations:listIntegrations '];
+  static examples = ['$ rockset api:orgs:getOrganizationRecentActivity '];
 
   async run() {
-    const { args, flags } = this.parse(ListIntegrations);
+    const { args, flags } = this.parse(GetOrganizationRecentActivity);
 
     // Rockset client object
     const client = await main.createClient();
 
-    const namedArgs: Args = ListIntegrations.args;
+    const namedArgs: Args = GetOrganizationRecentActivity.args;
 
     // apicall
-    const apicall = client.integrations.listIntegrations.bind(client.integrations);
+    const apicall = client.orgs.getOrganizationRecentActivity.bind(client.orgs);
 
     // endpoint
-    const endpoint = '/v1/orgs/self/integrations';
+    const endpoint = '/v1/orgs/self/activity';
     const method = 'GET';
 
     await runApiCall.bind(this)({ args, flags, namedArgs, apicall, method, endpoint, bodySchema });
   }
 }
 
-export default ListIntegrations;
+export default GetOrganizationRecentActivity;
