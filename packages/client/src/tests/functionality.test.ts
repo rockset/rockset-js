@@ -21,7 +21,7 @@ const collection = 'test_collection_' + Math.random().toString(36).slice(2);
 const queryLambdaName = 'test_query_' + Math.random().toString(36).slice(2);
 
 afterAll(function () {});
-describe('Rockset Unit Tests', function () {
+describe('functionality tests (e2e)', function () {
   test('creating a collection', async () => {
     try {
       const result = await rockset.collections.createCollection('commons', {
