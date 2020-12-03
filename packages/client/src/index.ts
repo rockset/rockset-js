@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import * as api from './codegen/api';
 import { version } from './version';
 require('node-fetch');
@@ -30,10 +31,8 @@ const rocksetConfigure = (
   // Overwrite the apikey so it doesn't need to be specified on every query
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const authFetch = async (url: string, options: any) => {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const newOptions = {
       ...options,
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       headers: {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
         ...options.headers,
@@ -44,7 +43,6 @@ const rocksetConfigure = (
 
     // Override the custom fetch so that the user doesn't see .json() issues
     if (customFetch) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       const out = await customFetch(url as string, newOptions);
       return {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-return
@@ -56,12 +54,18 @@ const rocksetConfigure = (
       if (response.status >= 200 && response.status < 300) {
         return response;
       } else {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-        const err: api.ErrorModel = (await response.json()) ?? {
-          message: 'Unknown Error',
-        };
-        err.toString = () => err?.message ?? JSON.stringify(err, null, 2);
-        throw err;
+        const body = (await response.text().catch(console.log)) ?? '';
+        let error;
+        try {
+          error = JSON.parse(body as string);
+        } catch (e) {
+          error = {
+            code: response.status,
+            message: response.statusText,
+            bodyText: body,
+          };
+        }
+        throw error;
       }
     }
   };

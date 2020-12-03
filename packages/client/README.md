@@ -174,7 +174,11 @@ Set ROCKSET_APIKEY and ROCKSET_HOST endpoint in the environment variables. To ru
 yarn test
 ```
 
-This runs unit tests and integration tests.
+This runs unit tests and integration tests. You can alternately run individual tests or test files using Jest:
+
+```
+jest src/tests/mockclient.test.ts
+```
 
 ## Advanced
 
