@@ -119,6 +119,15 @@ field_mappings:
       field_name: zip_hash
       value: SHA256(:zip)
       on_error: "['SKIP', 'FAIL']"
+field_partitions:
+  - field_name: address.city.zipcode
+    type: AUTO
+    keys: Values of a record to partition on. This is not needed if the partition
+      type is AUTO
+field_schemas:
+  - field_name: address.city.zipcode
+    field_options: Options to specify whether to build an inverted index  a type
+      index, a range index and a column index on this field
 `;
 
 class CreateCollection extends RockCommand {

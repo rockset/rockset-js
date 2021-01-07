@@ -35,6 +35,9 @@
       "name": "Users"
     },
     {
+      "name": "Virtual Instances"
+    },
+    {
       "name": "Workspaces"
     }
   ],
@@ -62,31 +65,6 @@
             "description": "organization retrieved successfully",
             "schema": {
               "$ref": "#/definitions/OrganizationResponse"
-            }
-          }
-        }
-      }
-    },
-    "/v1/orgs/self/activity": {
-      "get": {
-        "tags": [
-          "Organizations"
-        ],
-        "summary": "Get Organization Recent Activity",
-        "description": "Get information about organization's recent activity.",
-        "operationId": "getOrganizationRecentActivity",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "organization recent activity retrieved successfully",
-            "schema": {
-              "$ref": "#/definitions/OrgRecentActivityResponse"
             }
           }
         }
@@ -738,6 +716,104 @@
             "description": "API key deleted successfully",
             "schema": {
               "$ref": "#/definitions/DeleteApiKeyResponse"
+            }
+          }
+        }
+      }
+    },
+    "/v1/orgs/self/virtualinstances": {
+      "get": {
+        "tags": [
+          "Virtual Instances"
+        ],
+        "summary": "List Virtual Instances",
+        "description": "Retrieve all virtual instances in an organization.",
+        "operationId": "listVirtualInstances",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "virtual instances retrieved successfully",
+            "schema": {
+              "$ref": "#/definitions/ListVirtualInstancesResponse"
+            }
+          }
+        }
+      }
+    },
+    "/v1/orgs/self/virtualinstances/{virtualInstanceId}": {
+      "get": {
+        "tags": [
+          "Virtual Instances"
+        ],
+        "summary": "Get Virtual Instance",
+        "description": "Get details about a virtual instance.",
+        "operationId": "getVirtualInstance",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "virtualInstanceId",
+            "in": "path",
+            "description": "uuid of the virtual instance",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "virtual instance retrieved successfully",
+            "schema": {
+              "$ref": "#/definitions/GetVirtualInstanceResponse"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Virtual Instances"
+        ],
+        "summary": "Update Virtual Instance",
+        "description": "Update the size of a virtual instance.",
+        "operationId": "setVirtualInstance",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "virtualInstanceId",
+            "in": "path",
+            "description": "uuid of the virtual instance",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "JSON object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UpdateVirtualInstanceRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "virtual instance updated successfully",
+            "schema": {
+              "$ref": "#/definitions/UpdateVirtualInstanceResponse"
             }
           }
         }
@@ -2377,11 +2453,25 @@
             "$ref": "#/definitions/FieldMappingV2"
           }
         },
+        "field_partitions": {
+          "type": "array",
+          "description": "list of partitions for a collection",
+          "items": {
+            "$ref": "#/definitions/FieldPartition"
+          }
+        },
         "aliases": {
           "type": "array",
           "description": "list of aliases for a collection",
           "items": {
             "$ref": "#/definitions/Alias"
+          }
+        },
+        "field_schemas": {
+          "type": "array",
+          "description": "list of field schemas ",
+          "items": {
+            "$ref": "#/definitions/FieldSchema"
           }
         }
       }
@@ -2571,6 +2661,20 @@
           "description": "list of mappings",
           "items": {
             "$ref": "#/definitions/FieldMappingV2"
+          }
+        },
+        "field_partitions": {
+          "type": "array",
+          "description": "list of field partitions",
+          "items": {
+            "$ref": "#/definitions/FieldPartition"
+          }
+        },
+        "field_schemas": {
+          "type": "array",
+          "description": "list of field schemas",
+          "items": {
+            "$ref": "#/definitions/FieldSchema"
           }
         }
       }
@@ -3115,6 +3219,72 @@
       },
       "description": "Field masking function name + args. The args is a JSON object."
     },
+    "FieldOptions": {
+      "type": "object",
+      "properties": {
+        "index_mode": {
+          "type": "string",
+          "example": "index",
+          "description": " index or no_index"
+        },
+        "range_index_mode": {
+          "type": "string",
+          "example": "v1_index",
+          "description": " v1_index or no_index"
+        },
+        "type_index_mode": {
+          "type": "string",
+          "example": "index",
+          "description": " index or no_index"
+        },
+        "column_index_mode": {
+          "type": "string",
+          "example": "store",
+          "description": " store or no_store"
+        }
+      }
+    },
+    "FieldPartition": {
+      "type": "object",
+      "properties": {
+        "field_name": {
+          "type": "string",
+          "example": "address.city.zipcode",
+          "description": "The name of a field, parsed as a SQL qualified name"
+        },
+        "type": {
+          "type": "string",
+          "example": "AUTO",
+          "description": "The type of partitions on a field",
+          "enum": [
+            "AUTO"
+          ]
+        },
+        "keys": {
+          "type": "array",
+          "example": "Values of a record to partition on. This is not needed if the partition type is AUTO",
+          "description": "The values for partitioning of a field",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "FieldSchema": {
+      "type": "object",
+      "properties": {
+        "field_name": {
+          "type": "string",
+          "example": "address.city.zipcode",
+          "description": "The name of a field, parsed as a SQL qualified name"
+        },
+        "field_options": {
+          "example": "Options to specify whether to build an inverted index  a type index, a range index and a column index on this field",
+          "description": "The indexing options for a field",
+          "$ref": "#/definitions/FieldOptions"
+        }
+      }
+    },
     "FormatParams": {
       "type": "object",
       "properties": {
@@ -3176,6 +3346,15 @@
         "data": {
           "description": "integration object",
           "$ref": "#/definitions/Integration"
+        }
+      }
+    },
+    "GetVirtualInstanceResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "description": "virtual instance that was requested",
+          "$ref": "#/definitions/VirtualInstance"
         }
       }
     },
@@ -3435,6 +3614,18 @@
         }
       }
     },
+    "ListVirtualInstancesResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "description": "list of all virtual instances",
+          "items": {
+            "$ref": "#/definitions/VirtualInstance"
+          }
+        }
+      }
+    },
     "ListWorkspacesResponse": {
       "type": "object",
       "properties": {
@@ -3509,34 +3700,12 @@
         }
       }
     },
-    "OrgRecentActivity": {
-      "type": "object",
-      "properties": {
-        "last_activity_millis": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "activity_type": {
-          "type": "string"
-        },
-        "scheduled_deletion_time_millis": {
-          "type": "integer",
-          "format": "int64"
-        }
-      }
-    },
-    "OrgRecentActivityResponse": {
-      "type": "object",
-      "properties": {
-        "data": {
-          "description": "OrgRecentActivity object",
-          "$ref": "#/definitions/OrgRecentActivity"
-        }
-      }
-    },
     "Organization": {
       "type": "object",
       "properties": {
+        "deletionScheduledAt": {
+          "type": "string"
+        },
         "id": {
           "type": "string",
           "example": "rockset",
@@ -4050,6 +4219,12 @@
           "format": "int64",
           "example": 126,
           "description": "query time in milliseconds"
+        },
+        "throttled_time_micros": {
+          "type": "integer",
+          "format": "int64",
+          "example": 126,
+          "description": "time query was throttled by admission control"
         }
       }
     },
@@ -4661,6 +4836,55 @@
         }
       }
     },
+    "UpdateVirtualInstanceRequest": {
+      "type": "object",
+      "required": [
+        "new_size"
+      ],
+      "properties": {
+        "new_size": {
+          "type": "string",
+          "example": "LARGE",
+          "description": "requested virtual instance size",
+          "enum": [
+            "FREE",
+            "SHARED",
+            "SMALL",
+            "MEDIUM",
+            "LARGE",
+            "XLARGE",
+            "XLARGE2",
+            "XLARGE4",
+            "XLARGE8",
+            "XLARGE16"
+          ]
+        },
+        "new_type": {
+          "type": "string",
+          "enum": [
+            "FREE",
+            "SHARED",
+            "SMALL",
+            "MEDIUM",
+            "LARGE",
+            "XLARGE",
+            "XLARGE2",
+            "XLARGE4",
+            "XLARGE8",
+            "XLARGE16"
+          ]
+        }
+      }
+    },
+    "UpdateVirtualInstanceResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "description": "virtual instance that was switched",
+          "$ref": "#/definitions/VirtualInstance"
+        }
+      }
+    },
     "User": {
       "type": "object",
       "required": [
@@ -4757,6 +4981,101 @@
           "items": {
             "type": "string"
           }
+        }
+      }
+    },
+    "VirtualInstance": {
+      "type": "object",
+      "properties": {
+        "state": {
+          "type": "string",
+          "example": "ACTIVE",
+          "description": "virtual instance state",
+          "enum": [
+            "PROVISIONING_RESOURCES",
+            "REBALANCING_COLLECTIONS",
+            "ACTIVE",
+            "DELETED"
+          ]
+        },
+        "current_type": {
+          "type": "string",
+          "enum": [
+            "FREE",
+            "SHARED",
+            "SMALL",
+            "MEDIUM",
+            "LARGE",
+            "XLARGE",
+            "XLARGE2",
+            "XLARGE4",
+            "XLARGE8",
+            "XLARGE16"
+          ]
+        },
+        "desired_type": {
+          "type": "string",
+          "enum": [
+            "FREE",
+            "SHARED",
+            "SMALL",
+            "MEDIUM",
+            "LARGE",
+            "XLARGE",
+            "XLARGE2",
+            "XLARGE4",
+            "XLARGE8",
+            "XLARGE16"
+          ]
+        },
+        "current_size": {
+          "type": "string",
+          "example": "MEDIUM",
+          "description": "virtual instance current size",
+          "readOnly": true,
+          "enum": [
+            "FREE",
+            "SHARED",
+            "SMALL",
+            "MEDIUM",
+            "LARGE",
+            "XLARGE",
+            "XLARGE2",
+            "XLARGE4",
+            "XLARGE8",
+            "XLARGE16"
+          ]
+        },
+        "desired_size": {
+          "type": "string",
+          "example": "MEDIUM",
+          "description": "virtual instance desired size",
+          "readOnly": true,
+          "enum": [
+            "FREE",
+            "SHARED",
+            "SMALL",
+            "MEDIUM",
+            "LARGE",
+            "XLARGE",
+            "XLARGE2",
+            "XLARGE4",
+            "XLARGE8",
+            "XLARGE16"
+          ]
+        },
+        "default_pod_count": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "scaled_pod_count": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "id": {
+          "type": "string",
+          "example": "123e4567-e89b-12d3-a456-556642440000",
+          "description": "unique identifier for virtual instance"
         }
       }
     },
