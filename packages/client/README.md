@@ -163,7 +163,7 @@ rocksetClient.queries
           name: 'minimum_age' /* name of parameter */,
           type:
             'int' /* one of: int, float, bool, string date, datetime, time, timestamp */,
-          value: '20' /* value of parameter*/,
+          value: '20' /* value of parameter */,
         },
       ],
       default_row_limit: 150 /* (optional) row limit to be used if no limit is specified in the query */,
@@ -241,8 +241,7 @@ rocksetClient.queryLambdas
       .createQueryLambdaTag('commons', 'MyFirstQueryLambda', {
         tag_name: 'dev' /* name of tag */,
         version:
-          response.data
-            .version /* specific Query Lambda version to be tagged */,
+          response.data.version /* specific Query Lambda version to be tagged */,
       })
       .then(console.log)
       .catch(console.error);
