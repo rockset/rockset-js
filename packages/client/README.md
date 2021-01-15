@@ -1,5 +1,4 @@
-@rockset/client
-============
+# @rockset/client
 
 [![Version](https://img.shields.io/npm/v/@rockset/client.svg)](https://npmjs.org/package/@rockset/client)
 [![Downloads/week](https://img.shields.io/npm/dw/@rockset/client.svg)](https://npmjs.org/package/@rockset/client)
@@ -12,7 +11,7 @@ Official Rockset Javascript/Typescript Client
 
 Node 10+
 
-Optionally use Typescript for type checking.
+Recommended: use Typescript for type checking.
 
 ## Installation
 
@@ -33,7 +32,7 @@ A complete reference of this library (powered by [TypeDoc](https://typedoc.org/)
 Note: you can also import using CommonJS syntax.
 
 ```ts
-import rockset from "@rockset/client";
+import rockset from '@rockset/client';
 ```
 
 ### Configure Client
@@ -49,38 +48,78 @@ Note: most sans-TypeScript projects currently require the following
 const rocksetClient = rockset.default(process.env.ROCKSET_APIKEY);
 ```
 
-### Execute a Query Lambda
+## Loading Your Data
+
+Note: we recommend using the [Rockset Console](https://console.rockset.com/) for setting up integrations, with which
+you can create collections that load data from [external data sources](https://docs.rockset.com/integrations/).
+
+### Create an empty collection
 
 ```ts
-// Run a Query Lambda by tag with default parameters (or no parameters)
-rocksetClient.queryLambdas
-  .executeQueryLambdaByTag(
-    /* workspace */ "commons",
-    /* queryName */ "myQuery",
-    /* tag */ "dev"
-  )
+rocksetClient.collections
+  .createCollection('commons' /* name of workspace */, {
+    name: 'MyFirstCollection' /* name of collection */,
+    description:
+      'I can write data to this collection' /* (optional) description */,
+  })
   .then(console.log)
   .catch(console.error);
+```
 
+### Create an empty collection with field mappings
 
-// Run a Query Lambda with default parameters (or no parameters)
-rocksetClient.queryLambdas
-  .executeQueryLambda(
-    /* workspace */ "commons",
-    /* queryName */ "myQuery",
-    /* version */ "1ab853df3eab33b"
-  )
-  .then(console.log)
-  .catch(console.error);
-
-// Run a Query Lambda with custom parameters
-rocksetClient.queryLambdas
-  .executeQueryLambda("commons", "myQuery", "1ab853df3eab33b", {
-    parameters: [
+```ts
+import { InputField, OutputField } from '@rockset/client/dist/codegen/api';
+rocksetClient.collections
+  .createCollection('commons', {
+    name: 'Users',
+    description: "I'm the map!",
+    retention_secs: 10000 /* (optional) number of seconds after which data is purged. */,
+    field_mappings: [
       {
-        name: "param",
-        type: "string",
-        value: "All work and no play makes Jack a dull boy",
+        name: 'drop_all_fields' /* name of field mapping */,
+        is_drop_all_fields: true /*  (optional) whether to drop all fields - if true, don't set input or output fields */,
+      },
+      {
+        name: 'cast_age_to_int',
+        input_fields: [
+          {
+            field_name: 'age' /* name of field in input data */,
+            /*
+              (optional) If an incoming document is missing this input field:
+                SKIP: the field mapping will not be applied at all
+                PASS: the input field value will be set to null when applying the field mapping
+            */
+            if_missing: InputField.IfMissingEnum.SKIP,
+            is_drop: false /* (optional) drop this field at the time of ingest */,
+            param:
+              'input_age' /* (optional) an alias which can be referred in a SQL expression in the output_field */,
+          },
+          {
+            field_name: 'first_name',
+            if_missing: InputField.IfMissingEnum.PASS,
+            is_drop: true,
+          },
+          {
+            field_name: 'last_name',
+            if_missing: InputField.IfMissingEnum.PASS,
+            is_drop: true,
+          },
+        ],
+        output_field: {
+          field_name:
+            'user_description' /* (optional) name of the new field created by your SQL expression */,
+          value: {
+            sql:
+              "CONCAT(:first_name, ' ', :last_name, ' is ', CAST(:input_age as int), ' years old.')",
+          } /* (optional) an expression that is applied to every new document added to your collection */,
+          /*
+            (optional) When there is an error while evaluating the SQL expression:
+              SKIP: skips only this output field but continues the update
+              FAIL: causes the update to fail entirely
+          */
+          on_error: OutputField.OnErrorEnum.FAIL,
+        },
       },
     ],
   })
@@ -88,87 +127,170 @@ rocksetClient.queryLambdas
   .catch(console.error);
 ```
 
+### Add documents into your collection with the Write API
 
-### Execute an Arbitrary SQL Query
+```ts
+rocksetClient.documents
+  .addDocuments(
+    'commons' /* name of workspace */,
+    'Users' /* name of collection */,
+    {
+      /* array of JSON objects, each representing a new document */
+      data: [
+        { first_name: 'Brian', last_name: 'Morris', age: '14' },
+        { first_name: 'Justin', last_name: 'Smith', age: '78' },
+        { first_name: 'Scott', last_name: 'Wong', age: '42' },
+      ],
+    }
+  )
+  .then(console.log)
+  .catch(console.error);
+```
+
+## Query your data
+
+### Run a SQL query
 
 ```ts
 rocksetClient.queries
   .query({
     sql: {
-      query: "SELECT 'Hello, world!'",
+      query: 'SELECT * FROM commons.Users u WHERE u.age > :minimum_age',
+      /* (optional) list of parameters that may be used in the query */
+      parameters: [
+        {
+          name: 'minimum_age' /* name of parameter */,
+          type:
+            'int' /* one of: int, float, bool, string date, datetime, time, timestamp */,
+          value: '20' /* value of parameter*/,
+        },
+      ],
+      default_row_limit: 150 /* (optional) row limit to be used if no limit is specified in the query */,
+      /*
+        (optional) Return helpful warnings, e.g. “You’re trying to query a field that exists on 0 documents”.
+        *** Reduces query performance slightly ***
+      */
+      generate_warnings: true,
+      /*
+        (optional) Allows us to internally generate a query profile, with the goal of improving query performance.
+        *** Reduces query performance very slightly ***
+      */
+      profiling_enabled: true,
     },
   })
-  .then(console.log);
+  .then(console.log)
+  .catch(console.error);
 ```
 
-### Create an Integration
+### Run queries using Query Lambdas
 
 ```ts
-rocksetClient.integrations
-  .createIntegration({
-    name: "my-first-integration",
-    description: "my-first-integration",
-    s3: {
-      aws_role: {
-        aws_role_arn: "...",
-      },
+// Create a Query Lambda
+rocksetClient.queryLambdas
+  .createQueryLambda('commons' /* name of workspace */, {
+    name: 'MyFirstQueryLambda' /* name of Query Lambda */,
+    description: 'A Query Lambda' /* (optional) description */,
+    sql: {
+      query: 'SELECT * FROM commons.Users u WHERE u.age > :minimum_age',
+      /* (optional) list of default parameters that may be used in the query */
+      default_parameters: [{ name: 'minimum_age', type: 'int', value: '40' }],
     },
   })
-  .then(console.log);
+  .then(console.log)
+  .catch(console.error);
+// Run a Query Lambda by tag
+rocksetClient.queryLambdas
+  .executeQueryLambdaByTag('commons', 'MyFirstQueryLambda', 'latest', {
+    /* (optional) list of parameters that may be used in the query, that overwrite default parameters */
+    parameters: [{ name: 'minimum_age', type: 'int', value: '20' }],
+  })
+  .then(console.log)
+  .catch(console.error);
+// Update a Query Lambda
+rocksetClient.queryLambdas
+  .updateQueryLambda('commons', 'MyFirstQueryLambda', {
+    description: 'query for exact age',
+    sql: {
+      query: 'SELECT * FROM commons.Users u WHERE u.age = :minimum_age',
+      default_parameters: [{ name: 'minimum_age', type: 'int', value: '42' }],
+    },
+  })
+  .then((response) => {
+    console.log(response);
+    // Run a Query Lambda by version
+    rocksetClient.queryLambdas
+      .executeQueryLambda(
+        'commons',
+        'MyFirstQueryLambda',
+        response.data.version /* specific Query Lambda version to run */,
+        {
+          parameters: [{ name: 'minimum_age', type: 'int', value: '10' }],
+          default_row_limit: 150,
+          generate_warnings: true,
+        }
+      )
+      .then(console.log)
+      .catch(console.error);
+    // Tag a specific version of your Query Lambda
+    rocksetClient.queryLambdas
+      .createQueryLambdaTag('commons', 'MyFirstQueryLambda', {
+        tag_name: 'dev' /* name of tag */,
+        version:
+          response.data
+            .version /* specific Query Lambda version to be tagged */,
+      })
+      .then(console.log)
+      .catch(console.error);
+  })
+  .catch(console.error);
 ```
 
-### Create a Collection from Amazon S3
+## Manage your collections
+
+### Create an alias for your collection
+
+```ts
+rocksetClient.aliases
+  .createAlias('commons', {
+    name: 'UsersAlias' /* name of alias */,
+    description: 'An alias for users collection' /* (optional) description */,
+    collections: [
+      'commons.Users',
+    ] /* list of collection (paths) that your alias references */,
+  })
+  .then(console.log)
+  .catch(console.error);
+```
+
+### Query an alias, as you would any collection
+
+```ts
+rocksetClient.queries
+  .query({
+    sql: {
+      query: 'SELECT * FROM commons.UsersAlias',
+    },
+  })
+  .then(console.log)
+  .catch(console.error);
+```
+
+### Point an alias to a new collection to avoid downtime
 
 ```ts
 rocksetClient.collections
-  .createCollection("commons", {
-    name: "my-first-s3-collection",
-    description: "my first s3 collection",
-    sources: [
-      {
-        integration_name: "my-first-integration",
-        s3: {
-          bucket: "bucket-name",
-        },
-      },
-    ],
+  .createCollection('commons', {
+    name: 'UsersV2',
+    description: 'Updated Users collection',
   })
-  .then(console.log);
-```
-
-### Write Data to a Collection
-
-```ts
-rocksetClient.documents
-  .addDocuments("commons", "my-first-collection", {
-    data: [
-      {
-        name: "foo",
-        address: "bar",
-      },
-    ],
+  .then(console.log)
+  .catch(console.error);
+rocksetClient.aliases
+  .updateAlias('commons', 'UsersAlias', {
+    collections: ['commons.UsersV2'],
   })
-  .then(console.log);
-```
-
-### Create a Query Lambda
-
-```ts
-rocksetClient.queryLambdas
-  .createQueryLambda("commons", {
-    name: "myQueryLambda",
-    sql: {
-      query: "SELECT :param as echo",
-      default_parameters: [
-        {
-          name: "param",
-          type: "string",
-          value: "Hello world!",
-        },
-      ],
-    },
-  })
-  .then(console.log);
+  .then(console.log)
+  .catch(console.error);
 ```
 
 ## Testing
@@ -196,8 +318,8 @@ By default, the client is a thin wrapper that sends REST calls to Rockset using 
 Here is an example that shows how to support cancelling API calls using a custom fetch function with Axios. To supply a custom fetch function, we pass it in as the last parameter to `rockset`.
 
 ```ts
-import axios from "axios";
-import rockset from "@rockset/client";
+import axios from 'axios';
+import rockset from '@rockset/client';
 
 // Simple fetch with Axios instead of node-fetch
 const customFetchAxios = async (
@@ -217,14 +339,18 @@ const customFetchAxios = async (
 };
 
 // Configure
-const basePath = "https://api.rs2.usw2.rockset.com";
-const rocksetClient = rockset(process.env.ROCKSET_APIKEY, basePath, customFetchAxios);
+const basePath = 'https://api.rs2.usw2.rockset.com';
+const rocksetClient = rockset(
+  process.env.ROCKSET_APIKEY,
+  basePath,
+  customFetchAxios
+);
 const cancelSource = axios.CancelToken.source();
 
 // Execute a query
 rockset.queries
   .query(
-    { sql: { query: "SELECT count(*) FROM _events" } },
+    { sql: { query: 'SELECT count(*) FROM _events' } },
     { cancelToken: cancelSource.token }
   )
   .then(console.log)
