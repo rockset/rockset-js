@@ -70,6 +70,7 @@ rocksetClient.collections
 
 ```ts
 import { InputField, OutputField } from '@rockset/client/dist/codegen/api';
+
 rocksetClient.collections
   .createCollection('commons', {
     name: 'Users',
@@ -198,6 +199,7 @@ rocksetClient.queryLambdas
   })
   .then(console.log)
   .catch(console.error);
+  
 // Run a Query Lambda by tag
 rocksetClient.queryLambdas
   .executeQueryLambdaByTag('commons', 'MyFirstQueryLambda', 'latest', {
@@ -206,6 +208,7 @@ rocksetClient.queryLambdas
   })
   .then(console.log)
   .catch(console.error);
+  
 // Update a Query Lambda
 rocksetClient.queryLambdas
   .updateQueryLambda('commons', 'MyFirstQueryLambda', {
@@ -217,6 +220,7 @@ rocksetClient.queryLambdas
   })
   .then((response) => {
     console.log(response);
+    
     // Run a Query Lambda by version
     rocksetClient.queryLambdas
       .executeQueryLambda(
@@ -231,6 +235,7 @@ rocksetClient.queryLambdas
       )
       .then(console.log)
       .catch(console.error);
+      
     // Tag a specific version of your Query Lambda
     rocksetClient.queryLambdas
       .createQueryLambdaTag('commons', 'MyFirstQueryLambda', {
@@ -285,6 +290,7 @@ rocksetClient.collections
   })
   .then(console.log)
   .catch(console.error);
+  
 rocksetClient.aliases
   .updateAlias('commons', 'UsersAlias', {
     collections: ['commons.UsersV2'],
