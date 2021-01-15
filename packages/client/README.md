@@ -42,8 +42,8 @@ import rockset from "@rockset/client";
 const rocksetClient = rockset(process.env.ROCKSET_APIKEY);
 ```
 
-Note: most sans-TypeScript projects require the following
-(we're working on supporting default exports for both environments right now):
+Note: most sans-TypeScript projects currently require the following
+(we're currently working on better interoperability for Node / CommonJS / ES6):
 
 ```ts
 const rocksetClient = rockset.default(process.env.ROCKSET_APIKEY);
