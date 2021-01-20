@@ -123,20 +123,20 @@ $ rockset api:collections:listCollections
 **Create a Collection (Empty)**
 
 ```yaml
-#. YAML Spec for this collection
+# YAML file for POST body
 name: testCollection
 description: a test collection
 ```
 
 ```bash
-$ rockset api:collections:createCollection commons --body spec.yaml
+$ rockset api:collections:createCollection commons --body body.yaml
 ...
 ```
 
 **Create a Collection (Using a Data Source)**
 
 ```yaml
-#. YAML Spec for this collection
+# YAML file for POST body
 name: testCollection
 sources:
 - s3:
@@ -154,10 +154,15 @@ sources:
 retention_secs: 100000
 ```
 
+```bash
+$ rockset api:collections:createCollection commons --body body.yaml
+...
+```
+
 **Create a Collection (With Field Mappings)**
 
 ```yaml
-#. YAML Spec for this collection
+# YAML file for POST body
 name: testCollection
 sources:
 - s3:
@@ -199,7 +204,7 @@ field_mappings:
 ```
 
 ```bash
-$ rockset api:collections:createCollection commons --body spec.yaml
+$ rockset api:collections:createCollection commons --body body.yaml
 ...
 ```
 
@@ -208,28 +213,77 @@ $ rockset api:collections:createCollection commons --body spec.yaml
 **Add Documents**
 
 ```yaml
+# YAML file for POST body
 data:
 - col1: val1
 - col1: val2
 ```
 
 ```bash
-$ rockset api:documents:addDocuments commons testCollection --body spec.yaml
+$ rockset api:documents:addDocuments commons testCollection --body body.yaml
 ...
 ```
 
 **Delete Documents**
 
 ```yaml
+# YAML file for POST body
 data:
 - _id: 2774620d-7bd8-4b7a-bb2e-f8f477a8bdf4-1
 - _id: 2774620d-7bd8-4b7a-bb2e-f8f477a8bdf4-2
 ```
 
 ```bash
-$ rockset api:documents:deleteDocuments commons testCollection --body spec.yaml
+$ rockset api:documents:deleteDocuments commons testCollection --body body.yaml
 ...
 ```
+
+### Aliases
+
+**Create Alias**
+
+```yaml
+# YAML file for POST body
+name: testAlias
+description: alias for testCollection
+collections:
+- commons.testCollection
+```
+
+```bash
+$ rockset api:aliases:createAlias commons --body body.yaml
+...
+```
+
+**Update Alias**
+
+```yaml
+# YAML file for POST body
+description: alias for testCollection2
+collections:
+- commons.testCollection2
+```
+
+```bash
+$ rockset api:aliases:updateAlias commons testAlias --body body.yaml
+...
+```
+
+### Workspaces
+
+**Create Workspace**
+
+```yaml
+# YAML file for POST body
+name: testWorkspace
+description: a test workspace
+```
+
+```bash
+$ rockset api:workspaces:createWorkspace --body body.yaml
+...
+```
+
 
 ## Output Format Options
 
