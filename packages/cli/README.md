@@ -110,7 +110,9 @@ most commands. Each API command accepts positional arguments that translate to t
 
 ## Sample Code Snippets
 
-Every endpoint in the [Rockset API](https://docs.rockset.com/rest-api) can be accessed using the `rockset api` commands, where **GET** parameters are directly defined as command line arguments and **POST** endpoints are defined using JSON or YAML files. Below are several examples to help you get started:
+Every endpoint in the [Rockset API](https://docs.rockset.com/rest-api) can be accessed using the `rockset api` commands, where **GET** parameters are directly defined as command line arguments and **POST** endpoints are defined using JSON or YAML files.
+
+Below are several examples to help you get started:
 
 ### Collections
 
