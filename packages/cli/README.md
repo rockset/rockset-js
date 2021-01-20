@@ -14,6 +14,10 @@ Official Rockset CLI
 
 * [Download & Installation Instructions](#download--installation-instructions)
 * [Authentication and Profile Management (`rockset auth`)](#authentication-and-profile-management-rockset-auth)
+* [Access the Rockset API from the Command Line (`rockset api`)](#access-the-rockset-api-from-the-command-line-rockset-api)
+    * [Sample Code Snippets](#code-snippets)
+    * [Output Format Options](#output-format-options)
+* [Execute SQL from the Command Line (`rockset sql`)](#execute-sql-from-the-command-line-rockset-sql)
 * [Create and Deploy Query Lambdas (`rockset local`)](#create-and-deploy-query-lambdas-rockset-local)
     * [Hello World Tutorial](/packages/cli/tutorials/queryLambdaHelloWorld.md)
     * [Set Up Query Lambdas Source Directory](#set-up-query-lambdas-source-directory)
@@ -23,10 +27,6 @@ Official Rockset CLI
     * [Execute and Test Query Lambda SQL](#execute-and-test-query-lambda-sql)
     * [Deploy Query Lambdas to Rockset](#deploy-query-lambdas-to-rockset)
     * [Integrate with Version Control and CI/CD](#integrate-with-version-control-and-cicd)
-* [Access the Rockset API from the Command Line (`rockset api`)](#access-the-rockset-api-from-the-command-line-rockset-api)
-    * [Input Arguments & Examples](#input-arguments--examples)
-    * [Output Format Options](#output-format-options)
-* [Execute SQL from the Command Line (`rockset sql`)](#execute-sql-from-the-command-line-rockset-sql)
 * [Telemetry](#telemetry)
 
 # Download & Installation Instructions
@@ -100,6 +100,167 @@ $ rockset auth:use
 ```
 
 You can find a complete reference for all supported `rockset:auth` commands [here](/packages/cli/reference/auth.md).
+
+# Access the Rockset API from the Command Line (`rockset api`)
+
+The `rockset api` commands allow you to access any of the [Rockset API endpoints](https://docs.rockset.com/rest-api).
+
+You can find a complete reference for all supported `rockset api` commands [here](/packages/cli/reference/api.md), along with detailed examples for
+most commands. Each API command accepts positional arguments that translate to the URL parameters of the REST endpoint that they wrap. Commands that wrap POST endpoints must additionally take a JSON or YAML file which specifies the data to be passed.
+
+## Sample Code Snippets
+
+Every endpoint in the [Rockset API](https://docs.rockset.com/rest-api) can be accessed using the `rockset api` commands, where **GET** parameters are directly defined as command line arguments and **POST** endpoints are defined using JSON or YAML files. Below are several examples to help you get started:
+
+### Collections
+
+**List All Collections**
+
+```bash
+$ rockset api:collections:listCollections
+```
+
+**Create a Collection (Empty)**
+
+```yaml
+#. YAML Spec for this collection
+name: testCollection
+description: a test collection
+```
+
+```bash
+$ rockset api:collections:createCollection commons --body spec.yaml
+...
+```
+
+**Create a Collection (Using a Data Source)**
+
+```yaml
+#. YAML Spec for this collection
+name: testCollection
+sources:
+- s3:
+    access_key: ''
+    secret_access: ''
+    prefix: partial-cities
+    region: us-west-2
+    bucket: rockset-public-datasets
+    prefixes:
+    - partial-cities
+    mappings: []
+  format: JSON
+
+# optionally specify retention duration of all documents in this collection
+retention_secs: 100000
+```
+
+**Create a Collection (With Field Mappings)**
+
+```yaml
+#. YAML Spec for this collection
+name: testCollection
+sources:
+- s3:
+    access_key: ''
+    secret_access: ''
+    prefix: partial-cities
+    region: us-west-2
+    bucket: rockset-public-datasets
+    prefixes:
+    - partial-cities
+    mappings: []
+  format: JSON
+field_mappings:
+- name: country_length_mapper
+  # used for Field Whitelisting
+  is_drop_all_fields:
+  input_fields:
+  - field_name: fields.country
+
+    # either 'SKIP' or 'PASS'
+    if_missing: PASS
+
+    # drop this field
+    is_drop: true
+
+    # optional parameter name to be referenced in output_field sql
+    param: country
+
+  output_field:
+    field_name: lenCountry
+    
+    # SQL transformation used to create a new field
+    value:
+      sql: LENGTH(:country)
+
+    # either 'SKIP' or 'FAIL'
+    on_error: SKIP
+
+```
+
+```bash
+$ rockset api:collections:createCollection commons --body spec.yaml
+...
+```
+
+### Documents
+
+**Add Documents**
+
+```yaml
+data:
+- col1: val1
+- col1: val2
+```
+
+```bash
+$ rockset api:documents:addDocuments commons testCollection --body spec.yaml
+...
+```
+
+**Delete Documents**
+
+```yaml
+data:
+- _id: 2774620d-7bd8-4b7a-bb2e-f8f477a8bdf4-1
+- _id: 2774620d-7bd8-4b7a-bb2e-f8f477a8bdf4-2
+```
+
+```bash
+$ rockset api:documents:deleteDocuments commons testCollection --body spec.yaml
+...
+```
+
+## Output Format Options
+
+All API Commands by default will intelligently grab the most relevant part of the response data and display it for you in a table. The most commonly used flags are shown below. The full set of flags can be found by setting the `-h` flag.
+
+```
+  --columns=columns              only show provided columns (comma-separated)
+
+  --output=csv|json|yaml         output in a more machine friendly format
+```
+
+
+# Execute SQL from the Command Line (`rockset sql`)
+
+The `rockset sql` commands allow you to execute any SQL statement.
+
+You can pass a SQL string directly as an argument:
+
+```
+$ rockset sql "SELECT 'hello, world!'"
+```
+
+You can also not pass any arguments, in which case you will be prompted to open your default text editor. Saving and closing the file
+will execute the SQL statement contained within it.
+
+```bash
+$ rockset sql
+? sql: Press <enter> to launch your preferred editor.
+```
+
+You can find a complete reference for the `rockset sql` command [here](/packages/cli/reference/sql.md).
 
 # Create and Deploy Query Lambdas (`rockset local`)
 
@@ -219,94 +380,6 @@ Then, your application can hit Query Lambda `helloWorld` with tag `development` 
 // JS Application Example
 rockset.queryLambdas.executeQueryLambdaByTag('commons', 'helloWorld', isProduction() ? 'production' : 'development');
 ```
-
-# Access the Rockset API from the Command Line (`rockset api`)
-
-The `rockset api` commands allow you to access any of the [Rockset REST API endpoints](https://docs.rockset.com/rest-api).
-
-You can find a complete reference for all supported `rockset api` commands [here](/packages/cli/reference/api.md), along with detailed examples for
-most commands.
-
-### Input Arguments & Examples
-
-Each API command accepts positional arguments that translate to the URL parameters of the REST endpoint that they wrap. Commands that wrap POST endpoints must
-additionally take a JSON / YAML file that specifies the data to be passed.
-
-Let's look at two basic examples:
-
-**List all Collections**
-
-```bash
-$ rockset api:collections:listCollections
-```
-
-**Create a Collection**
-
-```yaml
-#. YAML Spec for this collection
-name: footest
-sources:
-- s3:
-    access_key: ''
-    secret_access: ''
-    prefix: partial-cities
-    region: us-west-2
-    bucket: rockset-public-datasets
-    prefixes:
-    - partial-cities
-    mappings: []
-  format: JSON
-retention_secs: 100000
-field_mappings:
-- name: country_length_mapper
-  is_drop_all_fields:
-  input_fields:
-  - field_name: fields.country
-    if_missing: PASS
-    is_drop: true
-    param: country
-  output_field:
-    field_name: lenCountry
-    value:
-      sql: LENGTH(:country)
-    on_error: SKIP
-```
-
-```bash
-$ rockset api:collections:createCollection commons --body spec.yaml
-...
-```
-
-### Output Format Options
-
-All API Commands by default will intelligently grab the most relevant part of the response data and display it for you in a table. The most commonly used flags are shown below. The full set of flags can be found by setting the `-h` flag.
-
-```
-  --columns=columns              only show provided columns (comma-separated)
-
-  --output=csv|json|yaml         output in a more machine friendly format
-```
-
-
-# Execute SQL from the Command Line (`rockset sql`)
-
-The `rockset sql` commands allow you to execute any SQL statement.
-
-You can pass a SQL string directly as an argument:
-
-```
-$ rockset sql "SELECT 'hello, world!'"
-```
-
-You can also not pass any arguments, in which case you will be prompted to open your default text editor. Saving and closing the file
-will execute the SQL statement contained within it.
-
-```bash
-$ rockset sql
-? sql: Press <enter> to launch your preferred editor.
-```
-
-You can find a complete reference for the `rockset sql` command [here](/packages/cli/reference/sql.md).
 
 # Telemetry
 
