@@ -15,7 +15,7 @@ Official Rockset CLI
 * [Download & Installation Instructions](#download--installation-instructions)
 * [Authentication and Profile Management (`rockset auth`)](#authentication-and-profile-management-rockset-auth)
 * [Access the Rockset API from the Command Line (`rockset api`)](#access-the-rockset-api-from-the-command-line-rockset-api)
-    * [Sample Code Snippets](#code-snippets)
+    * [Sample Code Snippets](#sample-code-snippets)
     * [Output Format Options](#output-format-options)
 * [Execute SQL from the Command Line (`rockset sql`)](#execute-sql-from-the-command-line-rockset-sql)
 * [Create and Deploy Query Lambdas (`rockset local`)](#create-and-deploy-query-lambdas-rockset-local)
