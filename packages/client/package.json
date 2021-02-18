@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@types/node-fetch": "^2.5.3",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.1",
     "portable-fetch": "^3.0.0",
     "url": "^0.11.0"
   },
