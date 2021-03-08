@@ -1,6 +1,6 @@
 {
   "name": "@rockset/test-client",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "description": "Rockset JS testing utils",
   "main": "./dist/index.js",
   "types": "dist/index.d.ts",
@@ -27,8 +27,8 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "@rockset/client": "0.8.0",
-    "@rockset/core": "0.8.0",
+    "@rockset/client": "0.8.1",
+    "@rockset/core": "0.8.1",
     "@rockset/parser": "0.8.0",
     "immer": "^8.0.1",
     "lodash": "^4.17.19"

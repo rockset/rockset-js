@@ -1,7 +1,7 @@
 {
   "dependencies": {
-    "@rockset/client": "0.8.0",
-    "@rockset/core": "0.8.0",
+    "@rockset/client": "0.8.1",
+    "@rockset/core": "0.8.1",
     "@rockset/eslint-config": "0.8.0",
     "@types/cors": "^2.8.6",
     "@types/express": "^4.17.6",
@@ -19,7 +19,7 @@
     "prompts": "^2.3.2"
   },
   "name": "@rockset/dev-server",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "description": "Rockset Developer Local Server",
   "main": "./dist/index.js",
   "types": "dist/index.d.ts",
