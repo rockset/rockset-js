@@ -29,14 +29,9 @@ describe('functionality tests (e2e)', function () {
       });
       expect(result).toMatchObject({
         data: {
-          created_at: null,
-          created_by: null,
-          description: null,
           field_mappings: [],
           name: collection,
-          retention_secs: null,
           sources: [],
-          stats: null,
           status: 'CREATED',
           workspace: 'commons',
         },
@@ -89,15 +84,9 @@ describe('functionality tests (e2e)', function () {
       );
       expect(result).toMatchObject({
         data: {
-          created_at: null,
-          created_by: null,
-          description: null,
           field_mappings: [],
           name: collection,
-          retention_secs: null,
           sources: [],
-          stats: null,
-          status: null,
           workspace: 'commons',
         },
       });
