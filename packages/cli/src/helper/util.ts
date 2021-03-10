@@ -30,16 +30,10 @@ export interface Flags extends Options {
 export type Apicall<A extends unknown[], Return> = (...a: A) => Promise<Return>;
 
 export function showTable(data: object[], flags: Options) {
-  try {
-    const columns = Object.getOwnPropertyNames(data?.[0]);
-    const col = columns.reduce((obj, cur) => ({ ...obj, [cur]: { header: cur } }), {});
-    cli.table(data, col, { ...flags });
-  }
-  catch (TypeError) {
-    if (Object.keys(data).length != 0) {
-      throw TypeError
-    }
-  }
+  const columns = Object.getOwnPropertyNames(data?.[0]);
+  const col = columns.reduce((obj, cur) => ({ ...obj, [cur]: { header: cur } }), {});
+
+  cli.table(data, col, { ...flags });
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
