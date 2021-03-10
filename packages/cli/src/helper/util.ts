@@ -30,7 +30,7 @@ export interface Flags extends Options {
 export type Apicall<A extends unknown[], Return> = (...a: A) => Promise<Return>;
 
 export function showTable(data: object[], flags: Options) {
-  const columns = Object.getOwnPropertyNames(data?.[0]);
+  const columns = Object.getOwnPropertyNames(data?.[0] ?? {});
   const col = columns.reduce((obj, cur) => ({ ...obj, [cur]: { header: cur } }), {});
 
   cli.table(data, col, { ...flags });
