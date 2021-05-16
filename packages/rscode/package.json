@@ -43,6 +43,10 @@
       {
         "command": "extension.rocksetRun",
         "title": "Execute Rockset Query"
+      },
+      {
+        "command": "extension.rocksetValidate",
+        "title": "Validate Rockset Query"
       }
     ],
     "languages": [
@@ -103,6 +107,7 @@
     "eslint-plugin-promise": "^4.2.1",
     "glob": "^7.1.4",
     "handlebars": "^4.7.6",
+    "jest": "^26.6.3",
     "ts-loader": "^8.0.0",
     "ts-node": "^8.10.2",
     "typescript": "^3.8.3",
