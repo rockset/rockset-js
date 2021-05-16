@@ -121,6 +121,32 @@ export function activate(context: vscode.ExtensionContext) {
     }
   );
 
+  // VALIDATE QUERY COMMAND
+  const validate_query = vscode.commands.registerTextEditorCommand(
+    'extension.rocksetValidate',
+    async (activeEditor) => {
+      const text = activeEditor.document.getText();
+      
+      channel.append(`
+*** Rockset Query Text: ***
+${text}\n\n`);
+
+      channel.append(`
+*** Rockset Query Validation: ***`)
+
+      try {
+        await client.queries.validate({ sql: { query: text } }) // try validation
+        channel.append("\nSUCCESS")
+        channel.show();
+      } catch (e) { // if failed, log error
+        channel.append(`\nFAIL: ${e.message}`); // log error
+        channel.show();
+        await vscode.window.showErrorMessage(e.message); // show vscode error
+      }
+    }
+  );
+
+  // EXECUTE QUERY COMMAND
   // The command has been defined in the package.json file
   // The commandId parameter must match the command field in package.json
   // This function is called when this command id is run
@@ -196,7 +222,7 @@ ${text}
     '.', // triggered whenever a '.' is being typed
     ':'
   );
-  context.subscriptions.push(disposable, rocksetAutoComplete);
+  context.subscriptions.push(disposable, rocksetAutoComplete, validate_query);
 }
 
 // this method is called when your extension is deactivated
