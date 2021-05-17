@@ -20,7 +20,8 @@
   ],
   "activationEvents": [
     "onLanguage:rsql",
-    "onCommand:extension.rocksetRun"
+    "onCommand:extension.rocksetRun",
+    "onCommand:extension.rocksetValidate"
   ],
   "main": "./out/extension.js",
   "contributes": {
