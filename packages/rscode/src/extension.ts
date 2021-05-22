@@ -179,6 +179,54 @@ ${text}
     }
   );
 
+    // Add Docs command
+    const add_docs = vscode.commands.registerTextEditorCommand(
+      'extension.rocksetAdd',
+      async (activeEditor) => {
+        try { // try to parse JSON
+          const docs = JSON.parse(activeEditor.document.getText());
+          try {
+            client.workspaces.listWorkspaces().then(function(raw_workspaces) { // list workspaces
+              let workspaces: string[] = []
+              
+              raw_workspaces.data?.forEach(item => { // for each workspace, add it's name to `workspaces`
+                if (typeof(item.name) == "string"){ workspaces.push(item.name) }
+              });
+              vscode.window.showQuickPick(workspaces, { placeHolder: "workspace" }).then(workspace => { // show dropdown menu of workspaces
+                if (!workspace) { return } // if user exits, return
+
+                client.collections.workspaceCollections(workspace).then(function(raw_collections){ // list collections in workspace
+                  let collections: string[] = []
+                  raw_collections.data?.forEach(item => {
+                    if (typeof(item.name) == "string") { collections.push(item.name) }
+                  });
+                  vscode.window.showQuickPick(collections, { placeHolder: "collection" }).then(collection => {
+                    if (!collection) { return }
+
+                    client.documents.addDocuments(workspace, collection, { // add documents
+                      data: Array.isArray(docs) ? docs : [docs] // if it is a single document, wrap it in a list
+                    }).then(
+                      function() { vscode.window.showInformationMessage("Document added.") } // show info message
+                    ).catch(vscode.window.showErrorMessage)
+                  })
+                })
+              });
+            }).catch(vscode.window.showErrorMessage)
+          } catch (err) { await vscode.window.showErrorMessage(err.message) }
+        }
+        catch (err){
+          if (err.name == "SyntaxError") {
+            // JSON is invalid, show error
+            await vscode.window.showErrorMessage("Invalid JSON  document body. See https://docs.rockset.com/rest-api/#adddocuments.");
+          }
+          else {
+            // if error is not a SyntaxError, just display it
+            await vscode.window.showErrorMessage(err.message)
+          }
+        }
+      }
+    );
+
   const rocksetAutoComplete = vscode.languages.registerCompletionItemProvider(
     { language: 'rsql' },
     {
@@ -222,7 +270,7 @@ ${text}
     '.', // triggered whenever a '.' is being typed
     ':'
   );
-  context.subscriptions.push(disposable, rocksetAutoComplete, validate_query);
+  context.subscriptions.push(disposable, rocksetAutoComplete, add_docs, validate_query);
 }
 
 // this method is called when your extension is deactivated

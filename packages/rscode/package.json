@@ -48,6 +48,33 @@
       {
         "command": "extension.rocksetValidate",
         "title": "Validate Rockset Query"
+      },
+      {
+        "command": "extension.rocksetAdd",
+        "title": "Add Rockset Document(s)"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "extension.rocksetRun",
+        "key": "ctrl+alt+e",
+        "mac": "ctrl+alt+e",
+        "win": "ctrl+alt+e",
+        "linux": "ctrl+alt+e"
+      },
+      {
+        "command": "extension.rocksetValidate",
+        "key": "ctrl+alt+v",
+        "mac": "ctrl+alt+v",
+        "win": "ctrl+alt+v",
+        "linux": "ctrl+alt+v"
+      },
+      {
+        "command": "extension.rocksetAdd",
+        "key": "ctrl+alt+a",
+        "mac": "ctrl+alt+a",
+        "win": "ctrl+alt+a",
+        "linux": "ctrl+alt+a"
       }
     ],
     "languages": [
