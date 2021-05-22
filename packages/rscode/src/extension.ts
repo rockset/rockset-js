@@ -8,7 +8,9 @@ const sqlFormatter = require('sql-formatter') as {
 import { helper } from '@rockset/core';
 
 import keywords from './keywords';
-import functions from './functions';
+import function_texts from './functions';
+import { functions } from './functions';
+
 import rocksetConfigure from '@rockset/client';
 import { ErrorModel } from '@rockset/client/dist/codegen/api';
 
@@ -227,6 +229,32 @@ ${text}
       }
     );
 
+    // Hover
+    let hovers = vscode.languages.registerHoverProvider("rsql", {
+        provideHover(document, position, _token) {
+
+          const word = document.getText(document.getWordRangeAtPosition(position)).toUpperCase(); // get current word and convert it to upper case
+
+          var function_texts_no_brackets = function_texts.map((func) => func.slice(0, func.indexOf("("))) as string[] // get all functions texts without parentheses
+          var function_links = functions.map((obj) => obj.link) as string[]; // get all function links
+          var function_descs = functions.map((obj) => obj.description) as string[]; // get all function descriptions
+
+          if (function_texts_no_brackets.includes(word)) { // if the current word is in the functions without brackets
+            var index = function_texts_no_brackets.indexOf(word) // find where `word` occurs
+            var text = function_texts[index]
+            var link = function_links[index]
+            var desc = function_descs[index]
+            return new vscode.Hover(new vscode.MarkdownString(`    ${text}
+***
+${desc}
+***
+[${link.replace("https://", "")}](${link})`)
+            ); // create hover
+          }
+          return undefined; // force return
+        }
+    });
+
   const rocksetAutoComplete = vscode.languages.registerCompletionItemProvider(
     { language: 'rsql' },
     {
@@ -256,7 +284,7 @@ ${text}
             )
           )
           .concat(
-            functions.map((f) => {
+            function_texts.map((f) => {
               const item = new vscode.CompletionItem(
                 f,
                 vscode.CompletionItemKind.Function
@@ -270,7 +298,7 @@ ${text}
     '.', // triggered whenever a '.' is being typed
     ':'
   );
-  context.subscriptions.push(disposable, rocksetAutoComplete, add_docs, validate_query);
+  context.subscriptions.push(disposable, rocksetAutoComplete, add_docs, validate_query, hovers);
 }
 
 // this method is called when your extension is deactivated

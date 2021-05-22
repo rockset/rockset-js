@@ -913,3 +913,4 @@ const functions = [
 ];
 
 export default functions.map((obj) => obj.text) as string[];
+export { functions };
