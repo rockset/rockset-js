@@ -192,7 +192,7 @@ ${text}
             let workspaces: string[] = []
 
             rawWorkspaces.data?.forEach(item => { // for each workspace, add it's name to `workspaces`
-              if (typeof (item.name) == "string") { workspaces.push(item.name) }
+              if (typeof (item.name) === "string") { workspaces.push(item.name) }
             });
             vscode.window.showQuickPick(workspaces, { placeHolder: "workspace" }).then(workspace => { // show dropdown menu of workspaces
               if (!workspace) { return } // if user exits, return
@@ -200,7 +200,7 @@ ${text}
               client.collections.workspaceCollections(workspace).then(function (rawCollectionss) { // list collections in workspace
                 let collections: string[] = []
                 rawCollectionss.data?.forEach(item => {
-                  if (typeof (item.name) == "string") { collections.push(item.name) }
+                  if (typeof (item.name) === "string") { collections.push(item.name) }
                 });
                 vscode.window.showQuickPick(collections, { placeHolder: "collection" }).then(collection => {
                   if (!collection) { return }
@@ -217,7 +217,7 @@ ${text}
         } catch (err) { await vscode.window.showErrorMessage(err.message) }
       }
       catch (err) {
-        if (err.name == "SyntaxError") {
+        if (err.name === "SyntaxError") {
           // JSON is invalid, show error
           await vscode.window.showErrorMessage("Invalid JSON  document body. See https://docs.rockset.com/rest-api/#adddocuments.");
         }
