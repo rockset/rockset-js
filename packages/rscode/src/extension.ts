@@ -8,7 +8,7 @@ const sqlFormatter = require('sql-formatter') as {
 import { helper } from '@rockset/core';
 
 import keywords from './keywords';
-import function_texts from './functions';
+import functionTexts from './functions';
 import { functions } from './functions';
 
 import rocksetConfigure from '@rockset/client';
@@ -124,7 +124,7 @@ export function activate(context: vscode.ExtensionContext) {
   );
 
   // VALIDATE QUERY COMMAND
-  const validate_query = vscode.commands.registerTextEditorCommand(
+  const validateQuery = vscode.commands.registerTextEditorCommand(
     'extension.rocksetValidate',
     async (activeEditor) => {
       const text = activeEditor.document.getText();
@@ -182,24 +182,24 @@ ${text}
   );
 
   // Add Docs command
-  const add_docs = vscode.commands.registerTextEditorCommand(
+  const addDocs = vscode.commands.registerTextEditorCommand(
     'extension.rocksetAdd',
     async (activeEditor) => {
       try { // try to parse JSON
         const docs = JSON.parse(activeEditor.document.getText());
         try {
-          client.workspaces.listWorkspaces().then(function (raw_workspaces) { // list workspaces
+          client.workspaces.listWorkspaces().then(function (rawWorkspaces) { // list workspaces
             let workspaces: string[] = []
 
-            raw_workspaces.data?.forEach(item => { // for each workspace, add it's name to `workspaces`
+            rawWorkspaces.data?.forEach(item => { // for each workspace, add it's name to `workspaces`
               if (typeof (item.name) == "string") { workspaces.push(item.name) }
             });
             vscode.window.showQuickPick(workspaces, { placeHolder: "workspace" }).then(workspace => { // show dropdown menu of workspaces
               if (!workspace) { return } // if user exits, return
 
-              client.collections.workspaceCollections(workspace).then(function (raw_collections) { // list collections in workspace
+              client.collections.workspaceCollections(workspace).then(function (rawCollectionss) { // list collections in workspace
                 let collections: string[] = []
-                raw_collections.data?.forEach(item => {
+                rawCollectionss.data?.forEach(item => {
                   if (typeof (item.name) == "string") { collections.push(item.name) }
                 });
                 vscode.window.showQuickPick(collections, { placeHolder: "collection" }).then(collection => {
@@ -235,15 +235,15 @@ ${text}
 
       const word = document.getText(document.getWordRangeAtPosition(position)).toUpperCase(); // get current word and convert it to upper case
 
-      var function_texts_no_brackets = function_texts.map((func) => func.slice(0, func.indexOf("("))) as string[] // get all functions texts without parentheses
-      var function_links = functions.map((obj) => obj.link) as string[]; // get all function links
-      var function_descs = functions.map((obj) => obj.description) as string[]; // get all function descriptions
+      var functionTextsNoBrackets = functionTexts.map((func) => func.slice(0, func.indexOf("("))) as string[] // get all functions texts without parentheses
+      var functionLinks = functions.map((obj) => obj.link) as string[]; // get all function links
+      var functionDescs = functions.map((obj) => obj.description) as string[]; // get all function descriptions
 
-      if (function_texts_no_brackets.includes(word)) { // if the current word is in the functions without brackets
-        var index = function_texts_no_brackets.indexOf(word) // find where `word` occurs
-        var text = function_texts[index]
-        var link = function_links[index]
-        var desc = function_descs[index]
+      if (functionTextsNoBrackets.includes(word)) { // if the current word is in the functions without brackets
+        var index = functionTextsNoBrackets.indexOf(word) // find where `word` occurs
+        var text = functionTexts[index]
+        var link = functionLinks[index]
+        var desc = functionDescs[index]
         return new vscode.Hover(new vscode.MarkdownString(`    ${text}
 ***
 ${desc}
@@ -284,7 +284,7 @@ ${desc}
             )
           )
           .concat(
-            function_texts.map((f) => {
+            functionTexts.map((f) => {
               const item = new vscode.CompletionItem(
                 f,
                 vscode.CompletionItemKind.Function
@@ -298,7 +298,7 @@ ${desc}
     '.', // triggered whenever a '.' is being typed
     ':'
   );
-  context.subscriptions.push(disposable, rocksetAutoComplete, add_docs, validate_query, hovers);
+  context.subscriptions.push(disposable, rocksetAutoComplete, addDocs, validateQuery, hovers);
 }
 
 // this method is called when your extension is deactivated
