@@ -128,7 +128,7 @@ export function activate(context: vscode.ExtensionContext) {
     'extension.rocksetValidate',
     async (activeEditor) => {
       const text = activeEditor.document.getText();
-      
+
       channel.append(`
 *** Rockset Query Text: ***
 ${text}\n\n`);
@@ -181,79 +181,79 @@ ${text}
     }
   );
 
-    // Add Docs command
-    const add_docs = vscode.commands.registerTextEditorCommand(
-      'extension.rocksetAdd',
-      async (activeEditor) => {
-        try { // try to parse JSON
-          const docs = JSON.parse(activeEditor.document.getText());
-          try {
-            client.workspaces.listWorkspaces().then(function(raw_workspaces) { // list workspaces
-              let workspaces: string[] = []
-              
-              raw_workspaces.data?.forEach(item => { // for each workspace, add it's name to `workspaces`
-                if (typeof(item.name) == "string"){ workspaces.push(item.name) }
-              });
-              vscode.window.showQuickPick(workspaces, { placeHolder: "workspace" }).then(workspace => { // show dropdown menu of workspaces
-                if (!workspace) { return } // if user exits, return
+  // Add Docs command
+  const add_docs = vscode.commands.registerTextEditorCommand(
+    'extension.rocksetAdd',
+    async (activeEditor) => {
+      try { // try to parse JSON
+        const docs = JSON.parse(activeEditor.document.getText());
+        try {
+          client.workspaces.listWorkspaces().then(function (raw_workspaces) { // list workspaces
+            let workspaces: string[] = []
 
-                client.collections.workspaceCollections(workspace).then(function(raw_collections){ // list collections in workspace
-                  let collections: string[] = []
-                  raw_collections.data?.forEach(item => {
-                    if (typeof(item.name) == "string") { collections.push(item.name) }
-                  });
-                  vscode.window.showQuickPick(collections, { placeHolder: "collection" }).then(collection => {
-                    if (!collection) { return }
+            raw_workspaces.data?.forEach(item => { // for each workspace, add it's name to `workspaces`
+              if (typeof (item.name) == "string") { workspaces.push(item.name) }
+            });
+            vscode.window.showQuickPick(workspaces, { placeHolder: "workspace" }).then(workspace => { // show dropdown menu of workspaces
+              if (!workspace) { return } // if user exits, return
 
-                    client.documents.addDocuments(workspace, collection, { // add documents
-                      data: Array.isArray(docs) ? docs : [docs] // if it is a single document, wrap it in a list
-                    }).then(
-                      function() { vscode.window.showInformationMessage("Document added.") } // show info message
-                    ).catch(vscode.window.showErrorMessage)
-                  })
+              client.collections.workspaceCollections(workspace).then(function (raw_collections) { // list collections in workspace
+                let collections: string[] = []
+                raw_collections.data?.forEach(item => {
+                  if (typeof (item.name) == "string") { collections.push(item.name) }
+                });
+                vscode.window.showQuickPick(collections, { placeHolder: "collection" }).then(collection => {
+                  if (!collection) { return }
+
+                  client.documents.addDocuments(workspace, collection, { // add documents
+                    data: Array.isArray(docs) ? docs : [docs] // if it is a single document, wrap it in a list
+                  }).then(
+                    function () { vscode.window.showInformationMessage("Document added.") } // show info message
+                  ).catch(vscode.window.showErrorMessage)
                 })
-              });
-            }).catch(vscode.window.showErrorMessage)
-          } catch (err) { await vscode.window.showErrorMessage(err.message) }
+              })
+            });
+          }).catch(vscode.window.showErrorMessage)
+        } catch (err) { await vscode.window.showErrorMessage(err.message) }
+      }
+      catch (err) {
+        if (err.name == "SyntaxError") {
+          // JSON is invalid, show error
+          await vscode.window.showErrorMessage("Invalid JSON  document body. See https://docs.rockset.com/rest-api/#adddocuments.");
         }
-        catch (err){
-          if (err.name == "SyntaxError") {
-            // JSON is invalid, show error
-            await vscode.window.showErrorMessage("Invalid JSON  document body. See https://docs.rockset.com/rest-api/#adddocuments.");
-          }
-          else {
-            // if error is not a SyntaxError, just display it
-            await vscode.window.showErrorMessage(err.message)
-          }
+        else {
+          // if error is not a SyntaxError, just display it
+          await vscode.window.showErrorMessage(err.message)
         }
       }
-    );
+    }
+  );
 
-    // Hover
-    let hovers = vscode.languages.registerHoverProvider("rsql", {
-        provideHover(document, position, _token) {
+  // Hover
+  let hovers = vscode.languages.registerHoverProvider("rsql", {
+    provideHover(document, position, _token) {
 
-          const word = document.getText(document.getWordRangeAtPosition(position)).toUpperCase(); // get current word and convert it to upper case
+      const word = document.getText(document.getWordRangeAtPosition(position)).toUpperCase(); // get current word and convert it to upper case
 
-          var function_texts_no_brackets = function_texts.map((func) => func.slice(0, func.indexOf("("))) as string[] // get all functions texts without parentheses
-          var function_links = functions.map((obj) => obj.link) as string[]; // get all function links
-          var function_descs = functions.map((obj) => obj.description) as string[]; // get all function descriptions
+      var function_texts_no_brackets = function_texts.map((func) => func.slice(0, func.indexOf("("))) as string[] // get all functions texts without parentheses
+      var function_links = functions.map((obj) => obj.link) as string[]; // get all function links
+      var function_descs = functions.map((obj) => obj.description) as string[]; // get all function descriptions
 
-          if (function_texts_no_brackets.includes(word)) { // if the current word is in the functions without brackets
-            var index = function_texts_no_brackets.indexOf(word) // find where `word` occurs
-            var text = function_texts[index]
-            var link = function_links[index]
-            var desc = function_descs[index]
-            return new vscode.Hover(new vscode.MarkdownString(`    ${text}
+      if (function_texts_no_brackets.includes(word)) { // if the current word is in the functions without brackets
+        var index = function_texts_no_brackets.indexOf(word) // find where `word` occurs
+        var text = function_texts[index]
+        var link = function_links[index]
+        var desc = function_descs[index]
+        return new vscode.Hover(new vscode.MarkdownString(`    ${text}
 ***
 ${desc}
 ***
 [${link.replace("https://", "")}](${link})`)
-            ); // create hover
-          }
-          return undefined; // force return
-        }
-    });
+        ); // create hover
+      }
+      return undefined; // force return
+    }
+  });
 
   const rocksetAutoComplete = vscode.languages.registerCompletionItemProvider(
     { language: 'rsql' },
@@ -302,4 +302,4 @@ ${desc}
 }
 
 // this method is called when your extension is deactivated
-export function deactivate() {}
+export function deactivate() { }
