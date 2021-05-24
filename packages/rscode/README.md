@@ -52,16 +52,7 @@ The Rockset VSCode Extension comes with a formatter. The simplest way to use the
 
 ## Executing Queries
 
-The recommended way to execute queries is with the [Rockset Developer UI](/packages/dev-server), which comes with the [Rockset CLI](/packages/cli). Please follow the documentation to install and set up these tools.
-
-```sh
-# After following the setup instructions above
-rockset local:serve
-```
-
-This will open up a UI which will allow you to set parameters and test your local Query Lambdas.
-
-You can also execute simple queries directly in VSCode. Open the Command Palette in VSCode (`CTRL-SHIFT-P` or `CMD-SHIFT-P`) and execute the command `Execute Rockset Query`. This will execute the Query Lambda text raw and _will not pass any parameters_. At this point, it is not possible to run parameterized queries directly from VSCode (this is available in the [Rockset Developer UI](/packages/dev-server)).
+You can execute simple queries directly in VSCode. Open the Command Palette in VSCode (`CTRL-SHIFT-P` or `CMD-SHIFT-P`) and execute the command `Execute Rockset Query`. This will execute the Query Lambda text raw and _will not pass any parameters_. At this point, it is not possible to run parameterized queries directly from VSCode.
 
 ## Extension Settings
 
