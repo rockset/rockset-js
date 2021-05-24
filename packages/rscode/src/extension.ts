@@ -197,9 +197,9 @@ ${text}
             vscode.window.showQuickPick(workspaces, { placeHolder: "workspace" }).then(workspace => { // show dropdown menu of workspaces
               if (!workspace) { return } // if user exits, return
 
-              client.collections.workspaceCollections(workspace).then(function (rawCollectionss) { // list collections in workspace
+              client.collections.workspaceCollections(workspace).then(function (rawCollections) { // list collections in workspace
                 let collections: string[] = []
-                rawCollectionss.data?.forEach(item => {
+                rawCollections.data?.forEach(item => {
                   if (typeof (item.name) === "string") { collections.push(item.name) }
                 });
                 vscode.window.showQuickPick(collections, { placeHolder: "collection" }).then(collection => {
