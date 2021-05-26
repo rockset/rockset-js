@@ -189,19 +189,15 @@ ${text}
         const docs = JSON.parse(activeEditor.document.getText());
         try {
           client.workspaces.listWorkspaces().then(function (rawWorkspaces) { // list workspaces
-            let workspaces: string[] = []
+            
+            const workspaces = rawWorkspaces.data?.map(ws => ws.name) as string[]; // get list of workspace names
 
-            rawWorkspaces.data?.forEach(item => { // for each workspace, add it's name to `workspaces`
-              if (typeof (item.name) === "string") { workspaces.push(item.name) }
-            });
             vscode.window.showQuickPick(workspaces, { placeHolder: "workspace" }).then(workspace => { // show dropdown menu of workspaces
               if (!workspace) { return } // if user exits, return
 
               client.collections.workspaceCollections(workspace).then(function (rawCollections) { // list collections in workspace
                 let collections: string[] = []
-                rawCollections.data?.forEach(item => {
-                  if (typeof (item.name) === "string") { collections.push(item.name) }
-                });
+                rawCollections.data?.map(col => col.name) as string[];
                 vscode.window.showQuickPick(collections, { placeHolder: "collection" }).then(collection => {
                   if (!collection) { return }
 
