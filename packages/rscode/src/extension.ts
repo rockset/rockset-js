@@ -31,6 +31,10 @@ export function activate(context: vscode.ExtensionContext) {
   let collections: string[] = [];
   let parameters: string[] = [];
 
+  const functionTextsNoBrackets = functionTexts.map((func) => func.slice(0, func.indexOf("("))) as string[] // get all functions texts without parentheses
+  const functionLinks = functions.map((obj) => obj.link) as string[]; // get all function links
+  const functionDescs = functions.map((obj) => obj.description) as string[]; // get all function descriptions
+
   // Grab all of the collections so we can later suggest them
   client.collections
     .listCollections()
@@ -230,10 +234,6 @@ ${text}
     provideHover(document, position, _token) {
 
       const word = document.getText(document.getWordRangeAtPosition(position)).toUpperCase(); // get current word and convert it to upper case
-
-      var functionTextsNoBrackets = functionTexts.map((func) => func.slice(0, func.indexOf("("))) as string[] // get all functions texts without parentheses
-      var functionLinks = functions.map((obj) => obj.link) as string[]; // get all function links
-      var functionDescs = functions.map((obj) => obj.description) as string[]; // get all function descriptions
 
       if (functionTextsNoBrackets.includes(word)) { // if the current word is in the functions without brackets
         var index = functionTextsNoBrackets.indexOf(word) // find where `word` occurs
