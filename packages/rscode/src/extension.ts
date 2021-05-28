@@ -11,7 +11,7 @@ import keywords from './keywords';
 import functionTexts from './functions';
 import { functions } from './functions';
 
-import rocksetConfigure from '@rockset/client';
+import rocksetConfigure, { MainApi } from '@rockset/client';
 import { ErrorModel } from '@rockset/client/dist/codegen/api';
 
 // this method is called when your extension is activated
@@ -26,12 +26,14 @@ export function activate(context: vscode.ExtensionContext) {
   const configuration = vscode.workspace.getConfiguration('rockset');
   const apikey = configuration.get('apikey') as string;
   const apiserver = configuration.get('apiserver') as string;
-  const client = rocksetConfigure(apikey, apiserver);
+  const client: MainApi = rocksetConfigure(apikey, apiserver);
 
   let collections: string[] = [];
   let parameters: string[] = [];
 
-  const functionTextsNoBrackets = functionTexts.map((func) => func.slice(0, func.indexOf("("))) as string[] // get all functions texts without parentheses
+  const functionTextsNoBrackets = functionTexts.map((func) =>
+    func.slice(0, func.indexOf('('))
+  ) as string[]; // get all functions texts without parentheses
   const functionLinks = functions.map((obj) => obj.link) as string[]; // get all function links
   const functionDescs = functions.map((obj) => obj.description) as string[]; // get all function descriptions
 
@@ -138,16 +140,18 @@ export function activate(context: vscode.ExtensionContext) {
 ${text}\n\n`);
 
       channel.append(`
-*** Rockset Query Validation: ***`)
+*** Rockset Query Validation: ***`);
 
       try {
-        await client.queries.validate({ sql: { query: text } }) // try validation
-        channel.append("\nSUCCESS")
+        await client.queries.validate({ sql: { query: text } }); // try validation
+        channel.append('\nSUCCESS');
         channel.show();
-      } catch (e) { // if failed, log error
-        channel.append(`\nFAIL: ${e.message}`); // log error
+      } catch (e) {
+        // if failed, log error
+        const error: ErrorModel = e as ErrorModel;
+        channel.append(`\nFAIL: ${error.message}`); // log error
         channel.show();
-        await vscode.window.showErrorMessage(e.message); // show vscode error
+        await vscode.window.showErrorMessage(error.message ?? ''); // show vscode error
       }
     }
   );
@@ -189,66 +193,105 @@ ${text}
   const addDocs = vscode.commands.registerTextEditorCommand(
     'extension.rocksetAdd',
     async (activeEditor) => {
-      try { // try to parse JSON
-        const docs = JSON.parse(activeEditor.document.getText());
+      try {
+        // try to parse JSON
+        const inpDocs = JSON.parse(activeEditor.document.getText()) as string;
         try {
-          client.workspaces.listWorkspaces().then(function (rawWorkspaces) { // list workspaces
-            
-            const workspaces = rawWorkspaces.data?.map(ws => ws.name) as string[]; // get list of workspace names
+          client.workspaces
+            .listWorkspaces()
+            .then(function (rawWorkspaces) {
+              // list workspaces
 
-            vscode.window.showQuickPick(workspaces, { placeHolder: "workspace" }).then(workspace => { // show dropdown menu of workspaces
-              if (!workspace) { return } // if user exits, return
+              const workspaces = rawWorkspaces.data?.map(
+                (ws) => ws.name
+              ) as string[]; // get list of workspace names
 
-              client.collections.workspaceCollections(workspace).then(function (rawCollections) { // list collections in workspace
-                let collections: string[] = []
-                rawCollections.data?.map(col => col.name) as string[];
-                vscode.window.showQuickPick(collections, { placeHolder: "collection" }).then(collection => {
-                  if (!collection) { return }
+              vscode.window
+                .showQuickPick(workspaces, { placeHolder: 'workspace' })
+                .then((workspace) => {
+                  // show dropdown menu of workspaces
+                  if (!workspace) {
+                    return;
+                  } // if user exits, return
 
-                  client.documents.addDocuments(workspace, collection, { // add documents
-                    data: Array.isArray(docs) ? docs : [docs] // if it is a single document, wrap it in a list
-                  }).then(
-                    function () { vscode.window.showInformationMessage("Document added.") } // show info message
-                  ).catch(vscode.window.showErrorMessage)
-                })
-              })
-            });
-          }).catch(vscode.window.showErrorMessage)
-        } catch (err) { await vscode.window.showErrorMessage(err.message) }
-      }
-      catch (err) {
-        if (err.name === "SyntaxError") {
-          // JSON is invalid, show error
-          await vscode.window.showErrorMessage("Invalid JSON  document body. See https://docs.rockset.com/rest-api/#adddocuments.");
+                  client.collections
+                    .workspaceCollections(workspace)
+                    .then(function (rawCollections) {
+                      // list collections in workspace
+                      const collections: string[] = [];
+                      rawCollections.data?.map((col) => col.name) as string[];
+                      vscode.window
+                        .showQuickPick(collections, {
+                          placeHolder: 'collection',
+                        })
+                        .then((collection) => {
+                          if (!collection) {
+                            return;
+                          }
+
+                          client.documents
+                            .addDocuments(workspace, collection, {
+                              // add documents
+                              data: Array.isArray(inpDocs)
+                                ? inpDocs
+                                : [inpDocs], // if it is a single document, wrap it in a list
+                            })
+                            .then(() => {
+                              vscode.window.showInformationMessage(
+                                'Document added.'
+                              ); // show info message
+                              return undefined;
+                            })
+                            .catch(vscode.window.showErrorMessage);
+                        });
+                    });
+                  return undefined;
+                });
+
+              return undefined;
+            })
+            .catch(vscode.window.showErrorMessage);
+        } catch (e) {
+          const err = e as ErrorModel;
+          await vscode.window.showErrorMessage(err.message ?? '');
         }
-        else {
+      } catch (err) {
+        if (err.name === 'SyntaxError') {
+          // JSON is invalid, show error
+          await vscode.window.showErrorMessage(
+            'Invalid JSON  document body. See https://docs.rockset.com/rest-api/#adddocuments.'
+          );
+        } else {
           // if error is not a SyntaxError, just display it
-          await vscode.window.showErrorMessage(err.message)
+          await vscode.window.showErrorMessage(err.message ?? '');
         }
       }
     }
   );
 
   // Hover
-  let hovers = vscode.languages.registerHoverProvider("rsql", {
-    provideHover(document, position, _token) {
+  const hovers = vscode.languages.registerHoverProvider('rsql', {
+    provideHover(document, position) {
+      const word = document
+        .getText(document.getWordRangeAtPosition(position))
+        .toUpperCase(); // get current word and convert it to upper case
 
-      const word = document.getText(document.getWordRangeAtPosition(position)).toUpperCase(); // get current word and convert it to upper case
-
-      if (functionTextsNoBrackets.includes(word)) { // if the current word is in the functions without brackets
-        var index = functionTextsNoBrackets.indexOf(word) // find where `word` occurs
-        var text = functionTexts[index]
-        var link = functionLinks[index]
-        var desc = functionDescs[index]
-        return new vscode.Hover(new vscode.MarkdownString(`    ${text}
+      if (functionTextsNoBrackets.includes(word)) {
+        // if the current word is in the functions without brackets
+        const index = functionTextsNoBrackets.indexOf(word); // find where `word` occurs
+        const text = functionTexts[index];
+        const link = functionLinks[index];
+        const desc = functionDescs[index];
+        return new vscode.Hover(
+          new vscode.MarkdownString(`    ${text}
 ***
 ${desc}
 ***
-[${link.replace("https://", "")}](${link})`)
+[${link.replace('https://', '')}](${link})`)
         ); // create hover
       }
       return undefined; // force return
-    }
+    },
   });
 
   const rocksetAutoComplete = vscode.languages.registerCompletionItemProvider(
@@ -294,8 +337,14 @@ ${desc}
     '.', // triggered whenever a '.' is being typed
     ':'
   );
-  context.subscriptions.push(disposable, rocksetAutoComplete, addDocs, validateQuery, hovers);
+  context.subscriptions.push(
+    disposable,
+    rocksetAutoComplete,
+    addDocs,
+    validateQuery,
+    hovers
+  );
 }
 
 // this method is called when your extension is deactivated
-export function deactivate() { }
+export function deactivate() {}
