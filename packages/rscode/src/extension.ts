@@ -12,7 +12,7 @@ import functionTexts from './functions';
 import { functions } from './functions';
 
 import rocksetConfigure, { MainApi } from '@rockset/client';
-import { ErrorModel } from '@rockset/client/dist/codegen/api';
+import { Collection, ErrorModel } from '@rockset/client/dist/codegen/api';
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -30,6 +30,8 @@ export function activate(context: vscode.ExtensionContext) {
 
   let collections: string[] = [];
   let parameters: string[] = [];
+  let collectionNames: string[] = [];
+  let collectionsMetadata: Collection[] = [];
 
   const functionTextsNoBrackets = functionTexts.map((func) =>
     func.slice(0, func.indexOf('('))
@@ -41,6 +43,9 @@ export function activate(context: vscode.ExtensionContext) {
   client.collections
     .listCollections()
     .then((c) => {
+      collectionNames = c.data?.map((c) => c.name) as string[];
+      collectionsMetadata = c.data as Collection[];
+
       collections =
         c.data?.map((c) =>
           helper.escapePath(
@@ -272,13 +277,12 @@ ${text}
   // Hover
   const hovers = vscode.languages.registerHoverProvider('rsql', {
     provideHover(document, position) {
-      const word = document
-        .getText(document.getWordRangeAtPosition(position))
-        .toUpperCase(); // get current word and convert it to upper case
+      const word = document.getText(document.getWordRangeAtPosition(position)); // get current word and convert it to upper case
 
-      if (functionTextsNoBrackets.includes(word)) {
+      // SQL hovers
+      if (functionTextsNoBrackets.includes(word.toUpperCase())) {
         // if the current word is in the functions without brackets
-        const index = functionTextsNoBrackets.indexOf(word); // find where `word` occurs
+        const index = functionTextsNoBrackets.indexOf(word.toUpperCase()); // find where `word` occurs
         const text = functionTexts[index];
         const link = functionLinks[index];
         const desc = functionDescs[index];
@@ -289,6 +293,24 @@ ${desc}
 ***
 [${link.replace('https://', '')}](${link})`)
         ); // create hover
+      }
+      // Collection hovers
+      if (collectionNames.includes(word)) {
+        const index = collectionNames.indexOf(word);
+        return new vscode.Hover(
+          new vscode.MarkdownString(`**${
+            collectionsMetadata[index].workspace
+          }.${collectionsMetadata[index].name}** ${
+            collectionsMetadata[index].description
+              ? ` \\
+${collectionsMetadata[index].description}`
+              : ''
+          }
+***
+\`\`\`json
+${JSON.stringify(collectionsMetadata[index], null, 2)}
+\`\`\``)
+        );
       }
       return undefined; // force return
     },
