@@ -13,6 +13,9 @@ import { functions } from './functions';
 
 import rocksetConfigure, { MainApi } from '@rockset/client';
 import { Collection, ErrorModel } from '@rockset/client/dist/codegen/api';
+import yaml = require('js-yaml');
+import { YAMLException } from "js-yaml"
+import assert = require('assert');
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -198,73 +201,80 @@ ${text}
   const addDocs = vscode.commands.registerTextEditorCommand(
     'extension.rocksetAdd',
     async (activeEditor) => {
+      // try to parse JSON
+      var inpDocs: string | object | object[];
+      try { // try to parse as JSON
+        inpDocs = JSON.parse(activeEditor.document.getText()) as string | object | object[];
+        assert(typeof(inpDocs) === "object")
+      } catch {
+        try { // if above doesn't work, parse as yaml and assert that it's an object
+          inpDocs = yaml.load(activeEditor.document.getText()) as string | object | object[]
+          assert(typeof(inpDocs) === "object") // verify that it's an object
+          console.log(typeof inpDocs)
+        } catch (err) { // if all fails, 
+          if ((err as Error).name === "SyntaxError" || "AssertionError" || "YAMLException") {
+            // JSON is invalid, show error
+            await vscode.window.showErrorMessage(
+              "Invalid document body. See https://docs.rockset.com/rest-api/#adddocuments."
+            );
+          } else {
+            // if error is not a bc of syntax, just display it
+            await vscode.window.showErrorMessage((err as Error).message ?? '');
+          }
+        }
+      }
       try {
-        // try to parse JSON
-        const inpDocs = JSON.parse(activeEditor.document.getText()) as string;
-        try {
-          client.workspaces
-            .listWorkspaces()
-            .then(function (rawWorkspaces) {
-              // list workspaces
+        client.workspaces
+          .listWorkspaces()
+          .then((rawWorkspaces) => {
+            // list workspaces
 
-              const workspaces = rawWorkspaces.data?.map(
-                (ws) => ws.name
-              ) as string[]; // get list of workspace names
+            const workspaces = rawWorkspaces.data?.map(
+              (ws) => ws.name
+            ) as string[]; // get list of workspace names
 
-              return vscode.window
-                .showQuickPick(workspaces, { placeHolder: 'workspace' })
-                .then((workspace) => {
-                  // show dropdown menu of workspaces
-                  if (!workspace) {
-                    return;
-                  } // if user exits, return
+            return vscode.window
+              .showQuickPick(workspaces, { placeHolder: 'workspace' })
+              .then((workspace) => {
+                // show dropdown menu of workspaces
+                if (!workspace) {
+                  return;
+                } // if user exits, return
 
-                  return client.collections
-                    .workspaceCollections(workspace)
-                    .then((rawCollections) => {
-                      // list collections in workspace
-                      const collections: string[] = [];
-                      rawCollections.data?.map((col) => col.name) as string[];
-                      return vscode.window
-                        .showQuickPick(collections, {
-                          placeHolder: 'collection',
-                        })
-                        .then((collection) => {
-                          if (!collection) {
-                            return;
-                          }
+                return client.collections
+                  .workspaceCollections(workspace)
+                  .then((rawCollections) => {
+                    // list collections in workspace
+                    const collections = rawCollections.data?.map((col) => col.name) as string[];;
+                    return vscode.window
+                      .showQuickPick(collections, {
+                        placeHolder: 'collection',
+                      })
+                      .then((collection) => {
+                        if (!collection) {
+                          return;
+                        }
 
-                          client.documents
-                            .addDocuments(workspace, collection, {
-                              // add documents
-                              data: Array.isArray(inpDocs)
-                                ? inpDocs
-                                : [inpDocs], // if it is a single document, wrap it in a list
-                            })
-                            .then(() => {
-                              return vscode.window.showInformationMessage(
-                                'Document added.'
-                              ); // show info message
-                            })
-                            .catch(vscode.window.showErrorMessage);
-                        });
-                    });
-                }, console.log);
-            })
-            .catch(vscode.window.showErrorMessage);
-        } catch (e) {
-          await vscode.window.showErrorMessage((e as Error).message ?? '');
-        }
-      } catch (err) {
-        if ((err as Error).name === 'SyntaxError') {
-          // JSON is invalid, show error
-          await vscode.window.showErrorMessage(
-            'Invalid JSON  document body. See https://docs.rockset.com/rest-api/#adddocuments.'
-          );
-        } else {
-          // if error is not a SyntaxError, just display it
-          await vscode.window.showErrorMessage((err as Error).message ?? '');
-        }
+                        client.documents
+                          .addDocuments(workspace, collection, {
+                            // add documents
+                            data: Array.isArray(inpDocs)
+                              ? inpDocs
+                              : [inpDocs], // if it is a single document, wrap it in a list
+                          })
+                          .then(() => {
+                            return vscode.window.showInformationMessage(
+                              'Document added.'
+                            ); // show info message
+                          })
+                          .catch(vscode.window.showErrorMessage);
+                      });
+                  });
+              }, console.log);
+          })
+          .catch(vscode.window.showErrorMessage);
+      } catch (e) {
+        await vscode.window.showErrorMessage((e as Error).message ?? '');
       }
     }
   );

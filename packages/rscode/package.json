@@ -21,7 +21,8 @@
   "activationEvents": [
     "onLanguage:rsql",
     "onCommand:extension.rocksetRun",
-    "onCommand:extension.rocksetValidate"
+    "onCommand:extension.rocksetValidate",
+    "onCommand:extension.rocksetAdd"
   ],
   "main": "./out/extension.js",
   "contributes": {
@@ -127,6 +128,7 @@
     "@rockset/eslint-config": "0.8.2",
     "@types/axios": "^0.14.0",
     "@types/glob": "^7.1.1",
+    "@types/js-yaml": "^4.0.1",
     "@types/lodash": "^4.14.141",
     "@types/node": "^10.12.21",
     "@types/sql-formatter": "^2.3.0",
@@ -147,6 +149,7 @@
   "dependencies": {
     "@rockset/client": "0.8.2",
     "@rockset/core": "0.8.2",
+    "js-yaml": "^3.14.1",
     "sql-formatter": "^2.3.3"
   }
 }
