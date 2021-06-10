@@ -209,7 +209,7 @@ describe('functionality tests (e2e)', function () {
       const error: ErrorModel = e;
       expect(error).toMatchObject({
         message:
-          'Query Lambda "myFakeQuery" not found in workspace "commons.fake.workspace"',
+          'Query Lambda "myFakeQuery" not found in workspace "commons.fake.workspace".',
         type: 'NotFound',
         line: null,
         column: null,
