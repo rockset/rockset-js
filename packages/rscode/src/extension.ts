@@ -143,22 +143,12 @@ export function activate(context: vscode.ExtensionContext) {
     async (activeEditor) => {
       const text = activeEditor.document.getText();
 
-      channel.append(`
-*** Rockset Query Text: ***
-${text}\n\n`);
-
-      channel.append(`
-*** Rockset Query Validation: ***`);
-
       try {
         await client.queries.validate({ sql: { query: text } }); // try validation
-        channel.append('\nSUCCESS');
-        channel.show();
+        vscode.window.showInformationMessage("Query valid");
       } catch (e) {
         // if failed, log error
-        const error: ErrorModel = e as ErrorModel;
-        channel.append(`\nFAIL: ${error.message}`); // log error
-        channel.show();
+        const error = e as ErrorModel;
         await vscode.window.showErrorMessage(error.message ?? ''); // show vscode error
       }
     }
