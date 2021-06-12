@@ -1,3 +1,4 @@
+/* eslint-disable promise/always-return */
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
@@ -14,7 +15,6 @@ import { functions } from './functions';
 import rocksetConfigure, { MainApi } from '@rockset/client';
 import { Collection, ErrorModel } from '@rockset/client/dist/codegen/api';
 import yaml = require('js-yaml');
-import { YAMLException } from "js-yaml"
 import assert = require('assert');
 
 // this method is called when your extension is activated
@@ -145,7 +145,15 @@ export function activate(context: vscode.ExtensionContext) {
 
       try {
         await client.queries.validate({ sql: { query: text } }); // try validation
-        vscode.window.showInformationMessage("Query valid");
+        // eslint-disable-next-line promise/catch-or-return
+        vscode.window.showInformationMessage('Query valid').then(
+          (msg) => {
+            return msg;
+          },
+          (err) => {
+            return vscode.window.showErrorMessage(err);
+          }
+        );
       } catch (e) {
         // if failed, log error
         const error = e as ErrorModel;
@@ -192,20 +200,33 @@ ${text}
     'extension.rocksetAdd',
     async (activeEditor) => {
       // try to parse JSON
-      var inpDocs: string | object | object[];
-      try { // try to parse as JSON
-        inpDocs = JSON.parse(activeEditor.document.getText()) as string | object | object[];
-        assert(typeof(inpDocs) === "object")
+      let inpDocs: string | object | object[];
+      try {
+        // try to parse as JSON
+        inpDocs = JSON.parse(activeEditor.document.getText()) as
+          | string
+          | object
+          | object[];
+        assert(typeof inpDocs === 'object');
       } catch {
-        try { // if above doesn't work, parse as yaml and assert that it's an object
-          inpDocs = yaml.load(activeEditor.document.getText()) as string | object | object[]
-          assert(typeof(inpDocs) === "object") // verify that it's an object
-          console.log(typeof inpDocs)
-        } catch (err) { // if all fails, 
-          if ((err as Error).name === "SyntaxError" || "AssertionError" || "YAMLException") {
+        try {
+          // if above doesn't work, parse as yaml and assert that it's an object
+          inpDocs = yaml.load(activeEditor.document.getText()) as
+            | string
+            | object
+            | object[];
+          assert(typeof inpDocs === 'object'); // verify that it's an object
+          console.log(typeof inpDocs);
+        } catch (err) {
+          // if all fails,
+          if (
+            (err as Error).name === 'SyntaxError' ||
+            'AssertionError' ||
+            'YAMLException'
+          ) {
             // JSON is invalid, show error
             await vscode.window.showErrorMessage(
-              "Invalid document body. See https://docs.rockset.com/rest-api/#adddocuments."
+              'Invalid document body. See https://docs.rockset.com/rest-api/#adddocuments.'
             );
           } else {
             // if error is not a bc of syntax, just display it
@@ -235,7 +256,9 @@ ${text}
                   .workspaceCollections(workspace)
                   .then((rawCollections) => {
                     // list collections in workspace
-                    const collections = rawCollections.data?.map((col) => col.name) as string[];;
+                    const collections = rawCollections.data?.map(
+                      (col) => col.name
+                    ) as string[];
                     return vscode.window
                       .showQuickPick(collections, {
                         placeHolder: 'collection',
@@ -248,9 +271,7 @@ ${text}
                         client.documents
                           .addDocuments(workspace, collection, {
                             // add documents
-                            data: Array.isArray(inpDocs)
-                              ? inpDocs
-                              : [inpDocs], // if it is a single document, wrap it in a list
+                            data: Array.isArray(inpDocs) ? inpDocs : [inpDocs], // if it is a single document, wrap it in a list
                           })
                           .then(() => {
                             return vscode.window.showInformationMessage(
