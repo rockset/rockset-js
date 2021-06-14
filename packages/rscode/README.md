@@ -14,7 +14,7 @@
 
 The Rockset VSCode plugin is available to install on the [VSCode Extension Marketplace](https://code.visualstudio.com/docs/editor/extension-gallery).
 
-## Setup
+### Setup
 
 After installation, first set the following two properties in your VSCode preferences (<kbd>CMD</kbd> + <kbd>,</kbd>).
 
@@ -70,6 +70,7 @@ You can hover over a collection to get it's metadata.
 - Execute query: <kbd>ctrl</kbd> + <kbd>alt</kbd> + <kbd>e</kbd>
 - Validate query: <kbd>ctrl</kbd> + <kbd>alt</kbd> + <kbd>v</kbd>
 - Add document: <kbd>ctrl</kbd> + <kbd>alt</kbd> + <kbd>a</kbd>
+
 See [the VSCode documentation](https://code.visualstudio.com/docs/getstarted/keybindings#_keyboard-shortcuts-editor) to configure your own keybinds.
 
 ### Extension Settings
