@@ -52,7 +52,7 @@ You can execute and validate simple queries directly in VSCode. Open the Command
 You can add documents with the [Write API](https://docs.rockset.com/write-api/) directly from VSCode. With a JSON or YAML file open, execute the command `Add Rockset Document(s)`. This command takes either a list of documents or a single document.
 
 ### SQL Documentation
-You can hover over any SQL function and get it's parameters and description, along with a link to Rockset's documentation.
+You can hover over any SQL function and get its parameters and description, along with a link to Rockset's documentation.
 
 ![Image failed to load](/packages/rscode/assets/vscode-readme-sql-hover.png)
 
@@ -62,7 +62,7 @@ The Rockset VSCode Extension comes with a formatter. The simplest way to use the
 - Turn on `editor.formatOnSave`. This will automatically format your document whenever you save it.
 
 ### Collection Hovers
-You can hover over a collection to get it's metadata.
+You can hover over a collection to get its metadata.
 
 ![image failed to load](/packages/rscode/assets/vscode-readme-collection.png)
 
