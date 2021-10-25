@@ -9,7 +9,8 @@ import { RockCommand } from '../../../base-command';
 import * as chalk from 'chalk';
 import { cli } from 'cli-ux';
 
-const bodySchema = `name: event-logger
+const bodySchema = `name: my-app
+role: null
 `;
 
 class CreateApiKey extends RockCommand {
@@ -37,7 +38,8 @@ Arguments to this command will be passed as URL parameters to ${chalk.bold(
 ${chalk.bold(`This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
        `)}
 Example Body (YAML):
-name: event-logger
+name: my-app
+role: null
 
 
 Endpoint Reference
@@ -48,7 +50,7 @@ Create a new API key for the authenticated user.
 More documentation at ${chalk.underline(`https://docs.rockset.com/rest-api#createapikey`)}`;
 
   static examples = [
-    '$ rockset api:apikeys:createApiKey  --body body.yaml\n$ cat body.yaml\nname: event-logger\n\n',
+    '$ rockset api:apikeys:createApiKey  --body body.yaml\n$ cat body.yaml\nname: my-app\nrole: null\n\n',
   ];
 
   async run() {

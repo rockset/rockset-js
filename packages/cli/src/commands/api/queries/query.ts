@@ -10,14 +10,16 @@ import * as chalk from 'chalk';
 import { cli } from 'cli-ux';
 
 const bodySchema = `sql:
+  query: SELECT * FROM foo where _id = :_id
+  generate_warnings: null
+  profiling_enabled: null
   parameters:
     - name: _id
       type: string
       value: 85beb391
-  query: SELECT * FROM foo where _id = :_id
   default_row_limit: null
-  generate_warnings: null
-  profiling_enabled: null
+  paginate: null
+  initial_paginate_response_doc_count: null
 `;
 
 class Query extends RockCommand {
@@ -54,17 +56,9 @@ Arguments to this command will be passed as URL parameters to ${chalk.bold(
   )}
 ${chalk.bold(`This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
        `)}
-Example Body (YAML):
-sql:
-  parameters:
-    - name: _id
-      type: string
-      value: 85beb391
-  query: SELECT * FROM foo where _id = :_id
-  default_row_limit: null
-  generate_warnings: null
-  profiling_enabled: null
-
+The POST body request schema has been omitted because it is too long. Please view the documentation at ${chalk.underline(
+    `https://docs.rockset.com/rest-api#query`,
+  )} to see the example.
 
 Endpoint Reference
 POST: /v1/orgs/self/queries
@@ -73,9 +67,7 @@ Make a SQL query to Rockset.
 
 More documentation at ${chalk.underline(`https://docs.rockset.com/rest-api#query`)}`;
 
-  static examples = [
-    '$ rockset api:queries:query  --body body.yaml\n$ cat body.yaml\nsql:\n  parameters:\n    - name: _id\n      type: string\n      value: 85beb391\n  query: SELECT * FROM foo where _id = :_id\n  default_row_limit: null\n  generate_warnings: null\n  profiling_enabled: null\n\n',
-  ];
+  static examples = [];
 
   async run() {
     const { args, flags } = this.parse(Query);

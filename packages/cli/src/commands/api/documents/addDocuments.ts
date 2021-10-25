@@ -10,7 +10,7 @@ import * as chalk from 'chalk';
 import { cli } from 'cli-ux';
 
 const bodySchema = `data:
-  - {}
+  - field: value
 `;
 
 class AddDocuments extends RockCommand {
@@ -42,13 +42,13 @@ class AddDocuments extends RockCommand {
   static args = [
     {
       name: 'workspace',
-      description: 'name of the workspace',
+      description: 'Name of the workspace.',
       required: true,
       hidden: false,
     },
     {
       name: 'collection',
-      description: 'name of the collection',
+      description: 'Name of the collection.',
       required: true,
       hidden: false,
     },
@@ -62,7 +62,7 @@ ${chalk.bold(`This endpoint REQUIRES a POST body. To specify a POST body, please
        `)}
 Example Body (YAML):
 data:
-  - {}
+  - field: value
 
 
 Endpoint Reference
@@ -73,7 +73,7 @@ Add documents to a collection.
 More documentation at ${chalk.underline(`https://docs.rockset.com/rest-api#adddocuments`)}`;
 
   static examples = [
-    '$ rockset api:documents:addDocuments WORKSPACE COLLECTION --body body.yaml\n$ cat body.yaml\ndata:\n  - {}\n\n',
+    '$ rockset api:documents:addDocuments WORKSPACE COLLECTION --body body.yaml\n$ cat body.yaml\ndata:\n  - field: value\n\n',
   ];
 
   async run() {

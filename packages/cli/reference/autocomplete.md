@@ -10,6 +10,8 @@ display autocomplete installation instructions
 display autocomplete installation instructions
 
 ```
+display autocomplete installation instructions
+
 USAGE
   $ rockset autocomplete [SHELL]
 

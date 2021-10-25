@@ -45,7 +45,7 @@ Arguments to this command will be passed as URL parameters to ${chalk.bold(
 
 Endpoint Reference
 GET: /v1/orgs/self/ws/{workspace}/collections/{collection}
-Get Collection
+Retrieve Collection
 Get details about a collection.
 
 More documentation at ${chalk.underline(`https://docs.rockset.com/rest-api#getcollection`)}`;

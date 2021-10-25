@@ -11,7 +11,7 @@ import { cli } from 'cli-ux';
 
 const bodySchema = ``;
 
-class GetCurrentUser extends RockCommand {
+class ListUnsubscribePreferences extends RockCommand {
   static flags = {
     help: flags.help({ char: 'h' }),
 
@@ -24,38 +24,40 @@ class GetCurrentUser extends RockCommand {
 
   static args = [];
 
-  static description = `retrieve currently authenticated user
+  static description = `get all notification preferences
 Arguments to this command will be passed as URL parameters to ${chalk.bold(
-    `GET: /v1/orgs/self/users/self`,
+    `GET: /v1/orgs/self/users/self/preferences`,
   )}
 
 
 Endpoint Reference
-GET: /v1/orgs/self/users/self
-Retrieve Current User
-Retrieve currently authenticated user.
+GET: /v1/orgs/self/users/self/preferences
+Get all notification preferences
+Get all notification preferences.
 
-More documentation at ${chalk.underline(`https://docs.rockset.com/rest-api#getcurrentuser`)}`;
+More documentation at ${chalk.underline(
+    `https://docs.rockset.com/rest-api#listunsubscribepreferences`,
+  )}`;
 
-  static examples = ['$ rockset api:users:getCurrentUser '];
+  static examples = ['$ rockset api:users:listUnsubscribePreferences '];
 
   async run() {
-    const { args, flags } = this.parse(GetCurrentUser);
+    const { args, flags } = this.parse(ListUnsubscribePreferences);
 
     // Rockset client object
     const client = await main.createClient();
 
-    const namedArgs: Args = GetCurrentUser.args;
+    const namedArgs: Args = ListUnsubscribePreferences.args;
 
     // apicall
-    const apicall = client.users.getCurrentUser.bind(client.users);
+    const apicall = client.users.listUnsubscribePreferences.bind(client.users);
 
     // endpoint
-    const endpoint = '/v1/orgs/self/users/self';
+    const endpoint = '/v1/orgs/self/users/self/preferences';
     const method = 'GET';
 
     await runApiCall.bind(this)({ args, flags, namedArgs, apicall, method, endpoint, bodySchema });
   }
 }
 
-export default GetCurrentUser;
+export default ListUnsubscribePreferences;

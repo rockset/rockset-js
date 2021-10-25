@@ -11,7 +11,7 @@ import { cli } from 'cli-ux';
 
 const bodySchema = ``;
 
-class ListQueryLambdasWithAlias extends RockCommand {
+class GetVirtualInstance extends RockCommand {
   static flags = {
     help: flags.help({ char: 'h' }),
 
@@ -24,51 +24,45 @@ class ListQueryLambdasWithAlias extends RockCommand {
 
   static args = [
     {
-      name: 'workspace',
-      required: true,
-      hidden: false,
-    },
-    {
-      name: 'alias',
+      name: 'virtualInstanceId',
+      description: 'uuid of the virtual instance',
       required: true,
       hidden: false,
     },
   ];
 
-  static description = `get all query lambdas that hit a specific rockset alias
+  static description = `get details about a virtual instance
 Arguments to this command will be passed as URL parameters to ${chalk.bold(
-    `GET: /v1/orgs/self/ws/{workspace}/aliases/{alias}/lambdas`,
+    `GET: /v1/orgs/self/virtualinstances/{virtualInstanceId}`,
   )}
 
 
 Endpoint Reference
-GET: /v1/orgs/self/ws/{workspace}/aliases/{alias}/lambdas
-Get Query Lambdas with Alias
-Get all Query Lambdas that hit a specific Rockset Alias.
+GET: /v1/orgs/self/virtualinstances/{virtualInstanceId}
+Retrieve Virtual Instance
+Get details about a virtual instance.
 
-More documentation at ${chalk.underline(
-    `https://docs.rockset.com/rest-api#listquerylambdaswithalias`,
-  )}`;
+More documentation at ${chalk.underline(`https://docs.rockset.com/rest-api#getvirtualinstance`)}`;
 
-  static examples = ['$ rockset api:aliases:listQueryLambdasWithAlias WORKSPACE ALIAS'];
+  static examples = ['$ rockset api:virtualInstances:getVirtualInstance VIRTUALINSTANCEID'];
 
   async run() {
-    const { args, flags } = this.parse(ListQueryLambdasWithAlias);
+    const { args, flags } = this.parse(GetVirtualInstance);
 
     // Rockset client object
     const client = await main.createClient();
 
-    const namedArgs: Args = ListQueryLambdasWithAlias.args;
+    const namedArgs: Args = GetVirtualInstance.args;
 
     // apicall
-    const apicall = client.aliases.listQueryLambdasWithAlias.bind(client.aliases);
+    const apicall = client.virtualInstances.getVirtualInstance.bind(client.virtualInstances);
 
     // endpoint
-    const endpoint = '/v1/orgs/self/ws/{workspace}/aliases/{alias}/lambdas';
+    const endpoint = '/v1/orgs/self/virtualinstances/{virtualInstanceId}';
     const method = 'GET';
 
     await runApiCall.bind(this)({ args, flags, namedArgs, apicall, method, endpoint, bodySchema });
   }
 }
 
-export default ListQueryLambdasWithAlias;
+export default GetVirtualInstance;

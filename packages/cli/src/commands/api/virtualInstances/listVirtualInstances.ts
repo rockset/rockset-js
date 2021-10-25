@@ -11,7 +11,7 @@ import { cli } from 'cli-ux';
 
 const bodySchema = ``;
 
-class GetOrganizationRecentActivity extends RockCommand {
+class ListVirtualInstances extends RockCommand {
   static flags = {
     help: flags.help({ char: 'h' }),
 
@@ -24,40 +24,38 @@ class GetOrganizationRecentActivity extends RockCommand {
 
   static args = [];
 
-  static description = `get information about organization's recent activity
+  static description = `retrieve all virtual instances in an organization
 Arguments to this command will be passed as URL parameters to ${chalk.bold(
-    `GET: /v1/orgs/self/activity`,
+    `GET: /v1/orgs/self/virtualinstances`,
   )}
 
 
 Endpoint Reference
-GET: /v1/orgs/self/activity
-Get Organization Recent Activity
-Get information about organization's recent activity.
+GET: /v1/orgs/self/virtualinstances
+List Virtual Instances
+Retrieve all virtual instances in an organization.
 
-More documentation at ${chalk.underline(
-    `https://docs.rockset.com/rest-api#getorganizationrecentactivity`,
-  )}`;
+More documentation at ${chalk.underline(`https://docs.rockset.com/rest-api#listvirtualinstances`)}`;
 
-  static examples = ['$ rockset api:orgs:getOrganizationRecentActivity '];
+  static examples = ['$ rockset api:virtualInstances:listVirtualInstances '];
 
   async run() {
-    const { args, flags } = this.parse(GetOrganizationRecentActivity);
+    const { args, flags } = this.parse(ListVirtualInstances);
 
     // Rockset client object
     const client = await main.createClient();
 
-    const namedArgs: Args = GetOrganizationRecentActivity.args;
+    const namedArgs: Args = ListVirtualInstances.args;
 
     // apicall
-    const apicall = client.orgs.getOrganizationRecentActivity.bind(client.orgs);
+    const apicall = client.virtualInstances.listVirtualInstances.bind(client.virtualInstances);
 
     // endpoint
-    const endpoint = '/v1/orgs/self/activity';
+    const endpoint = '/v1/orgs/self/virtualinstances';
     const method = 'GET';
 
     await runApiCall.bind(this)({ args, flags, namedArgs, apicall, method, endpoint, bodySchema });
   }
 }
 
-export default GetOrganizationRecentActivity;
+export default ListVirtualInstances;

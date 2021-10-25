@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+// /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import rocksetConfigure from '../index';
 import { version } from '../version';
 

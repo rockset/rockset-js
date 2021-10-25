@@ -7,22 +7,22 @@ wrappers for Rockset's API endpoints (full documentation at https://docs.rockset
 * [`rockset api:aliases:deleteAlias WORKSPACE ALIAS`](#rockset-apialiasesdeletealias-workspace-alias)
 * [`rockset api:aliases:getAlias WORKSPACE ALIAS`](#rockset-apialiasesgetalias-workspace-alias)
 * [`rockset api:aliases:listAliases`](#rockset-apialiaseslistaliases)
-* [`rockset api:aliases:listQueryLambdasWithAlias WORKSPACE ALIAS`](#rockset-apialiaseslistquerylambdaswithalias-workspace-alias)
 * [`rockset api:aliases:updateAlias WORKSPACE ALIAS`](#rockset-apialiasesupdatealias-workspace-alias)
 * [`rockset api:aliases:workspaceAliases WORKSPACE`](#rockset-apialiasesworkspacealiases-workspace)
 * [`rockset api:apikeys:createApiKey`](#rockset-apiapikeyscreateapikey)
-* [`rockset api:apikeys:createApiKeyAdmin USER`](#rockset-apiapikeyscreateapikeyadmin-user)
-* [`rockset api:apikeys:deleteApiKey NAME`](#rockset-apiapikeysdeleteapikey-name)
-* [`rockset api:apikeys:deleteApiKeyAdmin NAME USER`](#rockset-apiapikeysdeleteapikeyadmin-name-user)
-* [`rockset api:apikeys:listApiKeys`](#rockset-apiapikeyslistapikeys)
-* [`rockset api:apikeys:listApiKeysAdmin USER`](#rockset-apiapikeyslistapikeysadmin-user)
+* [`rockset api:apikeys:deleteApiKey NAME USER`](#rockset-apiapikeysdeleteapikey-name-user)
+* [`rockset api:apikeys:getApiKey USER NAME`](#rockset-apiapikeysgetapikey-user-name)
+* [`rockset api:apikeys:listApiKeys USER`](#rockset-apiapikeyslistapikeys-user)
+* [`rockset api:apikeys:updateApiKey NAME USER`](#rockset-apiapikeysupdateapikey-name-user)
 * [`rockset api:collections:createCollection WORKSPACE`](#rockset-apicollectionscreatecollection-workspace)
 * [`rockset api:collections:deleteCollection WORKSPACE COLLECTION`](#rockset-apicollectionsdeletecollection-workspace-collection)
 * [`rockset api:collections:getCollection WORKSPACE COLLECTION`](#rockset-apicollectionsgetcollection-workspace-collection)
-* [`rockset api:collections:listAliasesForCollection WORKSPACE COLLECTION`](#rockset-apicollectionslistaliasesforcollection-workspace-collection)
 * [`rockset api:collections:listCollections`](#rockset-apicollectionslistcollections)
-* [`rockset api:collections:listQueryLambdasInCollection WORKSPACE COLLECTION`](#rockset-apicollectionslistquerylambdasincollection-workspace-collection)
 * [`rockset api:collections:workspaceCollections WORKSPACE`](#rockset-apicollectionsworkspacecollections-workspace)
+* [`rockset api:customRolesBeta:createRole`](#rockset-apicustomrolesbetacreaterole)
+* [`rockset api:customRolesBeta:deleteRole ROLENAME`](#rockset-apicustomrolesbetadeleterole-rolename)
+* [`rockset api:customRolesBeta:listRoles`](#rockset-apicustomrolesbetalistroles)
+* [`rockset api:customRolesBeta:updateRole ROLENAME`](#rockset-apicustomrolesbetaupdaterole-rolename)
 * [`rockset api:documents:addDocuments WORKSPACE COLLECTION`](#rockset-apidocumentsadddocuments-workspace-collection)
 * [`rockset api:documents:deleteDocuments WORKSPACE COLLECTION`](#rockset-apidocumentsdeletedocuments-workspace-collection)
 * [`rockset api:documents:patchDocuments WORKSPACE COLLECTION`](#rockset-apidocumentspatchdocuments-workspace-collection)
@@ -31,21 +31,17 @@ wrappers for Rockset's API endpoints (full documentation at https://docs.rockset
 * [`rockset api:integrations:getIntegration INTEGRATION`](#rockset-apiintegrationsgetintegration-integration)
 * [`rockset api:integrations:listIntegrations`](#rockset-apiintegrationslistintegrations)
 * [`rockset api:orgs:getOrganization`](#rockset-apiorgsgetorganization)
-* [`rockset api:orgs:getOrganizationRecentActivity`](#rockset-apiorgsgetorganizationrecentactivity)
 * [`rockset api:queries:query`](#rockset-apiqueriesquery)
-* [`rockset api:queries:validate PARAMETERS`](#rockset-apiqueriesvalidate-parameters)
+* [`rockset api:queries:validate`](#rockset-apiqueriesvalidate)
 * [`rockset api:queryLambdas:createQueryLambda WORKSPACE`](#rockset-apiquerylambdascreatequerylambda-workspace)
 * [`rockset api:queryLambdas:createQueryLambdaTag WORKSPACE QUERYLAMBDA`](#rockset-apiquerylambdascreatequerylambdatag-workspace-querylambda)
 * [`rockset api:queryLambdas:deleteQueryLambda WORKSPACE QUERYLAMBDA`](#rockset-apiquerylambdasdeletequerylambda-workspace-querylambda)
-* [`rockset api:queryLambdas:deleteQueryLambdaTag WORKSPACE QUERYLAMBDA TAG`](#rockset-apiquerylambdasdeletequerylambdatag-workspace-querylambda-tag)
 * [`rockset api:queryLambdas:deleteQueryLambdaVersion WORKSPACE QUERYLAMBDA VERSION`](#rockset-apiquerylambdasdeletequerylambdaversion-workspace-querylambda-version)
 * [`rockset api:queryLambdas:executeQueryLambda WORKSPACE QUERYLAMBDA VERSION`](#rockset-apiquerylambdasexecutequerylambda-workspace-querylambda-version)
 * [`rockset api:queryLambdas:executeQueryLambdaByTag WORKSPACE QUERYLAMBDA TAG`](#rockset-apiquerylambdasexecutequerylambdabytag-workspace-querylambda-tag)
 * [`rockset api:queryLambdas:getQueryLambdaTagVersion WORKSPACE QUERYLAMBDA TAG`](#rockset-apiquerylambdasgetquerylambdatagversion-workspace-querylambda-tag)
 * [`rockset api:queryLambdas:getQueryLambdaVersion WORKSPACE QUERYLAMBDA VERSION`](#rockset-apiquerylambdasgetquerylambdaversion-workspace-querylambda-version)
 * [`rockset api:queryLambdas:listAllQueryLambdas`](#rockset-apiquerylambdaslistallquerylambdas)
-* [`rockset api:queryLambdas:listOrganizationTags`](#rockset-apiquerylambdaslistorganizationtags)
-* [`rockset api:queryLambdas:listQueryLambdaTagVersions TAG`](#rockset-apiquerylambdaslistquerylambdatagversions-tag)
 * [`rockset api:queryLambdas:listQueryLambdaTags WORKSPACE QUERYLAMBDA`](#rockset-apiquerylambdaslistquerylambdatags-workspace-querylambda)
 * [`rockset api:queryLambdas:listQueryLambdaVersions WORKSPACE QUERYLAMBDA`](#rockset-apiquerylambdaslistquerylambdaversions-workspace-querylambda)
 * [`rockset api:queryLambdas:listQueryLambdasInWorkspace WORKSPACE`](#rockset-apiquerylambdaslistquerylambdasinworkspace-workspace)
@@ -53,18 +49,49 @@ wrappers for Rockset's API endpoints (full documentation at https://docs.rockset
 * [`rockset api:users:createUser`](#rockset-apiuserscreateuser)
 * [`rockset api:users:deleteUser USER`](#rockset-apiusersdeleteuser-user)
 * [`rockset api:users:getCurrentUser`](#rockset-apiusersgetcurrentuser)
+* [`rockset api:users:getUser USER`](#rockset-apiusersgetuser-user)
+* [`rockset api:users:listUnsubscribePreferences`](#rockset-apiuserslistunsubscribepreferences)
 * [`rockset api:users:listUsers`](#rockset-apiuserslistusers)
+* [`rockset api:users:updateUnsubscribePreferences`](#rockset-apiusersupdateunsubscribepreferences)
+* [`rockset api:views:createView WORKSPACE`](#rockset-apiviewscreateview-workspace)
+* [`rockset api:views:deleteView WORKSPACE VIEW`](#rockset-apiviewsdeleteview-workspace-view)
+* [`rockset api:views:getView WORKSPACE VIEW`](#rockset-apiviewsgetview-workspace-view)
+* [`rockset api:views:listViews`](#rockset-apiviewslistviews)
+* [`rockset api:views:updateView WORKSPACE VIEW`](#rockset-apiviewsupdateview-workspace-view)
+* [`rockset api:views:workspaceViews WORKSPACE`](#rockset-apiviewsworkspaceviews-workspace)
+* [`rockset api:virtualInstances:getVirtualInstance VIRTUALINSTANCEID`](#rockset-apivirtualinstancesgetvirtualinstance-virtualinstanceid)
+* [`rockset api:virtualInstances:listVirtualInstances`](#rockset-apivirtualinstanceslistvirtualinstances)
+* [`rockset api:virtualInstances:setVirtualInstance VIRTUALINSTANCEID`](#rockset-apivirtualinstancessetvirtualinstance-virtualinstanceid)
 * [`rockset api:workspaces:childWorkspaces WORKSPACE`](#rockset-apiworkspaceschildworkspaces-workspace)
 * [`rockset api:workspaces:createWorkspace`](#rockset-apiworkspacescreateworkspace)
 * [`rockset api:workspaces:deleteWorkspace WORKSPACE`](#rockset-apiworkspacesdeleteworkspace-workspace)
 * [`rockset api:workspaces:getWorkspace WORKSPACE`](#rockset-apiworkspacesgetworkspace-workspace)
-* [`rockset api:workspaces:listWorkspaces`](#rockset-apiworkspaceslistworkspaces)
+* [`rockset api:workspaces:listWorkspaces FETCH_ACROSS_REGIONS`](#rockset-apiworkspaceslistworkspaces-fetch_across_regions)
 
 ## `rockset api:aliases:createAlias WORKSPACE`
 
 create new alias in a workspace
 
 ```
+create new alias in a workspace
+Arguments to this command will be passed as URL parameters to POST: /v1/orgs/self/ws/{workspace}/aliases
+This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
+       
+Example Body (YAML):
+name: aliasName
+description: version alias
+collections:
+  - commons.foo
+  - prod.demo
+
+
+Endpoint Reference
+POST: /v1/orgs/self/ws/{workspace}/aliases
+Create Alias
+Create new alias in a workspace.
+
+More documentation at https://docs.rockset.com/rest-api#createalias
+
 USAGE
   $ rockset api:aliases:createAlias WORKSPACE
 
@@ -91,12 +118,14 @@ DESCRIPTION
   Example Body (YAML):
   name: aliasName
   description: version alias
-  collections: "[common.foo, prod.demo]"
+  collections:
+     - commons.foo
+     - prod.demo
 
 
   Endpoint Reference
   POST: /v1/orgs/self/ws/{workspace}/aliases
-  Create alias
+  Create Alias
   Create new alias in a workspace.
 
   More documentation at https://docs.rockset.com/rest-api#createalias
@@ -106,7 +135,9 @@ EXAMPLE
   $ cat body.yaml
   name: aliasName
   description: version alias
-  collections: "[common.foo, prod.demo]"
+  collections:
+     - commons.foo
+     - prod.demo
 ```
 
 _See code: [src/commands/api/aliases/createAlias.ts](../src/commands/api/aliases/createAlias.ts)_
@@ -116,6 +147,17 @@ _See code: [src/commands/api/aliases/createAlias.ts](../src/commands/api/aliases
 delete an alias
 
 ```
+delete an alias
+Arguments to this command will be passed as URL parameters to DELETE: /v1/orgs/self/ws/{workspace}/aliases/{alias}
+
+
+Endpoint Reference
+DELETE: /v1/orgs/self/ws/{workspace}/aliases/{alias}
+Delete Alias
+Delete an alias.
+
+More documentation at https://docs.rockset.com/rest-api#deletealias
+
 USAGE
   $ rockset api:aliases:deleteAlias WORKSPACE ALIAS
 
@@ -150,9 +192,20 @@ _See code: [src/commands/api/aliases/deleteAlias.ts](../src/commands/api/aliases
 
 ## `rockset api:aliases:getAlias WORKSPACE ALIAS`
 
-get details about a alias
+get details about an alias
 
 ```
+get details about an alias
+Arguments to this command will be passed as URL parameters to GET: /v1/orgs/self/ws/{workspace}/aliases/{alias}
+
+
+Endpoint Reference
+GET: /v1/orgs/self/ws/{workspace}/aliases/{alias}
+Retrieve Alias
+Get details about an alias
+
+More documentation at https://docs.rockset.com/rest-api#getalias
+
 USAGE
   $ rockset api:aliases:getAlias WORKSPACE ALIAS
 
@@ -174,8 +227,8 @@ DESCRIPTION
 
   Endpoint Reference
   GET: /v1/orgs/self/ws/{workspace}/aliases/{alias}
-  Get Alias
-  Get details about a alias
+  Retrieve Alias
+  Get details about an alias
 
   More documentation at https://docs.rockset.com/rest-api#getalias
 
@@ -190,6 +243,17 @@ _See code: [src/commands/api/aliases/getAlias.ts](../src/commands/api/aliases/ge
 retrieve all aliases in an organization
 
 ```
+retrieve all aliases in an organization
+Arguments to this command will be passed as URL parameters to GET: /v1/orgs/self/aliases
+
+
+Endpoint Reference
+GET: /v1/orgs/self/aliases
+List Aliases
+Retrieve all aliases in an organization
+
+More documentation at https://docs.rockset.com/rest-api#listaliases
+
 USAGE
   $ rockset api:aliases:listAliases
 
@@ -218,45 +282,29 @@ EXAMPLE
 
 _See code: [src/commands/api/aliases/listAliases.ts](../src/commands/api/aliases/listAliases.ts)_
 
-## `rockset api:aliases:listQueryLambdasWithAlias WORKSPACE ALIAS`
-
-get all query lambdas that hit a specific rockset alias
-
-```
-USAGE
-  $ rockset api:aliases:listQueryLambdasWithAlias WORKSPACE ALIAS
-
-OPTIONS
-  -h, --help              show CLI help
-  --columns=columns       only show provided columns (comma-separated)
-  --output=csv|json|yaml  output in a more machine friendly format
-
-  --raw                   Show the raw output from the server, instead of grabbing the results. Usually used in
-                          conjunction with --output=json
-
-DESCRIPTION
-  Arguments to this command will be passed as URL parameters to GET: 
-  /v1/orgs/self/ws/{workspace}/aliases/{alias}/lambdas
-
-
-  Endpoint Reference
-  GET: /v1/orgs/self/ws/{workspace}/aliases/{alias}/lambdas
-  Get Query Lambdas with Alias
-  Get all Query Lambdas that hit a specific Rockset Alias.
-
-  More documentation at https://docs.rockset.com/rest-api#listquerylambdaswithalias
-
-EXAMPLE
-  $ rockset api:aliases:listQueryLambdasWithAlias WORKSPACE ALIAS
-```
-
-_See code: [src/commands/api/aliases/listQueryLambdasWithAlias.ts](../src/commands/api/aliases/listQueryLambdasWithAlias.ts)_
-
 ## `rockset api:aliases:updateAlias WORKSPACE ALIAS`
 
 update alias in a workspace
 
 ```
+update alias in a workspace
+Arguments to this command will be passed as URL parameters to POST: /v1/orgs/self/ws/{workspace}/aliases/{alias}
+This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
+       
+Example Body (YAML):
+description: version alias
+collections:
+  - commons.foo
+  - prod.demo
+
+
+Endpoint Reference
+POST: /v1/orgs/self/ws/{workspace}/aliases/{alias}
+Update Alias
+Update alias in a workspace.
+
+More documentation at https://docs.rockset.com/rest-api#updatealias
+
 USAGE
   $ rockset api:aliases:updateAlias WORKSPACE ALIAS
 
@@ -283,12 +331,14 @@ DESCRIPTION
        
   Example Body (YAML):
   description: version alias
-  collections: "[common.foo, prod.demo]"
+  collections:
+     - commons.foo
+     - prod.demo
 
 
   Endpoint Reference
   POST: /v1/orgs/self/ws/{workspace}/aliases/{alias}
-  Update alias
+  Update Alias
   Update alias in a workspace.
 
   More documentation at https://docs.rockset.com/rest-api#updatealias
@@ -297,7 +347,9 @@ EXAMPLE
   $ rockset api:aliases:updateAlias WORKSPACE ALIAS --body body.yaml
   $ cat body.yaml
   description: version alias
-  collections: "[common.foo, prod.demo]"
+  collections:
+     - commons.foo
+     - prod.demo
 ```
 
 _See code: [src/commands/api/aliases/updateAlias.ts](../src/commands/api/aliases/updateAlias.ts)_
@@ -307,6 +359,17 @@ _See code: [src/commands/api/aliases/updateAlias.ts](../src/commands/api/aliases
 retrieve all aliases in a workspace
 
 ```
+retrieve all aliases in a workspace
+Arguments to this command will be passed as URL parameters to GET: /v1/orgs/self/ws/{workspace}/aliases
+
+
+Endpoint Reference
+GET: /v1/orgs/self/ws/{workspace}/aliases
+List Aliases in Workspace
+Retrieve all aliases in a workspace.
+
+More documentation at https://docs.rockset.com/rest-api#workspacealiases
+
 USAGE
   $ rockset api:aliases:workspaceAliases WORKSPACE
 
@@ -327,7 +390,7 @@ DESCRIPTION
 
   Endpoint Reference
   GET: /v1/orgs/self/ws/{workspace}/aliases
-  List Aliases for Workspace
+  List Aliases in Workspace
   Retrieve all aliases in a workspace.
 
   More documentation at https://docs.rockset.com/rest-api#workspacealiases
@@ -343,6 +406,22 @@ _See code: [src/commands/api/aliases/workspaceAliases.ts](../src/commands/api/al
 create a new api key for the authenticated user
 
 ```
+create a new api key for the authenticated user
+Arguments to this command will be passed as URL parameters to POST: /v1/orgs/self/users/self/apikeys
+This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
+       
+Example Body (YAML):
+name: my-app
+role: null
+
+
+Endpoint Reference
+POST: /v1/orgs/self/users/self/apikeys
+Create API Key
+Create a new API key for the authenticated user.
+
+More documentation at https://docs.rockset.com/rest-api#createapikey
+
 USAGE
   $ rockset api:apikeys:createApiKey
 
@@ -364,7 +443,8 @@ DESCRIPTION
   This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
        
   Example Body (YAML):
-  name: event-logger
+  name: my-app
+  role: null
 
 
   Endpoint Reference
@@ -377,105 +457,34 @@ DESCRIPTION
 EXAMPLE
   $ rockset api:apikeys:createApiKey  --body body.yaml
   $ cat body.yaml
-  name: event-logger
+  name: my-app
+  role: null
 ```
 
 _See code: [src/commands/api/apikeys/createApiKey.ts](../src/commands/api/apikeys/createApiKey.ts)_
 
-## `rockset api:apikeys:createApiKeyAdmin USER`
+## `rockset api:apikeys:deleteApiKey NAME USER`
 
-create a new api key for any user in your organization. accessible to admin users only
+delete an api key for any user in your organization
 
 ```
+delete an api key for any user in your organization
+Arguments to this command will be passed as URL parameters to DELETE: /v1/orgs/self/users/{user}/apikeys/{name}
+
+
+Endpoint Reference
+DELETE: /v1/orgs/self/users/{user}/apikeys/{name}
+Delete API Key
+Delete an API key for any user in your organization.
+
+More documentation at https://docs.rockset.com/rest-api#deleteapikey
+
 USAGE
-  $ rockset api:apikeys:createApiKeyAdmin USER
+  $ rockset api:apikeys:deleteApiKey NAME USER
 
 ARGUMENTS
-  USER  user email
-
-OPTIONS
-  -h, --help              show CLI help
-
-  --body=body             (required) Path to a file whose contents will be passed as the POST body of this request.
-                          Format must be [json|yaml]. An example schema is shown below.
-
-  --columns=columns       only show provided columns (comma-separated)
-
-  --output=csv|json|yaml  output in a more machine friendly format
-
-  --raw                   Show the raw output from the server, instead of grabbing the results. Usually used in
-                          conjunction with --output=json
-
-DESCRIPTION
-  Arguments to this command will be passed as URL parameters to POST: /v1/orgs/self/users/{user}/apikeys
-  This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
-       
-  Example Body (YAML):
-  name: event-logger
-
-
-  Endpoint Reference
-  POST: /v1/orgs/self/users/{user}/apikeys
-  Create API Key (any user)
-  Create a new API key for any user in your organization. Accessible to Admin users only.
-
-  More documentation at https://docs.rockset.com/rest-api#createapikeyadmin
-
-EXAMPLE
-  $ rockset api:apikeys:createApiKeyAdmin USER --body body.yaml
-  $ cat body.yaml
-  name: event-logger
-```
-
-_See code: [src/commands/api/apikeys/createApiKeyAdmin.ts](../src/commands/api/apikeys/createApiKeyAdmin.ts)_
-
-## `rockset api:apikeys:deleteApiKey NAME`
-
-delete an api key for the authenticated user
-
-```
-USAGE
-  $ rockset api:apikeys:deleteApiKey NAME
-
-ARGUMENTS
-  NAME  name of the API key
-
-OPTIONS
-  -h, --help              show CLI help
-  --columns=columns       only show provided columns (comma-separated)
-  --output=csv|json|yaml  output in a more machine friendly format
-
-  --raw                   Show the raw output from the server, instead of grabbing the results. Usually used in
-                          conjunction with --output=json
-
-DESCRIPTION
-  Arguments to this command will be passed as URL parameters to DELETE: /v1/orgs/self/users/self/apikeys/{name}
-
-
-  Endpoint Reference
-  DELETE: /v1/orgs/self/users/self/apikeys/{name}
-  Delete API Key
-  Delete an API key for the authenticated user.
-
-  More documentation at https://docs.rockset.com/rest-api#deleteapikey
-
-EXAMPLE
-  $ rockset api:apikeys:deleteApiKey NAME
-```
-
-_See code: [src/commands/api/apikeys/deleteApiKey.ts](../src/commands/api/apikeys/deleteApiKey.ts)_
-
-## `rockset api:apikeys:deleteApiKeyAdmin NAME USER`
-
-delete an api key for any user in your organization. accessible to admin users only
-
-```
-USAGE
-  $ rockset api:apikeys:deleteApiKeyAdmin NAME USER
-
-ARGUMENTS
-  NAME  name of the API key
-  USER  user email
+  NAME  Name of the API key.
+  USER  Email of the API key owner. Use `self` to specify the currently authenticated user.
 
 OPTIONS
   -h, --help              show CLI help
@@ -491,24 +500,39 @@ DESCRIPTION
 
   Endpoint Reference
   DELETE: /v1/orgs/self/users/{user}/apikeys/{name}
-  Delete API Key (any user)
-  Delete an API key for any user in your organization. Accessible to Admin users only.
+  Delete API Key
+  Delete an API key for any user in your organization.
 
-  More documentation at https://docs.rockset.com/rest-api#deleteapikeyadmin
+  More documentation at https://docs.rockset.com/rest-api#deleteapikey
 
 EXAMPLE
-  $ rockset api:apikeys:deleteApiKeyAdmin NAME USER
+  $ rockset api:apikeys:deleteApiKey NAME USER
 ```
 
-_See code: [src/commands/api/apikeys/deleteApiKeyAdmin.ts](../src/commands/api/apikeys/deleteApiKeyAdmin.ts)_
+_See code: [src/commands/api/apikeys/deleteApiKey.ts](../src/commands/api/apikeys/deleteApiKey.ts)_
 
-## `rockset api:apikeys:listApiKeys`
+## `rockset api:apikeys:getApiKey USER NAME`
 
-list all api keys for the authenticated user
+retrieve a particular api key for any user in your organization
 
 ```
+retrieve a particular api key for any user in your organization
+Arguments to this command will be passed as URL parameters to GET: /v1/orgs/self/users/{user}/apikeys/{name}
+
+
+Endpoint Reference
+GET: /v1/orgs/self/users/{user}/apikeys/{name}
+Retrieve API Key
+Retrieve a particular API key for any user in your organization.
+
+More documentation at https://docs.rockset.com/rest-api#getapikey
+
 USAGE
-  $ rockset api:apikeys:listApiKeys
+  $ rockset api:apikeys:getApiKey USER NAME
+
+ARGUMENTS
+  USER  Email of the API key owner. Use `self` to specify the currently authenticated user.
+  NAME  Name of the API key.
 
 OPTIONS
   -h, --help              show CLI help
@@ -519,32 +543,43 @@ OPTIONS
                           conjunction with --output=json
 
 DESCRIPTION
-  Arguments to this command will be passed as URL parameters to GET: /v1/orgs/self/users/self/apikeys
+  Arguments to this command will be passed as URL parameters to GET: /v1/orgs/self/users/{user}/apikeys/{name}
 
 
   Endpoint Reference
-  GET: /v1/orgs/self/users/self/apikeys
-  List API Keys
-  List all API keys for the authenticated user.
+  GET: /v1/orgs/self/users/{user}/apikeys/{name}
+  Retrieve API Key
+  Retrieve a particular API key for any user in your organization.
 
-  More documentation at https://docs.rockset.com/rest-api#listapikeys
+  More documentation at https://docs.rockset.com/rest-api#getapikey
 
 EXAMPLE
-  $ rockset api:apikeys:listApiKeys
+  $ rockset api:apikeys:getApiKey USER NAME
 ```
 
-_See code: [src/commands/api/apikeys/listApiKeys.ts](../src/commands/api/apikeys/listApiKeys.ts)_
+_See code: [src/commands/api/apikeys/getApiKey.ts](../src/commands/api/apikeys/getApiKey.ts)_
 
-## `rockset api:apikeys:listApiKeysAdmin USER`
+## `rockset api:apikeys:listApiKeys USER`
 
-list all api keys for any user in your organization. accessible to admin users only
+list api key metadata for any user in your organization
 
 ```
+list api key metadata for any user in your organization
+Arguments to this command will be passed as URL parameters to GET: /v1/orgs/self/users/{user}/apikeys
+
+
+Endpoint Reference
+GET: /v1/orgs/self/users/{user}/apikeys
+List API Keys.
+List API key metadata for any user in your organization.
+
+More documentation at https://docs.rockset.com/rest-api#listapikeys
+
 USAGE
-  $ rockset api:apikeys:listApiKeysAdmin USER
+  $ rockset api:apikeys:listApiKeys USER
 
 ARGUMENTS
-  USER  user email
+  USER  Email of the API key owner. Use `self` to specify the currently authenticated user.
 
 OPTIONS
   -h, --help              show CLI help
@@ -560,22 +595,98 @@ DESCRIPTION
 
   Endpoint Reference
   GET: /v1/orgs/self/users/{user}/apikeys
-  List API Keys (any user)
-  List all API keys for any user in your organization. Accessible to Admin users only.
+  List API Keys.
+  List API key metadata for any user in your organization.
 
-  More documentation at https://docs.rockset.com/rest-api#listapikeysadmin
+  More documentation at https://docs.rockset.com/rest-api#listapikeys
 
 EXAMPLE
-  $ rockset api:apikeys:listApiKeysAdmin USER
+  $ rockset api:apikeys:listApiKeys USER
 ```
 
-_See code: [src/commands/api/apikeys/listApiKeysAdmin.ts](../src/commands/api/apikeys/listApiKeysAdmin.ts)_
+_See code: [src/commands/api/apikeys/listApiKeys.ts](../src/commands/api/apikeys/listApiKeys.ts)_
+
+## `rockset api:apikeys:updateApiKey NAME USER`
+
+update the state of an api key for any user in your organization
+
+```
+update the state of an api key for any user in your organization
+Arguments to this command will be passed as URL parameters to POST: /v1/orgs/self/users/{user}/apikeys/{name}
+This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
+       
+Example Body (YAML):
+state: ACTIVE
+
+
+Endpoint Reference
+POST: /v1/orgs/self/users/{user}/apikeys/{name}
+Update an API key's state
+Update the state of an API key for any user in your organization.
+
+More documentation at https://docs.rockset.com/rest-api#updateapikey
+
+USAGE
+  $ rockset api:apikeys:updateApiKey NAME USER
+
+ARGUMENTS
+  NAME  Name of the API key.
+  USER  Email of the API key owner. Use `self` to specify the currently authenticated user.
+
+OPTIONS
+  -h, --help              show CLI help
+
+  --body=body             (required) Path to a file whose contents will be passed as the POST body of this request.
+                          Format must be [json|yaml]. An example schema is shown below.
+
+  --columns=columns       only show provided columns (comma-separated)
+
+  --output=csv|json|yaml  output in a more machine friendly format
+
+  --raw                   Show the raw output from the server, instead of grabbing the results. Usually used in
+                          conjunction with --output=json
+
+DESCRIPTION
+  Arguments to this command will be passed as URL parameters to POST: /v1/orgs/self/users/{user}/apikeys/{name}
+  This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
+       
+  Example Body (YAML):
+  state: ACTIVE
+
+
+  Endpoint Reference
+  POST: /v1/orgs/self/users/{user}/apikeys/{name}
+  Update an API key's state
+  Update the state of an API key for any user in your organization.
+
+  More documentation at https://docs.rockset.com/rest-api#updateapikey
+
+EXAMPLE
+  $ rockset api:apikeys:updateApiKey NAME USER --body body.yaml
+  $ cat body.yaml
+  state: ACTIVE
+```
+
+_See code: [src/commands/api/apikeys/updateApiKey.ts](../src/commands/api/apikeys/updateApiKey.ts)_
 
 ## `rockset api:collections:createCollection WORKSPACE`
 
 create new collection in a workspace
 
 ```
+create new collection in a workspace
+Arguments to this command will be passed as URL parameters to POST: /v1/orgs/self/ws/{workspace}/collections
+This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
+       
+The POST body request schema has been omitted because it is too long. Please view the documentation at https://docs.rockset.com/rest-api#createcollection to see the example.
+
+Endpoint Reference
+POST: /v1/orgs/self/ws/{workspace}/collections
+Create Collection
+Create new collection in a workspace.
+
+More documentation at https://docs.rockset.com/rest-api#createcollection
+
 USAGE
   $ rockset api:collections:createCollection WORKSPACE
 
@@ -617,6 +728,17 @@ _See code: [src/commands/api/collections/createCollection.ts](../src/commands/ap
 delete a collection and all its documents from rockset
 
 ```
+delete a collection and all its documents from rockset
+Arguments to this command will be passed as URL parameters to DELETE: /v1/orgs/self/ws/{workspace}/collections/{collection}
+
+
+Endpoint Reference
+DELETE: /v1/orgs/self/ws/{workspace}/collections/{collection}
+Delete Collection
+Delete a collection and all its documents from Rockset.
+
+More documentation at https://docs.rockset.com/rest-api#deletecollection
+
 USAGE
   $ rockset api:collections:deleteCollection WORKSPACE COLLECTION
 
@@ -655,6 +777,17 @@ _See code: [src/commands/api/collections/deleteCollection.ts](../src/commands/ap
 get details about a collection
 
 ```
+get details about a collection
+Arguments to this command will be passed as URL parameters to GET: /v1/orgs/self/ws/{workspace}/collections/{collection}
+
+
+Endpoint Reference
+GET: /v1/orgs/self/ws/{workspace}/collections/{collection}
+Retrieve Collection
+Get details about a collection.
+
+More documentation at https://docs.rockset.com/rest-api#getcollection
+
 USAGE
   $ rockset api:collections:getCollection WORKSPACE COLLECTION
 
@@ -677,7 +810,7 @@ DESCRIPTION
 
   Endpoint Reference
   GET: /v1/orgs/self/ws/{workspace}/collections/{collection}
-  Get Collection
+  Retrieve Collection
   Get details about a collection.
 
   More documentation at https://docs.rockset.com/rest-api#getcollection
@@ -688,45 +821,22 @@ EXAMPLE
 
 _See code: [src/commands/api/collections/getCollection.ts](../src/commands/api/collections/getCollection.ts)_
 
-## `rockset api:collections:listAliasesForCollection WORKSPACE COLLECTION`
-
-get all aliases for a specific rockset collection
-
-```
-USAGE
-  $ rockset api:collections:listAliasesForCollection WORKSPACE COLLECTION
-
-OPTIONS
-  -h, --help              show CLI help
-  --columns=columns       only show provided columns (comma-separated)
-  --output=csv|json|yaml  output in a more machine friendly format
-
-  --raw                   Show the raw output from the server, instead of grabbing the results. Usually used in
-                          conjunction with --output=json
-
-DESCRIPTION
-  Arguments to this command will be passed as URL parameters to GET: 
-  /v1/orgs/self/ws/{workspace}/collections/{collection}/aliases
-
-
-  Endpoint Reference
-  GET: /v1/orgs/self/ws/{workspace}/collections/{collection}/aliases
-  Get Aliases for Collection
-  Get all Aliases for a specific Rockset Collection.
-
-  More documentation at https://docs.rockset.com/rest-api#listaliasesforcollection
-
-EXAMPLE
-  $ rockset api:collections:listAliasesForCollection WORKSPACE COLLECTION
-```
-
-_See code: [src/commands/api/collections/listAliasesForCollection.ts](../src/commands/api/collections/listAliasesForCollection.ts)_
-
 ## `rockset api:collections:listCollections`
 
 retrieve all collections in an organization
 
 ```
+retrieve all collections in an organization
+Arguments to this command will be passed as URL parameters to GET: /v1/orgs/self/collections
+
+
+Endpoint Reference
+GET: /v1/orgs/self/collections
+List Collections
+Retrieve all collections in an organization.
+
+More documentation at https://docs.rockset.com/rest-api#listcollections
+
 USAGE
   $ rockset api:collections:listCollections
 
@@ -755,49 +865,22 @@ EXAMPLE
 
 _See code: [src/commands/api/collections/listCollections.ts](../src/commands/api/collections/listCollections.ts)_
 
-## `rockset api:collections:listQueryLambdasInCollection WORKSPACE COLLECTION`
-
-get all query lambdas that hit a specific rockset collection
-
-```
-USAGE
-  $ rockset api:collections:listQueryLambdasInCollection WORKSPACE COLLECTION
-
-ARGUMENTS
-  WORKSPACE   name of the workspace
-  COLLECTION  name of the collection
-
-OPTIONS
-  -h, --help              show CLI help
-  --columns=columns       only show provided columns (comma-separated)
-  --output=csv|json|yaml  output in a more machine friendly format
-
-  --raw                   Show the raw output from the server, instead of grabbing the results. Usually used in
-                          conjunction with --output=json
-
-DESCRIPTION
-  Arguments to this command will be passed as URL parameters to GET: 
-  /v1/orgs/self/ws/{workspace}/collections/{collection}/lambdas
-
-
-  Endpoint Reference
-  GET: /v1/orgs/self/ws/{workspace}/collections/{collection}/lambdas
-  Get Query Lambdas for Collection
-  Get all Query Lambdas that hit a specific Rockset Collection.
-
-  More documentation at https://docs.rockset.com/rest-api#listquerylambdasincollection
-
-EXAMPLE
-  $ rockset api:collections:listQueryLambdasInCollection WORKSPACE COLLECTION
-```
-
-_See code: [src/commands/api/collections/listQueryLambdasInCollection.ts](../src/commands/api/collections/listQueryLambdasInCollection.ts)_
-
 ## `rockset api:collections:workspaceCollections WORKSPACE`
 
 retrieve all collections in a workspace
 
 ```
+retrieve all collections in a workspace
+Arguments to this command will be passed as URL parameters to GET: /v1/orgs/self/ws/{workspace}/collections
+
+
+Endpoint Reference
+GET: /v1/orgs/self/ws/{workspace}/collections
+List Collections in Workspace
+Retrieve all collections in a workspace.
+
+More documentation at https://docs.rockset.com/rest-api#workspacecollections
+
 USAGE
   $ rockset api:collections:workspaceCollections WORKSPACE
 
@@ -818,7 +901,7 @@ DESCRIPTION
 
   Endpoint Reference
   GET: /v1/orgs/self/ws/{workspace}/collections
-  List Collections for Workspace
+  List Collections in Workspace
   Retrieve all collections in a workspace.
 
   More documentation at https://docs.rockset.com/rest-api#workspacecollections
@@ -829,17 +912,266 @@ EXAMPLE
 
 _See code: [src/commands/api/collections/workspaceCollections.ts](../src/commands/api/collections/workspaceCollections.ts)_
 
+## `rockset api:customRolesBeta:createRole`
+
+create a role for your organization
+
+```
+create a role for your organization
+Arguments to this command will be passed as URL parameters to POST: /v1/orgs/self/roles
+This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
+       
+Example Body (YAML):
+role_name: read_write
+description: Role with read and write privileges to all collections.
+privileges:
+  - action: Create collection
+    resource_name: commons
+    cluster: "*ALL*"
+
+
+Endpoint Reference
+POST: /v1/orgs/self/roles
+Create a Role
+Create a role for your organization.
+
+More documentation at https://docs.rockset.com/rest-api#createrole
+
+USAGE
+  $ rockset api:customRolesBeta:createRole
+
+OPTIONS
+  -h, --help              show CLI help
+
+  --body=body             (required) Path to a file whose contents will be passed as the POST body of this request.
+                          Format must be [json|yaml]. An example schema is shown below.
+
+  --columns=columns       only show provided columns (comma-separated)
+
+  --output=csv|json|yaml  output in a more machine friendly format
+
+  --raw                   Show the raw output from the server, instead of grabbing the results. Usually used in
+                          conjunction with --output=json
+
+DESCRIPTION
+  Arguments to this command will be passed as URL parameters to POST: /v1/orgs/self/roles
+  This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
+       
+  Example Body (YAML):
+  role_name: read_write
+  description: Role with read and write privileges to all collections.
+  privileges:
+     - action: Create collection
+       resource_name: commons
+       cluster: "*ALL*"
+
+
+  Endpoint Reference
+  POST: /v1/orgs/self/roles
+  Create a Role
+  Create a role for your organization.
+
+  More documentation at https://docs.rockset.com/rest-api#createrole
+
+EXAMPLE
+  $ rockset api:customRolesBeta:createRole  --body body.yaml
+  $ cat body.yaml
+  role_name: read_write
+  description: Role with read and write privileges to all collections.
+  privileges:
+     - action: Create collection
+       resource_name: commons
+       cluster: "*ALL*"
+```
+
+_See code: [src/commands/api/customRolesBeta/createRole.ts](../src/commands/api/customRolesBeta/createRole.ts)_
+
+## `rockset api:customRolesBeta:deleteRole ROLENAME`
+
+delete a role for your organization
+
+```
+delete a role for your organization
+Arguments to this command will be passed as URL parameters to DELETE: /v1/orgs/self/roles/{roleName}
+
+
+Endpoint Reference
+DELETE: /v1/orgs/self/roles/{roleName}
+Delete a Role
+Delete a role for your organization.
+
+More documentation at https://docs.rockset.com/rest-api#deleterole
+
+USAGE
+  $ rockset api:customRolesBeta:deleteRole ROLENAME
+
+OPTIONS
+  -h, --help              show CLI help
+  --columns=columns       only show provided columns (comma-separated)
+  --output=csv|json|yaml  output in a more machine friendly format
+
+  --raw                   Show the raw output from the server, instead of grabbing the results. Usually used in
+                          conjunction with --output=json
+
+DESCRIPTION
+  Arguments to this command will be passed as URL parameters to DELETE: /v1/orgs/self/roles/{roleName}
+
+
+  Endpoint Reference
+  DELETE: /v1/orgs/self/roles/{roleName}
+  Delete a Role
+  Delete a role for your organization.
+
+  More documentation at https://docs.rockset.com/rest-api#deleterole
+
+EXAMPLE
+  $ rockset api:customRolesBeta:deleteRole ROLENAME
+```
+
+_See code: [src/commands/api/customRolesBeta/deleteRole.ts](../src/commands/api/customRolesBeta/deleteRole.ts)_
+
+## `rockset api:customRolesBeta:listRoles`
+
+list all roles for your organization
+
+```
+list all roles for your organization
+Arguments to this command will be passed as URL parameters to GET: /v1/orgs/self/roles
+
+
+Endpoint Reference
+GET: /v1/orgs/self/roles
+List Roles
+List all roles for your organization.
+
+More documentation at https://docs.rockset.com/rest-api#listroles
+
+USAGE
+  $ rockset api:customRolesBeta:listRoles
+
+OPTIONS
+  -h, --help              show CLI help
+  --columns=columns       only show provided columns (comma-separated)
+  --output=csv|json|yaml  output in a more machine friendly format
+
+  --raw                   Show the raw output from the server, instead of grabbing the results. Usually used in
+                          conjunction with --output=json
+
+DESCRIPTION
+  Arguments to this command will be passed as URL parameters to GET: /v1/orgs/self/roles
+
+
+  Endpoint Reference
+  GET: /v1/orgs/self/roles
+  List Roles
+  List all roles for your organization.
+
+  More documentation at https://docs.rockset.com/rest-api#listroles
+
+EXAMPLE
+  $ rockset api:customRolesBeta:listRoles
+```
+
+_See code: [src/commands/api/customRolesBeta/listRoles.ts](../src/commands/api/customRolesBeta/listRoles.ts)_
+
+## `rockset api:customRolesBeta:updateRole ROLENAME`
+
+update a role for your organization
+
+```
+update a role for your organization
+Arguments to this command will be passed as URL parameters to POST: /v1/orgs/self/roles/{roleName}
+This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
+       
+Example Body (YAML):
+description: Role with read and write privileges to all collections.
+privileges:
+  - action: Create collection
+    resource_name: commons
+    cluster: "*ALL*"
+
+
+Endpoint Reference
+POST: /v1/orgs/self/roles/{roleName}
+Update a Role
+Update a role for your organization.
+
+More documentation at https://docs.rockset.com/rest-api#updaterole
+
+USAGE
+  $ rockset api:customRolesBeta:updateRole ROLENAME
+
+OPTIONS
+  -h, --help              show CLI help
+
+  --body=body             (required) Path to a file whose contents will be passed as the POST body of this request.
+                          Format must be [json|yaml]. An example schema is shown below.
+
+  --columns=columns       only show provided columns (comma-separated)
+
+  --output=csv|json|yaml  output in a more machine friendly format
+
+  --raw                   Show the raw output from the server, instead of grabbing the results. Usually used in
+                          conjunction with --output=json
+
+DESCRIPTION
+  Arguments to this command will be passed as URL parameters to POST: /v1/orgs/self/roles/{roleName}
+  This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
+       
+  Example Body (YAML):
+  description: Role with read and write privileges to all collections.
+  privileges:
+     - action: Create collection
+       resource_name: commons
+       cluster: "*ALL*"
+
+
+  Endpoint Reference
+  POST: /v1/orgs/self/roles/{roleName}
+  Update a Role
+  Update a role for your organization.
+
+  More documentation at https://docs.rockset.com/rest-api#updaterole
+
+EXAMPLE
+  $ rockset api:customRolesBeta:updateRole ROLENAME --body body.yaml
+  $ cat body.yaml
+  description: Role with read and write privileges to all collections.
+  privileges:
+     - action: Create collection
+       resource_name: commons
+       cluster: "*ALL*"
+```
+
+_See code: [src/commands/api/customRolesBeta/updateRole.ts](../src/commands/api/customRolesBeta/updateRole.ts)_
+
 ## `rockset api:documents:addDocuments WORKSPACE COLLECTION`
 
 add documents to a collection
 
 ```
+add documents to a collection
+Arguments to this command will be passed as URL parameters to POST: /v1/orgs/self/ws/{workspace}/collections/{collection}/docs
+This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
+       
+Example Body (YAML):
+data:
+  - field: value
+
+
+Endpoint Reference
+POST: /v1/orgs/self/ws/{workspace}/collections/{collection}/docs
+Add Documents
+Add documents to a collection.
+
+More documentation at https://docs.rockset.com/rest-api#adddocuments
+
 USAGE
   $ rockset api:documents:addDocuments WORKSPACE COLLECTION
 
 ARGUMENTS
-  WORKSPACE   name of the workspace
-  COLLECTION  name of the collection
+  WORKSPACE   Name of the workspace.
+  COLLECTION  Name of the collection.
 
 OPTIONS
   -h, --help                     show CLI help
@@ -866,7 +1198,7 @@ DESCRIPTION
        
   Example Body (YAML):
   data:
-     - {}
+     - field: value
 
 
   Endpoint Reference
@@ -880,7 +1212,7 @@ EXAMPLE
   $ rockset api:documents:addDocuments WORKSPACE COLLECTION --body body.yaml
   $ cat body.yaml
   data:
-     - {}
+     - field: value
 ```
 
 _See code: [src/commands/api/documents/addDocuments.ts](../src/commands/api/documents/addDocuments.ts)_
@@ -890,12 +1222,28 @@ _See code: [src/commands/api/documents/addDocuments.ts](../src/commands/api/docu
 delete documents from a collection
 
 ```
+delete documents from a collection
+Arguments to this command will be passed as URL parameters to DELETE: /v1/orgs/self/ws/{workspace}/collections/{collection}/docs
+This endpoint REQUIRES a DELETE body. To specify a DELETE body, please pass a JSON or YAML file to the --body flag.
+       
+Example Body (YAML):
+data:
+  - _id: 2cd61e3b
+
+
+Endpoint Reference
+DELETE: /v1/orgs/self/ws/{workspace}/collections/{collection}/docs
+Delete Documents
+Delete documents from a collection.
+
+More documentation at https://docs.rockset.com/rest-api#deletedocuments
+
 USAGE
   $ rockset api:documents:deleteDocuments WORKSPACE COLLECTION
 
 ARGUMENTS
-  WORKSPACE   name of the workspace
-  COLLECTION  name of the collection
+  WORKSPACE   Name of the workspace.
+  COLLECTION  Name of the collection.
 
 OPTIONS
   -h, --help                     show CLI help
@@ -946,12 +1294,33 @@ _See code: [src/commands/api/documents/deleteDocuments.ts](../src/commands/api/d
 update existing documents in a collection
 
 ```
+update existing documents in a collection
+Arguments to this command will be passed as URL parameters to PATCH: /v1/orgs/self/ws/{workspace}/collections/{collection}/docs
+This endpoint REQUIRES a PATCH body. To specify a PATCH body, please pass a JSON or YAML file to the --body flag.
+       
+Example Body (YAML):
+data:
+  - _id: ca2d6832-1bfd-f88f-0620-d2aa27a5d86c
+    patch:
+      - op: ADD
+        path: /foo/bar
+        value: baz
+        from: null
+
+
+Endpoint Reference
+PATCH: /v1/orgs/self/ws/{workspace}/collections/{collection}/docs
+Patch Documents
+Update existing documents in a collection.
+
+More documentation at https://docs.rockset.com/rest-api#patchdocuments
+
 USAGE
   $ rockset api:documents:patchDocuments WORKSPACE COLLECTION
 
 ARGUMENTS
-  WORKSPACE   name of the workspace
-  COLLECTION  name of the collection
+  WORKSPACE   Name of the workspace.
+  COLLECTION  Name of the collection.
 
 OPTIONS
   -h, --help                     show CLI help
@@ -980,7 +1349,7 @@ DESCRIPTION
   data:
      - _id: ca2d6832-1bfd-f88f-0620-d2aa27a5d86c
        patch:
-         - op: add
+         - op: ADD
            path: /foo/bar
            value: baz
            from: null
@@ -999,7 +1368,7 @@ EXAMPLE
   data:
      - _id: ca2d6832-1bfd-f88f-0620-d2aa27a5d86c
        patch:
-         - op: add
+         - op: ADD
            path: /foo/bar
            value: baz
            from: null
@@ -1012,6 +1381,19 @@ _See code: [src/commands/api/documents/patchDocuments.ts](../src/commands/api/do
 create a new integration
 
 ```
+create a new integration
+Arguments to this command will be passed as URL parameters to POST: /v1/orgs/self/integrations
+This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
+       
+The POST body request schema has been omitted because it is too long. Please view the documentation at https://docs.rockset.com/rest-api#createintegration to see the example.
+
+Endpoint Reference
+POST: /v1/orgs/self/integrations
+Create Integration
+Create a new integration.
+
+More documentation at https://docs.rockset.com/rest-api#createintegration
+
 USAGE
   $ rockset api:integrations:createIntegration
 
@@ -1050,6 +1432,17 @@ _See code: [src/commands/api/integrations/createIntegration.ts](../src/commands/
 remove an integration
 
 ```
+remove an integration
+Arguments to this command will be passed as URL parameters to DELETE: /v1/orgs/self/integrations/{integration}
+
+
+Endpoint Reference
+DELETE: /v1/orgs/self/integrations/{integration}
+Delete Integration
+Remove an integration.
+
+More documentation at https://docs.rockset.com/rest-api#deleteintegration
+
 USAGE
   $ rockset api:integrations:deleteIntegration INTEGRATION
 
@@ -1083,9 +1476,20 @@ _See code: [src/commands/api/integrations/deleteIntegration.ts](../src/commands/
 
 ## `rockset api:integrations:getIntegration INTEGRATION`
 
-get information about a single integration
+retrieve information about a single integration
 
 ```
+retrieve information about a single integration
+Arguments to this command will be passed as URL parameters to GET: /v1/orgs/self/integrations/{integration}
+
+
+Endpoint Reference
+GET: /v1/orgs/self/integrations/{integration}
+Retrieve Integration
+Retrieve information about a single integration.
+
+More documentation at https://docs.rockset.com/rest-api#getintegration
+
 USAGE
   $ rockset api:integrations:getIntegration INTEGRATION
 
@@ -1106,8 +1510,8 @@ DESCRIPTION
 
   Endpoint Reference
   GET: /v1/orgs/self/integrations/{integration}
-  Get Integration
-  Get information about a single integration.
+  Retrieve Integration
+  Retrieve information about a single integration.
 
   More documentation at https://docs.rockset.com/rest-api#getintegration
 
@@ -1122,6 +1526,17 @@ _See code: [src/commands/api/integrations/getIntegration.ts](../src/commands/api
 list all integrations in an organization
 
 ```
+list all integrations in an organization
+Arguments to this command will be passed as URL parameters to GET: /v1/orgs/self/integrations
+
+
+Endpoint Reference
+GET: /v1/orgs/self/integrations
+List Integrations
+List all integrations in an organization.
+
+More documentation at https://docs.rockset.com/rest-api#listintegrations
+
 USAGE
   $ rockset api:integrations:listIntegrations
 
@@ -1155,6 +1570,17 @@ _See code: [src/commands/api/integrations/listIntegrations.ts](../src/commands/a
 retrieve information about current organization
 
 ```
+retrieve information about current organization
+Arguments to this command will be passed as URL parameters to GET: /v1/orgs/self
+
+
+Endpoint Reference
+GET: /v1/orgs/self
+Get Organization
+Retrieve information about current organization.
+
+More documentation at https://docs.rockset.com/rest-api#getorganization
+
 USAGE
   $ rockset api:orgs:getOrganization
 
@@ -1183,44 +1609,24 @@ EXAMPLE
 
 _See code: [src/commands/api/orgs/getOrganization.ts](../src/commands/api/orgs/getOrganization.ts)_
 
-## `rockset api:orgs:getOrganizationRecentActivity`
-
-get information about organization's recent activity
-
-```
-USAGE
-  $ rockset api:orgs:getOrganizationRecentActivity
-
-OPTIONS
-  -h, --help              show CLI help
-  --columns=columns       only show provided columns (comma-separated)
-  --output=csv|json|yaml  output in a more machine friendly format
-
-  --raw                   Show the raw output from the server, instead of grabbing the results. Usually used in
-                          conjunction with --output=json
-
-DESCRIPTION
-  Arguments to this command will be passed as URL parameters to GET: /v1/orgs/self/activity
-
-
-  Endpoint Reference
-  GET: /v1/orgs/self/activity
-  Get Organization Recent Activity
-  Get information about organization's recent activity.
-
-  More documentation at https://docs.rockset.com/rest-api#getorganizationrecentactivity
-
-EXAMPLE
-  $ rockset api:orgs:getOrganizationRecentActivity
-```
-
-_See code: [src/commands/api/orgs/getOrganizationRecentActivity.ts](../src/commands/api/orgs/getOrganizationRecentActivity.ts)_
-
 ## `rockset api:queries:query`
 
 make a sql query to rockset
 
 ```
+make a sql query to rockset
+Arguments to this command will be passed as URL parameters to POST: /v1/orgs/self/queries
+This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
+       
+The POST body request schema has been omitted because it is too long. Please view the documentation at https://docs.rockset.com/rest-api#query to see the example.
+
+Endpoint Reference
+POST: /v1/orgs/self/queries
+Query
+Make a SQL query to Rockset.
+
+More documentation at https://docs.rockset.com/rest-api#query
+
 USAGE
   $ rockset api:queries:query
 
@@ -1246,17 +1652,8 @@ DESCRIPTION
   Arguments to this command will be passed as URL parameters to POST: /v1/orgs/self/queries
   This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
        
-  Example Body (YAML):
-  sql:
-     parameters:
-       - name: _id
-         type: string
-         value: 85beb391
-     query: SELECT * FROM foo where _id = :_id
-     default_row_limit: null
-     generate_warnings: null
-     profiling_enabled: null
-
+  The POST body request schema has been omitted because it is too long. Please view the documentation at 
+  https://docs.rockset.com/rest-api#query to see the example.
 
   Endpoint Reference
   POST: /v1/orgs/self/queries
@@ -1264,30 +1661,30 @@ DESCRIPTION
   Make a SQL query to Rockset.
 
   More documentation at https://docs.rockset.com/rest-api#query
-
-EXAMPLE
-  $ rockset api:queries:query  --body body.yaml
-  $ cat body.yaml
-  sql:
-     parameters:
-       - name: _id
-         type: string
-         value: 85beb391
-     query: SELECT * FROM foo where _id = :_id
-     default_row_limit: null
-     generate_warnings: null
-     profiling_enabled: null
 ```
 
 _See code: [src/commands/api/queries/query.ts](../src/commands/api/queries/query.ts)_
 
-## `rockset api:queries:validate PARAMETERS`
+## `rockset api:queries:validate`
 
 validate a sql query with rockset's parser and planner
 
 ```
+validate a sql query with rockset's parser and planner
+Arguments to this command will be passed as URL parameters to POST: /v1/orgs/self/queries/validations
+This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
+       
+The POST body request schema has been omitted because it is too long. Please view the documentation at https://docs.rockset.com/rest-api#validate to see the example.
+
+Endpoint Reference
+POST: /v1/orgs/self/queries/validations
+Validate Query
+Validate a SQL query with Rockset's parser and planner.
+
+More documentation at https://docs.rockset.com/rest-api#validate
+
 USAGE
-  $ rockset api:queries:validate PARAMETERS
+  $ rockset api:queries:validate
 
 OPTIONS
   -h, --help                     show CLI help
@@ -1311,17 +1708,8 @@ DESCRIPTION
   Arguments to this command will be passed as URL parameters to POST: /v1/orgs/self/queries/validations
   This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
        
-  Example Body (YAML):
-  sql:
-     parameters:
-       - name: _id
-         type: string
-         value: 85beb391
-     query: SELECT * FROM foo where _id = :_id
-     default_row_limit: null
-     generate_warnings: null
-     profiling_enabled: null
-
+  The POST body request schema has been omitted because it is too long. Please view the documentation at 
+  https://docs.rockset.com/rest-api#validate to see the example.
 
   Endpoint Reference
   POST: /v1/orgs/self/queries/validations
@@ -1329,19 +1717,6 @@ DESCRIPTION
   Validate a SQL query with Rockset's parser and planner.
 
   More documentation at https://docs.rockset.com/rest-api#validate
-
-EXAMPLE
-  $ rockset api:queries:validate PARAMETERS --body body.yaml
-  $ cat body.yaml
-  sql:
-     parameters:
-       - name: _id
-         type: string
-         value: 85beb391
-     query: SELECT * FROM foo where _id = :_id
-     default_row_limit: null
-     generate_warnings: null
-     profiling_enabled: null
 ```
 
 _See code: [src/commands/api/queries/validate.ts](../src/commands/api/queries/validate.ts)_
@@ -1351,6 +1726,28 @@ _See code: [src/commands/api/queries/validate.ts](../src/commands/api/queries/va
 create a query lambda in given workspace
 
 ```
+create a query lambda in given workspace
+Arguments to this command will be passed as URL parameters to POST: /v1/orgs/self/ws/{workspace}/lambdas
+This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
+       
+Example Body (YAML):
+name: myQueryLambda
+description: production version foo
+sql:
+  query: SELECT 'Foo'
+  default_parameters:
+    - name: _id
+      type: string
+      value: 85beb391
+
+
+Endpoint Reference
+POST: /v1/orgs/self/ws/{workspace}/lambdas
+Create Query Lambda
+Create a Query Lambda in given workspace.
+
+More documentation at https://docs.rockset.com/rest-api#createquerylambda
+
 USAGE
   $ rockset api:queryLambdas:createQueryLambda WORKSPACE
 
@@ -1417,6 +1814,22 @@ _See code: [src/commands/api/queryLambdas/createQueryLambda.ts](../src/commands/
 create a tag for a specific query lambda version, or update that tag if it already exists
 
 ```
+create a tag for a specific query lambda version, or update that tag if it already exists
+Arguments to this command will be passed as URL parameters to POST: /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/tags
+This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
+       
+Example Body (YAML):
+tag_name: production
+version: 123ABC
+
+
+Endpoint Reference
+POST: /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/tags
+Create Query Lambda Tag
+Create a tag for a specific Query Lambda version, or update that tag if it already exists.
+
+More documentation at https://docs.rockset.com/rest-api#createquerylambdatag
+
 USAGE
   $ rockset api:queryLambdas:createQueryLambdaTag WORKSPACE QUERYLAMBDA
 
@@ -1473,6 +1886,17 @@ _See code: [src/commands/api/queryLambdas/createQueryLambdaTag.ts](../src/comman
 delete a query lambda
 
 ```
+delete a query lambda
+Arguments to this command will be passed as URL parameters to DELETE: /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}
+
+
+Endpoint Reference
+DELETE: /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}
+Delete Query Lambda
+Delete a Query Lambda.
+
+More documentation at https://docs.rockset.com/rest-api#deletequerylambda
+
 USAGE
   $ rockset api:queryLambdas:deleteQueryLambda WORKSPACE QUERYLAMBDA
 
@@ -1513,57 +1937,22 @@ EXAMPLE
 
 _See code: [src/commands/api/queryLambdas/deleteQueryLambda.ts](../src/commands/api/queryLambdas/deleteQueryLambda.ts)_
 
-## `rockset api:queryLambdas:deleteQueryLambdaTag WORKSPACE QUERYLAMBDA TAG`
-
-delete a tag for a specific query lambda
-
-```
-USAGE
-  $ rockset api:queryLambdas:deleteQueryLambdaTag WORKSPACE QUERYLAMBDA TAG
-
-ARGUMENTS
-  WORKSPACE    name of the workspace
-  QUERYLAMBDA  name of the Query Lambda
-  TAG          name of the tag
-
-OPTIONS
-  -h, --help                     show CLI help
-
-  -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this endpoint. The value
-                                 passed to this flag determines how many requests per second will be sent
-
-  -y, --yes                      Skip all safety prompts
-
-  --columns=columns              only show provided columns (comma-separated)
-
-  --output=csv|json|yaml         output in a more machine friendly format
-
-  --raw                          Show the raw output from the server, instead of grabbing the results. Usually used in
-                                 conjunction with --output=json
-
-DESCRIPTION
-  Arguments to this command will be passed as URL parameters to DELETE: 
-  /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/tags/{tag}
-
-
-  Endpoint Reference
-  DELETE: /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/tags/{tag}
-  Delete Query Lambda Tag Version
-  Delete a tag for a specific Query Lambda
-
-  More documentation at https://docs.rockset.com/rest-api#deletequerylambdatag
-
-EXAMPLE
-  $ rockset api:queryLambdas:deleteQueryLambdaTag WORKSPACE QUERYLAMBDA TAG
-```
-
-_See code: [src/commands/api/queryLambdas/deleteQueryLambdaTag.ts](../src/commands/api/queryLambdas/deleteQueryLambdaTag.ts)_
-
 ## `rockset api:queryLambdas:deleteQueryLambdaVersion WORKSPACE QUERYLAMBDA VERSION`
 
 delete a query lambda version
 
 ```
+delete a query lambda version
+Arguments to this command will be passed as URL parameters to DELETE: /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/version/{version}
+
+
+Endpoint Reference
+DELETE: /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/version/{version}
+Delete Query Lambda Version
+Delete a Query Lambda version.
+
+More documentation at https://docs.rockset.com/rest-api#deletequerylambdaversion
+
 USAGE
   $ rockset api:queryLambdas:deleteQueryLambdaVersion WORKSPACE QUERYLAMBDA VERSION
 
@@ -1610,6 +1999,28 @@ _See code: [src/commands/api/queryLambdas/deleteQueryLambdaVersion.ts](../src/co
 execute a particular version of a query lambda
 
 ```
+execute a particular version of a query lambda
+Arguments to this command will be passed as URL parameters to POST: /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/versions/{version}
+This endpoint optionally accepts a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
+       
+Example Body (YAML):
+parameters:
+  - name: _id
+    type: string
+    value: 85beb391
+default_row_limit: null
+generate_warnings: null
+paginate: null
+initial_paginate_response_doc_count: null
+
+
+Endpoint Reference
+POST: /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/versions/{version}
+Execute Query Lambda By Version
+Execute a particular version of a Query Lambda.
+
+More documentation at https://docs.rockset.com/rest-api#executequerylambda
+
 USAGE
   $ rockset api:queryLambdas:executeQueryLambda WORKSPACE QUERYLAMBDA VERSION
 
@@ -1649,11 +2060,13 @@ DESCRIPTION
        value: 85beb391
   default_row_limit: null
   generate_warnings: null
+  paginate: null
+  initial_paginate_response_doc_count: null
 
 
   Endpoint Reference
   POST: /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/versions/{version}
-  Execute Query Lambda
+  Execute Query Lambda By Version
   Execute a particular version of a Query Lambda.
 
   More documentation at https://docs.rockset.com/rest-api#executequerylambda
@@ -1668,6 +2081,8 @@ EXAMPLES
        value: 85beb391
   default_row_limit: null
   generate_warnings: null
+  paginate: null
+  initial_paginate_response_doc_count: null
 ```
 
 _See code: [src/commands/api/queryLambdas/executeQueryLambda.ts](../src/commands/api/queryLambdas/executeQueryLambda.ts)_
@@ -1677,6 +2092,28 @@ _See code: [src/commands/api/queryLambdas/executeQueryLambda.ts](../src/commands
 execute the query lambda version associated with a given tag
 
 ```
+execute the query lambda version associated with a given tag
+Arguments to this command will be passed as URL parameters to POST: /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/tags/{tag}
+This endpoint optionally accepts a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
+       
+Example Body (YAML):
+parameters:
+  - name: _id
+    type: string
+    value: 85beb391
+default_row_limit: null
+generate_warnings: null
+paginate: null
+initial_paginate_response_doc_count: null
+
+
+Endpoint Reference
+POST: /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/tags/{tag}
+Execute Query Lambda By Tag
+Execute the Query Lambda version associated with a given tag.
+
+More documentation at https://docs.rockset.com/rest-api#executequerylambdabytag
+
 USAGE
   $ rockset api:queryLambdas:executeQueryLambdaByTag WORKSPACE QUERYLAMBDA TAG
 
@@ -1716,6 +2153,8 @@ DESCRIPTION
        value: 85beb391
   default_row_limit: null
   generate_warnings: null
+  paginate: null
+  initial_paginate_response_doc_count: null
 
 
   Endpoint Reference
@@ -1735,15 +2174,28 @@ EXAMPLES
        value: 85beb391
   default_row_limit: null
   generate_warnings: null
+  paginate: null
+  initial_paginate_response_doc_count: null
 ```
 
 _See code: [src/commands/api/queryLambdas/executeQueryLambdaByTag.ts](../src/commands/api/queryLambdas/executeQueryLambdaByTag.ts)_
 
 ## `rockset api:queryLambdas:getQueryLambdaTagVersion WORKSPACE QUERYLAMBDA TAG`
 
-get the query lambda version associated with a given tag
+retrieve the query lambda version associated with a given tag
 
 ```
+retrieve the query lambda version associated with a given tag
+Arguments to this command will be passed as URL parameters to GET: /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/tags/{tag}
+
+
+Endpoint Reference
+GET: /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/tags/{tag}
+Retrieve Query Lambda Tag
+Retrieve the Query Lambda version associated with a given tag.
+
+More documentation at https://docs.rockset.com/rest-api#getquerylambdatagversion
+
 USAGE
   $ rockset api:queryLambdas:getQueryLambdaTagVersion WORKSPACE QUERYLAMBDA TAG
 
@@ -1774,8 +2226,8 @@ DESCRIPTION
 
   Endpoint Reference
   GET: /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/tags/{tag}
-  Get Query Lambda Tag
-  Get the Query Lambda version associated with a given tag.
+  Retrieve Query Lambda Tag
+  Retrieve the Query Lambda version associated with a given tag.
 
   More documentation at https://docs.rockset.com/rest-api#getquerylambdatagversion
 
@@ -1787,9 +2239,20 @@ _See code: [src/commands/api/queryLambdas/getQueryLambdaTagVersion.ts](../src/co
 
 ## `rockset api:queryLambdas:getQueryLambdaVersion WORKSPACE QUERYLAMBDA VERSION`
 
-get details for a specified version of a query lambda
+retrieve details for a specified version of a query lambda
 
 ```
+retrieve details for a specified version of a query lambda
+Arguments to this command will be passed as URL parameters to GET: /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/versions/{version}
+
+
+Endpoint Reference
+GET: /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/versions/{version}
+Retrieve Query Lambda Version
+Retrieve details for a specified version of a Query Lambda.
+
+More documentation at https://docs.rockset.com/rest-api#getquerylambdaversion
+
 USAGE
   $ rockset api:queryLambdas:getQueryLambdaVersion WORKSPACE QUERYLAMBDA VERSION
 
@@ -1820,8 +2283,8 @@ DESCRIPTION
 
   Endpoint Reference
   GET: /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/versions/{version}
-  Get Query Lambda Version
-  Get details for a specified version of a Query Lambda.
+  Retrieve Query Lambda Version
+  Retrieve details for a specified version of a Query Lambda.
 
   More documentation at https://docs.rockset.com/rest-api#getquerylambdaversion
 
@@ -1836,6 +2299,17 @@ _See code: [src/commands/api/queryLambdas/getQueryLambdaVersion.ts](../src/comma
 list all query lambdas in an organization
 
 ```
+list all query lambdas in an organization
+Arguments to this command will be passed as URL parameters to GET: /v1/orgs/self/lambdas
+
+
+Endpoint Reference
+GET: /v1/orgs/self/lambdas
+List Query Lambdas
+List all Query Lambdas in an organization.
+
+More documentation at https://docs.rockset.com/rest-api#listallquerylambdas
+
 USAGE
   $ rockset api:queryLambdas:listAllQueryLambdas
 
@@ -1871,94 +2345,22 @@ EXAMPLE
 
 _See code: [src/commands/api/queryLambdas/listAllQueryLambdas.ts](../src/commands/api/queryLambdas/listAllQueryLambdas.ts)_
 
-## `rockset api:queryLambdas:listOrganizationTags`
-
-list all distinct query lambda tags in an organization
-
-```
-USAGE
-  $ rockset api:queryLambdas:listOrganizationTags
-
-OPTIONS
-  -h, --help                     show CLI help
-
-  -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this endpoint. The value
-                                 passed to this flag determines how many requests per second will be sent
-
-  -y, --yes                      Skip all safety prompts
-
-  --columns=columns              only show provided columns (comma-separated)
-
-  --output=csv|json|yaml         output in a more machine friendly format
-
-  --raw                          Show the raw output from the server, instead of grabbing the results. Usually used in
-                                 conjunction with --output=json
-
-DESCRIPTION
-  Arguments to this command will be passed as URL parameters to GET: /v1/orgs/self/lambdas/tags
-
-
-  Endpoint Reference
-  GET: /v1/orgs/self/lambdas/tags
-  List All Query Lambda Tags
-  List all distinct Query Lambda tags in an organization.
-
-  More documentation at https://docs.rockset.com/rest-api#listorganizationtags
-
-EXAMPLE
-  $ rockset api:queryLambdas:listOrganizationTags
-```
-
-_See code: [src/commands/api/queryLambdas/listOrganizationTags.ts](../src/commands/api/queryLambdas/listOrganizationTags.ts)_
-
-## `rockset api:queryLambdas:listQueryLambdaTagVersions TAG`
-
-list all query lambda versions associated with a given tag
-
-```
-USAGE
-  $ rockset api:queryLambdas:listQueryLambdaTagVersions TAG
-
-ARGUMENTS
-  TAG  name of the tag
-
-OPTIONS
-  -h, --help                     show CLI help
-
-  -l, --loadTestRps=loadTestRps  If this flag is active, a load test will be conducted using this endpoint. The value
-                                 passed to this flag determines how many requests per second will be sent
-
-  -y, --yes                      Skip all safety prompts
-
-  --columns=columns              only show provided columns (comma-separated)
-
-  --output=csv|json|yaml         output in a more machine friendly format
-
-  --raw                          Show the raw output from the server, instead of grabbing the results. Usually used in
-                                 conjunction with --output=json
-
-DESCRIPTION
-  Arguments to this command will be passed as URL parameters to GET: /v1/orgs/self/lambdas/tags/{tag}
-
-
-  Endpoint Reference
-  GET: /v1/orgs/self/lambdas/tags/{tag}
-  List Query Lambda Tag Versions
-  List all Query Lambda versions associated with a given tag.
-
-  More documentation at https://docs.rockset.com/rest-api#listquerylambdatagversions
-
-EXAMPLE
-  $ rockset api:queryLambdas:listQueryLambdaTagVersions TAG
-```
-
-_See code: [src/commands/api/queryLambdas/listQueryLambdaTagVersions.ts](../src/commands/api/queryLambdas/listQueryLambdaTagVersions.ts)_
-
 ## `rockset api:queryLambdas:listQueryLambdaTags WORKSPACE QUERYLAMBDA`
 
 list all tags associated with a query lambda
 
 ```
+list all tags associated with a query lambda
+Arguments to this command will be passed as URL parameters to GET: /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/tags
+
+
+Endpoint Reference
+GET: /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/tags
+List Query Lambda Tags
+List all tags associated with a Query Lambda
+
+More documentation at https://docs.rockset.com/rest-api#listquerylambdatags
+
 USAGE
   $ rockset api:queryLambdas:listQueryLambdaTags WORKSPACE QUERYLAMBDA
 
@@ -2004,6 +2406,17 @@ _See code: [src/commands/api/queryLambdas/listQueryLambdaTags.ts](../src/command
 list all versions of a query lambda
 
 ```
+list all versions of a query lambda
+Arguments to this command will be passed as URL parameters to GET: /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/versions
+
+
+Endpoint Reference
+GET: /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/versions
+List Query Lambda Versions
+List all versions of a Query Lambda.
+
+More documentation at https://docs.rockset.com/rest-api#listquerylambdaversions
+
 USAGE
   $ rockset api:queryLambdas:listQueryLambdaVersions WORKSPACE QUERYLAMBDA
 
@@ -2049,6 +2462,17 @@ _See code: [src/commands/api/queryLambdas/listQueryLambdaVersions.ts](../src/com
 list all query lambdas under given workspace
 
 ```
+list all query lambdas under given workspace
+Arguments to this command will be passed as URL parameters to GET: /v1/orgs/self/ws/{workspace}/lambdas
+
+
+Endpoint Reference
+GET: /v1/orgs/self/ws/{workspace}/lambdas
+List Query Lambdas in Workspace
+List all Query Lambdas under given workspace.
+
+More documentation at https://docs.rockset.com/rest-api#listquerylambdasinworkspace
+
 USAGE
   $ rockset api:queryLambdas:listQueryLambdasInWorkspace WORKSPACE
 
@@ -2092,6 +2516,27 @@ _See code: [src/commands/api/queryLambdas/listQueryLambdasInWorkspace.ts](../src
 create a new version of a query lambda in given workspace
 
 ```
+create a new version of a query lambda in given workspace
+Arguments to this command will be passed as URL parameters to POST: /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/versions
+This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
+       
+Example Body (YAML):
+description: production version foo
+sql:
+  query: SELECT 'Foo'
+  default_parameters:
+    - name: _id
+      type: string
+      value: 85beb391
+
+
+Endpoint Reference
+POST: /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/versions
+Update Query Lambda
+Create a new version of a Query Lambda in given workspace.
+
+More documentation at https://docs.rockset.com/rest-api#updatequerylambda
+
 USAGE
   $ rockset api:queryLambdas:updateQueryLambda WORKSPACE QUERYLAMBDA CREATE
 
@@ -2159,6 +2604,25 @@ _See code: [src/commands/api/queryLambdas/updateQueryLambda.ts](../src/commands/
 create a new user for an organization
 
 ```
+create a new user for an organization
+Arguments to this command will be passed as URL parameters to POST: /v1/orgs/self/users
+This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
+       
+Example Body (YAML):
+email: hello@rockset.com
+roles:
+  - admin
+  - member
+  - read-only
+
+
+Endpoint Reference
+POST: /v1/orgs/self/users
+Create User
+Create a new user for an organization.
+
+More documentation at https://docs.rockset.com/rest-api#createuser
+
 USAGE
   $ rockset api:users:createUser
 
@@ -2211,6 +2675,17 @@ _See code: [src/commands/api/users/createUser.ts](../src/commands/api/users/crea
 delete a user from an organization
 
 ```
+delete a user from an organization
+Arguments to this command will be passed as URL parameters to DELETE: /v1/orgs/self/users/{user}
+
+
+Endpoint Reference
+DELETE: /v1/orgs/self/users/{user}
+Delete User
+Delete a user from an organization.
+
+More documentation at https://docs.rockset.com/rest-api#deleteuser
+
 USAGE
   $ rockset api:users:deleteUser USER
 
@@ -2247,6 +2722,17 @@ _See code: [src/commands/api/users/deleteUser.ts](../src/commands/api/users/dele
 retrieve currently authenticated user
 
 ```
+retrieve currently authenticated user
+Arguments to this command will be passed as URL parameters to GET: /v1/orgs/self/users/self
+
+
+Endpoint Reference
+GET: /v1/orgs/self/users/self
+Retrieve Current User
+Retrieve currently authenticated user.
+
+More documentation at https://docs.rockset.com/rest-api#getcurrentuser
+
 USAGE
   $ rockset api:users:getCurrentUser
 
@@ -2264,7 +2750,7 @@ DESCRIPTION
 
   Endpoint Reference
   GET: /v1/orgs/self/users/self
-  Get Current User
+  Retrieve Current User
   Retrieve currently authenticated user.
 
   More documentation at https://docs.rockset.com/rest-api#getcurrentuser
@@ -2275,11 +2761,113 @@ EXAMPLE
 
 _See code: [src/commands/api/users/getCurrentUser.ts](../src/commands/api/users/getCurrentUser.ts)_
 
+## `rockset api:users:getUser USER`
+
+retrieve user by email
+
+```
+retrieve user by email
+Arguments to this command will be passed as URL parameters to GET: /v1/orgs/self/users/{user}
+
+
+Endpoint Reference
+GET: /v1/orgs/self/users/{user}
+Retrieve User
+Retrieve user by email.
+
+More documentation at https://docs.rockset.com/rest-api#getuser
+
+USAGE
+  $ rockset api:users:getUser USER
+
+ARGUMENTS
+  USER  user email
+
+OPTIONS
+  -h, --help              show CLI help
+  --columns=columns       only show provided columns (comma-separated)
+  --output=csv|json|yaml  output in a more machine friendly format
+
+  --raw                   Show the raw output from the server, instead of grabbing the results. Usually used in
+                          conjunction with --output=json
+
+DESCRIPTION
+  Arguments to this command will be passed as URL parameters to GET: /v1/orgs/self/users/{user}
+
+
+  Endpoint Reference
+  GET: /v1/orgs/self/users/{user}
+  Retrieve User
+  Retrieve user by email.
+
+  More documentation at https://docs.rockset.com/rest-api#getuser
+
+EXAMPLE
+  $ rockset api:users:getUser USER
+```
+
+_See code: [src/commands/api/users/getUser.ts](../src/commands/api/users/getUser.ts)_
+
+## `rockset api:users:listUnsubscribePreferences`
+
+get all notification preferences
+
+```
+get all notification preferences
+Arguments to this command will be passed as URL parameters to GET: /v1/orgs/self/users/self/preferences
+
+
+Endpoint Reference
+GET: /v1/orgs/self/users/self/preferences
+Get all notification preferences
+Get all notification preferences.
+
+More documentation at https://docs.rockset.com/rest-api#listunsubscribepreferences
+
+USAGE
+  $ rockset api:users:listUnsubscribePreferences
+
+OPTIONS
+  -h, --help              show CLI help
+  --columns=columns       only show provided columns (comma-separated)
+  --output=csv|json|yaml  output in a more machine friendly format
+
+  --raw                   Show the raw output from the server, instead of grabbing the results. Usually used in
+                          conjunction with --output=json
+
+DESCRIPTION
+  Arguments to this command will be passed as URL parameters to GET: /v1/orgs/self/users/self/preferences
+
+
+  Endpoint Reference
+  GET: /v1/orgs/self/users/self/preferences
+  Get all notification preferences
+  Get all notification preferences.
+
+  More documentation at https://docs.rockset.com/rest-api#listunsubscribepreferences
+
+EXAMPLE
+  $ rockset api:users:listUnsubscribePreferences
+```
+
+_See code: [src/commands/api/users/listUnsubscribePreferences.ts](../src/commands/api/users/listUnsubscribePreferences.ts)_
+
 ## `rockset api:users:listUsers`
 
 retrieve all users for an organization
 
 ```
+retrieve all users for an organization
+Arguments to this command will be passed as URL parameters to GET: /v1/orgs/self/users
+
+
+Endpoint Reference
+GET: /v1/orgs/self/users
+List Users
+Retrieve all users for an organization.
+
+More documentation at https://docs.rockset.com/rest-api#listusers
+
 USAGE
   $ rockset api:users:listUsers
 
@@ -2308,11 +2896,564 @@ EXAMPLE
 
 _See code: [src/commands/api/users/listUsers.ts](../src/commands/api/users/listUsers.ts)_
 
+## `rockset api:users:updateUnsubscribePreferences`
+
+update notification preference
+
+```
+update notification preference
+Arguments to this command will be passed as URL parameters to POST: /v1/orgs/self/users/self/preferences
+This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
+       
+Example Body (YAML):
+data:
+  - notificationType: create_apikey
+
+
+Endpoint Reference
+POST: /v1/orgs/self/users/self/preferences
+Update notification preferences
+Update notification preference.
+
+More documentation at https://docs.rockset.com/rest-api#updateunsubscribepreferences
+
+USAGE
+  $ rockset api:users:updateUnsubscribePreferences
+
+OPTIONS
+  -h, --help              show CLI help
+
+  --body=body             (required) Path to a file whose contents will be passed as the POST body of this request.
+                          Format must be [json|yaml]. An example schema is shown below.
+
+  --columns=columns       only show provided columns (comma-separated)
+
+  --output=csv|json|yaml  output in a more machine friendly format
+
+  --raw                   Show the raw output from the server, instead of grabbing the results. Usually used in
+                          conjunction with --output=json
+
+DESCRIPTION
+  Arguments to this command will be passed as URL parameters to POST: /v1/orgs/self/users/self/preferences
+  This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
+       
+  Example Body (YAML):
+  data:
+     - notificationType: create_apikey
+
+
+  Endpoint Reference
+  POST: /v1/orgs/self/users/self/preferences
+  Update notification preferences
+  Update notification preference.
+
+  More documentation at https://docs.rockset.com/rest-api#updateunsubscribepreferences
+
+EXAMPLE
+  $ rockset api:users:updateUnsubscribePreferences  --body body.yaml
+  $ cat body.yaml
+  data:
+     - notificationType: create_apikey
+```
+
+_See code: [src/commands/api/users/updateUnsubscribePreferences.ts](../src/commands/api/users/updateUnsubscribePreferences.ts)_
+
+## `rockset api:views:createView WORKSPACE`
+
+create a view
+
+```
+create a view
+Arguments to this command will be passed as URL parameters to POST: /v1/orgs/self/ws/{workspace}/views
+This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
+       
+Example Body (YAML):
+name: myAwesomeView
+description: view of awesome collection
+query: SELECT * FROM foo
+
+
+Endpoint Reference
+POST: /v1/orgs/self/ws/{workspace}/views
+Create View
+Create a view
+
+More documentation at https://docs.rockset.com/rest-api#createview
+
+USAGE
+  $ rockset api:views:createView WORKSPACE
+
+ARGUMENTS
+  WORKSPACE  name of the workspace
+
+OPTIONS
+  -h, --help              show CLI help
+
+  --body=body             (required) Path to a file whose contents will be passed as the POST body of this request.
+                          Format must be [json|yaml]. An example schema is shown below.
+
+  --columns=columns       only show provided columns (comma-separated)
+
+  --output=csv|json|yaml  output in a more machine friendly format
+
+  --raw                   Show the raw output from the server, instead of grabbing the results. Usually used in
+                          conjunction with --output=json
+
+DESCRIPTION
+  Arguments to this command will be passed as URL parameters to POST: /v1/orgs/self/ws/{workspace}/views
+  This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
+       
+  Example Body (YAML):
+  name: myAwesomeView
+  description: view of awesome collection
+  query: SELECT * FROM foo
+
+
+  Endpoint Reference
+  POST: /v1/orgs/self/ws/{workspace}/views
+  Create View
+  Create a view
+
+  More documentation at https://docs.rockset.com/rest-api#createview
+
+EXAMPLE
+  $ rockset api:views:createView WORKSPACE --body body.yaml
+  $ cat body.yaml
+  name: myAwesomeView
+  description: view of awesome collection
+  query: SELECT * FROM foo
+```
+
+_See code: [src/commands/api/views/createView.ts](../src/commands/api/views/createView.ts)_
+
+## `rockset api:views:deleteView WORKSPACE VIEW`
+
+delete a view
+
+```
+delete a view
+Arguments to this command will be passed as URL parameters to DELETE: /v1/orgs/self/ws/{workspace}/views/{view}
+
+
+Endpoint Reference
+DELETE: /v1/orgs/self/ws/{workspace}/views/{view}
+Delete View
+Delete a view
+
+More documentation at https://docs.rockset.com/rest-api#deleteview
+
+USAGE
+  $ rockset api:views:deleteView WORKSPACE VIEW
+
+ARGUMENTS
+  WORKSPACE  name of the workspace
+  VIEW       name of the view
+
+OPTIONS
+  -h, --help              show CLI help
+  --columns=columns       only show provided columns (comma-separated)
+  --output=csv|json|yaml  output in a more machine friendly format
+
+  --raw                   Show the raw output from the server, instead of grabbing the results. Usually used in
+                          conjunction with --output=json
+
+DESCRIPTION
+  Arguments to this command will be passed as URL parameters to DELETE: /v1/orgs/self/ws/{workspace}/views/{view}
+
+
+  Endpoint Reference
+  DELETE: /v1/orgs/self/ws/{workspace}/views/{view}
+  Delete View
+  Delete a view
+
+  More documentation at https://docs.rockset.com/rest-api#deleteview
+
+EXAMPLE
+  $ rockset api:views:deleteView WORKSPACE VIEW
+```
+
+_See code: [src/commands/api/views/deleteView.ts](../src/commands/api/views/deleteView.ts)_
+
+## `rockset api:views:getView WORKSPACE VIEW`
+
+get details about a view
+
+```
+get details about a view
+Arguments to this command will be passed as URL parameters to GET: /v1/orgs/self/ws/{workspace}/views/{view}
+
+
+Endpoint Reference
+GET: /v1/orgs/self/ws/{workspace}/views/{view}
+Retrieve View
+Get details about a view
+
+More documentation at https://docs.rockset.com/rest-api#getview
+
+USAGE
+  $ rockset api:views:getView WORKSPACE VIEW
+
+ARGUMENTS
+  WORKSPACE  name of the workspace
+  VIEW       name of the view
+
+OPTIONS
+  -h, --help              show CLI help
+  --columns=columns       only show provided columns (comma-separated)
+  --output=csv|json|yaml  output in a more machine friendly format
+
+  --raw                   Show the raw output from the server, instead of grabbing the results. Usually used in
+                          conjunction with --output=json
+
+DESCRIPTION
+  Arguments to this command will be passed as URL parameters to GET: /v1/orgs/self/ws/{workspace}/views/{view}
+
+
+  Endpoint Reference
+  GET: /v1/orgs/self/ws/{workspace}/views/{view}
+  Retrieve View
+  Get details about a view
+
+  More documentation at https://docs.rockset.com/rest-api#getview
+
+EXAMPLE
+  $ rockset api:views:getView WORKSPACE VIEW
+```
+
+_See code: [src/commands/api/views/getView.ts](../src/commands/api/views/getView.ts)_
+
+## `rockset api:views:listViews`
+
+retrieve all views in an organization
+
+```
+retrieve all views in an organization
+Arguments to this command will be passed as URL parameters to GET: /v1/orgs/self/views
+
+
+Endpoint Reference
+GET: /v1/orgs/self/views
+List Views
+Retrieve all views in an organization
+
+More documentation at https://docs.rockset.com/rest-api#listviews
+
+USAGE
+  $ rockset api:views:listViews
+
+OPTIONS
+  -h, --help              show CLI help
+  --columns=columns       only show provided columns (comma-separated)
+  --output=csv|json|yaml  output in a more machine friendly format
+
+  --raw                   Show the raw output from the server, instead of grabbing the results. Usually used in
+                          conjunction with --output=json
+
+DESCRIPTION
+  Arguments to this command will be passed as URL parameters to GET: /v1/orgs/self/views
+
+
+  Endpoint Reference
+  GET: /v1/orgs/self/views
+  List Views
+  Retrieve all views in an organization
+
+  More documentation at https://docs.rockset.com/rest-api#listviews
+
+EXAMPLE
+  $ rockset api:views:listViews
+```
+
+_See code: [src/commands/api/views/listViews.ts](../src/commands/api/views/listViews.ts)_
+
+## `rockset api:views:updateView WORKSPACE VIEW`
+
+update a view
+
+```
+update a view
+Arguments to this command will be passed as URL parameters to POST: /v1/orgs/self/ws/{workspace}/views/{view}
+This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
+       
+Example Body (YAML):
+description: view of awesome collection
+query: SELECT * FROM foo
+
+
+Endpoint Reference
+POST: /v1/orgs/self/ws/{workspace}/views/{view}
+Update View
+Update a view
+
+More documentation at https://docs.rockset.com/rest-api#updateview
+
+USAGE
+  $ rockset api:views:updateView WORKSPACE VIEW
+
+ARGUMENTS
+  WORKSPACE  name of the workspace
+  VIEW       name of the view
+
+OPTIONS
+  -h, --help              show CLI help
+
+  --body=body             (required) Path to a file whose contents will be passed as the POST body of this request.
+                          Format must be [json|yaml]. An example schema is shown below.
+
+  --columns=columns       only show provided columns (comma-separated)
+
+  --output=csv|json|yaml  output in a more machine friendly format
+
+  --raw                   Show the raw output from the server, instead of grabbing the results. Usually used in
+                          conjunction with --output=json
+
+DESCRIPTION
+  Arguments to this command will be passed as URL parameters to POST: /v1/orgs/self/ws/{workspace}/views/{view}
+  This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
+       
+  Example Body (YAML):
+  description: view of awesome collection
+  query: SELECT * FROM foo
+
+
+  Endpoint Reference
+  POST: /v1/orgs/self/ws/{workspace}/views/{view}
+  Update View
+  Update a view
+
+  More documentation at https://docs.rockset.com/rest-api#updateview
+
+EXAMPLE
+  $ rockset api:views:updateView WORKSPACE VIEW --body body.yaml
+  $ cat body.yaml
+  description: view of awesome collection
+  query: SELECT * FROM foo
+```
+
+_See code: [src/commands/api/views/updateView.ts](../src/commands/api/views/updateView.ts)_
+
+## `rockset api:views:workspaceViews WORKSPACE`
+
+retrieve all views in a workspace
+
+```
+retrieve all views in a workspace
+Arguments to this command will be passed as URL parameters to GET: /v1/orgs/self/ws/{workspace}/views
+
+
+Endpoint Reference
+GET: /v1/orgs/self/ws/{workspace}/views
+List Views in Workspace
+Retrieve all views in a workspace.
+
+More documentation at https://docs.rockset.com/rest-api#workspaceviews
+
+USAGE
+  $ rockset api:views:workspaceViews WORKSPACE
+
+ARGUMENTS
+  WORKSPACE  name of the workspace
+
+OPTIONS
+  -h, --help              show CLI help
+  --columns=columns       only show provided columns (comma-separated)
+  --output=csv|json|yaml  output in a more machine friendly format
+
+  --raw                   Show the raw output from the server, instead of grabbing the results. Usually used in
+                          conjunction with --output=json
+
+DESCRIPTION
+  Arguments to this command will be passed as URL parameters to GET: /v1/orgs/self/ws/{workspace}/views
+
+
+  Endpoint Reference
+  GET: /v1/orgs/self/ws/{workspace}/views
+  List Views in Workspace
+  Retrieve all views in a workspace.
+
+  More documentation at https://docs.rockset.com/rest-api#workspaceviews
+
+EXAMPLE
+  $ rockset api:views:workspaceViews WORKSPACE
+```
+
+_See code: [src/commands/api/views/workspaceViews.ts](../src/commands/api/views/workspaceViews.ts)_
+
+## `rockset api:virtualInstances:getVirtualInstance VIRTUALINSTANCEID`
+
+get details about a virtual instance
+
+```
+get details about a virtual instance
+Arguments to this command will be passed as URL parameters to GET: /v1/orgs/self/virtualinstances/{virtualInstanceId}
+
+
+Endpoint Reference
+GET: /v1/orgs/self/virtualinstances/{virtualInstanceId}
+Retrieve Virtual Instance
+Get details about a virtual instance.
+
+More documentation at https://docs.rockset.com/rest-api#getvirtualinstance
+
+USAGE
+  $ rockset api:virtualInstances:getVirtualInstance VIRTUALINSTANCEID
+
+ARGUMENTS
+  VIRTUALINSTANCEID  uuid of the virtual instance
+
+OPTIONS
+  -h, --help              show CLI help
+  --columns=columns       only show provided columns (comma-separated)
+  --output=csv|json|yaml  output in a more machine friendly format
+
+  --raw                   Show the raw output from the server, instead of grabbing the results. Usually used in
+                          conjunction with --output=json
+
+DESCRIPTION
+  Arguments to this command will be passed as URL parameters to GET: /v1/orgs/self/virtualinstances/{virtualInstanceId}
+
+
+  Endpoint Reference
+  GET: /v1/orgs/self/virtualinstances/{virtualInstanceId}
+  Retrieve Virtual Instance
+  Get details about a virtual instance.
+
+  More documentation at https://docs.rockset.com/rest-api#getvirtualinstance
+
+EXAMPLE
+  $ rockset api:virtualInstances:getVirtualInstance VIRTUALINSTANCEID
+```
+
+_See code: [src/commands/api/virtualInstances/getVirtualInstance.ts](../src/commands/api/virtualInstances/getVirtualInstance.ts)_
+
+## `rockset api:virtualInstances:listVirtualInstances`
+
+retrieve all virtual instances in an organization
+
+```
+retrieve all virtual instances in an organization
+Arguments to this command will be passed as URL parameters to GET: /v1/orgs/self/virtualinstances
+
+
+Endpoint Reference
+GET: /v1/orgs/self/virtualinstances
+List Virtual Instances
+Retrieve all virtual instances in an organization.
+
+More documentation at https://docs.rockset.com/rest-api#listvirtualinstances
+
+USAGE
+  $ rockset api:virtualInstances:listVirtualInstances
+
+OPTIONS
+  -h, --help              show CLI help
+  --columns=columns       only show provided columns (comma-separated)
+  --output=csv|json|yaml  output in a more machine friendly format
+
+  --raw                   Show the raw output from the server, instead of grabbing the results. Usually used in
+                          conjunction with --output=json
+
+DESCRIPTION
+  Arguments to this command will be passed as URL parameters to GET: /v1/orgs/self/virtualinstances
+
+
+  Endpoint Reference
+  GET: /v1/orgs/self/virtualinstances
+  List Virtual Instances
+  Retrieve all virtual instances in an organization.
+
+  More documentation at https://docs.rockset.com/rest-api#listvirtualinstances
+
+EXAMPLE
+  $ rockset api:virtualInstances:listVirtualInstances
+```
+
+_See code: [src/commands/api/virtualInstances/listVirtualInstances.ts](../src/commands/api/virtualInstances/listVirtualInstances.ts)_
+
+## `rockset api:virtualInstances:setVirtualInstance VIRTUALINSTANCEID`
+
+update the properties of a virtual instance
+
+```
+update the properties of a virtual instance
+Arguments to this command will be passed as URL parameters to POST: /v1/orgs/self/virtualinstances/{virtualInstanceId}
+This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
+       
+Example Body (YAML):
+new_size: LARGE
+new_type: null
+monitoring_enabled: null
+
+
+Endpoint Reference
+POST: /v1/orgs/self/virtualinstances/{virtualInstanceId}
+Update Virtual Instance
+Update the properties of a virtual instance.
+
+More documentation at https://docs.rockset.com/rest-api#setvirtualinstance
+
+USAGE
+  $ rockset api:virtualInstances:setVirtualInstance VIRTUALINSTANCEID
+
+ARGUMENTS
+  VIRTUALINSTANCEID  uuid of the virtual instance
+
+OPTIONS
+  -h, --help              show CLI help
+
+  --body=body             (required) Path to a file whose contents will be passed as the POST body of this request.
+                          Format must be [json|yaml]. An example schema is shown below.
+
+  --columns=columns       only show provided columns (comma-separated)
+
+  --output=csv|json|yaml  output in a more machine friendly format
+
+  --raw                   Show the raw output from the server, instead of grabbing the results. Usually used in
+                          conjunction with --output=json
+
+DESCRIPTION
+  Arguments to this command will be passed as URL parameters to POST: /v1/orgs/self/virtualinstances/{virtualInstanceId}
+  This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
+       
+  Example Body (YAML):
+  new_size: LARGE
+  new_type: null
+  monitoring_enabled: null
+
+
+  Endpoint Reference
+  POST: /v1/orgs/self/virtualinstances/{virtualInstanceId}
+  Update Virtual Instance
+  Update the properties of a virtual instance.
+
+  More documentation at https://docs.rockset.com/rest-api#setvirtualinstance
+
+EXAMPLE
+  $ rockset api:virtualInstances:setVirtualInstance VIRTUALINSTANCEID --body body.yaml
+  $ cat body.yaml
+  new_size: LARGE
+  new_type: null
+  monitoring_enabled: null
+```
+
+_See code: [src/commands/api/virtualInstances/setVirtualInstance.ts](../src/commands/api/virtualInstances/setVirtualInstance.ts)_
+
 ## `rockset api:workspaces:childWorkspaces WORKSPACE`
 
 list workspaces under given workspace
 
 ```
+list workspaces under given workspace
+Arguments to this command will be passed as URL parameters to GET: /v1/orgs/self/ws/{workspace}/ws
+
+
+Endpoint Reference
+GET: /v1/orgs/self/ws/{workspace}/ws
+List Workspaces in Workspace
+List workspaces under given workspace.
+
+More documentation at https://docs.rockset.com/rest-api#childworkspaces
+
 USAGE
   $ rockset api:workspaces:childWorkspaces WORKSPACE
 
@@ -2349,6 +3490,22 @@ _See code: [src/commands/api/workspaces/childWorkspaces.ts](../src/commands/api/
 create a new workspace
 
 ```
+create a new workspace
+Arguments to this command will be passed as URL parameters to POST: /v1/orgs/self/ws
+This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
+       
+Example Body (YAML):
+name: event_logs
+description: Datasets of system logs for the ops team.
+
+
+Endpoint Reference
+POST: /v1/orgs/self/ws
+Create Workspace
+Create a new workspace.
+
+More documentation at https://docs.rockset.com/rest-api#createworkspace
+
 USAGE
   $ rockset api:workspaces:createWorkspace
 
@@ -2395,6 +3552,17 @@ _See code: [src/commands/api/workspaces/createWorkspace.ts](../src/commands/api/
 remove a workspace
 
 ```
+remove a workspace
+Arguments to this command will be passed as URL parameters to DELETE: /v1/orgs/self/ws/{workspace}
+
+
+Endpoint Reference
+DELETE: /v1/orgs/self/ws/{workspace}
+Delete Workspace
+Remove a workspace.
+
+More documentation at https://docs.rockset.com/rest-api#deleteworkspace
+
 USAGE
   $ rockset api:workspaces:deleteWorkspace WORKSPACE
 
@@ -2431,6 +3599,17 @@ _See code: [src/commands/api/workspaces/deleteWorkspace.ts](../src/commands/api/
 get information about a single workspace
 
 ```
+get information about a single workspace
+Arguments to this command will be passed as URL parameters to GET: /v1/orgs/self/ws/{workspace}
+
+
+Endpoint Reference
+GET: /v1/orgs/self/ws/{workspace}
+Retrieve Workspace
+Get information about a single workspace.
+
+More documentation at https://docs.rockset.com/rest-api#getworkspace
+
 USAGE
   $ rockset api:workspaces:getWorkspace WORKSPACE
 
@@ -2451,7 +3630,7 @@ DESCRIPTION
 
   Endpoint Reference
   GET: /v1/orgs/self/ws/{workspace}
-  Get Workspace
+  Retrieve Workspace
   Get information about a single workspace.
 
   More documentation at https://docs.rockset.com/rest-api#getworkspace
@@ -2462,13 +3641,24 @@ EXAMPLE
 
 _See code: [src/commands/api/workspaces/getWorkspace.ts](../src/commands/api/workspaces/getWorkspace.ts)_
 
-## `rockset api:workspaces:listWorkspaces`
+## `rockset api:workspaces:listWorkspaces FETCH_ACROSS_REGIONS`
 
 list all workspaces in an organization
 
 ```
+list all workspaces in an organization
+Arguments to this command will be passed as URL parameters to GET: /v1/orgs/self/ws
+
+
+Endpoint Reference
+GET: /v1/orgs/self/ws
+List Workspaces
+List all workspaces in an organization.
+
+More documentation at https://docs.rockset.com/rest-api#listworkspaces
+
 USAGE
-  $ rockset api:workspaces:listWorkspaces
+  $ rockset api:workspaces:listWorkspaces FETCH_ACROSS_REGIONS
 
 OPTIONS
   -h, --help              show CLI help
@@ -2490,7 +3680,7 @@ DESCRIPTION
   More documentation at https://docs.rockset.com/rest-api#listworkspaces
 
 EXAMPLE
-  $ rockset api:workspaces:listWorkspaces
+  $ rockset api:workspaces:listWorkspaces FETCH_ACROSS_REGIONS
 ```
 
 _See code: [src/commands/api/workspaces/listWorkspaces.ts](../src/commands/api/workspaces/listWorkspaces.ts)_

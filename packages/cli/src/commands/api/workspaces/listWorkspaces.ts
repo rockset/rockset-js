@@ -22,7 +22,13 @@ class ListWorkspaces extends RockCommand {
     ...cli.table.flags({ only: ['columns', 'output'] }),
   };
 
-  static args = [];
+  static args = [
+    {
+      name: 'fetch_across_regions',
+      required: true,
+      hidden: false,
+    },
+  ];
 
   static description = `list all workspaces in an organization
 Arguments to this command will be passed as URL parameters to ${chalk.bold(`GET: /v1/orgs/self/ws`)}
@@ -35,7 +41,7 @@ List all workspaces in an organization.
 
 More documentation at ${chalk.underline(`https://docs.rockset.com/rest-api#listworkspaces`)}`;
 
-  static examples = ['$ rockset api:workspaces:listWorkspaces '];
+  static examples = ['$ rockset api:workspaces:listWorkspaces FETCH_ACROSS_REGIONS'];
 
   async run() {
     const { args, flags } = this.parse(ListWorkspaces);
