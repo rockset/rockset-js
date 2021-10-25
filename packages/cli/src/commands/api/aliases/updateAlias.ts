@@ -10,7 +10,9 @@ import * as chalk from 'chalk';
 import { cli } from 'cli-ux';
 
 const bodySchema = `description: version alias
-collections: "[common.foo, prod.demo]"
+collections:
+  - commons.foo
+  - prod.demo
 `;
 
 class UpdateAlias extends RockCommand {
@@ -52,18 +54,20 @@ ${chalk.bold(`This endpoint REQUIRES a POST body. To specify a POST body, please
        `)}
 Example Body (YAML):
 description: version alias
-collections: "[common.foo, prod.demo]"
+collections:
+  - commons.foo
+  - prod.demo
 
 
 Endpoint Reference
 POST: /v1/orgs/self/ws/{workspace}/aliases/{alias}
-Update alias
+Update Alias
 Update alias in a workspace.
 
 More documentation at ${chalk.underline(`https://docs.rockset.com/rest-api#updatealias`)}`;
 
   static examples = [
-    '$ rockset api:aliases:updateAlias WORKSPACE ALIAS --body body.yaml\n$ cat body.yaml\ndescription: version alias\ncollections: "[common.foo, prod.demo]"\n\n',
+    '$ rockset api:aliases:updateAlias WORKSPACE ALIAS --body body.yaml\n$ cat body.yaml\ndescription: version alias\ncollections:\n  - commons.foo\n  - prod.demo\n\n',
   ];
 
   async run() {

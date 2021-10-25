@@ -11,7 +11,7 @@ import { cli } from 'cli-ux';
 
 const bodySchema = ``;
 
-class ListAliasesForCollection extends RockCommand {
+class DeleteView extends RockCommand {
   static flags = {
     help: flags.help({ char: 'h' }),
 
@@ -25,50 +25,50 @@ class ListAliasesForCollection extends RockCommand {
   static args = [
     {
       name: 'workspace',
+      description: 'name of the workspace',
       required: true,
       hidden: false,
     },
     {
-      name: 'collection',
+      name: 'view',
+      description: 'name of the view',
       required: true,
       hidden: false,
     },
   ];
 
-  static description = `get all aliases for a specific rockset collection
+  static description = `delete a view
 Arguments to this command will be passed as URL parameters to ${chalk.bold(
-    `GET: /v1/orgs/self/ws/{workspace}/collections/{collection}/aliases`,
+    `DELETE: /v1/orgs/self/ws/{workspace}/views/{view}`,
   )}
 
 
 Endpoint Reference
-GET: /v1/orgs/self/ws/{workspace}/collections/{collection}/aliases
-Get Aliases for Collection
-Get all Aliases for a specific Rockset Collection.
+DELETE: /v1/orgs/self/ws/{workspace}/views/{view}
+Delete View
+Delete a view
 
-More documentation at ${chalk.underline(
-    `https://docs.rockset.com/rest-api#listaliasesforcollection`,
-  )}`;
+More documentation at ${chalk.underline(`https://docs.rockset.com/rest-api#deleteview`)}`;
 
-  static examples = ['$ rockset api:collections:listAliasesForCollection WORKSPACE COLLECTION'];
+  static examples = ['$ rockset api:views:deleteView WORKSPACE VIEW'];
 
   async run() {
-    const { args, flags } = this.parse(ListAliasesForCollection);
+    const { args, flags } = this.parse(DeleteView);
 
     // Rockset client object
     const client = await main.createClient();
 
-    const namedArgs: Args = ListAliasesForCollection.args;
+    const namedArgs: Args = DeleteView.args;
 
     // apicall
-    const apicall = client.collections.listAliasesForCollection.bind(client.collections);
+    const apicall = client.views.deleteView.bind(client.views);
 
     // endpoint
-    const endpoint = '/v1/orgs/self/ws/{workspace}/collections/{collection}/aliases';
-    const method = 'GET';
+    const endpoint = '/v1/orgs/self/ws/{workspace}/views/{view}';
+    const method = 'DELETE';
 
     await runApiCall.bind(this)({ args, flags, namedArgs, apicall, method, endpoint, bodySchema });
   }
 }
 
-export default ListAliasesForCollection;
+export default DeleteView;

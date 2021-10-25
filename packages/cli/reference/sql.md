@@ -10,6 +10,8 @@ execute a SQL expression
 execute a SQL expression
 
 ```
+execute a SQL expression
+
 USAGE
   $ rockset sql [SQL]
 

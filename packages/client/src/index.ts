@@ -6,7 +6,7 @@ require('node-fetch');
 export interface MainApi {
   aliases: api.AliasesApi;
   users: api.UsersApi;
-  apikeys: api.ApiKeysApi;
+  apikeys: api.APIKeysApi;
   workspaces: api.WorkspacesApi;
   collections: api.CollectionsApi;
   documents: api.DocumentsApi;
@@ -14,6 +14,9 @@ export interface MainApi {
   orgs: api.OrganizationsApi;
   queries: api.QueriesApi;
   queryLambdas: api.QueryLambdasApi;
+  views: api.ViewsApi;
+  virtualInstances: api.VirtualInstancesApi;
+  customRolesBeta: api.CustomRolesBetaApi;
   _fetch: api.FetchAPI;
 }
 
@@ -99,7 +102,7 @@ const rocksetConfigure = (
   return {
     aliases: new api.AliasesApi({}, host, authFetch),
     users: new api.UsersApi({}, host, authFetch),
-    apikeys: new api.ApiKeysApi({}, host, authFetch),
+    apikeys: new api.APIKeysApi({}, host, authFetch),
     workspaces: new api.WorkspacesApi({}, host, authFetch),
     collections: new api.CollectionsApi({}, host, authFetch),
     documents: new api.DocumentsApi({}, host, authFetch),
@@ -107,6 +110,9 @@ const rocksetConfigure = (
     orgs: new api.OrganizationsApi({}, host, authFetch),
     queries: new api.QueriesApi({}, host, queryFetch),
     queryLambdas: new api.QueryLambdasApi({}, host, queryFetch),
+    views: new api.ViewsApi({}, host, authFetch),
+    virtualInstances: new api.VirtualInstancesApi({}, host, authFetch),
+    customRolesBeta: new api.CustomRolesBetaApi({}, host, authFetch),
     _fetch: authFetch,
   };
 };

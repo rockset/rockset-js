@@ -11,7 +11,7 @@ import { cli } from 'cli-ux';
 
 const bodySchema = ``;
 
-class ListApiKeysAdmin extends RockCommand {
+class ListRoles extends RockCommand {
   static flags = {
     help: flags.help({ char: 'h' }),
 
@@ -22,47 +22,40 @@ class ListApiKeysAdmin extends RockCommand {
     ...cli.table.flags({ only: ['columns', 'output'] }),
   };
 
-  static args = [
-    {
-      name: 'user',
-      description: 'user email',
-      required: true,
-      hidden: false,
-    },
-  ];
+  static args = [];
 
-  static description = `list all api keys for any user in your organization. accessible to admin users only
+  static description = `list all roles for your organization
 Arguments to this command will be passed as URL parameters to ${chalk.bold(
-    `GET: /v1/orgs/self/users/{user}/apikeys`,
+    `GET: /v1/orgs/self/roles`,
   )}
 
 
 Endpoint Reference
-GET: /v1/orgs/self/users/{user}/apikeys
-List API Keys (any user)
-List all API keys for any user in your organization. Accessible to Admin users only.
+GET: /v1/orgs/self/roles
+List Roles
+List all roles for your organization.
 
-More documentation at ${chalk.underline(`https://docs.rockset.com/rest-api#listapikeysadmin`)}`;
+More documentation at ${chalk.underline(`https://docs.rockset.com/rest-api#listroles`)}`;
 
-  static examples = ['$ rockset api:apikeys:listApiKeysAdmin USER'];
+  static examples = ['$ rockset api:customRolesBeta:listRoles '];
 
   async run() {
-    const { args, flags } = this.parse(ListApiKeysAdmin);
+    const { args, flags } = this.parse(ListRoles);
 
     // Rockset client object
     const client = await main.createClient();
 
-    const namedArgs: Args = ListApiKeysAdmin.args;
+    const namedArgs: Args = ListRoles.args;
 
     // apicall
-    const apicall = client.apikeys.listApiKeysAdmin.bind(client.apikeys);
+    const apicall = client.customRolesBeta.listRoles.bind(client.customRolesBeta);
 
     // endpoint
-    const endpoint = '/v1/orgs/self/users/{user}/apikeys';
+    const endpoint = '/v1/orgs/self/roles';
     const method = 'GET';
 
     await runApiCall.bind(this)({ args, flags, namedArgs, apicall, method, endpoint, bodySchema });
   }
 }
 
-export default ListApiKeysAdmin;
+export default ListRoles;

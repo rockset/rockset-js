@@ -11,7 +11,7 @@ import { cli } from 'cli-ux';
 
 const bodySchema = ``;
 
-class GetCurrentUser extends RockCommand {
+class ListViews extends RockCommand {
   static flags = {
     help: flags.help({ char: 'h' }),
 
@@ -24,38 +24,38 @@ class GetCurrentUser extends RockCommand {
 
   static args = [];
 
-  static description = `retrieve currently authenticated user
+  static description = `retrieve all views in an organization
 Arguments to this command will be passed as URL parameters to ${chalk.bold(
-    `GET: /v1/orgs/self/users/self`,
+    `GET: /v1/orgs/self/views`,
   )}
 
 
 Endpoint Reference
-GET: /v1/orgs/self/users/self
-Retrieve Current User
-Retrieve currently authenticated user.
+GET: /v1/orgs/self/views
+List Views
+Retrieve all views in an organization
 
-More documentation at ${chalk.underline(`https://docs.rockset.com/rest-api#getcurrentuser`)}`;
+More documentation at ${chalk.underline(`https://docs.rockset.com/rest-api#listviews`)}`;
 
-  static examples = ['$ rockset api:users:getCurrentUser '];
+  static examples = ['$ rockset api:views:listViews '];
 
   async run() {
-    const { args, flags } = this.parse(GetCurrentUser);
+    const { args, flags } = this.parse(ListViews);
 
     // Rockset client object
     const client = await main.createClient();
 
-    const namedArgs: Args = GetCurrentUser.args;
+    const namedArgs: Args = ListViews.args;
 
     // apicall
-    const apicall = client.users.getCurrentUser.bind(client.users);
+    const apicall = client.views.listViews.bind(client.views);
 
     // endpoint
-    const endpoint = '/v1/orgs/self/users/self';
+    const endpoint = '/v1/orgs/self/views';
     const method = 'GET';
 
     await runApiCall.bind(this)({ args, flags, namedArgs, apicall, method, endpoint, bodySchema });
   }
 }
 
-export default GetCurrentUser;
+export default ListViews;

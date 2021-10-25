@@ -31,7 +31,7 @@ class GetIntegration extends RockCommand {
     },
   ];
 
-  static description = `get information about a single integration
+  static description = `retrieve information about a single integration
 Arguments to this command will be passed as URL parameters to ${chalk.bold(
     `GET: /v1/orgs/self/integrations/{integration}`,
   )}
@@ -39,8 +39,8 @@ Arguments to this command will be passed as URL parameters to ${chalk.bold(
 
 Endpoint Reference
 GET: /v1/orgs/self/integrations/{integration}
-Get Integration
-Get information about a single integration.
+Retrieve Integration
+Retrieve information about a single integration.
 
 More documentation at ${chalk.underline(`https://docs.rockset.com/rest-api#getintegration`)}`;
 

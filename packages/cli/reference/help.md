@@ -10,6 +10,8 @@ display help for rockset
 display help for rockset
 
 ```
+display help for <%= config.bin %>
+
 USAGE
   $ rockset help [COMMAND]
 

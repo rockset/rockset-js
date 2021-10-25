@@ -39,7 +39,7 @@ Arguments to this command will be passed as URL parameters to ${chalk.bold(
 
 Endpoint Reference
 GET: /v1/orgs/self/ws/{workspace}/aliases
-List Aliases for Workspace
+List Aliases in Workspace
 Retrieve all aliases in a workspace.
 
 More documentation at ${chalk.underline(`https://docs.rockset.com/rest-api#workspacealiases`)}`;

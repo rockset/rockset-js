@@ -42,13 +42,13 @@ class DeleteDocuments extends RockCommand {
   static args = [
     {
       name: 'workspace',
-      description: 'name of the workspace',
+      description: 'Name of the workspace.',
       required: true,
       hidden: false,
     },
     {
       name: 'collection',
-      description: 'name of the collection',
+      description: 'Name of the collection.',
       required: true,
       hidden: false,
     },

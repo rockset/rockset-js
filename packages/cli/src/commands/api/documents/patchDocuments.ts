@@ -12,7 +12,7 @@ import { cli } from 'cli-ux';
 const bodySchema = `data:
   - _id: ca2d6832-1bfd-f88f-0620-d2aa27a5d86c
     patch:
-      - op: add
+      - op: ADD
         path: /foo/bar
         value: baz
         from: null
@@ -47,13 +47,13 @@ class PatchDocuments extends RockCommand {
   static args = [
     {
       name: 'workspace',
-      description: 'name of the workspace',
+      description: 'Name of the workspace.',
       required: true,
       hidden: false,
     },
     {
       name: 'collection',
-      description: 'name of the collection',
+      description: 'Name of the collection.',
       required: true,
       hidden: false,
     },
@@ -69,7 +69,7 @@ Example Body (YAML):
 data:
   - _id: ca2d6832-1bfd-f88f-0620-d2aa27a5d86c
     patch:
-      - op: add
+      - op: ADD
         path: /foo/bar
         value: baz
         from: null
@@ -83,7 +83,7 @@ Update existing documents in a collection.
 More documentation at ${chalk.underline(`https://docs.rockset.com/rest-api#patchdocuments`)}`;
 
   static examples = [
-    '$ rockset api:documents:patchDocuments WORKSPACE COLLECTION --body body.yaml\n$ cat body.yaml\ndata:\n  - _id: ca2d6832-1bfd-f88f-0620-d2aa27a5d86c\n    patch:\n      - op: add\n        path: /foo/bar\n        value: baz\n        from: null\n\n',
+    '$ rockset api:documents:patchDocuments WORKSPACE COLLECTION --body body.yaml\n$ cat body.yaml\ndata:\n  - _id: ca2d6832-1bfd-f88f-0620-d2aa27a5d86c\n    patch:\n      - op: ADD\n        path: /foo/bar\n        value: baz\n        from: null\n\n',
   ];
 
   async run() {

@@ -22,22 +22,30 @@ class ListApiKeys extends RockCommand {
     ...cli.table.flags({ only: ['columns', 'output'] }),
   };
 
-  static args = [];
+  static args = [
+    {
+      name: 'user',
+      description:
+        'Email of the API key owner. Use `self` to specify the currently authenticated user.',
+      required: true,
+      hidden: false,
+    },
+  ];
 
-  static description = `list all api keys for the authenticated user
+  static description = `list api key metadata for any user in your organization
 Arguments to this command will be passed as URL parameters to ${chalk.bold(
-    `GET: /v1/orgs/self/users/self/apikeys`,
+    `GET: /v1/orgs/self/users/{user}/apikeys`,
   )}
 
 
 Endpoint Reference
-GET: /v1/orgs/self/users/self/apikeys
-List API Keys
-List all API keys for the authenticated user.
+GET: /v1/orgs/self/users/{user}/apikeys
+List API Keys.
+List API key metadata for any user in your organization.
 
 More documentation at ${chalk.underline(`https://docs.rockset.com/rest-api#listapikeys`)}`;
 
-  static examples = ['$ rockset api:apikeys:listApiKeys '];
+  static examples = ['$ rockset api:apikeys:listApiKeys USER'];
 
   async run() {
     const { args, flags } = this.parse(ListApiKeys);
@@ -51,7 +59,7 @@ More documentation at ${chalk.underline(`https://docs.rockset.com/rest-api#lista
     const apicall = client.apikeys.listApiKeys.bind(client.apikeys);
 
     // endpoint
-    const endpoint = '/v1/orgs/self/users/self/apikeys';
+    const endpoint = '/v1/orgs/self/users/{user}/apikeys';
     const method = 'GET';
 
     await runApiCall.bind(this)({ args, flags, namedArgs, apicall, method, endpoint, bodySchema });

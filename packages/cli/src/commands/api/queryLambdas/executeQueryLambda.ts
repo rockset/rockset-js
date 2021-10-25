@@ -15,6 +15,8 @@ const bodySchema = `parameters:
     value: 85beb391
 default_row_limit: null
 generate_warnings: null
+paginate: null
+initial_paginate_response_doc_count: null
 `;
 
 class ExecuteQueryLambda extends RockCommand {
@@ -77,18 +79,20 @@ parameters:
     value: 85beb391
 default_row_limit: null
 generate_warnings: null
+paginate: null
+initial_paginate_response_doc_count: null
 
 
 Endpoint Reference
 POST: /v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/versions/{version}
-Execute Query Lambda
+Execute Query Lambda By Version
 Execute a particular version of a Query Lambda.
 
 More documentation at ${chalk.underline(`https://docs.rockset.com/rest-api#executequerylambda`)}`;
 
   static examples = [
     '$ rockset api:queryLambdas:executeQueryLambda WORKSPACE QUERYLAMBDA VERSION',
-    '$ rockset api:queryLambdas:executeQueryLambda WORKSPACE QUERYLAMBDA VERSION --body body.yaml\n$ cat body.yaml\nparameters:\n  - name: _id\n    type: string\n    value: 85beb391\ndefault_row_limit: null\ngenerate_warnings: null\n\n',
+    '$ rockset api:queryLambdas:executeQueryLambda WORKSPACE QUERYLAMBDA VERSION --body body.yaml\n$ cat body.yaml\nparameters:\n  - name: _id\n    type: string\n    value: 85beb391\ndefault_row_limit: null\ngenerate_warnings: null\npaginate: null\ninitial_paginate_response_doc_count: null\n\n',
   ];
 
   async run() {

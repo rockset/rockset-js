@@ -15,6 +15,8 @@ const bodySchema = `parameters:
     value: 85beb391
 default_row_limit: null
 generate_warnings: null
+paginate: null
+initial_paginate_response_doc_count: null
 `;
 
 class ExecuteQueryLambdaByTag extends RockCommand {
@@ -77,6 +79,8 @@ parameters:
     value: 85beb391
 default_row_limit: null
 generate_warnings: null
+paginate: null
+initial_paginate_response_doc_count: null
 
 
 Endpoint Reference
@@ -90,7 +94,7 @@ More documentation at ${chalk.underline(
 
   static examples = [
     '$ rockset api:queryLambdas:executeQueryLambdaByTag WORKSPACE QUERYLAMBDA TAG',
-    '$ rockset api:queryLambdas:executeQueryLambdaByTag WORKSPACE QUERYLAMBDA TAG --body body.yaml\n$ cat body.yaml\nparameters:\n  - name: _id\n    type: string\n    value: 85beb391\ndefault_row_limit: null\ngenerate_warnings: null\n\n',
+    '$ rockset api:queryLambdas:executeQueryLambdaByTag WORKSPACE QUERYLAMBDA TAG --body body.yaml\n$ cat body.yaml\nparameters:\n  - name: _id\n    type: string\n    value: 85beb391\ndefault_row_limit: null\ngenerate_warnings: null\npaginate: null\ninitial_paginate_response_doc_count: null\n\n',
   ];
 
   async run() {
