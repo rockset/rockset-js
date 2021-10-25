@@ -20,7 +20,9 @@ sources:
       pattern: prefix/to/**/keys/*.format
       region: us-west-2
       bucket: s3://customer-account-info
-      prefixes: "['/transactions', '/stores']"
+      prefixes:
+        - /transactions
+        - /stores
       format: none
       mappings:
         - input_path:
@@ -28,12 +30,20 @@ sources:
           mask:
             name: null
             args: {}
+      object_count_downloaded: null
+      object_count_total: null
+      object_bytes_total: null
     kinesis:
-      stream_name: click_stream
       aws_region: us-east-2
+      stream_name: click_stream
+      dms_primary_key:
+        - null
     gcs:
       bucket: server-logs
       prefix: prefix/to/keys
+      object_count_downloaded: null
+      object_count_total: null
+      object_bytes_total: null
     redshift:
       database: dev
       schema: common
@@ -42,6 +52,11 @@ sources:
     dynamodb:
       aws_region: us-east-2
       table_name: dynamodb_table_name
+      current_status:
+        initial_dump_completion_percentage: 0.73
+        state: PROCESSING_STREAM
+        stream_last_processed_at: 2019-01-15T21:48:23Z
+      rcu: 1000
       status:
         scan_start_time: 2001-08-28T00:23:41Z
         scan_end_time: 2001-08-28T00:23:41Z
@@ -49,7 +64,7 @@ sources:
         scan_total_records: 2000
         state: SCANNING_TABLE
         stream_last_processed_at: 2019-01-15T21:48:23Z
-      rcu: 1000
+      use_scan_api: null
     file_upload:
       file_name: file1.json
       file_size: 12345
@@ -60,6 +75,11 @@ sources:
         state: ACTIVE
         last_consumed_time: 2001-08-28T00:23:41Z
         num_documents_processed: 1337
+        kafka_partitions:
+          - partition_number: 123
+            partition_offset: 100
+      use_v3: null
+      offset_reset_policy: null
     mongodb:
       database_name: my_database
       collection_name: my_collection
@@ -77,23 +97,25 @@ sources:
         stream_records_deleted: 100
     status:
       state: INITIALIZING
-      since: 2019-01-15T21:48:23Z
       message: error 403 forbidden
       last_processed_at: 2019-01-15T21:48:23Z
       last_processed_item: /path/to/some/object
       total_processed_items: 32849023
-      last_error_at: 2019-01-15T21:48:23Z
-      last_error_item: /path/to/some/object
-      last_error_reason: invalid format .docx
-      total_error_items: 32849023
     format_params:
       json: true
       csv:
         firstLineAsColumnNames: true
         separator: ","
         encoding: UTF-8
-        columnNames: "[c1, c2, c3]"
-        columnTypes: "['BOOLEAN', 'INTEGER', 'FLOAT', 'STRING']"
+        columnNames:
+          - c1
+          - c2
+          - c3
+        columnTypes:
+          - BOOLEAN
+          - INTEGER
+          - FLOAT
+          - STRING
         quoteChar: '"'
         escapeChar: \
       xml:
@@ -102,7 +124,11 @@ sources:
         doc_tag: row
         value_tag: value
         attribute_prefix: _attr
+      mysql_dms: null
+      postgres_dms: null
 retention_secs: 1000000
+time_partition_resolution_secs: null
+insert_only: null
 event_time_info:
   field: timestamp
   format: seconds_since_epoch
@@ -119,6 +145,23 @@ field_mappings:
       field_name: zip_hash
       value: SHA256(:zip)
       on_error: "['SKIP', 'FAIL']"
+field_mapping_query:
+  sql: sql
+clustering_key:
+  - field_name: address.city.zipcode
+    type: AUTO
+    keys: Values of a record to partition on. This is not needed if the partition
+      type is AUTO
+field_schemas:
+  - field_name: address.city.zipcode
+    field_options: Options to specify whether to build an inverted index  a type
+      index, a range index and a column index on this field
+inverted_index_group_encoding_options:
+  ? format_version
+  ? group_size
+  ? restart_length
+  ? event_time_codec
+  ? doc_id_codec
 `;
 
 class CreateCollection extends RockCommand {

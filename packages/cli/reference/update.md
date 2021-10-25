@@ -10,6 +10,8 @@ update the rockset CLI
 update the rockset CLI
 
 ```
+update the <%= config.bin %> CLI
+
 USAGE
   $ rockset update [CHANNEL]
 ```

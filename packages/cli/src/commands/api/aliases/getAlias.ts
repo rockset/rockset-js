@@ -37,7 +37,7 @@ class GetAlias extends RockCommand {
     },
   ];
 
-  static description = `get details about a alias
+  static description = `get details about an alias
 Arguments to this command will be passed as URL parameters to ${chalk.bold(
     `GET: /v1/orgs/self/ws/{workspace}/aliases/{alias}`,
   )}
@@ -45,8 +45,8 @@ Arguments to this command will be passed as URL parameters to ${chalk.bold(
 
 Endpoint Reference
 GET: /v1/orgs/self/ws/{workspace}/aliases/{alias}
-Get Alias
-Get details about a alias
+Retrieve Alias
+Get details about an alias
 
 More documentation at ${chalk.underline(`https://docs.rockset.com/rest-api#getalias`)}`;
 

@@ -29,6 +29,7 @@ dynamodb:
     aws_secret_access_key: wJal....
   aws_role:
     aws_role_arn: arn:aws:iam::2378964092:role/rockset-role
+  s3_export_bucket_name: null
 redshift:
   aws_access_key:
     aws_access_key_id: AKIAIOSFODNN7EXAMPLE
@@ -49,6 +50,11 @@ kafka:
   source_status_by_topic: topic-a:DORMANT
   kafka_data_format: json
   connection_string: null
+  use_v3: null
+  bootstrap_servers: null
+  security_config:
+    ? api_key
+    ? secret
 mongodb:
   connection_uri: mongodb+srv://<username>:<password>@server.example.com/
 `;

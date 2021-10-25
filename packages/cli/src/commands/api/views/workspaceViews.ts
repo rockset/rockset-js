@@ -11,7 +11,7 @@ import { cli } from 'cli-ux';
 
 const bodySchema = ``;
 
-class ListQueryLambdasInCollection extends RockCommand {
+class WorkspaceViews extends RockCommand {
   static flags = {
     help: flags.help({ char: 'h' }),
 
@@ -29,48 +29,40 @@ class ListQueryLambdasInCollection extends RockCommand {
       required: true,
       hidden: false,
     },
-    {
-      name: 'collection',
-      description: 'name of the collection',
-      required: true,
-      hidden: false,
-    },
   ];
 
-  static description = `get all query lambdas that hit a specific rockset collection
+  static description = `retrieve all views in a workspace
 Arguments to this command will be passed as URL parameters to ${chalk.bold(
-    `GET: /v1/orgs/self/ws/{workspace}/collections/{collection}/lambdas`,
+    `GET: /v1/orgs/self/ws/{workspace}/views`,
   )}
 
 
 Endpoint Reference
-GET: /v1/orgs/self/ws/{workspace}/collections/{collection}/lambdas
-Get Query Lambdas for Collection
-Get all Query Lambdas that hit a specific Rockset Collection.
+GET: /v1/orgs/self/ws/{workspace}/views
+List Views in Workspace
+Retrieve all views in a workspace.
 
-More documentation at ${chalk.underline(
-    `https://docs.rockset.com/rest-api#listquerylambdasincollection`,
-  )}`;
+More documentation at ${chalk.underline(`https://docs.rockset.com/rest-api#workspaceviews`)}`;
 
-  static examples = ['$ rockset api:collections:listQueryLambdasInCollection WORKSPACE COLLECTION'];
+  static examples = ['$ rockset api:views:workspaceViews WORKSPACE'];
 
   async run() {
-    const { args, flags } = this.parse(ListQueryLambdasInCollection);
+    const { args, flags } = this.parse(WorkspaceViews);
 
     // Rockset client object
     const client = await main.createClient();
 
-    const namedArgs: Args = ListQueryLambdasInCollection.args;
+    const namedArgs: Args = WorkspaceViews.args;
 
     // apicall
-    const apicall = client.collections.listQueryLambdasInCollection.bind(client.collections);
+    const apicall = client.views.workspaceViews.bind(client.views);
 
     // endpoint
-    const endpoint = '/v1/orgs/self/ws/{workspace}/collections/{collection}/lambdas';
+    const endpoint = '/v1/orgs/self/ws/{workspace}/views';
     const method = 'GET';
 
     await runApiCall.bind(this)({ args, flags, namedArgs, apicall, method, endpoint, bodySchema });
   }
 }
 
-export default ListQueryLambdasInCollection;
+export default WorkspaceViews;

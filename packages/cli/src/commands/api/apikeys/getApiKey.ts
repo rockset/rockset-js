@@ -11,7 +11,7 @@ import { cli } from 'cli-ux';
 
 const bodySchema = ``;
 
-class GetWorkspace extends RockCommand {
+class GetApiKey extends RockCommand {
   static flags = {
     help: flags.help({ char: 'h' }),
 
@@ -24,45 +24,52 @@ class GetWorkspace extends RockCommand {
 
   static args = [
     {
-      name: 'workspace',
-      description: 'name of the workspace',
+      name: 'user',
+      description:
+        'Email of the API key owner. Use `self` to specify the currently authenticated user.',
+      required: true,
+      hidden: false,
+    },
+    {
+      name: 'name',
+      description: 'Name of the API key.',
       required: true,
       hidden: false,
     },
   ];
 
-  static description = `get information about a single workspace
+  static description = `retrieve a particular api key for any user in your organization
 Arguments to this command will be passed as URL parameters to ${chalk.bold(
-    `GET: /v1/orgs/self/ws/{workspace}`,
+    `GET: /v1/orgs/self/users/{user}/apikeys/{name}`,
   )}
 
 
 Endpoint Reference
-GET: /v1/orgs/self/ws/{workspace}
-Retrieve Workspace
-Get information about a single workspace.
+GET: /v1/orgs/self/users/{user}/apikeys/{name}
+Retrieve API Key
+Retrieve a particular API key for any user in your organization.
 
-More documentation at ${chalk.underline(`https://docs.rockset.com/rest-api#getworkspace`)}`;
+More documentation at ${chalk.underline(`https://docs.rockset.com/rest-api#getapikey`)}`;
 
-  static examples = ['$ rockset api:workspaces:getWorkspace WORKSPACE'];
+  static examples = ['$ rockset api:apikeys:getApiKey USER NAME'];
 
   async run() {
-    const { args, flags } = this.parse(GetWorkspace);
+    const { args, flags } = this.parse(GetApiKey);
 
     // Rockset client object
     const client = await main.createClient();
 
-    const namedArgs: Args = GetWorkspace.args;
+    const namedArgs: Args = GetApiKey.args;
 
     // apicall
-    const apicall = client.workspaces.getWorkspace.bind(client.workspaces);
+    const apicall = client.apikeys.getApiKey.bind(client.apikeys);
 
     // endpoint
-    const endpoint = '/v1/orgs/self/ws/{workspace}';
+    const endpoint = '/v1/orgs/self/users/{user}/apikeys/{name}';
     const method = 'GET';
 
     await runApiCall.bind(this)({ args, flags, namedArgs, apicall, method, endpoint, bodySchema });
   }
 }
 
-export default GetWorkspace;
+export default GetApiKey;

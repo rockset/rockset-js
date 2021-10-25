@@ -11,7 +11,7 @@ import { cli } from 'cli-ux';
 
 const bodySchema = ``;
 
-class GetCurrentUser extends RockCommand {
+class GetUser extends RockCommand {
   static flags = {
     help: flags.help({ char: 'h' }),
 
@@ -22,40 +22,47 @@ class GetCurrentUser extends RockCommand {
     ...cli.table.flags({ only: ['columns', 'output'] }),
   };
 
-  static args = [];
+  static args = [
+    {
+      name: 'user',
+      description: 'user email',
+      required: true,
+      hidden: false,
+    },
+  ];
 
-  static description = `retrieve currently authenticated user
+  static description = `retrieve user by email
 Arguments to this command will be passed as URL parameters to ${chalk.bold(
-    `GET: /v1/orgs/self/users/self`,
+    `GET: /v1/orgs/self/users/{user}`,
   )}
 
 
 Endpoint Reference
-GET: /v1/orgs/self/users/self
-Retrieve Current User
-Retrieve currently authenticated user.
+GET: /v1/orgs/self/users/{user}
+Retrieve User
+Retrieve user by email.
 
-More documentation at ${chalk.underline(`https://docs.rockset.com/rest-api#getcurrentuser`)}`;
+More documentation at ${chalk.underline(`https://docs.rockset.com/rest-api#getuser`)}`;
 
-  static examples = ['$ rockset api:users:getCurrentUser '];
+  static examples = ['$ rockset api:users:getUser USER'];
 
   async run() {
-    const { args, flags } = this.parse(GetCurrentUser);
+    const { args, flags } = this.parse(GetUser);
 
     // Rockset client object
     const client = await main.createClient();
 
-    const namedArgs: Args = GetCurrentUser.args;
+    const namedArgs: Args = GetUser.args;
 
     // apicall
-    const apicall = client.users.getCurrentUser.bind(client.users);
+    const apicall = client.users.getUser.bind(client.users);
 
     // endpoint
-    const endpoint = '/v1/orgs/self/users/self';
+    const endpoint = '/v1/orgs/self/users/{user}';
     const method = 'GET';
 
     await runApiCall.bind(this)({ args, flags, namedArgs, apicall, method, endpoint, bodySchema });
   }
 }
 
-export default GetCurrentUser;
+export default GetUser;

@@ -9,14 +9,12 @@ import { RockCommand } from '../../../base-command';
 import * as chalk from 'chalk';
 import { cli } from 'cli-ux';
 
-const bodySchema = `name: aliasName
-description: version alias
-collections:
-  - commons.foo
-  - prod.demo
+const bodySchema = `name: myAwesomeView
+description: view of awesome collection
+query: SELECT * FROM foo
 `;
 
-class CreateAlias extends RockCommand {
+class CreateView extends RockCommand {
   static flags = {
     help: flags.help({ char: 'h' }),
     body: flags.string({
@@ -41,48 +39,46 @@ class CreateAlias extends RockCommand {
     },
   ];
 
-  static description = `create new alias in a workspace
+  static description = `create a view
 Arguments to this command will be passed as URL parameters to ${chalk.bold(
-    `POST: /v1/orgs/self/ws/{workspace}/aliases`,
+    `POST: /v1/orgs/self/ws/{workspace}/views`,
   )}
 ${chalk.bold(`This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
        `)}
 Example Body (YAML):
-name: aliasName
-description: version alias
-collections:
-  - commons.foo
-  - prod.demo
+name: myAwesomeView
+description: view of awesome collection
+query: SELECT * FROM foo
 
 
 Endpoint Reference
-POST: /v1/orgs/self/ws/{workspace}/aliases
-Create Alias
-Create new alias in a workspace.
+POST: /v1/orgs/self/ws/{workspace}/views
+Create View
+Create a view
 
-More documentation at ${chalk.underline(`https://docs.rockset.com/rest-api#createalias`)}`;
+More documentation at ${chalk.underline(`https://docs.rockset.com/rest-api#createview`)}`;
 
   static examples = [
-    '$ rockset api:aliases:createAlias WORKSPACE --body body.yaml\n$ cat body.yaml\nname: aliasName\ndescription: version alias\ncollections:\n  - commons.foo\n  - prod.demo\n\n',
+    '$ rockset api:views:createView WORKSPACE --body body.yaml\n$ cat body.yaml\nname: myAwesomeView\ndescription: view of awesome collection\nquery: SELECT * FROM foo\n\n',
   ];
 
   async run() {
-    const { args, flags } = this.parse(CreateAlias);
+    const { args, flags } = this.parse(CreateView);
 
     // Rockset client object
     const client = await main.createClient();
 
-    const namedArgs: Args = CreateAlias.args;
+    const namedArgs: Args = CreateView.args;
 
     // apicall
-    const apicall = client.aliases.createAlias.bind(client.aliases);
+    const apicall = client.views.createView.bind(client.views);
 
     // endpoint
-    const endpoint = '/v1/orgs/self/ws/{workspace}/aliases';
+    const endpoint = '/v1/orgs/self/ws/{workspace}/views';
     const method = 'POST';
 
     await runApiCall.bind(this)({ args, flags, namedArgs, apicall, method, endpoint, bodySchema });
   }
 }
 
-export default CreateAlias;
+export default CreateView;

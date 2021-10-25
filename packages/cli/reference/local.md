@@ -17,6 +17,12 @@ Manage your local Query Lambdas.
 deploy Query Lambda entities to Rockset
 
 ```
+deploy Query Lambda entities to Rockset
+
+If a workspace parameter is passed, only Query Lambdas in that workspace will be deployed.
+If a lambda parameter is passed, only that Query Lambda will be deployed.
+
+
 USAGE
   $ rockset local:deploy
 
@@ -50,6 +56,10 @@ _See code: [src/commands/local/deploy.ts](../src/commands/local/deploy.ts)_
 download Query Lambda entities from Rockset to your local project
 
 ```
+download Query Lambda entities from Rockset to your local project
+  
+  Note: For operating systems that are case insensitive (eg. MacOS and Windows), it is possible that two different Query Lambdas from the server will be associated with the same paths on disk. This command will skip Query Lambdas that would otherwise overwrite each other.
+
 USAGE
   $ rockset local:download
 
@@ -71,6 +81,8 @@ _See code: [src/commands/local/download.ts](../src/commands/local/download.ts)_
 initialize your project with a rockset.config.json file.
 
 ```
+initialize your project with a rockset.config.json file.
+
 USAGE
   $ rockset local:init
 
@@ -86,6 +98,8 @@ _See code: [src/commands/local/init.ts](../src/commands/local/init.ts)_
 add a Query Lambda to the current project
 
 ```
+add a Query Lambda to the current project
+
 USAGE
   $ rockset local:queryLambda:add NAME
 
@@ -108,6 +122,8 @@ _See code: [src/commands/local/queryLambda/add.ts](../src/commands/local/queryLa
 delete a Query Lambda from the current project
 
 ```
+delete a Query Lambda from the current project
+
 USAGE
   $ rockset local:queryLambda:delete NAME
 
@@ -131,6 +147,8 @@ _See code: [src/commands/local/queryLambda/delete.ts](../src/commands/local/quer
 execute a Query Lambda in the current project
 
 ```
+execute a Query Lambda in the current project
+
 USAGE
   $ rockset local:queryLambda:execute NAME
 
@@ -154,6 +172,8 @@ _See code: [src/commands/local/queryLambda/execute.ts](../src/commands/local/que
 list all of the Query Lambdas in the current project
 
 ```
+list all of the Query Lambdas in the current project
+
 USAGE
   $ rockset local:queryLambda:list
 
@@ -168,6 +188,8 @@ _See code: [src/commands/local/queryLambda/list.ts](../src/commands/local/queryL
 resolve the absolute path of an entity in the current project
 
 ```
+resolve the absolute path of an entity in the current project
+
 USAGE
   $ rockset local:resolve NAME
 

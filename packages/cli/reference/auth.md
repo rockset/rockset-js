@@ -13,6 +13,11 @@ Manage your authentication profiles.
 create a new profile with the specified name and apikey.
 
 ```
+create a new profile with the specified name and apikey.
+  
+  You can find an API Key for your account in the Rockset Console. https://console.rockset.com/apikeys
+  
+
 USAGE
   $ rockset auth:add NAME APIKEY [APISERVER]
 
@@ -36,6 +41,8 @@ _See code: [src/commands/auth/add.ts](../src/commands/auth/add.ts)_
 delete a profile with the specified name
 
 ```
+delete a profile with the specified name
+
 USAGE
   $ rockset auth:delete NAME
 
@@ -53,6 +60,8 @@ _See code: [src/commands/auth/delete.ts](../src/commands/auth/delete.ts)_
 list all of the available profiles, and show the active profile
 
 ```
+list all of the available profiles, and show the active profile
+
 USAGE
   $ rockset auth:list
 
@@ -68,6 +77,8 @@ _See code: [src/commands/auth/list.ts](../src/commands/auth/list.ts)_
 use a specific authentication profile
 
 ```
+use a specific authentication profile
+
 USAGE
   $ rockset auth:use NAME
 

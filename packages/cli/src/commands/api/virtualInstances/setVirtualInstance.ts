@@ -9,14 +9,12 @@ import { RockCommand } from '../../../base-command';
 import * as chalk from 'chalk';
 import { cli } from 'cli-ux';
 
-const bodySchema = `name: aliasName
-description: version alias
-collections:
-  - commons.foo
-  - prod.demo
+const bodySchema = `new_size: LARGE
+new_type: null
+monitoring_enabled: null
 `;
 
-class CreateAlias extends RockCommand {
+class SetVirtualInstance extends RockCommand {
   static flags = {
     help: flags.help({ char: 'h' }),
     body: flags.string({
@@ -34,55 +32,53 @@ class CreateAlias extends RockCommand {
 
   static args = [
     {
-      name: 'workspace',
-      description: 'name of the workspace',
+      name: 'virtualInstanceId',
+      description: 'uuid of the virtual instance',
       required: true,
       hidden: false,
     },
   ];
 
-  static description = `create new alias in a workspace
+  static description = `update the properties of a virtual instance
 Arguments to this command will be passed as URL parameters to ${chalk.bold(
-    `POST: /v1/orgs/self/ws/{workspace}/aliases`,
+    `POST: /v1/orgs/self/virtualinstances/{virtualInstanceId}`,
   )}
 ${chalk.bold(`This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
        `)}
 Example Body (YAML):
-name: aliasName
-description: version alias
-collections:
-  - commons.foo
-  - prod.demo
+new_size: LARGE
+new_type: null
+monitoring_enabled: null
 
 
 Endpoint Reference
-POST: /v1/orgs/self/ws/{workspace}/aliases
-Create Alias
-Create new alias in a workspace.
+POST: /v1/orgs/self/virtualinstances/{virtualInstanceId}
+Update Virtual Instance
+Update the properties of a virtual instance.
 
-More documentation at ${chalk.underline(`https://docs.rockset.com/rest-api#createalias`)}`;
+More documentation at ${chalk.underline(`https://docs.rockset.com/rest-api#setvirtualinstance`)}`;
 
   static examples = [
-    '$ rockset api:aliases:createAlias WORKSPACE --body body.yaml\n$ cat body.yaml\nname: aliasName\ndescription: version alias\ncollections:\n  - commons.foo\n  - prod.demo\n\n',
+    '$ rockset api:virtualInstances:setVirtualInstance VIRTUALINSTANCEID --body body.yaml\n$ cat body.yaml\nnew_size: LARGE\nnew_type: null\nmonitoring_enabled: null\n\n',
   ];
 
   async run() {
-    const { args, flags } = this.parse(CreateAlias);
+    const { args, flags } = this.parse(SetVirtualInstance);
 
     // Rockset client object
     const client = await main.createClient();
 
-    const namedArgs: Args = CreateAlias.args;
+    const namedArgs: Args = SetVirtualInstance.args;
 
     // apicall
-    const apicall = client.aliases.createAlias.bind(client.aliases);
+    const apicall = client.virtualInstances.setVirtualInstance.bind(client.virtualInstances);
 
     // endpoint
-    const endpoint = '/v1/orgs/self/ws/{workspace}/aliases';
+    const endpoint = '/v1/orgs/self/virtualinstances/{virtualInstanceId}';
     const method = 'POST';
 
     await runApiCall.bind(this)({ args, flags, namedArgs, apicall, method, endpoint, bodySchema });
   }
 }
 
-export default CreateAlias;
+export default SetVirtualInstance;
