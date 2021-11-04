@@ -183,6 +183,42 @@ rocksetClient.queries
   .catch(console.error);
 ```
 
+### Run queries with pagination
+
+```ts
+let page = await rockset.queries.query({
+  sql: {
+    // This query will return 100 documents.
+    query: 'SELECT * FROM my_collection LIMIT 100',
+
+    // Pagination must be enabled explicitly on a per-query basis.
+    paginate: true,
+
+    // This tells Rockset how many documents to include in the initial response.
+    initial_paginate_response_doc_count: 20,
+  },
+});
+
+const qid = page.query_id ?? '';
+
+// `next_cursor` will be null when all queries are read.
+while (page.pagination?.next_cursor) {
+  // Process the results.
+  console.log(page.results);
+
+  page = await rockset.queries.getQueryPagination(
+    qid,
+    page.pagination?.next_cursor ?? '',
+    // Read results in batches of 10 results. This can be an arbitrary number.
+    10,
+    0
+  );
+}
+
+// Process the last page of results.
+console.log(page.results);
+```
+
 ### Run queries using Query Lambdas
 
 ```ts
