@@ -13,10 +13,7 @@ Manage your authentication profiles.
 create a new profile with the specified name and apikey.
 
 ```
-create a new profile with the specified name and apikey.
-  
-  You can find an API Key for your account in the Rockset Console. https://console.rockset.com/apikeys
-  
+create a new profile with the specified name and apikey.  
 
 USAGE
   $ rockset auth:add NAME APIKEY [APISERVER]
