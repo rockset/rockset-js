@@ -25,7 +25,9 @@ Note: you can also install using `yarn`.
 
 A complete reference of this library (powered by [TypeDoc](https://typedoc.org/)) can be found [here](https://docs.rockset.com/client/node/docs/).
 
-## Usage Examples
+## Initialization
+
+To initialize a Rockset client, you will have to import the client, and set client parameters.
 
 ### Import (ES6 Syntax)
 
@@ -35,7 +37,7 @@ Note: you can also import using CommonJS syntax.
 import rockset from '@rockset/client';
 ```
 
-### Configure Client
+### Configure Client - Apikey
 
 ```ts
 const rocksetClient = rockset(process.env.ROCKSET_APIKEY);
@@ -46,6 +48,14 @@ Note: most sans-TypeScript projects currently require the following
 
 ```ts
 const rocksetClient = rockset.default(process.env.ROCKSET_APIKEY);
+```
+
+### Configure Client - Region
+
+By default, our client connects to the us-west-2 server. To select another region, you will need to explicitly set this region. You can find a list of Rockset API servers and supported regions in the Rockset Docs [here](https://rockset.com/docs/rest-api).
+
+```ts
+const rocksetClient = rockset(process.env.ROCKSET_APIKEY, "https://api.use1a1.rockset.com");
 ```
 
 ## Loading Your Data
