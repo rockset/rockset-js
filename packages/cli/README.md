@@ -14,6 +14,7 @@ Official Rockset CLI
 
 * [Download & Installation Instructions](#download--installation-instructions)
 * [Authentication and Profile Management (`rockset auth`)](#authentication-and-profile-management-rockset-auth)
+    * [Multi-region support](#multi-region-support)
 * [Access the Rockset API from the Command Line (`rockset api`)](#access-the-rockset-api-from-the-command-line-rockset-api)
     * [Sample Code Snippets](#sample-code-snippets)
     * [Output Format Options](#output-format-options)
@@ -100,6 +101,9 @@ $ rockset auth:use
 ```
 
 You can find a complete reference for all supported `rockset:auth` commands [here](/packages/cli/reference/auth.md).
+
+### Multi-region support
+By default, the Rockset CLI tool uses the us-west-2 server. To select another region, you will need to add and use a new profile that explicitly sets a different region. For more information, check out `rockset:auth` commands [here](/packages/cli/reference/auth.md).
 
 # Access the Rockset API from the Command Line (`rockset api`)
 

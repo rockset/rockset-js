@@ -40,6 +40,7 @@ class AddProfile extends RockCommand {
   static description = chalk`create a new profile with the specified name and apikey.
   
   You can find an API Key for your account in the Rockset Console. {underline https://console.rockset.com/apikeys}
+  You can find a list of Rockset API servers and supported regions in the Rockset Docs. {underline https://rockset.com/docs/rest-api}
   `;
 
   async run() {
