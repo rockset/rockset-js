@@ -21,6 +21,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - run: ./login ${{ secrets.NPM_ACCESS_KEY }} ${{ secrets.FONTAWESOME_REGISTRY }}
+    - run: export SKIP_PREFLIGHT_CHECK=true
     - run: yarn
     - run: yarn run build 
     - run: yarn run lint
