@@ -10,6 +10,8 @@ jobs:
     strategy:
       matrix:
         node-version: [12.x]
+    env:
+      SKIP_PREFLIGHT_CHECK: true
 
     steps:
     - uses: actions/checkout@v2
