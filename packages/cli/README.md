@@ -391,6 +391,17 @@ You can also execute Query Lambda SQL direclty from the command line:
 $ rockset local:queryLambda:execute commons.helloWorld
 ```
 
+For more complex queries or queries with parameters, you can use the [Rockset Developer UI](/packages/dev-server). You can
+start the Developer UI with the following command:
+
+```
+$ rockset local:serve
+```
+
+This command spins up a local webserver that displays all of the Query Lambdas found in your local project, allows
+you to easily specify and manage query parameters, and offers fully featured data tables and JSON renderers to view your
+SQL results.
+
 ### Deploy Query Lambdas to Rockset
 
 Up to this point, none of the commands we've run have actually created or updated any resources in our Rockset account.
