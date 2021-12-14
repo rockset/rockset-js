@@ -29,6 +29,7 @@ OPTIONS
 
 DESCRIPTION
   You can find an API Key for your account in the Rockset Console. https://console.rockset.com/apikeys
+     You can find a list of Rockset API servers and supported regions in the Rockset Docs. https://rockset.com/docs/rest-api
 ```
 
 _See code: [src/commands/auth/add.ts](../src/commands/auth/add.ts)_
