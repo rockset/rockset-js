@@ -7,7 +7,7 @@
     "color": "#DEEDF7",
     "theme": "light"
   },
-  "version": "0.8.9",
+  "version": "0.8.10",
   "license": "Apache-2.0",
   "publisher": "RocksetInc",
   "repository": "https://github.com/rockset/rockset-js/tree/master/packages/rscode",
@@ -147,8 +147,8 @@
     "webpack-cli": "^3.3.12"
   },
   "dependencies": {
-    "@rockset/client": "0.8.9",
-    "@rockset/core": "0.8.9",
+    "@rockset/client": "0.8.10",
+    "@rockset/core": "0.8.10",
     "js-yaml": "^3.14.1",
     "sql-formatter": "^2.3.3"
   }

@@ -1,7 +1,7 @@
 {
   "name": "@rockset/cli",
   "description": "Official Rockset CLI",
-  "version": "0.8.9",
+  "version": "0.8.10",
   "author": "Rockset",
   "bin": {
     "rockset": "./bin/run"
@@ -13,8 +13,8 @@
     "@oclif/plugin-autocomplete": "^1.1.1",
     "@oclif/plugin-help": "^5.1.10",
     "@oclif/plugin-update": "^2.1.5",
-    "@rockset/client": "0.8.9",
-    "@rockset/core": "0.8.9",
+    "@rockset/client": "0.8.10",
+    "@rockset/core": "0.8.10",
     "@rockset/dev-server": "0.8.9",
     "@rockset/eslint-config": "0.8.9",
     "@types/chalk": "^2.2.0",
@@ -31,7 +31,6 @@
     "tslib": "^1.11.2"
   },
   "devDependencies": {
-    "oclif": "2.1.0",
     "@types/chalk": "^2.2.0",
     "@types/lodash": "^4.14.150",
     "@types/node": "^10.17.21",
@@ -46,6 +45,7 @@
     "globby": "^10.0.2",
     "jest": "^26.1.0",
     "js-yaml": "^3.14.0",
+    "oclif": "2.1.0",
     "ts-jest": "^26.1.3",
     "ts-node": "^8.10.1",
     "typescript": "^3.8.3"
@@ -122,8 +122,12 @@
       "@oclif/plugin-update"
     ],
     "repositoryPrefix": "../<%- commandPath %>",
-    "additionalHelpFlags": ["-h"],
-    "additionalVersionFlags": ["-v"],
+    "additionalHelpFlags": [
+      "-h"
+    ],
+    "additionalVersionFlags": [
+      "-v"
+    ],
     "topicSeparator": " "
   },
   "repository": "https://github.com/rockset/rockset-js",
