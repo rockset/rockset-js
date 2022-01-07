@@ -1,5 +1,5 @@
 // Generated file, please do not edit directly
-import { flags } from '@oclif/command';
+import { Flags } from '@oclif/core';
 import { RockCommand } from '../base-command';
 import { main } from '@rockset/core';
 import * as _ from 'lodash';
@@ -9,8 +9,8 @@ import { showTable } from '../helper/util';
 
 class SQL extends RockCommand {
   static flags = {
-    help: flags.help({ char: 'h' }),
-    defaultLimit: flags.integer({
+    help: Flags.help({ char: 'h' }),
+    defaultLimit: Flags.integer({
       char: 'l',
       description:
         'set the default row limit property on the query. This will set a default limit on the query that can be overrided by a limit in the SQL text.',
@@ -32,7 +32,7 @@ class SQL extends RockCommand {
   static description = `execute a SQL expression`;
 
   async run() {
-    const { args, flags } = this.parse(SQL);
+    const { args, flags } = await this.parse(SQL);
 
     const sql = args.sql as string;
 

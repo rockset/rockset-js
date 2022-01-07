@@ -1,7 +1,7 @@
 /* eslint-disable unicorn/filename-case */
 // Generated file, please do not edit directly
 
-import { flags } from '@oclif/command';
+import { Flags } from '@oclif/core';
 import { main } from '@rockset/core';
 import { runApiCall, Args } from '../../../helper/util';
 import { RockCommand } from '../../../base-command';
@@ -13,9 +13,8 @@ const bodySchema = ``;
 
 class DeleteView extends RockCommand {
   static flags = {
-    help: flags.help({ char: 'h' }),
-
-    raw: flags.boolean({
+    help: Flags.help({ char: 'h' }),
+    raw: Flags.boolean({
       description:
         'Show the raw output from the server, instead of grabbing the results. Usually used in conjunction with --output=json',
     }),
@@ -53,7 +52,7 @@ More documentation at ${chalk.underline(`https://docs.rockset.com/rest-api#delet
   static examples = ['$ rockset api:views:deleteView WORKSPACE VIEW'];
 
   async run() {
-    const { args, flags } = this.parse(DeleteView);
+    const { args, flags } = await this.parse(DeleteView);
 
     // Rockset client object
     const client = await main.createClient();

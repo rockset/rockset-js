@@ -10,22 +10,26 @@ display autocomplete installation instructions
 display autocomplete installation instructions
 
 ```
-display autocomplete installation instructions
-
 USAGE
-  $ rockset autocomplete [SHELL]
+  $ rockset autocomplete [SHELL] [-r]
 
 ARGUMENTS
   SHELL  shell type
 
-OPTIONS
+FLAGS
   -r, --refresh-cache  Refresh cache (ignores displaying instructions)
+
+DESCRIPTION
+  display autocomplete installation instructions
 
 EXAMPLES
   $ rockset autocomplete
+
   $ rockset autocomplete bash
+
   $ rockset autocomplete zsh
+
   $ rockset autocomplete --refresh-cache
 ```
 
-_See code: [@oclif/plugin-autocomplete](https://github.com/oclif/plugin-autocomplete/blob/v0.2.0/src/commands/autocomplete/index.ts)_
+_See code: [@oclif/plugin-autocomplete](https://github.com/oclif/plugin-autocomplete/blob/v1.1.1/src/commands/autocomplete/index.ts)_

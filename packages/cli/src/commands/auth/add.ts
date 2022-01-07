@@ -1,4 +1,4 @@
-import { flags } from '@oclif/command';
+import { Flags } from '@oclif/core';
 import { auth } from '@rockset/core';
 import { parseAuthProfile } from '@rockset/core/dist/filesystem/auth';
 import { RockCommand } from '../../base-command';
@@ -6,8 +6,8 @@ import * as chalk from 'chalk';
 
 class AddProfile extends RockCommand {
   static flags = {
-    help: flags.help({ char: 'h' }),
-    activate: flags.boolean({
+    help: Flags.help({ char: 'h' }),
+    activate: Flags.boolean({
       char: 'a',
       default: true,
       description: 'whether to activate the profile after creating it',
@@ -44,7 +44,7 @@ class AddProfile extends RockCommand {
   `;
 
   async run() {
-    const { args, flags } = this.parse(AddProfile);
+    const { args, flags } = await this.parse(AddProfile);
 
     // Will throw for invalid qualified name
     await auth.createAuthProfile(

@@ -1,10 +1,10 @@
-import { flags } from '@oclif/command';
+import { Flags } from '@oclif/core';
 import { auth } from '@rockset/core';
 import { RockCommand } from '../../base-command';
 
 class AddProfile extends RockCommand {
   static flags = {
-    help: flags.help({ char: 'h' }),
+    help: Flags.help({ char: 'h' }),
   };
 
   static args = [
@@ -19,7 +19,7 @@ class AddProfile extends RockCommand {
   static description = `delete a profile with the specified name`;
 
   async run() {
-    const { args } = this.parse(AddProfile);
+    const { args } = await this.parse(AddProfile);
 
     await auth.deleteAuthProfile(args.name);
   }

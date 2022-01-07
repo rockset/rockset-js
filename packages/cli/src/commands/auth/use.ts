@@ -1,10 +1,10 @@
-import { flags } from '@oclif/command';
+import { Flags } from '@oclif/core';
 import { auth } from '@rockset/core';
 import { RockCommand } from '../../base-command';
 
 class UseProfile extends RockCommand {
   static flags = {
-    help: flags.help({ char: 'h' }),
+    help: Flags.help({ char: 'h' }),
   };
 
   static args = [
@@ -19,7 +19,7 @@ class UseProfile extends RockCommand {
   static description = `use a specific authentication profile`;
 
   async run() {
-    const { args } = this.parse(UseProfile);
+    const { args } = await this.parse(UseProfile);
     await auth.activateAuthProfile(args.name);
     this.info(`Successfully activated profile ${args.name}`);
   }

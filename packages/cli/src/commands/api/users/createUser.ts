@@ -1,7 +1,7 @@
 /* eslint-disable unicorn/filename-case */
 // Generated file, please do not edit directly
 
-import { flags } from '@oclif/command';
+import { Flags } from '@oclif/core';
 import { main } from '@rockset/core';
 import { runApiCall, Args } from '../../../helper/util';
 import { RockCommand } from '../../../base-command';
@@ -18,14 +18,13 @@ roles:
 
 class CreateUser extends RockCommand {
   static flags = {
-    help: flags.help({ char: 'h' }),
-    body: flags.string({
+    help: Flags.help({ char: 'h' }),
+    body: Flags.string({
       required: true,
       description:
         'Path to a file whose contents will be passed as the POST body of this request. Format must be [json|yaml]. An example schema is shown below.',
     }),
-
-    raw: flags.boolean({
+    raw: Flags.boolean({
       description:
         'Show the raw output from the server, instead of grabbing the results. Usually used in conjunction with --output=json',
     }),
@@ -60,7 +59,7 @@ More documentation at ${chalk.underline(`https://docs.rockset.com/rest-api#creat
   ];
 
   async run() {
-    const { args, flags } = this.parse(CreateUser);
+    const { args, flags } = await this.parse(CreateUser);
 
     // Rockset client object
     const client = await main.createClient();

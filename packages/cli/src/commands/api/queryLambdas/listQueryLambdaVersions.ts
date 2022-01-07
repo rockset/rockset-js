@@ -1,7 +1,7 @@
 /* eslint-disable unicorn/filename-case */
 // Generated file, please do not edit directly
 
-import { flags } from '@oclif/command';
+import { Flags } from '@oclif/core';
 import { main } from '@rockset/core';
 import { runApiCall, Args } from '../../../helper/util';
 import { RockCommand } from '../../../base-command';
@@ -13,19 +13,18 @@ const bodySchema = ``;
 
 class ListQueryLambdaVersions extends RockCommand {
   static flags = {
-    help: flags.help({ char: 'h' }),
-
-    raw: flags.boolean({
+    help: Flags.help({ char: 'h' }),
+    raw: Flags.boolean({
       description:
         'Show the raw output from the server, instead of grabbing the results. Usually used in conjunction with --output=json',
     }),
     ...cli.table.flags({ only: ['columns', 'output'] }),
-    loadTestRps: flags.integer({
+    loadTestRps: Flags.integer({
       char: 'l',
       description:
         'If this flag is active, a load test will be conducted using this endpoint. The value passed to this flag determines how many requests per second will be sent',
     }),
-    yes: flags.boolean({
+    yes: Flags.boolean({
       char: 'y',
       description: 'Skip all safety prompts',
       default: false,
@@ -65,7 +64,7 @@ More documentation at ${chalk.underline(
   static examples = ['$ rockset api:queryLambdas:listQueryLambdaVersions WORKSPACE QUERYLAMBDA'];
 
   async run() {
-    const { args, flags } = this.parse(ListQueryLambdaVersions);
+    const { args, flags } = await this.parse(ListQueryLambdaVersions);
 
     // Rockset client object
     const client = await main.createClient();
