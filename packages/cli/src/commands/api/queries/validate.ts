@@ -1,7 +1,7 @@
 /* eslint-disable unicorn/filename-case */
 // Generated file, please do not edit directly
 
-import { flags } from '@oclif/command';
+import { Flags } from '@oclif/core';
 import { main } from '@rockset/core';
 import { runApiCall, Args } from '../../../helper/util';
 import { RockCommand } from '../../../base-command';
@@ -24,24 +24,23 @@ const bodySchema = `sql:
 
 class Validate extends RockCommand {
   static flags = {
-    help: flags.help({ char: 'h' }),
-    body: flags.string({
+    help: Flags.help({ char: 'h' }),
+    body: Flags.string({
       required: true,
       description:
         'Path to a file whose contents will be passed as the POST body of this request. Format must be [json|yaml]. An example schema is shown below.',
     }),
-
-    raw: flags.boolean({
+    raw: Flags.boolean({
       description:
         'Show the raw output from the server, instead of grabbing the results. Usually used in conjunction with --output=json',
     }),
     ...cli.table.flags({ only: ['columns', 'output'] }),
-    loadTestRps: flags.integer({
+    loadTestRps: Flags.integer({
       char: 'l',
       description:
         'If this flag is active, a load test will be conducted using this endpoint. The value passed to this flag determines how many requests per second will be sent',
     }),
-    yes: flags.boolean({
+    yes: Flags.boolean({
       char: 'y',
       description: 'Skip all safety prompts',
       default: false,
@@ -70,7 +69,7 @@ More documentation at ${chalk.underline(`https://docs.rockset.com/rest-api#valid
   static examples = [];
 
   async run() {
-    const { args, flags } = this.parse(Validate);
+    const { args, flags } = await this.parse(Validate);
 
     // Rockset client object
     const client = await main.createClient();

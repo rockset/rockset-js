@@ -1,4 +1,4 @@
-import { flags } from '@oclif/command';
+import { Flags } from '@oclif/core';
 import { types, main, helper } from '@rockset/core';
 import { RockCommand } from '../../../base-command';
 import { QueryResponse, ErrorModel } from '@rockset/client/dist/codegen/api';
@@ -6,8 +6,8 @@ import { LambdaEntity, parseQueryParameterArray } from '@rockset/core/dist/types
 
 class ExecuteQueryLambda extends RockCommand {
   static flags = {
-    help: flags.help({ char: 'h' }),
-    parameters: flags.string({
+    help: Flags.help({ char: 'h' }),
+    parameters: Flags.string({
       char: 'p',
       description: 'a JSON string of parameters to execute the query with.',
       required: false,
@@ -31,7 +31,7 @@ class ExecuteQueryLambda extends RockCommand {
   static description = `execute a Query Lambda in the current project`;
 
   async run() {
-    const { args, flags } = this.parse(ExecuteQueryLambda);
+    const { args, flags } = await this.parse(ExecuteQueryLambda);
 
     const params = flags.parameters ? parseQueryParameterArray(flags.parameters) : [];
 

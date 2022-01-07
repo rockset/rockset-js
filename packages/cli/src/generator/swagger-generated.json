@@ -8414,10 +8414,6 @@
           "description": "Amazon DynamoDB details, must have one of aws_access_key or aws_role",
           "$ref": "#/definitions/DynamodbIntegration"
         },
-        "redshift": {
-          "description": "Amazon Redshift details",
-          "$ref": "#/definitions/RedshiftIntegration"
-        },
         "gcs": {
           "description": "GCS details",
           "$ref": "#/definitions/GcsIntegration"

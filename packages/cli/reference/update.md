@@ -10,10 +10,14 @@ update the rockset CLI
 update the rockset CLI
 
 ```
-update the <%= config.bin %> CLI
-
 USAGE
-  $ rockset update [CHANNEL]
+  $ rockset update [CHANNEL] [--from-local]
+
+FLAGS
+  --from-local  interactively choose an already installed version
+
+DESCRIPTION
+  update the rockset CLI
 ```
 
-_See code: [@oclif/plugin-update](https://github.com/oclif/plugin-update/blob/v1.3.10/src/commands/update.ts)_
+_See code: [@oclif/plugin-update](https://github.com/oclif/plugin-update/blob/v2.1.5/src/commands/update.ts)_

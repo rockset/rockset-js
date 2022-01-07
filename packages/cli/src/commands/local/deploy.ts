@@ -1,4 +1,4 @@
-import { flags } from '@oclif/command';
+import { Flags } from '@oclif/core';
 import { main } from '@rockset/core';
 import { QueryLambdaVersionResponse, ErrorModel } from '@rockset/client/dist/codegen/api';
 import { LambdaEntity } from '@rockset/core/dist/types';
@@ -7,26 +7,26 @@ import * as chalk from 'chalk';
 
 class DeployQueryLambda extends RockCommand {
   static flags = {
-    help: flags.help({ char: 'h' }),
-    tag: flags.string({
+    help: Flags.help({ char: 'h' }),
+    tag: Flags.string({
       char: 't',
       helpValue: `specify a tag name to be applied to deployed Query Lambda versions`,
     }),
-    workspace: flags.string({
+    workspace: Flags.string({
       char: 'w',
       description: 'the qualified name of the workspace to deploy',
     }),
-    lambda: flags.string({
+    lambda: Flags.string({
       char: 'l',
       description: 'the qualified name of the lambda to deploy',
       exclusive: ['workspace'],
     }),
-    failOnMissingWorkspace: flags.boolean({
+    failOnMissingWorkspace: Flags.boolean({
       description:
         'if a workspace does not exist in the remote, the deploy will fail instead of creating one',
       default: false,
     }),
-    dryRun: flags.boolean({
+    dryRun: Flags.boolean({
       description: 'print out the names of the Query Lambdas that would be deployed and return',
       default: false,
     }),
@@ -39,7 +39,7 @@ If a lambda parameter is passed, only that Query Lambda will be deployed.
 `;
 
   async run() {
-    const { flags } = this.parse(DeployQueryLambda);
+    const { flags } = await this.parse(DeployQueryLambda);
     await main.deployQueryLambdas(
       {
         onDeployStart: (lambda: LambdaEntity) => {

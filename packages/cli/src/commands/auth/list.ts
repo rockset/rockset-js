@@ -1,4 +1,4 @@
-import { flags } from '@oclif/command';
+import { Flags } from '@oclif/core';
 import { auth } from '@rockset/core';
 import _ = require('lodash');
 import { cli } from 'cli-ux';
@@ -15,14 +15,14 @@ const censorApiKey = (key: string | undefined) => {
 
 class ListProfiles extends RockCommand {
   static flags = {
-    help: flags.help({ char: 'h' }),
-    showKeys: flags.boolean({ char: 's', description: 'uncensor all API Keys' }),
+    help: Flags.help({ char: 'h' }),
+    showKeys: Flags.boolean({ char: 's', description: 'uncensor all API Keys' }),
   };
 
   static description = `list all of the available profiles, and show the active profile`;
 
   async run() {
-    const { flags } = this.parse(ListProfiles);
+    const { flags } = await this.parse(ListProfiles);
     // First check if there is a profile active at all
     const allAuth = await auth.listAuthProfiles();
 

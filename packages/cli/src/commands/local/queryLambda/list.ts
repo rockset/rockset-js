@@ -1,16 +1,16 @@
-import { flags } from '@oclif/command';
+import { Flags } from '@oclif/core';
 import { listEntityNames } from '@rockset/core/dist/main';
 import { RockCommand } from '../../../base-command';
 
 class ListEntities extends RockCommand {
   static flags = {
-    help: flags.help({ char: 'h' }),
+    help: Flags.help({ char: 'h' }),
   };
 
   static description = `list all of the Query Lambdas in the current project`;
 
   async run() {
-    this.parse(ListEntities);
+    await this.parse(ListEntities);
 
     // Will throw for invalid qualified name
 

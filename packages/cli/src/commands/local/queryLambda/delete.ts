@@ -1,12 +1,12 @@
-import { flags } from '@oclif/command';
+import { Flags } from '@oclif/core';
 import { main, types } from '@rockset/core';
 import { RockCommand } from '../../../base-command';
 import * as prompts from 'prompts';
 
 class CleanEntities extends RockCommand {
   static flags = {
-    help: flags.help({ char: 'h' }),
-    yes: flags.boolean({
+    help: Flags.help({ char: 'h' }),
+    yes: Flags.boolean({
       char: 'y',
       default: false,
       description: 'bypass the safety checks, and automatically engage in dangerous actions',
@@ -31,7 +31,7 @@ class CleanEntities extends RockCommand {
   ];
 
   async run() {
-    const { flags, args } = this.parse(CleanEntities);
+    const { flags, args } = await this.parse(CleanEntities);
     // Will throw for invalid qualified name
     const qualifiedName = types.parseLambdaQualifiedName(args.name as string);
     if (flags.yes) {

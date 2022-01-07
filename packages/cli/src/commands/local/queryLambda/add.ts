@@ -1,12 +1,12 @@
-import { flags } from '@oclif/command';
+import { Flags } from '@oclif/core';
 import { types, fileutil, pathutil } from '@rockset/core';
 import { RockCommand } from '../../../base-command';
 import * as chalk from 'chalk';
 
 class AddEntity extends RockCommand {
   static flags = {
-    help: flags.help({ char: 'h' }),
-    description: flags.string({
+    help: Flags.help({ char: 'h' }),
+    description: Flags.string({
       char: 'd',
       description: 'set the description for the Query Lambda',
     }),
@@ -31,7 +31,7 @@ Successfully added Query Lambda commons.helloWorld to path /Users/tchordia/rocks
   static description = `add a Query Lambda to the current project`;
 
   async run() {
-    const { args, flags } = this.parse(AddEntity);
+    const { args, flags } = await this.parse(AddEntity);
 
     // Will throw for invalid qualified name
     const qualifiedName = types.parseLambdaQualifiedName(args.name as string);

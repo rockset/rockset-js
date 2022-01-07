@@ -1,4 +1,4 @@
-import { flags } from '@oclif/command';
+import { Flags } from '@oclif/core';
 import * as prompts from 'prompts';
 import { types, fileutil } from '@rockset/core';
 import { RockCommand } from '../../base-command';
@@ -8,14 +8,14 @@ export const DEFAULT_SOURCE_ROOT = 'src';
 
 class InitializeProject extends RockCommand {
   static flags = {
-    help: flags.help({ char: 'h' }),
-    yes: flags.boolean({ char: 'y' }),
+    help: Flags.help({ char: 'h' }),
+    yes: Flags.boolean({ char: 'y' }),
   };
 
   static description = `initialize your project with a ${types.ROOT_CONFIG} file.`;
 
   async run() {
-    const { flags } = this.parse(InitializeProject);
+    const { flags } = await this.parse(InitializeProject);
     const writeRootConfig = async (source_root: string = DEFAULT_SOURCE_ROOT) => {
       await fileutil.writeRootConfig({
         source_root,

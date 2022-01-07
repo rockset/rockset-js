@@ -1,5 +1,4 @@
 /* eslint-disable unicorn/no-abusive-eslint-disable */
-import * as Parser from '@oclif/parser';
 import * as _ from 'lodash';
 import { makeAbsolute, readConfigFromPath } from '@rockset/core/dist/filesystem/pathutil';
 import { RockCommand } from '../base-command';
@@ -9,7 +8,11 @@ import { cli } from 'cli-ux';
 import * as YAML from 'yaml';
 import prompts = require('prompts');
 
-export type Args = Parser.args.Input;
+type Arg = {
+  name: string;
+};
+export type Args = Arg[];
+
 interface Options {
   [key: string]: unknown;
   sort?: string;
@@ -29,7 +32,7 @@ export interface Flags extends Options {
 }
 export type Apicall<A extends unknown[], Return> = (...a: A) => Promise<Return>;
 
-export function showTable(data: object[], flags: Options) {
+export function showTable(data: Record<string, unknown>[], flags: Options) {
   const columns = Object.getOwnPropertyNames(data?.[0] ?? {});
   const col = columns.reduce((obj, cur) => ({ ...obj, [cur]: { header: cur } }), {});
 
@@ -60,7 +63,7 @@ export async function runApiCall<A extends any[], Return>(
 
   // This function shows a regular object in a table by wrapping it in an array
   // Special case when the output is set to JSON or YAML (otherwise there will be an extra bracket in the output)
-  function showObjectAsTable(data: object, flags: Options) {
+  function showObjectAsTable(data: Record<string, unknown>, flags: Options) {
     if (flags.output === 'json') {
       log(prettyPrint(data));
     } else if (flags.output === 'yaml') {
@@ -106,7 +109,7 @@ export async function runApiCall<A extends any[], Return>(
     if (_.isArray(unwrapData)) {
       showTable(unwrapData, { ...flags });
     } else if (_.isObject(unwrapData)) {
-      showObjectAsTable(unwrapData, flags);
+      showObjectAsTable(unwrapData as Record<string, unknown>, flags);
     } else {
       log(prettyPrint(unwrapData));
     }
@@ -185,7 +188,7 @@ export async function loadTest<Data>(
     const avgFailLatency = errLatency.reduce((a, b) => a + b, 0) / errLatency.length;
     const pending = total - successLatency.length - errLatency.length;
     this.log(`
-**** 
+****
 Sent: ${total}
 Success: ${successLatency.length}
 Failure: ${errLatency.length}

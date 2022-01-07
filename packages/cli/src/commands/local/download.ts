@@ -1,4 +1,4 @@
-import { flags } from '@oclif/command';
+import { Flags } from '@oclif/core';
 import { main } from '@rockset/core';
 import { RockCommand } from '../../base-command';
 import * as prompts from 'prompts';
@@ -7,13 +7,13 @@ import { prettyPrint } from '@rockset/core/dist/helper';
 
 class DownloadQueryLambda extends RockCommand {
   static flags = {
-    help: flags.help({ char: 'h' }),
-    yes: flags.boolean({
+    help: Flags.help({ char: 'h' }),
+    yes: Flags.boolean({
       char: 'y',
       default: false,
       description: 'bypass the safety checks, and automatically engage in dangerous actions',
     }),
-    tag: flags.string({
+    tag: Flags.string({
       char: 't',
       description: `only download Query Lambda versions marked with this tag`,
       helpValue: 'production',
@@ -25,7 +25,7 @@ class DownloadQueryLambda extends RockCommand {
   Note: For operating systems that are case insensitive (eg. MacOS and Windows), it is possible that two different Query Lambdas from the server will be associated with the same paths on disk. This command will skip Query Lambdas that would otherwise overwrite each other.`;
 
   async run() {
-    const { flags } = this.parse(DownloadQueryLambda);
+    const { flags } = await this.parse(DownloadQueryLambda);
 
     const downloadLambdas = () =>
       main.downloadQueryLambdas(

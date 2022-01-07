@@ -1,4 +1,4 @@
-import Command from '@oclif/command';
+import { Command } from '@oclif/core';
 import { prettyPrint, wait } from '@rockset/core/dist/helper';
 import _ = require('lodash');
 import { RockClientException } from '@rockset/core/dist/exception/exception';

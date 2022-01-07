@@ -1,25 +1,25 @@
-import { flags } from '@oclif/command';
+import { Flags } from '@oclif/core';
 import { types, fileutil, pathutil } from '@rockset/core';
 import { getSrcPath } from '@rockset/core/dist/filesystem/fileutil';
 import { RockCommand } from '../../base-command';
 
 class ResolvePath extends RockCommand {
   static flags = {
-    help: flags.help({ char: 'h' }),
-    entity: flags.string({
+    help: Flags.help({ char: 'h' }),
+    entity: Flags.string({
       char: 'e',
       options: ['lambda', 'workspace'],
       default: 'lambda',
       description: 'the type of entity you wish to resolve',
     }),
 
-    exists: flags.boolean({
+    exists: Flags.boolean({
       description: 'return with an error if file does not exist',
       default: true,
       allowNo: true,
     }),
 
-    sql: flags.boolean({
+    sql: Flags.boolean({
       description: 'return the SQL file path (only for Query Lambdas)',
     }),
   };
@@ -42,7 +42,7 @@ class ResolvePath extends RockCommand {
   ];
 
   async run() {
-    const { args, flags } = this.parse(ResolvePath);
+    const { args, flags } = await this.parse(ResolvePath);
 
     // These must be specified, as they are marked required above
     const entity = flags.entity as 'lambda' | 'workspace';
