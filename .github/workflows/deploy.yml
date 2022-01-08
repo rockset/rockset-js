@@ -1,7 +1,7 @@
 name: "Deploy"
 
 on:
-  push: 
+  push:
     tags:
     - 'v*.*.*'
 jobs:
@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [12.x]
+        node-version: [16.x]
     env:
       SKIP_PREFLIGHT_CHECK: true
 
@@ -21,7 +21,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: ./login ${{ secrets.NPM_ACCESS_KEY }} ${{ secrets.FONTAWESOME_REGISTRY }}
     - run: yarn
-    - run: yarn run build 
+    - run: yarn run build
     - run: yarn run lint
     - run: ROCKSET_APIKEY="${{ secrets.ROCKSET_APIKEY }}" ROCKSET_APISERVER="${{ secrets.ROCKSET_APISERVER }}" yarn run test
     - run: git checkout -- .
@@ -34,4 +34,4 @@ jobs:
         AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
         AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
         ROCKSET_APIKEY: ${{ secrets.ROCKSET_APIKEY }}
-        ROCKSET_APISERVER: ${{ secrets.ROCKSET_APISERVER }} 
+        ROCKSET_APISERVER: ${{ secrets.ROCKSET_APISERVER }}
