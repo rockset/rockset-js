@@ -147,8 +147,8 @@
     "webpack-cli": "^3.3.12"
   },
   "dependencies": {
-    "@rockset/client": "0.8.11",
-    "@rockset/core": "0.8.11",
+    "@rockset/client": "^0.8.11",
+    "@rockset/core": "^0.8.11",
     "js-yaml": "^3.14.1",
     "sql-formatter": "^2.3.3"
   }

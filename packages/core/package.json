@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "@rockset/client": "0.8.11",
+    "@rockset/client": "^0.8.11",
     "@rockset/eslint-config": "0.8.11",
     "@types/fs-extra": "^9.0.1",
     "fp-ts": "^2.6.1",
