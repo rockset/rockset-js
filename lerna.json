@@ -1,6 +1,13 @@
 {
   "packages": [
-    "packages/*"
+    "packages/cli",
+    "packages/client",
+    "packages/core",
+    "packages/dev-server",
+    "packages/dev-ui",
+    "packages/eslint-config",
+    "packages/parser",
+    "packages/test-client"
   ],
   "version": "0.8.11",
   "npmClient": "yarn",
