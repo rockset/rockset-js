@@ -1,6 +1,6 @@
 {
   "name": "@rockset/test-client",
-  "version": "0.8.11",
+  "version": "0.8.12",
   "description": "Rockset JS testing utils",
   "main": "./dist/index.js",
   "types": "dist/index.d.ts",
