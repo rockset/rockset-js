@@ -1,5 +1,5 @@
 # The ISC License (ISC)
-# 
+#
 # Copyright © Heroku 2017
 #
 # Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted, provided that the above copyright notice and this permission notice appear in all copies.
@@ -45,7 +45,7 @@
   if [ "\$ARCH" == "x86_64" ]; then
     ARCH=x64
   elif [[ "\$ARCH" == arm* ]]; then
-    ARCH=arm
+    ARCH=arm64
   else
     echoerr "unsupported arch: \$ARCH"
     exit 1
@@ -55,13 +55,14 @@
   cd /usr/local/lib
   rm -rf rockset
   rm -rf ~/.local/share/rockset/client
-  # if [ \$(command -v xz) ]; then
-  #   URL="https://rockset-cli-artifacts.s3.amazonaws.com/rockset-\$OS-\$ARCH.tar.xz"
-  #   TAR_ARGS="xJ"
-  # else
-  URL="https://rockset-cli-artifacts.s3.amazonaws.com/rockset-\$OS-\$ARCH.tar.gz"
-  TAR_ARGS="xz"
-  # fi
+  BASE_URL="https://rockset-cli-artifacts.s3.amazonaws.com/channels/stable/rockset-\$OS-\$ARCH"
+  if [ \$(command -v xz) ]; then
+    URL="\$BASE_URL.tar.xz"
+    TAR_ARGS="xJ"
+  else
+    URL="$BASE_URL.tar.gz"
+    TAR_ARGS="xz"
+  fi
   echo "Installing CLI from \$URL"
   if [ \$(command -v curl) ]; then
     curl "\$URL" | tar "\$TAR_ARGS"
