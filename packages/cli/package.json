@@ -142,7 +142,7 @@
     "codegen-swagger": "js-yaml src/generator/swagger-generated.yaml > src/generator/swagger-generated.json",
     "codegen": "yarn run codegen-swagger && rm -rf src/commands/api/ && ts-node src/generator/generate.ts && eslint --fix src/commands/api/**/*.ts --no-ignore",
     "oclif-pack": "ln -s ../../yarn.lock yarn.lock && oclif pack:tarballs && rm yarn.lock",
-    "oclif-publish": "oclif publish"
+    "oclif-publish": "oclif promote"
   },
   "types": "lib/index.d.ts",
   "publishConfig": {
