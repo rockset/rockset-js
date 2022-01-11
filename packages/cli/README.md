@@ -34,10 +34,10 @@ Official Rockset CLI
 
 ### Install Using `curl` (Recommended)
 
-This standalone installation is ideal for most environments as it contains its own Node.js binary and automatically updates. However, it is **not Windows compatible**. 
+This standalone installation is ideal for most environments as it contains its own Node.js binary and automatically updates. However, it is **not Windows compatible**.
 
 ```
-curl https://rockset-cli-artifacts.s3-us-west-2.amazonaws.com/install-standalone.sh | bash 
+curl https://rockset-cli-artifacts.s3-us-west-2.amazonaws.com/install-standalone.sh | bash
 ```
 
 Running this script requires sudo access. **Be sure to restart your command line once the installation is completed.**
@@ -57,7 +57,7 @@ You can update the Rockset CLI to the latest version at any time using `rockset 
 $ rockset update
 ```
 
-After an update, run `rockset autocomplete -r` to rebuild the autocomplete cache. 
+After an update, run `rockset autocomplete -r` to rebuild the autocomplete cache.
 
 ### Verify Your Installation
 To verify that your installation was completed successfully, run `rockset --version` in your command line.
@@ -84,26 +84,26 @@ You may need to restart your command line after all steps to enable the autocomp
 
 To use the Rockset CLI tool, you will need to create an authentication profile using your API Key which can be created and found in the [Rockset Console](https://console.rockset.com/apikeys).
 
-Once you have successfully obtained your API key, run the `rockset auth:add` command to create your authentication profile. Running the following command will create an authentication profile named `default`:
+Once you have successfully obtained your API key, run the `rockset auth add` command to create your authentication profile. Running the following command will create an authentication profile named `default`:
 
 ```
-$ rockset auth:add default [API Key]
+$ rockset auth add default [API Key]
 ```
 
 You can add multiple profiles as needed. To view all profiles and switch between them, use the following commands:
 
 ```bash
 #. View auth profiles
-$ rockset auth:list
+$ rockset auth list
 
 #. Use a different auth profile
-$ rockset auth:use
+$ rockset auth use
 ```
 
-You can find a complete reference for all supported `rockset:auth` commands [here](/packages/cli/reference/auth.md).
+You can find a complete reference for all supported `rockset auth` commands [here](/packages/cli/reference/auth.md).
 
 ### Multi-region support
-By default, the Rockset CLI tool uses the us-west-2 server. To select another region, you will need to add and use a new profile that explicitly sets a different region. For more information, check out `rockset:auth` commands [here](/packages/cli/reference/auth.md).
+By default, the Rockset CLI tool uses the us-west-2 server. To select another region, you will need to add and use a new profile that explicitly sets a different region. For more information, check out `rockset auth` commands [here](/packages/cli/reference/auth.md).
 
 # Access the Rockset API from the Command Line (`rockset api`)
 
@@ -123,7 +123,7 @@ Below are several examples to help you get started:
 **List All Collections**
 
 ```bash
-$ rockset api:collections:listCollections
+$ rockset api collections listCollections
 ```
 
 **Create a Collection (Empty)**
@@ -135,7 +135,7 @@ description: a test collection
 ```
 
 ```bash
-$ rockset api:collections:createCollection commons --body body.yaml
+$ rockset api collections createCollection commons --body body.yaml
 ...
 ```
 
@@ -161,7 +161,7 @@ retention_secs: 100000
 ```
 
 ```bash
-$ rockset api:collections:createCollection commons --body body.yaml
+$ rockset api collections createCollection commons --body body.yaml
 ...
 ```
 
@@ -199,7 +199,7 @@ field_mappings:
 
   output_field:
     field_name: lenCountry
-    
+
     # SQL transformation used to create a new field
     value:
       sql: LENGTH(:country)
@@ -210,7 +210,7 @@ field_mappings:
 ```
 
 ```bash
-$ rockset api:collections:createCollection commons --body body.yaml
+$ rockset api collections createCollection commons --body body.yaml
 ...
 ```
 
@@ -226,7 +226,7 @@ data:
 ```
 
 ```bash
-$ rockset api:documents:addDocuments commons testCollection --body body.yaml
+$ rockset api documents addDocuments commons testCollection --body body.yaml
 ...
 ```
 
@@ -240,7 +240,7 @@ data:
 ```
 
 ```bash
-$ rockset api:documents:deleteDocuments commons testCollection --body body.yaml
+$ rockset api documents deleteDocuments commons testCollection --body body.yaml
 ...
 ```
 
@@ -257,7 +257,7 @@ collections:
 ```
 
 ```bash
-$ rockset api:aliases:createAlias commons --body body.yaml
+$ rockset api aliases createAlias commons --body body.yaml
 ...
 ```
 
@@ -271,7 +271,7 @@ collections:
 ```
 
 ```bash
-$ rockset api:aliases:updateAlias commons testAlias --body body.yaml
+$ rockset api aliases updateAlias commons testAlias --body body.yaml
 ...
 ```
 
@@ -286,7 +286,7 @@ description: a test workspace
 ```
 
 ```bash
-$ rockset api:workspaces:createWorkspace --body body.yaml
+$ rockset api workspaces createWorkspace --body body.yaml
 ...
 ```
 
@@ -337,7 +337,7 @@ You'll be prompted for a relative path (`./src` by default) that will serve as t
 
 ### Download Existing Query Lambdas from Rockset
 
-If you've already created Query Lambdas through the Rockset Console, you can download them to your local filesystem using the `rockset local:download` 
+If you've already created Query Lambdas through the Rockset Console, you can download them to your local filesystem using the `rockset local:download`
 command. You can specify particular Query Lambda tags to download as arguments (see `rockset local:download -h` for full details).
 
 Each Query Lambda downloaded will write both a definition file and a SQL file. A sample file structure might look like:
@@ -365,8 +365,8 @@ $ tree
 You can set up a new Query Lambda locally by running:
 
 ```
-rockset local:queryLambda:add [workspaceName].[queryLambdaName]
-rockset local:queryLambda:add commons.helloWorld
+rockset local queryLambda add [workspaceName].[queryLambdaName]
+rockset local queryLambda add commons.helloWorld
 ```
 
 This command will construct two boilerplate files on your behalf:
@@ -388,14 +388,14 @@ For simple, unparametrized queries with simple results, you can trigger an execu
 You can also execute Query Lambda SQL direclty from the command line:
 
 ```
-$ rockset local:queryLambda:execute commons.helloWorld
+$ rockset local queryLambda execute commons.helloWorld
 ```
 
 For more complex queries or queries with parameters, you can use the [Rockset Developer UI](/packages/dev-server). You can
 start the Developer UI with the following command:
 
 ```
-$ rockset local:serve
+$ rockset local serve
 ```
 
 This command spins up a local webserver that displays all of the Query Lambdas found in your local project, allows
@@ -408,7 +408,7 @@ Up to this point, none of the commands we've run have actually created or update
 To take the Query Lambdas defined locally and deploy them to Rockset, we can run the following command:
 
 ```
-$ rockset local:deploy -l commons.helloWorld -t dev
+$ rockset local deploy -l commons.helloWorld -t dev
 ```
 
 If a Query Lambda named `commons.helloWorld` already exists in Rockset (for example, if you'd already `deploy`'d it previously,
@@ -426,12 +426,12 @@ command to deploy your Query Lambdas automatically in CI/CD.
 
 ```bash
 #. In CI/CD
-rockset local:deploy -t development
+rockset local deploy -t development
 ...
 
 #. When you want to deploy to production
 git checkout <commit hash>
-rockset local:deploy -t production
+rockset local deploy -t production
 ```
 
 Then, your application can hit Query Lambda `helloWorld` with tag `development` in development, and hit `helloWorld` with tag `production` in the production environment.
