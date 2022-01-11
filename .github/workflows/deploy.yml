@@ -19,6 +19,8 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
+    - run: echo "${GITHUB_SHA::7}"
+    - run: echo "${{ env.GITHUB_REF_NAME }}"
     - run: ./login ${{ secrets.NPM_ACCESS_KEY }} ${{ secrets.FONTAWESOME_REGISTRY }}
     - run: yarn
     - run: yarn run build
@@ -28,7 +30,7 @@ jobs:
     - run: ./login ${{ secrets.NPM_ACCESS_KEY }} ${{ secrets.FONTAWESOME_REGISTRY }}
     - run: ./lerna-publish
     - run: cd packages/cli && yarn run oclif-pack
-    - run: cd packages/cli && yarn run oclif-publish
+    - run: cd packages/cli && oclif promote --sha="${GITHUB_SHA::7}" --version="${{ env.GITHUB_REF_NAME }}"
       env:
         CI: true
         AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
