@@ -1,6 +1,6 @@
 {
   "name": "@rockset/dev-ui",
-  "version": "0.8.16",
+  "version": "0.8.17",
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-pro": "^5.13.0",

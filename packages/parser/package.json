@@ -1,6 +1,6 @@
 {
   "name": "@rockset/parser",
-  "version": "0.8.16",
+  "version": "0.8.17",
   "description": "SQL Parser Implementation in JS",
   "main": "./dist/index.js",
   "types": "dist/index.d.ts",
