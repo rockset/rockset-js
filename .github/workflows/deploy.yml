@@ -28,7 +28,7 @@ jobs:
     - run: ./login ${{ secrets.NPM_ACCESS_KEY }} ${{ secrets.FONTAWESOME_REGISTRY }}
     - run: ./lerna-publish
     - run: cd packages/cli && yarn run oclif-pack
-    - run: cd packages/cli && oclif promote --sha="${GITHUB_SHA::7}" --version="${GITHUB_REF_NAME:1}"
+    - run: cd packages/cli && yarn run oclif-publish --sha="${GITHUB_SHA::7}" --version="${GITHUB_REF_NAME:1}"
       env:
         CI: true
         AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
