@@ -1,7 +1,7 @@
 {
   "name": "@rockset/cli",
   "description": "Official Rockset CLI",
-  "version": "0.8.14",
+  "version": "0.8.15",
   "author": "Rockset",
   "bin": {
     "rockset": "./bin/run"
@@ -13,10 +13,10 @@
     "@oclif/plugin-autocomplete": "^1.1.1",
     "@oclif/plugin-help": "^5.1.10",
     "@oclif/plugin-update": "^2.1.5",
-    "@rockset/client": "0.8.14",
-    "@rockset/core": "0.8.14",
-    "@rockset/dev-server": "0.8.14",
-    "@rockset/eslint-config": "0.8.14",
+    "@rockset/client": "0.8.15",
+    "@rockset/core": "0.8.15",
+    "@rockset/dev-server": "0.8.15",
+    "@rockset/eslint-config": "0.8.15",
     "@types/chalk": "^2.2.0",
     "@types/fs-extra": "^8.1.1",
     "@types/inquirer": "^6.5.0",
