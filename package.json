@@ -17,7 +17,14 @@
     "ts-jest": "^25.5.1"
   },
   "workspaces": [
-    "packages/*"
+    "packages/cli",
+    "packages/client",
+    "packages/core",
+    "packages/dev-server",
+    "packages/dev-ui",
+    "packages/eslint-config",
+    "packages/parser",
+    "packages/test-client"
   ],
   "scripts": {
     "start": "lerna run --parallel start",
