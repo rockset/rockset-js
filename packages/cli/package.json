@@ -112,7 +112,14 @@
     "commands": "./lib/commands",
     "update": {
       "s3": {
-        "bucket": "rockset-cli-artifacts"
+        "bucket": "rockset-cli-artifacts",
+        "templates": {
+          "target": {
+            "unversioned": "channels/stable/<%- bin %>-<%- platform %>-<%- arch %><%- ext %>",
+            "versioned": "channels/stable/<%- bin %>-v<%- version %>/<%- bin %>-v<%- version %>-<%- platform %>-<%- arch %><%- ext %>",
+            "manifest": "channels/stable/rockset-<%- platform %>-<%- arch %>-buildmanifest"
+          }
+        }
       }
     },
     "bin": "rockset",
