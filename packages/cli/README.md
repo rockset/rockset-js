@@ -103,7 +103,7 @@ $ rockset auth use
 You can find a complete reference for all supported `rockset auth` commands [here](/packages/cli/reference/auth.md).
 
 ### Multi-region support
-By default, the Rockset CLI tool uses the us-west-2 server. To select another region, you will need to add and use a new profile that explicitly sets a different region. For more information, check out `rockset auth` commands [here](/packages/cli/reference/auth.md).
+By default, the Rockset CLI tool uses the Oregon 1 server. To select another region, you will need to add and use a new profile that explicitly sets a different region. For more information, check out `rockset auth` commands [here](/packages/cli/reference/auth.md).
 
 # Access the Rockset API from the Command Line (`rockset api`)
 

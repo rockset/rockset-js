@@ -52,7 +52,7 @@ const rocksetClient = rockset.default(process.env.ROCKSET_APIKEY);
 
 ### Configure Client - Region
 
-By default, our client connects to the us-west-2 server. To select another region, you will need to explicitly set this region. You can find a list of Rockset API servers and supported regions in the Rockset Docs [here](https://rockset.com/docs/rest-api).
+By default, our client connects to the Oregon 1 server. To select another region, you will need to explicitly set this region. You can find a list of Rockset API servers and supported regions in the Rockset Docs [here](https://rockset.com/docs/rest-api).
 
 ```ts
 const rocksetClient = rockset(process.env.ROCKSET_APIKEY, "https://api.use1a1.rockset.com");
