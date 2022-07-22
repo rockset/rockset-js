@@ -34,7 +34,7 @@
     "typedoc": "^0.17.7",
     "typescript": "^3.8.3"
   },
-  "repository": "https://github.com/rockset/rockset-js/q",
+  "repository": "https://github.com/rockset/rockset-js",
   "scripts": {
     "start": "tsc-watch --onSuccess 'cp src/codegen/custom.d.ts dist/codegen/custom.d.ts'",
     "test": "jest --setupFiles dotenv/config",
