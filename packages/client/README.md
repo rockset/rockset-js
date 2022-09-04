@@ -346,7 +346,7 @@ rocksetClient.aliases
 
 ## Testing
 
-Unit tests are available in the [tests](tests) folder.
+Unit tests are available in the [tests](https://github.com/rockset/rockset-js/tree/master/packages/client/src/tests) folder.
 
 Set ROCKSET_APIKEY and ROCKSET_HOST endpoint in the environment variables. To run tests:
 
@@ -422,4 +422,4 @@ File any issues with this client through GitHub.
 
 ## License
 
-This client is licensed under the [Apache 2.0 License](LICENSE).
+This client is licensed under the [Apache 2.0 License](https://github.com/rockset/rockset-js/blob/master/packages/client/LICENSE).
