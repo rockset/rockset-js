@@ -33,6 +33,7 @@ export const SUPPORTED_PARAMS = [
   'string',
   'int',
   'float',
+  'bool',
   'date',
   'datetime',
   'time',
