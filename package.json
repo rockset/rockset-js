@@ -16,6 +16,9 @@
     "lerna": "^4.0.0",
     "ts-jest": "^25.5.1"
   },
+  "resolutions": {
+    "node-fetch": "^2.6.7"
+  },
   "workspaces": [
     "packages/*"
   ],
