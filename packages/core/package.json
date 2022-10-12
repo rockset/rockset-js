@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "@rockset/client": "0.8.23",
+    "@rockset/client": "0.8.24",
     "@rockset/eslint-config": "0.8.23",
     "@types/fs-extra": "^9.0.1",
     "fp-ts": "^2.6.1",
@@ -14,7 +14,7 @@
     "yaml": "^1.10.0"
   },
   "name": "@rockset/core",
-  "version": "0.8.23",
+  "version": "0.8.24",
   "description": "JS Rock Cli for Lambdas",
   "main": "./dist/index.js",
   "types": "dist/index.d.ts",
