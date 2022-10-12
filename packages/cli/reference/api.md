@@ -97,7 +97,7 @@ DESCRIPTION
 
   This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
 
-  
+
 
   Example Body (YAML):
 
@@ -275,7 +275,7 @@ DESCRIPTION
 
   This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
 
-  
+
 
   Example Body (YAML):
 
@@ -369,7 +369,7 @@ DESCRIPTION
 
   This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
 
-  
+
 
   Example Body (YAML):
 
@@ -540,7 +540,7 @@ DESCRIPTION
 
   This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
 
-  
+
 
   Example Body (YAML):
 
@@ -591,7 +591,7 @@ DESCRIPTION
 
   This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
 
-  
+
 
   The POST body request schema has been omitted because it is too long. Please view the documentation at
   https://docs.rockset.com/rest-api#createcollection to see the example.
@@ -789,7 +789,7 @@ DESCRIPTION
 
   This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
 
-  
+
 
   Example Body (YAML):
 
@@ -922,7 +922,7 @@ DESCRIPTION
 
   This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
 
-  
+
 
   Example Body (YAML):
 
@@ -990,7 +990,7 @@ DESCRIPTION
 
   This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
 
-  
+
 
   Example Body (YAML):
 
@@ -1049,7 +1049,7 @@ DESCRIPTION
 
   This endpoint REQUIRES a DELETE body. To specify a DELETE body, please pass a JSON or YAML file to the --body flag.
 
-  
+
 
   Example Body (YAML):
 
@@ -1108,7 +1108,7 @@ DESCRIPTION
 
   This endpoint REQUIRES a PATCH body. To specify a PATCH body, please pass a JSON or YAML file to the --body flag.
 
-  
+
 
   Example Body (YAML):
 
@@ -1174,7 +1174,7 @@ DESCRIPTION
 
   This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
 
-  
+
 
   The POST body request schema has been omitted because it is too long. Please view the documentation at
   https://docs.rockset.com/rest-api#createintegration to see the example.
@@ -1367,7 +1367,7 @@ DESCRIPTION
 
   This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
 
-  
+
 
   The POST body request schema has been omitted because it is too long. Please view the documentation at
   https://docs.rockset.com/rest-api#query to see the example.
@@ -1412,7 +1412,7 @@ DESCRIPTION
 
   This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
 
-  
+
 
   The POST body request schema has been omitted because it is too long. Please view the documentation at
   https://docs.rockset.com/rest-api#validate to see the example.
@@ -1460,7 +1460,7 @@ DESCRIPTION
 
   This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
 
-  
+
 
   Example Body (YAML):
 
@@ -1537,7 +1537,7 @@ DESCRIPTION
 
   This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
 
-  
+
 
   Example Body (YAML):
 
@@ -1687,7 +1687,7 @@ DESCRIPTION
   This endpoint optionally accepts a POST body. To specify a POST body, please pass a JSON or YAML file to the --body
   flag.
 
-  
+
 
   Example Body (YAML):
 
@@ -1768,7 +1768,7 @@ DESCRIPTION
   This endpoint optionally accepts a POST body. To specify a POST body, please pass a JSON or YAML file to the --body
   flag.
 
-  
+
 
   Example Body (YAML):
 
@@ -2107,7 +2107,7 @@ DESCRIPTION
 
   This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
 
-  
+
 
   Example Body (YAML):
 
@@ -2172,7 +2172,7 @@ DESCRIPTION
 
   This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
 
-  
+
 
   Example Body (YAML):
 
@@ -2413,7 +2413,7 @@ DESCRIPTION
 
   This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
 
-  
+
 
   Example Body (YAML):
 
@@ -2467,7 +2467,7 @@ DESCRIPTION
 
   This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
 
-  
+
 
   Example Body (YAML):
 
@@ -2638,7 +2638,7 @@ DESCRIPTION
 
   This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
 
-  
+
 
   Example Body (YAML):
 
@@ -2804,7 +2804,7 @@ DESCRIPTION
 
   This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
 
-  
+
 
   Example Body (YAML):
 
@@ -2897,7 +2897,7 @@ DESCRIPTION
 
   This endpoint REQUIRES a POST body. To specify a POST body, please pass a JSON or YAML file to the --body flag.
 
-  
+
 
   Example Body (YAML):
 
