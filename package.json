@@ -30,6 +30,6 @@
     "all": "lerna run build --stream && lerna run lint && lerna run test",
     "test": "lerna run test",
     "lerna-publish": "lerna publish from-git",
-    "release-all": "lerna version --exact"
+    "release-all": "lerna version --exact --force-publish"
   }
 }
