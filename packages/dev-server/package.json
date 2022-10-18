@@ -19,7 +19,7 @@
     "prompts": "^2.3.2"
   },
   "name": "@rockset/dev-server",
-  "version": "0.8.25",
+  "version": "0.8.26",
   "description": "Rockset Developer Local Server",
   "main": "./dist/index.js",
   "types": "dist/index.d.ts",
@@ -47,7 +47,7 @@
   "files": [
     "/dist"
   ],
-  "author": "Rockset", 
+  "author": "Rockset",
   "publishConfig": {
     "access": "public"
   },

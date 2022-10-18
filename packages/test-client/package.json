@@ -1,6 +1,6 @@
 {
   "name": "@rockset/test-client",
-  "version": "0.8.25",
+  "version": "0.8.26",
   "description": "Rockset JS testing utils",
   "main": "./dist/index.js",
   "types": "dist/index.d.ts",
@@ -15,7 +15,7 @@
     "test": "jest",
     "start": "tsc --watch",
     "clean": "rm -rf dist",
-    "build": "yarn run clean && tsc", 
+    "build": "yarn run clean && tsc",
     "lint": "eslint 'src/**/*.ts'"
   },
   "files": [

@@ -1,6 +1,6 @@
 {
   "name": "@rockset/eslint-config",
-  "version": "0.8.25",
+  "version": "0.8.26",
   "description": "Rockset eslint config",
   "author": "Rockset",
   "homepage": "",
@@ -10,7 +10,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@types/prompts": "^2.0.8", 
+    "@types/prompts": "^2.0.8",
     "eslint-config-prettier": "^6.11.0",
     "prompts": "^2.3.2"
   },
