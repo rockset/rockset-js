@@ -14,8 +14,8 @@
   "scripts": {
     "test": "jest",
     "start": "tsc --watch",
-    "clean": "rm -rf dist",
-    "build": "yarn run clean && tsc",
+    "clean": "rm -rf dist", 
+    "build": "yarn run clean && tsc", 
     "lint": "eslint 'src/**/*.ts'",
     "antlr-raw": "java -jar artifacts/antlr-4.8-complete.jar -visitor -Dlanguage=JavaScript artifacts/Sql.g4 -o src/codegen/",
     "antlr": "yarn run antlr-raw > /dev/null 2> tmp.err.txt || node artifacts/fixSql.js"

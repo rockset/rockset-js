@@ -47,7 +47,7 @@
   "files": [
     "/dist"
   ],
-  "author": "Rockset",
+  "author": "Rockset", 
   "publishConfig": {
     "access": "public"
   },

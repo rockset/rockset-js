@@ -11,7 +11,6 @@ Manage your local Query Lambdas.
 * [`rockset local queryLambda execute NAME`](#rockset-local-querylambda-execute-name)
 * [`rockset local queryLambda list`](#rockset-local-querylambda-list)
 * [`rockset local resolve NAME`](#rockset-local-resolve-name)
-* [`rockset local serve`](#rockset-local-serve)
 
 ## `rockset local deploy`
 
@@ -190,21 +189,4 @@ EXAMPLES
   $ rockset local:resolve commons.myLambda
 
   $ rockset local:resolve commons.myLambda --sql
-```
-
-## `rockset local serve`
-
-start development server and open the Developer UI. Used to configure parameters and execute SQL files in your local project
-
-```
-USAGE
-  $ rockset local serve [-h] [-p <value>]
-
-FLAGS
-  -h, --help          Show CLI help.
-  -p, --port=<value>  [default: 3001] the port to listen at
-
-DESCRIPTION
-  start development server and open the Developer UI. Used to configure parameters and execute SQL files in your local
-  project
 ```
