@@ -17,12 +17,14 @@
     "ts-jest": "^25.5.1"
   },
   "resolutions": {
-    "node-fetch": "^2.6.7"
+    "node-fetch": "^2.6.7",
+    "portable-fetch/node-fetch": "^2.6.7"
   },
   "workspaces": [
     "packages/*"
   ],
   "scripts": {
+    "preinstall": "npx npm-force-resolutions || exit 0",
     "start": "lerna run --parallel start",
     "build": "lerna run build --stream",
     "lint": "lerna run lint",
