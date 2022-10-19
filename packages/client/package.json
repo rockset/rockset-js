@@ -10,7 +10,7 @@
   "dependencies": {
     "@types/node-fetch": "^2.5.3",
     "node-fetch": "^2.6.7",
-    "portable-fetch": "^3.0.0",
+    "fetch-ponyfill": "^7.1.0",
     "url": "^0.11.0"
   },
   "devDependencies": {
@@ -35,8 +35,7 @@
     "typescript": "^3.8.3"
   },
   "resolutions": {
-    "node-fetch": "^2.6.7",
-    "portable-fetch/node-fetch": "^2.6.7"
+    "node-fetch": "^2.6.7"
   },
   "repository": "https://github.com/rockset/rockset-js",
   "scripts": {

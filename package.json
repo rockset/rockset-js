@@ -17,8 +17,7 @@
     "ts-jest": "^25.5.1"
   },
   "resolutions": {
-    "node-fetch": "^2.6.7",
-    "portable-fetch/node-fetch": "^2.6.7"
+    "node-fetch": "^2.6.7"
   },
   "workspaces": [
     "packages/*"

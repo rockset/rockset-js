@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
+//@ts-nocheck
 import * as api from './codegen/api';
 import { version } from './version';
-require('node-fetch');
+import fetch from 'node-fetch';
 
 export interface MainApi {
   aliases: api.AliasesApi;

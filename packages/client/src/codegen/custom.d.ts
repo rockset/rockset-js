@@ -1,2 +1,2 @@
-declare module 'portable-fetch';
+declare module 'fetch-ponyfill';
 declare module 'url';
