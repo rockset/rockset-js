@@ -136,9 +136,7 @@ export async function downloadCollections(hooks: DownloadHooks = {}) {
   });
 }
 
-export async function downloadQueryLambdas(
-  hooks: DownloadHooks = {}
-) {
+export async function downloadQueryLambdas(hooks: DownloadHooks = {}) {
   const client = await createClient();
 
   let lambdas: QueryLambdaVersion[] = [];
