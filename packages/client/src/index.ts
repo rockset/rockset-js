@@ -17,7 +17,7 @@ export interface MainApi {
   queryLambdas: api.QueryLambdasApi;
   views: api.ViewsApi;
   virtualInstances: api.VirtualInstancesApi;
-  customRolesBeta: api.CustomRolesBetaApi;
+  customRolesBeta: api.CustomRolesApi;
   _fetch: api.FetchAPI;
 }
 
@@ -113,7 +113,7 @@ const rocksetConfigure = (
     queryLambdas: new api.QueryLambdasApi({}, host, queryFetch),
     views: new api.ViewsApi({}, host, authFetch),
     virtualInstances: new api.VirtualInstancesApi({}, host, authFetch),
-    customRolesBeta: new api.CustomRolesBetaApi({}, host, authFetch),
+    customRolesBeta: new api.CustomRolesApi({}, host, authFetch),
     _fetch: authFetch,
   };
 };
