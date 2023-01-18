@@ -177,16 +177,6 @@ rocksetClient.queries
         },
       ],
       default_row_limit: 150 /* (optional) row limit to be used if no limit is specified in the query */,
-      /*
-        (optional) Return helpful warnings, e.g. “You’re trying to query a field that exists on 0 documents”.
-        *** Reduces query performance slightly ***
-      */
-      generate_warnings: true,
-      /*
-        (optional) Allows us to internally generate a query profile, with the goal of improving query performance.
-        *** Reduces query performance very slightly ***
-      */
-      profiling_enabled: true,
     },
   })
   .then(console.log)

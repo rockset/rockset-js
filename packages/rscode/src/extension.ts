@@ -95,7 +95,6 @@ export function activate(context: vscode.ExtensionContext) {
           {
             sql: {
               query: document.document.getText(),
-              profiling_enabled: true,
             },
           },
           true

@@ -69,8 +69,6 @@ describe('Test Rockset Test Client', () => {
         { name: 'foo2', value: 'bar', type: 'string' },
       ],
       default_row_limit: 100,
-      generate_warnings: true,
-      profiling_enabled: true,
     });
   });
 });
