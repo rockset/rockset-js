@@ -13,11 +13,6 @@ class DownloadQueryLambda extends RockCommand {
       default: false,
       description: 'bypass the safety checks, and automatically engage in dangerous actions',
     }),
-    tag: Flags.string({
-      char: 't',
-      description: `only download Query Lambda versions marked with this tag`,
-      helpValue: 'production',
-    }),
   };
 
   static description = `download Query Lambda entities from Rockset to your local project
@@ -42,10 +37,7 @@ Please delete or rename Query Lambdas that are duplicates before re-attempting t
               `,
             );
           },
-        },
-        {
-          useLambdaTag: flags.tag,
-        },
+        }
       );
 
     if (flags.yes) {

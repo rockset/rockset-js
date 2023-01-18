@@ -222,10 +222,6 @@ export interface ExecuteHooks {
   onExecuteError?: (error: ErrorModel, entity: LambdaEntity) => void;
 }
 
-export interface LambdaDownloadOptions {
-  useLambdaTag?: string;
-}
-
 export interface LambdaDeleteOptions {
   workspace?: string;
   lambda?: string;
