@@ -4,7 +4,6 @@ import {
   LambdaEntity,
   CollectionEntity,
   DownloadHooks,
-  LambdaDownloadOptions,
   notEmpty,
   LambdaDeployOptions,
   LambdaQualifiedName,
@@ -137,27 +136,17 @@ export async function downloadCollections(hooks: DownloadHooks = {}) {
   });
 }
 
-export async function downloadQueryLambdas(
-  hooks: DownloadHooks = {},
-  options: LambdaDownloadOptions
-) {
+export async function downloadQueryLambdas(hooks: DownloadHooks = {}) {
   const client = await createClient();
 
   let lambdas: QueryLambdaVersion[] = [];
   // Grab entities from apiserver
-  if (options.useLambdaTag) {
-    // Use tags — QLs without this tag will not be pulled
-    const lambdaResponse = await client.queryLambdas.listQueryLambdaTagVersions(
-      options.useLambdaTag
-    );
-    lambdas = lambdaResponse?.data ?? [];
-  } else {
-    // Use latest versions - all QLs will be pulled
-    const lambdaResponse = await client.queryLambdas.listAllQueryLambdas();
-    lambdas = (lambdaResponse.data ?? []).map(
-      (l: QueryLambda) => l.latest_version as QueryLambdaVersion
-    );
-  }
+  // Use latest versions - all QLs will be pulled
+  const lambdaResponse = await client.queryLambdas.listAllQueryLambdas();
+  lambdas = (lambdaResponse.data ?? []).map(
+    (l: QueryLambda) => l.latest_version as QueryLambdaVersion
+  );
+
   if (lambdas.length === 0) {
     hooks.onNoOp?.();
   }

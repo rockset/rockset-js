@@ -16,7 +16,7 @@ import * as url from "url";
 import { Configuration } from "./configuration";
 const fetchPonyfill = require("fetch-ponyfill")();
 
-const BASE_PATH = "https://api.rs2.usw2.rockset.com".replace(/\/+$/, "");
+const BASE_PATH = "https://api.use1a1.rockset.com".replace(/\/+$/, "");
 
 /**
  *
@@ -97,17 +97,11 @@ export interface AddDocumentsRequest {
  */
 export interface AddDocumentsResponse {
     /**
-     * information about the added documents
+     * Information about the added documents.
      * @type {Array<DocumentStatus>}
      * @memberof AddDocumentsResponse
      */
     data?: Array<DocumentStatus>;
-    /**
-     * A string representing the collection offset after completing the write
-     * @type {string}
-     * @memberof AddDocumentsResponse
-     */
-    last_offset?: string;
 }
 
 /**
@@ -117,49 +111,49 @@ export interface AddDocumentsResponse {
  */
 export interface Alias {
     /**
-     * name of the alias
+     * Name of the alias.
      * @type {string}
      * @memberof Alias
      */
     name?: string;
     /**
-     * alias description
+     * Alias description.
      * @type {string}
      * @memberof Alias
      */
     description?: string;
     /**
-     * name of the workspace
+     * Name of the workspace.
      * @type {string}
      * @memberof Alias
      */
     workspace?: string;
     /**
-     * email of the creator
+     * Email of the creator.
      * @type {string}
      * @memberof Alias
      */
     creator_email?: string;
     /**
-     * list of fully qualified collection names referenced by alias
+     * List of fully qualified collection names referenced by alias.
      * @type {Array<string>}
      * @memberof Alias
      */
     collections?: Array<string>;
     /**
-     * state of the alias
+     * State of the alias.
      * @type {string}
      * @memberof Alias
      */
     state?: Alias.StateEnum;
     /**
-     * ISO-8601 date
+     * ISO-8601 date.
      * @type {string}
      * @memberof Alias
      */
     created_at?: string;
     /**
-     * ISO-8601 date
+     * ISO-8601 date.
      * @type {string}
      * @memberof Alias
      */
@@ -212,6 +206,12 @@ export interface ApiKey {
      */
     last_access_time?: string;
     /**
+     * The expiration date of this API key.
+     * @type {string}
+     * @memberof ApiKey
+     */
+    expiry_time?: string;
+    /**
      * Role specifying access control. If not specified, API key will have access to all of the associated user's roles.
      * @type {string}
      * @memberof ApiKey
@@ -224,7 +224,7 @@ export interface ApiKey {
      */
     created_by?: string;
     /**
-     * current state of this key
+     * Current state of this key.
      * @type {string}
      * @memberof ApiKey
      */
@@ -249,17 +249,51 @@ export namespace ApiKey {
 /**
  * 
  * @export
+ * @interface AsyncQueryOptions
+ */
+export interface AsyncQueryOptions {
+    /**
+     * The maximum amount of time that the client is willing to wait for the query to complete. If the query is not complete by this timeout, a response will be returned with a `query_id` that can be used to check the status of the query and retrieve results once the query has completed.
+     * @type {number}
+     * @memberof AsyncQueryOptions
+     */
+    client_timeout_ms?: number;
+    /**
+     * The maximum amount of time that the system will attempt to complete query execution before aborting the query and returning an error.
+     * @type {number}
+     * @memberof AsyncQueryOptions
+     */
+    timeout_ms?: number;
+    /**
+     * The maximum number of results you will receive as a client. If the query exceeds this limit, the remaining results can be requested using a returned pagination cursor. In addition, there is a maximum response size of 100MiB so fewer than `max_results` may be returned.
+     * @type {number}
+     * @memberof AsyncQueryOptions
+     */
+    max_initial_results?: number;
+}
+
+/**
+ * 
+ * @export
+ * @interface AvroParams
+ */
+export interface AvroParams {
+}
+
+/**
+ * 
+ * @export
  * @interface AwsAccessKey
  */
 export interface AwsAccessKey {
     /**
-     * AWS access key ID
+     * AWS access key ID.
      * @type {string}
      * @memberof AwsAccessKey
      */
     aws_access_key_id: string;
     /**
-     * AWS secret access key
+     * AWS secret access key.
      * @type {string}
      * @memberof AwsAccessKey
      */
@@ -273,67 +307,153 @@ export interface AwsAccessKey {
  */
 export interface AwsRole {
     /**
-     * ARN of rockset-role created in your account
+     * ARN of rockset-role created in your account.
      * @type {string}
      * @memberof AwsRole
      */
     aws_role_arn: string;
+    /**
+     * External id used for integration.
+     * @type {string}
+     * @memberof AwsRole
+     */
+    aws_external_id?: string;
 }
 
 /**
  * 
  * @export
- * @interface BodyPart
+ * @interface AzureBlobStorageIntegration
  */
-export interface BodyPart {
+export interface AzureBlobStorageIntegration {
+    /**
+     * Credentials for the Azure Blob Service.
+     * @type {string}
+     * @memberof AzureBlobStorageIntegration
+     */
+    connection_string: string;
+}
+
+/**
+ * 
+ * @export
+ * @interface AzureEventHubsIntegration
+ */
+export interface AzureEventHubsIntegration {
+    /**
+     * Credentials for the Azure Event Hubs.
+     * @type {string}
+     * @memberof AzureEventHubsIntegration
+     */
+    connection_string?: string;
+}
+
+/**
+ * 
+ * @export
+ * @interface AzureServiceBusIntegration
+ */
+export interface AzureServiceBusIntegration {
+    /**
+     * Credentials for the Azure Service Bus.
+     * @type {string}
+     * @memberof AzureServiceBusIntegration
+     */
+    connection_string: string;
+}
+
+/**
+ * 
+ * @export
+ * @interface BulkStats
+ */
+export interface BulkStats {
+    /**
+     * ISO-8601 date of when the bulk ingest was started.
+     * @type {string}
+     * @memberof BulkStats
+     */
+    started_at?: string;
+    /**
+     * ISO-8601 date of when the initializing stage was completed.
+     * @type {string}
+     * @memberof BulkStats
+     */
+    initializing_stage_done_at?: string;
+    /**
+     * ISO-8601 date of when the downloading stage was completed.
+     * @type {string}
+     * @memberof BulkStats
+     */
+    downloading_stage_done_at?: string;
+    /**
+     * ISO-8601 date of when the provisioning stage was completed.
+     * @type {string}
+     * @memberof BulkStats
+     */
+    provisioning_stage_done_at?: string;
+    /**
+     * ISO-8601 date of when the indexing stage was completed.
+     * @type {string}
+     * @memberof BulkStats
+     */
+    indexing_stage_done_at?: string;
+    /**
+     * ISO-8601 date of when the finalizing stage was completed.
+     * @type {string}
+     * @memberof BulkStats
+     */
+    finalizing_stage_done_at?: string;
+    /**
+     * Number of documents downloaded from source during an ongoing or completed bulk ingest. This includes documents that are dropped and reingested.
+     * @type {number}
+     * @memberof BulkStats
+     */
+    documents_downloaded?: number;
+    /**
+     * Size in bytes of documents downloaded from source during an ongoing or completed bulk ingest. This includes documents that are dropped and reingested.
+     * @type {number}
+     * @memberof BulkStats
+     */
+    data_downloaded_bytes?: number;
+    /**
+     * Bulk ingest compute units in milliseconds used for downloading documents.
+     * @type {number}
+     * @memberof BulkStats
+     */
+    download_compute_ms?: number;
+    /**
+     * Size in bytes of documents indexed. This is the total size of documents after transformations and dropping before indexes are built.
+     * @type {number}
+     * @memberof BulkStats
+     */
+    data_indexed_bytes?: number;
+    /**
+     * Bulk ingest compute units in milliseconds used for indexing documents.
+     * @type {number}
+     * @memberof BulkStats
+     */
+    index_compute_ms?: number;
+    /**
+     * Total size of indexes after the completed bulk ingest. This is the same as collection size.
+     * @type {number}
+     * @memberof BulkStats
+     */
+    total_index_size_bytes?: number;
+}
+
+/**
+ * 
+ * @export
+ * @interface CancelQueryResponse
+ */
+export interface CancelQueryResponse {
     /**
      * 
-     * @type {ContentDisposition}
-     * @memberof BodyPart
+     * @type {QueryInfo}
+     * @memberof CancelQueryResponse
      */
-    contentDisposition?: ContentDisposition;
-    /**
-     * 
-     * @type {any}
-     * @memberof BodyPart
-     */
-    entity?: any;
-    /**
-     * 
-     * @type {{ [key: string]: Array<string>; }}
-     * @memberof BodyPart
-     */
-    headers?: { [key: string]: Array<string>; };
-    /**
-     * 
-     * @type {MediaType}
-     * @memberof BodyPart
-     */
-    mediaType?: MediaType;
-    /**
-     * 
-     * @type {MessageBodyWorkers}
-     * @memberof BodyPart
-     */
-    messageBodyWorkers?: MessageBodyWorkers;
-    /**
-     * 
-     * @type {MultiPart}
-     * @memberof BodyPart
-     */
-    parent?: MultiPart;
-    /**
-     * 
-     * @type {Providers}
-     * @memberof BodyPart
-     */
-    providers?: Providers;
-    /**
-     * 
-     * @type {{ [key: string]: Array<ParameterizedHeader>; }}
-     * @memberof BodyPart
-     */
-    parameterizedHeaders?: { [key: string]: Array<ParameterizedHeader>; };
+    data?: QueryInfo;
 }
 
 /**
@@ -343,37 +463,37 @@ export interface BodyPart {
  */
 export interface Cluster {
     /**
-     * unique identifier for the cluster
+     * Unique identifier for the cluster.
      * @type {string}
      * @memberof Cluster
      */
     id?: string;
     /**
-     * cluster type
+     * Cluster type.
      * @type {string}
      * @memberof Cluster
      */
     cluster_type?: Cluster.ClusterTypeEnum;
     /**
-     * aws region
+     * Aws region.
      * @type {string}
      * @memberof Cluster
      */
     aws_region?: string;
     /**
-     * domain of org using cluster
+     * Domain of org using cluster.
      * @type {string}
      * @memberof Cluster
      */
     domain?: string;
     /**
-     * top level domain of org using cluster
+     * Top level domain of org using cluster.
      * @type {string}
      * @memberof Cluster
      */
     top_level_domain?: string;
     /**
-     * api server url for cluster
+     * Api server url for cluster.
      * @type {string}
      * @memberof Cluster
      */
@@ -390,8 +510,7 @@ export namespace Cluster {
      * @enum {string}
      */
     export enum ClusterTypeEnum {
-        PUBLIC = <any> 'PUBLIC',
-        PRIVATE = <any> 'PRIVATE'
+        PUBLIC = <any> 'PUBLIC'
     }
 }
 
@@ -402,113 +521,101 @@ export namespace Cluster {
  */
 export interface Collection {
     /**
-     * ISO-8601 date
+     * ISO-8601 date.
      * @type {string}
      * @memberof Collection
      */
     created_at?: string;
     /**
-     * email of user who created the collection
+     * Email of user who created the collection.
      * @type {string}
      * @memberof Collection
      */
     created_by?: string;
     /**
-     * unique identifer for collection, can contain alphanumeric or dash characters
+     * Unique identifer for collection, can contain alphanumeric or dash characters.
      * @type {string}
      * @memberof Collection
      */
     name?: string;
     /**
-     * text describing the collection
+     * Text describing the collection.
      * @type {string}
      * @memberof Collection
      */
     description?: string;
     /**
-     * name of the workspace that the collection is in
+     * Name of the workspace that the collection is in.
      * @type {string}
      * @memberof Collection
      */
     workspace?: string;
     /**
-     * current status of collection, one of: CREATED, READY, DELETED
+     * Current status of collection.
      * @type {string}
      * @memberof Collection
      */
     status?: Collection.StatusEnum;
     /**
-     * list of sources from which collection ingests
+     * List of sources from which collection ingests.
      * @type {Array<Source>}
      * @memberof Collection
      */
     sources?: Array<Source>;
     /**
-     * metrics about the collection
+     * Metrics about the collection.
      * @type {CollectionStats}
      * @memberof Collection
      */
     stats?: CollectionStats;
     /**
-     * number of seconds after which data is purged based on event time
+     * Number of seconds after which data is purged based on event time.
      * @type {number}
      * @memberof Collection
      */
     retention_secs?: number;
     /**
-     * list of mappings applied on all documents in a collection
+     * List of mappings applied on all documents in a collection.
      * @type {Array<FieldMappingV2>}
      * @memberof Collection
      */
     field_mappings?: Array<FieldMappingV2>;
     /**
-     * Field mapping for a collection
+     * Field mapping for a collection.
      * @type {FieldMappingQuery}
      * @memberof Collection
      */
     field_mapping_query?: FieldMappingQuery;
     /**
-     * list of partitions for a collection
-     * @type {Array<FieldPartition>}
-     * @memberof Collection
-     */
-    field_partitions?: Array<FieldPartition>;
-    /**
-     * list of clustering fields for a collection
+     * List of clustering fields for a collection.
      * @type {Array<FieldPartition>}
      * @memberof Collection
      */
     clustering_key?: Array<FieldPartition>;
     /**
-     * list of aliases for a collection
+     * List of aliases for a collection.
      * @type {Array<Alias>}
      * @memberof Collection
      */
     aliases?: Array<Alias>;
     /**
-     * list of field schemas 
-     * @type {Array<FieldSchema>}
+     * Whether the collection is read-only or not.
+     * @type {boolean}
      * @memberof Collection
      */
-    field_schemas?: Array<FieldSchema>;
+    read_only?: boolean;
     /**
-     * inverted index group encoding options
-     * @type {InvertedIndexGroupEncodingOptions}
-     * @memberof Collection
-     */
-    inverted_index_group_encoding_options?: InvertedIndexGroupEncodingOptions;
-    /**
-     * Whether the collection is insert only or not
+     * Whether the collection is insert only or not.
      * @type {boolean}
      * @memberof Collection
      */
     insert_only?: boolean;
     /**
-     * If true, exactly-once write semantics is enabled.
-     * @type {boolean}
+     * 
+     * @type {Array<BulkStats>}
      * @memberof Collection
      */
-    enable_exactly_once_writes?: boolean;
+    bulk_stats?: Array<BulkStats>;
 }
 
 /**
@@ -538,75 +645,122 @@ export namespace Collection {
 /**
  * 
  * @export
- * @interface CollectionMetric
+ * @interface CollectionMount
  */
-export interface CollectionMetric {
+export interface CollectionMount {
     /**
-     * 
+     * Mount type.
      * @type {string}
-     * @memberof CollectionMetric
+     * @memberof CollectionMount
+     */
+    type?: CollectionMount.TypeEnum;
+    /**
+     * ISO-8601 date.
+     * @type {string}
+     * @memberof CollectionMount
+     */
+    created_at?: string;
+    /**
+     * Mount type.
+     * @type {string}
+     * @memberof CollectionMount
+     */
+    state?: CollectionMount.StateEnum;
+    /**
+     * Collection path.
+     * @type {string}
+     * @memberof CollectionMount
      */
     collection_path?: string;
     /**
-     * 
-     * @type {number}
-     * @memberof CollectionMetric
+     * Virtual instance ID.
+     * @type {string}
+     * @memberof CollectionMount
      */
-    doc_count?: number;
+    virtual_instance_id?: string;
     /**
-     * 
-     * @type {number}
-     * @memberof CollectionMetric
+     * Virtual Instance RRN.
+     * @type {string}
+     * @memberof CollectionMount
      */
-    total_index_size?: number;
+    virtual_instance_rrn?: string;
     /**
-     * 
-     * @type {number}
-     * @memberof CollectionMetric
+     * Mount ID.
+     * @type {string}
+     * @memberof CollectionMount
      */
-    total_bytes_ingested?: number;
+    id?: string;
     /**
-     * 
-     * @type {number}
-     * @memberof CollectionMetric
+     * Mount RRN.
+     * @type {string}
+     * @memberof CollectionMount
      */
-    ingest_parse_errors?: number;
+    rrn?: string;
     /**
-     * 
+     * Time in millis at which the snapshot expires.
      * @type {number}
-     * @memberof CollectionMetric
+     * @memberof CollectionMount
      */
-    ingest_source_total_time_ms?: number;
+    snapshot_expiration_time_millis?: number;
     /**
-     * 
+     * Stats about this Collection Mount
+     * @type {CollectionMountStats}
+     * @memberof CollectionMount
+     */
+    stats?: CollectionMountStats;
+}
+
+/**
+ * @export
+ * @namespace CollectionMount
+ */
+export namespace CollectionMount {
+    /**
+     * @export
+     * @enum {string}
+     */
+    export enum TypeEnum {
+        STATIC = <any> 'STATIC',
+        LIVE = <any> 'LIVE'
+    }
+    /**
+     * @export
+     * @enum {string}
+     */
+    export enum StateEnum {
+        CREATING = <any> 'CREATING',
+        ACTIVE = <any> 'ACTIVE',
+        EXPIRED = <any> 'EXPIRED',
+        DELETING = <any> 'DELETING'
+    }
+}
+
+/**
+ * 
+ * @export
+ * @interface CollectionMountResponse
+ */
+export interface CollectionMountResponse {
+    /**
+     * Resource mount object.
+     * @type {CollectionMount}
+     * @memberof CollectionMountResponse
+     */
+    data?: CollectionMount;
+}
+
+/**
+ * 
+ * @export
+ * @interface CollectionMountStats
+ */
+export interface CollectionMountStats {
+    /**
+     * Milliseconds since Unix epoch Jan 1, 1970.
      * @type {number}
-     * @memberof CollectionMetric
+     * @memberof CollectionMountStats
      */
-    ingest_source_measurements?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof CollectionMetric
-     */
-    leaf_ingest_total_time_ms?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof CollectionMetric
-     */
-    leaf_ingest_measurements?: number;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CollectionMetric
-     */
-    is_bulk_ingest?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof CollectionMetric
-     */
-    time?: number;
+    last_queried_ms?: number;
 }
 
 /**
@@ -616,97 +770,97 @@ export interface CollectionMetric {
  */
 export interface CollectionStats {
     /**
-     * number of documents in the collection
+     * Number of documents in the collection.
      * @type {number}
      * @memberof CollectionStats
      */
     doc_count?: number;
     /**
-     * number of documents purged from the collection
+     * Number of documents purged from the collection.
      * @type {number}
      * @memberof CollectionStats
      */
     purged_doc_count?: number;
     /**
-     * number between 0 and 1 that indicates progress of collection creation
+     * Number between 0 and 1 that indicates progress of collection creation.
      * @type {number}
      * @memberof CollectionStats
      */
     fill_progress?: number;
     /**
-     * milliseconds since Unix epoch Jan 1, 1970
+     * Milliseconds since Unix epoch Jan 1, 1970.
      * @type {number}
      * @memberof CollectionStats
      */
     last_queried_ms?: number;
     /**
-     * milliseconds since Unix epoch Jan 1, 1970
+     * Milliseconds since Unix epoch Jan 1, 1970.
      * @type {number}
      * @memberof CollectionStats
      */
     last_updated_ms?: number;
     /**
-     * total collection size in bytes
+     * Total collection size in bytes.
      * @type {number}
      * @memberof CollectionStats
      */
     total_size?: number;
     /**
-     * total collection index size in bytes
+     * Total collection index size in bytes.
      * @type {number}
      * @memberof CollectionStats
      */
     total_index_size?: number;
     /**
-     * total collection row index size in bytes
+     * Total collection row index size in bytes.
      * @type {number}
      * @memberof CollectionStats
      */
     row_index_size?: number;
     /**
-     * total collection column index size in bytes
+     * Total collection column index size in bytes.
      * @type {number}
      * @memberof CollectionStats
      */
     column_index_size?: number;
     /**
-     * total collection inverted index size in bytes
+     * Total collection inverted index size in bytes.
      * @type {number}
      * @memberof CollectionStats
      */
     inverted_index_size?: number;
     /**
-     * total collection range index size in bytes
+     * Total collection range index size in bytes.
      * @type {number}
      * @memberof CollectionStats
      */
     range_index_size?: number;
     /**
-     * total size of bytes purged in bytes
+     * Total size of bytes purged in bytes.
      * @type {number}
      * @memberof CollectionStats
      */
     purged_doc_size?: number;
     /**
-     * total number of bytes inserted into the collection
+     * Total number of bytes inserted into the collection.
      * @type {number}
      * @memberof CollectionStats
      */
     bytes_inserted?: number;
     /**
-     * total number of bytes overwritten in writing into the collection
+     * Total number of bytes overwritten in writing into the collection.
      * @type {number}
      * @memberof CollectionStats
      */
     bytes_overwritten?: number;
     /**
-     * total number of bytes inserted into the collection during bulk
+     * Total number of bytes inserted into the collection during bulk.
      * @type {number}
      * @memberof CollectionStats
      */
     bulk_bytes_inserted?: number;
     /**
-     * total number of bytes overwritten in writing into the collection during bulk
+     * Total number of bytes overwritten in writing into the collection during bulk.
      * @type {number}
      * @memberof CollectionStats
      */
@@ -716,151 +870,23 @@ export interface CollectionStats {
 /**
  * 
  * @export
- * @interface ComputeUsage
- */
-export interface ComputeUsage {
-    /**
-     * 
-     * @type {number}
-     * @memberof ComputeUsage
-     */
-    minutes: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof ComputeUsage
-     */
-    total_compute_cost: number;
-}
-
-/**
- * 
- * @export
- * @interface ContactSalesRequest
- */
-export interface ContactSalesRequest {
-    /**
-     * email to cc, determined by user
-     * @type {string}
-     * @memberof ContactSalesRequest
-     */
-    cc_email?: string;
-    /**
-     * user phone number
-     * @type {string}
-     * @memberof ContactSalesRequest
-     */
-    phone_number?: string;
-    /**
-     * category user is contacting us about
-     * @type {string}
-     * @memberof ContactSalesRequest
-     */
-    category?: string;
-    /**
-     * message from user
-     * @type {string}
-     * @memberof ContactSalesRequest
-     */
-    message?: string;
-    /**
-     * source of contact sales trigger
-     * @type {string}
-     * @memberof ContactSalesRequest
-     */
-    source?: string;
-}
-
-/**
- * 
- * @export
- * @interface ContactSupportRequest
- */
-export interface ContactSupportRequest {
-    /**
-     * subject of support ticket
-     * @type {string}
-     * @memberof ContactSupportRequest
-     */
-    subject?: string;
-    /**
-     * description of support ticket
-     * @type {string}
-     * @memberof ContactSupportRequest
-     */
-    description?: string;
-}
-
-/**
- * 
- * @export
- * @interface ContentDisposition
- */
-export interface ContentDisposition {
-    /**
-     * 
-     * @type {string}
-     * @memberof ContentDisposition
-     */
-    type?: string;
-    /**
-     * 
-     * @type {{ [key: string]: string; }}
-     * @memberof ContentDisposition
-     */
-    parameters?: { [key: string]: string; };
-    /**
-     * 
-     * @type {string}
-     * @memberof ContentDisposition
-     */
-    fileName?: string;
-    /**
-     * 
-     * @type {Date}
-     * @memberof ContentDisposition
-     */
-    creationDate?: Date;
-    /**
-     * 
-     * @type {Date}
-     * @memberof ContentDisposition
-     */
-    modificationDate?: Date;
-    /**
-     * 
-     * @type {Date}
-     * @memberof ContentDisposition
-     */
-    readDate?: Date;
-    /**
-     * 
-     * @type {number}
-     * @memberof ContentDisposition
-     */
-    size?: number;
-}
-
-/**
- * 
- * @export
  * @interface CreateAliasRequest
  */
 export interface CreateAliasRequest {
     /**
-     * Alias name
+     * Alias name.
      * @type {string}
      * @memberof CreateAliasRequest
      */
     name: string;
     /**
-     * optional description
+     * Optional description.
      * @type {string}
      * @memberof CreateAliasRequest
      */
     description?: string;
     /**
-     * list of fully qualified collection names referenced by alias
+     * List of fully qualified collection names referenced by alias.
      * @type {Array<string>}
      * @memberof CreateAliasRequest
      */
@@ -874,7 +900,7 @@ export interface CreateAliasRequest {
  */
 export interface CreateAliasResponse {
     /**
-     * alias that was created
+     * Alias that was created.
      * @type {Alias}
      * @memberof CreateAliasResponse
      */
@@ -894,11 +920,17 @@ export interface CreateApiKeyRequest {
      */
     name: string;
     /**
-     * Role specifying access control. If not specified, API key will have access to all of the associated user's roles.
+     * 
      * @type {string}
      * @memberof CreateApiKeyRequest
      */
     role?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateApiKeyRequest
+     */
+    created_by?: string;
 }
 
 /**
@@ -918,128 +950,92 @@ export interface CreateApiKeyResponse {
 /**
  * 
  * @export
+ * @interface CreateCollectionMountRequest
+ */
+export interface CreateCollectionMountRequest {
+    /**
+     * Mount type.
+     * @type {string}
+     * @memberof CreateCollectionMountRequest
+     */
+    type?: CreateCollectionMountRequest.TypeEnum;
+    /**
+     * Collections to mount.
+     * @type {Array<string>}
+     * @memberof CreateCollectionMountRequest
+     */
+    collection_paths?: Array<string>;
+}
+
+/**
+ * @export
+ * @namespace CreateCollectionMountRequest
+ */
+export namespace CreateCollectionMountRequest {
+    /**
+     * @export
+     * @enum {string}
+     */
+    export enum TypeEnum {
+        STATIC = <any> 'STATIC',
+        LIVE = <any> 'LIVE'
+    }
+}
+
+/**
+ * 
+ * @export
  * @interface CreateCollectionRequest
  */
 export interface CreateCollectionRequest {
     /**
-     * unique identifier for collection, can contain alphanumeric or dash characters
+     * Unique identifier for collection, can contain alphanumeric or dash characters.
      * @type {string}
      * @memberof CreateCollectionRequest
      */
-    name: string;
+    name?: string;
     /**
-     * text describing the collection
+     * Text describing the collection.
      * @type {string}
      * @memberof CreateCollectionRequest
      */
     description?: string;
     /**
-     * list of sources from which to ingest data
+     * List of sources from which to ingest data.
      * @type {Array<Source>}
      * @memberof CreateCollectionRequest
      */
     sources?: Array<Source>;
     /**
-     * number of seconds after which data is purged, based on event time
+     * Number of seconds after which data is purged, based on event time.
      * @type {number}
      * @memberof CreateCollectionRequest
      */
     retention_secs?: number;
     /**
-     * If non-null, the collection will be time partitioned and each partition will be time_partition_resolution_secs wide.
-     * @type {number}
-     * @memberof CreateCollectionRequest
-     */
-    time_partition_resolution_secs?: number;
-    /**
-     * If true disallows updates and deletes, but makes indexing more efficient
-     * @type {boolean}
-     * @memberof CreateCollectionRequest
-     */
-    insert_only?: boolean;
-    /**
-     * If true, exactly-once write semantics is enabled.
-     * @type {boolean}
-     * @memberof CreateCollectionRequest
-     */
-    enable_exactly_once_writes?: boolean;
-    /**
-     * configuration for event data
+     * Deprecated. Configuration for event data. Use an _event_time mapping in `field_mapping_query` instead.
      * @type {EventTimeInfo}
      * @memberof CreateCollectionRequest
      */
     event_time_info?: EventTimeInfo;
     /**
-     * list of mappings
+     * Deprecated. List of mappings. Use field_mapping_query instead.
      * @type {Array<FieldMappingV2>}
      * @memberof CreateCollectionRequest
      */
     field_mappings?: Array<FieldMappingV2>;
     /**
-     * Mapping of fields for a collection
+     * Mapping of fields for a collection.
      * @type {FieldMappingQuery}
      * @memberof CreateCollectionRequest
      */
     field_mapping_query?: FieldMappingQuery;
     /**
-     * list of field partitions
-     * @type {Array<FieldPartition>}
-     * @memberof CreateCollectionRequest
-     */
-    field_partitions?: Array<FieldPartition>;
-    /**
-     * list of clustering fields
+     * Deprecated. List of clustering fields. Use CLUSTER BY clause in `field_mapping_query` instead.
      * @type {Array<FieldPartition>}
      * @memberof CreateCollectionRequest
      */
     clustering_key?: Array<FieldPartition>;
-    /**
-     * list of field schemas
-     * @type {Array<FieldSchema>}
-     * @memberof CreateCollectionRequest
-     */
-    field_schemas?: Array<FieldSchema>;
-    /**
-     * inverted index group encoding options
-     * @type {InvertedIndexGroupEncodingOptions}
-     * @memberof CreateCollectionRequest
-     */
-    inverted_index_group_encoding_options?: InvertedIndexGroupEncodingOptions;
-    /**
-     * override value for bulk ingest state
-     * @type {boolean}
-     * @memberof CreateCollectionRequest
-     */
-    bulk_load_override?: boolean;
-    /**
-     * Virtual instance type, chosen at first collection creation
-     * @type {string}
-     * @memberof CreateCollectionRequest
-     */
-    instance_type?: CreateCollectionRequest.InstanceTypeEnum;
-}
-
-/**
- * @export
- * @namespace CreateCollectionRequest
- */
-export namespace CreateCollectionRequest {
-    /**
-     * @export
-     * @enum {string}
-     */
-    export enum InstanceTypeEnum {
-        FREE = <any> 'FREE',
-        SHARED = <any> 'SHARED',
-        SMALL = <any> 'SMALL',
-        MEDIUM = <any> 'MEDIUM',
-        LARGE = <any> 'LARGE',
-        XLARGE = <any> 'XLARGE',
-        XLARGE2 = <any> 'XLARGE2',
-        XLARGE4 = <any> 'XLARGE4',
-        XLARGE8 = <any> 'XLARGE8',
-        XLARGE16 = <any> 'XLARGE16'
-    }
 }
 
 /**
@@ -1049,7 +1045,7 @@ export namespace CreateCollectionRequest {
  */
 export interface CreateCollectionResponse {
     /**
-     * collection that was created
+     * Collection that was created.
      * @type {Collection}
      * @memberof CreateCollectionResponse
      */
@@ -1063,53 +1059,59 @@ export interface CreateCollectionResponse {
  */
 export interface CreateIntegrationRequest {
     /**
-     * descriptive label
+     * Descriptive label.
      * @type {string}
      * @memberof CreateIntegrationRequest
      */
     name: string;
     /**
-     * longer explanation for the integration
+     * Longer explanation for the integration.
      * @type {string}
      * @memberof CreateIntegrationRequest
      */
     description?: string;
     /**
-     * Amazon S3 details, must have one of aws_access_key or aws_role
+     * Amazon S3 details, must have one of aws_access_key or aws_role.
      * @type {S3Integration}
      * @memberof CreateIntegrationRequest
      */
     s3?: S3Integration;
     /**
-     * Amazon Kinesis details, must have one of aws_access_key or aws_role
+     * Amazon Kinesis details, must have one of aws_access_key or aws_role.
      * @type {KinesisIntegration}
      * @memberof CreateIntegrationRequest
      */
     kinesis?: KinesisIntegration;
     /**
-     * Amazon DynamoDB details, must have one of aws_access_key or aws_role
+     * Amazon DynamoDB details, must have one of aws_access_key or aws_role.
      * @type {DynamodbIntegration}
      * @memberof CreateIntegrationRequest
      */
     dynamodb?: DynamodbIntegration;
     /**
-     * Amazon Redshift details
-     * @type {RedshiftIntegration}
-     * @memberof CreateIntegrationRequest
-     */
-    redshift?: RedshiftIntegration;
-    /**
-     * GCS details
+     * GCS details.
      * @type {GcsIntegration}
      * @memberof CreateIntegrationRequest
      */
     gcs?: GcsIntegration;
     /**
-     * 
-     * @type {SegmentIntegration}
+     * Azure Blob Storage details.
+     * @type {AzureBlobStorageIntegration}
      * @memberof CreateIntegrationRequest
      */
-    segment?: SegmentIntegration;
+    azure_blob_storage?: AzureBlobStorageIntegration;
+    /**
+     * Azure Service Bus details.
+     * @type {AzureServiceBusIntegration}
+     * @memberof CreateIntegrationRequest
+     */
+    azure_service_bus?: AzureServiceBusIntegration;
+    /**
+     * Azure Event Hubs details.
+     * @type {AzureEventHubsIntegration}
+     * @memberof CreateIntegrationRequest
+     */
+    azure_event_hubs?: AzureEventHubsIntegration;
     /**
      * 
      * @type {KafkaIntegration}
@@ -1117,11 +1119,17 @@ export interface CreateIntegrationRequest {
      */
     kafka?: KafkaIntegration;
     /**
-     * MongoDb details
+     * MongoDb details.
      * @type {MongoDbIntegration}
      * @memberof CreateIntegrationRequest
      */
     mongodb?: MongoDbIntegration;
+    /**
+     * 
+     * @type {SnowflakeIntegration}
+     * @memberof CreateIntegrationRequest
+     */
+    snowflake?: SnowflakeIntegration;
 }
 
 /**
@@ -1131,7 +1139,7 @@ export interface CreateIntegrationRequest {
  */
 export interface CreateIntegrationResponse {
     /**
-     * integration object that was created
+     * Integration object that was created.
      * @type {Integration}
      * @memberof CreateIntegrationResponse
      */
@@ -1141,221 +1149,33 @@ export interface CreateIntegrationResponse {
 /**
  * 
  * @export
- * @interface CreateIpAllowlistRequest
- */
-export interface CreateIpAllowlistRequest {
-    /**
-     * IP Allowlist policy name
-     * @type {string}
-     * @memberof CreateIpAllowlistRequest
-     */
-    name: string;
-    /**
-     * optional description
-     * @type {string}
-     * @memberof CreateIpAllowlistRequest
-     */
-    description?: string;
-    /**
-     * individual IP address or range of IP addresses in CIDR notation
-     * @type {string}
-     * @memberof CreateIpAllowlistRequest
-     */
-    ip_address: string;
-}
-
-/**
- * 
- * @export
- * @interface CreateIpAllowlistResponse
- */
-export interface CreateIpAllowlistResponse {
-    /**
-     * IP Allowlist network policy entry that was created
-     * @type {IpAllowlist}
-     * @memberof CreateIpAllowlistResponse
-     */
-    data?: IpAllowlist;
-}
-
-/**
- * 
- * @export
- * @interface CreateIssueRequest
- */
-export interface CreateIssueRequest {
-    /**
-     * title
-     * @type {string}
-     * @memberof CreateIssueRequest
-     */
-    title?: string;
-    /**
-     * description
-     * @type {string}
-     * @memberof CreateIssueRequest
-     */
-    description?: string;
-}
-
-/**
- * 
- * @export
- * @interface CreateIssueResponse
- */
-export interface CreateIssueResponse {
-    /**
-     * issue that was created
-     * @type {Issue}
-     * @memberof CreateIssueResponse
-     */
-    data?: Issue;
-}
-
-/**
- * 
- * @export
- * @interface CreateOrganizationRequest
- */
-export interface CreateOrganizationRequest {
-    /**
-     * unique identifier for the organization
-     * @type {string}
-     * @memberof CreateOrganizationRequest
-     */
-    id?: string;
-    /**
-     * name of the organization
-     * @type {string}
-     * @memberof CreateOrganizationRequest
-     */
-    display_name?: string;
-    /**
-     * name of the creating user
-     * @type {string}
-     * @memberof CreateOrganizationRequest
-     */
-    first_name?: string;
-    /**
-     * name of the creating user
-     * @type {string}
-     * @memberof CreateOrganizationRequest
-     */
-    last_name?: string;
-    /**
-     * email of the creating user
-     * @type {string}
-     * @memberof CreateOrganizationRequest
-     */
-    email?: string;
-    /**
-     * name of the company
-     * @type {string}
-     * @memberof CreateOrganizationRequest
-     */
-    company_name?: string;
-    /**
-     * phone number of the user
-     * @type {string}
-     * @memberof CreateOrganizationRequest
-     */
-    phone_number?: string;
-    /**
-     * whether plan is a 15 day free trial
-     * @type {boolean}
-     * @memberof CreateOrganizationRequest
-     */
-    trial?: boolean;
-    /**
-     * whether to use KMS for S3 operations
-     * @type {boolean}
-     * @memberof CreateOrganizationRequest
-     */
-    use_kms_for_s3?: boolean;
-    /**
-     * cluster id
-     * @type {string}
-     * @memberof CreateOrganizationRequest
-     */
-    cluster_id?: string;
-    /**
-     * cluster name to determine cluster mapping on org creation
-     * @type {string}
-     * @memberof CreateOrganizationRequest
-     */
-    cluster_name?: string;
-    /**
-     * encyption key
-     * @type {string}
-     * @memberof CreateOrganizationRequest
-     */
-    encryption_key?: string;
-}
-
-/**
- * 
- * @export
- * @interface CreatePreviewSourceRequest
- */
-export interface CreatePreviewSourceRequest {
-    /**
-     * name of integration to use
-     * @type {string}
-     * @memberof CreatePreviewSourceRequest
-     */
-    integration_name?: string;
-    /**
-     * whether type is file upload
-     * @type {boolean}
-     * @memberof CreatePreviewSourceRequest
-     */
-    file_upload?: boolean;
-    /**
-     * configuration to receive data from kafka
-     * @type {SourceKafka}
-     * @memberof CreatePreviewSourceRequest
-     */
-    kafka?: SourceKafka;
-}
-
-/**
- * 
- * @export
- * @interface CreatePreviewSourceResponse
- */
-export interface CreatePreviewSourceResponse {
-    /**
-     * details of the created preview source
-     * @type {PreviewSource}
-     * @memberof CreatePreviewSourceResponse
-     */
-    data?: PreviewSource;
-}
-
-/**
- * 
- * @export
  * @interface CreateQueryLambdaRequest
  */
 export interface CreateQueryLambdaRequest {
     /**
-     * Query Lambda name
+     * Query Lambda name.
      * @type {string}
      * @memberof CreateQueryLambdaRequest
      */
     name: string;
     /**
-     * optional description
+     * Optional description.
      * @type {string}
      * @memberof CreateQueryLambdaRequest
      */
     description?: string;
     /**
-     * Query Lambda SQL query
+     * Query Lambda SQL query.
      * @type {QueryLambdaSql}
      * @memberof CreateQueryLambdaRequest
      */
     sql: QueryLambdaSql;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CreateQueryLambdaRequest
+     */
+    is_public?: boolean;
 }
 
 /**
@@ -1365,13 +1185,13 @@ export interface CreateQueryLambdaRequest {
  */
 export interface CreateQueryLambdaTagRequest {
     /**
-     * name of Query Lambda tag
+     * Name of Query Lambda tag.
      * @type {string}
      * @memberof CreateQueryLambdaTagRequest
      */
     tag_name: string;
     /**
-     * hash identifying a Query Lambda tag
+     * Hash identifying a Query Lambda tag.
      * @type {string}
      * @memberof CreateQueryLambdaTagRequest
      */
@@ -1411,17 +1231,29 @@ export interface CreateRoleRequest {
  */
 export interface CreateUserRequest {
     /**
-     * user email, must be unique
+     * User email, must be unique.
      * @type {string}
      * @memberof CreateUserRequest
      */
     email: string;
     /**
-     * List of roles for a given user
+     * List of roles for a given user.
      * @type {Array<string>}
      * @memberof CreateUserRequest
      */
     roles: Array<string>;
+    /**
+     * User first name.
+     * @type {string}
+     * @memberof CreateUserRequest
+     */
+    first_name?: string;
+    /**
+     * User last name.
+     * @type {string}
+     * @memberof CreateUserRequest
+     */
+    last_name?: string;
 }
 
 /**
@@ -1431,7 +1263,7 @@ export interface CreateUserRequest {
  */
 export interface CreateUserResponse {
     /**
-     * user that was created
+     * User that was created.
      * @type {User}
      * @memberof CreateUserResponse
      */
@@ -1445,19 +1277,19 @@ export interface CreateUserResponse {
  */
 export interface CreateViewRequest {
     /**
-     * View name
+     * View name.
      * @type {string}
      * @memberof CreateViewRequest
      */
     name: string;
     /**
-     * optional description
+     * Optional description.
      * @type {string}
      * @memberof CreateViewRequest
      */
     description?: string;
     /**
-     * SQL for this view
+     * SQL for this view.
      * @type {string}
      * @memberof CreateViewRequest
      */
@@ -1471,7 +1303,7 @@ export interface CreateViewRequest {
  */
 export interface CreateViewResponse {
     /**
-     * view that was updated
+     * View that was updated.
      * @type {View}
      * @memberof CreateViewResponse
      */
@@ -1481,17 +1313,88 @@ export interface CreateViewResponse {
 /**
  * 
  * @export
+ * @interface CreateVirtualInstanceRequest
+ */
+export interface CreateVirtualInstanceRequest {
+    /**
+     * Requested virtual instance type.
+     * @type {string}
+     * @memberof CreateVirtualInstanceRequest
+     */
+    type?: CreateVirtualInstanceRequest.TypeEnum;
+    /**
+     * Unique identifier for virtual instance, can contain alphanumeric or dash characters.
+     * @type {string}
+     * @memberof CreateVirtualInstanceRequest
+     */
+    name: string;
+    /**
+     * Description of requested virtual instance.
+     * @type {string}
+     * @memberof CreateVirtualInstanceRequest
+     */
+    description?: string;
+    /**
+     * Number of seconds without queries after which the VI is suspended
+     * @type {number}
+     * @memberof CreateVirtualInstanceRequest
+     */
+    auto_suspend_seconds?: number;
+}
+
+/**
+ * @export
+ * @namespace CreateVirtualInstanceRequest
+ */
+export namespace CreateVirtualInstanceRequest {
+    /**
+     * @export
+     * @enum {string}
+     */
+    export enum TypeEnum {
+        FREE = <any> 'FREE',
+        NANO = <any> 'NANO',
+        SHARED = <any> 'SHARED',
+        MILLI = <any> 'MILLI',
+        SMALL = <any> 'SMALL',
+        MEDIUM = <any> 'MEDIUM',
+        LARGE = <any> 'LARGE',
+        XLARGE = <any> 'XLARGE',
+        XLARGE2 = <any> 'XLARGE2',
+        XLARGE4 = <any> 'XLARGE4',
+        XLARGE8 = <any> 'XLARGE8',
+        XLARGE16 = <any> 'XLARGE16'
+    }
+}
+
+/**
+ * 
+ * @export
+ * @interface CreateVirtualInstanceResponse
+ */
+export interface CreateVirtualInstanceResponse {
+    /**
+     * Virtual instance object.
+     * @type {VirtualInstance}
+     * @memberof CreateVirtualInstanceResponse
+     */
+    data?: VirtualInstance;
+}
+
+/**
+ * 
+ * @export
  * @interface CreateWorkspaceRequest
  */
 export interface CreateWorkspaceRequest {
     /**
-     * descriptive label and unique identifier
+     * Descriptive label and unique identifier.
      * @type {string}
      * @memberof CreateWorkspaceRequest
      */
     name: string;
     /**
-     * longer explanation for the workspace
+     * Longer explanation for the workspace.
      * @type {string}
      * @memberof CreateWorkspaceRequest
      */
@@ -1505,7 +1408,7 @@ export interface CreateWorkspaceRequest {
  */
 export interface CreateWorkspaceResponse {
     /**
-     * the workspace that was created
+     * The workspace that was created.
      * @type {Workspace}
      * @memberof CreateWorkspaceResponse
      */
@@ -1515,114 +1418,35 @@ export interface CreateWorkspaceResponse {
 /**
  * 
  * @export
- * @interface Credit
- */
-export interface Credit {
-    /**
-     * 
-     * @type {number}
-     * @memberof Credit
-     */
-    credit_id?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof Credit
-     */
-    org_id?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof Credit
-     */
-    credit_start?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof Credit
-     */
-    credit_end?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof Credit
-     */
-    value?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof Credit
-     */
-    value_used?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof Credit
-     */
-    description?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof Credit
-     */
-    credit_type?: Credit.CreditTypeEnum;
-    /**
-     * 
-     * @type {number}
-     * @memberof Credit
-     */
-    max_monthly_application?: number;
-}
-
-/**
- * @export
- * @namespace Credit
- */
-export namespace Credit {
-    /**
-     * @export
-     * @enum {string}
-     */
-    export enum CreditTypeEnum {
-        GENERIC = <any> 'GENERIC',
-        COMPUTE = <any> 'COMPUTE',
-        INGEST = <any> 'INGEST',
-        STORAGE = <any> 'STORAGE'
-    }
-}
-
-/**
- * 
- * @export
  * @interface CsvParams
  */
 export interface CsvParams {
     /**
-     * If the first line in every object specifies the column names
+     * If the first line in every object specifies the column names.
      * @type {boolean}
      * @memberof CsvParams
      */
     firstLineAsColumnNames?: boolean;
     /**
-     * a single character that is the column separator
+     * A single character that is the column separator.
      * @type {string}
      * @memberof CsvParams
      */
     separator?: string;
     /**
-     * can be one of: UTF-8, ISO_8859_1, UTF-16
+     * One of: UTF-8, ISO_8859_1, UTF-16.
      * @type {string}
      * @memberof CsvParams
      */
     encoding?: string;
     /**
-     * names of columns
+     * Names of columns.
      * @type {Array<string>}
      * @memberof CsvParams
      */
     columnNames?: Array<string>;
     /**
-     * names of columns
+     * Names of columns.
      * @type {Array<string>}
      * @memberof CsvParams
      */
@@ -1672,7 +1496,7 @@ export namespace CsvParams {
  */
 export interface DeleteAliasResponse {
     /**
-     * alias that was deleted
+     * Alias that was deleted.
      * @type {Alias}
      * @memberof DeleteAliasResponse
      */
@@ -1700,7 +1524,7 @@ export interface DeleteApiKeyResponse {
  */
 export interface DeleteCollectionResponse {
     /**
-     * collection that was deleted
+     * Collection that was deleted.
      * @type {Collection}
      * @memberof DeleteCollectionResponse
      */
@@ -1714,7 +1538,7 @@ export interface DeleteCollectionResponse {
  */
 export interface DeleteDocumentsRequest {
     /**
-     * Array of IDs of documents to be deleted
+     * Array of IDs of documents to be deleted.
      * @type {Array<DeleteDocumentsRequestData>}
      * @memberof DeleteDocumentsRequest
      */
@@ -1728,7 +1552,7 @@ export interface DeleteDocumentsRequest {
  */
 export interface DeleteDocumentsRequestData {
     /**
-     * unique document ID
+     * Unique document ID.
      * @type {string}
      * @memberof DeleteDocumentsRequestData
      */
@@ -1742,7 +1566,7 @@ export interface DeleteDocumentsRequestData {
  */
 export interface DeleteDocumentsResponse {
     /**
-     * information about deleted documents
+     * Information about deleted documents.
      * @type {Array<DocumentStatus>}
      * @memberof DeleteDocumentsResponse
      */
@@ -1756,7 +1580,7 @@ export interface DeleteDocumentsResponse {
  */
 export interface DeleteIntegrationResponse {
     /**
-     * integration object that was deleted
+     * Integration object that was deleted.
      * @type {Integration}
      * @memberof DeleteIntegrationResponse
      */
@@ -1766,39 +1590,11 @@ export interface DeleteIntegrationResponse {
 /**
  * 
  * @export
- * @interface DeleteIpAllowlistRequest
- */
-export interface DeleteIpAllowlistRequest {
-    /**
-     * Org ID of the org for which we want to delete an entry
-     * @type {string}
-     * @memberof DeleteIpAllowlistRequest
-     */
-    org_id?: string;
-}
-
-/**
- * 
- * @export
- * @interface DeleteIpAllowlistResponse
- */
-export interface DeleteIpAllowlistResponse {
-    /**
-     * IP Allowlist network policy entry that was deleted
-     * @type {IpAllowlist}
-     * @memberof DeleteIpAllowlistResponse
-     */
-    data?: IpAllowlist;
-}
-
-/**
- * 
- * @export
  * @interface DeleteQueryLambdaResponse
  */
 export interface DeleteQueryLambdaResponse {
     /**
-     * Query Lambda details
+     * Query Lambda details.
      * @type {QueryLambda}
      * @memberof DeleteQueryLambdaResponse
      */
@@ -1812,7 +1608,7 @@ export interface DeleteQueryLambdaResponse {
  */
 export interface DeleteUserResponse {
     /**
-     * user object that was deleted
+     * User object that was deleted.
      * @type {User}
      * @memberof DeleteUserResponse
      */
@@ -1826,7 +1622,7 @@ export interface DeleteUserResponse {
  */
 export interface DeleteViewResponse {
     /**
-     * view that was deleted
+     * View that was deleted.
      * @type {View}
      * @memberof DeleteViewResponse
      */
@@ -1836,11 +1632,25 @@ export interface DeleteViewResponse {
 /**
  * 
  * @export
+ * @interface DeleteVirtualInstanceResponse
+ */
+export interface DeleteVirtualInstanceResponse {
+    /**
+     * Virtual instance that was deleted.
+     * @type {VirtualInstance}
+     * @memberof DeleteVirtualInstanceResponse
+     */
+    data?: VirtualInstance;
+}
+
+/**
+ * 
+ * @export
  * @interface DeleteWorkspaceResponse
  */
 export interface DeleteWorkspaceResponse {
     /**
-     * the workspace that was deleted
+     * The workspace that was deleted.
      * @type {Workspace}
      * @memberof DeleteWorkspaceResponse
      */
@@ -1854,31 +1664,31 @@ export interface DeleteWorkspaceResponse {
  */
 export interface DocumentStatus {
     /**
-     * collection name
+     * Collection name.
      * @type {string}
      * @memberof DocumentStatus
      */
     _collection?: string;
     /**
-     * error message, if any
+     * Error message, if any.
      * @type {ErrorModel}
      * @memberof DocumentStatus
      */
     error?: ErrorModel;
     /**
-     * unique document ID
+     * Unique document ID.
      * @type {string}
      * @memberof DocumentStatus
      */
     _id?: string;
     /**
-     * status, one of ADDED, REPLACED, DELETED, ERROR
+     * Status of the document.
      * @type {string}
      * @memberof DocumentStatus
      */
     status?: DocumentStatus.StatusEnum;
     /**
-     * unique id used to represent each patch request
+     * Unique id used to represent each patch request.
      * @type {string}
      * @memberof DocumentStatus
      */
@@ -1910,19 +1720,19 @@ export namespace DocumentStatus {
  */
 export interface DynamodbIntegration {
     /**
-     * credentials for an AWS access key integration
+     * Credentials for an AWS access key integration.
      * @type {AwsAccessKey}
      * @memberof DynamodbIntegration
      */
     aws_access_key?: AwsAccessKey;
     /**
-     * role used for external id type authentication
+     * Role used for external id type authentication.
      * @type {AwsRole}
      * @memberof DynamodbIntegration
      */
     aws_role?: AwsRole;
     /**
-     * S3 bucket used for export during collection initial dump
+     * S3 bucket used for export during collection initial dump.
      * @type {string}
      * @memberof DynamodbIntegration
      */
@@ -1936,41 +1746,47 @@ export interface DynamodbIntegration {
  */
 export interface ErrorModel {
     /**
-     * descriptive message about the error
+     * Descriptive message about the error.
      * @type {string}
      * @memberof ErrorModel
      */
     message?: string;
     /**
-     * category of the error
+     * Category of the error.
      * @type {string}
      * @memberof ErrorModel
      */
     type?: ErrorModel.TypeEnum;
     /**
-     * Line where the error happened (if applicable)
+     * Line where the error happened (if applicable).
      * @type {number}
      * @memberof ErrorModel
      */
     line?: number;
     /**
-     * Column where the error happened (if applicable)
+     * Column where the error happened (if applicable).
      * @type {number}
      * @memberof ErrorModel
      */
     column?: number;
     /**
-     * Internal trace ID to help with debugging
+     * Internal trace ID to help with debugging.
      * @type {string}
      * @memberof ErrorModel
      */
     trace_id?: string;
     /**
-     * ID of the error
+     * ID of the error.
      * @type {string}
      * @memberof ErrorModel
      */
     error_id?: string;
+    /**
+     * ID of the query (if applicable).
+     * @type {string}
+     * @memberof ErrorModel
+     */
+    query_id?: string;
 }
 
 /**
@@ -1999,8 +1815,8 @@ export namespace ErrorModel {
         NOTREADY = <any> 'NOT_READY',
         FORBIDDEN = <any> 'FORBIDDEN',
         QUERYTIMEOUT = <any> 'QUERY_TIMEOUT',
-        ROLENOTFOUND = <any> 'ROLE_NOT_FOUND',
         CONNECTIONERROR = <any> 'CONNECTION_ERROR',
+        CONTENTTOOLARGE = <any> 'CONTENTTOOLARGE',
         CREATING = <any> 'CREATING',
         BADREQUEST = <any> 'BADREQUEST',
         SERVICEUNAVAILABLE = <any> 'SERVICEUNAVAILABLE',
@@ -2017,19 +1833,19 @@ export namespace ErrorModel {
  */
 export interface EventTimeInfo {
     /**
-     * name of the field containing event time
+     * Name of the field containing event time.
      * @type {string}
      * @memberof EventTimeInfo
      */
     field: string;
     /**
-     * format of time field, can be one of: milliseconds_since_epoch, seconds_since_epoch
+     * Format of time field, can be one of: milliseconds_since_epoch, seconds_since_epoch.
      * @type {string}
      * @memberof EventTimeInfo
      */
     format?: string;
     /**
-     * default time zone, in standard IANA format
+     * Default time zone, in standard IANA format.
      * @type {string}
      * @memberof EventTimeInfo
      */
@@ -2039,23 +1855,49 @@ export interface EventTimeInfo {
 /**
  * 
  * @export
+ * @interface ExecutePublicQueryLambdaRequest
+ */
+export interface ExecutePublicQueryLambdaRequest {
+    /**
+     * List of named parameters.
+     * @type {Array<QueryParameter>}
+     * @memberof ExecutePublicQueryLambdaRequest
+     */
+    parameters?: Array<QueryParameter>;
+    /**
+     * Row limit to use if no limit specified in the SQL query text.
+     * @type {number}
+     * @memberof ExecutePublicQueryLambdaRequest
+     */
+    default_row_limit?: number;
+    /**
+     * Whether to generate warnings.
+     * @type {boolean}
+     * @memberof ExecutePublicQueryLambdaRequest
+     */
+    generate_warnings?: boolean;
+}
+
+/**
+ * 
+ * @export
  * @interface ExecuteQueryLambdaRequest
  */
 export interface ExecuteQueryLambdaRequest {
     /**
-     * list of named parameters
+     * List of named parameters.
      * @type {Array<QueryParameter>}
      * @memberof ExecuteQueryLambdaRequest
      */
     parameters?: Array<QueryParameter>;
     /**
-     * Row limit to use if no limit specified in the SQL query text
+     * Row limit to use if no limit specified in the SQL query text.
      * @type {number}
      * @memberof ExecuteQueryLambdaRequest
      */
     default_row_limit?: number;
     /**
-     * Whether to generate warnings
+     * Whether to generate warnings.
      * @type {boolean}
      * @memberof ExecuteQueryLambdaRequest
      */
@@ -2072,6 +1914,18 @@ export interface ExecuteQueryLambdaRequest {
      * @memberof ExecuteQueryLambdaRequest
      */
     initial_paginate_response_doc_count?: number;
+    /**
+     * Options for configuring Asynchronous Query Mode (beta).
+     * @type {AsyncQueryOptions}
+     * @memberof ExecuteQueryLambdaRequest
+     */
+    async_options?: AsyncQueryOptions;
+    /**
+     * Virtual instance on which to run the query.
+     * @type {string}
+     * @memberof ExecuteQueryLambdaRequest
+     */
+    virtual_instance_id?: string;
 }
 
 /**
@@ -2089,7 +1943,7 @@ export interface FieldMapping {
  */
 export interface FieldMappingQuery {
     /**
-     * SELECT * EXCEPT (name), SHA256(name) AS name_anon FROM _input
+     * SELECT * EXCEPT (name), SHA256(name) AS name_anon FROM _input.
      * @type {string}
      * @memberof FieldMappingQuery
      */
@@ -2103,7 +1957,7 @@ export interface FieldMappingQuery {
  */
 export interface FieldMappingV2 {
     /**
-     * A user specified string that is a name for this mapping
+     * A user specified string that is a name for this mapping.
      * @type {string}
      * @memberof FieldMappingV2
      */
@@ -2115,13 +1969,13 @@ export interface FieldMappingV2 {
      */
     is_drop_all_fields?: boolean;
     /**
-     * A List of InputField for this mapping
+     * A List of InputField for this mapping.
      * @type {Array<InputField>}
      * @memberof FieldMappingV2
      */
     input_fields?: Array<InputField>;
     /**
-     * An OutputField for this mapping
+     * An OutputField for this mapping.
      * @type {OutputField}
      * @memberof FieldMappingV2
      */
@@ -2131,95 +1985,23 @@ export interface FieldMappingV2 {
 /**
  * 
  * @export
- * @interface FieldMask
- */
-export interface FieldMask {
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof FieldMask
-     */
-    input_path: Array<string>;
-    /**
-     * 
-     * @type {FieldMaskMask}
-     * @memberof FieldMask
-     */
-    mask?: FieldMaskMask;
-}
-
-/**
- * Field masking function name + args. The args is a JSON object.
- * @export
- * @interface FieldMaskMask
- */
-export interface FieldMaskMask {
-    /**
-     * 
-     * @type {string}
-     * @memberof FieldMaskMask
-     */
-    name: string;
-    /**
-     * 
-     * @type {any}
-     * @memberof FieldMaskMask
-     */
-    args?: any;
-}
-
-/**
- * 
- * @export
- * @interface FieldOptions
- */
-export interface FieldOptions {
-    /**
-     *  index or no_index
-     * @type {string}
-     * @memberof FieldOptions
-     */
-    index_mode?: string;
-    /**
-     *  v1_index or no_index
-     * @type {string}
-     * @memberof FieldOptions
-     */
-    range_index_mode?: string;
-    /**
-     *  index or no_index
-     * @type {string}
-     * @memberof FieldOptions
-     */
-    type_index_mode?: string;
-    /**
-     *  store or no_store
-     * @type {string}
-     * @memberof FieldOptions
-     */
-    column_index_mode?: string;
-}
-
-/**
- * 
- * @export
  * @interface FieldPartition
  */
 export interface FieldPartition {
     /**
-     * The name of a field, parsed as a SQL qualified name
+     * The name of a field, parsed as a SQL qualified name.
      * @type {string}
      * @memberof FieldPartition
      */
     field_name?: string;
     /**
-     * The type of partitions on a field
+     * The type of partitions on a field.
      * @type {string}
      * @memberof FieldPartition
      */
     type?: FieldPartition.TypeEnum;
     /**
-     * The values for partitioning of a field
+     * The values for partitioning of a field. Unneeded if the partition type is AUTO.
      * @type {Array<string>}
      * @memberof FieldPartition
      */
@@ -2243,193 +2025,11 @@ export namespace FieldPartition {
 /**
  * 
  * @export
- * @interface FieldSchema
- */
-export interface FieldSchema {
-    /**
-     * The name of a field, parsed as a SQL qualified name
-     * @type {string}
-     * @memberof FieldSchema
-     */
-    field_name?: string;
-    /**
-     * The indexing options for a field
-     * @type {FieldOptions}
-     * @memberof FieldSchema
-     */
-    field_options?: FieldOptions;
-}
-
-/**
- * 
- * @export
- * @interface FileUploadStatus
- */
-export interface FileUploadStatus {
-    /**
-     * name of the file uploaded
-     * @type {string}
-     * @memberof FileUploadStatus
-     */
-    file_name?: string;
-    /**
-     * ISO-8601 date
-     * @type {string}
-     * @memberof FileUploadStatus
-     */
-    uploaded_at?: string;
-    /**
-     * id used to identify a file upload request
-     * @type {string}
-     * @memberof FileUploadStatus
-     */
-    file_upload_id?: string;
-}
-
-/**
- * 
- * @export
- * @interface FormDataBodyPart
- */
-export interface FormDataBodyPart {
-    /**
-     * 
-     * @type {ContentDisposition}
-     * @memberof FormDataBodyPart
-     */
-    contentDisposition?: ContentDisposition;
-    /**
-     * 
-     * @type {any}
-     * @memberof FormDataBodyPart
-     */
-    entity?: any;
-    /**
-     * 
-     * @type {{ [key: string]: Array<string>; }}
-     * @memberof FormDataBodyPart
-     */
-    headers?: { [key: string]: Array<string>; };
-    /**
-     * 
-     * @type {MediaType}
-     * @memberof FormDataBodyPart
-     */
-    mediaType?: MediaType;
-    /**
-     * 
-     * @type {MessageBodyWorkers}
-     * @memberof FormDataBodyPart
-     */
-    messageBodyWorkers?: MessageBodyWorkers;
-    /**
-     * 
-     * @type {MultiPart}
-     * @memberof FormDataBodyPart
-     */
-    parent?: MultiPart;
-    /**
-     * 
-     * @type {Providers}
-     * @memberof FormDataBodyPart
-     */
-    providers?: Providers;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof FormDataBodyPart
-     */
-    simple?: boolean;
-    /**
-     * 
-     * @type {FormDataContentDisposition}
-     * @memberof FormDataBodyPart
-     */
-    formDataContentDisposition?: FormDataContentDisposition;
-    /**
-     * 
-     * @type {string}
-     * @memberof FormDataBodyPart
-     */
-    name?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof FormDataBodyPart
-     */
-    value?: string;
-    /**
-     * 
-     * @type {{ [key: string]: Array<ParameterizedHeader>; }}
-     * @memberof FormDataBodyPart
-     */
-    parameterizedHeaders?: { [key: string]: Array<ParameterizedHeader>; };
-}
-
-/**
- * 
- * @export
- * @interface FormDataContentDisposition
- */
-export interface FormDataContentDisposition {
-    /**
-     * 
-     * @type {string}
-     * @memberof FormDataContentDisposition
-     */
-    type?: string;
-    /**
-     * 
-     * @type {{ [key: string]: string; }}
-     * @memberof FormDataContentDisposition
-     */
-    parameters?: { [key: string]: string; };
-    /**
-     * 
-     * @type {string}
-     * @memberof FormDataContentDisposition
-     */
-    fileName?: string;
-    /**
-     * 
-     * @type {Date}
-     * @memberof FormDataContentDisposition
-     */
-    creationDate?: Date;
-    /**
-     * 
-     * @type {Date}
-     * @memberof FormDataContentDisposition
-     */
-    modificationDate?: Date;
-    /**
-     * 
-     * @type {Date}
-     * @memberof FormDataContentDisposition
-     */
-    readDate?: Date;
-    /**
-     * 
-     * @type {number}
-     * @memberof FormDataContentDisposition
-     */
-    size?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof FormDataContentDisposition
-     */
-    name?: string;
-}
-
-/**
- * 
- * @export
  * @interface FormatParams
  */
 export interface FormatParams {
     /**
-     * source data is in json format
+     * Source data is in json format.
      * @type {boolean}
      * @memberof FormatParams
      */
@@ -2458,6 +2058,24 @@ export interface FormatParams {
      * @memberof FormatParams
      */
     postgres_dms?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof FormatParams
+     */
+    mssql_dms?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof FormatParams
+     */
+    oracle_dms?: boolean;
+    /**
+     * 
+     * @type {AvroParams}
+     * @memberof FormatParams
+     */
+    avro?: AvroParams;
 }
 
 /**
@@ -2467,7 +2085,7 @@ export interface FormatParams {
  */
 export interface GcpServiceAccount {
     /**
-     * Contents of JSON Service Account key file
+     * Contents of JSON Service Account key file.
      * @type {string}
      * @memberof GcpServiceAccount
      */
@@ -2481,7 +2099,7 @@ export interface GcpServiceAccount {
  */
 export interface GcsIntegration {
     /**
-     * credentials for an AWS key integration
+     * Credentials for an GCP key integration.
      * @type {GcpServiceAccount}
      * @memberof GcsIntegration
      */
@@ -2491,25 +2109,11 @@ export interface GcsIntegration {
 /**
  * 
  * @export
- * @interface GetActivityResponse
- */
-export interface GetActivityResponse {
-    /**
-     * list of activity details
-     * @type {Array<any>}
-     * @memberof GetActivityResponse
-     */
-    activities?: Array<any>;
-}
-
-/**
- * 
- * @export
  * @interface GetAliasResponse
  */
 export interface GetAliasResponse {
     /**
-     * alias that was requested
+     * Alias that was requested.
      * @type {Alias}
      * @memberof GetAliasResponse
      */
@@ -2533,51 +2137,11 @@ export interface GetApiKeyResponse {
 /**
  * 
  * @export
- * @interface GetCollectionCommit
- */
-export interface GetCollectionCommit {
-    /**
-     * 
-     * @type {GetCollectionCommitData}
-     * @memberof GetCollectionCommit
-     */
-    data?: GetCollectionCommitData;
-    /**
-     * 
-     * @type {Offsets}
-     * @memberof GetCollectionCommit
-     */
-    offsets?: Offsets;
-}
-
-/**
- * 
- * @export
- * @interface GetCollectionCommitData
- */
-export interface GetCollectionCommitData {
-    /**
-     * 
-     * @type {string}
-     * @memberof GetCollectionCommitData
-     */
-    fence?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof GetCollectionCommitData
-     */
-    passed?: boolean;
-}
-
-/**
- * 
- * @export
  * @interface GetCollectionResponse
  */
 export interface GetCollectionResponse {
     /**
-     * collection that was requested
+     * Collection that was requested.
      * @type {Collection}
      * @memberof GetCollectionResponse
      */
@@ -2591,7 +2155,7 @@ export interface GetCollectionResponse {
  */
 export interface GetIntegrationResponse {
     /**
-     * integration object
+     * Integration object.
      * @type {Integration}
      * @memberof GetIntegrationResponse
      */
@@ -2601,29 +2165,15 @@ export interface GetIntegrationResponse {
 /**
  * 
  * @export
- * @interface GetIpAllowlistResponse
+ * @interface GetQueryResponse
  */
-export interface GetIpAllowlistResponse {
+export interface GetQueryResponse {
     /**
-     * IP Allowlist entry that was requested
-     * @type {IpAllowlist}
-     * @memberof GetIpAllowlistResponse
+     * 
+     * @type {QueryInfo}
+     * @memberof GetQueryResponse
      */
-    data?: IpAllowlist;
-}
-
-/**
- * 
- * @export
- * @interface GetUserTosResponse
- */
-export interface GetUserTosResponse {
-    /**
-     * date user has accepted ToS
-     * @type {string}
-     * @memberof GetUserTosResponse
-     */
-    data?: string;
+    data?: QueryInfo;
 }
 
 /**
@@ -2633,7 +2183,7 @@ export interface GetUserTosResponse {
  */
 export interface GetViewResponse {
     /**
-     * view that was requested
+     * View that was requested.
      * @type {View}
      * @memberof GetViewResponse
      */
@@ -2643,31 +2193,11 @@ export interface GetViewResponse {
 /**
  * 
  * @export
- * @interface GetVirtualInstanceMetricsResponse
- */
-export interface GetVirtualInstanceMetricsResponse {
-    /**
-     * virtual instance
-     * @type {VirtualInstance}
-     * @memberof GetVirtualInstanceMetricsResponse
-     */
-    virtual_instance?: VirtualInstance;
-    /**
-     * virtual instance metrics per time
-     * @type {Array<VirtualInstanceMetrics>}
-     * @memberof GetVirtualInstanceMetricsResponse
-     */
-    metrics?: Array<VirtualInstanceMetrics>;
-}
-
-/**
- * 
- * @export
  * @interface GetVirtualInstanceResponse
  */
 export interface GetVirtualInstanceResponse {
     /**
-     * virtual instance that was requested
+     * Virtual instance that was requested.
      * @type {VirtualInstance}
      * @memberof GetVirtualInstanceResponse
      */
@@ -2681,7 +2211,7 @@ export interface GetVirtualInstanceResponse {
  */
 export interface GetWorkspaceResponse {
     /**
-     * the workspace that was requested
+     * The workspace that was requested.
      * @type {Workspace}
      * @memberof GetWorkspaceResponse
      */
@@ -2691,75 +2221,29 @@ export interface GetWorkspaceResponse {
 /**
  * 
  * @export
- * @interface IngestUsage
- */
-export interface IngestUsage {
-    /**
-     * 
-     * @type {Array<IngestUsagePrice>}
-     * @memberof IngestUsage
-     */
-    states: Array<IngestUsagePrice>;
-    /**
-     * 
-     * @type {number}
-     * @memberof IngestUsage
-     */
-    total_cost: number;
-}
-
-/**
- * 
- * @export
- * @interface IngestUsagePrice
- */
-export interface IngestUsagePrice {
-    /**
-     * 
-     * @type {number}
-     * @memberof IngestUsagePrice
-     */
-    price?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof IngestUsagePrice
-     */
-    total_bytes_ingested?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof IngestUsagePrice
-     */
-    total_cost?: number;
-}
-
-/**
- * 
- * @export
  * @interface InputField
  */
 export interface InputField {
     /**
-     * The name of a field, parsed as a SQL qualified name
+     * The name of a field, parsed as a SQL qualified name.
      * @type {string}
      * @memberof InputField
      */
     field_name?: string;
     /**
-     * Define the behaviour if fieldName is missing or is null
+     * Define the behaviour if fieldName is missing or is null.
      * @type {string}
      * @memberof InputField
      */
     if_missing?: InputField.IfMissingEnum;
     /**
-     * If true, then drop fieldName from the document
+     * If true, then drop fieldName from the document.
      * @type {boolean}
      * @memberof InputField
      */
     is_drop?: boolean;
     /**
-     * Sql parameter name
+     * Sql parameter name.
      * @type {string}
      * @memberof InputField
      */
@@ -2782,325 +2266,107 @@ export namespace InputField {
 }
 
 /**
- * 
- * @export
- * @interface InputStream
- */
-export interface InputStream {
-}
-
-/**
- * Instance
- * @export
- * @interface Instance
- */
-export interface Instance {
-    /**
-     * id
-     * @type {string}
-     * @memberof Instance
-     */
-    id?: string;
-    /**
-     * instance plan
-     * @type {string}
-     * @memberof Instance
-     */
-    instance_plan?: Instance.InstancePlanEnum;
-    /**
-     * instance type
-     * @type {string}
-     * @memberof Instance
-     */
-    instance_type?: Instance.InstanceTypeEnum;
-    /**
-     * hourly compute
-     * @type {number}
-     * @memberof Instance
-     */
-    hourly_compute?: number;
-    /**
-     * compute usage
-     * @type {ComputeUsage}
-     * @memberof Instance
-     */
-    compute_usage?: ComputeUsage;
-    /**
-     * leaf group
-     * @type {LeafGroup}
-     * @memberof Instance
-     */
-    leaf_group?: LeafGroup;
-}
-
-/**
- * @export
- * @namespace Instance
- */
-export namespace Instance {
-    /**
-     * @export
-     * @enum {string}
-     */
-    export enum InstancePlanEnum {
-        RESERVED = <any> 'RESERVED',
-        ONDEMAND = <any> 'ON_DEMAND'
-    }
-    /**
-     * @export
-     * @enum {string}
-     */
-    export enum InstanceTypeEnum {
-        FREE = <any> 'FREE',
-        SHARED = <any> 'SHARED',
-        SMALL = <any> 'SMALL',
-        MEDIUM = <any> 'MEDIUM',
-        LARGE = <any> 'LARGE',
-        XLARGE = <any> 'XLARGE',
-        XLARGE2 = <any> 'XLARGE2',
-        XLARGE4 = <any> 'XLARGE4',
-        XLARGE8 = <any> 'XLARGE8',
-        XLARGE16 = <any> 'XLARGE16'
-    }
-}
-
-/**
  * Integrations that can be associated with data sources to create collections. Only one type of integration may be specified.
  * @export
  * @interface Integration
  */
 export interface Integration {
     /**
-     * descriptive label and unique identifier
+     * Descriptive label and unique identifier.
      * @type {string}
      * @memberof Integration
      */
     name: string;
     /**
-     * longer explanation for the integration
+     * Longer explanation for the integration.
      * @type {string}
      * @memberof Integration
      */
     description?: string;
     /**
-     * list of collections that use the integration
-     * @type {Array<Collection>}
-     * @memberof Integration
-     */
-    collections?: Array<Collection>;
-    /**
-     * email of user who created the integration
+     * Email of user who created the integration.
      * @type {string}
      * @memberof Integration
      */
     created_by: string;
     /**
-     * ISO-8601 date
+     * User that owns this integration.
+     * @type {string}
+     * @memberof Integration
+     */
+    owner_email?: string;
+    /**
+     * ISO-8601 date.
      * @type {string}
      * @memberof Integration
      */
     created_at?: string;
     /**
-     * Amazon S3 details, must have one of aws_access_key or aws_role
+     * Amazon S3 details, must have one of aws_access_key or aws_role.
      * @type {S3Integration}
      * @memberof Integration
      */
     s3?: S3Integration;
     /**
-     * Amazon Kinesis details, must have one of aws_access_key or aws_role
+     * Amazon Kinesis details, must have one of aws_access_key or aws_role.
      * @type {KinesisIntegration}
      * @memberof Integration
      */
     kinesis?: KinesisIntegration;
     /**
-     * Amazon DynamoDB details, must have one of aws_access_key or aws_role
+     * Amazon DynamoDB details, must have one of aws_access_key or aws_role.
      * @type {DynamodbIntegration}
      * @memberof Integration
      */
     dynamodb?: DynamodbIntegration;
     /**
-     * GCS details
+     * GCS details.
      * @type {GcsIntegration}
      * @memberof Integration
      */
     gcs?: GcsIntegration;
     /**
-     * Segment details
-     * @type {SegmentIntegration}
+     * Azure Blob Storage details.
+     * @type {AzureBlobStorageIntegration}
      * @memberof Integration
      */
-    segment?: SegmentIntegration;
+    azure_blob_storage?: AzureBlobStorageIntegration;
     /**
-     * Kafka details
+     * Azure Service Bus details.
+     * @type {AzureServiceBusIntegration}
+     * @memberof Integration
+     */
+    azure_service_bus?: AzureServiceBusIntegration;
+    /**
+     * Azure Event Hubs details.
+     * @type {AzureEventHubsIntegration}
+     * @memberof Integration
+     */
+    azure_event_hubs?: AzureEventHubsIntegration;
+    /**
+     * Kafka details.
      * @type {KafkaIntegration}
      * @memberof Integration
      */
     kafka?: KafkaIntegration;
     /**
-     * MongoDb details
+     * MongoDb details.
      * @type {MongoDbIntegration}
      * @memberof Integration
      */
     mongodb?: MongoDbIntegration;
-}
-
-/**
- * 
- * @export
- * @interface InvertedIndexGroupEncodingOptions
- */
-export interface InvertedIndexGroupEncodingOptions {
     /**
-     * 
-     * @type {number}
-     * @memberof InvertedIndexGroupEncodingOptions
+     * Snowflake details.
+     * @type {SnowflakeIntegration}
+     * @memberof Integration
      */
-    format_version?: number;
+    snowflake?: SnowflakeIntegration;
     /**
-     * 
-     * @type {number}
-     * @memberof InvertedIndexGroupEncodingOptions
+     * List of collections that use the integration.
+     * @type {Array<Collection>}
+     * @memberof Integration
      */
-    group_size?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof InvertedIndexGroupEncodingOptions
-     */
-    restart_length?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof InvertedIndexGroupEncodingOptions
-     */
-    event_time_codec?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof InvertedIndexGroupEncodingOptions
-     */
-    doc_id_codec?: string;
-}
-
-/**
- * 
- * @export
- * @interface InviteState
- */
-export interface InviteState {
-    /**
-     * state of user
-     * @type {string}
-     * @memberof InviteState
-     */
-    data?: InviteState.DataEnum;
-}
-
-/**
- * @export
- * @namespace InviteState
- */
-export namespace InviteState {
-    /**
-     * @export
-     * @enum {string}
-     */
-    export enum DataEnum {
-        PENDING = <any> 'PENDING',
-        ACCEPTED = <any> 'ACCEPTED',
-        EXPIRED = <any> 'EXPIRED',
-        CANCELLED = <any> 'CANCELLED'
-    }
-}
-
-/**
- * An invoice created by Stripe.
- * @export
- * @interface Invoice
- */
-export interface Invoice {
-    /**
-     * total amount billed
-     * @type {number}
-     * @memberof Invoice
-     */
-    amount_paid?: number;
-    /**
-     * total amount billed
-     * @type {number}
-     * @memberof Invoice
-     */
-    amount_due?: number;
-    /**
-     * time in microseconds charge occured
-     * @type {number}
-     * @memberof Invoice
-     */
-    date?: number;
-    /**
-     * pdf link for full invoice with line items
-     * @type {string}
-     * @memberof Invoice
-     */
-    pdf_link?: string;
-}
-
-/**
- * 
- * @export
- * @interface IpAllowlist
- */
-export interface IpAllowlist {
-    /**
-     * IP Allowlist policy name
-     * @type {string}
-     * @memberof IpAllowlist
-     */
-    name: string;
-    /**
-     * optional description
-     * @type {string}
-     * @memberof IpAllowlist
-     */
-    description?: string;
-    /**
-     * email of the creator
-     * @type {string}
-     * @memberof IpAllowlist
-     */
-    creator_email?: string;
-    /**
-     * individual IP address or range of IP addresses in CIDR notation
-     * @type {string}
-     * @memberof IpAllowlist
-     */
-    ip_address: string;
-    /**
-     * ISO-8601 date
-     * @type {string}
-     * @memberof IpAllowlist
-     */
-    created_at?: string;
-}
-
-/**
- * 
- * @export
- * @interface Issue
- */
-export interface Issue {
-    /**
-     * identifier
-     * @type {string}
-     * @memberof Issue
-     */
-    identifier?: string;
-    /**
-     * url
-     * @type {string}
-     * @memberof Issue
-     */
-    url?: string;
+    collections?: Array<Collection>;
 }
 
 /**
@@ -3110,31 +2376,37 @@ export interface Issue {
  */
 export interface KafkaIntegration {
     /**
-     * Kafka topics to tail
+     * Kafka topics to tail.
      * @type {Array<string>}
      * @memberof KafkaIntegration
      */
     kafka_topic_names?: Array<string>;
     /**
-     * The status of the Kafka source by topic
+     * The status of the Kafka source by topic.
      * @type {{ [key: string]: StatusKafka; }}
      * @memberof KafkaIntegration
      */
     source_status_by_topic?: { [key: string]: StatusKafka; };
     /**
-     * The format of the Kafka topics being tailed
+     * The format of the Kafka topics being tailed.
      * @type {string}
      * @memberof KafkaIntegration
      */
     kafka_data_format?: KafkaIntegration.KafkaDataFormatEnum;
     /**
-     * kafka connection string
+     * Kafka connection string.
      * @type {string}
      * @memberof KafkaIntegration
      */
     connection_string?: string;
     /**
-     * Whether to use v3 integration
+     * Details of an AWS cross-account role integration.
+     * @type {AwsRole}
+     * @memberof KafkaIntegration
+     */
+    aws_role?: AwsRole;
+    /**
+     * 
      * @type {boolean}
      * @memberof KafkaIntegration
      */
@@ -3146,11 +2418,17 @@ export interface KafkaIntegration {
      */
     bootstrap_servers?: string;
     /**
-     * Kafka security configurations. Required only for V3 integration.
+     * Kafka security configurations.
      * @type {KafkaV3SecurityConfig}
      * @memberof KafkaIntegration
      */
     security_config?: KafkaV3SecurityConfig;
+    /**
+     * Kafka configurations for schema registry.
+     * @type {SchemaRegistryConfig}
+     * @memberof KafkaIntegration
+     */
+    schema_registry_config?: SchemaRegistryConfig;
 }
 
 /**
@@ -3175,17 +2453,17 @@ export namespace KafkaIntegration {
  */
 export interface KafkaV3SecurityConfig {
     /**
-     * The secure API key
+     * 
      * @type {string}
      * @memberof KafkaV3SecurityConfig
      */
-    api_key: string;
+    api_key?: string;
     /**
-     * The secure API password
+     * 
      * @type {string}
      * @memberof KafkaV3SecurityConfig
      */
-    secret: string;
+    secret?: string;
 }
 
 /**
@@ -3195,214 +2473,17 @@ export interface KafkaV3SecurityConfig {
  */
 export interface KinesisIntegration {
     /**
-     * credentials for an AWS access key integration
+     * Credentials for an AWS access key integration.
      * @type {AwsAccessKey}
      * @memberof KinesisIntegration
      */
     aws_access_key?: AwsAccessKey;
     /**
-     * details of an AWS cross-account role integration
+     * Details of an AWS cross-account role integration.
      * @type {AwsRole}
      * @memberof KinesisIntegration
      */
     aws_role?: AwsRole;
-}
-
-/**
- * Leaf Group
- * @export
- * @interface LeafGroup
- */
-export interface LeafGroup {
-    /**
-     * pod type
-     * @type {string}
-     * @memberof LeafGroup
-     */
-    pod_type?: LeafGroup.PodTypeEnum;
-    /**
-     * pod count
-     * @type {number}
-     * @memberof LeafGroup
-     */
-    pod_count?: number;
-    /**
-     * cpu count
-     * @type {number}
-     * @memberof LeafGroup
-     */
-    cpu_count?: number;
-}
-
-/**
- * @export
- * @namespace LeafGroup
- */
-export namespace LeafGroup {
-    /**
-     * @export
-     * @enum {string}
-     */
-    export enum PodTypeEnum {
-        C5D9XLARGE32CPU = <any> 'C5D_9XLARGE_32CPU',
-        I32XLARGE4CPU = <any> 'I3_2XLARGE_4CPU',
-        I32XLARGE2CPU = <any> 'I3_2XLARGE_2CPU'
-    }
-}
-
-/**
- * 
- * @export
- * @interface LineItem
- */
-export interface LineItem {
-    /**
-     * 
-     * @type {number}
-     * @memberof LineItem
-     */
-    start?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof LineItem
-     */
-    end?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof LineItem
-     */
-    region?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof LineItem
-     */
-    cost?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof LineItem
-     */
-    quantity?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof LineItem
-     */
-    unit?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof LineItem
-     */
-    rate?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof LineItem
-     */
-    rate_unit?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof LineItem
-     */
-    description?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof LineItem
-     */
-    type?: LineItem.TypeEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof LineItem
-     */
-    readable_line_item?: string;
-}
-
-/**
- * @export
- * @namespace LineItem
- */
-export namespace LineItem {
-    /**
-     * @export
-     * @enum {string}
-     */
-    export enum TypeEnum {
-        COMPUTEFREE = <any> 'COMPUTE_FREE',
-        COMPUTESHARED = <any> 'COMPUTE_SHARED',
-        COMPUTESMALL = <any> 'COMPUTE_SMALL',
-        COMPUTEMEDIUM = <any> 'COMPUTE_MEDIUM',
-        COMPUTELARGE = <any> 'COMPUTE_LARGE',
-        COMPUTEXLARGE = <any> 'COMPUTE_XLARGE',
-        COMPUTEXLARGE2 = <any> 'COMPUTE_XLARGE2',
-        COMPUTEXLARGE4 = <any> 'COMPUTE_XLARGE4',
-        COMPUTEXLARGE8 = <any> 'COMPUTE_XLARGE8',
-        COMPUTEXLARGE16 = <any> 'COMPUTE_XLARGE16',
-        STORAGE = <any> 'STORAGE',
-        INGEST = <any> 'INGEST',
-        CREDITCOMPUTE = <any> 'CREDIT_COMPUTE',
-        CREDITSTORAGE = <any> 'CREDIT_STORAGE',
-        CREDITINGEST = <any> 'CREDIT_INGEST',
-        CREDIT = <any> 'CREDIT'
-    }
-}
-
-/**
- * 
- * @export
- * @interface LineItems
- */
-export interface LineItems {
-    /**
-     * 
-     * @type {string}
-     * @memberof LineItems
-     */
-    org_id?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof LineItems
-     */
-    start?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof LineItems
-     */
-    end?: number;
-    /**
-     * 
-     * @type {Array<LineItem>}
-     * @memberof LineItems
-     */
-    line_items?: Array<LineItem>;
-    /**
-     * 
-     * @type {number}
-     * @memberof LineItems
-     */
-    total_cost?: number;
-}
-
-/**
- * 
- * @export
- * @interface LineItemsResponse
- */
-export interface LineItemsResponse {
-    /**
-     * billing line items
-     * @type {LineItems}
-     * @memberof LineItemsResponse
-     */
-    data?: LineItems;
 }
 
 /**
@@ -3412,25 +2493,11 @@ export interface LineItemsResponse {
  */
 export interface ListAliasesResponse {
     /**
-     * list of all aliases
+     * List of all aliases.
      * @type {Array<Alias>}
      * @memberof ListAliasesResponse
      */
     data?: Array<Alias>;
-}
-
-/**
- * 
- * @export
- * @interface ListAllQueryPagesResponse
- */
-export interface ListAllQueryPagesResponse {
-    /**
-     * 
-     * @type {Array<QueryPageInfo>}
-     * @memberof ListAllQueryPagesResponse
-     */
-    data?: Array<QueryPageInfo>;
 }
 
 /**
@@ -3450,11 +2517,25 @@ export interface ListApiKeysResponse {
 /**
  * 
  * @export
+ * @interface ListCollectionMountsResponse
+ */
+export interface ListCollectionMountsResponse {
+    /**
+     * List of all collection mounts.
+     * @type {Array<CollectionMount>}
+     * @memberof ListCollectionMountsResponse
+     */
+    data?: Array<CollectionMount>;
+}
+
+/**
+ * 
+ * @export
  * @interface ListCollectionsResponse
  */
 export interface ListCollectionsResponse {
     /**
-     * list of all collections
+     * List of all collections.
      * @type {Array<Collection>}
      * @memberof ListCollectionsResponse
      */
@@ -3464,25 +2545,11 @@ export interface ListCollectionsResponse {
 /**
  * 
  * @export
- * @interface ListCreditsResponse
- */
-export interface ListCreditsResponse {
-    /**
-     * 
-     * @type {Array<Credit>}
-     * @memberof ListCreditsResponse
-     */
-    data?: Array<Credit>;
-}
-
-/**
- * 
- * @export
  * @interface ListIntegrationsResponse
  */
 export interface ListIntegrationsResponse {
     /**
-     * list of integration objects
+     * List of integration objects.
      * @type {Array<Integration>}
      * @memberof ListIntegrationsResponse
      */
@@ -3492,15 +2559,15 @@ export interface ListIntegrationsResponse {
 /**
  * 
  * @export
- * @interface ListIpAllowlistsResponse
+ * @interface ListQueriesResponse
  */
-export interface ListIpAllowlistsResponse {
+export interface ListQueriesResponse {
     /**
-     * list of all IP Allowlist network policies
-     * @type {Array<IpAllowlist>}
-     * @memberof ListIpAllowlistsResponse
+     * 
+     * @type {Array<QueryInfo>}
+     * @memberof ListQueriesResponse
      */
-    data?: Array<IpAllowlist>;
+    data?: Array<QueryInfo>;
 }
 
 /**
@@ -3510,7 +2577,7 @@ export interface ListIpAllowlistsResponse {
  */
 export interface ListQueryLambdaTagsResponse {
     /**
-     * list of all tags associated with a Query Lambda
+     * List of all tags associated with a Query Lambda.
      * @type {Array<QueryLambdaTag>}
      * @memberof ListQueryLambdaTagsResponse
      */
@@ -3524,7 +2591,7 @@ export interface ListQueryLambdaTagsResponse {
  */
 export interface ListQueryLambdaVersionsResponse {
     /**
-     * list of all versions for a particular Query Lambda
+     * List of all versions for a particular Query Lambda.
      * @type {Array<QueryLambdaVersion>}
      * @memberof ListQueryLambdaVersionsResponse
      */
@@ -3538,25 +2605,11 @@ export interface ListQueryLambdaVersionsResponse {
  */
 export interface ListQueryLambdasResponse {
     /**
-     * list of all Query Lambdas
+     * List of all Query Lambdas.
      * @type {Array<QueryLambda>}
      * @memberof ListQueryLambdasResponse
      */
     data?: Array<QueryLambda>;
-}
-
-/**
- * 
- * @export
- * @interface ListQueryPagesResponse
- */
-export interface ListQueryPagesResponse {
-    /**
-     * 
-     * @type {QueryPageInfo}
-     * @memberof ListQueryPagesResponse
-     */
-    data?: QueryPageInfo;
 }
 
 /**
@@ -3580,7 +2633,7 @@ export interface ListRolesResponse {
  */
 export interface ListUnsubscribePreferencesResponse {
     /**
-     * List of notification preferences
+     * List of notification preferences.
      * @type {Array<UnsubscribePreference>}
      * @memberof ListUnsubscribePreferencesResponse
      */
@@ -3594,7 +2647,7 @@ export interface ListUnsubscribePreferencesResponse {
  */
 export interface ListUsersResponse {
     /**
-     * list of users
+     * List of users.
      * @type {Array<User>}
      * @memberof ListUsersResponse
      */
@@ -3608,7 +2661,7 @@ export interface ListUsersResponse {
  */
 export interface ListViewsResponse {
     /**
-     * list of all views
+     * List of all views.
      * @type {Array<View>}
      * @memberof ListViewsResponse
      */
@@ -3622,7 +2675,7 @@ export interface ListViewsResponse {
  */
 export interface ListVirtualInstancesResponse {
     /**
-     * list of all virtual instances
+     * List of all virtual instances.
      * @type {Array<VirtualInstance>}
      * @memberof ListVirtualInstancesResponse
      */
@@ -3636,7 +2689,7 @@ export interface ListVirtualInstancesResponse {
  */
 export interface ListWorkspacesResponse {
     /**
-     * list of workspaces
+     * List of workspaces.
      * @type {Array<Workspace>}
      * @memberof ListWorkspacesResponse
      */
@@ -3646,946 +2699,15 @@ export interface ListWorkspacesResponse {
 /**
  * 
  * @export
- * @interface MarketplaceSubscriptionRequest
- */
-export interface MarketplaceSubscriptionRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof MarketplaceSubscriptionRequest
-     */
-    aws_marketplace_token: string;
-}
-
-/**
- * 
- * @export
- * @interface MediaType
- */
-export interface MediaType {
-    /**
-     * 
-     * @type {string}
-     * @memberof MediaType
-     */
-    type?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof MediaType
-     */
-    subtype?: string;
-    /**
-     * 
-     * @type {{ [key: string]: string; }}
-     * @memberof MediaType
-     */
-    parameters?: { [key: string]: string; };
-    /**
-     * 
-     * @type {boolean}
-     * @memberof MediaType
-     */
-    wildcardType?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof MediaType
-     */
-    wildcardSubtype?: boolean;
-}
-
-/**
- * 
- * @export
- * @interface MessageBodyWorkers
- */
-export interface MessageBodyWorkers {
-}
-
-/**
- * 
- * @export
  * @interface MongoDbIntegration
  */
 export interface MongoDbIntegration {
     /**
-     * MongoDB connection URI string
+     * MongoDB connection URI string.
      * @type {string}
      * @memberof MongoDbIntegration
      */
     connection_uri: string;
-}
-
-/**
- * 
- * @export
- * @interface MultiPart
- */
-export interface MultiPart {
-    /**
-     * 
-     * @type {ContentDisposition}
-     * @memberof MultiPart
-     */
-    contentDisposition?: ContentDisposition;
-    /**
-     * 
-     * @type {any}
-     * @memberof MultiPart
-     */
-    entity?: any;
-    /**
-     * 
-     * @type {{ [key: string]: Array<string>; }}
-     * @memberof MultiPart
-     */
-    headers?: { [key: string]: Array<string>; };
-    /**
-     * 
-     * @type {MediaType}
-     * @memberof MultiPart
-     */
-    mediaType?: MediaType;
-    /**
-     * 
-     * @type {MessageBodyWorkers}
-     * @memberof MultiPart
-     */
-    messageBodyWorkers?: MessageBodyWorkers;
-    /**
-     * 
-     * @type {MultiPart}
-     * @memberof MultiPart
-     */
-    parent?: MultiPart;
-    /**
-     * 
-     * @type {Providers}
-     * @memberof MultiPart
-     */
-    providers?: Providers;
-    /**
-     * 
-     * @type {Array<BodyPart>}
-     * @memberof MultiPart
-     */
-    bodyParts?: Array<BodyPart>;
-    /**
-     * 
-     * @type {{ [key: string]: Array<ParameterizedHeader>; }}
-     * @memberof MultiPart
-     */
-    parameterizedHeaders?: { [key: string]: Array<ParameterizedHeader>; };
-}
-
-/**
- * 
- * @export
- * @interface Offsets
- */
-export interface Offsets {
-    /**
-     * 
-     * @type {string}
-     * @memberof Offsets
-     */
-    commit?: string;
-}
-
-/**
- * 
- * @export
- * @interface OperatorStats
- */
-export interface OperatorStats {
-    /**
-     * The id of the worker this operator ran on
-     * @type {string}
-     * @memberof OperatorStats
-     */
-    worker?: string;
-    /**
-     * The id of the fragment this operator belonged to
-     * @type {number}
-     * @memberof OperatorStats
-     */
-    fragment?: number;
-    /**
-     * The id of the task this operator belonged to
-     * @type {string}
-     * @memberof OperatorStats
-     */
-    task?: string;
-    /**
-     * The id of this operator in the task
-     * @type {number}
-     * @memberof OperatorStats
-     */
-    operator_id?: number;
-    /**
-     * The class name of this operator
-     * @type {string}
-     * @memberof OperatorStats
-     */
-    operator_name?: string;
-    /**
-     * Microseconds since UNIX epoch of the first time data was received from any of this operator's inputs
-     * @type {number}
-     * @memberof OperatorStats
-     */
-    start_time_us?: number;
-    /**
-     * Microseconds since UNIX epoch of the last time data was sent to any of this operator's outputs
-     * @type {number}
-     * @memberof OperatorStats
-     */
-    end_time_us?: number;
-    /**
-     * Maximum memory used by this operator during execution
-     * @type {number}
-     * @memberof OperatorStats
-     */
-    max_memory?: number;
-    /**
-     * Total bytes received across all inputs
-     * @type {number}
-     * @memberof OperatorStats
-     */
-    input_bytes?: number;
-    /**
-     * Total rows received across all inputs
-     * @type {number}
-     * @memberof OperatorStats
-     */
-    input_rows?: number;
-    /**
-     * Total bytes sent across all outputs
-     * @type {number}
-     * @memberof OperatorStats
-     */
-    output_bytes?: number;
-    /**
-     * Total rows sent across all outputs
-     * @type {number}
-     * @memberof OperatorStats
-     */
-    output_rows?: number;
-    /**
-     * Total time in microseconds spent doing useful work
-     * @type {number}
-     * @memberof OperatorStats
-     */
-    processing_time_us?: number;
-    /**
-     * Number of times InvertedIndexLazyMergeOperator is invoked to perform lazy merge
-     * @type {number}
-     * @memberof OperatorStats
-     */
-    term_iterator_merge_count?: number;
-    /**
-     * Number of operands InvertedIndexLazyMergeOperator merged in total
-     * @type {number}
-     * @memberof OperatorStats
-     */
-    term_iterator_merge_operand_count?: number;
-    /**
-     * Time spent in the merge operation in InvertedIndexLazyMergeOperator
-     * @type {number}
-     * @memberof OperatorStats
-     */
-    term_iterator_merge_duration_secs?: number;
-    /**
-     * Max size of value merged by InvertedIndexLazyMergeOperator
-     * @type {number}
-     * @memberof OperatorStats
-     */
-    term_iterator_max_merged_value_size?: number;
-}
-
-/**
- * 
- * @export
- * @interface OrgBillingPortalResponse
- */
-export interface OrgBillingPortalResponse {
-    /**
-     * 
-     * @type {string}
-     * @memberof OrgBillingPortalResponse
-     */
-    portal_url?: string;
-}
-
-/**
- * 
- * @export
- * @interface OrgCompute
- */
-export interface OrgCompute {
-    /**
-     * 
-     * @type {number}
-     * @memberof OrgCompute
-     */
-    compute_cost: number;
-    /**
-     * 
-     * @type {Array<Instance>}
-     * @memberof OrgCompute
-     */
-    instances: Array<Instance>;
-}
-
-/**
- * 
- * @export
- * @interface OrgComputeResponse
- */
-export interface OrgComputeResponse {
-    /**
-     * OrgCompute object
-     * @type {OrgCompute}
-     * @memberof OrgComputeResponse
-     */
-    data?: OrgCompute;
-}
-
-/**
- * 
- * @export
- * @interface OrgIngestResponse
- */
-export interface OrgIngestResponse {
-    /**
-     * OrgIngest object
-     * @type {IngestUsage}
-     * @memberof OrgIngestResponse
-     */
-    data?: IngestUsage;
-}
-
-/**
- * Invoice history for an organization.
- * @export
- * @interface OrgInvoices
- */
-export interface OrgInvoices {
-    /**
-     * list of historical invoices
-     * @type {Array<Invoice>}
-     * @memberof OrgInvoices
-     */
-    invoices?: Array<Invoice>;
-}
-
-/**
- * 
- * @export
- * @interface OrgInvoicesResponse
- */
-export interface OrgInvoicesResponse {
-    /**
-     * OrgInvoices object
-     * @type {OrgInvoices}
-     * @memberof OrgInvoicesResponse
-     */
-    data?: OrgInvoices;
-}
-
-/**
- * 
- * @export
- * @interface OrgMembership
- */
-export interface OrgMembership {
-    /**
-     * 
-     * @type {Organization}
-     * @memberof OrgMembership
-     */
-    organization: Organization;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof OrgMembership
-     */
-    roles: Array<string>;
-    /**
-     * 
-     * @type {string}
-     * @memberof OrgMembership
-     */
-    invite_state: OrgMembership.InviteStateEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof OrgMembership
-     */
-    invited_by: string;
-    /**
-     * email of the user
-     * @type {string}
-     * @memberof OrgMembership
-     */
-    email?: string;
-    /**
-     * ISO-8601 date
-     * @type {string}
-     * @memberof OrgMembership
-     */
-    expires_at: string;
-    /**
-     * ISO-8601 date
-     * @type {string}
-     * @memberof OrgMembership
-     */
-    created_at: string;
-}
-
-/**
- * @export
- * @namespace OrgMembership
- */
-export namespace OrgMembership {
-    /**
-     * @export
-     * @enum {string}
-     */
-    export enum InviteStateEnum {
-        PENDING = <any> 'PENDING',
-        ACCEPTED = <any> 'ACCEPTED',
-        EXPIRED = <any> 'EXPIRED',
-        CANCELLED = <any> 'CANCELLED'
-    }
-}
-
-/**
- * Information related to payment for an organization.
- * @export
- * @interface OrgPaymentMethod
- */
-export interface OrgPaymentMethod {
-    /**
-     * stripe source ID associated with credit card
-     * @type {string}
-     * @memberof OrgPaymentMethod
-     */
-    card_source_id?: string;
-    /**
-     * brand of credit card
-     * @type {string}
-     * @memberof OrgPaymentMethod
-     */
-    card_brand?: string;
-    /**
-     * origin country of credit card
-     * @type {string}
-     * @memberof OrgPaymentMethod
-     */
-    card_country?: string;
-    /**
-     * credit card expiration month
-     * @type {string}
-     * @memberof OrgPaymentMethod
-     */
-    card_exp_month?: string;
-    /**
-     * credit card expiration year
-     * @type {string}
-     * @memberof OrgPaymentMethod
-     */
-    card_exp_year?: string;
-    /**
-     * debit or credit
-     * @type {string}
-     * @memberof OrgPaymentMethod
-     */
-    card_funding?: string;
-    /**
-     * last 4 digits of credit card
-     * @type {string}
-     * @memberof OrgPaymentMethod
-     */
-    card_last4?: string;
-    /**
-     * status of credit card
-     * @type {string}
-     * @memberof OrgPaymentMethod
-     */
-    card_status?: string;
-    /**
-     * stripe customer id. not a secret.
-     * @type {string}
-     * @memberof OrgPaymentMethod
-     */
-    customer_id?: string;
-}
-
-/**
- * 
- * @export
- * @interface OrgPaymentMethodResponse
- */
-export interface OrgPaymentMethodResponse {
-    /**
-     * OrgPaymentMethod object
-     * @type {OrgPaymentMethod}
-     * @memberof OrgPaymentMethodResponse
-     */
-    data?: OrgPaymentMethod;
-}
-
-/**
- * Settings for an organization.
- * @export
- * @interface OrgSettings
- */
-export interface OrgSettings {
-    /**
-     * Max number of aggregators per query
-     * @type {number}
-     * @memberof OrgSettings
-     */
-    aggregator_parallelism?: number;
-    /**
-     * collection limit per organization
-     * @type {number}
-     * @memberof OrgSettings
-     */
-    collection_limit?: number;
-    /**
-     * alias limit per organization
-     * @type {number}
-     * @memberof OrgSettings
-     */
-    alias_limit?: number;
-    /**
-     * IP allowlist limit per organization
-     * @type {number}
-     * @memberof OrgSettings
-     */
-    ip_allowlist_limit?: number;
-    /**
-     * Console metrics days limit per organization
-     * @type {number}
-     * @memberof OrgSettings
-     */
-    console_metrics_days_limit?: number;
-    /**
-     * Custom roles limit per organization
-     * @type {number}
-     * @memberof OrgSettings
-     */
-    custom_role_limit?: number;
-    /**
-     * Query Lambda limit per organization
-     * @type {number}
-     * @memberof OrgSettings
-     */
-    query_lambda_count_limit?: number;
-    /**
-     * version limit per Query Lambda
-     * @type {number}
-     * @memberof OrgSettings
-     */
-    query_lambda_version_count_limit?: number;
-    /**
-     * Unique tag limit per organization
-     * @type {number}
-     * @memberof OrgSettings
-     */
-    unique_tag_count_limit?: number;
-    /**
-     * concurrent queries limit per organization
-     * @type {number}
-     * @memberof OrgSettings
-     */
-    concurrent_queries_limit?: number;
-    /**
-     * concurrent query execution limit per organization
-     * @type {number}
-     * @memberof OrgSettings
-     */
-    concurrent_query_execution_limit?: number;
-    /**
-     * identifier for encryption key for org
-     * @type {string}
-     * @memberof OrgSettings
-     */
-    encryption_key?: string;
-    /**
-     * number of file uploads allowed per collection
-     * @type {number}
-     * @memberof OrgSettings
-     */
-    file_upload_limit_per_collection?: number;
-    /**
-     * input rate limit in megabytes per second
-     * @type {number}
-     * @memberof OrgSettings
-     */
-    input_rate_limit_kbps?: number;
-    /**
-     * number of partitions in the log store for each collection
-     * @type {number}
-     * @memberof OrgSettings
-     */
-    log_partitions_per_collection?: number;
-    /**
-     * custom unit price for ingest
-     * @type {number}
-     * @memberof OrgSettings
-     */
-    custom_ingest_price?: number;
-    /**
-     * custom trial credit amount
-     * @type {number}
-     * @memberof OrgSettings
-     */
-    custom_trial_credit?: number;
-    /**
-     * hourly compute price
-     * @type {number}
-     * @memberof OrgSettings
-     */
-    hourly_compute_price?: number;
-    /**
-     * the minimum monthly bill for an organization
-     * @type {number}
-     * @memberof OrgSettings
-     */
-    min_monthly_bill?: number;
-    /**
-     * Pending invites limit per organization
-     * @type {number}
-     * @memberof OrgSettings
-     */
-    pending_invites_limit?: number;
-    /**
-     * Total users limit per organization
-     * @type {number}
-     * @memberof OrgSettings
-     */
-    total_users_limit?: number;
-    /**
-     * Max amount of memory allocated per query per worker node
-     * @type {number}
-     * @memberof OrgSettings
-     */
-    query_memory_limit_bytes?: number;
-    /**
-     * whether role-based access control is enabled
-     * @type {number}
-     * @memberof OrgSettings
-     */
-    replication_factor?: number;
-    /**
-     * min number of shards in Rockset for each collection
-     * @type {number}
-     * @memberof OrgSettings
-     */
-    min_shards_per_collection?: number;
-    /**
-     * max number of shards in Rockset for each collection
-     * @type {number}
-     * @memberof OrgSettings
-     */
-    max_shards_per_collection?: number;
-    /**
-     * storage size limit in bytes
-     * @type {number}
-     * @memberof OrgSettings
-     */
-    size_limit_bytes?: number;
-    /**
-     * whether Single Sign On is enabled
-     * @type {boolean}
-     * @memberof OrgSettings
-     */
-    sso_enabled?: boolean;
-    /**
-     * state of the org
-     * @type {string}
-     * @memberof OrgSettings
-     */
-    state?: OrgSettings.StateEnum;
-    /**
-     * edition of the org
-     * @type {string}
-     * @memberof OrgSettings
-     */
-    edition?: OrgSettings.EditionEnum;
-    /**
-     * data when trial ends
-     * @type {number}
-     * @memberof OrgSettings
-     */
-    trial_end?: number;
-    /**
-     * date when trial began
-     * @type {number}
-     * @memberof OrgSettings
-     */
-    trial_start?: number;
-    /**
-     * list of console feature flags that are on
-     * @type {Array<string>}
-     * @memberof OrgSettings
-     */
-    console_flags?: Array<string>;
-    /**
-     * whether users from specified domains can be auto-provisioned with accounts
-     * @type {boolean}
-     * @memberof OrgSettings
-     */
-    auto_provision?: boolean;
-    /**
-     * default role for autoprovisioned users
-     * @type {string}
-     * @memberof OrgSettings
-     */
-    auto_provision_role?: string;
-    /**
-     * domain for which accounts can be autoprovisioned
-     * @type {string}
-     * @memberof OrgSettings
-     */
-    auto_provision_domain?: string;
-    /**
-     * connection name of SSO connection
-     * @type {string}
-     * @memberof OrgSettings
-     */
-    sso_connection?: string;
-    /**
-     * whether or not SSO is the only permitted form of auth
-     * @type {boolean}
-     * @memberof OrgSettings
-     */
-    sso_only?: boolean;
-    /**
-     * organization is allowed to use MFA
-     * @type {boolean}
-     * @memberof OrgSettings
-     */
-    mfa_enabled?: boolean;
-    /**
-     * organization requires MFA
-     * @type {boolean}
-     * @memberof OrgSettings
-     */
-    mfa_restricted?: boolean;
-    /**
-     * whether or not instance-based pricing is enabled for this org
-     * @type {boolean}
-     * @memberof OrgSettings
-     */
-    instance_pricing?: boolean;
-}
-
-/**
- * @export
- * @namespace OrgSettings
- */
-export namespace OrgSettings {
-    /**
-     * @export
-     * @enum {string}
-     */
-    export enum StateEnum {
-        FREE = <any> 'FREE',
-        PAID = <any> 'PAID',
-        TRIAL = <any> 'TRIAL',
-        TRIALEXPIRED = <any> 'TRIAL_EXPIRED',
-        TRIALDEPLETED = <any> 'TRIAL_DEPLETED',
-        INACTIVE = <any> 'INACTIVE',
-        DELETED = <any> 'DELETED'
-    }
-    /**
-     * @export
-     * @enum {string}
-     */
-    export enum EditionEnum {
-        STANDARD = <any> 'STANDARD',
-        PREMIUM = <any> 'PREMIUM'
-    }
-}
-
-/**
- * 
- * @export
- * @interface OrgSettingsResponse
- */
-export interface OrgSettingsResponse {
-    /**
-     * OrgSettings object
-     * @type {OrgSettings}
-     * @memberof OrgSettingsResponse
-     */
-    data?: OrgSettings;
-}
-
-/**
- * 
- * @export
- * @interface OrgStorage
- */
-export interface OrgStorage {
-    /**
-     * 
-     * @type {{ [key: string]: Usage; }}
-     * @memberof OrgStorage
-     */
-    series: { [key: string]: Usage; };
-    /**
-     * 
-     * @type {number}
-     * @memberof OrgStorage
-     */
-    cost: number;
-}
-
-/**
- * 
- * @export
- * @interface OrgStorageResponse
- */
-export interface OrgStorageResponse {
-    /**
-     * OrgUsage object
-     * @type {OrgStorage}
-     * @memberof OrgStorageResponse
-     */
-    data?: OrgStorage;
-}
-
-/**
- * 
- * @export
- * @interface OrgTrialUsage
- */
-export interface OrgTrialUsage {
-    /**
-     * 
-     * @type {number}
-     * @memberof OrgTrialUsage
-     */
-    trial_credit_used: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof OrgTrialUsage
-     */
-    trial_credit_remaining: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof OrgTrialUsage
-     */
-    trial_start: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof OrgTrialUsage
-     */
-    trial_end: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof OrgTrialUsage
-     */
-    month_credit_used: number;
-}
-
-/**
- * 
- * @export
- * @interface OrgTrialUsageResponse
- */
-export interface OrgTrialUsageResponse {
-    /**
-     * OrgTrialUsage object
-     * @type {OrgTrialUsage}
-     * @memberof OrgTrialUsageResponse
-     */
-    data?: OrgTrialUsage;
-}
-
-/**
- * Usage statistics for an organization.
- * @export
- * @interface OrgUsage
- */
-export interface OrgUsage {
-    /**
-     * number of active documents
-     * @type {number}
-     * @memberof OrgUsage
-     */
-    active_document_count?: number;
-    /**
-     * number of collections
-     * @type {number}
-     * @memberof OrgUsage
-     */
-    collection_count?: number;
-    /**
-     * number of users
-     * @type {number}
-     * @memberof OrgUsage
-     */
-    user_count?: number;
-    /**
-     * number of integrations
-     * @type {number}
-     * @memberof OrgUsage
-     */
-    integration_count?: number;
-    /**
-     * timestamp of last update
-     * @type {string}
-     * @memberof OrgUsage
-     */
-    last_updated_ms?: string;
-    /**
-     * timestamp of last query
-     * @type {string}
-     * @memberof OrgUsage
-     */
-    last_queried_ms?: string;
-    /**
-     * total size in bytes of all collections
-     * @type {number}
-     * @memberof OrgUsage
-     */
-    total_size_bytes?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof OrgUsage
-     */
-    total_index_size?: number;
-    /**
-     * total queries performed in org
-     * @type {number}
-     * @memberof OrgUsage
-     */
-    total_queries?: number;
-}
-
-/**
- * 
- * @export
- * @interface OrgUsageResponse
- */
-export interface OrgUsageResponse {
-    /**
-     * OrgUsage object
-     * @type {OrgUsage}
-     * @memberof OrgUsageResponse
-     */
-    data?: OrgUsage;
 }
 
 /**
@@ -4595,105 +2717,41 @@ export interface OrgUsageResponse {
  */
 export interface Organization {
     /**
-     * Rockset's global AWS user
-     * @type {string}
-     * @memberof Organization
-     */
-    rockset_user?: string;
-    /**
-     * organization's unique external ID within Rockset
-     * @type {string}
-     * @memberof Organization
-     */
-    external_id?: string;
-    /**
-     * name of the company
-     * @type {string}
-     * @memberof Organization
-     */
-    company_name?: string;
-    /**
-     * org state
-     * @type {string}
-     * @memberof Organization
-     */
-    state?: Organization.StateEnum;
-    /**
-     * org edition
-     * @type {string}
-     * @memberof Organization
-     */
-    edition?: Organization.EditionEnum;
-    /**
-     * AWS Marketplace Customer ID
-     * @type {string}
-     * @memberof Organization
-     */
-    aws_marketplace_customer_id?: string;
-    /**
-     * list of clusters associated with this org
-     * @type {Array<Cluster>}
-     * @memberof Organization
-     */
-    clusters?: Array<Cluster>;
-    /**
-     * Org is MFA restricted
-     * @type {boolean}
-     * @memberof Organization
-     */
-    mfa_restricted?: boolean;
-    /**
-     * unique identifier for the organization
+     * Unique identifier for the organization.
      * @type {string}
      * @memberof Organization
      */
     id?: string;
     /**
-     * ISO-8601 date
+     * ISO-8601 date.
      * @type {string}
      * @memberof Organization
      */
     created_at?: string;
     /**
-     * name of the organization
+     * Name of the organization.
      * @type {string}
      * @memberof Organization
      */
     display_name?: string;
     /**
-     * org deletion scheduled at
+     * Organization's unique external ID within Rockset.
      * @type {string}
      * @memberof Organization
      */
-    deletion_scheduled_at?: string;
-}
-
-/**
- * @export
- * @namespace Organization
- */
-export namespace Organization {
+    external_id?: string;
     /**
-     * @export
-     * @enum {string}
+     * Rockset's global AWS user.
+     * @type {string}
+     * @memberof Organization
      */
-    export enum StateEnum {
-        FREE = <any> 'FREE',
-        PAID = <any> 'PAID',
-        TRIAL = <any> 'TRIAL',
-        TRIALEXPIRED = <any> 'TRIAL_EXPIRED',
-        TRIALDEPLETED = <any> 'TRIAL_DEPLETED',
-        INACTIVE = <any> 'INACTIVE',
-        DELETED = <any> 'DELETED'
-    }
+    rockset_user?: string;
     /**
-     * @export
-     * @enum {string}
+     * List of clusters associated with this org.
+     * @type {Array<Cluster>}
+     * @memberof Organization
      */
-    export enum EditionEnum {
-        STANDARD = <any> 'STANDARD',
-        PREMIUM = <any> 'PREMIUM'
-    }
+    clusters?: Array<Cluster>;
 }
 
 /**
@@ -4703,7 +2761,7 @@ export namespace Organization {
  */
 export interface OrganizationResponse {
     /**
-     * Organization object
+     * Organization object.
      * @type {Organization}
      * @memberof OrganizationResponse
      */
@@ -4717,19 +2775,19 @@ export interface OrganizationResponse {
  */
 export interface OutputField {
     /**
-     * The name of a field, parsed as a SQL qualified name 
+     * The name of a field, parsed as a SQL qualified name.
      * @type {string}
      * @memberof OutputField
      */
     field_name?: string;
     /**
-     * The name of a sql function
+     * The name of a sql function.
      * @type {SqlExpression}
      * @memberof OutputField
      */
     value?: SqlExpression;
     /**
-     * Error in Mapping execution: 'skip' or 'fail' 
+     * Error in Mapping execution: 'skip' or 'fail'.
      * @type {string}
      * @memberof OutputField
      */
@@ -4758,7 +2816,7 @@ export namespace OutputField {
  */
 export interface Pagination {
     /**
-     * Cursor for the first doc in this query
+     * Use this cursor to fetch the first page of results for this query.
      * @type {string}
      * @memberof Pagination
      */
@@ -4772,7 +2830,7 @@ export interface Pagination {
  */
 export interface PaginationInfo {
     /**
-     * Number of documents returned in this result set
+     * Number of documents returned in this result set.
      * @type {number}
      * @memberof PaginationInfo
      */
@@ -4790,31 +2848,17 @@ export interface PaginationInfo {
      */
     start_cursor?: string;
     /**
-     * Cursor to use to get the list of documents
+     * Cursor to use to get the list of documents.
      * @type {string}
      * @memberof PaginationInfo
      */
     next_cursor?: string;
-}
-
-/**
- * 
- * @export
- * @interface ParameterizedHeader
- */
-export interface ParameterizedHeader {
     /**
-     * 
+     * Direct link to the next page of results.
      * @type {string}
-     * @memberof ParameterizedHeader
+     * @memberof PaginationInfo
      */
-    value?: string;
-    /**
-     * 
-     * @type {{ [key: string]: string; }}
-     * @memberof ParameterizedHeader
-     */
-    parameters?: { [key: string]: string; };
+    next_page_link?: string;
 }
 
 /**
@@ -4920,90 +2964,6 @@ export namespace PatchOperation {
 /**
  * 
  * @export
- * @interface PreviewCollectionRequest
- */
-export interface PreviewCollectionRequest {
-    /**
-     * list of sources from which to ingest data
-     * @type {Array<Source>}
-     * @memberof PreviewCollectionRequest
-     */
-    sources?: Array<Source>;
-    /**
-     * configuration for event data
-     * @type {EventTimeInfo}
-     * @memberof PreviewCollectionRequest
-     */
-    event_time_info?: EventTimeInfo;
-    /**
-     * list of mappings
-     * @type {Array<FieldMappingV2>}
-     * @memberof PreviewCollectionRequest
-     */
-    field_mappings?: Array<FieldMappingV2>;
-}
-
-/**
- * 
- * @export
- * @interface PreviewCollectionResponse
- */
-export interface PreviewCollectionResponse {
-    /**
-     * sample documents
-     * @type {Array<Array<any>>}
-     * @memberof PreviewCollectionResponse
-     */
-    sample_documents?: Array<Array<any>>;
-    /**
-     * mapped_fields
-     * @type {Array<string>}
-     * @memberof PreviewCollectionResponse
-     */
-    mapped_fields?: Array<string>;
-}
-
-/**
- * 
- * @export
- * @interface PreviewSource
- */
-export interface PreviewSource {
-    /**
-     * UUID unique to the source
-     * @type {string}
-     * @memberof PreviewSource
-     */
-    preview_source_id?: string;
-    /**
-     * integration used for this source
-     * @type {string}
-     * @memberof PreviewSource
-     */
-    integration_name?: string;
-    /**
-     * whether type is file upload
-     * @type {boolean}
-     * @memberof PreviewSource
-     */
-    file_upload?: boolean;
-    /**
-     * configuration for receiving data from kafka
-     * @type {SourceKafka}
-     * @memberof PreviewSource
-     */
-    kafka?: SourceKafka;
-    /**
-     * time at which this preview source expires (ISO-8601 format)
-     * @type {string}
-     * @memberof PreviewSource
-     */
-    expire_at?: string;
-}
-
-/**
- * 
- * @export
  * @interface Privilege
  */
 export interface Privilege {
@@ -5020,17 +2980,11 @@ export interface Privilege {
      */
     resource_name?: string;
     /**
-     * Cluster ID (`rs2` for us-west-2, `use1a1` for us-east-1) for which the action is allowed. Defaults to '*All*' if not specified.
+     * Cluster ID (`usw2a1` for us-west-2, `use1a1` for us-east-1, `euc1a1` for eu-central-1) for which the action is allowed. Defaults to '*All*' if not specified.
      * @type {string}
      * @memberof Privilege
      */
     cluster?: string;
-    /**
-     * The Virtual Instances on which the action is allowed. Defaults to '*All*' if not specified.
-     * @type {string}
-     * @memberof Privilege
-     */
-    virtual_instance?: string;
 }
 
 /**
@@ -5053,6 +3007,7 @@ export namespace Privilege {
         UPDATEBILLINGGLOBAL = <any> 'UPDATE_BILLING_GLOBAL',
         UPDATESETTINGSGLOBAL = <any> 'UPDATE_SETTINGS_GLOBAL',
         GETMETRICSGLOBAL = <any> 'GET_METRICS_GLOBAL',
+        CREATEVIGLOBAL = <any> 'CREATE_VI_GLOBAL',
         UPDATEVIGLOBAL = <any> 'UPDATE_VI_GLOBAL',
         LISTVIGLOBAL = <any> 'LIST_VI_GLOBAL',
         CREATEWSGLOBAL = <any> 'CREATE_WS_GLOBAL',
@@ -5082,16 +3037,13 @@ export namespace Privilege {
         DELETEQUERYLAMBDAWS = <any> 'DELETE_QUERY_LAMBDA_WS',
         EXECUTEQUERYLAMBDAWS = <any> 'EXECUTE_QUERY_LAMBDA_WS',
         CREATEVIEWWS = <any> 'CREATE_VIEW_WS',
-        DELETEVIEWWS = <any> 'DELETE_VIEW_WS'
+        DELETEVIEWWS = <any> 'DELETE_VIEW_WS',
+        ALLVIACTIONS = <any> 'ALL_VI_ACTIONS',
+        QUERYVI = <any> 'QUERY_VI',
+        UPDATEVI = <any> 'UPDATE_VI',
+        SUSPENDRESUMEVI = <any> 'SUSPEND_RESUME_VI',
+        DELETEVI = <any> 'DELETE_VI'
     }
-}
-
-/**
- * 
- * @export
- * @interface Providers
- */
-export interface Providers {
 }
 
 /**
@@ -5101,13 +3053,13 @@ export interface Providers {
  */
 export interface QueryError {
     /**
-     * The type of error
+     * The type of error.
      * @type {string}
      * @memberof QueryError
      */
     type?: string;
     /**
-     * A message associated with the error, containing more information about it
+     * A message associated with the error, containing more information about it.
      * @type {string}
      * @memberof QueryError
      */
@@ -5127,13 +3079,13 @@ export interface QueryError {
  */
 export interface QueryFieldType {
     /**
-     * name of the field
+     * Name of the field.
      * @type {string}
      * @memberof QueryFieldType
      */
     name: string;
     /**
-     * data type of the field
+     * Data type of the field.
      * @type {string}
      * @memberof QueryFieldType
      */
@@ -5143,47 +3095,127 @@ export interface QueryFieldType {
 /**
  * 
  * @export
+ * @interface QueryInfo
+ */
+export interface QueryInfo {
+    /**
+     * Unique Query ID.
+     * @type {string}
+     * @memberof QueryInfo
+     */
+    query_id?: string;
+    /**
+     * Status of the query.
+     * @type {string}
+     * @memberof QueryInfo
+     */
+    status?: QueryInfo.StatusEnum;
+    /**
+     * User ID who executed the query.
+     * @type {string}
+     * @memberof QueryInfo
+     */
+    executed_by?: string;
+    /**
+     * Time (UTC) the query request was first received and queued for execution.
+     * @type {string}
+     * @memberof QueryInfo
+     */
+    submitted_at?: string;
+    /**
+     * Time (UTC) that query results expire. Only populated if `status` is `COMPLETE`.
+     * @type {string}
+     * @memberof QueryInfo
+     */
+    expires_at?: string;
+    /**
+     * Various stats about the query's execution.
+     * @type {Stats}
+     * @memberof QueryInfo
+     */
+    stats?: Stats;
+    /**
+     * Information for fetching query results pages. Only populated if `status` is `COMPLETE`.
+     * @type {Pagination}
+     * @memberof QueryInfo
+     */
+    pagination?: Pagination;
+    /**
+     * The log offset that query results were written to in the destination collection. Only populated for INSERT INTO queries.
+     * @type {string}
+     * @memberof QueryInfo
+     */
+    last_offset?: string;
+    /**
+     * Errors encountered while executing the query.
+     * @type {Array<QueryError>}
+     * @memberof QueryInfo
+     */
+    query_errors?: Array<QueryError>;
+}
+
+/**
+ * @export
+ * @namespace QueryInfo
+ */
+export namespace QueryInfo {
+    /**
+     * @export
+     * @enum {string}
+     */
+    export enum StatusEnum {
+        QUEUED = <any> 'QUEUED',
+        RUNNING = <any> 'RUNNING',
+        COMPLETED = <any> 'COMPLETED',
+        ERROR = <any> 'ERROR',
+        CANCELLED = <any> 'CANCELLED'
+    }
+}
+
+/**
+ * 
+ * @export
  * @interface QueryLambda
  */
 export interface QueryLambda {
     /**
-     * workspace of this Query Lambda
+     * Workspace of this Query Lambda.
      * @type {string}
      * @memberof QueryLambda
      */
     workspace?: string;
     /**
-     * user that created this Query Lambda
+     * User that created this Query Lambda.
      * @type {string}
      * @memberof QueryLambda
      */
     last_updated_by?: string;
     /**
-     * ISO-8601 date of when Query Lambda was last updated
+     * ISO-8601 date of when Query Lambda was last updated.
      * @type {string}
      * @memberof QueryLambda
      */
     last_updated?: string;
     /**
-     * Query Lambda name
+     * Query Lambda name.
      * @type {string}
      * @memberof QueryLambda
      */
     name?: string;
     /**
-     * number of Query Lambda versions
+     * Number of Query Lambda versions.
      * @type {number}
      * @memberof QueryLambda
      */
     version_count?: number;
     /**
-     * collections/aliases queried by underlying SQL query
+     * Collections/aliases queried by underlying SQL query.
      * @type {Array<string>}
      * @memberof QueryLambda
      */
     collections?: Array<string>;
     /**
-     * Query Lambda version details for most recently created version
+     * Query Lambda version details for most recently created version.
      * @type {QueryLambdaVersion}
      * @memberof QueryLambda
      */
@@ -5193,73 +3225,17 @@ export interface QueryLambda {
 /**
  * 
  * @export
- * @interface QueryLambdaMetric
- */
-export interface QueryLambdaMetric {
-    /**
-     * 
-     * @type {string}
-     * @memberof QueryLambdaMetric
-     */
-    query_lambda_name?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof QueryLambdaMetric
-     */
-    avg_latency?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof QueryLambdaMetric
-     */
-    avg_throttled_latency?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof QueryLambdaMetric
-     */
-    query_count?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof QueryLambdaMetric
-     */
-    err_count?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof QueryLambdaMetric
-     */
-    err_count_5xx?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof QueryLambdaMetric
-     */
-    err_count_4xx?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof QueryLambdaMetric
-     */
-    time?: number;
-}
-
-/**
- * 
- * @export
  * @interface QueryLambdaSql
  */
 export interface QueryLambdaSql {
     /**
-     * SQL text
+     * SQL text.
      * @type {string}
      * @memberof QueryLambdaSql
      */
     query: string;
     /**
-     * default parameters for this Query Lambda
+     * Default parameters for this Query Lambda.
      * @type {Array<QueryParameter>}
      * @memberof QueryLambdaSql
      */
@@ -5273,25 +3249,25 @@ export interface QueryLambdaSql {
  */
 export interface QueryLambdaStats {
     /**
-     * ISO-8601 date
+     * ISO-8601 date.
      * @type {string}
      * @memberof QueryLambdaStats
      */
     last_executed?: string;
     /**
-     * user who last executed Query Lambda
+     * User who last executed Query Lambda.
      * @type {string}
      * @memberof QueryLambdaStats
      */
     last_executed_by?: string;
     /**
-     * ISO-8601 date of last execution failure
+     * ISO-8601 date of last execution failure.
      * @type {string}
      * @memberof QueryLambdaStats
      */
     last_execution_error?: string;
     /**
-     * error message associated with last failed execution
+     * Error message associated with last failed execution.
      * @type {string}
      * @memberof QueryLambdaStats
      */
@@ -5305,13 +3281,13 @@ export interface QueryLambdaStats {
  */
 export interface QueryLambdaTag {
     /**
-     * name of Query Lambda tag
+     * Name of Query Lambda tag.
      * @type {string}
      * @memberof QueryLambdaTag
      */
     tag_name?: string;
     /**
-     * query lambda version
+     * Query lambda version.
      * @type {QueryLambdaVersion}
      * @memberof QueryLambdaTag
      */
@@ -5325,7 +3301,7 @@ export interface QueryLambdaTag {
  */
 export interface QueryLambdaTagResponse {
     /**
-     * updated Query Lambda tag
+     * Updated Query Lambda tag.
      * @type {QueryLambdaTag}
      * @memberof QueryLambdaTagResponse
      */
@@ -5339,65 +3315,71 @@ export interface QueryLambdaTagResponse {
  */
 export interface QueryLambdaVersion {
     /**
-     * workspace of this Query Lambda
+     * Workspace of this Query Lambda.
      * @type {string}
      * @memberof QueryLambdaVersion
      */
     workspace?: string;
     /**
-     * user that created this Query Lambda
+     * User that created this Query Lambda.
      * @type {string}
      * @memberof QueryLambdaVersion
      */
     created_by?: string;
     /**
-     * ISO-8601 date of when Query Lambda was created
+     * ISO-8601 date of when Query Lambda was created.
      * @type {string}
      * @memberof QueryLambdaVersion
      */
     created_at?: string;
     /**
-     * Query Lambda name
+     * Query Lambda name.
      * @type {string}
      * @memberof QueryLambdaVersion
      */
     name?: string;
     /**
-     * Query Lambda version
+     * Query Lambda version.
      * @type {string}
      * @memberof QueryLambdaVersion
      */
     version?: string;
     /**
-     * optional description
+     * Optional description.
      * @type {string}
      * @memberof QueryLambdaVersion
      */
     description?: string;
     /**
-     * Query Lambda SQL query
+     * Query Lambda SQL query.
      * @type {QueryLambdaSql}
      * @memberof QueryLambdaVersion
      */
     sql?: QueryLambdaSql;
     /**
-     * collections queried by underlying SQL query
+     * Collections queried by underlying SQL query.
      * @type {Array<string>}
      * @memberof QueryLambdaVersion
      */
     collections?: Array<string>;
     /**
-     * status of this Query Lambda
+     * Status of this Query Lambda.
      * @type {string}
      * @memberof QueryLambdaVersion
      */
     state?: QueryLambdaVersion.StateEnum;
     /**
-     * stats related to this Query Lambda
+     * Stats related to this Query Lambda.
      * @type {QueryLambdaStats}
      * @memberof QueryLambdaVersion
      */
     stats?: QueryLambdaStats;
+    /**
+     * Public access ID associated with this QL version
+     * @type {string}
+     * @memberof QueryLambdaVersion
+     */
+    public_access_id?: string;
 }
 
 /**
@@ -5422,7 +3404,7 @@ export namespace QueryLambdaVersion {
  */
 export interface QueryLambdaVersionResponse {
     /**
-     * Query Lambda version details
+     * Query Lambda version details.
      * @type {QueryLambdaVersion}
      * @memberof QueryLambdaVersionResponse
      */
@@ -5432,88 +3414,23 @@ export interface QueryLambdaVersionResponse {
 /**
  * 
  * @export
- * @interface QueryPageInfo
- */
-export interface QueryPageInfo {
-    /**
-     * Query ID
-     * @type {string}
-     * @memberof QueryPageInfo
-     */
-    query_id?: string;
-    /**
-     * Either RUNNING or FINISHED.
-     * @type {string}
-     * @memberof QueryPageInfo
-     */
-    state?: QueryPageInfo.StateEnum;
-    /**
-     * User who ran the query
-     * @type {string}
-     * @memberof QueryPageInfo
-     */
-    run_by?: string;
-    /**
-     * Time the query results expire
-     * @type {string}
-     * @memberof QueryPageInfo
-     */
-    expires_at?: string;
-    /**
-     * Time the query was run
-     * @type {string}
-     * @memberof QueryPageInfo
-     */
-    run_at?: string;
-    /**
-     * 
-     * @type {Stats}
-     * @memberof QueryPageInfo
-     */
-    stats?: Stats;
-    /**
-     * 
-     * @type {Pagination}
-     * @memberof QueryPageInfo
-     */
-    pagination?: Pagination;
-}
-
-/**
- * @export
- * @namespace QueryPageInfo
- */
-export namespace QueryPageInfo {
-    /**
-     * @export
-     * @enum {string}
-     */
-    export enum StateEnum {
-        RUNNING = <any> 'RUNNING',
-        FINISHED = <any> 'FINISHED'
-    }
-}
-
-/**
- * 
- * @export
  * @interface QueryPaginationResponse
  */
 export interface QueryPaginationResponse {
     /**
-     * List of documents returned by the query
+     * List of documents returned by the query.
      * @type {Array<any>}
      * @memberof QueryPaginationResponse
      */
     results?: Array<any>;
     /**
-     * Total documents returned by the query
+     * Total documents returned by the query.
      * @type {number}
      * @memberof QueryPaginationResponse
      */
     results_total_doc_count?: number;
     /**
-     * Pagination metadata
+     * Pagination metadata.
      * @type {PaginationInfo}
      * @memberof QueryPaginationResponse
      */
@@ -5527,19 +3444,19 @@ export interface QueryPaginationResponse {
  */
 export interface QueryParameter {
     /**
-     * name of the field
+     * Name of the field.
      * @type {string}
      * @memberof QueryParameter
      */
     name: string;
     /**
-     * data type of the field
+     * Data type of the field.
      * @type {string}
      * @memberof QueryParameter
      */
     type: string;
     /**
-     * literal value of the field
+     * Literal value of the field.
      * @type {string}
      * @memberof QueryParameter
      */
@@ -5558,6 +3475,12 @@ export interface QueryRequest {
      * @memberof QueryRequest
      */
     sql: QueryRequestSql;
+    /**
+     * Options for configuring Asynchronous Query Mode (beta).
+     * @type {AsyncQueryOptions}
+     * @memberof QueryRequest
+     */
+    async_options?: AsyncQueryOptions;
 }
 
 /**
@@ -5578,12 +3501,6 @@ export interface QueryRequestSql {
      * @memberof QueryRequestSql
      */
     generate_warnings?: boolean;
-    /**
-     * Flag to generate a performance profile for this query.
-     * @type {boolean}
-     * @memberof QueryRequestSql
-     */
-    profiling_enabled?: boolean;
     /**
      * List of named parameters.
      * @type {Array<QueryParameter>}
@@ -5608,12 +3525,6 @@ export interface QueryRequestSql {
      * @memberof QueryRequestSql
      */
     initial_paginate_response_doc_count?: number;
-    /**
-     * If this query is being used for ingest transformations we add fixes to make it closer to what the rollup would actually do
-     * @type {boolean}
-     * @memberof QueryRequestSql
-     */
-    is_ingest_transformation_preview?: boolean;
 }
 
 /**
@@ -5622,12 +3533,6 @@ export interface QueryRequestSql {
  * @interface QueryResponse
  */
 export interface QueryResponse {
-    /**
-     * List of aliases referenced in the query.
-     * @type {Array<QueryResponseAlias>}
-     * @memberof QueryResponse
-     */
-    aliases?: Array<QueryResponseAlias>;
     /**
      * Unique ID for this query.
      * @type {string}
@@ -5659,6 +3564,12 @@ export interface QueryResponse {
      */
     warnings?: Array<string>;
     /**
+     * The full path of the executed query lambda. Includes version information.
+     * @type {string}
+     * @memberof QueryResponse
+     */
+    query_lambda_path?: string;
+    /**
      * Errors encountered while executing the query.
      * @type {Array<QueryError>}
      * @memberof QueryResponse
@@ -5671,7 +3582,7 @@ export interface QueryResponse {
      */
     column_fields?: Array<QueryFieldType>;
     /**
-     * Number of results generated by the query
+     * Number of results generated by the query.
      * @type {number}
      * @memberof QueryResponse
      */
@@ -5683,7 +3594,7 @@ export interface QueryResponse {
      */
     pagination?: PaginationInfo;
     /**
-     * If this was a write query, this is the log offset the query was written to
+     * If this was a write query, this is the log offset the query was written to.
      * @type {string}
      * @memberof QueryResponse
      */
@@ -5693,37 +3604,17 @@ export interface QueryResponse {
 /**
  * 
  * @export
- * @interface QueryResponseAlias
- */
-export interface QueryResponseAlias {
-    /**
-     * name of the alias
-     * @type {string}
-     * @memberof QueryResponseAlias
-     */
-    name: string;
-    /**
-     * list of fully qualified collection names referenced by the alias
-     * @type {Array<string>}
-     * @memberof QueryResponseAlias
-     */
-    collections: Array<string>;
-}
-
-/**
- * 
- * @export
  * @interface QueryResponseStats
  */
 export interface QueryResponseStats {
     /**
-     * query time in milliseconds
+     * Query time in milliseconds.
      * @type {number}
      * @memberof QueryResponseStats
      */
     elapsed_time_ms?: number;
     /**
-     * time query was throttled by admission control
+     * Time query was throttled by admission control.
      * @type {number}
      * @memberof QueryResponseStats
      */
@@ -5733,229 +3624,15 @@ export interface QueryResponseStats {
 /**
  * 
  * @export
- * @interface QueryStats
+ * @interface ResumeVirtualInstanceResponse
  */
-export interface QueryStats {
+export interface ResumeVirtualInstanceResponse {
     /**
-     * query time in milliseconds
-     * @type {number}
-     * @memberof QueryStats
+     * Virtual instance that was resumed.
+     * @type {VirtualInstance}
+     * @memberof ResumeVirtualInstanceResponse
      */
-    elapsed_time_ms?: number;
-    /**
-     * rows scanned as part of query execution
-     * @type {number}
-     * @memberof QueryStats
-     */
-    rows_scanned?: number;
-    /**
-     * number of rows returned from the query
-     * @type {number}
-     * @memberof QueryStats
-     */
-    rows_returned?: number;
-    /**
-     * Statistics for each operator from query execution
-     * @type {Array<OperatorStats>}
-     * @memberof QueryStats
-     */
-    operators?: Array<OperatorStats>;
-    /**
-     * Statistics for each exchange source from query execution
-     * @type {Array<RpcSourceStats>}
-     * @memberof QueryStats
-     */
-    exchange_sources?: Array<RpcSourceStats>;
-    /**
-     * Statistics for each exchange sink from query execution
-     * @type {Array<RpcSinkStats>}
-     * @memberof QueryStats
-     */
-    exchange_sinks?: Array<RpcSinkStats>;
-    /**
-     * DOT graph representing the execution steps of this query
-     * @type {string}
-     * @memberof QueryStats
-     */
-    execution_graph?: string;
-    /**
-     * Execution plan (output of EXPLAIN) of this query
-     * @type {string}
-     * @memberof QueryStats
-     */
-    execution_plan?: string;
-    /**
-     * Information about each physical operator, like what fields it is fetching
-     * @type {string}
-     * @memberof QueryStats
-     */
-    operator_metadata?: string;
-    /**
-     * SQL text of Query that was executed
-     * @type {string}
-     * @memberof QueryStats
-     */
-    query_text?: string;
-}
-
-/**
- * 
- * @export
- * @interface QueryStatsResponse
- */
-export interface QueryStatsResponse {
-    /**
-     * 
-     * @type {QueryStats}
-     * @memberof QueryStatsResponse
-     */
-    data?: QueryStats;
-}
-
-/**
- * 
- * @export
- * @interface RateCard
- */
-export interface RateCard {
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RateCard
-     */
-    active?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof RateCard
-     */
-    small?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof RateCard
-     */
-    medium?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof RateCard
-     */
-    large?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof RateCard
-     */
-    xlarge?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof RateCard
-     */
-    xlarge2?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof RateCard
-     */
-    xlarge4?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof RateCard
-     */
-    xlarge8?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof RateCard
-     */
-    xlarge16?: number;
-}
-
-/**
- * 
- * @export
- * @interface RateCardResponse
- */
-export interface RateCardResponse {
-    /**
-     * 
-     * @type {RateCard}
-     * @memberof RateCardResponse
-     */
-    data?: RateCard;
-}
-
-/**
- * 
- * @export
- * @interface RecordActivityRequest
- */
-export interface RecordActivityRequest {
-    /**
-     * should this activity trigger a notification message
-     * @type {boolean}
-     * @memberof RecordActivityRequest
-     */
-    notify?: boolean;
-    /**
-     * message to be sent
-     * @type {string}
-     * @memberof RecordActivityRequest
-     */
-    message?: string;
-    /**
-     * details of the activity
-     * @type {{ [key: string]: any; }}
-     * @memberof RecordActivityRequest
-     */
-    details?: { [key: string]: any; };
-}
-
-/**
- * 
- * @export
- * @interface RedshiftIntegration
- */
-export interface RedshiftIntegration {
-    /**
-     * AWS access key credentials
-     * @type {AwsAccessKey}
-     * @memberof RedshiftIntegration
-     */
-    aws_access_key?: AwsAccessKey;
-    /**
-     * Username associated with Redshift cluster
-     * @type {string}
-     * @memberof RedshiftIntegration
-     */
-    username: string;
-    /**
-     * Password associated with Redshift cluster
-     * @type {string}
-     * @memberof RedshiftIntegration
-     */
-    password: string;
-    /**
-     * Redshift Cluster host
-     * @type {string}
-     * @memberof RedshiftIntegration
-     */
-    host: string;
-    /**
-     * Redshift Cluster port
-     * @type {number}
-     * @memberof RedshiftIntegration
-     */
-    port: number;
-    /**
-     * unload S3 bucket path
-     * @type {string}
-     * @memberof RedshiftIntegration
-     */
-    s3_bucket_path: string;
+    data?: VirtualInstance;
 }
 
 /**
@@ -6019,171 +3696,17 @@ export interface RoleResponse {
 /**
  * 
  * @export
- * @interface RpcSinkStats
- */
-export interface RpcSinkStats {
-    /**
-     * The id of the worker this operator ran on
-     * @type {string}
-     * @memberof RpcSinkStats
-     */
-    worker?: string;
-    /**
-     * The id of the fragment this operator belonged to
-     * @type {number}
-     * @memberof RpcSinkStats
-     */
-    fragment?: number;
-    /**
-     * The id of the task this operator belonged to
-     * @type {string}
-     * @memberof RpcSinkStats
-     */
-    task?: string;
-    /**
-     * The id of this operator in the task
-     * @type {number}
-     * @memberof RpcSinkStats
-     */
-    operator_id?: number;
-    /**
-     * The class name of upstream operator
-     * @type {string}
-     * @memberof RpcSinkStats
-     */
-    src_operator_name?: string;
-    /**
-     * Total bytes received from the input
-     * @type {number}
-     * @memberof RpcSinkStats
-     */
-    input_bytes?: number;
-    /**
-     * Maximum bytes received in one data chunk
-     * @type {number}
-     * @memberof RpcSinkStats
-     */
-    max_input_bytes?: number;
-    /**
-     * Total rows received from the input
-     * @type {number}
-     * @memberof RpcSinkStats
-     */
-    input_rows?: number;
-    /**
-     * Total data chunks received from the input
-     * @type {number}
-     * @memberof RpcSinkStats
-     */
-    input_data_chunks?: number;
-    /**
-     * Total data chunks sent to the output
-     * @type {number}
-     * @memberof RpcSinkStats
-     */
-    output_data_chunks?: number;
-    /**
-     * Total messages sent to the output
-     * @type {number}
-     * @memberof RpcSinkStats
-     */
-    output_messages?: number;
-    /**
-     * Total time in microseconds spent doing useful work
-     * @type {number}
-     * @memberof RpcSinkStats
-     */
-    processing_time_us?: number;
-}
-
-/**
- * 
- * @export
- * @interface RpcSourceStats
- */
-export interface RpcSourceStats {
-    /**
-     * The id of the worker this operator ran on
-     * @type {string}
-     * @memberof RpcSourceStats
-     */
-    worker?: string;
-    /**
-     * The id of the fragment this operator belonged to
-     * @type {number}
-     * @memberof RpcSourceStats
-     */
-    fragment?: number;
-    /**
-     * The id of the task this operator belonged to
-     * @type {string}
-     * @memberof RpcSourceStats
-     */
-    task?: string;
-    /**
-     * The id of this operator in the task
-     * @type {number}
-     * @memberof RpcSourceStats
-     */
-    operator_id?: number;
-    /**
-     * The class name of downstream operator
-     * @type {string}
-     * @memberof RpcSourceStats
-     */
-    dest_operator_name?: string;
-    /**
-     * Total bytes received from the input
-     * @type {number}
-     * @memberof RpcSourceStats
-     */
-    input_bytes?: number;
-    /**
-     * Maximum bytes received in one data chunk
-     * @type {number}
-     * @memberof RpcSourceStats
-     */
-    max_input_bytes?: number;
-    /**
-     * Total rows received from the input
-     * @type {number}
-     * @memberof RpcSourceStats
-     */
-    input_rows?: number;
-    /**
-     * Total data chunks received from the input
-     * @type {number}
-     * @memberof RpcSourceStats
-     */
-    input_data_chunks?: number;
-    /**
-     * Total messages received from the input
-     * @type {number}
-     * @memberof RpcSourceStats
-     */
-    input_messages?: number;
-    /**
-     * Total time in microseconds spent doing useful work
-     * @type {number}
-     * @memberof RpcSourceStats
-     */
-    processing_time_us?: number;
-}
-
-/**
- * 
- * @export
  * @interface S3Integration
  */
 export interface S3Integration {
     /**
-     * credentials for an AWS access key integration
+     * Credentials for an AWS access key integration.
      * @type {AwsAccessKey}
      * @memberof S3Integration
      */
     aws_access_key?: AwsAccessKey;
     /**
-     * details of an AWS cross-account role integration
+     * Details of an AWS cross-account role integration.
      * @type {AwsRole}
      * @memberof S3Integration
      */
@@ -6193,103 +3716,83 @@ export interface S3Integration {
 /**
  * 
  * @export
- * @interface SegmentIntegration
+ * @interface SchemaRegistryConfig
  */
-export interface SegmentIntegration {
+export interface SchemaRegistryConfig {
     /**
-     * segment connection string
+     * Schema registry URL.
      * @type {string}
-     * @memberof SegmentIntegration
+     * @memberof SchemaRegistryConfig
      */
-    connection_string?: string;
+    url?: string;
+    /**
+     * The secure API key for schema registry.
+     * @type {string}
+     * @memberof SchemaRegistryConfig
+     */
+    key?: string;
+    /**
+     * The secure API password registry.
+     * @type {string}
+     * @memberof SchemaRegistryConfig
+     */
+    secret?: string;
 }
 
 /**
  * 
  * @export
- * @interface SlowQuery
+ * @interface SnowflakeIntegration
  */
-export interface SlowQuery {
+export interface SnowflakeIntegration {
     /**
-     * 
+     * Snowflake browser url.
      * @type {string}
-     * @memberof SlowQuery
+     * @memberof SnowflakeIntegration
      */
-    user?: string;
+    snowflake_url: string;
     /**
-     * 
+     * Snowflake database username.
      * @type {string}
-     * @memberof SlowQuery
+     * @memberof SnowflakeIntegration
      */
-    query_lambda_name?: string;
+    username: string;
     /**
-     * 
-     * @type {number}
-     * @memberof SlowQuery
-     */
-    latency_millis?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof SlowQuery
-     */
-    throttled_latency_micros?: number;
-    /**
-     * 
+     * Snowflake database password.
      * @type {string}
-     * @memberof SlowQuery
+     * @memberof SnowflakeIntegration
      */
-    agent?: string;
+    password: string;
     /**
-     * 
-     * @type {Array<string>}
-     * @memberof SlowQuery
-     */
-    collections?: Array<string>;
-    /**
-     * 
-     * @type {Array<QueryResponseAlias>}
-     * @memberof SlowQuery
-     */
-    aliases?: Array<QueryResponseAlias>;
-    /**
-     * 
+     * Snowflake user role. If unspecified, will use the default user role.
      * @type {string}
-     * @memberof SlowQuery
+     * @memberof SnowflakeIntegration
      */
-    query?: string;
+    user_role?: string;
     /**
-     * 
+     * Details of an AWS cross-account role integration.
+     * @type {AwsRole}
+     * @memberof SnowflakeIntegration
+     */
+    aws_role?: AwsRole;
+    /**
+     * Credentials for an AWS access key integration.
+     * @type {AwsAccessKey}
+     * @memberof SnowflakeIntegration
+     */
+    aws_access_key?: AwsAccessKey;
+    /**
+     * default snowflake data warehouse name for query execution. Warehouse name can be overridden in the collection.
      * @type {string}
-     * @memberof SlowQuery
+     * @memberof SnowflakeIntegration
      */
-    id?: string;
+    default_warehouse: string;
     /**
-     * 
-     * @type {number}
-     * @memberof SlowQuery
+     * S3 path used for running 'COPY INTO' command on snowflake table.
+     * @type {string}
+     * @memberof SnowflakeIntegration
      */
-    time?: number;
-}
-
-/**
- * 
- * @export
- * @interface SlowQueryCount
- */
-export interface SlowQueryCount {
-    /**
-     * 
-     * @type {number}
-     * @memberof SlowQueryCount
-     */
-    count?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof SlowQueryCount
-     */
-    time?: number;
+    s3_export_path: string;
 }
 
 /**
@@ -6299,67 +3802,91 @@ export interface SlowQueryCount {
  */
 export interface Source {
     /**
-     * name of integration to use
+     * Unique source identifier.
      * @type {string}
      * @memberof Source
      */
-    integration_name: string;
+    id?: string;
     /**
-     * configuration for ingestion from S3
+     * Name of integration to use.
+     * @type {string}
+     * @memberof Source
+     */
+    integration_name?: string;
+    /**
+     * Configuration for ingestion from S3.
      * @type {SourceS3}
      * @memberof Source
      */
     s3?: SourceS3;
     /**
-     * configuration for ingestion from kinesis stream
+     * Configuration for ingestion from kinesis stream.
      * @type {SourceKinesis}
      * @memberof Source
      */
     kinesis?: SourceKinesis;
     /**
-     * configuration for ingestion from GCS
+     * Configuration for ingestion from GCS.
      * @type {SourceGcs}
      * @memberof Source
      */
     gcs?: SourceGcs;
     /**
-     * configuration for ingestion from Redshift
-     * @type {SourceRedshift}
+     * Configuration for ingestion from Azure Blob Storage.
+     * @type {SourceAzureBlobStorage}
      * @memberof Source
      */
-    redshift?: SourceRedshift;
+    azure_blob_storage?: SourceAzureBlobStorage;
     /**
-     * configuration for ingestion from  a dynamodb table
+     * Configuration for ingestion from Azure Service Bus.
+     * @type {SourceAzureServiceBus}
+     * @memberof Source
+     */
+    azure_service_bus?: SourceAzureServiceBus;
+    /**
+     * Configuration for ingestion from Azure Event Hubs.
+     * @type {SourceAzureEventHubs}
+     * @memberof Source
+     */
+    azure_event_hubs?: SourceAzureEventHubs;
+    /**
+     * Configuration for ingestion from  a dynamodb table.
      * @type {SourceDynamoDb}
      * @memberof Source
      */
     dynamodb?: SourceDynamoDb;
     /**
-     * file upload details
+     * File upload details.
      * @type {SourceFileUpload}
      * @memberof Source
      */
     file_upload?: SourceFileUpload;
     /**
-     * kafka collection identifier
+     * Kafka collection identifier.
      * @type {SourceKafka}
      * @memberof Source
      */
     kafka?: SourceKafka;
     /**
-     * MongoDB collection details
+     * MongoDB collection details.
      * @type {SourceMongoDb}
      * @memberof Source
      */
     mongodb?: SourceMongoDb;
     /**
-     * the ingest status of this source
+     * Configuration for ingestion from Snowflake.
+     * @type {SourceSnowflake}
+     * @memberof Source
+     */
+    snowflake?: SourceSnowflake;
+    /**
+     * The ingest status of this source.
      * @type {Status}
      * @memberof Source
      */
     status?: Status;
     /**
-     * format parameters for data from this source
+     * Format parameters for data from this source.
      * @type {FormatParams}
      * @memberof Source
      */
@@ -6369,119 +3896,112 @@ export interface Source {
 /**
  * 
  * @export
- * @interface SourceConfig
+ * @interface SourceAzureBlobStorage
  */
-export interface SourceConfig {
+export interface SourceAzureBlobStorage {
     /**
-     * dynamo source information
-     * @type {SourceConfigDynamo}
-     * @memberof SourceConfig
-     */
-    dynamo_config?: SourceConfigDynamo;
-    /**
-     * mongo source information
-     * @type {SourceConfigMongo}
-     * @memberof SourceConfig
-     */
-    mongo_config?: SourceConfigMongo;
-}
-
-/**
- * 
- * @export
- * @interface SourceConfigDynamo
- */
-export interface SourceConfigDynamo {
-    /**
-     * RCUs configured on source DynamoDb Table
-     * @type {number}
-     * @memberof SourceConfigDynamo
-     */
-    rcu?: number;
-    /**
-     * estimated time in seconds to scan DynamoDb Table
-     * @type {number}
-     * @memberof SourceConfigDynamo
-     */
-    estimated_time_seconds?: number;
-    /**
-     * size of DynamoDb Table in Bytes
-     * @type {number}
-     * @memberof SourceConfigDynamo
-     */
-    table_size_bytes?: number;
-    /**
-     * number of records in DynamoDb Table
-     * @type {number}
-     * @memberof SourceConfigDynamo
-     */
-    num_records?: number;
-    /**
-     * Whether point-in-time-recovery is enabled at the time of collection creation
-     * @type {boolean}
-     * @memberof SourceConfigDynamo
-     */
-    is_pitr_enabled?: boolean;
-}
-
-/**
- * 
- * @export
- * @interface SourceConfigMongo
- */
-export interface SourceConfigMongo {
-    /**
-     * size of MongoDB Collection in Bytes
-     * @type {number}
-     * @memberof SourceConfigMongo
-     */
-    table_size_bytes?: number;
-    /**
-     * number of documents in MongoDB Collection
-     * @type {number}
-     * @memberof SourceConfigMongo
-     */
-    num_records?: number;
-}
-
-/**
- * 
- * @export
- * @interface SourceConfigRequest
- */
-export interface SourceConfigRequest {
-    /**
-     * name of integration to use
+     * Name of Azure blob Storage container you want to ingest from.
      * @type {string}
-     * @memberof SourceConfigRequest
+     * @memberof SourceAzureBlobStorage
      */
-    integration_name: string;
+    container?: string;
     /**
-     * configuration for ingestion from a DynamoDB table
-     * @type {SourceDynamoDb}
-     * @memberof SourceConfigRequest
+     * Prefix that selects blobs to ingest.
+     * @type {string}
+     * @memberof SourceAzureBlobStorage
      */
-    dynamodb?: SourceDynamoDb;
+    prefix?: string;
     /**
-     * configuration for ingestion from a MongoDB collection
-     * @type {SourceMongoDb}
-     * @memberof SourceConfigRequest
+     * Glob-style pattern that selects keys to ingest. Only either prefix or pattern can be specified.
+     * @type {string}
+     * @memberof SourceAzureBlobStorage
      */
-    mongodb?: SourceMongoDb;
+    pattern?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof SourceAzureBlobStorage
+     */
+    blob_count_downloaded?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof SourceAzureBlobStorage
+     */
+    blob_count_total?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof SourceAzureBlobStorage
+     */
+    blob_bytes_total?: number;
 }
 
 /**
  * 
  * @export
- * @interface SourceConfigResponse
+ * @interface SourceAzureEventHubs
  */
-export interface SourceConfigResponse {
+export interface SourceAzureEventHubs {
     /**
-     * source information that was requested
-     * @type {SourceConfig}
-     * @memberof SourceConfigResponse
+     * Name of the hub which rockset should ingest from.
+     * @type {string}
+     * @memberof SourceAzureEventHubs
      */
-    data?: SourceConfig;
+    hub_id?: string;
+    /**
+     * The offset reset policy.
+     * @type {string}
+     * @memberof SourceAzureEventHubs
+     */
+    offset_reset_policy?: SourceAzureEventHubs.OffsetResetPolicyEnum;
+    /**
+     * Source status.
+     * @type {StatusAzureEventHubs}
+     * @memberof SourceAzureEventHubs
+     */
+    status?: StatusAzureEventHubs;
+}
+
+/**
+ * @export
+ * @namespace SourceAzureEventHubs
+ */
+export namespace SourceAzureEventHubs {
+    /**
+     * @export
+     * @enum {string}
+     */
+    export enum OffsetResetPolicyEnum {
+        LATEST = <any> 'LATEST',
+        EARLIEST = <any> 'EARLIEST'
+    }
+}
+
+/**
+ * 
+ * @export
+ * @interface SourceAzureServiceBus
+ */
+export interface SourceAzureServiceBus {
+    /**
+     * Name of the topic which rockset should ingest from.
+     * @type {string}
+     * @memberof SourceAzureServiceBus
+     */
+    topic?: string;
+    /**
+     * The subscription to read from the topic.
+     * @type {string}
+     * @memberof SourceAzureServiceBus
+     */
+    subscription?: string;
+    /**
+     * Azure Service bus source status.
+     * @type {StatusAzureServiceBus}
+     * @memberof SourceAzureServiceBus
+     */
+    status?: StatusAzureServiceBus;
 }
 
 /**
@@ -6491,37 +4011,37 @@ export interface SourceConfigResponse {
  */
 export interface SourceDynamoDb {
     /**
-     * AWS region name of DynamoDB table, by default us-west-2 is used
+     * AWS region name of DynamoDB table, by default us-west-2 is used.
      * @type {string}
      * @memberof SourceDynamoDb
      */
     aws_region?: string;
     /**
-     * name of DynamoDB table containing data
+     * Name of DynamoDB table containing data.
      * @type {string}
      * @memberof SourceDynamoDb
      */
     table_name: string;
     /**
-     * DynamoDB source status v2
+     * DynamoDB source status v2.
      * @type {StatusDynamoDbV2}
      * @memberof SourceDynamoDb
      */
     current_status?: StatusDynamoDbV2;
     /**
-     * Max RCU usage for scan
+     * Max RCU usage for scan.
      * @type {number}
      * @memberof SourceDynamoDb
      */
     rcu?: number;
     /**
-     * DynamoDB source status
+     * DynamoDB source status.
      * @type {StatusDynamoDb}
      * @memberof SourceDynamoDb
      */
     status?: StatusDynamoDb;
     /**
-     * Whether to use DynamoDB Scan API for the initial scan
+     * Whether to use DynamoDB Scan API for the initial scan.
      * @type {boolean}
      * @memberof SourceDynamoDb
      */
@@ -6535,19 +4055,19 @@ export interface SourceDynamoDb {
  */
 export interface SourceFileUpload {
     /**
-     * name of the file
+     * Name of the file.
      * @type {string}
      * @memberof SourceFileUpload
      */
     file_name: string;
     /**
-     * size of the file in bytes
+     * Size of the file in bytes.
      * @type {number}
      * @memberof SourceFileUpload
      */
     file_size: number;
     /**
-     * time of file upload
+     * Time of file upload.
      * @type {string}
      * @memberof SourceFileUpload
      */
@@ -6561,7 +4081,7 @@ export interface SourceFileUpload {
  */
 export interface SourceGcs {
     /**
-     * name of GCS bucket you want to ingest from
+     * Name of GCS bucket you want to ingest from.
      * @type {string}
      * @memberof SourceGcs
      */
@@ -6572,6 +4092,12 @@ export interface SourceGcs {
      * @memberof SourceGcs
      */
     prefix?: string;
+    /**
+     * Glob-style pattern that selects keys to ingest. Only either prefix or pattern can be specified.
+     * @type {string}
+     * @memberof SourceGcs
+     */
+    pattern?: string;
     /**
      * 
      * @type {number}
@@ -6590,6 +4116,12 @@ export interface SourceGcs {
      * @memberof SourceGcs
      */
     object_bytes_total?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof SourceGcs
+     */
+    object_bytes_downloaded?: number;
 }
 
 /**
@@ -6599,25 +4131,31 @@ export interface SourceGcs {
  */
 export interface SourceKafka {
     /**
-     * The Kafka topic to be tailed
+     * The Kafka topic to be tailed.
      * @type {string}
      * @memberof SourceKafka
      */
-    kafka_topic_name: string;
+    kafka_topic_name?: string;
     /**
-     * Kafka source status
+     * Kafka source status.
      * @type {StatusKafka}
      * @memberof SourceKafka
      */
     status?: StatusKafka;
     /**
-     * Whether to use v3 integration
+     * The Kafka consumer group Id being used.
+     * @type {string}
+     * @memberof SourceKafka
+     */
+    consumer_group_id?: string;
+    /**
+     * Whether to use v3 integration.
      * @type {boolean}
      * @memberof SourceKafka
      */
     use_v3?: boolean;
     /**
-     * The offset reset policy. Required only for V3 collection.
+     * The offset reset policy.
      * @type {string}
      * @memberof SourceKafka
      */
@@ -6646,23 +4184,44 @@ export namespace SourceKafka {
  */
 export interface SourceKinesis {
     /**
-     * AWS region name of Kinesis stream, by default us-west-2 is used
+     * AWS region name of Kinesis stream, by default us-west-2 is used.
      * @type {string}
      * @memberof SourceKinesis
      */
     aws_region?: string;
     /**
-     * name of kinesis stream
+     * Name of kinesis stream.
      * @type {string}
      * @memberof SourceKinesis
      */
     stream_name: string;
     /**
-     * set of fields that correspond to a DMS primary key
+     * Set of fields that correspond to a DMS primary key.
      * @type {Array<string>}
      * @memberof SourceKinesis
      */
     dms_primary_key?: Array<string>;
+    /**
+     * For non-DMS streams, Rockset can tail from the earliest end or latest end of kinesis source.
+     * @type {string}
+     * @memberof SourceKinesis
+     */
+    offset_reset_policy?: SourceKinesis.OffsetResetPolicyEnum;
+}
+
+/**
+ * @export
+ * @namespace SourceKinesis
+ */
+export namespace SourceKinesis {
+    /**
+     * @export
+     * @enum {string}
+     */
+    export enum OffsetResetPolicyEnum {
+        LATEST = <any> 'LATEST',
+        EARLIEST = <any> 'EARLIEST'
+    }
 }
 
 /**
@@ -6672,19 +4231,19 @@ export interface SourceKinesis {
  */
 export interface SourceMongoDb {
     /**
-     * MongoDB database name containing this collection
+     * MongoDB database name containing this collection.
      * @type {string}
      * @memberof SourceMongoDb
      */
     database_name: string;
     /**
-     * MongoDB collection name
+     * MongoDB collection name.
      * @type {string}
      * @memberof SourceMongoDb
      */
     collection_name: string;
     /**
-     * MongoDB source status
+     * MongoDB source status.
      * @type {StatusMongoDb}
      * @memberof SourceMongoDb
      */
@@ -6694,53 +4253,9 @@ export interface SourceMongoDb {
 /**
  * 
  * @export
- * @interface SourceRedshift
- */
-export interface SourceRedshift {
-    /**
-     * name of the database in Redshift Cluster
-     * @type {string}
-     * @memberof SourceRedshift
-     */
-    database: string;
-    /**
-     * schema which contains the Redshift table
-     * @type {string}
-     * @memberof SourceRedshift
-     */
-    schema: string;
-    /**
-     * name of Redshift table containing data
-     * @type {string}
-     * @memberof SourceRedshift
-     */
-    table_name: string;
-    /**
-     * field in Redshift source table to monitor for updates
-     * @type {string}
-     * @memberof SourceRedshift
-     */
-    incremental_field?: string;
-}
-
-/**
- * 
- * @export
  * @interface SourceS3
  */
 export interface SourceS3 {
-    /**
-     * AWS credential with ListObjects and GetObject access
-     * @type {string}
-     * @memberof SourceS3
-     */
-    access_key?: string;
-    /**
-     * AWS credential with ListObjects and GetObject access
-     * @type {string}
-     * @memberof SourceS3
-     */
-    secret_access?: string;
     /**
      * Prefix that selects keys to ingest.
      * @type {string}
@@ -6748,41 +4263,29 @@ export interface SourceS3 {
      */
     prefix?: string;
     /**
-     * Pattern that selects keys to ingest.
+     * Glob-style pattern that selects keys to ingest. Only either prefix or pattern can be specified.
      * @type {string}
      * @memberof SourceS3
      */
     pattern?: string;
     /**
-     * AWS region containing source bucket
+     * AWS region containing source bucket.
      * @type {string}
      * @memberof SourceS3
      */
     region?: string;
     /**
-     * address of S3 bucket containing data
+     * Address of S3 bucket containing data.
      * @type {string}
      * @memberof SourceS3
      */
     bucket: string;
     /**
-     * list of prefixes to paths from which data should be ingested
+     * List of prefixes to paths from which data should be ingested.
      * @type {Array<string>}
      * @memberof SourceS3
      */
     prefixes: Array<string>;
-    /**
-     * do not use
-     * @type {string}
-     * @memberof SourceS3
-     */
-    format?: SourceS3.FormatEnum;
-    /**
-     * custom transformation on data field
-     * @type {Array<FieldMask>}
-     * @memberof SourceS3
-     */
-    mappings?: Array<FieldMask>;
     /**
      * 
      * @type {number}
@@ -6801,20 +4304,50 @@ export interface SourceS3 {
      * @memberof SourceS3
      */
     object_bytes_total?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof SourceS3
+     */
+    object_bytes_downloaded?: number;
 }
 
 /**
+ * 
  * @export
- * @namespace SourceS3
+ * @interface SourceSnowflake
  */
-export namespace SourceS3 {
+export interface SourceSnowflake {
     /**
-     * @export
-     * @enum {string}
+     * Name of the snowflake database.
+     * @type {string}
+     * @memberof SourceSnowflake
      */
-    export enum FormatEnum {
-        JSON = <any> 'JSON'
-    }
+    database: string;
+    /**
+     * Name of the snowflake database schema.
+     * @type {string}
+     * @memberof SourceSnowflake
+     */
+    schema: string;
+    /**
+     * Name of the snowflake table.
+     * @type {string}
+     * @memberof SourceSnowflake
+     */
+    table_name: string;
+    /**
+     * Name of the data warehouse to be used.
+     * @type {string}
+     * @memberof SourceSnowflake
+     */
+    warehouse?: string;
+    /**
+     * Snowflake source status.
+     * @type {StatusSnowflake}
+     * @memberof SourceSnowflake
+     */
+    status?: StatusSnowflake;
 }
 
 /**
@@ -6824,7 +4357,7 @@ export namespace SourceS3 {
  */
 export interface SqlExpression {
     /**
-     * The name of a sql function
+     * The name of a sql function.
      * @type {string}
      * @memberof SqlExpression
      */
@@ -6838,29 +4371,29 @@ export interface SqlExpression {
  */
 export interface Stats {
     /**
-     * Time taken for query to run in milliseconds.
+     * Total execution time (including time queued) of the query, in milliseconds.
      * @type {number}
      * @memberof Stats
      */
     elapsed_time_ms?: number;
     /**
-     * Throttled time for query to run in milliseconds.
+     * Time query spent queued, in milliseconds.
      * @type {number}
      * @memberof Stats
      */
     throttled_time_ms?: number;
     /**
-     * Number of docs returned by this query.
+     * Number of documents returned by the query. Only populated if `status` is `COMPLETE`.
      * @type {number}
      * @memberof Stats
      */
-    doc_count?: number;
+    result_set_document_count?: number;
     /**
-     * Number of bytes in the query result set.
+     * Number of bytes in the query result set. Only populated if `status` is `COMPLETE`. Not populated for INSERT INTO queries.
      * @type {number}
      * @memberof Stats
      */
-    size_bytes?: number;
+    result_set_bytes_size?: number;
 }
 
 /**
@@ -6870,35 +4403,41 @@ export interface Stats {
  */
 export interface Status {
     /**
-     * Status of the Source's ingestion, one of: INITIALIZING, WATCHING, PROCESSING, COMPLETED, ERROR
+     * Status of the Source's ingestion.
      * @type {string}
      * @memberof Status
      */
     state?: Status.StateEnum;
     /**
-     * state message
+     * State message.
      * @type {string}
      * @memberof Status
      */
     message?: string;
     /**
-     * ISO-8601 date when source was last processed
+     * ISO-8601 date when source was last processed.
      * @type {string}
      * @memberof Status
      */
     last_processed_at?: string;
     /**
-     * last source item processed by ingester
+     * Last source item processed by ingester.
      * @type {string}
      * @memberof Status
      */
     last_processed_item?: string;
     /**
-     * Total items processed of source
+     * Total items processed of source.
      * @type {number}
      * @memberof Status
      */
     total_processed_items?: number;
+    /**
+     * Size in bytes detected for the source at collection initialization. This size can be 0 or null for event stream sources.
+     * @type {number}
+     * @memberof Status
+     */
+    detected_size_bytes?: number;
 }
 
 /**
@@ -6922,41 +4461,161 @@ export namespace Status {
 /**
  * 
  * @export
+ * @interface StatusAzureEventHubs
+ */
+export interface StatusAzureEventHubs {
+    /**
+     * State of the source.
+     * @type {string}
+     * @memberof StatusAzureEventHubs
+     */
+    state?: StatusAzureEventHubs.StateEnum;
+    /**
+     * Time at which the last document was consumed.
+     * @type {string}
+     * @memberof StatusAzureEventHubs
+     */
+    last_consumed_time?: string;
+    /**
+     * Number of documents consumed.
+     * @type {number}
+     * @memberof StatusAzureEventHubs
+     */
+    num_documents_processed?: number;
+    /**
+     * Status info per partition.
+     * @type {Array<StatusAzureEventHubsPartition>}
+     * @memberof StatusAzureEventHubs
+     */
+    partitions?: Array<StatusAzureEventHubsPartition>;
+}
+
+/**
+ * @export
+ * @namespace StatusAzureEventHubs
+ */
+export namespace StatusAzureEventHubs {
+    /**
+     * @export
+     * @enum {string}
+     */
+    export enum StateEnum {
+        NODOCSYET = <any> 'NO_DOCS_YET',
+        ACTIVE = <any> 'ACTIVE',
+        DORMANT = <any> 'DORMANT'
+    }
+}
+
+/**
+ * 
+ * @export
+ * @interface StatusAzureEventHubsPartition
+ */
+export interface StatusAzureEventHubsPartition {
+    /**
+     * The number of this partition.
+     * @type {number}
+     * @memberof StatusAzureEventHubsPartition
+     */
+    partition_number?: number;
+    /**
+     * Latest offset of partition.
+     * @type {number}
+     * @memberof StatusAzureEventHubsPartition
+     */
+    partition_offset?: number;
+    /**
+     * Per partition lag for offset.
+     * @type {number}
+     * @memberof StatusAzureEventHubsPartition
+     */
+    offset_lag?: number;
+}
+
+/**
+ * 
+ * @export
+ * @interface StatusAzureServiceBus
+ */
+export interface StatusAzureServiceBus {
+    /**
+     * Service Bus first message processed time in ISO-8601 format.
+     * @type {string}
+     * @memberof StatusAzureServiceBus
+     */
+    first_processed_at?: string;
+    /**
+     * Number of records processed.
+     * @type {number}
+     * @memberof StatusAzureServiceBus
+     */
+    records_processed?: number;
+    /**
+     * Sessions processed.
+     * @type {{ [key: string]: StatusAzureServiceBusSession; }}
+     * @memberof StatusAzureServiceBus
+     */
+    sessions?: { [key: string]: StatusAzureServiceBusSession; };
+}
+
+/**
+ * 
+ * @export
+ * @interface StatusAzureServiceBusSession
+ */
+export interface StatusAzureServiceBusSession {
+    /**
+     * The last processed sequence number within this session.
+     * @type {number}
+     * @memberof StatusAzureServiceBusSession
+     */
+    sequence_number?: number;
+    /**
+     * Most recent ISO-8601 date when a message from this session was processed.
+     * @type {string}
+     * @memberof StatusAzureServiceBusSession
+     */
+    last_processed?: string;
+}
+
+/**
+ * 
+ * @export
  * @interface StatusDynamoDb
  */
 export interface StatusDynamoDb {
     /**
-     * DynamoDB scan start time
+     * DynamoDB scan start time.
      * @type {string}
      * @memberof StatusDynamoDb
      */
     scan_start_time?: string;
     /**
-     * DynamoDb scan end time
+     * DynamoDb scan end time.
      * @type {string}
      * @memberof StatusDynamoDb
      */
     scan_end_time?: string;
     /**
-     * Number of records inserted using scan
+     * Number of records inserted using scan.
      * @type {number}
      * @memberof StatusDynamoDb
      */
     scan_records_processed?: number;
     /**
-     * Number of records in DynamoDB table at time of scan
+     * Number of records in DynamoDB table at time of scan.
      * @type {number}
      * @memberof StatusDynamoDb
      */
     scan_total_records?: number;
     /**
-     * state of current ingest for this table
+     * State of current ingest for this table.
      * @type {string}
      * @memberof StatusDynamoDb
      */
     state?: StatusDynamoDb.StateEnum;
     /**
-     * ISO-8601 date when source was last processed
+     * ISO-8601 date when source was last processed.
      * @type {string}
      * @memberof StatusDynamoDb
      */
@@ -6992,13 +4651,13 @@ export interface StatusDynamoDbV2 {
      */
     initial_dump_completion_percentage?: number;
     /**
-     * state of current ingest for this table
+     * State of current ingest for this table.
      * @type {string}
      * @memberof StatusDynamoDbV2
      */
     state?: StatusDynamoDbV2.StateEnum;
     /**
-     * ISO-8601 date when source was last processed
+     * ISO-8601 date when source was last processed.
      * @type {string}
      * @memberof StatusDynamoDbV2
      */
@@ -7030,25 +4689,25 @@ export namespace StatusDynamoDbV2 {
  */
 export interface StatusKafka {
     /**
-     * State of the Kafka source
+     * State of the Kafka source.
      * @type {string}
      * @memberof StatusKafka
      */
     state?: StatusKafka.StateEnum;
     /**
-     * Time at which the last document was consumed from Kafka
+     * Time at which the last document was consumed from Kafka.
      * @type {string}
      * @memberof StatusKafka
      */
     last_consumed_time?: string;
     /**
-     * Number of documents consumed by this Kafka topic
+     * Number of documents consumed by this Kafka topic.
      * @type {number}
      * @memberof StatusKafka
      */
     num_documents_processed?: number;
     /**
-     * Status info per partition
+     * Status info per partition.
      * @type {Array<StatusKafkaPartition>}
      * @memberof StatusKafka
      */
@@ -7078,17 +4737,23 @@ export namespace StatusKafka {
  */
 export interface StatusKafkaPartition {
     /**
-     * The number of this partition
+     * The number of this partition.
      * @type {number}
      * @memberof StatusKafkaPartition
      */
     partition_number?: number;
     /**
-     * Latest offset of partition
+     * Latest offset of partition.
      * @type {number}
      * @memberof StatusKafkaPartition
      */
     partition_offset?: number;
+    /**
+     * Per partition lag for offset.
+     * @type {number}
+     * @memberof StatusKafkaPartition
+     */
+    offset_lag?: number;
 }
 
 /**
@@ -7098,67 +4763,67 @@ export interface StatusKafkaPartition {
  */
 export interface StatusMongoDb {
     /**
-     * MongoDB scan start time
+     * MongoDB scan start time.
      * @type {string}
      * @memberof StatusMongoDb
      */
     scan_start_time?: string;
     /**
-     * MongoDB scan end time
+     * MongoDB scan end time.
      * @type {string}
      * @memberof StatusMongoDb
      */
     scan_end_time?: string;
     /**
-     * Number of records inserted using scan
+     * Number of records inserted using scan.
      * @type {number}
      * @memberof StatusMongoDb
      */
     scan_records_processed?: number;
     /**
-     * Number of records in MongoDB table at time of scan
+     * Number of records in MongoDB table at time of scan.
      * @type {number}
      * @memberof StatusMongoDb
      */
     scan_total_records?: number;
     /**
-     * state of current ingest for this table
+     * State of current ingest for this table.
      * @type {string}
      * @memberof StatusMongoDb
      */
     state?: StatusMongoDb.StateEnum;
     /**
-     * ISO-8601 date when new insert from source was last processed
+     * ISO-8601 date when new insert from source was last processed.
      * @type {string}
      * @memberof StatusMongoDb
      */
     stream_last_insert_processed_at?: string;
     /**
-     * ISO-8601 date when update from source was last processed
+     * ISO-8601 date when update from source was last processed.
      * @type {string}
      * @memberof StatusMongoDb
      */
     stream_last_update_processed_at?: string;
     /**
-     * ISO-8601 date when delete from source was last processed
+     * ISO-8601 date when delete from source was last processed.
      * @type {string}
      * @memberof StatusMongoDb
      */
     stream_last_delete_processed_at?: string;
     /**
-     * Number of new records inserted using stream
+     * Number of new records inserted using stream.
      * @type {number}
      * @memberof StatusMongoDb
      */
     stream_records_inserted?: number;
     /**
-     * Number of new records updated using stream
+     * Number of new records updated using stream.
      * @type {number}
      * @memberof StatusMongoDb
      */
     stream_records_updated?: number;
     /**
-     * Number of new records deleted using stream
+     * Number of new records deleted using stream.
      * @type {number}
      * @memberof StatusMongoDb
      */
@@ -7184,154 +4849,46 @@ export namespace StatusMongoDb {
 /**
  * 
  * @export
- * @interface StatusResponse
+ * @interface StatusSnowflake
  */
-export interface StatusResponse {
+export interface StatusSnowflake {
     /**
-     * 
+     * State of current ingest for this table.
      * @type {string}
-     * @memberof StatusResponse
+     * @memberof StatusSnowflake
      */
-    message?: string;
-}
-
-/**
- * 
- * @export
- * @interface TelemetryRequest
- */
-export interface TelemetryRequest {
-    /**
-     * event details
-     * @type {{ [key: string]: any; }}
-     * @memberof TelemetryRequest
-     */
-    event?: { [key: string]: any; };
-}
-
-/**
- * 
- * @export
- * @interface TimeSeriesMetrics
- */
-export interface TimeSeriesMetrics {
-    /**
-     * 
-     * @type {string}
-     * @memberof TimeSeriesMetrics
-     */
-    type?: TimeSeriesMetrics.TypeEnum;
-    /**
-     * 
-     * @type {{ [key: string]: VirtualInstanceMetric; }}
-     * @memberof TimeSeriesMetrics
-     */
-    virtual_instance_metrics?: { [key: string]: VirtualInstanceMetric; };
-    /**
-     * 
-     * @type {{ [key: string]: VirtualInstanceStorageMetric; }}
-     * @memberof TimeSeriesMetrics
-     */
-    virtual_instance_storage_metrics?: { [key: string]: VirtualInstanceStorageMetric; };
-    /**
-     * 
-     * @type {{ [key: string]: VirtualInstanceQueryMetric; }}
-     * @memberof TimeSeriesMetrics
-     */
-    virtual_instance_query_metrics?: { [key: string]: VirtualInstanceQueryMetric; };
-    /**
-     * 
-     * @type {{ [key: string]: Array<QueryLambdaMetric>; }}
-     * @memberof TimeSeriesMetrics
-     */
-    query_lambda_metrics?: { [key: string]: Array<QueryLambdaMetric>; };
-    /**
-     * 
-     * @type {{ [key: string]: Array<CollectionMetric>; }}
-     * @memberof TimeSeriesMetrics
-     */
-    collection_metrics?: { [key: string]: Array<CollectionMetric>; };
-    /**
-     * 
-     * @type {{ [key: string]: SlowQueryCount; }}
-     * @memberof TimeSeriesMetrics
-     */
-    slow_query_counts?: { [key: string]: SlowQueryCount; };
-    /**
-     * 
-     * @type {Array<SlowQuery>}
-     * @memberof TimeSeriesMetrics
-     */
-    slow_queries?: Array<SlowQuery>;
-    /**
-     * 
-     * @type {number}
-     * @memberof TimeSeriesMetrics
-     */
-    query_count?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof TimeSeriesMetrics
-     */
-    percentile_query_latency?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof TimeSeriesMetrics
-     */
-    collection_bulk_ingest_cpu?: number;
+    state?: StatusSnowflake.StateEnum;
 }
 
 /**
  * @export
- * @namespace TimeSeriesMetrics
+ * @namespace StatusSnowflake
  */
-export namespace TimeSeriesMetrics {
+export namespace StatusSnowflake {
     /**
      * @export
      * @enum {string}
      */
-    export enum TypeEnum {
-        COLLECTION = <any> 'COLLECTION',
-        QUERYLAMBDA = <any> 'QUERY_LAMBDA',
-        VIRTUALINSTANCE = <any> 'VIRTUAL_INSTANCE',
-        VIRTUALINSTANCEQUERY = <any> 'VIRTUAL_INSTANCE_QUERY',
-        VIRTUALINSTANCESTORAGE = <any> 'VIRTUAL_INSTANCE_STORAGE',
-        SLOWQUERYCOUNT = <any> 'SLOW_QUERY_COUNT',
-        SLOWQUERIES = <any> 'SLOW_QUERIES',
-        PERCENTILEQUERYLATENCY = <any> 'PERCENTILE_QUERY_LATENCY',
-        QUERYCOUNT = <any> 'QUERY_COUNT',
-        COLLECTIONBULKINGESTCPU = <any> 'COLLECTION_BULK_INGEST_CPU'
+    export enum StateEnum {
+        INITIALIZING = <any> 'INITIALIZING',
+        EXPORTINGTOS3 = <any> 'EXPORTING_TO_S3',
+        DOWNLOADINGFROMS3 = <any> 'DOWNLOADING_FROM_S3',
+        COMPLETED = <any> 'COMPLETED'
     }
 }
 
 /**
  * 
  * @export
- * @interface TimeSeriesMetricsResponse
+ * @interface SuspendVirtualInstanceResponse
  */
-export interface TimeSeriesMetricsResponse {
+export interface SuspendVirtualInstanceResponse {
     /**
-     * 
-     * @type {TimeSeriesMetrics}
-     * @memberof TimeSeriesMetricsResponse
+     * Virtual instance that was suspended.
+     * @type {VirtualInstance}
+     * @memberof SuspendVirtualInstanceResponse
      */
-    data?: TimeSeriesMetrics;
-}
-
-/**
- * 
- * @export
- * @interface TransferOwnershipRequest
- */
-export interface TransferOwnershipRequest {
-    /**
-     * email of new owner
-     * @type {string}
-     * @memberof TransferOwnershipRequest
-     */
-    new_owner?: string;
+    data?: VirtualInstance;
 }
 
 /**
@@ -7355,13 +4912,13 @@ export interface UnsubscribePreference {
  */
 export interface UpdateAliasRequest {
     /**
-     * optional description
+     * Optional description.
      * @type {string}
      * @memberof UpdateAliasRequest
      */
     description?: string;
     /**
-     * list of fully qualified collection names referenced by alias
+     * List of fully qualified collection names referenced by alias.
      * @type {Array<string>}
      * @memberof UpdateAliasRequest
      */
@@ -7414,49 +4971,27 @@ export interface UpdateApiKeyResponse {
 /**
  * 
  * @export
- * @interface UpdateOrgMfaSettingsRequest
- */
-export interface UpdateOrgMfaSettingsRequest {
-    /**
-     * org is MFA restricted
-     * @type {boolean}
-     * @memberof UpdateOrgMfaSettingsRequest
-     */
-    mfa_restricted?: boolean;
-}
-
-/**
- * 
- * @export
- * @interface UpdateOrgPaymentMethodRequest
- */
-export interface UpdateOrgPaymentMethodRequest {
-    /**
-     * Stripe source
-     * @type {string}
-     * @memberof UpdateOrgPaymentMethodRequest
-     */
-    source?: string;
-}
-
-/**
- * 
- * @export
  * @interface UpdateQueryLambdaRequest
  */
 export interface UpdateQueryLambdaRequest {
     /**
-     * optional description
+     * Optional description.
      * @type {string}
      * @memberof UpdateQueryLambdaRequest
      */
     description?: string;
     /**
-     * Query Lambda SQL query
+     * Query Lambda SQL query.
      * @type {QueryLambdaSql}
      * @memberof UpdateQueryLambdaRequest
      */
     sql?: QueryLambdaSql;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof UpdateQueryLambdaRequest
+     */
+    is_public?: boolean;
 }
 
 /**
@@ -7482,49 +5017,11 @@ export interface UpdateRoleRequest {
 /**
  * 
  * @export
- * @interface UpdateSsoRequest
- */
-export interface UpdateSsoRequest {
-    /**
-     * x09 SAML certificate
-     * @type {string}
-     * @memberof UpdateSsoRequest
-     */
-    cert?: string;
-    /**
-     * SSO provided endpoint to trigger login
-     * @type {string}
-     * @memberof UpdateSsoRequest
-     */
-    sign_in_endpoint?: string;
-    /**
-     * auto provision accounts for users in domain
-     * @type {boolean}
-     * @memberof UpdateSsoRequest
-     */
-    auto_provision?: boolean;
-    /**
-     * auto provision accounts with this role
-     * @type {string}
-     * @memberof UpdateSsoRequest
-     */
-    auto_provision_role?: string;
-    /**
-     * force sso as only auth mechanism for org
-     * @type {boolean}
-     * @memberof UpdateSsoRequest
-     */
-    sso_only?: boolean;
-}
-
-/**
- * 
- * @export
  * @interface UpdateUnsubscribePreferencesRequest
  */
 export interface UpdateUnsubscribePreferencesRequest {
     /**
-     * List of notification preferences
+     * List of notification preferences.
      * @type {Array<UnsubscribePreference>}
      * @memberof UpdateUnsubscribePreferencesRequest
      */
@@ -7538,7 +5035,7 @@ export interface UpdateUnsubscribePreferencesRequest {
  */
 export interface UpdateUnsubscribePreferencesResponse {
     /**
-     * List of notification preferences
+     * List of notification preferences.
      * @type {Array<UnsubscribePreference>}
      * @memberof UpdateUnsubscribePreferencesResponse
      */
@@ -7548,121 +5045,23 @@ export interface UpdateUnsubscribePreferencesResponse {
 /**
  * 
  * @export
- * @interface UpdateUserNuxRequest
- */
-export interface UpdateUserNuxRequest {
-    /**
-     * data integration for this user's nux
-     * @type {string}
-     * @memberof UpdateUserNuxRequest
-     */
-    data_integration?: UpdateUserNuxRequest.DataIntegrationEnum;
-    /**
-     * way in which user wants to export query in nux
-     * @type {string}
-     * @memberof UpdateUserNuxRequest
-     */
-    query_integration_type?: UpdateUserNuxRequest.QueryIntegrationTypeEnum;
-    /**
-     * specific query integration for this user's nux
-     * @type {string}
-     * @memberof UpdateUserNuxRequest
-     */
-    query_integration?: UpdateUserNuxRequest.QueryIntegrationEnum;
-    /**
-     * boolean for if user has dismissed nux
-     * @type {boolean}
-     * @memberof UpdateUserNuxRequest
-     */
-    dismissed_nux?: boolean;
-}
-
-/**
- * @export
- * @namespace UpdateUserNuxRequest
- */
-export namespace UpdateUserNuxRequest {
-    /**
-     * @export
-     * @enum {string}
-     */
-    export enum DataIntegrationEnum {
-        S3 = <any> 'S3',
-        KINESIS = <any> 'KINESIS',
-        DYNAMODB = <any> 'DYNAMODB',
-        GCS = <any> 'GCS',
-        REDSHIFT = <any> 'REDSHIFT',
-        KAFKA = <any> 'KAFKA',
-        FILE = <any> 'FILE',
-        WRITE = <any> 'WRITE',
-        PUBLIC = <any> 'PUBLIC',
-        MONGODB = <any> 'MONGODB',
-        RDSMYSQL = <any> 'RDSMYSQL',
-        RDSORACLE = <any> 'RDSORACLE',
-        RDSPOSTGRES = <any> 'RDSPOSTGRES',
-        UNKNOWN = <any> 'UNKNOWN'
-    }
-    /**
-     * @export
-     * @enum {string}
-     */
-    export enum QueryIntegrationTypeEnum {
-        VIZ = <any> 'VIZ',
-        CODE = <any> 'CODE',
-        UNKNOWN = <any> 'UNKNOWN'
-    }
-    /**
-     * @export
-     * @enum {string}
-     */
-    export enum QueryIntegrationEnum {
-        GRAFANA = <any> 'GRAFANA',
-        REDASH = <any> 'REDASH',
-        SUPERSET = <any> 'SUPERSET',
-        TABLEAU = <any> 'TABLEAU',
-        GOLANG = <any> 'GOLANG',
-        JAVA = <any> 'JAVA',
-        NODEJS = <any> 'NODEJS',
-        PYTHON = <any> 'PYTHON',
-        RLANG = <any> 'RLANG',
-        REST = <any> 'REST',
-        RETOOL = <any> 'RETOOL',
-        UNKNOWN = <any> 'UNKNOWN'
-    }
-}
-
-/**
- * 
- * @export
  * @interface UpdateUserRequest
  */
 export interface UpdateUserRequest {
     /**
-     * user first name
+     * User first name.
      * @type {string}
      * @memberof UpdateUserRequest
      */
     first_name?: string;
     /**
-     * user last name
+     * User last name.
      * @type {string}
      * @memberof UpdateUserRequest
      */
     last_name?: string;
     /**
-     * user phone number
-     * @type {string}
-     * @memberof UpdateUserRequest
-     */
-    phone_number?: string;
-    /**
-     * number of times to prompt user for demo
-     * @type {number}
-     * @memberof UpdateUserRequest
-     */
-    demo_remaining_prompts?: number;
-    /**
-     * New list of roles for a given user
+     * New list of roles for a given user.
      * @type {Array<string>}
      * @memberof UpdateUserRequest
      */
@@ -7676,13 +5075,13 @@ export interface UpdateUserRequest {
  */
 export interface UpdateViewRequest {
     /**
-     * optional description
+     * Optional description.
      * @type {string}
      * @memberof UpdateViewRequest
      */
     description?: string;
     /**
-     * SQL for this view
+     * SQL for this view.
      * @type {string}
      * @memberof UpdateViewRequest
      */
@@ -7696,7 +5095,7 @@ export interface UpdateViewRequest {
  */
 export interface UpdateViewResponse {
     /**
-     * view that was updated
+     * View that was updated.
      * @type {View}
      * @memberof UpdateViewResponse
      */
@@ -7710,23 +5109,41 @@ export interface UpdateViewResponse {
  */
 export interface UpdateVirtualInstanceRequest {
     /**
-     * requested virtual instance size
+     * Requested virtual instance size.
      * @type {string}
      * @memberof UpdateVirtualInstanceRequest
      */
     new_size?: UpdateVirtualInstanceRequest.NewSizeEnum;
     /**
-     * requested virtual instance type
-     * @type {string}
-     * @memberof UpdateVirtualInstanceRequest
-     */
-    new_type?: UpdateVirtualInstanceRequest.NewTypeEnum;
-    /**
-     * whether monitoring should be enabled for this virtual instance
+     * 
      * @type {boolean}
      * @memberof UpdateVirtualInstanceRequest
      */
     monitoring_enabled?: boolean;
+    /**
+     * New virtual instance name.
+     * @type {string}
+     * @memberof UpdateVirtualInstanceRequest
+     */
+    name?: string;
+    /**
+     * New virtual instance description.
+     * @type {string}
+     * @memberof UpdateVirtualInstanceRequest
+     */
+    description?: string;
+    /**
+     * Whether auto-suspend should be enabled for this Virtual Instance.
+     * @type {boolean}
+     * @memberof UpdateVirtualInstanceRequest
+     */
+    auto_suspend_enabled?: boolean;
+    /**
+     * Number of seconds without queries after which the VI is suspended
+     * @type {number}
+     * @memberof UpdateVirtualInstanceRequest
+     */
+    auto_suspend_seconds?: number;
 }
 
 /**
@@ -7740,23 +5157,9 @@ export namespace UpdateVirtualInstanceRequest {
      */
     export enum NewSizeEnum {
         FREE = <any> 'FREE',
+        NANO = <any> 'NANO',
         SHARED = <any> 'SHARED',
-        SMALL = <any> 'SMALL',
-        MEDIUM = <any> 'MEDIUM',
-        LARGE = <any> 'LARGE',
-        XLARGE = <any> 'XLARGE',
-        XLARGE2 = <any> 'XLARGE2',
-        XLARGE4 = <any> 'XLARGE4',
-        XLARGE8 = <any> 'XLARGE8',
-        XLARGE16 = <any> 'XLARGE16'
-    }
-    /**
-     * @export
-     * @enum {string}
-     */
-    export enum NewTypeEnum {
-        FREE = <any> 'FREE',
-        SHARED = <any> 'SHARED',
+        MILLI = <any> 'MILLI',
         SMALL = <any> 'SMALL',
         MEDIUM = <any> 'MEDIUM',
         LARGE = <any> 'LARGE',
@@ -7775,7 +5178,7 @@ export namespace UpdateVirtualInstanceRequest {
  */
 export interface UpdateVirtualInstanceResponse {
     /**
-     * virtual instance that was switched
+     * Virtual instance that was switched.
      * @type {VirtualInstance}
      * @memberof UpdateVirtualInstanceResponse
      */
@@ -7785,391 +5188,45 @@ export interface UpdateVirtualInstanceResponse {
 /**
  * 
  * @export
- * @interface UploadFileResponse
- */
-export interface UploadFileResponse {
-    /**
-     * information about the file uploaded
-     * @type {FileUploadStatus}
-     * @memberof UploadFileResponse
-     */
-    data?: FileUploadStatus;
-}
-
-/**
- * 
- * @export
- * @interface Usage
- */
-export interface Usage {
-    /**
-     * 
-     * @type {number}
-     * @memberof Usage
-     */
-    byte_minutes?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof Usage
-     */
-    price?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof Usage
-     */
-    gb_hours?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof Usage
-     */
-    gb_months: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof Usage
-     */
-    total_cost: number;
-}
-
-/**
- * 
- * @export
  * @interface User
  */
 export interface User {
     /**
-     * ISO-8601 date
+     * ISO-8601 date.
      * @type {string}
      * @memberof User
      */
     created_at?: string;
     /**
-     * user email
+     * User email.
      * @type {string}
      * @memberof User
      */
     email: string;
     /**
-     * user first name
+     * User first name.
      * @type {string}
      * @memberof User
      */
     first_name?: string;
     /**
-     * user last name
+     * User last name.
      * @type {string}
      * @memberof User
      */
     last_name?: string;
     /**
-     * user phone number
-     * @type {string}
-     * @memberof User
-     */
-    phone_number?: string;
-    /**
-     * List of roles for a given user
+     * List of roles for a given user.
      * @type {Array<string>}
      * @memberof User
      */
     roles?: Array<string>;
     /**
-     * state of user - NEW / ACTIVE
+     * State of user - NEW / ACTIVE.
      * @type {string}
      * @memberof User
      */
     state?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof User
-     */
-    org?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof User
-     */
-    invite_state?: User.InviteStateEnum;
-    /**
-     * 
-     * @type {Array<Organization>}
-     * @memberof User
-     */
-    orgs?: Array<Organization>;
-    /**
-     * 
-     * @type {Array<OrgMembership>}
-     * @memberof User
-     */
-    org_memberships?: Array<OrgMembership>;
-}
-
-/**
- * @export
- * @namespace User
- */
-export namespace User {
-    /**
-     * @export
-     * @enum {string}
-     */
-    export enum InviteStateEnum {
-        PENDING = <any> 'PENDING',
-        ACCEPTED = <any> 'ACCEPTED',
-        EXPIRED = <any> 'EXPIRED',
-        CANCELLED = <any> 'CANCELLED'
-    }
-}
-
-/**
- * 
- * @export
- * @interface UserNux
- */
-export interface UserNux {
-    /**
-     * user email
-     * @type {string}
-     * @memberof UserNux
-     */
-    email: string;
-    /**
-     * data integration for this user's nux
-     * @type {string}
-     * @memberof UserNux
-     */
-    data_integration?: UserNux.DataIntegrationEnum;
-    /**
-     * way in which user wants to export query in nux
-     * @type {string}
-     * @memberof UserNux
-     */
-    query_integration_type?: UserNux.QueryIntegrationTypeEnum;
-    /**
-     * specific query integration for this user's nux
-     * @type {string}
-     * @memberof UserNux
-     */
-    query_integration?: UserNux.QueryIntegrationEnum;
-    /**
-     * boolean for if user has dismissed nux
-     * @type {boolean}
-     * @memberof UserNux
-     */
-    dismissed_nux?: boolean;
-}
-
-/**
- * @export
- * @namespace UserNux
- */
-export namespace UserNux {
-    /**
-     * @export
-     * @enum {string}
-     */
-    export enum DataIntegrationEnum {
-        S3 = <any> 'S3',
-        KINESIS = <any> 'KINESIS',
-        DYNAMODB = <any> 'DYNAMODB',
-        GCS = <any> 'GCS',
-        REDSHIFT = <any> 'REDSHIFT',
-        KAFKA = <any> 'KAFKA',
-        FILE = <any> 'FILE',
-        WRITE = <any> 'WRITE',
-        PUBLIC = <any> 'PUBLIC',
-        MONGODB = <any> 'MONGODB',
-        RDSMYSQL = <any> 'RDSMYSQL',
-        RDSORACLE = <any> 'RDSORACLE',
-        RDSPOSTGRES = <any> 'RDSPOSTGRES',
-        UNKNOWN = <any> 'UNKNOWN'
-    }
-    /**
-     * @export
-     * @enum {string}
-     */
-    export enum QueryIntegrationTypeEnum {
-        VIZ = <any> 'VIZ',
-        CODE = <any> 'CODE',
-        UNKNOWN = <any> 'UNKNOWN'
-    }
-    /**
-     * @export
-     * @enum {string}
-     */
-    export enum QueryIntegrationEnum {
-        GRAFANA = <any> 'GRAFANA',
-        REDASH = <any> 'REDASH',
-        SUPERSET = <any> 'SUPERSET',
-        TABLEAU = <any> 'TABLEAU',
-        GOLANG = <any> 'GOLANG',
-        JAVA = <any> 'JAVA',
-        NODEJS = <any> 'NODEJS',
-        PYTHON = <any> 'PYTHON',
-        RLANG = <any> 'RLANG',
-        REST = <any> 'REST',
-        RETOOL = <any> 'RETOOL',
-        UNKNOWN = <any> 'UNKNOWN'
-    }
-}
-
-/**
- * 
- * @export
- * @interface UserQuery
- */
-export interface UserQuery {
-    /**
-     * success/invalid status of query
-     * @type {string}
-     * @memberof UserQuery
-     */
-    label?: string;
-    /**
-     * query that user executed
-     * @type {string}
-     * @memberof UserQuery
-     */
-    query_sql?: string;
-    /**
-     * ISO 8601 time at which the query was executed
-     * @type {string}
-     * @memberof UserQuery
-     */
-    query_time?: string;
-}
-
-/**
- * 
- * @export
- * @interface UserQueryHistoryResponse
- */
-export interface UserQueryHistoryResponse {
-    /**
-     * query history of this user
-     * @type {Array<UserQuery>}
-     * @memberof UserQueryHistoryResponse
-     */
-    data?: Array<UserQuery>;
-}
-
-/**
- * 
- * @export
- * @interface UserState
- */
-export interface UserState {
-    /**
-     * state of user
-     * @type {string}
-     * @memberof UserState
-     */
-    data?: UserState.DataEnum;
-    /**
-     * number of prompts left for user
-     * @type {number}
-     * @memberof UserState
-     */
-    demo_remaining_prompts?: number;
-}
-
-/**
- * @export
- * @namespace UserState
- */
-export namespace UserState {
-    /**
-     * @export
-     * @enum {string}
-     */
-    export enum DataEnum {
-        NEW = <any> 'NEW',
-        ACTIVE = <any> 'ACTIVE'
-    }
-}
-
-/**
- * 
- * @export
- * @interface ValidateExpressionRequest
- */
-export interface ValidateExpressionRequest {
-    /**
-     * SQL expression to be validated
-     * @type {string}
-     * @memberof ValidateExpressionRequest
-     */
-    sql_expression?: string;
-}
-
-/**
- * 
- * @export
- * @interface ValidateExpressionResponse
- */
-export interface ValidateExpressionResponse {
-    /**
-     * input parameters of validated SQL expression
-     * @type {Array<string>}
-     * @memberof ValidateExpressionResponse
-     */
-    parameters?: Array<string>;
-}
-
-/**
- * 
- * @export
- * @interface ValidateFieldMappingQueryRequest
- */
-export interface ValidateFieldMappingQueryRequest {
-    /**
-     * Field mapping query to be validated
-     * @type {string}
-     * @memberof ValidateFieldMappingQueryRequest
-     */
-    sql?: string;
-    /**
-     * is field mapping for an insert only collection
-     * @type {boolean}
-     * @memberof ValidateFieldMappingQueryRequest
-     */
-    insert_only?: boolean;
-}
-
-/**
- * 
- * @export
- * @interface ValidateFieldMappingQueryResponse
- */
-export interface ValidateFieldMappingQueryResponse {
-    /**
-     * Whether the field mapping query is valid
-     * @type {boolean}
-     * @memberof ValidateFieldMappingQueryResponse
-     */
-    valid?: boolean;
-    /**
-     * The reason if field mapping query is invalid
-     * @type {string}
-     * @memberof ValidateFieldMappingQueryResponse
-     */
-    reason?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ValidateFieldMappingQueryResponse
-     */
-    is_rollup?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ValidateFieldMappingQueryResponse
-     */
-    has_id_mapping?: boolean;
 }
 
 /**
@@ -8179,31 +5236,13 @@ export interface ValidateFieldMappingQueryResponse {
  */
 export interface ValidateQueryResponse {
     /**
-     * list of aliases specifiedQueryRunner and referenced collections in query
-     * @type {Array<QueryResponseAlias>}
-     * @memberof ValidateQueryResponse
-     */
-    aliases?: Array<QueryResponseAlias>;
-    /**
-     * list of views specified in query
-     * @type {Array<string>}
-     * @memberof ValidateQueryResponse
-     */
-    views?: Array<string>;
-    /**
-     * list of collection specified in query
-     * @type {Array<string>}
-     * @memberof ValidateQueryResponse
-     */
-    name: Array<string>;
-    /**
-     * list of collection specified in query
+     * List of collections specified in query.
      * @type {Array<string>}
      * @memberof ValidateQueryResponse
      */
     collections: Array<string>;
     /**
-     * list of parameters specified in query
+     * List of parameters specified in query.
      * @type {Array<string>}
      * @memberof ValidateQueryResponse
      */
@@ -8223,61 +5262,61 @@ export interface View {
      */
     path?: string;
     /**
-     * name of the view
+     * Name of the view.
      * @type {string}
      * @memberof View
      */
     name?: string;
     /**
-     * view description
+     * View description.
      * @type {string}
      * @memberof View
      */
     description?: string;
     /**
-     * name of the workspace
+     * Name of the workspace.
      * @type {string}
      * @memberof View
      */
     workspace?: string;
     /**
-     * email of the creator
+     * Email of the creator.
      * @type {string}
      * @memberof View
      */
     creator_email?: string;
     /**
-     * email of the owner
+     * Email of the owner, note: deprecated and will always be null.
      * @type {string}
      * @memberof View
      */
     owner_email?: string;
     /**
-     * SQL query of the view
+     * SQL query of the view.
      * @type {string}
      * @memberof View
      */
     query_sql?: string;
     /**
-     * list of entities referenced by view. An entity can be a view, alias or collection
+     * List of entities referenced by view. An entity can be a view, alias or collection.
      * @type {Array<string>}
      * @memberof View
      */
     entities?: Array<string>;
     /**
-     * state of the view
+     * State of the view.
      * @type {string}
      * @memberof View
      */
     state?: View.StateEnum;
     /**
-     * ISO-8601 date
+     * ISO-8601 date.
      * @type {string}
      * @memberof View
      */
     created_at?: string;
     /**
-     * ISO-8601 date
+     * ISO-8601 date.
      * @type {string}
      * @memberof View
      */
@@ -8307,71 +5346,101 @@ export namespace View {
  */
 export interface VirtualInstance {
     /**
-     * virtual instance state
+     * Virtual instance name.
+     * @type {string}
+     * @memberof VirtualInstance
+     */
+    name: string;
+    /**
+     * Virtual instance description.
+     * @type {string}
+     * @memberof VirtualInstance
+     */
+    description?: string;
+    /**
+     * Creator of requested virtual instance.
+     * @type {string}
+     * @memberof VirtualInstance
+     */
+    created_by?: string;
+    /**
+     * ISO-8601 date of when virtual instance was created.
+     * @type {string}
+     * @memberof VirtualInstance
+     */
+    created_at?: string;
+    /**
+     * ISO-8601 date of when virtual instance was created.
+     * @type {string}
+     * @memberof VirtualInstance
+     */
+    resumed_at?: string;
+    /**
+     * Virtual instance state.
      * @type {string}
      * @memberof VirtualInstance
      */
     state?: VirtualInstance.StateEnum;
     /**
-     * virtual instance current type
-     * @type {string}
-     * @memberof VirtualInstance
-     */
-    current_type?: VirtualInstance.CurrentTypeEnum;
-    /**
-     * virtual instance desired type
-     * @type {string}
-     * @memberof VirtualInstance
-     */
-    desired_type?: VirtualInstance.DesiredTypeEnum;
-    /**
-     * virtual instance current size
+     * Virtual instance current size.
      * @type {string}
      * @memberof VirtualInstance
      */
     current_size?: VirtualInstance.CurrentSizeEnum;
     /**
-     * virtual instance desired size
+     * Virtual instance desired size.
      * @type {string}
      * @memberof VirtualInstance
      */
     desired_size?: VirtualInstance.DesiredSizeEnum;
     /**
-     * ISO-8601 date of when virtual instance size was last updated
-     * @type {string}
-     * @memberof VirtualInstance
-     */
-    last_updated?: string;
-    /**
-     * estimated duration in minutes of last virtual instance size update
-     * @type {number}
-     * @memberof VirtualInstance
-     */
-    estimated_switch_duration_minutes?: number;
-    /**
-     * whether monitoring should be enabled for this virtual instance
+     * 
      * @type {boolean}
      * @memberof VirtualInstance
      */
     monitoring_enabled?: boolean;
     /**
-     * virtual instance default pod count
+     * 
+     * @type {boolean}
+     * @memberof VirtualInstance
+     */
+    default_vi?: boolean;
+    /**
+     * 
      * @type {number}
      * @memberof VirtualInstance
      */
     default_pod_count?: number;
     /**
-     * virtual instance scaled pod count
+     * 
      * @type {number}
      * @memberof VirtualInstance
      */
     scaled_pod_count?: number;
     /**
-     * unique identifier for virtual instance
+     * Unique identifier for virtual instance.
      * @type {string}
      * @memberof VirtualInstance
      */
     id?: string;
+    /**
+     * Virtual Instance RRN.
+     * @type {string}
+     * @memberof VirtualInstance
+     */
+    rrn?: string;
+    /**
+     * Number of seconds without queries after which the VI is suspended
+     * @type {number}
+     * @memberof VirtualInstance
+     */
+    auto_suspend_seconds?: number;
+    /**
+     * Stats about this VirtualInstance
+     * @type {VirtualInstanceStats}
+     * @memberof VirtualInstance
+     */
+    stats?: VirtualInstanceStats;
 }
 
 /**
@@ -8384,42 +5453,14 @@ export namespace VirtualInstance {
      * @enum {string}
      */
     export enum StateEnum {
+        INITIALIZING = <any> 'INITIALIZING',
         PROVISIONINGRESOURCES = <any> 'PROVISIONING_RESOURCES',
         REBALANCINGCOLLECTIONS = <any> 'REBALANCING_COLLECTIONS',
         ACTIVE = <any> 'ACTIVE',
+        SUSPENDING = <any> 'SUSPENDING',
+        SUSPENDED = <any> 'SUSPENDED',
+        RESUMING = <any> 'RESUMING',
         DELETED = <any> 'DELETED'
-    }
-    /**
-     * @export
-     * @enum {string}
-     */
-    export enum CurrentTypeEnum {
-        FREE = <any> 'FREE',
-        SHARED = <any> 'SHARED',
-        SMALL = <any> 'SMALL',
-        MEDIUM = <any> 'MEDIUM',
-        LARGE = <any> 'LARGE',
-        XLARGE = <any> 'XLARGE',
-        XLARGE2 = <any> 'XLARGE2',
-        XLARGE4 = <any> 'XLARGE4',
-        XLARGE8 = <any> 'XLARGE8',
-        XLARGE16 = <any> 'XLARGE16'
-    }
-    /**
-     * @export
-     * @enum {string}
-     */
-    export enum DesiredTypeEnum {
-        FREE = <any> 'FREE',
-        SHARED = <any> 'SHARED',
-        SMALL = <any> 'SMALL',
-        MEDIUM = <any> 'MEDIUM',
-        LARGE = <any> 'LARGE',
-        XLARGE = <any> 'XLARGE',
-        XLARGE2 = <any> 'XLARGE2',
-        XLARGE4 = <any> 'XLARGE4',
-        XLARGE8 = <any> 'XLARGE8',
-        XLARGE16 = <any> 'XLARGE16'
     }
     /**
      * @export
@@ -8427,7 +5468,9 @@ export namespace VirtualInstance {
      */
     export enum CurrentSizeEnum {
         FREE = <any> 'FREE',
+        NANO = <any> 'NANO',
         SHARED = <any> 'SHARED',
+        MILLI = <any> 'MILLI',
         SMALL = <any> 'SMALL',
         MEDIUM = <any> 'MEDIUM',
         LARGE = <any> 'LARGE',
@@ -8443,7 +5486,9 @@ export namespace VirtualInstance {
      */
     export enum DesiredSizeEnum {
         FREE = <any> 'FREE',
+        NANO = <any> 'NANO',
         SHARED = <any> 'SHARED',
+        MILLI = <any> 'MILLI',
         SMALL = <any> 'SMALL',
         MEDIUM = <any> 'MEDIUM',
         LARGE = <any> 'LARGE',
@@ -8458,310 +5503,15 @@ export namespace VirtualInstance {
 /**
  * 
  * @export
- * @interface VirtualInstanceMetric
+ * @interface VirtualInstanceStats
  */
-export interface VirtualInstanceMetric {
+export interface VirtualInstanceStats {
     /**
-     * 
+     * Milliseconds since Unix epoch Jan 1, 1970.
      * @type {number}
-     * @memberof VirtualInstanceMetric
+     * @memberof VirtualInstanceStats
      */
-    leaf_cpu_load?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof VirtualInstanceMetric
-     */
-    leaf_cpu_utilization?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof VirtualInstanceMetric
-     */
-    leaf_cpu_allocated?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof VirtualInstanceMetric
-     */
-    leaf_memory_used?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof VirtualInstanceMetric
-     */
-    leaf_memory_allocated?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof VirtualInstanceMetric
-     */
-    aggregator_cpu_load?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof VirtualInstanceMetric
-     */
-    aggregator_cpu_utilization?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof VirtualInstanceMetric
-     */
-    aggregator_cpu_allocated?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof VirtualInstanceMetric
-     */
-    aggregator_memory_used?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof VirtualInstanceMetric
-     */
-    aggregator_memory_allocated?: number;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof VirtualInstanceMetric
-     */
-    switch_in_progress?: boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof VirtualInstanceMetric
-     */
-    time?: number;
-}
-
-/**
- * 
- * @export
- * @interface VirtualInstanceMetrics
- */
-export interface VirtualInstanceMetrics {
-    /**
-     * virtual instance current type
-     * @type {string}
-     * @memberof VirtualInstanceMetrics
-     */
-    current_type?: VirtualInstanceMetrics.CurrentTypeEnum;
-    /**
-     * virtual instance desired type
-     * @type {string}
-     * @memberof VirtualInstanceMetrics
-     */
-    desired_type?: VirtualInstanceMetrics.DesiredTypeEnum;
-    /**
-     * virtual instance state
-     * @type {string}
-     * @memberof VirtualInstanceMetrics
-     */
-    state?: VirtualInstanceMetrics.StateEnum;
-    /**
-     * virtual instance leaf cpu load
-     * @type {number}
-     * @memberof VirtualInstanceMetrics
-     */
-    leaf_cpu_load?: number;
-    /**
-     * virtual instance leaf cpu utilization
-     * @type {number}
-     * @memberof VirtualInstanceMetrics
-     */
-    leaf_cpu_utilization?: number;
-    /**
-     * virtual instance leaf cpu allocated
-     * @type {number}
-     * @memberof VirtualInstanceMetrics
-     */
-    leaf_cpu_allocated?: number;
-    /**
-     * virtual instance leaf memory used
-     * @type {number}
-     * @memberof VirtualInstanceMetrics
-     */
-    leaf_memory_used?: number;
-    /**
-     * virtual instance leaf memory allocated
-     * @type {number}
-     * @memberof VirtualInstanceMetrics
-     */
-    leaf_memory_allocated?: number;
-    /**
-     * virtual instance aggregator cpu load
-     * @type {number}
-     * @memberof VirtualInstanceMetrics
-     */
-    aggregator_cpu_load?: number;
-    /**
-     * virtual instance aggregator cpu utilization
-     * @type {number}
-     * @memberof VirtualInstanceMetrics
-     */
-    aggregator_cpu_utilization?: number;
-    /**
-     * virtual instance aggregator cpu allocated
-     * @type {number}
-     * @memberof VirtualInstanceMetrics
-     */
-    aggregator_cpu_allocated?: number;
-    /**
-     * virtual instance aggregator memory used
-     * @type {number}
-     * @memberof VirtualInstanceMetrics
-     */
-    aggregator_memory_used?: number;
-    /**
-     * virtual instance aggregator memory allocated
-     * @type {number}
-     * @memberof VirtualInstanceMetrics
-     */
-    aggregator_memory_allocated?: number;
-    /**
-     * virtual instance queries in flight
-     * @type {number}
-     * @memberof VirtualInstanceMetrics
-     */
-    queries_in_flight?: number;
-    /**
-     * metrics timestamp millis
-     * @type {number}
-     * @memberof VirtualInstanceMetrics
-     */
-    time_millis?: number;
-}
-
-/**
- * @export
- * @namespace VirtualInstanceMetrics
- */
-export namespace VirtualInstanceMetrics {
-    /**
-     * @export
-     * @enum {string}
-     */
-    export enum CurrentTypeEnum {
-        FREE = <any> 'FREE',
-        SHARED = <any> 'SHARED',
-        SMALL = <any> 'SMALL',
-        MEDIUM = <any> 'MEDIUM',
-        LARGE = <any> 'LARGE',
-        XLARGE = <any> 'XLARGE',
-        XLARGE2 = <any> 'XLARGE2',
-        XLARGE4 = <any> 'XLARGE4',
-        XLARGE8 = <any> 'XLARGE8',
-        XLARGE16 = <any> 'XLARGE16'
-    }
-    /**
-     * @export
-     * @enum {string}
-     */
-    export enum DesiredTypeEnum {
-        FREE = <any> 'FREE',
-        SHARED = <any> 'SHARED',
-        SMALL = <any> 'SMALL',
-        MEDIUM = <any> 'MEDIUM',
-        LARGE = <any> 'LARGE',
-        XLARGE = <any> 'XLARGE',
-        XLARGE2 = <any> 'XLARGE2',
-        XLARGE4 = <any> 'XLARGE4',
-        XLARGE8 = <any> 'XLARGE8',
-        XLARGE16 = <any> 'XLARGE16'
-    }
-    /**
-     * @export
-     * @enum {string}
-     */
-    export enum StateEnum {
-        PROVISIONINGRESOURCES = <any> 'PROVISIONING_RESOURCES',
-        REBALANCINGCOLLECTIONS = <any> 'REBALANCING_COLLECTIONS',
-        ACTIVE = <any> 'ACTIVE',
-        DELETED = <any> 'DELETED'
-    }
-}
-
-/**
- * 
- * @export
- * @interface VirtualInstanceQueryMetric
- */
-export interface VirtualInstanceQueryMetric {
-    /**
-     * 
-     * @type {number}
-     * @memberof VirtualInstanceQueryMetric
-     */
-    avg_latency?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof VirtualInstanceQueryMetric
-     */
-    avg_throttled_latency?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof VirtualInstanceQueryMetric
-     */
-    query_count?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof VirtualInstanceQueryMetric
-     */
-    err_count?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof VirtualInstanceQueryMetric
-     */
-    err_count_5xx?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof VirtualInstanceQueryMetric
-     */
-    err_count_4xx?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof VirtualInstanceQueryMetric
-     */
-    time?: number;
-}
-
-/**
- * 
- * @export
- * @interface VirtualInstanceStorageMetric
- */
-export interface VirtualInstanceStorageMetric {
-    /**
-     * 
-     * @type {number}
-     * @memberof VirtualInstanceStorageMetric
-     */
-    total_index_size?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof VirtualInstanceStorageMetric
-     */
-    total_index_size_bulk?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof VirtualInstanceStorageMetric
-     */
-    total_index_size_streaming?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof VirtualInstanceStorageMetric
-     */
-    time?: number;
+    last_queried_ms?: number;
 }
 
 /**
@@ -8771,31 +5521,31 @@ export interface VirtualInstanceStorageMetric {
  */
 export interface Workspace {
     /**
-     * ISO-8601 date of when workspace was created
+     * ISO-8601 date of when workspace was created.
      * @type {string}
      * @memberof Workspace
      */
     created_at?: string;
     /**
-     * email of user who created the workspace
+     * Email of user who created the workspace.
      * @type {string}
      * @memberof Workspace
      */
     created_by?: string;
     /**
-     * descriptive label and unique identifier
+     * Descriptive label and unique identifier.
      * @type {string}
      * @memberof Workspace
      */
     name?: string;
     /**
-     * longer explanation for the workspace
+     * Longer explanation for the workspace.
      * @type {string}
      * @memberof Workspace
      */
     description?: string;
     /**
-     * number of collections that are immediate children of workspace
+     * Number of collections that are immediate children of workspace.
      * @type {number}
      * @memberof Workspace
      */
@@ -8809,19 +5559,19 @@ export interface Workspace {
  */
 export interface XmlParams {
     /**
-     * tag until which xml is ignored
+     * Tag until which xml is ignored.
      * @type {string}
      * @memberof XmlParams
      */
     root_tag?: string;
     /**
-     * encoding in which data source is encoded
+     * Encoding in which data source is encoded.
      * @type {string}
      * @memberof XmlParams
      */
     encoding?: string;
     /**
-     * tags with which documents are identified
+     * Tags with which documents are identified.
      * @type {string}
      * @memberof XmlParams
      */
@@ -8833,7 +5583,7 @@ export interface XmlParams {
      */
     value_tag?: string;
     /**
-     * tag to differentiate between attributes and elements
+     * Tag to differentiate between attributes and elements.
      * @type {string}
      * @memberof XmlParams
      */
@@ -8910,38 +5660,11 @@ export const APIKeysApiFetchParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * 
-         * @summary Delete API Key
-         * @param {string} name 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteApiKeySelf(name: string, options: any = {}): FetchArgs {
-            // verify required parameter 'name' is not null or undefined
-            if (name === null || name === undefined) {
-                throw new RequiredError('name','Required parameter name was null or undefined when calling deleteApiKeySelf.');
-            }
-            const localVarPath = `/v1/orgs/self/users/self/apikeys/{name}`
-                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'DELETE' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Retrieve a particular API key for any user in your organization.
          * @summary Retrieve API Key
          * @param {string} user Email of the API key owner. Use &#x60;self&#x60; to specify the currently authenticated user.
          * @param {string} name Name of the API key.
-         * @param {boolean} [reveal] 
+         * @param {boolean} [reveal] Reveal full key.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -8974,39 +5697,8 @@ export const APIKeysApiFetchParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * 
-         * @summary Retrieve API key
-         * @param {string} name 
-         * @param {boolean} [reveal] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getApiKeySelf(name: string, reveal?: boolean, options: any = {}): FetchArgs {
-            // verify required parameter 'name' is not null or undefined
-            if (name === null || name === undefined) {
-                throw new RequiredError('name','Required parameter name was null or undefined when calling getApiKeySelf.');
-            }
-            const localVarPath = `/v1/orgs/self/users/self/apikeys/{name}`
-                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            if (reveal !== undefined) {
-                localVarQueryParameter['reveal'] = reveal;
-            }
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * List API key metadata for any user in your organization.
-         * @summary List API Keys.
+         * @summary List API Keys
          * @param {string} user Email of the API key owner. Use &#x60;self&#x60; to specify the currently authenticated user.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -9032,29 +5724,8 @@ export const APIKeysApiFetchParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * 
-         * @summary List API keys
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listApiKeysSelf(options: any = {}): FetchArgs {
-            const localVarPath = `/v1/orgs/self/users/self/apikeys`;
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Update the state of an API key for any user in your organization.
-         * @summary Update an API key's state
+         * @summary Update API Key State
          * @param {string} name Name of the API key.
          * @param {string} user Email of the API key owner. Use &#x60;self&#x60; to specify the currently authenticated user.
          * @param {UpdateApiKeyRequest} body JSON object
@@ -9077,41 +5748,6 @@ export const APIKeysApiFetchParamCreator = function (configuration?: Configurati
             const localVarPath = `/v1/orgs/self/users/{user}/apikeys/{name}`
                 .replace(`{${"name"}}`, encodeURIComponent(String(name)))
                 .replace(`{${"user"}}`, encodeURIComponent(String(user)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"UpdateApiKeyRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Update API key
-         * @param {string} name 
-         * @param {UpdateApiKeyRequest} body JSON object
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updateApiKeySelf(name: string, body: UpdateApiKeyRequest, options: any = {}): FetchArgs {
-            // verify required parameter 'name' is not null or undefined
-            if (name === null || name === undefined) {
-                throw new RequiredError('name','Required parameter name was null or undefined when calling updateApiKeySelf.');
-            }
-            // verify required parameter 'body' is not null or undefined
-            if (body === null || body === undefined) {
-                throw new RequiredError('body','Required parameter body was null or undefined when calling updateApiKeySelf.');
-            }
-            const localVarPath = `/v1/orgs/self/users/self/apikeys/{name}`
-                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
             const localVarHeaderParameter = {} as any;
@@ -9176,30 +5812,11 @@ export const APIKeysApiFp = function(configuration?: Configuration) {
             };
         },
         /**
-         * 
-         * @summary Delete API Key
-         * @param {string} name 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteApiKeySelf(name: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
-            const localVarFetchArgs = APIKeysApiFetchParamCreator(configuration).deleteApiKeySelf(name, options);
-            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response;
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
          * Retrieve a particular API key for any user in your organization.
          * @summary Retrieve API Key
          * @param {string} user Email of the API key owner. Use &#x60;self&#x60; to specify the currently authenticated user.
          * @param {string} name Name of the API key.
-         * @param {boolean} [reveal] 
+         * @param {boolean} [reveal] Reveal full key.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -9216,28 +5833,8 @@ export const APIKeysApiFp = function(configuration?: Configuration) {
             };
         },
         /**
-         * 
-         * @summary Retrieve API key
-         * @param {string} name 
-         * @param {boolean} [reveal] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getApiKeySelf(name: string, reveal?: boolean, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
-            const localVarFetchArgs = APIKeysApiFetchParamCreator(configuration).getApiKeySelf(name, reveal, options);
-            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response;
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
          * List API key metadata for any user in your organization.
-         * @summary List API Keys.
+         * @summary List API Keys
          * @param {string} user Email of the API key owner. Use &#x60;self&#x60; to specify the currently authenticated user.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -9255,26 +5852,8 @@ export const APIKeysApiFp = function(configuration?: Configuration) {
             };
         },
         /**
-         * 
-         * @summary List API keys
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listApiKeysSelf(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
-            const localVarFetchArgs = APIKeysApiFetchParamCreator(configuration).listApiKeysSelf(options);
-            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response;
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
          * Update the state of an API key for any user in your organization.
-         * @summary Update an API key's state
+         * @summary Update API Key State
          * @param {string} name Name of the API key.
          * @param {string} user Email of the API key owner. Use &#x60;self&#x60; to specify the currently authenticated user.
          * @param {UpdateApiKeyRequest} body JSON object
@@ -9287,26 +5866,6 @@ export const APIKeysApiFp = function(configuration?: Configuration) {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary Update API key
-         * @param {string} name 
-         * @param {UpdateApiKeyRequest} body JSON object
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updateApiKeySelf(name: string, body: UpdateApiKeyRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
-            const localVarFetchArgs = APIKeysApiFetchParamCreator(configuration).updateApiKeySelf(name, body, options);
-            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response;
                     } else {
                         throw response;
                     }
@@ -9344,21 +5903,11 @@ export const APIKeysApiFactory = function (configuration?: Configuration, fetch?
             return APIKeysApiFp(configuration).deleteApiKey(name, user, options)(fetch, basePath);
         },
         /**
-         * 
-         * @summary Delete API Key
-         * @param {string} name 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteApiKeySelf(name: string, options?: any) {
-            return APIKeysApiFp(configuration).deleteApiKeySelf(name, options)(fetch, basePath);
-        },
-        /**
          * Retrieve a particular API key for any user in your organization.
          * @summary Retrieve API Key
          * @param {string} user Email of the API key owner. Use &#x60;self&#x60; to specify the currently authenticated user.
          * @param {string} name Name of the API key.
-         * @param {boolean} [reveal] 
+         * @param {boolean} [reveal] Reveal full key.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -9366,19 +5915,8 @@ export const APIKeysApiFactory = function (configuration?: Configuration, fetch?
             return APIKeysApiFp(configuration).getApiKey(user, name, reveal, options)(fetch, basePath);
         },
         /**
-         * 
-         * @summary Retrieve API key
-         * @param {string} name 
-         * @param {boolean} [reveal] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getApiKeySelf(name: string, reveal?: boolean, options?: any) {
-            return APIKeysApiFp(configuration).getApiKeySelf(name, reveal, options)(fetch, basePath);
-        },
-        /**
          * List API key metadata for any user in your organization.
-         * @summary List API Keys.
+         * @summary List API Keys
          * @param {string} user Email of the API key owner. Use &#x60;self&#x60; to specify the currently authenticated user.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -9387,17 +5925,8 @@ export const APIKeysApiFactory = function (configuration?: Configuration, fetch?
             return APIKeysApiFp(configuration).listApiKeys(user, options)(fetch, basePath);
         },
         /**
-         * 
-         * @summary List API keys
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listApiKeysSelf(options?: any) {
-            return APIKeysApiFp(configuration).listApiKeysSelf(options)(fetch, basePath);
-        },
-        /**
          * Update the state of an API key for any user in your organization.
-         * @summary Update an API key's state
+         * @summary Update API Key State
          * @param {string} name Name of the API key.
          * @param {string} user Email of the API key owner. Use &#x60;self&#x60; to specify the currently authenticated user.
          * @param {UpdateApiKeyRequest} body JSON object
@@ -9406,17 +5935,6 @@ export const APIKeysApiFactory = function (configuration?: Configuration, fetch?
          */
         updateApiKey(name: string, user: string, body: UpdateApiKeyRequest, options?: any) {
             return APIKeysApiFp(configuration).updateApiKey(name, user, body, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary Update API key
-         * @param {string} name 
-         * @param {UpdateApiKeyRequest} body JSON object
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updateApiKeySelf(name: string, body: UpdateApiKeyRequest, options?: any) {
-            return APIKeysApiFp(configuration).updateApiKeySelf(name, body, options)(fetch, basePath);
         },
     };
 };
@@ -9451,22 +5969,11 @@ export class APIKeysApi extends BaseAPI {
         return APIKeysApiFp(this.configuration).deleteApiKey(name, user, options)(this.fetch, this.basePath);
     }
     /**
-     * 
-     * @summary Delete API Key
-     * @param {string} name 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof APIKeysApi
-     */
-    public deleteApiKeySelf(name: string, options?: any) {
-        return APIKeysApiFp(this.configuration).deleteApiKeySelf(name, options)(this.fetch, this.basePath);
-    }
-    /**
      * Retrieve a particular API key for any user in your organization.
      * @summary Retrieve API Key
      * @param {string} user Email of the API key owner. Use &#x60;self&#x60; to specify the currently authenticated user.
      * @param {string} name Name of the API key.
-     * @param {boolean} [reveal] 
+     * @param {boolean} [reveal] Reveal full key.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof APIKeysApi
@@ -9475,20 +5982,8 @@ export class APIKeysApi extends BaseAPI {
         return APIKeysApiFp(this.configuration).getApiKey(user, name, reveal, options)(this.fetch, this.basePath);
     }
     /**
-     * 
-     * @summary Retrieve API key
-     * @param {string} name 
-     * @param {boolean} [reveal] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof APIKeysApi
-     */
-    public getApiKeySelf(name: string, reveal?: boolean, options?: any) {
-        return APIKeysApiFp(this.configuration).getApiKeySelf(name, reveal, options)(this.fetch, this.basePath);
-    }
-    /**
      * List API key metadata for any user in your organization.
-     * @summary List API Keys.
+     * @summary List API Keys
      * @param {string} user Email of the API key owner. Use &#x60;self&#x60; to specify the currently authenticated user.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -9498,18 +5993,8 @@ export class APIKeysApi extends BaseAPI {
         return APIKeysApiFp(this.configuration).listApiKeys(user, options)(this.fetch, this.basePath);
     }
     /**
-     * 
-     * @summary List API keys
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof APIKeysApi
-     */
-    public listApiKeysSelf(options?: any) {
-        return APIKeysApiFp(this.configuration).listApiKeysSelf(options)(this.fetch, this.basePath);
-    }
-    /**
      * Update the state of an API key for any user in your organization.
-     * @summary Update an API key's state
+     * @summary Update API Key State
      * @param {string} name Name of the API key.
      * @param {string} user Email of the API key owner. Use &#x60;self&#x60; to specify the currently authenticated user.
      * @param {UpdateApiKeyRequest} body JSON object
@@ -9519,18 +6004,6 @@ export class APIKeysApi extends BaseAPI {
      */
     public updateApiKey(name: string, user: string, body: UpdateApiKeyRequest, options?: any) {
         return APIKeysApiFp(this.configuration).updateApiKey(name, user, body, options)(this.fetch, this.basePath);
-    }
-    /**
-     * 
-     * @summary Update API key
-     * @param {string} name 
-     * @param {UpdateApiKeyRequest} body JSON object
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof APIKeysApi
-     */
-    public updateApiKeySelf(name: string, body: UpdateApiKeyRequest, options?: any) {
-        return APIKeysApiFp(this.configuration).updateApiKeySelf(name, body, options)(this.fetch, this.basePath);
     }
 }
 
@@ -9657,80 +6130,6 @@ export const AliasesApiFetchParamCreator = function (configuration?: Configurati
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Get all Query Lambdas that hit a specific Rockset Alias.
-         * @summary Get Query Lambdas with Alias
-         * @param {string} workspace 
-         * @param {string} alias 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listQueryLambdasWithAlias(workspace: string, alias: string, options: any = {}): FetchArgs {
-            // verify required parameter 'workspace' is not null or undefined
-            if (workspace === null || workspace === undefined) {
-                throw new RequiredError('workspace','Required parameter workspace was null or undefined when calling listQueryLambdasWithAlias.');
-            }
-            // verify required parameter 'alias' is not null or undefined
-            if (alias === null || alias === undefined) {
-                throw new RequiredError('alias','Required parameter alias was null or undefined when calling listQueryLambdasWithAlias.');
-            }
-            const localVarPath = `/v1/orgs/self/ws/{workspace}/aliases/{alias}/lambdas`
-                .replace(`{${"workspace"}}`, encodeURIComponent(String(workspace)))
-                .replace(`{${"alias"}}`, encodeURIComponent(String(alias)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Transfer ownership of an alias to a new user.
-         * @summary Transfer Ownership of an Alias
-         * @param {string} workspace name of the workspace
-         * @param {string} alias name of the alias
-         * @param {TransferOwnershipRequest} body JSON object
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        transferOwnership(workspace: string, alias: string, body: TransferOwnershipRequest, options: any = {}): FetchArgs {
-            // verify required parameter 'workspace' is not null or undefined
-            if (workspace === null || workspace === undefined) {
-                throw new RequiredError('workspace','Required parameter workspace was null or undefined when calling transferOwnership.');
-            }
-            // verify required parameter 'alias' is not null or undefined
-            if (alias === null || alias === undefined) {
-                throw new RequiredError('alias','Required parameter alias was null or undefined when calling transferOwnership.');
-            }
-            // verify required parameter 'body' is not null or undefined
-            if (body === null || body === undefined) {
-                throw new RequiredError('body','Required parameter body was null or undefined when calling transferOwnership.');
-            }
-            const localVarPath = `/v1/orgs/self/ws/{workspace}/aliases/{alias}/owner`
-                .replace(`{${"workspace"}}`, encodeURIComponent(String(workspace)))
-                .replace(`{${"alias"}}`, encodeURIComponent(String(alias)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"TransferOwnershipRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
             return {
                 url: url.format(localVarUrlObj),
                 options: localVarRequestOptions,
@@ -9891,47 +6290,6 @@ export const AliasesApiFp = function(configuration?: Configuration) {
             };
         },
         /**
-         * Get all Query Lambdas that hit a specific Rockset Alias.
-         * @summary Get Query Lambdas with Alias
-         * @param {string} workspace 
-         * @param {string} alias 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listQueryLambdasWithAlias(workspace: string, alias: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ListQueryLambdasResponse> {
-            const localVarFetchArgs = AliasesApiFetchParamCreator(configuration).listQueryLambdasWithAlias(workspace, alias, options);
-            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * Transfer ownership of an alias to a new user.
-         * @summary Transfer Ownership of an Alias
-         * @param {string} workspace name of the workspace
-         * @param {string} alias name of the alias
-         * @param {TransferOwnershipRequest} body JSON object
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        transferOwnership(workspace: string, alias: string, body: TransferOwnershipRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
-            const localVarFetchArgs = AliasesApiFetchParamCreator(configuration).transferOwnership(workspace, alias, body, options);
-            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response;
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
          * Update alias in a workspace.
          * @summary Update Alias
          * @param {string} workspace name of the workspace
@@ -10023,29 +6381,6 @@ export const AliasesApiFactory = function (configuration?: Configuration, fetch?
             return AliasesApiFp(configuration).listAliases(options)(fetch, basePath);
         },
         /**
-         * Get all Query Lambdas that hit a specific Rockset Alias.
-         * @summary Get Query Lambdas with Alias
-         * @param {string} workspace 
-         * @param {string} alias 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listQueryLambdasWithAlias(workspace: string, alias: string, options?: any) {
-            return AliasesApiFp(configuration).listQueryLambdasWithAlias(workspace, alias, options)(fetch, basePath);
-        },
-        /**
-         * Transfer ownership of an alias to a new user.
-         * @summary Transfer Ownership of an Alias
-         * @param {string} workspace name of the workspace
-         * @param {string} alias name of the alias
-         * @param {TransferOwnershipRequest} body JSON object
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        transferOwnership(workspace: string, alias: string, body: TransferOwnershipRequest, options?: any) {
-            return AliasesApiFp(configuration).transferOwnership(workspace, alias, body, options)(fetch, basePath);
-        },
-        /**
          * Update alias in a workspace.
          * @summary Update Alias
          * @param {string} workspace name of the workspace
@@ -10123,31 +6458,6 @@ export class AliasesApi extends BaseAPI {
         return AliasesApiFp(this.configuration).listAliases(options)(this.fetch, this.basePath);
     }
     /**
-     * Get all Query Lambdas that hit a specific Rockset Alias.
-     * @summary Get Query Lambdas with Alias
-     * @param {string} workspace 
-     * @param {string} alias 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AliasesApi
-     */
-    public listQueryLambdasWithAlias(workspace: string, alias: string, options?: any) {
-        return AliasesApiFp(this.configuration).listQueryLambdasWithAlias(workspace, alias, options)(this.fetch, this.basePath);
-    }
-    /**
-     * Transfer ownership of an alias to a new user.
-     * @summary Transfer Ownership of an Alias
-     * @param {string} workspace name of the workspace
-     * @param {string} alias name of the alias
-     * @param {TransferOwnershipRequest} body JSON object
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AliasesApi
-     */
-    public transferOwnership(workspace: string, alias: string, body: TransferOwnershipRequest, options?: any) {
-        return AliasesApiFp(this.configuration).transferOwnership(workspace, alias, body, options)(this.fetch, this.basePath);
-    }
-    /**
      * Update alias in a workspace.
      * @summary Update Alias
      * @param {string} workspace name of the workspace
@@ -10208,35 +6518,6 @@ export const CollectionsApiFetchParamCreator = function (configuration?: Configu
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
             const needsSerialization = (<any>"CreateCollectionRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Create an ephemeral source (expires after 24h) to perform preview on.
-         * @summary Create Preview Source
-         * @param {CreatePreviewSourceRequest} body JSON object
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createPreviewSource(body: CreatePreviewSourceRequest, options: any = {}): FetchArgs {
-            // verify required parameter 'body' is not null or undefined
-            if (body === null || body === undefined) {
-                throw new RequiredError('body','Required parameter body was null or undefined when calling createPreviewSource.');
-            }
-            const localVarPath = `/v1/orgs/self/collections/previews/sources`;
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"CreatePreviewSourceRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
             localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
             return {
                 url: url.format(localVarUrlObj),
@@ -10310,142 +6591,6 @@ export const CollectionsApiFetchParamCreator = function (configuration?: Configu
             };
         },
         /**
-         * 
-         * @summary Determines if the collection includes data at or after the specified fence
-         * @param {string} workspace name of the workspace
-         * @param {string} collection name of the collection
-         * @param {string} [fence] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getCollectionOffsets(workspace: string, collection: string, fence?: string, options: any = {}): FetchArgs {
-            // verify required parameter 'workspace' is not null or undefined
-            if (workspace === null || workspace === undefined) {
-                throw new RequiredError('workspace','Required parameter workspace was null or undefined when calling getCollectionOffsets.');
-            }
-            // verify required parameter 'collection' is not null or undefined
-            if (collection === null || collection === undefined) {
-                throw new RequiredError('collection','Required parameter collection was null or undefined when calling getCollectionOffsets.');
-            }
-            const localVarPath = `/v1/orgs/self/ws/{workspace}/collections/{collection}/offsets/commit`
-                .replace(`{${"workspace"}}`, encodeURIComponent(String(workspace)))
-                .replace(`{${"collection"}}`, encodeURIComponent(String(collection)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            if (fence !== undefined) {
-                localVarQueryParameter['fence'] = fence;
-            }
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Get schema for a collection in Rockset.
-         * @summary Get Collection Schema
-         * @param {string} workspace name of the workspace
-         * @param {string} collection name of the collection
-         * @param {number} [depth] max nested depth level to search
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getSchema(workspace: string, collection: string, depth?: number, options: any = {}): FetchArgs {
-            // verify required parameter 'workspace' is not null or undefined
-            if (workspace === null || workspace === undefined) {
-                throw new RequiredError('workspace','Required parameter workspace was null or undefined when calling getSchema.');
-            }
-            // verify required parameter 'collection' is not null or undefined
-            if (collection === null || collection === undefined) {
-                throw new RequiredError('collection','Required parameter collection was null or undefined when calling getSchema.');
-            }
-            const localVarPath = `/v1/orgs/self/ws/{workspace}/collections/{collection}/schema`
-                .replace(`{${"workspace"}}`, encodeURIComponent(String(workspace)))
-                .replace(`{${"collection"}}`, encodeURIComponent(String(collection)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            if (depth !== undefined) {
-                localVarQueryParameter['depth'] = depth;
-            }
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Retrieve information about source.
-         * @summary Get Source config
-         * @param {SourceConfigRequest} body JSON object
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getSourceConfigs(body: SourceConfigRequest, options: any = {}): FetchArgs {
-            // verify required parameter 'body' is not null or undefined
-            if (body === null || body === undefined) {
-                throw new RequiredError('body','Required parameter body was null or undefined when calling getSourceConfigs.');
-            }
-            const localVarPath = `/v1/orgs/self/collections/configs`;
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"SourceConfigRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Get all Aliases for a specific Rockset Collection.
-         * @summary Get Aliases for Collection
-         * @param {string} workspace 
-         * @param {string} collection 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listAliasesForCollection(workspace: string, collection: string, options: any = {}): FetchArgs {
-            // verify required parameter 'workspace' is not null or undefined
-            if (workspace === null || workspace === undefined) {
-                throw new RequiredError('workspace','Required parameter workspace was null or undefined when calling listAliasesForCollection.');
-            }
-            // verify required parameter 'collection' is not null or undefined
-            if (collection === null || collection === undefined) {
-                throw new RequiredError('collection','Required parameter collection was null or undefined when calling listAliasesForCollection.');
-            }
-            const localVarPath = `/v1/orgs/self/ws/{workspace}/collections/{collection}/aliases`
-                .replace(`{${"workspace"}}`, encodeURIComponent(String(workspace)))
-                .replace(`{${"collection"}}`, encodeURIComponent(String(collection)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Retrieve all collections in an organization.
          * @summary List Collections
          * @param {*} [options] Override http request option.
@@ -10461,237 +6606,6 @@ export const CollectionsApiFetchParamCreator = function (configuration?: Configu
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Get all Query Lambdas that hit a specific Rockset Collection.
-         * @summary Get Query Lambdas for Collection
-         * @param {string} workspace name of the workspace
-         * @param {string} collection name of the collection
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listQueryLambdasInCollection(workspace: string, collection: string, options: any = {}): FetchArgs {
-            // verify required parameter 'workspace' is not null or undefined
-            if (workspace === null || workspace === undefined) {
-                throw new RequiredError('workspace','Required parameter workspace was null or undefined when calling listQueryLambdasInCollection.');
-            }
-            // verify required parameter 'collection' is not null or undefined
-            if (collection === null || collection === undefined) {
-                throw new RequiredError('collection','Required parameter collection was null or undefined when calling listQueryLambdasInCollection.');
-            }
-            const localVarPath = `/v1/orgs/self/ws/{workspace}/collections/{collection}/lambdas`
-                .replace(`{${"workspace"}}`, encodeURIComponent(String(workspace)))
-                .replace(`{${"collection"}}`, encodeURIComponent(String(collection)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Get sample documents given collection configuration.
-         * @summary Preview Collection
-         * @param {PreviewCollectionRequest} body JSON object
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        previewCollection(body: PreviewCollectionRequest, options: any = {}): FetchArgs {
-            // verify required parameter 'body' is not null or undefined
-            if (body === null || body === undefined) {
-                throw new RequiredError('body','Required parameter body was null or undefined when calling previewCollection.');
-            }
-            const localVarPath = `/v1/orgs/self/collections/previews`;
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"PreviewCollectionRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Update state of a collection.
-         * @summary Update state of Collection
-         * @param {string} workspace name of the workspace
-         * @param {string} collection name of the collection
-         * @param {'READY' | 'PAUSED'} state new state of this collection
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        setCollectionState(workspace: string, collection: string, state: 'READY' | 'PAUSED', options: any = {}): FetchArgs {
-            // verify required parameter 'workspace' is not null or undefined
-            if (workspace === null || workspace === undefined) {
-                throw new RequiredError('workspace','Required parameter workspace was null or undefined when calling setCollectionState.');
-            }
-            // verify required parameter 'collection' is not null or undefined
-            if (collection === null || collection === undefined) {
-                throw new RequiredError('collection','Required parameter collection was null or undefined when calling setCollectionState.');
-            }
-            // verify required parameter 'state' is not null or undefined
-            if (state === null || state === undefined) {
-                throw new RequiredError('state','Required parameter state was null or undefined when calling setCollectionState.');
-            }
-            const localVarPath = `/v1/orgs/self/ws/{workspace}/collections/{collection}/state/{state}`
-                .replace(`{${"workspace"}}`, encodeURIComponent(String(workspace)))
-                .replace(`{${"collection"}}`, encodeURIComponent(String(collection)))
-                .replace(`{${"state"}}`, encodeURIComponent(String(state)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Transfer ownership of a collection to a new user.
-         * @summary Transfer Ownership of a Collection
-         * @param {string} workspace name of the workspace
-         * @param {string} collection name of the collection
-         * @param {TransferOwnershipRequest} body JSON Object
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        transferOwnership(workspace: string, collection: string, body: TransferOwnershipRequest, options: any = {}): FetchArgs {
-            // verify required parameter 'workspace' is not null or undefined
-            if (workspace === null || workspace === undefined) {
-                throw new RequiredError('workspace','Required parameter workspace was null or undefined when calling transferOwnership.');
-            }
-            // verify required parameter 'collection' is not null or undefined
-            if (collection === null || collection === undefined) {
-                throw new RequiredError('collection','Required parameter collection was null or undefined when calling transferOwnership.');
-            }
-            // verify required parameter 'body' is not null or undefined
-            if (body === null || body === undefined) {
-                throw new RequiredError('body','Required parameter body was null or undefined when calling transferOwnership.');
-            }
-            const localVarPath = `/v1/orgs/self/ws/{workspace}/collections/{collection}/owner`
-                .replace(`{${"workspace"}}`, encodeURIComponent(String(workspace)))
-                .replace(`{${"collection"}}`, encodeURIComponent(String(collection)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"TransferOwnershipRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Upload a file to a collection in Rockset.
-         * @summary Upload a file
-         * @param {string} workspace name of the workspace
-         * @param {string} collection name of the collection
-         * @param {InputStream} body file input stream
-         * @param {FormDataContentDisposition} body2 file metadata
-         * @param {FormDataBodyPart} [body3] file format params
-         * @param {string} [body4] file size
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        uploadFile(workspace: string, collection: string, body: InputStream, body2: FormDataContentDisposition, body3?: FormDataBodyPart, body4?: string, options: any = {}): FetchArgs {
-            // verify required parameter 'workspace' is not null or undefined
-            if (workspace === null || workspace === undefined) {
-                throw new RequiredError('workspace','Required parameter workspace was null or undefined when calling uploadFile.');
-            }
-            // verify required parameter 'collection' is not null or undefined
-            if (collection === null || collection === undefined) {
-                throw new RequiredError('collection','Required parameter collection was null or undefined when calling uploadFile.');
-            }
-            // verify required parameter 'body' is not null or undefined
-            if (body === null || body === undefined) {
-                throw new RequiredError('body','Required parameter body was null or undefined when calling uploadFile.');
-            }
-            // verify required parameter 'body2' is not null or undefined
-            if (body2 === null || body2 === undefined) {
-                throw new RequiredError('body2','Required parameter body2 was null or undefined when calling uploadFile.');
-            }
-            const localVarPath = `/v1/orgs/self/ws/{workspace}/collections/{collection}/uploads`
-                .replace(`{${"workspace"}}`, encodeURIComponent(String(workspace)))
-                .replace(`{${"collection"}}`, encodeURIComponent(String(collection)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"string" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body4 || {}) : (body4 || "");
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Upload a file to a preview source that can be used to generate preview docs
-         * @summary Upload File to Preview Source
-         * @param {string} preview_source_id preview source identifier
-         * @param {InputStream} body file input stream
-         * @param {FormDataContentDisposition} body2 file metadata
-         * @param {string} [body3] file size
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        uploadFilePreviewSource(preview_source_id: string, body: InputStream, body2: FormDataContentDisposition, body3?: string, options: any = {}): FetchArgs {
-            // verify required parameter 'preview_source_id' is not null or undefined
-            if (preview_source_id === null || preview_source_id === undefined) {
-                throw new RequiredError('preview_source_id','Required parameter preview_source_id was null or undefined when calling uploadFilePreviewSource.');
-            }
-            // verify required parameter 'body' is not null or undefined
-            if (body === null || body === undefined) {
-                throw new RequiredError('body','Required parameter body was null or undefined when calling uploadFilePreviewSource.');
-            }
-            // verify required parameter 'body2' is not null or undefined
-            if (body2 === null || body2 === undefined) {
-                throw new RequiredError('body2','Required parameter body2 was null or undefined when calling uploadFilePreviewSource.');
-            }
-            const localVarPath = `/v1/orgs/self/collections/previews/sources/{preview_source_id}/uploads`
-                .replace(`{${"preview_source_id"}}`, encodeURIComponent(String(preview_source_id)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"string" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body3 || {}) : (body3 || "");
             return {
                 url: url.format(localVarUrlObj),
                 options: localVarRequestOptions,
@@ -10753,25 +6667,6 @@ export const CollectionsApiFp = function(configuration?: Configuration) {
             };
         },
         /**
-         * Create an ephemeral source (expires after 24h) to perform preview on.
-         * @summary Create Preview Source
-         * @param {CreatePreviewSourceRequest} body JSON object
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createPreviewSource(body: CreatePreviewSourceRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<CreatePreviewSourceResponse> {
-            const localVarFetchArgs = CollectionsApiFetchParamCreator(configuration).createPreviewSource(body, options);
-            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
          * Delete a collection and all its documents from Rockset.
          * @summary Delete Collection
          * @param {string} workspace name of the workspace
@@ -10812,87 +6707,6 @@ export const CollectionsApiFp = function(configuration?: Configuration) {
             };
         },
         /**
-         * 
-         * @summary Determines if the collection includes data at or after the specified fence
-         * @param {string} workspace name of the workspace
-         * @param {string} collection name of the collection
-         * @param {string} [fence] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getCollectionOffsets(workspace: string, collection: string, fence?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<GetCollectionCommit> {
-            const localVarFetchArgs = CollectionsApiFetchParamCreator(configuration).getCollectionOffsets(workspace, collection, fence, options);
-            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * Get schema for a collection in Rockset.
-         * @summary Get Collection Schema
-         * @param {string} workspace name of the workspace
-         * @param {string} collection name of the collection
-         * @param {number} [depth] max nested depth level to search
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getSchema(workspace: string, collection: string, depth?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<QueryResponse> {
-            const localVarFetchArgs = CollectionsApiFetchParamCreator(configuration).getSchema(workspace, collection, depth, options);
-            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * Retrieve information about source.
-         * @summary Get Source config
-         * @param {SourceConfigRequest} body JSON object
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getSourceConfigs(body: SourceConfigRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<SourceConfigResponse> {
-            const localVarFetchArgs = CollectionsApiFetchParamCreator(configuration).getSourceConfigs(body, options);
-            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * Get all Aliases for a specific Rockset Collection.
-         * @summary Get Aliases for Collection
-         * @param {string} workspace 
-         * @param {string} collection 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listAliasesForCollection(workspace: string, collection: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ListAliasesResponse> {
-            const localVarFetchArgs = CollectionsApiFetchParamCreator(configuration).listAliasesForCollection(workspace, collection, options);
-            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
          * Retrieve all collections in an organization.
          * @summary List Collections
          * @param {*} [options] Override http request option.
@@ -10900,133 +6714,6 @@ export const CollectionsApiFp = function(configuration?: Configuration) {
          */
         listCollections(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ListCollectionsResponse> {
             const localVarFetchArgs = CollectionsApiFetchParamCreator(configuration).listCollections(options);
-            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * Get all Query Lambdas that hit a specific Rockset Collection.
-         * @summary Get Query Lambdas for Collection
-         * @param {string} workspace name of the workspace
-         * @param {string} collection name of the collection
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listQueryLambdasInCollection(workspace: string, collection: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ListQueryLambdaVersionsResponse> {
-            const localVarFetchArgs = CollectionsApiFetchParamCreator(configuration).listQueryLambdasInCollection(workspace, collection, options);
-            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * Get sample documents given collection configuration.
-         * @summary Preview Collection
-         * @param {PreviewCollectionRequest} body JSON object
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        previewCollection(body: PreviewCollectionRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<PreviewCollectionResponse> {
-            const localVarFetchArgs = CollectionsApiFetchParamCreator(configuration).previewCollection(body, options);
-            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * Update state of a collection.
-         * @summary Update state of Collection
-         * @param {string} workspace name of the workspace
-         * @param {string} collection name of the collection
-         * @param {'READY' | 'PAUSED'} state new state of this collection
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        setCollectionState(workspace: string, collection: string, state: 'READY' | 'PAUSED', options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<GetCollectionResponse> {
-            const localVarFetchArgs = CollectionsApiFetchParamCreator(configuration).setCollectionState(workspace, collection, state, options);
-            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * Transfer ownership of a collection to a new user.
-         * @summary Transfer Ownership of a Collection
-         * @param {string} workspace name of the workspace
-         * @param {string} collection name of the collection
-         * @param {TransferOwnershipRequest} body JSON Object
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        transferOwnership(workspace: string, collection: string, body: TransferOwnershipRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
-            const localVarFetchArgs = CollectionsApiFetchParamCreator(configuration).transferOwnership(workspace, collection, body, options);
-            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response;
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * Upload a file to a collection in Rockset.
-         * @summary Upload a file
-         * @param {string} workspace name of the workspace
-         * @param {string} collection name of the collection
-         * @param {InputStream} body file input stream
-         * @param {FormDataContentDisposition} body2 file metadata
-         * @param {FormDataBodyPart} [body3] file format params
-         * @param {string} [body4] file size
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        uploadFile(workspace: string, collection: string, body: InputStream, body2: FormDataContentDisposition, body3?: FormDataBodyPart, body4?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<UploadFileResponse> {
-            const localVarFetchArgs = CollectionsApiFetchParamCreator(configuration).uploadFile(workspace, collection, body, body2, body3, body4, options);
-            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * Upload a file to a preview source that can be used to generate preview docs
-         * @summary Upload File to Preview Source
-         * @param {string} preview_source_id preview source identifier
-         * @param {InputStream} body file input stream
-         * @param {FormDataContentDisposition} body2 file metadata
-         * @param {string} [body3] file size
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        uploadFilePreviewSource(preview_source_id: string, body: InputStream, body2: FormDataContentDisposition, body3?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<UploadFileResponse> {
-            const localVarFetchArgs = CollectionsApiFetchParamCreator(configuration).uploadFilePreviewSource(preview_source_id, body, body2, body3, options);
             return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -11077,16 +6764,6 @@ export const CollectionsApiFactory = function (configuration?: Configuration, fe
             return CollectionsApiFp(configuration).createCollection(workspace, body, options)(fetch, basePath);
         },
         /**
-         * Create an ephemeral source (expires after 24h) to perform preview on.
-         * @summary Create Preview Source
-         * @param {CreatePreviewSourceRequest} body JSON object
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createPreviewSource(body: CreatePreviewSourceRequest, options?: any) {
-            return CollectionsApiFp(configuration).createPreviewSource(body, options)(fetch, basePath);
-        },
-        /**
          * Delete a collection and all its documents from Rockset.
          * @summary Delete Collection
          * @param {string} workspace name of the workspace
@@ -11109,51 +6786,6 @@ export const CollectionsApiFactory = function (configuration?: Configuration, fe
             return CollectionsApiFp(configuration).getCollection(workspace, collection, options)(fetch, basePath);
         },
         /**
-         * 
-         * @summary Determines if the collection includes data at or after the specified fence
-         * @param {string} workspace name of the workspace
-         * @param {string} collection name of the collection
-         * @param {string} [fence] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getCollectionOffsets(workspace: string, collection: string, fence?: string, options?: any) {
-            return CollectionsApiFp(configuration).getCollectionOffsets(workspace, collection, fence, options)(fetch, basePath);
-        },
-        /**
-         * Get schema for a collection in Rockset.
-         * @summary Get Collection Schema
-         * @param {string} workspace name of the workspace
-         * @param {string} collection name of the collection
-         * @param {number} [depth] max nested depth level to search
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getSchema(workspace: string, collection: string, depth?: number, options?: any) {
-            return CollectionsApiFp(configuration).getSchema(workspace, collection, depth, options)(fetch, basePath);
-        },
-        /**
-         * Retrieve information about source.
-         * @summary Get Source config
-         * @param {SourceConfigRequest} body JSON object
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getSourceConfigs(body: SourceConfigRequest, options?: any) {
-            return CollectionsApiFp(configuration).getSourceConfigs(body, options)(fetch, basePath);
-        },
-        /**
-         * Get all Aliases for a specific Rockset Collection.
-         * @summary Get Aliases for Collection
-         * @param {string} workspace 
-         * @param {string} collection 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listAliasesForCollection(workspace: string, collection: string, options?: any) {
-            return CollectionsApiFp(configuration).listAliasesForCollection(workspace, collection, options)(fetch, basePath);
-        },
-        /**
          * Retrieve all collections in an organization.
          * @summary List Collections
          * @param {*} [options] Override http request option.
@@ -11161,79 +6793,6 @@ export const CollectionsApiFactory = function (configuration?: Configuration, fe
          */
         listCollections(options?: any) {
             return CollectionsApiFp(configuration).listCollections(options)(fetch, basePath);
-        },
-        /**
-         * Get all Query Lambdas that hit a specific Rockset Collection.
-         * @summary Get Query Lambdas for Collection
-         * @param {string} workspace name of the workspace
-         * @param {string} collection name of the collection
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listQueryLambdasInCollection(workspace: string, collection: string, options?: any) {
-            return CollectionsApiFp(configuration).listQueryLambdasInCollection(workspace, collection, options)(fetch, basePath);
-        },
-        /**
-         * Get sample documents given collection configuration.
-         * @summary Preview Collection
-         * @param {PreviewCollectionRequest} body JSON object
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        previewCollection(body: PreviewCollectionRequest, options?: any) {
-            return CollectionsApiFp(configuration).previewCollection(body, options)(fetch, basePath);
-        },
-        /**
-         * Update state of a collection.
-         * @summary Update state of Collection
-         * @param {string} workspace name of the workspace
-         * @param {string} collection name of the collection
-         * @param {'READY' | 'PAUSED'} state new state of this collection
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        setCollectionState(workspace: string, collection: string, state: 'READY' | 'PAUSED', options?: any) {
-            return CollectionsApiFp(configuration).setCollectionState(workspace, collection, state, options)(fetch, basePath);
-        },
-        /**
-         * Transfer ownership of a collection to a new user.
-         * @summary Transfer Ownership of a Collection
-         * @param {string} workspace name of the workspace
-         * @param {string} collection name of the collection
-         * @param {TransferOwnershipRequest} body JSON Object
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        transferOwnership(workspace: string, collection: string, body: TransferOwnershipRequest, options?: any) {
-            return CollectionsApiFp(configuration).transferOwnership(workspace, collection, body, options)(fetch, basePath);
-        },
-        /**
-         * Upload a file to a collection in Rockset.
-         * @summary Upload a file
-         * @param {string} workspace name of the workspace
-         * @param {string} collection name of the collection
-         * @param {InputStream} body file input stream
-         * @param {FormDataContentDisposition} body2 file metadata
-         * @param {FormDataBodyPart} [body3] file format params
-         * @param {string} [body4] file size
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        uploadFile(workspace: string, collection: string, body: InputStream, body2: FormDataContentDisposition, body3?: FormDataBodyPart, body4?: string, options?: any) {
-            return CollectionsApiFp(configuration).uploadFile(workspace, collection, body, body2, body3, body4, options)(fetch, basePath);
-        },
-        /**
-         * Upload a file to a preview source that can be used to generate preview docs
-         * @summary Upload File to Preview Source
-         * @param {string} preview_source_id preview source identifier
-         * @param {InputStream} body file input stream
-         * @param {FormDataContentDisposition} body2 file metadata
-         * @param {string} [body3] file size
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        uploadFilePreviewSource(preview_source_id: string, body: InputStream, body2: FormDataContentDisposition, body3?: string, options?: any) {
-            return CollectionsApiFp(configuration).uploadFilePreviewSource(preview_source_id, body, body2, body3, options)(fetch, basePath);
         },
         /**
          * Retrieve all collections in a workspace.
@@ -11267,17 +6826,6 @@ export class CollectionsApi extends BaseAPI {
         return CollectionsApiFp(this.configuration).createCollection(workspace, body, options)(this.fetch, this.basePath);
     }
     /**
-     * Create an ephemeral source (expires after 24h) to perform preview on.
-     * @summary Create Preview Source
-     * @param {CreatePreviewSourceRequest} body JSON object
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CollectionsApi
-     */
-    public createPreviewSource(body: CreatePreviewSourceRequest, options?: any) {
-        return CollectionsApiFp(this.configuration).createPreviewSource(body, options)(this.fetch, this.basePath);
-    }
-    /**
      * Delete a collection and all its documents from Rockset.
      * @summary Delete Collection
      * @param {string} workspace name of the workspace
@@ -11302,55 +6850,6 @@ export class CollectionsApi extends BaseAPI {
         return CollectionsApiFp(this.configuration).getCollection(workspace, collection, options)(this.fetch, this.basePath);
     }
     /**
-     * 
-     * @summary Determines if the collection includes data at or after the specified fence
-     * @param {string} workspace name of the workspace
-     * @param {string} collection name of the collection
-     * @param {string} [fence] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CollectionsApi
-     */
-    public getCollectionOffsets(workspace: string, collection: string, fence?: string, options?: any) {
-        return CollectionsApiFp(this.configuration).getCollectionOffsets(workspace, collection, fence, options)(this.fetch, this.basePath);
-    }
-    /**
-     * Get schema for a collection in Rockset.
-     * @summary Get Collection Schema
-     * @param {string} workspace name of the workspace
-     * @param {string} collection name of the collection
-     * @param {number} [depth] max nested depth level to search
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CollectionsApi
-     */
-    public getSchema(workspace: string, collection: string, depth?: number, options?: any) {
-        return CollectionsApiFp(this.configuration).getSchema(workspace, collection, depth, options)(this.fetch, this.basePath);
-    }
-    /**
-     * Retrieve information about source.
-     * @summary Get Source config
-     * @param {SourceConfigRequest} body JSON object
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CollectionsApi
-     */
-    public getSourceConfigs(body: SourceConfigRequest, options?: any) {
-        return CollectionsApiFp(this.configuration).getSourceConfigs(body, options)(this.fetch, this.basePath);
-    }
-    /**
-     * Get all Aliases for a specific Rockset Collection.
-     * @summary Get Aliases for Collection
-     * @param {string} workspace 
-     * @param {string} collection 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CollectionsApi
-     */
-    public listAliasesForCollection(workspace: string, collection: string, options?: any) {
-        return CollectionsApiFp(this.configuration).listAliasesForCollection(workspace, collection, options)(this.fetch, this.basePath);
-    }
-    /**
      * Retrieve all collections in an organization.
      * @summary List Collections
      * @param {*} [options] Override http request option.
@@ -11359,85 +6858,6 @@ export class CollectionsApi extends BaseAPI {
      */
     public listCollections(options?: any) {
         return CollectionsApiFp(this.configuration).listCollections(options)(this.fetch, this.basePath);
-    }
-    /**
-     * Get all Query Lambdas that hit a specific Rockset Collection.
-     * @summary Get Query Lambdas for Collection
-     * @param {string} workspace name of the workspace
-     * @param {string} collection name of the collection
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CollectionsApi
-     */
-    public listQueryLambdasInCollection(workspace: string, collection: string, options?: any) {
-        return CollectionsApiFp(this.configuration).listQueryLambdasInCollection(workspace, collection, options)(this.fetch, this.basePath);
-    }
-    /**
-     * Get sample documents given collection configuration.
-     * @summary Preview Collection
-     * @param {PreviewCollectionRequest} body JSON object
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CollectionsApi
-     */
-    public previewCollection(body: PreviewCollectionRequest, options?: any) {
-        return CollectionsApiFp(this.configuration).previewCollection(body, options)(this.fetch, this.basePath);
-    }
-    /**
-     * Update state of a collection.
-     * @summary Update state of Collection
-     * @param {string} workspace name of the workspace
-     * @param {string} collection name of the collection
-     * @param {'READY' | 'PAUSED'} state new state of this collection
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CollectionsApi
-     */
-    public setCollectionState(workspace: string, collection: string, state: 'READY' | 'PAUSED', options?: any) {
-        return CollectionsApiFp(this.configuration).setCollectionState(workspace, collection, state, options)(this.fetch, this.basePath);
-    }
-    /**
-     * Transfer ownership of a collection to a new user.
-     * @summary Transfer Ownership of a Collection
-     * @param {string} workspace name of the workspace
-     * @param {string} collection name of the collection
-     * @param {TransferOwnershipRequest} body JSON Object
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CollectionsApi
-     */
-    public transferOwnership(workspace: string, collection: string, body: TransferOwnershipRequest, options?: any) {
-        return CollectionsApiFp(this.configuration).transferOwnership(workspace, collection, body, options)(this.fetch, this.basePath);
-    }
-    /**
-     * Upload a file to a collection in Rockset.
-     * @summary Upload a file
-     * @param {string} workspace name of the workspace
-     * @param {string} collection name of the collection
-     * @param {InputStream} body file input stream
-     * @param {FormDataContentDisposition} body2 file metadata
-     * @param {FormDataBodyPart} [body3] file format params
-     * @param {string} [body4] file size
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CollectionsApi
-     */
-    public uploadFile(workspace: string, collection: string, body: InputStream, body2: FormDataContentDisposition, body3?: FormDataBodyPart, body4?: string, options?: any) {
-        return CollectionsApiFp(this.configuration).uploadFile(workspace, collection, body, body2, body3, body4, options)(this.fetch, this.basePath);
-    }
-    /**
-     * Upload a file to a preview source that can be used to generate preview docs
-     * @summary Upload File to Preview Source
-     * @param {string} preview_source_id preview source identifier
-     * @param {InputStream} body file input stream
-     * @param {FormDataContentDisposition} body2 file metadata
-     * @param {string} [body3] file size
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof CollectionsApi
-     */
-    public uploadFilePreviewSource(preview_source_id: string, body: InputStream, body2: FormDataContentDisposition, body3?: string, options?: any) {
-        return CollectionsApiFp(this.configuration).uploadFilePreviewSource(preview_source_id, body, body2, body3, options)(this.fetch, this.basePath);
     }
     /**
      * Retrieve all collections in a workspace.
@@ -11453,309 +6873,10 @@ export class CollectionsApi extends BaseAPI {
 }
 
 /**
- * ConsoleApi - fetch parameter creator
+ * CustomRolesApi - fetch parameter creator
  * @export
  */
-export const ConsoleApiFetchParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * Send confirmation email to user, send email internally, and notify internally
-         * @summary Contact Sales
-         * @param {ContactSalesRequest} body contact sales information
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        contactSales(body: ContactSalesRequest, options: any = {}): FetchArgs {
-            // verify required parameter 'body' is not null or undefined
-            if (body === null || body === undefined) {
-                throw new RequiredError('body','Required parameter body was null or undefined when calling contactSales.');
-            }
-            const localVarPath = `/v1/console/sales`;
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"ContactSalesRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Open a support ticket on behalf of the user
-         * @summary Contact Support
-         * @param {ContactSupportRequest} body contact sales information
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        contactSupport(body: ContactSupportRequest, options: any = {}): FetchArgs {
-            // verify required parameter 'body' is not null or undefined
-            if (body === null || body === undefined) {
-                throw new RequiredError('body','Required parameter body was null or undefined when calling contactSupport.');
-            }
-            const localVarPath = `/v1/console/support`;
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"ContactSupportRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Get list of all activity for user
-         * @summary Get Activities
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getActivity(options: any = {}): FetchArgs {
-            const localVarPath = `/v1/console/activity`;
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Record an activity item from console.
-         * @summary Record Activity
-         * @param {RecordActivityRequest} body the activity item
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        recordActivity(body: RecordActivityRequest, options: any = {}): FetchArgs {
-            // verify required parameter 'body' is not null or undefined
-            if (body === null || body === undefined) {
-                throw new RequiredError('body','Required parameter body was null or undefined when calling recordActivity.');
-            }
-            const localVarPath = `/v1/console/activity`;
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"RecordActivityRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-/**
- * ConsoleApi - functional programming interface
- * @export
- */
-export const ConsoleApiFp = function(configuration?: Configuration) {
-    return {
-        /**
-         * Send confirmation email to user, send email internally, and notify internally
-         * @summary Contact Sales
-         * @param {ContactSalesRequest} body contact sales information
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        contactSales(body: ContactSalesRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<StatusResponse> {
-            const localVarFetchArgs = ConsoleApiFetchParamCreator(configuration).contactSales(body, options);
-            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * Open a support ticket on behalf of the user
-         * @summary Contact Support
-         * @param {ContactSupportRequest} body contact sales information
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        contactSupport(body: ContactSupportRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<StatusResponse> {
-            const localVarFetchArgs = ConsoleApiFetchParamCreator(configuration).contactSupport(body, options);
-            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * Get list of all activity for user
-         * @summary Get Activities
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getActivity(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<GetActivityResponse> {
-            const localVarFetchArgs = ConsoleApiFetchParamCreator(configuration).getActivity(options);
-            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * Record an activity item from console.
-         * @summary Record Activity
-         * @param {RecordActivityRequest} body the activity item
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        recordActivity(body: RecordActivityRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<StatusResponse> {
-            const localVarFetchArgs = ConsoleApiFetchParamCreator(configuration).recordActivity(body, options);
-            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-    }
-};
-
-/**
- * ConsoleApi - factory interface
- * @export
- */
-export const ConsoleApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
-    return {
-        /**
-         * Send confirmation email to user, send email internally, and notify internally
-         * @summary Contact Sales
-         * @param {ContactSalesRequest} body contact sales information
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        contactSales(body: ContactSalesRequest, options?: any) {
-            return ConsoleApiFp(configuration).contactSales(body, options)(fetch, basePath);
-        },
-        /**
-         * Open a support ticket on behalf of the user
-         * @summary Contact Support
-         * @param {ContactSupportRequest} body contact sales information
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        contactSupport(body: ContactSupportRequest, options?: any) {
-            return ConsoleApiFp(configuration).contactSupport(body, options)(fetch, basePath);
-        },
-        /**
-         * Get list of all activity for user
-         * @summary Get Activities
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getActivity(options?: any) {
-            return ConsoleApiFp(configuration).getActivity(options)(fetch, basePath);
-        },
-        /**
-         * Record an activity item from console.
-         * @summary Record Activity
-         * @param {RecordActivityRequest} body the activity item
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        recordActivity(body: RecordActivityRequest, options?: any) {
-            return ConsoleApiFp(configuration).recordActivity(body, options)(fetch, basePath);
-        },
-    };
-};
-/**
- * ConsoleApi - object-oriented interface
- * @export
- * @class ConsoleApi
- * @extends {BaseAPI}
- */
-export class ConsoleApi extends BaseAPI {
-    /**
-     * Send confirmation email to user, send email internally, and notify internally
-     * @summary Contact Sales
-     * @param {ContactSalesRequest} body contact sales information
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ConsoleApi
-     */
-    public contactSales(body: ContactSalesRequest, options?: any) {
-        return ConsoleApiFp(this.configuration).contactSales(body, options)(this.fetch, this.basePath);
-    }
-    /**
-     * Open a support ticket on behalf of the user
-     * @summary Contact Support
-     * @param {ContactSupportRequest} body contact sales information
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ConsoleApi
-     */
-    public contactSupport(body: ContactSupportRequest, options?: any) {
-        return ConsoleApiFp(this.configuration).contactSupport(body, options)(this.fetch, this.basePath);
-    }
-    /**
-     * Get list of all activity for user
-     * @summary Get Activities
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ConsoleApi
-     */
-    public getActivity(options?: any) {
-        return ConsoleApiFp(this.configuration).getActivity(options)(this.fetch, this.basePath);
-    }
-    /**
-     * Record an activity item from console.
-     * @summary Record Activity
-     * @param {RecordActivityRequest} body the activity item
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ConsoleApi
-     */
-    public recordActivity(body: RecordActivityRequest, options?: any) {
-        return ConsoleApiFp(this.configuration).recordActivity(body, options)(this.fetch, this.basePath);
-    }
-}
-
-/**
- * CustomRolesBetaApi - fetch parameter creator
- * @export
- */
-export const CustomRolesBetaApiFetchParamCreator = function (configuration?: Configuration) {
+export const CustomRolesApiFetchParamCreator = function (configuration?: Configuration) {
     return {
         /**
          * Create a role for your organization.
@@ -11802,6 +6923,33 @@ export const CustomRolesBetaApiFetchParamCreator = function (configuration?: Con
                 .replace(`{${"roleName"}}`, encodeURIComponent(String(roleName)));
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'DELETE' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Retrieve a role by name for your organization.
+         * @summary Retrieve role
+         * @param {string} roleName 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getRole(roleName: string, options: any = {}): FetchArgs {
+            // verify required parameter 'roleName' is not null or undefined
+            if (roleName === null || roleName === undefined) {
+                throw new RequiredError('roleName','Required parameter roleName was null or undefined when calling getRole.');
+            }
+            const localVarPath = `/v1/orgs/self/roles/{roleName}`
+                .replace(`{${"roleName"}}`, encodeURIComponent(String(roleName)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
@@ -11872,10 +7020,10 @@ export const CustomRolesBetaApiFetchParamCreator = function (configuration?: Con
     }
 };
 /**
- * CustomRolesBetaApi - functional programming interface
+ * CustomRolesApi - functional programming interface
  * @export
  */
-export const CustomRolesBetaApiFp = function(configuration?: Configuration) {
+export const CustomRolesApiFp = function(configuration?: Configuration) {
     return {
         /**
          * Create a role for your organization.
@@ -11885,7 +7033,7 @@ export const CustomRolesBetaApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         createRole(body: CreateRoleRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<RoleResponse> {
-            const localVarFetchArgs = CustomRolesBetaApiFetchParamCreator(configuration).createRole(body, options);
+            const localVarFetchArgs = CustomRolesApiFetchParamCreator(configuration).createRole(body, options);
             return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -11904,7 +7052,26 @@ export const CustomRolesBetaApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         deleteRole(roleName: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<RoleResponse> {
-            const localVarFetchArgs = CustomRolesBetaApiFetchParamCreator(configuration).deleteRole(roleName, options);
+            const localVarFetchArgs = CustomRolesApiFetchParamCreator(configuration).deleteRole(roleName, options);
+            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * Retrieve a role by name for your organization.
+         * @summary Retrieve role
+         * @param {string} roleName 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getRole(roleName: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<RoleResponse> {
+            const localVarFetchArgs = CustomRolesApiFetchParamCreator(configuration).getRole(roleName, options);
             return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -11922,7 +7089,7 @@ export const CustomRolesBetaApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         listRoles(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ListRolesResponse> {
-            const localVarFetchArgs = CustomRolesBetaApiFetchParamCreator(configuration).listRoles(options);
+            const localVarFetchArgs = CustomRolesApiFetchParamCreator(configuration).listRoles(options);
             return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -11942,7 +7109,7 @@ export const CustomRolesBetaApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         updateRole(roleName: string, body: UpdateRoleRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<RoleResponse> {
-            const localVarFetchArgs = CustomRolesBetaApiFetchParamCreator(configuration).updateRole(roleName, body, options);
+            const localVarFetchArgs = CustomRolesApiFetchParamCreator(configuration).updateRole(roleName, body, options);
             return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -11957,10 +7124,10 @@ export const CustomRolesBetaApiFp = function(configuration?: Configuration) {
 };
 
 /**
- * CustomRolesBetaApi - factory interface
+ * CustomRolesApi - factory interface
  * @export
  */
-export const CustomRolesBetaApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
+export const CustomRolesApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
     return {
         /**
          * Create a role for your organization.
@@ -11970,7 +7137,7 @@ export const CustomRolesBetaApiFactory = function (configuration?: Configuration
          * @throws {RequiredError}
          */
         createRole(body: CreateRoleRequest, options?: any) {
-            return CustomRolesBetaApiFp(configuration).createRole(body, options)(fetch, basePath);
+            return CustomRolesApiFp(configuration).createRole(body, options)(fetch, basePath);
         },
         /**
          * Delete a role for your organization.
@@ -11980,7 +7147,17 @@ export const CustomRolesBetaApiFactory = function (configuration?: Configuration
          * @throws {RequiredError}
          */
         deleteRole(roleName: string, options?: any) {
-            return CustomRolesBetaApiFp(configuration).deleteRole(roleName, options)(fetch, basePath);
+            return CustomRolesApiFp(configuration).deleteRole(roleName, options)(fetch, basePath);
+        },
+        /**
+         * Retrieve a role by name for your organization.
+         * @summary Retrieve role
+         * @param {string} roleName 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getRole(roleName: string, options?: any) {
+            return CustomRolesApiFp(configuration).getRole(roleName, options)(fetch, basePath);
         },
         /**
          * List all roles for your organization.
@@ -11989,7 +7166,7 @@ export const CustomRolesBetaApiFactory = function (configuration?: Configuration
          * @throws {RequiredError}
          */
         listRoles(options?: any) {
-            return CustomRolesBetaApiFp(configuration).listRoles(options)(fetch, basePath);
+            return CustomRolesApiFp(configuration).listRoles(options)(fetch, basePath);
         },
         /**
          * Update a role for your organization.
@@ -12000,27 +7177,27 @@ export const CustomRolesBetaApiFactory = function (configuration?: Configuration
          * @throws {RequiredError}
          */
         updateRole(roleName: string, body: UpdateRoleRequest, options?: any) {
-            return CustomRolesBetaApiFp(configuration).updateRole(roleName, body, options)(fetch, basePath);
+            return CustomRolesApiFp(configuration).updateRole(roleName, body, options)(fetch, basePath);
         },
     };
 };
 /**
- * CustomRolesBetaApi - object-oriented interface
+ * CustomRolesApi - object-oriented interface
  * @export
- * @class CustomRolesBetaApi
+ * @class CustomRolesApi
  * @extends {BaseAPI}
  */
-export class CustomRolesBetaApi extends BaseAPI {
+export class CustomRolesApi extends BaseAPI {
     /**
      * Create a role for your organization.
      * @summary Create a Role
      * @param {CreateRoleRequest} body JSON Object
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof CustomRolesBetaApi
+     * @memberof CustomRolesApi
      */
     public createRole(body: CreateRoleRequest, options?: any) {
-        return CustomRolesBetaApiFp(this.configuration).createRole(body, options)(this.fetch, this.basePath);
+        return CustomRolesApiFp(this.configuration).createRole(body, options)(this.fetch, this.basePath);
     }
     /**
      * Delete a role for your organization.
@@ -12028,20 +7205,31 @@ export class CustomRolesBetaApi extends BaseAPI {
      * @param {string} roleName 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof CustomRolesBetaApi
+     * @memberof CustomRolesApi
      */
     public deleteRole(roleName: string, options?: any) {
-        return CustomRolesBetaApiFp(this.configuration).deleteRole(roleName, options)(this.fetch, this.basePath);
+        return CustomRolesApiFp(this.configuration).deleteRole(roleName, options)(this.fetch, this.basePath);
+    }
+    /**
+     * Retrieve a role by name for your organization.
+     * @summary Retrieve role
+     * @param {string} roleName 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CustomRolesApi
+     */
+    public getRole(roleName: string, options?: any) {
+        return CustomRolesApiFp(this.configuration).getRole(roleName, options)(this.fetch, this.basePath);
     }
     /**
      * List all roles for your organization.
      * @summary List Roles
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof CustomRolesBetaApi
+     * @memberof CustomRolesApi
      */
     public listRoles(options?: any) {
-        return CustomRolesBetaApiFp(this.configuration).listRoles(options)(this.fetch, this.basePath);
+        return CustomRolesApiFp(this.configuration).listRoles(options)(this.fetch, this.basePath);
     }
     /**
      * Update a role for your organization.
@@ -12050,152 +7238,10 @@ export class CustomRolesBetaApi extends BaseAPI {
      * @param {UpdateRoleRequest} body JSON Object
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof CustomRolesBetaApi
+     * @memberof CustomRolesApi
      */
     public updateRole(roleName: string, body: UpdateRoleRequest, options?: any) {
-        return CustomRolesBetaApiFp(this.configuration).updateRole(roleName, body, options)(this.fetch, this.basePath);
-    }
-}
-
-/**
- * DefaultApi - fetch parameter creator
- * @export
- */
-export const DefaultApiFetchParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        receiveKafkaEvent(options: any = {}): FetchArgs {
-            const localVarPath = `/v1/receivers/kafka`;
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        receiveSegmentEvent(options: any = {}): FetchArgs {
-            const localVarPath = `/v1/receivers/segment`;
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-/**
- * DefaultApi - functional programming interface
- * @export
- */
-export const DefaultApiFp = function(configuration?: Configuration) {
-    return {
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        receiveKafkaEvent(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
-            const localVarFetchArgs = DefaultApiFetchParamCreator(configuration).receiveKafkaEvent(options);
-            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response;
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        receiveSegmentEvent(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
-            const localVarFetchArgs = DefaultApiFetchParamCreator(configuration).receiveSegmentEvent(options);
-            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response;
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-    }
-};
-
-/**
- * DefaultApi - factory interface
- * @export
- */
-export const DefaultApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
-    return {
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        receiveKafkaEvent(options?: any) {
-            return DefaultApiFp(configuration).receiveKafkaEvent(options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        receiveSegmentEvent(options?: any) {
-            return DefaultApiFp(configuration).receiveSegmentEvent(options)(fetch, basePath);
-        },
-    };
-};
-/**
- * DefaultApi - object-oriented interface
- * @export
- * @class DefaultApi
- * @extends {BaseAPI}
- */
-export class DefaultApi extends BaseAPI {
-    /**
-     * 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public receiveKafkaEvent(options?: any) {
-        return DefaultApiFp(this.configuration).receiveKafkaEvent(options)(this.fetch, this.basePath);
-    }
-    /**
-     * 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public receiveSegmentEvent(options?: any) {
-        return DefaultApiFp(this.configuration).receiveSegmentEvent(options)(this.fetch, this.basePath);
+        return CustomRolesApiFp(this.configuration).updateRole(roleName, body, options)(this.fetch, this.basePath);
     }
 }
 
@@ -12495,308 +7541,6 @@ export class DocumentsApi extends BaseAPI {
 }
 
 /**
- * IPAllowlistApi - fetch parameter creator
- * @export
- */
-export const IPAllowlistApiFetchParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * Create a new entry to allow an IP address
-         * @summary Create IP Allowlist Network Policy
-         * @param {CreateIpAllowlistRequest} body JSON object
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createAllowlistIp(body: CreateIpAllowlistRequest, options: any = {}): FetchArgs {
-            // verify required parameter 'body' is not null or undefined
-            if (body === null || body === undefined) {
-                throw new RequiredError('body','Required parameter body was null or undefined when calling createAllowlistIp.');
-            }
-            const localVarPath = `/v1/orgs/self/ip/allowlist`;
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"CreateIpAllowlistRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Delete an entry for IP allowlist network policy.
-         * @summary Delete IP Allowlist Network Policy
-         * @param {string} name name of the IP allowlist network policy
-         * @param {DeleteIpAllowlistRequest} [body] JSON object
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteAllowlistIp(name: string, body?: DeleteIpAllowlistRequest, options: any = {}): FetchArgs {
-            // verify required parameter 'name' is not null or undefined
-            if (name === null || name === undefined) {
-                throw new RequiredError('name','Required parameter name was null or undefined when calling deleteAllowlistIp.');
-            }
-            const localVarPath = `/v1/orgs/self/ip/allowlist/{name}`
-                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'DELETE' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"DeleteIpAllowlistRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Get details about a IP Allowlist network policy
-         * @summary Get IP Allowlist Network Policy
-         * @param {string} name name of the IP Allowlist network policy
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getAllowlistIp(name: string, options: any = {}): FetchArgs {
-            // verify required parameter 'name' is not null or undefined
-            if (name === null || name === undefined) {
-                throw new RequiredError('name','Required parameter name was null or undefined when calling getAllowlistIp.');
-            }
-            const localVarPath = `/v1/orgs/self/ip/allowlist/{name}`
-                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary List IP Allowlist Entries
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listAllowlistIps(options: any = {}): FetchArgs {
-            const localVarPath = `/v1/orgs/self/ip/allowlist`;
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-/**
- * IPAllowlistApi - functional programming interface
- * @export
- */
-export const IPAllowlistApiFp = function(configuration?: Configuration) {
-    return {
-        /**
-         * Create a new entry to allow an IP address
-         * @summary Create IP Allowlist Network Policy
-         * @param {CreateIpAllowlistRequest} body JSON object
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createAllowlistIp(body: CreateIpAllowlistRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<CreateIpAllowlistResponse> {
-            const localVarFetchArgs = IPAllowlistApiFetchParamCreator(configuration).createAllowlistIp(body, options);
-            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * Delete an entry for IP allowlist network policy.
-         * @summary Delete IP Allowlist Network Policy
-         * @param {string} name name of the IP allowlist network policy
-         * @param {DeleteIpAllowlistRequest} [body] JSON object
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteAllowlistIp(name: string, body?: DeleteIpAllowlistRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<DeleteIpAllowlistResponse> {
-            const localVarFetchArgs = IPAllowlistApiFetchParamCreator(configuration).deleteAllowlistIp(name, body, options);
-            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * Get details about a IP Allowlist network policy
-         * @summary Get IP Allowlist Network Policy
-         * @param {string} name name of the IP Allowlist network policy
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getAllowlistIp(name: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<GetIpAllowlistResponse> {
-            const localVarFetchArgs = IPAllowlistApiFetchParamCreator(configuration).getAllowlistIp(name, options);
-            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary List IP Allowlist Entries
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listAllowlistIps(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ListIpAllowlistsResponse> {
-            const localVarFetchArgs = IPAllowlistApiFetchParamCreator(configuration).listAllowlistIps(options);
-            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-    }
-};
-
-/**
- * IPAllowlistApi - factory interface
- * @export
- */
-export const IPAllowlistApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
-    return {
-        /**
-         * Create a new entry to allow an IP address
-         * @summary Create IP Allowlist Network Policy
-         * @param {CreateIpAllowlistRequest} body JSON object
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createAllowlistIp(body: CreateIpAllowlistRequest, options?: any) {
-            return IPAllowlistApiFp(configuration).createAllowlistIp(body, options)(fetch, basePath);
-        },
-        /**
-         * Delete an entry for IP allowlist network policy.
-         * @summary Delete IP Allowlist Network Policy
-         * @param {string} name name of the IP allowlist network policy
-         * @param {DeleteIpAllowlistRequest} [body] JSON object
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteAllowlistIp(name: string, body?: DeleteIpAllowlistRequest, options?: any) {
-            return IPAllowlistApiFp(configuration).deleteAllowlistIp(name, body, options)(fetch, basePath);
-        },
-        /**
-         * Get details about a IP Allowlist network policy
-         * @summary Get IP Allowlist Network Policy
-         * @param {string} name name of the IP Allowlist network policy
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getAllowlistIp(name: string, options?: any) {
-            return IPAllowlistApiFp(configuration).getAllowlistIp(name, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary List IP Allowlist Entries
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listAllowlistIps(options?: any) {
-            return IPAllowlistApiFp(configuration).listAllowlistIps(options)(fetch, basePath);
-        },
-    };
-};
-/**
- * IPAllowlistApi - object-oriented interface
- * @export
- * @class IPAllowlistApi
- * @extends {BaseAPI}
- */
-export class IPAllowlistApi extends BaseAPI {
-    /**
-     * Create a new entry to allow an IP address
-     * @summary Create IP Allowlist Network Policy
-     * @param {CreateIpAllowlistRequest} body JSON object
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IPAllowlistApi
-     */
-    public createAllowlistIp(body: CreateIpAllowlistRequest, options?: any) {
-        return IPAllowlistApiFp(this.configuration).createAllowlistIp(body, options)(this.fetch, this.basePath);
-    }
-    /**
-     * Delete an entry for IP allowlist network policy.
-     * @summary Delete IP Allowlist Network Policy
-     * @param {string} name name of the IP allowlist network policy
-     * @param {DeleteIpAllowlistRequest} [body] JSON object
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IPAllowlistApi
-     */
-    public deleteAllowlistIp(name: string, body?: DeleteIpAllowlistRequest, options?: any) {
-        return IPAllowlistApiFp(this.configuration).deleteAllowlistIp(name, body, options)(this.fetch, this.basePath);
-    }
-    /**
-     * Get details about a IP Allowlist network policy
-     * @summary Get IP Allowlist Network Policy
-     * @param {string} name name of the IP Allowlist network policy
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IPAllowlistApi
-     */
-    public getAllowlistIp(name: string, options?: any) {
-        return IPAllowlistApiFp(this.configuration).getAllowlistIp(name, options)(this.fetch, this.basePath);
-    }
-    /**
-     * 
-     * @summary List IP Allowlist Entries
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IPAllowlistApi
-     */
-    public listAllowlistIps(options?: any) {
-        return IPAllowlistApiFp(this.configuration).listAllowlistIps(options)(this.fetch, this.basePath);
-    }
-}
-
-/**
  * IntegrationsApi - fetch parameter creator
  * @export
  */
@@ -12906,68 +7650,6 @@ export const IntegrationsApiFetchParamCreator = function (configuration?: Config
                 options: localVarRequestOptions,
             };
         },
-        /**
-         * Transfer ownership of an integration to a new user.
-         * @summary Transfer Ownership of an Integration
-         * @param {string} integration name of the integration
-         * @param {TransferOwnershipRequest} body JSON Object
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        transferOwnership(integration: string, body: TransferOwnershipRequest, options: any = {}): FetchArgs {
-            // verify required parameter 'integration' is not null or undefined
-            if (integration === null || integration === undefined) {
-                throw new RequiredError('integration','Required parameter integration was null or undefined when calling transferOwnership.');
-            }
-            // verify required parameter 'body' is not null or undefined
-            if (body === null || body === undefined) {
-                throw new RequiredError('body','Required parameter body was null or undefined when calling transferOwnership.');
-            }
-            const localVarPath = `/v1/orgs/self/integrations/{integration}/owner`
-                .replace(`{${"integration"}}`, encodeURIComponent(String(integration)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"TransferOwnershipRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Verify that an integration is healthy.
-         * @summary Verify Integration
-         * @param {string} integration name of the integration
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        verifyIntegration(integration: string, options: any = {}): FetchArgs {
-            // verify required parameter 'integration' is not null or undefined
-            if (integration === null || integration === undefined) {
-                throw new RequiredError('integration','Required parameter integration was null or undefined when calling verifyIntegration.');
-            }
-            const localVarPath = `/v1/orgs/self/integrations/{integration}/verifications`
-                .replace(`{${"integration"}}`, encodeURIComponent(String(integration)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
     }
 };
 /**
@@ -13051,45 +7733,6 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
                 });
             };
         },
-        /**
-         * Transfer ownership of an integration to a new user.
-         * @summary Transfer Ownership of an Integration
-         * @param {string} integration name of the integration
-         * @param {TransferOwnershipRequest} body JSON Object
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        transferOwnership(integration: string, body: TransferOwnershipRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
-            const localVarFetchArgs = IntegrationsApiFetchParamCreator(configuration).transferOwnership(integration, body, options);
-            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response;
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * Verify that an integration is healthy.
-         * @summary Verify Integration
-         * @param {string} integration name of the integration
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        verifyIntegration(integration: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<StatusResponse> {
-            const localVarFetchArgs = IntegrationsApiFetchParamCreator(configuration).verifyIntegration(integration, options);
-            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
     }
 };
 
@@ -13137,27 +7780,6 @@ export const IntegrationsApiFactory = function (configuration?: Configuration, f
          */
         listIntegrations(options?: any) {
             return IntegrationsApiFp(configuration).listIntegrations(options)(fetch, basePath);
-        },
-        /**
-         * Transfer ownership of an integration to a new user.
-         * @summary Transfer Ownership of an Integration
-         * @param {string} integration name of the integration
-         * @param {TransferOwnershipRequest} body JSON Object
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        transferOwnership(integration: string, body: TransferOwnershipRequest, options?: any) {
-            return IntegrationsApiFp(configuration).transferOwnership(integration, body, options)(fetch, basePath);
-        },
-        /**
-         * Verify that an integration is healthy.
-         * @summary Verify Integration
-         * @param {string} integration name of the integration
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        verifyIntegration(integration: string, options?: any) {
-            return IntegrationsApiFp(configuration).verifyIntegration(integration, options)(fetch, basePath);
         },
     };
 };
@@ -13211,132 +7833,6 @@ export class IntegrationsApi extends BaseAPI {
     public listIntegrations(options?: any) {
         return IntegrationsApiFp(this.configuration).listIntegrations(options)(this.fetch, this.basePath);
     }
-    /**
-     * Transfer ownership of an integration to a new user.
-     * @summary Transfer Ownership of an Integration
-     * @param {string} integration name of the integration
-     * @param {TransferOwnershipRequest} body JSON Object
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IntegrationsApi
-     */
-    public transferOwnership(integration: string, body: TransferOwnershipRequest, options?: any) {
-        return IntegrationsApiFp(this.configuration).transferOwnership(integration, body, options)(this.fetch, this.basePath);
-    }
-    /**
-     * Verify that an integration is healthy.
-     * @summary Verify Integration
-     * @param {string} integration name of the integration
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof IntegrationsApi
-     */
-    public verifyIntegration(integration: string, options?: any) {
-        return IntegrationsApiFp(this.configuration).verifyIntegration(integration, options)(this.fetch, this.basePath);
-    }
-}
-
-/**
- * LinearApi - fetch parameter creator
- * @export
- */
-export const LinearApiFetchParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * Creates an issue.
-         * @summary Create issue
-         * @param {CreateIssueRequest} body Creates an issue in linear
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createIssue(body: CreateIssueRequest, options: any = {}): FetchArgs {
-            // verify required parameter 'body' is not null or undefined
-            if (body === null || body === undefined) {
-                throw new RequiredError('body','Required parameter body was null or undefined when calling createIssue.');
-            }
-            const localVarPath = `/v1/linear/issue`;
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"CreateIssueRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-/**
- * LinearApi - functional programming interface
- * @export
- */
-export const LinearApiFp = function(configuration?: Configuration) {
-    return {
-        /**
-         * Creates an issue.
-         * @summary Create issue
-         * @param {CreateIssueRequest} body Creates an issue in linear
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createIssue(body: CreateIssueRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<CreateIssueResponse> {
-            const localVarFetchArgs = LinearApiFetchParamCreator(configuration).createIssue(body, options);
-            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-    }
-};
-
-/**
- * LinearApi - factory interface
- * @export
- */
-export const LinearApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
-    return {
-        /**
-         * Creates an issue.
-         * @summary Create issue
-         * @param {CreateIssueRequest} body Creates an issue in linear
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createIssue(body: CreateIssueRequest, options?: any) {
-            return LinearApiFp(configuration).createIssue(body, options)(fetch, basePath);
-        },
-    };
-};
-/**
- * LinearApi - object-oriented interface
- * @export
- * @class LinearApi
- * @extends {BaseAPI}
- */
-export class LinearApi extends BaseAPI {
-    /**
-     * Creates an issue.
-     * @summary Create issue
-     * @param {CreateIssueRequest} body Creates an issue in linear
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof LinearApi
-     */
-    public createIssue(body: CreateIssueRequest, options?: any) {
-        return LinearApiFp(this.configuration).createIssue(body, options)(this.fetch, this.basePath);
-    }
 }
 
 /**
@@ -13345,154 +7841,6 @@ export class LinearApi extends BaseAPI {
  */
 export const OrganizationsApiFetchParamCreator = function (configuration?: Configuration) {
     return {
-        /**
-         * Add an organization to a new cluster.
-         * @summary Add Organization to Cluster
-         * @param {string} clusterName 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        addOrgToCluster(clusterName: string, options: any = {}): FetchArgs {
-            // verify required parameter 'clusterName' is not null or undefined
-            if (clusterName === null || clusterName === undefined) {
-                throw new RequiredError('clusterName','Required parameter clusterName was null or undefined when calling addOrgToCluster.');
-            }
-            const localVarPath = `/v1/orgs/self/clusters/{clusterName}`
-                .replace(`{${"clusterName"}}`, encodeURIComponent(String(clusterName)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Confirm an AWS Marketplace subscription for an organization.
-         * @summary Confirm AWS Marketplace Subscription
-         * @param {MarketplaceSubscriptionRequest} body JSON object
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        confirmMarketplaceSubscription(body: MarketplaceSubscriptionRequest, options: any = {}): FetchArgs {
-            // verify required parameter 'body' is not null or undefined
-            if (body === null || body === undefined) {
-                throw new RequiredError('body','Required parameter body was null or undefined when calling confirmMarketplaceSubscription.');
-            }
-            const localVarPath = `/v1/orgs/self/billing/marketplace`;
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"MarketplaceSubscriptionRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Get the rate card for an organization.
-         * @summary Get Rate Card
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getActiveRateCard(options: any = {}): FetchArgs {
-            const localVarPath = `/v1/orgs/self/billing/cards`;
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * List all billing line items for a specified month and year.
-         * @summary Retrieve billing line items.
-         * @param {number} [month] 
-         * @param {number} [year] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getBillingLineItems(month?: number, year?: number, options: any = {}): FetchArgs {
-            const localVarPath = `/v1/orgs/self/billing/lineitems`;
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            if (month !== undefined) {
-                localVarQueryParameter['month'] = month;
-            }
-            if (year !== undefined) {
-                localVarQueryParameter['year'] = year;
-            }
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Get the redirect to customer billing portal.
-         * @summary Retrieve customer billing portal
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getBillingPortal(options: any = {}): FetchArgs {
-            const localVarPath = `/v1/orgs/self/billing`;
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Get metrics for all VIs with metrics enabled.
-         * @summary Get metrics
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getMetrics(options: any = {}): FetchArgs {
-            const localVarPath = `/v1/orgs/self/metrics`;
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
         /**
          * Retrieve information about current organization.
          * @summary Get Organization
@@ -13514,384 +7862,6 @@ export const OrganizationsApiFetchParamCreator = function (configuration?: Confi
                 options: localVarRequestOptions,
             };
         },
-        /**
-         * Retrieve usage levels for current organization.
-         * @summary Get Organization Compute Time-Series data
-         * @param {string} [month] 
-         * @param {string} [year] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getOrganizationCompute(month?: string, year?: string, options: any = {}): FetchArgs {
-            const localVarPath = `/v1/orgs/self/usage/compute`;
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            if (month !== undefined) {
-                localVarQueryParameter['month'] = month;
-            }
-            if (year !== undefined) {
-                localVarQueryParameter['year'] = year;
-            }
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Retrieve usage levels for current organization.
-         * @summary Get Organization ingest usage data
-         * @param {string} [month] 
-         * @param {string} [year] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getOrganizationIngest(month?: string, year?: string, options: any = {}): FetchArgs {
-            const localVarPath = `/v1/orgs/self/usage/ingest`;
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            if (month !== undefined) {
-                localVarQueryParameter['month'] = month;
-            }
-            if (year !== undefined) {
-                localVarQueryParameter['year'] = year;
-            }
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Retrieve settings for current organization.
-         * @summary Get Organization Settings
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getOrganizationSettings(options: any = {}): FetchArgs {
-            const localVarPath = `/v1/orgs/self/settings`;
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Retrieve usage levels for current organization.
-         * @summary Get Organization Storage Time-Series data
-         * @param {string} [month] 
-         * @param {string} [year] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getOrganizationStorage(month?: string, year?: string, options: any = {}): FetchArgs {
-            const localVarPath = `/v1/orgs/self/usage/storage`;
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            if (month !== undefined) {
-                localVarQueryParameter['month'] = month;
-            }
-            if (year !== undefined) {
-                localVarQueryParameter['year'] = year;
-            }
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Retrieve usage levels for current organization.
-         * @summary Get Organization trial credit usage data
-         * @param {string} [month] 
-         * @param {string} [year] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getOrganizationTrialCredit(month?: string, year?: string, options: any = {}): FetchArgs {
-            const localVarPath = `/v1/orgs/self/usage/trial`;
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            if (month !== undefined) {
-                localVarQueryParameter['month'] = month;
-            }
-            if (year !== undefined) {
-                localVarQueryParameter['year'] = year;
-            }
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Retrieve usage levels for current organization.
-         * @summary Get Organization Usage
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getOrganizationUsage(options: any = {}): FetchArgs {
-            const localVarPath = `/v1/orgs/self/usage`;
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Get the payment information for your organization.
-         * @summary Retrieve payment information about payment method
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getPaymentMethod(options: any = {}): FetchArgs {
-            const localVarPath = `/v1/orgs/self/payment/method`;
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Get stored payment information for your organization.
-         * @summary Retrieve payment information
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getPaymentSource(options: any = {}): FetchArgs {
-            const localVarPath = `/v1/orgs/self/payment/invoices`;
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Get stored sso information for your organization.
-         * @summary Retrieve sso settings
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getSsoSettings(options: any = {}): FetchArgs {
-            const localVarPath = `/v1/orgs/self/sso`;
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Fetch time series metrics, for a specified VI, time interval, and granularity.
-         * @summary Get time series metrics.
-         * @param {string} [virtual_instance_id] 
-         * @param {'COLLECTION' | 'QUERY_LAMBDA' | 'VIRTUAL_INSTANCE' | 'VIRTUAL_INSTANCE_QUERY' | 'VIRTUAL_INSTANCE_STORAGE' | 'SLOW_QUERY_COUNT' | 'SLOW_QUERIES' | 'PERCENTILE_QUERY_LATENCY' | 'QUERY_COUNT' | 'COLLECTION_BULK_INGEST_CPU'} [metric_type] 
-         * @param {number} [start] 
-         * @param {number} [end] 
-         * @param {number} [granularity] 
-         * @param {number} [limit] 
-         * @param {string} [collection_path] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getTimeSeriesMetrics(virtual_instance_id?: string, metric_type?: 'COLLECTION' | 'QUERY_LAMBDA' | 'VIRTUAL_INSTANCE' | 'VIRTUAL_INSTANCE_QUERY' | 'VIRTUAL_INSTANCE_STORAGE' | 'SLOW_QUERY_COUNT' | 'SLOW_QUERIES' | 'PERCENTILE_QUERY_LATENCY' | 'QUERY_COUNT' | 'COLLECTION_BULK_INGEST_CPU', start?: number, end?: number, granularity?: number, limit?: number, collection_path?: string, options: any = {}): FetchArgs {
-            const localVarPath = `/v1/orgs/self/metrics/timeSeries`;
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            if (virtual_instance_id !== undefined) {
-                localVarQueryParameter['virtual_instance_id'] = virtual_instance_id;
-            }
-            if (metric_type !== undefined) {
-                localVarQueryParameter['metric_type'] = metric_type;
-            }
-            if (start !== undefined) {
-                localVarQueryParameter['start'] = start;
-            }
-            if (end !== undefined) {
-                localVarQueryParameter['end'] = end;
-            }
-            if (granularity !== undefined) {
-                localVarQueryParameter['granularity'] = granularity;
-            }
-            if (limit !== undefined) {
-                localVarQueryParameter['limit'] = limit;
-            }
-            if (collection_path !== undefined) {
-                localVarQueryParameter['collection_path'] = collection_path;
-            }
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * List all credits for an organization.
-         * @summary Retrieve credits.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listCredits(options: any = {}): FetchArgs {
-            const localVarPath = `/v1/orgs/self/billing/credits`;
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Update MFA settings for your organization.
-         * @summary Update MFA settings
-         * @param {UpdateOrgMfaSettingsRequest} body JSON object
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updateMfaSettings(body: UpdateOrgMfaSettingsRequest, options: any = {}): FetchArgs {
-            // verify required parameter 'body' is not null or undefined
-            if (body === null || body === undefined) {
-                throw new RequiredError('body','Required parameter body was null or undefined when calling updateMfaSettings.');
-            }
-            const localVarPath = `/v1/orgs/self/mfa`;
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"UpdateOrgMfaSettingsRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Update payment settings with new Stripe Source id.
-         * @summary Update Payment Information
-         * @param {UpdateOrgPaymentMethodRequest} body JSON object
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updatePaymentSource(body: UpdateOrgPaymentMethodRequest, options: any = {}): FetchArgs {
-            // verify required parameter 'body' is not null or undefined
-            if (body === null || body === undefined) {
-                throw new RequiredError('body','Required parameter body was null or undefined when calling updatePaymentSource.');
-            }
-            const localVarPath = `/v1/orgs/self/payment/method`;
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"UpdateOrgPaymentMethodRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Update SSO settings with certificates and redirect links.
-         * @summary Update SSO settings
-         * @param {UpdateSsoRequest} body JSON object
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updateSsoSettings(body: UpdateSsoRequest, options: any = {}): FetchArgs {
-            // verify required parameter 'body' is not null or undefined
-            if (body === null || body === undefined) {
-                throw new RequiredError('body','Required parameter body was null or undefined when calling updateSsoSettings.');
-            }
-            const localVarPath = `/v1/orgs/self/sso`;
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"UpdateSsoRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
     }
 };
 /**
@@ -13901,118 +7871,6 @@ export const OrganizationsApiFetchParamCreator = function (configuration?: Confi
 export const OrganizationsApiFp = function(configuration?: Configuration) {
     return {
         /**
-         * Add an organization to a new cluster.
-         * @summary Add Organization to Cluster
-         * @param {string} clusterName 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        addOrgToCluster(clusterName: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
-            const localVarFetchArgs = OrganizationsApiFetchParamCreator(configuration).addOrgToCluster(clusterName, options);
-            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response;
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * Confirm an AWS Marketplace subscription for an organization.
-         * @summary Confirm AWS Marketplace Subscription
-         * @param {MarketplaceSubscriptionRequest} body JSON object
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        confirmMarketplaceSubscription(body: MarketplaceSubscriptionRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
-            const localVarFetchArgs = OrganizationsApiFetchParamCreator(configuration).confirmMarketplaceSubscription(body, options);
-            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response;
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * Get the rate card for an organization.
-         * @summary Get Rate Card
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getActiveRateCard(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<RateCardResponse> {
-            const localVarFetchArgs = OrganizationsApiFetchParamCreator(configuration).getActiveRateCard(options);
-            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * List all billing line items for a specified month and year.
-         * @summary Retrieve billing line items.
-         * @param {number} [month] 
-         * @param {number} [year] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getBillingLineItems(month?: number, year?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<LineItemsResponse> {
-            const localVarFetchArgs = OrganizationsApiFetchParamCreator(configuration).getBillingLineItems(month, year, options);
-            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * Get the redirect to customer billing portal.
-         * @summary Retrieve customer billing portal
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getBillingPortal(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<OrgBillingPortalResponse> {
-            const localVarFetchArgs = OrganizationsApiFetchParamCreator(configuration).getBillingPortal(options);
-            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * Get metrics for all VIs with metrics enabled.
-         * @summary Get metrics
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getMetrics(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
-            const localVarFetchArgs = OrganizationsApiFetchParamCreator(configuration).getMetrics(options);
-            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response;
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
          * Retrieve information about current organization.
          * @summary Get Organization
          * @param {*} [options] Override http request option.
@@ -14020,276 +7878,6 @@ export const OrganizationsApiFp = function(configuration?: Configuration) {
          */
         getOrganization(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<OrganizationResponse> {
             const localVarFetchArgs = OrganizationsApiFetchParamCreator(configuration).getOrganization(options);
-            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * Retrieve usage levels for current organization.
-         * @summary Get Organization Compute Time-Series data
-         * @param {string} [month] 
-         * @param {string} [year] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getOrganizationCompute(month?: string, year?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<OrgComputeResponse> {
-            const localVarFetchArgs = OrganizationsApiFetchParamCreator(configuration).getOrganizationCompute(month, year, options);
-            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * Retrieve usage levels for current organization.
-         * @summary Get Organization ingest usage data
-         * @param {string} [month] 
-         * @param {string} [year] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getOrganizationIngest(month?: string, year?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<OrgIngestResponse> {
-            const localVarFetchArgs = OrganizationsApiFetchParamCreator(configuration).getOrganizationIngest(month, year, options);
-            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * Retrieve settings for current organization.
-         * @summary Get Organization Settings
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getOrganizationSettings(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<OrgSettingsResponse> {
-            const localVarFetchArgs = OrganizationsApiFetchParamCreator(configuration).getOrganizationSettings(options);
-            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * Retrieve usage levels for current organization.
-         * @summary Get Organization Storage Time-Series data
-         * @param {string} [month] 
-         * @param {string} [year] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getOrganizationStorage(month?: string, year?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<OrgStorageResponse> {
-            const localVarFetchArgs = OrganizationsApiFetchParamCreator(configuration).getOrganizationStorage(month, year, options);
-            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * Retrieve usage levels for current organization.
-         * @summary Get Organization trial credit usage data
-         * @param {string} [month] 
-         * @param {string} [year] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getOrganizationTrialCredit(month?: string, year?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<OrgTrialUsageResponse> {
-            const localVarFetchArgs = OrganizationsApiFetchParamCreator(configuration).getOrganizationTrialCredit(month, year, options);
-            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * Retrieve usage levels for current organization.
-         * @summary Get Organization Usage
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getOrganizationUsage(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<OrgUsageResponse> {
-            const localVarFetchArgs = OrganizationsApiFetchParamCreator(configuration).getOrganizationUsage(options);
-            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * Get the payment information for your organization.
-         * @summary Retrieve payment information about payment method
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getPaymentMethod(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<OrgPaymentMethodResponse> {
-            const localVarFetchArgs = OrganizationsApiFetchParamCreator(configuration).getPaymentMethod(options);
-            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * Get stored payment information for your organization.
-         * @summary Retrieve payment information
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getPaymentSource(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<OrgInvoicesResponse> {
-            const localVarFetchArgs = OrganizationsApiFetchParamCreator(configuration).getPaymentSource(options);
-            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * Get stored sso information for your organization.
-         * @summary Retrieve sso settings
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getSsoSettings(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<OrgSettingsResponse> {
-            const localVarFetchArgs = OrganizationsApiFetchParamCreator(configuration).getSsoSettings(options);
-            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * Fetch time series metrics, for a specified VI, time interval, and granularity.
-         * @summary Get time series metrics.
-         * @param {string} [virtual_instance_id] 
-         * @param {'COLLECTION' | 'QUERY_LAMBDA' | 'VIRTUAL_INSTANCE' | 'VIRTUAL_INSTANCE_QUERY' | 'VIRTUAL_INSTANCE_STORAGE' | 'SLOW_QUERY_COUNT' | 'SLOW_QUERIES' | 'PERCENTILE_QUERY_LATENCY' | 'QUERY_COUNT' | 'COLLECTION_BULK_INGEST_CPU'} [metric_type] 
-         * @param {number} [start] 
-         * @param {number} [end] 
-         * @param {number} [granularity] 
-         * @param {number} [limit] 
-         * @param {string} [collection_path] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getTimeSeriesMetrics(virtual_instance_id?: string, metric_type?: 'COLLECTION' | 'QUERY_LAMBDA' | 'VIRTUAL_INSTANCE' | 'VIRTUAL_INSTANCE_QUERY' | 'VIRTUAL_INSTANCE_STORAGE' | 'SLOW_QUERY_COUNT' | 'SLOW_QUERIES' | 'PERCENTILE_QUERY_LATENCY' | 'QUERY_COUNT' | 'COLLECTION_BULK_INGEST_CPU', start?: number, end?: number, granularity?: number, limit?: number, collection_path?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<TimeSeriesMetricsResponse> {
-            const localVarFetchArgs = OrganizationsApiFetchParamCreator(configuration).getTimeSeriesMetrics(virtual_instance_id, metric_type, start, end, granularity, limit, collection_path, options);
-            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * List all credits for an organization.
-         * @summary Retrieve credits.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listCredits(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ListCreditsResponse> {
-            const localVarFetchArgs = OrganizationsApiFetchParamCreator(configuration).listCredits(options);
-            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * Update MFA settings for your organization.
-         * @summary Update MFA settings
-         * @param {UpdateOrgMfaSettingsRequest} body JSON object
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updateMfaSettings(body: UpdateOrgMfaSettingsRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<OrgSettingsResponse> {
-            const localVarFetchArgs = OrganizationsApiFetchParamCreator(configuration).updateMfaSettings(body, options);
-            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * Update payment settings with new Stripe Source id.
-         * @summary Update Payment Information
-         * @param {UpdateOrgPaymentMethodRequest} body JSON object
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updatePaymentSource(body: UpdateOrgPaymentMethodRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<OrgPaymentMethodResponse> {
-            const localVarFetchArgs = OrganizationsApiFetchParamCreator(configuration).updatePaymentSource(body, options);
-            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * Update SSO settings with certificates and redirect links.
-         * @summary Update SSO settings
-         * @param {UpdateSsoRequest} body JSON object
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updateSsoSettings(body: UpdateSsoRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<OrgSettingsResponse> {
-            const localVarFetchArgs = OrganizationsApiFetchParamCreator(configuration).updateSsoSettings(body, options);
             return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -14310,64 +7898,6 @@ export const OrganizationsApiFp = function(configuration?: Configuration) {
 export const OrganizationsApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
     return {
         /**
-         * Add an organization to a new cluster.
-         * @summary Add Organization to Cluster
-         * @param {string} clusterName 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        addOrgToCluster(clusterName: string, options?: any) {
-            return OrganizationsApiFp(configuration).addOrgToCluster(clusterName, options)(fetch, basePath);
-        },
-        /**
-         * Confirm an AWS Marketplace subscription for an organization.
-         * @summary Confirm AWS Marketplace Subscription
-         * @param {MarketplaceSubscriptionRequest} body JSON object
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        confirmMarketplaceSubscription(body: MarketplaceSubscriptionRequest, options?: any) {
-            return OrganizationsApiFp(configuration).confirmMarketplaceSubscription(body, options)(fetch, basePath);
-        },
-        /**
-         * Get the rate card for an organization.
-         * @summary Get Rate Card
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getActiveRateCard(options?: any) {
-            return OrganizationsApiFp(configuration).getActiveRateCard(options)(fetch, basePath);
-        },
-        /**
-         * List all billing line items for a specified month and year.
-         * @summary Retrieve billing line items.
-         * @param {number} [month] 
-         * @param {number} [year] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getBillingLineItems(month?: number, year?: number, options?: any) {
-            return OrganizationsApiFp(configuration).getBillingLineItems(month, year, options)(fetch, basePath);
-        },
-        /**
-         * Get the redirect to customer billing portal.
-         * @summary Retrieve customer billing portal
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getBillingPortal(options?: any) {
-            return OrganizationsApiFp(configuration).getBillingPortal(options)(fetch, basePath);
-        },
-        /**
-         * Get metrics for all VIs with metrics enabled.
-         * @summary Get metrics
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getMetrics(options?: any) {
-            return OrganizationsApiFp(configuration).getMetrics(options)(fetch, basePath);
-        },
-        /**
          * Retrieve information about current organization.
          * @summary Get Organization
          * @param {*} [options] Override http request option.
@@ -14375,150 +7905,6 @@ export const OrganizationsApiFactory = function (configuration?: Configuration, 
          */
         getOrganization(options?: any) {
             return OrganizationsApiFp(configuration).getOrganization(options)(fetch, basePath);
-        },
-        /**
-         * Retrieve usage levels for current organization.
-         * @summary Get Organization Compute Time-Series data
-         * @param {string} [month] 
-         * @param {string} [year] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getOrganizationCompute(month?: string, year?: string, options?: any) {
-            return OrganizationsApiFp(configuration).getOrganizationCompute(month, year, options)(fetch, basePath);
-        },
-        /**
-         * Retrieve usage levels for current organization.
-         * @summary Get Organization ingest usage data
-         * @param {string} [month] 
-         * @param {string} [year] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getOrganizationIngest(month?: string, year?: string, options?: any) {
-            return OrganizationsApiFp(configuration).getOrganizationIngest(month, year, options)(fetch, basePath);
-        },
-        /**
-         * Retrieve settings for current organization.
-         * @summary Get Organization Settings
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getOrganizationSettings(options?: any) {
-            return OrganizationsApiFp(configuration).getOrganizationSettings(options)(fetch, basePath);
-        },
-        /**
-         * Retrieve usage levels for current organization.
-         * @summary Get Organization Storage Time-Series data
-         * @param {string} [month] 
-         * @param {string} [year] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getOrganizationStorage(month?: string, year?: string, options?: any) {
-            return OrganizationsApiFp(configuration).getOrganizationStorage(month, year, options)(fetch, basePath);
-        },
-        /**
-         * Retrieve usage levels for current organization.
-         * @summary Get Organization trial credit usage data
-         * @param {string} [month] 
-         * @param {string} [year] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getOrganizationTrialCredit(month?: string, year?: string, options?: any) {
-            return OrganizationsApiFp(configuration).getOrganizationTrialCredit(month, year, options)(fetch, basePath);
-        },
-        /**
-         * Retrieve usage levels for current organization.
-         * @summary Get Organization Usage
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getOrganizationUsage(options?: any) {
-            return OrganizationsApiFp(configuration).getOrganizationUsage(options)(fetch, basePath);
-        },
-        /**
-         * Get the payment information for your organization.
-         * @summary Retrieve payment information about payment method
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getPaymentMethod(options?: any) {
-            return OrganizationsApiFp(configuration).getPaymentMethod(options)(fetch, basePath);
-        },
-        /**
-         * Get stored payment information for your organization.
-         * @summary Retrieve payment information
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getPaymentSource(options?: any) {
-            return OrganizationsApiFp(configuration).getPaymentSource(options)(fetch, basePath);
-        },
-        /**
-         * Get stored sso information for your organization.
-         * @summary Retrieve sso settings
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getSsoSettings(options?: any) {
-            return OrganizationsApiFp(configuration).getSsoSettings(options)(fetch, basePath);
-        },
-        /**
-         * Fetch time series metrics, for a specified VI, time interval, and granularity.
-         * @summary Get time series metrics.
-         * @param {string} [virtual_instance_id] 
-         * @param {'COLLECTION' | 'QUERY_LAMBDA' | 'VIRTUAL_INSTANCE' | 'VIRTUAL_INSTANCE_QUERY' | 'VIRTUAL_INSTANCE_STORAGE' | 'SLOW_QUERY_COUNT' | 'SLOW_QUERIES' | 'PERCENTILE_QUERY_LATENCY' | 'QUERY_COUNT' | 'COLLECTION_BULK_INGEST_CPU'} [metric_type] 
-         * @param {number} [start] 
-         * @param {number} [end] 
-         * @param {number} [granularity] 
-         * @param {number} [limit] 
-         * @param {string} [collection_path] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getTimeSeriesMetrics(virtual_instance_id?: string, metric_type?: 'COLLECTION' | 'QUERY_LAMBDA' | 'VIRTUAL_INSTANCE' | 'VIRTUAL_INSTANCE_QUERY' | 'VIRTUAL_INSTANCE_STORAGE' | 'SLOW_QUERY_COUNT' | 'SLOW_QUERIES' | 'PERCENTILE_QUERY_LATENCY' | 'QUERY_COUNT' | 'COLLECTION_BULK_INGEST_CPU', start?: number, end?: number, granularity?: number, limit?: number, collection_path?: string, options?: any) {
-            return OrganizationsApiFp(configuration).getTimeSeriesMetrics(virtual_instance_id, metric_type, start, end, granularity, limit, collection_path, options)(fetch, basePath);
-        },
-        /**
-         * List all credits for an organization.
-         * @summary Retrieve credits.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listCredits(options?: any) {
-            return OrganizationsApiFp(configuration).listCredits(options)(fetch, basePath);
-        },
-        /**
-         * Update MFA settings for your organization.
-         * @summary Update MFA settings
-         * @param {UpdateOrgMfaSettingsRequest} body JSON object
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updateMfaSettings(body: UpdateOrgMfaSettingsRequest, options?: any) {
-            return OrganizationsApiFp(configuration).updateMfaSettings(body, options)(fetch, basePath);
-        },
-        /**
-         * Update payment settings with new Stripe Source id.
-         * @summary Update Payment Information
-         * @param {UpdateOrgPaymentMethodRequest} body JSON object
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updatePaymentSource(body: UpdateOrgPaymentMethodRequest, options?: any) {
-            return OrganizationsApiFp(configuration).updatePaymentSource(body, options)(fetch, basePath);
-        },
-        /**
-         * Update SSO settings with certificates and redirect links.
-         * @summary Update SSO settings
-         * @param {UpdateSsoRequest} body JSON object
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updateSsoSettings(body: UpdateSsoRequest, options?: any) {
-            return OrganizationsApiFp(configuration).updateSsoSettings(body, options)(fetch, basePath);
         },
     };
 };
@@ -14530,70 +7916,6 @@ export const OrganizationsApiFactory = function (configuration?: Configuration, 
  */
 export class OrganizationsApi extends BaseAPI {
     /**
-     * Add an organization to a new cluster.
-     * @summary Add Organization to Cluster
-     * @param {string} clusterName 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof OrganizationsApi
-     */
-    public addOrgToCluster(clusterName: string, options?: any) {
-        return OrganizationsApiFp(this.configuration).addOrgToCluster(clusterName, options)(this.fetch, this.basePath);
-    }
-    /**
-     * Confirm an AWS Marketplace subscription for an organization.
-     * @summary Confirm AWS Marketplace Subscription
-     * @param {MarketplaceSubscriptionRequest} body JSON object
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof OrganizationsApi
-     */
-    public confirmMarketplaceSubscription(body: MarketplaceSubscriptionRequest, options?: any) {
-        return OrganizationsApiFp(this.configuration).confirmMarketplaceSubscription(body, options)(this.fetch, this.basePath);
-    }
-    /**
-     * Get the rate card for an organization.
-     * @summary Get Rate Card
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof OrganizationsApi
-     */
-    public getActiveRateCard(options?: any) {
-        return OrganizationsApiFp(this.configuration).getActiveRateCard(options)(this.fetch, this.basePath);
-    }
-    /**
-     * List all billing line items for a specified month and year.
-     * @summary Retrieve billing line items.
-     * @param {number} [month] 
-     * @param {number} [year] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof OrganizationsApi
-     */
-    public getBillingLineItems(month?: number, year?: number, options?: any) {
-        return OrganizationsApiFp(this.configuration).getBillingLineItems(month, year, options)(this.fetch, this.basePath);
-    }
-    /**
-     * Get the redirect to customer billing portal.
-     * @summary Retrieve customer billing portal
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof OrganizationsApi
-     */
-    public getBillingPortal(options?: any) {
-        return OrganizationsApiFp(this.configuration).getBillingPortal(options)(this.fetch, this.basePath);
-    }
-    /**
-     * Get metrics for all VIs with metrics enabled.
-     * @summary Get metrics
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof OrganizationsApi
-     */
-    public getMetrics(options?: any) {
-        return OrganizationsApiFp(this.configuration).getMetrics(options)(this.fetch, this.basePath);
-    }
-    /**
      * Retrieve information about current organization.
      * @summary Get Organization
      * @param {*} [options] Override http request option.
@@ -14602,383 +7924,6 @@ export class OrganizationsApi extends BaseAPI {
      */
     public getOrganization(options?: any) {
         return OrganizationsApiFp(this.configuration).getOrganization(options)(this.fetch, this.basePath);
-    }
-    /**
-     * Retrieve usage levels for current organization.
-     * @summary Get Organization Compute Time-Series data
-     * @param {string} [month] 
-     * @param {string} [year] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof OrganizationsApi
-     */
-    public getOrganizationCompute(month?: string, year?: string, options?: any) {
-        return OrganizationsApiFp(this.configuration).getOrganizationCompute(month, year, options)(this.fetch, this.basePath);
-    }
-    /**
-     * Retrieve usage levels for current organization.
-     * @summary Get Organization ingest usage data
-     * @param {string} [month] 
-     * @param {string} [year] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof OrganizationsApi
-     */
-    public getOrganizationIngest(month?: string, year?: string, options?: any) {
-        return OrganizationsApiFp(this.configuration).getOrganizationIngest(month, year, options)(this.fetch, this.basePath);
-    }
-    /**
-     * Retrieve settings for current organization.
-     * @summary Get Organization Settings
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof OrganizationsApi
-     */
-    public getOrganizationSettings(options?: any) {
-        return OrganizationsApiFp(this.configuration).getOrganizationSettings(options)(this.fetch, this.basePath);
-    }
-    /**
-     * Retrieve usage levels for current organization.
-     * @summary Get Organization Storage Time-Series data
-     * @param {string} [month] 
-     * @param {string} [year] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof OrganizationsApi
-     */
-    public getOrganizationStorage(month?: string, year?: string, options?: any) {
-        return OrganizationsApiFp(this.configuration).getOrganizationStorage(month, year, options)(this.fetch, this.basePath);
-    }
-    /**
-     * Retrieve usage levels for current organization.
-     * @summary Get Organization trial credit usage data
-     * @param {string} [month] 
-     * @param {string} [year] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof OrganizationsApi
-     */
-    public getOrganizationTrialCredit(month?: string, year?: string, options?: any) {
-        return OrganizationsApiFp(this.configuration).getOrganizationTrialCredit(month, year, options)(this.fetch, this.basePath);
-    }
-    /**
-     * Retrieve usage levels for current organization.
-     * @summary Get Organization Usage
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof OrganizationsApi
-     */
-    public getOrganizationUsage(options?: any) {
-        return OrganizationsApiFp(this.configuration).getOrganizationUsage(options)(this.fetch, this.basePath);
-    }
-    /**
-     * Get the payment information for your organization.
-     * @summary Retrieve payment information about payment method
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof OrganizationsApi
-     */
-    public getPaymentMethod(options?: any) {
-        return OrganizationsApiFp(this.configuration).getPaymentMethod(options)(this.fetch, this.basePath);
-    }
-    /**
-     * Get stored payment information for your organization.
-     * @summary Retrieve payment information
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof OrganizationsApi
-     */
-    public getPaymentSource(options?: any) {
-        return OrganizationsApiFp(this.configuration).getPaymentSource(options)(this.fetch, this.basePath);
-    }
-    /**
-     * Get stored sso information for your organization.
-     * @summary Retrieve sso settings
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof OrganizationsApi
-     */
-    public getSsoSettings(options?: any) {
-        return OrganizationsApiFp(this.configuration).getSsoSettings(options)(this.fetch, this.basePath);
-    }
-    /**
-     * Fetch time series metrics, for a specified VI, time interval, and granularity.
-     * @summary Get time series metrics.
-     * @param {string} [virtual_instance_id] 
-     * @param {'COLLECTION' | 'QUERY_LAMBDA' | 'VIRTUAL_INSTANCE' | 'VIRTUAL_INSTANCE_QUERY' | 'VIRTUAL_INSTANCE_STORAGE' | 'SLOW_QUERY_COUNT' | 'SLOW_QUERIES' | 'PERCENTILE_QUERY_LATENCY' | 'QUERY_COUNT' | 'COLLECTION_BULK_INGEST_CPU'} [metric_type] 
-     * @param {number} [start] 
-     * @param {number} [end] 
-     * @param {number} [granularity] 
-     * @param {number} [limit] 
-     * @param {string} [collection_path] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof OrganizationsApi
-     */
-    public getTimeSeriesMetrics(virtual_instance_id?: string, metric_type?: 'COLLECTION' | 'QUERY_LAMBDA' | 'VIRTUAL_INSTANCE' | 'VIRTUAL_INSTANCE_QUERY' | 'VIRTUAL_INSTANCE_STORAGE' | 'SLOW_QUERY_COUNT' | 'SLOW_QUERIES' | 'PERCENTILE_QUERY_LATENCY' | 'QUERY_COUNT' | 'COLLECTION_BULK_INGEST_CPU', start?: number, end?: number, granularity?: number, limit?: number, collection_path?: string, options?: any) {
-        return OrganizationsApiFp(this.configuration).getTimeSeriesMetrics(virtual_instance_id, metric_type, start, end, granularity, limit, collection_path, options)(this.fetch, this.basePath);
-    }
-    /**
-     * List all credits for an organization.
-     * @summary Retrieve credits.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof OrganizationsApi
-     */
-    public listCredits(options?: any) {
-        return OrganizationsApiFp(this.configuration).listCredits(options)(this.fetch, this.basePath);
-    }
-    /**
-     * Update MFA settings for your organization.
-     * @summary Update MFA settings
-     * @param {UpdateOrgMfaSettingsRequest} body JSON object
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof OrganizationsApi
-     */
-    public updateMfaSettings(body: UpdateOrgMfaSettingsRequest, options?: any) {
-        return OrganizationsApiFp(this.configuration).updateMfaSettings(body, options)(this.fetch, this.basePath);
-    }
-    /**
-     * Update payment settings with new Stripe Source id.
-     * @summary Update Payment Information
-     * @param {UpdateOrgPaymentMethodRequest} body JSON object
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof OrganizationsApi
-     */
-    public updatePaymentSource(body: UpdateOrgPaymentMethodRequest, options?: any) {
-        return OrganizationsApiFp(this.configuration).updatePaymentSource(body, options)(this.fetch, this.basePath);
-    }
-    /**
-     * Update SSO settings with certificates and redirect links.
-     * @summary Update SSO settings
-     * @param {UpdateSsoRequest} body JSON object
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof OrganizationsApi
-     */
-    public updateSsoSettings(body: UpdateSsoRequest, options?: any) {
-        return OrganizationsApiFp(this.configuration).updateSsoSettings(body, options)(this.fetch, this.basePath);
-    }
-}
-
-/**
- * ProvisionApi - fetch parameter creator
- * @export
- */
-export const ProvisionApiFetchParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * 
-         * @summary Provision an organization
-         * @param {CreateOrganizationRequest} body JSON object
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        provisionOrganization(body: CreateOrganizationRequest, options: any = {}): FetchArgs {
-            // verify required parameter 'body' is not null or undefined
-            if (body === null || body === undefined) {
-                throw new RequiredError('body','Required parameter body was null or undefined when calling provisionOrganization.');
-            }
-            const localVarPath = `/v1/provision/orgs`;
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"CreateOrganizationRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Provision a user
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        provisionUser(options: any = {}): FetchArgs {
-            const localVarPath = `/v1/provision/orgs/self/users`;
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Resend verification email
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        verifyEmail(options: any = {}): FetchArgs {
-            const localVarPath = `/v1/provision/orgs/self/verification/email`;
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-/**
- * ProvisionApi - functional programming interface
- * @export
- */
-export const ProvisionApiFp = function(configuration?: Configuration) {
-    return {
-        /**
-         * 
-         * @summary Provision an organization
-         * @param {CreateOrganizationRequest} body JSON object
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        provisionOrganization(body: CreateOrganizationRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
-            const localVarFetchArgs = ProvisionApiFetchParamCreator(configuration).provisionOrganization(body, options);
-            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response;
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary Provision a user
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        provisionUser(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
-            const localVarFetchArgs = ProvisionApiFetchParamCreator(configuration).provisionUser(options);
-            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response;
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary Resend verification email
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        verifyEmail(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
-            const localVarFetchArgs = ProvisionApiFetchParamCreator(configuration).verifyEmail(options);
-            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response;
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-    }
-};
-
-/**
- * ProvisionApi - factory interface
- * @export
- */
-export const ProvisionApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
-    return {
-        /**
-         * 
-         * @summary Provision an organization
-         * @param {CreateOrganizationRequest} body JSON object
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        provisionOrganization(body: CreateOrganizationRequest, options?: any) {
-            return ProvisionApiFp(configuration).provisionOrganization(body, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary Provision a user
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        provisionUser(options?: any) {
-            return ProvisionApiFp(configuration).provisionUser(options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary Resend verification email
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        verifyEmail(options?: any) {
-            return ProvisionApiFp(configuration).verifyEmail(options)(fetch, basePath);
-        },
-    };
-};
-/**
- * ProvisionApi - object-oriented interface
- * @export
- * @class ProvisionApi
- * @extends {BaseAPI}
- */
-export class ProvisionApi extends BaseAPI {
-    /**
-     * 
-     * @summary Provision an organization
-     * @param {CreateOrganizationRequest} body JSON object
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ProvisionApi
-     */
-    public provisionOrganization(body: CreateOrganizationRequest, options?: any) {
-        return ProvisionApiFp(this.configuration).provisionOrganization(body, options)(this.fetch, this.basePath);
-    }
-    /**
-     * 
-     * @summary Provision a user
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ProvisionApi
-     */
-    public provisionUser(options?: any) {
-        return ProvisionApiFp(this.configuration).provisionUser(options)(this.fetch, this.basePath);
-    }
-    /**
-     * 
-     * @summary Resend verification email
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ProvisionApi
-     */
-    public verifyEmail(options?: any) {
-        return ProvisionApiFp(this.configuration).verifyEmail(options)(this.fetch, this.basePath);
     }
 }
 
@@ -14989,8 +7934,35 @@ export class ProvisionApi extends BaseAPI {
 export const QueriesApiFetchParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Returns information for a query
-         * @summary Get information for a query
+         * Attempts to cancel an actively-running query.
+         * @summary Cancel Query
+         * @param {string} queryId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        cancelQuery(queryId: string, options: any = {}): FetchArgs {
+            // verify required parameter 'queryId' is not null or undefined
+            if (queryId === null || queryId === undefined) {
+                throw new RequiredError('queryId','Required parameter queryId was null or undefined when calling cancelQuery.');
+            }
+            const localVarPath = `/v1/orgs/self/queries/{queryId}`
+                .replace(`{${"queryId"}}`, encodeURIComponent(String(queryId)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'DELETE' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns information about a query.
+         * @summary Retrieve Query
          * @param {string} queryId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -15016,93 +7988,31 @@ export const QueriesApiFetchParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * 
-         * @summary Fetch paginated query results
+         * Returns a page of query results.
+         * @summary Retrieve Query Results Page
          * @param {string} queryId 
-         * @param {string} cursor 
-         * @param {number} [docs] 
-         * @param {number} [offset] 
+         * @param {string} [cursor] Cursor to current page. If unset, will default to the first page.
+         * @param {number} [docs] Number of documents to fetch.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getQueryPagination(queryId: string, cursor: string, docs?: number, offset?: number, options: any = {}): FetchArgs {
+        getQueryResults(queryId: string, cursor?: string, docs?: number, options: any = {}): FetchArgs {
             // verify required parameter 'queryId' is not null or undefined
             if (queryId === null || queryId === undefined) {
-                throw new RequiredError('queryId','Required parameter queryId was null or undefined when calling getQueryPagination.');
+                throw new RequiredError('queryId','Required parameter queryId was null or undefined when calling getQueryResults.');
             }
-            // verify required parameter 'cursor' is not null or undefined
-            if (cursor === null || cursor === undefined) {
-                throw new RequiredError('cursor','Required parameter cursor was null or undefined when calling getQueryPagination.');
-            }
-            const localVarPath = `/v1/orgs/self/queries/{queryId}/pages/{cursor}`
-                .replace(`{${"queryId"}}`, encodeURIComponent(String(queryId)))
-                .replace(`{${"cursor"}}`, encodeURIComponent(String(cursor)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            if (docs !== undefined) {
-                localVarQueryParameter['docs'] = docs;
-            }
-            if (offset !== undefined) {
-                localVarQueryParameter['offset'] = offset;
-            }
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Fetch a query plan from Rockset's planner for a given SQL query.
-         * @summary Plan Query
-         * @param {QueryRequest} body JSON object
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getQueryPlan(body: QueryRequest, options: any = {}): FetchArgs {
-            // verify required parameter 'body' is not null or undefined
-            if (body === null || body === undefined) {
-                throw new RequiredError('body','Required parameter body was null or undefined when calling getQueryPlan.');
-            }
-            const localVarPath = `/v1/orgs/self/queries/plans`;
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"QueryRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Fetch execution statistics for a particular query.
-         * @summary Fetch Query Stats
-         * @param {string} queryId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getQueryStats(queryId: string, options: any = {}): FetchArgs {
-            // verify required parameter 'queryId' is not null or undefined
-            if (queryId === null || queryId === undefined) {
-                throw new RequiredError('queryId','Required parameter queryId was null or undefined when calling getQueryStats.');
-            }
-            const localVarPath = `/v1/orgs/self/queries/{queryId}/stats`
+            const localVarPath = `/v1/orgs/self/queries/{queryId}/pages`
                 .replace(`{${"queryId"}}`, encodeURIComponent(String(queryId)));
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+            if (cursor !== undefined) {
+                localVarQueryParameter['cursor'] = cursor;
+            }
+            if (docs !== undefined) {
+                localVarQueryParameter['docs'] = docs;
+            }
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
@@ -15113,12 +8023,12 @@ export const QueriesApiFetchParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Lists data about ongoing queries.
-         * @summary List all query pages
+         * Lists actively queued and running queries.
+         * @summary List Queries
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listAllQueryPages(options: any = {}): FetchArgs {
+        listActiveQueries(options: any = {}): FetchArgs {
             const localVarPath = `/v1/orgs/self/queries`;
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
@@ -15134,35 +8044,8 @@ export const QueriesApiFetchParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Lists data about this queries pages.
-         * @summary Get pages for a query
-         * @param {string} queryId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listQueryPages(queryId: string, options: any = {}): FetchArgs {
-            // verify required parameter 'queryId' is not null or undefined
-            if (queryId === null || queryId === undefined) {
-                throw new RequiredError('queryId','Required parameter queryId was null or undefined when calling listQueryPages.');
-            }
-            const localVarPath = `/v1/orgs/self/queries/{queryId}/pages`
-                .replace(`{${"queryId"}}`, encodeURIComponent(String(queryId)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Make a SQL query to Rockset.
-         * @summary Query
+         * @summary Execute SQL Query
          * @param {QueryRequest} body JSON object
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -15193,12 +8076,10 @@ export const QueriesApiFetchParamCreator = function (configuration?: Configurati
          * Validate a SQL query with Rockset's parser and planner.
          * @summary Validate Query
          * @param {QueryRequest} body JSON object
-         * @param {boolean} [parameters] 
-         * @param {boolean} [allow_undefined_parameters] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        validate(body: QueryRequest, parameters?: boolean, allow_undefined_parameters?: boolean, options: any = {}): FetchArgs {
+        validate(body: QueryRequest, options: any = {}): FetchArgs {
             // verify required parameter 'body' is not null or undefined
             if (body === null || body === undefined) {
                 throw new RequiredError('body','Required parameter body was null or undefined when calling validate.');
@@ -15208,76 +8089,12 @@ export const QueriesApiFetchParamCreator = function (configuration?: Configurati
             const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-            if (parameters !== undefined) {
-                localVarQueryParameter['parameters'] = parameters;
-            }
-            if (allow_undefined_parameters !== undefined) {
-                localVarQueryParameter['allow_undefined_parameters'] = allow_undefined_parameters;
-            }
             localVarHeaderParameter['Content-Type'] = 'application/json';
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
             const needsSerialization = (<any>"QueryRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Validate a SQL Expression with Rockset's parser and planner.
-         * @summary Validate Expression
-         * @param {ValidateExpressionRequest} body JSON object
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        validateExpression(body: ValidateExpressionRequest, options: any = {}): FetchArgs {
-            // verify required parameter 'body' is not null or undefined
-            if (body === null || body === undefined) {
-                throw new RequiredError('body','Required parameter body was null or undefined when calling validateExpression.');
-            }
-            const localVarPath = `/v1/orgs/self/queries/validateExpression`;
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"ValidateExpressionRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Validate field mapping query with Rockset's parser and planner.
-         * @summary Validate field mapping query
-         * @param {ValidateFieldMappingQueryRequest} body SQL query
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        validateFieldMappingQuery(body: ValidateFieldMappingQueryRequest, options: any = {}): FetchArgs {
-            // verify required parameter 'body' is not null or undefined
-            if (body === null || body === undefined) {
-                throw new RequiredError('body','Required parameter body was null or undefined when calling validateFieldMappingQuery.');
-            }
-            const localVarPath = `/v1/orgs/self/queries/validateMappings`;
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"ValidateFieldMappingQueryRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
             localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
             return {
                 url: url.format(localVarUrlObj),
@@ -15293,13 +8110,32 @@ export const QueriesApiFetchParamCreator = function (configuration?: Configurati
 export const QueriesApiFp = function(configuration?: Configuration) {
     return {
         /**
-         * Returns information for a query
-         * @summary Get information for a query
+         * Attempts to cancel an actively-running query.
+         * @summary Cancel Query
          * @param {string} queryId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getQuery(queryId: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<QueryResponse> {
+        cancelQuery(queryId: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<CancelQueryResponse> {
+            const localVarFetchArgs = QueriesApiFetchParamCreator(configuration).cancelQuery(queryId, options);
+            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * Returns information about a query.
+         * @summary Retrieve Query
+         * @param {string} queryId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getQuery(queryId: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<GetQueryResponse> {
             const localVarFetchArgs = QueriesApiFetchParamCreator(configuration).getQuery(queryId, options);
             return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
@@ -15312,17 +8148,16 @@ export const QueriesApiFp = function(configuration?: Configuration) {
             };
         },
         /**
-         * 
-         * @summary Fetch paginated query results
+         * Returns a page of query results.
+         * @summary Retrieve Query Results Page
          * @param {string} queryId 
-         * @param {string} cursor 
-         * @param {number} [docs] 
-         * @param {number} [offset] 
+         * @param {string} [cursor] Cursor to current page. If unset, will default to the first page.
+         * @param {number} [docs] Number of documents to fetch.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getQueryPagination(queryId: string, cursor: string, docs?: number, offset?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<QueryPaginationResponse> {
-            const localVarFetchArgs = QueriesApiFetchParamCreator(configuration).getQueryPagination(queryId, cursor, docs, offset, options);
+        getQueryResults(queryId: string, cursor?: string, docs?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<QueryPaginationResponse> {
+            const localVarFetchArgs = QueriesApiFetchParamCreator(configuration).getQueryResults(queryId, cursor, docs, options);
             return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -15334,70 +8169,13 @@ export const QueriesApiFp = function(configuration?: Configuration) {
             };
         },
         /**
-         * Fetch a query plan from Rockset's planner for a given SQL query.
-         * @summary Plan Query
-         * @param {QueryRequest} body JSON object
+         * Lists actively queued and running queries.
+         * @summary List Queries
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getQueryPlan(body: QueryRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<QueryResponse> {
-            const localVarFetchArgs = QueriesApiFetchParamCreator(configuration).getQueryPlan(body, options);
-            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * Fetch execution statistics for a particular query.
-         * @summary Fetch Query Stats
-         * @param {string} queryId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getQueryStats(queryId: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<QueryStatsResponse> {
-            const localVarFetchArgs = QueriesApiFetchParamCreator(configuration).getQueryStats(queryId, options);
-            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * Lists data about ongoing queries.
-         * @summary List all query pages
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listAllQueryPages(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ListAllQueryPagesResponse> {
-            const localVarFetchArgs = QueriesApiFetchParamCreator(configuration).listAllQueryPages(options);
-            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * Lists data about this queries pages.
-         * @summary Get pages for a query
-         * @param {string} queryId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listQueryPages(queryId: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ListQueryPagesResponse> {
-            const localVarFetchArgs = QueriesApiFetchParamCreator(configuration).listQueryPages(queryId, options);
+        listActiveQueries(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ListQueriesResponse> {
+            const localVarFetchArgs = QueriesApiFetchParamCreator(configuration).listActiveQueries(options);
             return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -15410,7 +8188,7 @@ export const QueriesApiFp = function(configuration?: Configuration) {
         },
         /**
          * Make a SQL query to Rockset.
-         * @summary Query
+         * @summary Execute SQL Query
          * @param {QueryRequest} body JSON object
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -15431,51 +8209,11 @@ export const QueriesApiFp = function(configuration?: Configuration) {
          * Validate a SQL query with Rockset's parser and planner.
          * @summary Validate Query
          * @param {QueryRequest} body JSON object
-         * @param {boolean} [parameters] 
-         * @param {boolean} [allow_undefined_parameters] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        validate(body: QueryRequest, parameters?: boolean, allow_undefined_parameters?: boolean, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ValidateQueryResponse> {
-            const localVarFetchArgs = QueriesApiFetchParamCreator(configuration).validate(body, parameters, allow_undefined_parameters, options);
-            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * Validate a SQL Expression with Rockset's parser and planner.
-         * @summary Validate Expression
-         * @param {ValidateExpressionRequest} body JSON object
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        validateExpression(body: ValidateExpressionRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ValidateExpressionResponse> {
-            const localVarFetchArgs = QueriesApiFetchParamCreator(configuration).validateExpression(body, options);
-            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * Validate field mapping query with Rockset's parser and planner.
-         * @summary Validate field mapping query
-         * @param {ValidateFieldMappingQueryRequest} body SQL query
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        validateFieldMappingQuery(body: ValidateFieldMappingQueryRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ValidateFieldMappingQueryResponse> {
-            const localVarFetchArgs = QueriesApiFetchParamCreator(configuration).validateFieldMappingQuery(body, options);
+        validate(body: QueryRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ValidateQueryResponse> {
+            const localVarFetchArgs = QueriesApiFetchParamCreator(configuration).validate(body, options);
             return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -15496,8 +8234,18 @@ export const QueriesApiFp = function(configuration?: Configuration) {
 export const QueriesApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
     return {
         /**
-         * Returns information for a query
-         * @summary Get information for a query
+         * Attempts to cancel an actively-running query.
+         * @summary Cancel Query
+         * @param {string} queryId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        cancelQuery(queryId: string, options?: any) {
+            return QueriesApiFp(configuration).cancelQuery(queryId, options)(fetch, basePath);
+        },
+        /**
+         * Returns information about a query.
+         * @summary Retrieve Query
          * @param {string} queryId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -15506,60 +8254,29 @@ export const QueriesApiFactory = function (configuration?: Configuration, fetch?
             return QueriesApiFp(configuration).getQuery(queryId, options)(fetch, basePath);
         },
         /**
-         * 
-         * @summary Fetch paginated query results
+         * Returns a page of query results.
+         * @summary Retrieve Query Results Page
          * @param {string} queryId 
-         * @param {string} cursor 
-         * @param {number} [docs] 
-         * @param {number} [offset] 
+         * @param {string} [cursor] Cursor to current page. If unset, will default to the first page.
+         * @param {number} [docs] Number of documents to fetch.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getQueryPagination(queryId: string, cursor: string, docs?: number, offset?: number, options?: any) {
-            return QueriesApiFp(configuration).getQueryPagination(queryId, cursor, docs, offset, options)(fetch, basePath);
+        getQueryResults(queryId: string, cursor?: string, docs?: number, options?: any) {
+            return QueriesApiFp(configuration).getQueryResults(queryId, cursor, docs, options)(fetch, basePath);
         },
         /**
-         * Fetch a query plan from Rockset's planner for a given SQL query.
-         * @summary Plan Query
-         * @param {QueryRequest} body JSON object
+         * Lists actively queued and running queries.
+         * @summary List Queries
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getQueryPlan(body: QueryRequest, options?: any) {
-            return QueriesApiFp(configuration).getQueryPlan(body, options)(fetch, basePath);
-        },
-        /**
-         * Fetch execution statistics for a particular query.
-         * @summary Fetch Query Stats
-         * @param {string} queryId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getQueryStats(queryId: string, options?: any) {
-            return QueriesApiFp(configuration).getQueryStats(queryId, options)(fetch, basePath);
-        },
-        /**
-         * Lists data about ongoing queries.
-         * @summary List all query pages
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listAllQueryPages(options?: any) {
-            return QueriesApiFp(configuration).listAllQueryPages(options)(fetch, basePath);
-        },
-        /**
-         * Lists data about this queries pages.
-         * @summary Get pages for a query
-         * @param {string} queryId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listQueryPages(queryId: string, options?: any) {
-            return QueriesApiFp(configuration).listQueryPages(queryId, options)(fetch, basePath);
+        listActiveQueries(options?: any) {
+            return QueriesApiFp(configuration).listActiveQueries(options)(fetch, basePath);
         },
         /**
          * Make a SQL query to Rockset.
-         * @summary Query
+         * @summary Execute SQL Query
          * @param {QueryRequest} body JSON object
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -15571,33 +8288,11 @@ export const QueriesApiFactory = function (configuration?: Configuration, fetch?
          * Validate a SQL query with Rockset's parser and planner.
          * @summary Validate Query
          * @param {QueryRequest} body JSON object
-         * @param {boolean} [parameters] 
-         * @param {boolean} [allow_undefined_parameters] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        validate(body: QueryRequest, parameters?: boolean, allow_undefined_parameters?: boolean, options?: any) {
-            return QueriesApiFp(configuration).validate(body, parameters, allow_undefined_parameters, options)(fetch, basePath);
-        },
-        /**
-         * Validate a SQL Expression with Rockset's parser and planner.
-         * @summary Validate Expression
-         * @param {ValidateExpressionRequest} body JSON object
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        validateExpression(body: ValidateExpressionRequest, options?: any) {
-            return QueriesApiFp(configuration).validateExpression(body, options)(fetch, basePath);
-        },
-        /**
-         * Validate field mapping query with Rockset's parser and planner.
-         * @summary Validate field mapping query
-         * @param {ValidateFieldMappingQueryRequest} body SQL query
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        validateFieldMappingQuery(body: ValidateFieldMappingQueryRequest, options?: any) {
-            return QueriesApiFp(configuration).validateFieldMappingQuery(body, options)(fetch, basePath);
+        validate(body: QueryRequest, options?: any) {
+            return QueriesApiFp(configuration).validate(body, options)(fetch, basePath);
         },
     };
 };
@@ -15609,8 +8304,19 @@ export const QueriesApiFactory = function (configuration?: Configuration, fetch?
  */
 export class QueriesApi extends BaseAPI {
     /**
-     * Returns information for a query
-     * @summary Get information for a query
+     * Attempts to cancel an actively-running query.
+     * @summary Cancel Query
+     * @param {string} queryId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof QueriesApi
+     */
+    public cancelQuery(queryId: string, options?: any) {
+        return QueriesApiFp(this.configuration).cancelQuery(queryId, options)(this.fetch, this.basePath);
+    }
+    /**
+     * Returns information about a query.
+     * @summary Retrieve Query
      * @param {string} queryId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -15620,65 +8326,31 @@ export class QueriesApi extends BaseAPI {
         return QueriesApiFp(this.configuration).getQuery(queryId, options)(this.fetch, this.basePath);
     }
     /**
-     * 
-     * @summary Fetch paginated query results
+     * Returns a page of query results.
+     * @summary Retrieve Query Results Page
      * @param {string} queryId 
-     * @param {string} cursor 
-     * @param {number} [docs] 
-     * @param {number} [offset] 
+     * @param {string} [cursor] Cursor to current page. If unset, will default to the first page.
+     * @param {number} [docs] Number of documents to fetch.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof QueriesApi
      */
-    public getQueryPagination(queryId: string, cursor: string, docs?: number, offset?: number, options?: any) {
-        return QueriesApiFp(this.configuration).getQueryPagination(queryId, cursor, docs, offset, options)(this.fetch, this.basePath);
+    public getQueryResults(queryId: string, cursor?: string, docs?: number, options?: any) {
+        return QueriesApiFp(this.configuration).getQueryResults(queryId, cursor, docs, options)(this.fetch, this.basePath);
     }
     /**
-     * Fetch a query plan from Rockset's planner for a given SQL query.
-     * @summary Plan Query
-     * @param {QueryRequest} body JSON object
+     * Lists actively queued and running queries.
+     * @summary List Queries
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof QueriesApi
      */
-    public getQueryPlan(body: QueryRequest, options?: any) {
-        return QueriesApiFp(this.configuration).getQueryPlan(body, options)(this.fetch, this.basePath);
-    }
-    /**
-     * Fetch execution statistics for a particular query.
-     * @summary Fetch Query Stats
-     * @param {string} queryId 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof QueriesApi
-     */
-    public getQueryStats(queryId: string, options?: any) {
-        return QueriesApiFp(this.configuration).getQueryStats(queryId, options)(this.fetch, this.basePath);
-    }
-    /**
-     * Lists data about ongoing queries.
-     * @summary List all query pages
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof QueriesApi
-     */
-    public listAllQueryPages(options?: any) {
-        return QueriesApiFp(this.configuration).listAllQueryPages(options)(this.fetch, this.basePath);
-    }
-    /**
-     * Lists data about this queries pages.
-     * @summary Get pages for a query
-     * @param {string} queryId 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof QueriesApi
-     */
-    public listQueryPages(queryId: string, options?: any) {
-        return QueriesApiFp(this.configuration).listQueryPages(queryId, options)(this.fetch, this.basePath);
+    public listActiveQueries(options?: any) {
+        return QueriesApiFp(this.configuration).listActiveQueries(options)(this.fetch, this.basePath);
     }
     /**
      * Make a SQL query to Rockset.
-     * @summary Query
+     * @summary Execute SQL Query
      * @param {QueryRequest} body JSON object
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -15691,36 +8363,12 @@ export class QueriesApi extends BaseAPI {
      * Validate a SQL query with Rockset's parser and planner.
      * @summary Validate Query
      * @param {QueryRequest} body JSON object
-     * @param {boolean} [parameters] 
-     * @param {boolean} [allow_undefined_parameters] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof QueriesApi
      */
-    public validate(body: QueryRequest, parameters?: boolean, allow_undefined_parameters?: boolean, options?: any) {
-        return QueriesApiFp(this.configuration).validate(body, parameters, allow_undefined_parameters, options)(this.fetch, this.basePath);
-    }
-    /**
-     * Validate a SQL Expression with Rockset's parser and planner.
-     * @summary Validate Expression
-     * @param {ValidateExpressionRequest} body JSON object
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof QueriesApi
-     */
-    public validateExpression(body: ValidateExpressionRequest, options?: any) {
-        return QueriesApiFp(this.configuration).validateExpression(body, options)(this.fetch, this.basePath);
-    }
-    /**
-     * Validate field mapping query with Rockset's parser and planner.
-     * @summary Validate field mapping query
-     * @param {ValidateFieldMappingQueryRequest} body SQL query
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof QueriesApi
-     */
-    public validateFieldMappingQuery(body: ValidateFieldMappingQueryRequest, options?: any) {
-        return QueriesApiFp(this.configuration).validateFieldMappingQuery(body, options)(this.fetch, this.basePath);
+    public validate(body: QueryRequest, options?: any) {
+        return QueriesApiFp(this.configuration).validate(body, options)(this.fetch, this.basePath);
     }
 }
 
@@ -16103,54 +8751,6 @@ export const QueryLambdasApiFetchParamCreator = function (configuration?: Config
             };
         },
         /**
-         * List all distinct Query Lambda tags in an organization.
-         * @summary List All Query Lambda Tags
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listOrganizationTags(options: any = {}): FetchArgs {
-            const localVarPath = `/v1/orgs/self/lambdas/tags`;
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * List all Query Lambda versions associated with a given tag.
-         * @summary List Query Lambda Tag Versions
-         * @param {string} tag name of the tag
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listQueryLambdaTagVersions(tag: string, options: any = {}): FetchArgs {
-            // verify required parameter 'tag' is not null or undefined
-            if (tag === null || tag === undefined) {
-                throw new RequiredError('tag','Required parameter tag was null or undefined when calling listQueryLambdaTagVersions.');
-            }
-            const localVarPath = `/v1/orgs/self/lambdas/tags/{tag}`
-                .replace(`{${"tag"}}`, encodeURIComponent(String(tag)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * List all tags associated with a Query Lambda
          * @summary List Query Lambda Tags
          * @param {string} workspace name of the workspace
@@ -16244,53 +8844,12 @@ export const QueryLambdasApiFetchParamCreator = function (configuration?: Config
             };
         },
         /**
-         * Transfer ownership of a Query Lambda to a new user.
-         * @summary Transfer Ownership of a Query Lambda
-         * @param {string} workspace name of the workspace
-         * @param {string} queryLambda name of the Query Lambda
-         * @param {TransferOwnershipRequest} body JSON Object
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        transferOwnership(workspace: string, queryLambda: string, body: TransferOwnershipRequest, options: any = {}): FetchArgs {
-            // verify required parameter 'workspace' is not null or undefined
-            if (workspace === null || workspace === undefined) {
-                throw new RequiredError('workspace','Required parameter workspace was null or undefined when calling transferOwnership.');
-            }
-            // verify required parameter 'queryLambda' is not null or undefined
-            if (queryLambda === null || queryLambda === undefined) {
-                throw new RequiredError('queryLambda','Required parameter queryLambda was null or undefined when calling transferOwnership.');
-            }
-            // verify required parameter 'body' is not null or undefined
-            if (body === null || body === undefined) {
-                throw new RequiredError('body','Required parameter body was null or undefined when calling transferOwnership.');
-            }
-            const localVarPath = `/v1/orgs/self/ws/{workspace}/lambdas/{queryLambda}/owner`
-                .replace(`{${"workspace"}}`, encodeURIComponent(String(workspace)))
-                .replace(`{${"queryLambda"}}`, encodeURIComponent(String(queryLambda)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"TransferOwnershipRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Create a new version of a Query Lambda in given workspace.
          * @summary Update Query Lambda
          * @param {string} workspace name of the workspace
          * @param {string} queryLambda name of the Query Lambda
          * @param {UpdateQueryLambdaRequest} body JSON object
-         * @param {boolean} [create] 
+         * @param {boolean} [create] Create a new Query Lambda if one does not exist already.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -16545,43 +9104,6 @@ export const QueryLambdasApiFp = function(configuration?: Configuration) {
             };
         },
         /**
-         * List all distinct Query Lambda tags in an organization.
-         * @summary List All Query Lambda Tags
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listOrganizationTags(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ListQueryLambdaTagsResponse> {
-            const localVarFetchArgs = QueryLambdasApiFetchParamCreator(configuration).listOrganizationTags(options);
-            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * List all Query Lambda versions associated with a given tag.
-         * @summary List Query Lambda Tag Versions
-         * @param {string} tag name of the tag
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listQueryLambdaTagVersions(tag: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ListQueryLambdaVersionsResponse> {
-            const localVarFetchArgs = QueryLambdasApiFetchParamCreator(configuration).listQueryLambdaTagVersions(tag, options);
-            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
          * List all tags associated with a Query Lambda
          * @summary List Query Lambda Tags
          * @param {string} workspace name of the workspace
@@ -16641,33 +9163,12 @@ export const QueryLambdasApiFp = function(configuration?: Configuration) {
             };
         },
         /**
-         * Transfer ownership of a Query Lambda to a new user.
-         * @summary Transfer Ownership of a Query Lambda
-         * @param {string} workspace name of the workspace
-         * @param {string} queryLambda name of the Query Lambda
-         * @param {TransferOwnershipRequest} body JSON Object
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        transferOwnership(workspace: string, queryLambda: string, body: TransferOwnershipRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
-            const localVarFetchArgs = QueryLambdasApiFetchParamCreator(configuration).transferOwnership(workspace, queryLambda, body, options);
-            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response;
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
          * Create a new version of a Query Lambda in given workspace.
          * @summary Update Query Lambda
          * @param {string} workspace name of the workspace
          * @param {string} queryLambda name of the Query Lambda
          * @param {UpdateQueryLambdaRequest} body JSON object
-         * @param {boolean} [create] 
+         * @param {boolean} [create] Create a new Query Lambda if one does not exist already.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -16810,25 +9311,6 @@ export const QueryLambdasApiFactory = function (configuration?: Configuration, f
             return QueryLambdasApiFp(configuration).listAllQueryLambdas(options)(fetch, basePath);
         },
         /**
-         * List all distinct Query Lambda tags in an organization.
-         * @summary List All Query Lambda Tags
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listOrganizationTags(options?: any) {
-            return QueryLambdasApiFp(configuration).listOrganizationTags(options)(fetch, basePath);
-        },
-        /**
-         * List all Query Lambda versions associated with a given tag.
-         * @summary List Query Lambda Tag Versions
-         * @param {string} tag name of the tag
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listQueryLambdaTagVersions(tag: string, options?: any) {
-            return QueryLambdasApiFp(configuration).listQueryLambdaTagVersions(tag, options)(fetch, basePath);
-        },
-        /**
          * List all tags associated with a Query Lambda
          * @summary List Query Lambda Tags
          * @param {string} workspace name of the workspace
@@ -16861,24 +9343,12 @@ export const QueryLambdasApiFactory = function (configuration?: Configuration, f
             return QueryLambdasApiFp(configuration).listQueryLambdasInWorkspace(workspace, options)(fetch, basePath);
         },
         /**
-         * Transfer ownership of a Query Lambda to a new user.
-         * @summary Transfer Ownership of a Query Lambda
-         * @param {string} workspace name of the workspace
-         * @param {string} queryLambda name of the Query Lambda
-         * @param {TransferOwnershipRequest} body JSON Object
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        transferOwnership(workspace: string, queryLambda: string, body: TransferOwnershipRequest, options?: any) {
-            return QueryLambdasApiFp(configuration).transferOwnership(workspace, queryLambda, body, options)(fetch, basePath);
-        },
-        /**
          * Create a new version of a Query Lambda in given workspace.
          * @summary Update Query Lambda
          * @param {string} workspace name of the workspace
          * @param {string} queryLambda name of the Query Lambda
          * @param {UpdateQueryLambdaRequest} body JSON object
-         * @param {boolean} [create] 
+         * @param {boolean} [create] Create a new Query Lambda if one does not exist already.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -17022,27 +9492,6 @@ export class QueryLambdasApi extends BaseAPI {
         return QueryLambdasApiFp(this.configuration).listAllQueryLambdas(options)(this.fetch, this.basePath);
     }
     /**
-     * List all distinct Query Lambda tags in an organization.
-     * @summary List All Query Lambda Tags
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof QueryLambdasApi
-     */
-    public listOrganizationTags(options?: any) {
-        return QueryLambdasApiFp(this.configuration).listOrganizationTags(options)(this.fetch, this.basePath);
-    }
-    /**
-     * List all Query Lambda versions associated with a given tag.
-     * @summary List Query Lambda Tag Versions
-     * @param {string} tag name of the tag
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof QueryLambdasApi
-     */
-    public listQueryLambdaTagVersions(tag: string, options?: any) {
-        return QueryLambdasApiFp(this.configuration).listQueryLambdaTagVersions(tag, options)(this.fetch, this.basePath);
-    }
-    /**
      * List all tags associated with a Query Lambda
      * @summary List Query Lambda Tags
      * @param {string} workspace name of the workspace
@@ -17078,25 +9527,12 @@ export class QueryLambdasApi extends BaseAPI {
         return QueryLambdasApiFp(this.configuration).listQueryLambdasInWorkspace(workspace, options)(this.fetch, this.basePath);
     }
     /**
-     * Transfer ownership of a Query Lambda to a new user.
-     * @summary Transfer Ownership of a Query Lambda
-     * @param {string} workspace name of the workspace
-     * @param {string} queryLambda name of the Query Lambda
-     * @param {TransferOwnershipRequest} body JSON Object
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof QueryLambdasApi
-     */
-    public transferOwnership(workspace: string, queryLambda: string, body: TransferOwnershipRequest, options?: any) {
-        return QueryLambdasApiFp(this.configuration).transferOwnership(workspace, queryLambda, body, options)(this.fetch, this.basePath);
-    }
-    /**
      * Create a new version of a Query Lambda in given workspace.
      * @summary Update Query Lambda
      * @param {string} workspace name of the workspace
      * @param {string} queryLambda name of the Query Lambda
      * @param {UpdateQueryLambdaRequest} body JSON object
-     * @param {boolean} [create] 
+     * @param {boolean} [create] Create a new Query Lambda if one does not exist already.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof QueryLambdasApi
@@ -17107,116 +9543,26 @@ export class QueryLambdasApi extends BaseAPI {
 }
 
 /**
- * StatusApi - fetch parameter creator
+ * SharedLambdasApi - fetch parameter creator
  * @export
  */
-export const StatusApiFetchParamCreator = function (configuration?: Configuration) {
+export const SharedLambdasApiFetchParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Server responds with 200 if healthy.
-         * @summary Health Check
+         * Execute a public query lambda (full version).
+         * @summary Execute a Public Query Lambda
+         * @param {string} public_access_id public access ID of the query lambda
+         * @param {ExecutePublicQueryLambdaRequest} [body] JSON object
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        health(options: any = {}): FetchArgs {
-            const localVarPath = `/`;
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-/**
- * StatusApi - functional programming interface
- * @export
- */
-export const StatusApiFp = function(configuration?: Configuration) {
-    return {
-        /**
-         * Server responds with 200 if healthy.
-         * @summary Health Check
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        health(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<StatusResponse> {
-            const localVarFetchArgs = StatusApiFetchParamCreator(configuration).health(options);
-            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-    }
-};
-
-/**
- * StatusApi - factory interface
- * @export
- */
-export const StatusApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
-    return {
-        /**
-         * Server responds with 200 if healthy.
-         * @summary Health Check
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        health(options?: any) {
-            return StatusApiFp(configuration).health(options)(fetch, basePath);
-        },
-    };
-};
-/**
- * StatusApi - object-oriented interface
- * @export
- * @class StatusApi
- * @extends {BaseAPI}
- */
-export class StatusApi extends BaseAPI {
-    /**
-     * Server responds with 200 if healthy.
-     * @summary Health Check
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof StatusApi
-     */
-    public health(options?: any) {
-        return StatusApiFp(this.configuration).health(options)(this.fetch, this.basePath);
-    }
-}
-
-/**
- * TelemetryApi - fetch parameter creator
- * @export
- */
-export const TelemetryApiFetchParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * Record an item.
-         * @summary Record Activity
-         * @param {TelemetryRequest} body the activity item
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        recordActivity(body: TelemetryRequest, options: any = {}): FetchArgs {
-            // verify required parameter 'body' is not null or undefined
-            if (body === null || body === undefined) {
-                throw new RequiredError('body','Required parameter body was null or undefined when calling recordActivity.');
+        executePublicQueryLambdaWithParams(public_access_id: string, body?: ExecutePublicQueryLambdaRequest, options: any = {}): FetchArgs {
+            // verify required parameter 'public_access_id' is not null or undefined
+            if (public_access_id === null || public_access_id === undefined) {
+                throw new RequiredError('public_access_id','Required parameter public_access_id was null or undefined when calling executePublicQueryLambdaWithParams.');
             }
-            const localVarPath = `/v1/telemetry`;
+            const localVarPath = `/v1/public/shared_lambdas/{public_access_id}`
+                .replace(`{${"public_access_id"}}`, encodeURIComponent(String(public_access_id)));
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
             const localVarHeaderParameter = {} as any;
@@ -17226,7 +9572,7 @@ export const TelemetryApiFetchParamCreator = function (configuration?: Configura
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"TelemetryRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            const needsSerialization = (<any>"ExecutePublicQueryLambdaRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
             localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
             return {
                 url: url.format(localVarUrlObj),
@@ -17236,20 +9582,21 @@ export const TelemetryApiFetchParamCreator = function (configuration?: Configura
     }
 };
 /**
- * TelemetryApi - functional programming interface
+ * SharedLambdasApi - functional programming interface
  * @export
  */
-export const TelemetryApiFp = function(configuration?: Configuration) {
+export const SharedLambdasApiFp = function(configuration?: Configuration) {
     return {
         /**
-         * Record an item.
-         * @summary Record Activity
-         * @param {TelemetryRequest} body the activity item
+         * Execute a public query lambda (full version).
+         * @summary Execute a Public Query Lambda
+         * @param {string} public_access_id public access ID of the query lambda
+         * @param {ExecutePublicQueryLambdaRequest} [body] JSON object
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        recordActivity(body: TelemetryRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<StatusResponse> {
-            const localVarFetchArgs = TelemetryApiFetchParamCreator(configuration).recordActivity(body, options);
+        executePublicQueryLambdaWithParams(public_access_id: string, body?: ExecutePublicQueryLambdaRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<QueryResponse> {
+            const localVarFetchArgs = SharedLambdasApiFetchParamCreator(configuration).executePublicQueryLambdaWithParams(public_access_id, body, options);
             return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -17264,40 +9611,42 @@ export const TelemetryApiFp = function(configuration?: Configuration) {
 };
 
 /**
- * TelemetryApi - factory interface
+ * SharedLambdasApi - factory interface
  * @export
  */
-export const TelemetryApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
+export const SharedLambdasApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
     return {
         /**
-         * Record an item.
-         * @summary Record Activity
-         * @param {TelemetryRequest} body the activity item
+         * Execute a public query lambda (full version).
+         * @summary Execute a Public Query Lambda
+         * @param {string} public_access_id public access ID of the query lambda
+         * @param {ExecutePublicQueryLambdaRequest} [body] JSON object
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        recordActivity(body: TelemetryRequest, options?: any) {
-            return TelemetryApiFp(configuration).recordActivity(body, options)(fetch, basePath);
+        executePublicQueryLambdaWithParams(public_access_id: string, body?: ExecutePublicQueryLambdaRequest, options?: any) {
+            return SharedLambdasApiFp(configuration).executePublicQueryLambdaWithParams(public_access_id, body, options)(fetch, basePath);
         },
     };
 };
 /**
- * TelemetryApi - object-oriented interface
+ * SharedLambdasApi - object-oriented interface
  * @export
- * @class TelemetryApi
+ * @class SharedLambdasApi
  * @extends {BaseAPI}
  */
-export class TelemetryApi extends BaseAPI {
+export class SharedLambdasApi extends BaseAPI {
     /**
-     * Record an item.
-     * @summary Record Activity
-     * @param {TelemetryRequest} body the activity item
+     * Execute a public query lambda (full version).
+     * @summary Execute a Public Query Lambda
+     * @param {string} public_access_id public access ID of the query lambda
+     * @param {ExecutePublicQueryLambdaRequest} [body] JSON object
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof TelemetryApi
+     * @memberof SharedLambdasApi
      */
-    public recordActivity(body: TelemetryRequest, options?: any) {
-        return TelemetryApiFp(this.configuration).recordActivity(body, options)(this.fetch, this.basePath);
+    public executePublicQueryLambdaWithParams(public_access_id: string, body?: ExecutePublicQueryLambdaRequest, options?: any) {
+        return SharedLambdasApiFp(this.configuration).executePublicQueryLambdaWithParams(public_access_id, body, options)(this.fetch, this.basePath);
     }
 }
 
@@ -17385,111 +9734,6 @@ export const UsersApiFetchParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
-         * @summary Get invite_state for current user's org_membership.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getCurrentUserInviteState(options: any = {}): FetchArgs {
-            const localVarPath = `/v1/orgs/self/users/self/inviteState`;
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Retrieve currently active user's nux values.
-         * @summary Get Current User's Nux Values
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getCurrentUserNux(options: any = {}): FetchArgs {
-            const localVarPath = `/v1/orgs/self/users/self/nux`;
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Get state value for user.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getCurrentUserState(options: any = {}): FetchArgs {
-            const localVarPath = `/v1/orgs/self/users/self/state`;
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Get accepted_ToS value for user.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getCurrentUserTos(options: any = {}): FetchArgs {
-            const localVarPath = `/v1/orgs/self/users/self/tos`;
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Functional in public API server's only - used to bootstrap Console
-         * @summary Get Current User
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getCurrentUserUnchecked(options: any = {}): FetchArgs {
-            const localVarPath = `/v1/orgs/self/users/self/public`;
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Retrieve user by email.
          * @summary Retrieve User
          * @param {string} user user email
@@ -17517,54 +9761,8 @@ export const UsersApiFetchParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
-         * @summary Get query history for user.
-         * @param {number} [limit] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getUserQueryHistory(limit?: number, options: any = {}): FetchArgs {
-            const localVarPath = `/v1/orgs/self/users/self/query-history`;
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            if (limit !== undefined) {
-                localVarQueryParameter['limit'] = limit;
-            }
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * List all roles for a user.
-         * @summary List User Roles
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listRoles(options: any = {}): FetchArgs {
-            const localVarPath = `/v1/orgs/self/users/roles`;
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Get all notification preferences.
-         * @summary Get all notification preferences
+         * @summary Retrieve Notification Preferences
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -17605,158 +9803,8 @@ export const UsersApiFetchParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
-         * @summary Set invite_state for current user's org_membership.
-         * @param {InviteState} body JSON object
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        setCurrentUserInviteState(body: InviteState, options: any = {}): FetchArgs {
-            // verify required parameter 'body' is not null or undefined
-            if (body === null || body === undefined) {
-                throw new RequiredError('body','Required parameter body was null or undefined when calling setCurrentUserInviteState.');
-            }
-            const localVarPath = `/v1/orgs/self/users/self/inviteState`;
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"InviteState" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Update state value for user.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        setCurrentUserState(options: any = {}): FetchArgs {
-            const localVarPath = `/v1/orgs/self/users/self/state`;
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Set accepted_ToS value to true for user.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        setCurrentUserTos(options: any = {}): FetchArgs {
-            const localVarPath = `/v1/orgs/self/users/self/tos`;
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Update Auth0 to require MFA for a user.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        setUserMfa(options: any = {}): FetchArgs {
-            const localVarPath = `/v1/orgs/self/users/self/mfa`;
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Update currently active user.
-         * @summary Update Current User
-         * @param {UpdateUserRequest} body JSON object
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updateCurrentUser(body: UpdateUserRequest, options: any = {}): FetchArgs {
-            // verify required parameter 'body' is not null or undefined
-            if (body === null || body === undefined) {
-                throw new RequiredError('body','Required parameter body was null or undefined when calling updateCurrentUser.');
-            }
-            const localVarPath = `/v1/orgs/self/users/self`;
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"UpdateUserRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Update nux info for user.
-         * @summary Update Nux Info for User
-         * @param {UpdateUserNuxRequest} body JSON object
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updateCurrentUserNux(body: UpdateUserNuxRequest, options: any = {}): FetchArgs {
-            // verify required parameter 'body' is not null or undefined
-            if (body === null || body === undefined) {
-                throw new RequiredError('body','Required parameter body was null or undefined when calling updateCurrentUserNux.');
-            }
-            const localVarPath = `/v1/orgs/self/users/self/nux`;
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"UpdateUserNuxRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Update notification preference.
-         * @summary Update notification preferences
+         * @summary Update Notification Preferences
          * @param {UpdateUnsubscribePreferencesRequest} body JSON Object
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -17883,96 +9931,6 @@ export const UsersApiFp = function(configuration?: Configuration) {
             };
         },
         /**
-         * 
-         * @summary Get invite_state for current user's org_membership.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getCurrentUserInviteState(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<InviteState> {
-            const localVarFetchArgs = UsersApiFetchParamCreator(configuration).getCurrentUserInviteState(options);
-            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * Retrieve currently active user's nux values.
-         * @summary Get Current User's Nux Values
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getCurrentUserNux(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<UserNux> {
-            const localVarFetchArgs = UsersApiFetchParamCreator(configuration).getCurrentUserNux(options);
-            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary Get state value for user.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getCurrentUserState(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<UserState> {
-            const localVarFetchArgs = UsersApiFetchParamCreator(configuration).getCurrentUserState(options);
-            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary Get accepted_ToS value for user.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getCurrentUserTos(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<GetUserTosResponse> {
-            const localVarFetchArgs = UsersApiFetchParamCreator(configuration).getCurrentUserTos(options);
-            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * Functional in public API server's only - used to bootstrap Console
-         * @summary Get Current User
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getCurrentUserUnchecked(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<User> {
-            const localVarFetchArgs = UsersApiFetchParamCreator(configuration).getCurrentUserUnchecked(options);
-            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
          * Retrieve user by email.
          * @summary Retrieve User
          * @param {string} user user email
@@ -17992,45 +9950,8 @@ export const UsersApiFp = function(configuration?: Configuration) {
             };
         },
         /**
-         * 
-         * @summary Get query history for user.
-         * @param {number} [limit] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getUserQueryHistory(limit?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<UserQueryHistoryResponse> {
-            const localVarFetchArgs = UsersApiFetchParamCreator(configuration).getUserQueryHistory(limit, options);
-            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * List all roles for a user.
-         * @summary List User Roles
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listRoles(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ListRolesResponse> {
-            const localVarFetchArgs = UsersApiFetchParamCreator(configuration).listRoles(options);
-            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
          * Get all notification preferences.
-         * @summary Get all notification preferences
+         * @summary Retrieve Notification Preferences
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -18065,119 +9986,8 @@ export const UsersApiFp = function(configuration?: Configuration) {
             };
         },
         /**
-         * 
-         * @summary Set invite_state for current user's org_membership.
-         * @param {InviteState} body JSON object
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        setCurrentUserInviteState(body: InviteState, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<InviteState> {
-            const localVarFetchArgs = UsersApiFetchParamCreator(configuration).setCurrentUserInviteState(body, options);
-            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary Update state value for user.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        setCurrentUserState(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<UserState> {
-            const localVarFetchArgs = UsersApiFetchParamCreator(configuration).setCurrentUserState(options);
-            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary Set accepted_ToS value to true for user.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        setCurrentUserTos(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
-            const localVarFetchArgs = UsersApiFetchParamCreator(configuration).setCurrentUserTos(options);
-            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response;
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary Update Auth0 to require MFA for a user.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        setUserMfa(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
-            const localVarFetchArgs = UsersApiFetchParamCreator(configuration).setUserMfa(options);
-            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response;
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * Update currently active user.
-         * @summary Update Current User
-         * @param {UpdateUserRequest} body JSON object
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updateCurrentUser(body: UpdateUserRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<User> {
-            const localVarFetchArgs = UsersApiFetchParamCreator(configuration).updateCurrentUser(body, options);
-            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * Update nux info for user.
-         * @summary Update Nux Info for User
-         * @param {UpdateUserNuxRequest} body JSON object
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updateCurrentUserNux(body: UpdateUserNuxRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<UserNux> {
-            const localVarFetchArgs = UsersApiFetchParamCreator(configuration).updateCurrentUserNux(body, options);
-            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
          * Update notification preference.
-         * @summary Update notification preferences
+         * @summary Update Notification Preferences
          * @param {UpdateUnsubscribePreferencesRequest} body JSON Object
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -18253,51 +10063,6 @@ export const UsersApiFactory = function (configuration?: Configuration, fetch?: 
             return UsersApiFp(configuration).getCurrentUser(options)(fetch, basePath);
         },
         /**
-         * 
-         * @summary Get invite_state for current user's org_membership.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getCurrentUserInviteState(options?: any) {
-            return UsersApiFp(configuration).getCurrentUserInviteState(options)(fetch, basePath);
-        },
-        /**
-         * Retrieve currently active user's nux values.
-         * @summary Get Current User's Nux Values
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getCurrentUserNux(options?: any) {
-            return UsersApiFp(configuration).getCurrentUserNux(options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary Get state value for user.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getCurrentUserState(options?: any) {
-            return UsersApiFp(configuration).getCurrentUserState(options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary Get accepted_ToS value for user.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getCurrentUserTos(options?: any) {
-            return UsersApiFp(configuration).getCurrentUserTos(options)(fetch, basePath);
-        },
-        /**
-         * Functional in public API server's only - used to bootstrap Console
-         * @summary Get Current User
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getCurrentUserUnchecked(options?: any) {
-            return UsersApiFp(configuration).getCurrentUserUnchecked(options)(fetch, basePath);
-        },
-        /**
          * Retrieve user by email.
          * @summary Retrieve User
          * @param {string} user user email
@@ -18308,27 +10073,8 @@ export const UsersApiFactory = function (configuration?: Configuration, fetch?: 
             return UsersApiFp(configuration).getUser(user, options)(fetch, basePath);
         },
         /**
-         * 
-         * @summary Get query history for user.
-         * @param {number} [limit] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getUserQueryHistory(limit?: number, options?: any) {
-            return UsersApiFp(configuration).getUserQueryHistory(limit, options)(fetch, basePath);
-        },
-        /**
-         * List all roles for a user.
-         * @summary List User Roles
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listRoles(options?: any) {
-            return UsersApiFp(configuration).listRoles(options)(fetch, basePath);
-        },
-        /**
          * Get all notification preferences.
-         * @summary Get all notification preferences
+         * @summary Retrieve Notification Preferences
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -18345,65 +10091,8 @@ export const UsersApiFactory = function (configuration?: Configuration, fetch?: 
             return UsersApiFp(configuration).listUsers(options)(fetch, basePath);
         },
         /**
-         * 
-         * @summary Set invite_state for current user's org_membership.
-         * @param {InviteState} body JSON object
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        setCurrentUserInviteState(body: InviteState, options?: any) {
-            return UsersApiFp(configuration).setCurrentUserInviteState(body, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary Update state value for user.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        setCurrentUserState(options?: any) {
-            return UsersApiFp(configuration).setCurrentUserState(options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary Set accepted_ToS value to true for user.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        setCurrentUserTos(options?: any) {
-            return UsersApiFp(configuration).setCurrentUserTos(options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary Update Auth0 to require MFA for a user.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        setUserMfa(options?: any) {
-            return UsersApiFp(configuration).setUserMfa(options)(fetch, basePath);
-        },
-        /**
-         * Update currently active user.
-         * @summary Update Current User
-         * @param {UpdateUserRequest} body JSON object
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updateCurrentUser(body: UpdateUserRequest, options?: any) {
-            return UsersApiFp(configuration).updateCurrentUser(body, options)(fetch, basePath);
-        },
-        /**
-         * Update nux info for user.
-         * @summary Update Nux Info for User
-         * @param {UpdateUserNuxRequest} body JSON object
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updateCurrentUserNux(body: UpdateUserNuxRequest, options?: any) {
-            return UsersApiFp(configuration).updateCurrentUserNux(body, options)(fetch, basePath);
-        },
-        /**
          * Update notification preference.
-         * @summary Update notification preferences
+         * @summary Update Notification Preferences
          * @param {UpdateUnsubscribePreferencesRequest} body JSON Object
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -18464,56 +10153,6 @@ export class UsersApi extends BaseAPI {
         return UsersApiFp(this.configuration).getCurrentUser(options)(this.fetch, this.basePath);
     }
     /**
-     * 
-     * @summary Get invite_state for current user's org_membership.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof UsersApi
-     */
-    public getCurrentUserInviteState(options?: any) {
-        return UsersApiFp(this.configuration).getCurrentUserInviteState(options)(this.fetch, this.basePath);
-    }
-    /**
-     * Retrieve currently active user's nux values.
-     * @summary Get Current User's Nux Values
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof UsersApi
-     */
-    public getCurrentUserNux(options?: any) {
-        return UsersApiFp(this.configuration).getCurrentUserNux(options)(this.fetch, this.basePath);
-    }
-    /**
-     * 
-     * @summary Get state value for user.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof UsersApi
-     */
-    public getCurrentUserState(options?: any) {
-        return UsersApiFp(this.configuration).getCurrentUserState(options)(this.fetch, this.basePath);
-    }
-    /**
-     * 
-     * @summary Get accepted_ToS value for user.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof UsersApi
-     */
-    public getCurrentUserTos(options?: any) {
-        return UsersApiFp(this.configuration).getCurrentUserTos(options)(this.fetch, this.basePath);
-    }
-    /**
-     * Functional in public API server's only - used to bootstrap Console
-     * @summary Get Current User
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof UsersApi
-     */
-    public getCurrentUserUnchecked(options?: any) {
-        return UsersApiFp(this.configuration).getCurrentUserUnchecked(options)(this.fetch, this.basePath);
-    }
-    /**
      * Retrieve user by email.
      * @summary Retrieve User
      * @param {string} user user email
@@ -18525,29 +10164,8 @@ export class UsersApi extends BaseAPI {
         return UsersApiFp(this.configuration).getUser(user, options)(this.fetch, this.basePath);
     }
     /**
-     * 
-     * @summary Get query history for user.
-     * @param {number} [limit] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof UsersApi
-     */
-    public getUserQueryHistory(limit?: number, options?: any) {
-        return UsersApiFp(this.configuration).getUserQueryHistory(limit, options)(this.fetch, this.basePath);
-    }
-    /**
-     * List all roles for a user.
-     * @summary List User Roles
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof UsersApi
-     */
-    public listRoles(options?: any) {
-        return UsersApiFp(this.configuration).listRoles(options)(this.fetch, this.basePath);
-    }
-    /**
      * Get all notification preferences.
-     * @summary Get all notification preferences
+     * @summary Retrieve Notification Preferences
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UsersApi
@@ -18566,71 +10184,8 @@ export class UsersApi extends BaseAPI {
         return UsersApiFp(this.configuration).listUsers(options)(this.fetch, this.basePath);
     }
     /**
-     * 
-     * @summary Set invite_state for current user's org_membership.
-     * @param {InviteState} body JSON object
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof UsersApi
-     */
-    public setCurrentUserInviteState(body: InviteState, options?: any) {
-        return UsersApiFp(this.configuration).setCurrentUserInviteState(body, options)(this.fetch, this.basePath);
-    }
-    /**
-     * 
-     * @summary Update state value for user.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof UsersApi
-     */
-    public setCurrentUserState(options?: any) {
-        return UsersApiFp(this.configuration).setCurrentUserState(options)(this.fetch, this.basePath);
-    }
-    /**
-     * 
-     * @summary Set accepted_ToS value to true for user.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof UsersApi
-     */
-    public setCurrentUserTos(options?: any) {
-        return UsersApiFp(this.configuration).setCurrentUserTos(options)(this.fetch, this.basePath);
-    }
-    /**
-     * 
-     * @summary Update Auth0 to require MFA for a user.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof UsersApi
-     */
-    public setUserMfa(options?: any) {
-        return UsersApiFp(this.configuration).setUserMfa(options)(this.fetch, this.basePath);
-    }
-    /**
-     * Update currently active user.
-     * @summary Update Current User
-     * @param {UpdateUserRequest} body JSON object
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof UsersApi
-     */
-    public updateCurrentUser(body: UpdateUserRequest, options?: any) {
-        return UsersApiFp(this.configuration).updateCurrentUser(body, options)(this.fetch, this.basePath);
-    }
-    /**
-     * Update nux info for user.
-     * @summary Update Nux Info for User
-     * @param {UpdateUserNuxRequest} body JSON object
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof UsersApi
-     */
-    public updateCurrentUserNux(body: UpdateUserNuxRequest, options?: any) {
-        return UsersApiFp(this.configuration).updateCurrentUserNux(body, options)(this.fetch, this.basePath);
-    }
-    /**
      * Update notification preference.
-     * @summary Update notification preferences
+     * @summary Update Notification Preferences
      * @param {UpdateUnsubscribePreferencesRequest} body JSON Object
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -19136,9 +10691,98 @@ export class ViewsApi extends BaseAPI {
 export const VirtualInstancesApiFetchParamCreator = function (configuration?: Configuration) {
     return {
         /**
+         * [beta] Create virtual instance
+         * @summary Create Virtual Instance
+         * @param {CreateVirtualInstanceRequest} body JSON object
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createVirtualInstance(body: CreateVirtualInstanceRequest, options: any = {}): FetchArgs {
+            // verify required parameter 'body' is not null or undefined
+            if (body === null || body === undefined) {
+                throw new RequiredError('body','Required parameter body was null or undefined when calling createVirtualInstance.');
+            }
+            const localVarPath = `/v1/orgs/self/virtualinstances`;
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"CreateVirtualInstanceRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * [beta] Delete a virtual instance.
+         * @summary Delete Virtual Instance
+         * @param {string} virtualInstanceId Virtual Instance RRN
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteVirtualInstance(virtualInstanceId: string, options: any = {}): FetchArgs {
+            // verify required parameter 'virtualInstanceId' is not null or undefined
+            if (virtualInstanceId === null || virtualInstanceId === undefined) {
+                throw new RequiredError('virtualInstanceId','Required parameter virtualInstanceId was null or undefined when calling deleteVirtualInstance.');
+            }
+            const localVarPath = `/v1/orgs/self/virtualinstances/{virtualInstanceId}`
+                .replace(`{${"virtualInstanceId"}}`, encodeURIComponent(String(virtualInstanceId)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'DELETE' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * [beta] Get a mount on this virtual instance.
+         * @summary Get Collection Mount
+         * @param {string} virtualInstanceId Virtual Instance RRN
+         * @param {string} collectionPath 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCollectionMount(virtualInstanceId: string, collectionPath: string, options: any = {}): FetchArgs {
+            // verify required parameter 'virtualInstanceId' is not null or undefined
+            if (virtualInstanceId === null || virtualInstanceId === undefined) {
+                throw new RequiredError('virtualInstanceId','Required parameter virtualInstanceId was null or undefined when calling getCollectionMount.');
+            }
+            // verify required parameter 'collectionPath' is not null or undefined
+            if (collectionPath === null || collectionPath === undefined) {
+                throw new RequiredError('collectionPath','Required parameter collectionPath was null or undefined when calling getCollectionMount.');
+            }
+            const localVarPath = `/v1/orgs/self/virtualinstances/{virtualInstanceId}/mounts/{collectionPath}`
+                .replace(`{${"virtualInstanceId"}}`, encodeURIComponent(String(virtualInstanceId)))
+                .replace(`{${"collectionPath"}}`, encodeURIComponent(String(collectionPath)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Get details about a virtual instance.
          * @summary Retrieve Virtual Instance
-         * @param {string} virtualInstanceId uuid of the virtual instance
+         * @param {string} virtualInstanceId Virtual Instance RRN
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -19163,39 +10807,50 @@ export const VirtualInstancesApiFetchParamCreator = function (configuration?: Co
             };
         },
         /**
-         * Get relevant metrics for a specific virtual instance.
-         * @summary Get Virtual Instance metrics
-         * @param {string} virtualInstanceId uuid of the virtual instance
-         * @param {number} start start time (ms)
-         * @param {number} end end time (ms)
+         * [beta] Lists actively queued and running queries for a particular Virtual Instance.
+         * @summary List Queries
+         * @param {string} virtualInstanceId Virtual Instance RRN
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getVirtualInstanceMetrics(virtualInstanceId: string, start: number, end: number, options: any = {}): FetchArgs {
+        getVirtualInstanceQueries(virtualInstanceId: string, options: any = {}): FetchArgs {
             // verify required parameter 'virtualInstanceId' is not null or undefined
             if (virtualInstanceId === null || virtualInstanceId === undefined) {
-                throw new RequiredError('virtualInstanceId','Required parameter virtualInstanceId was null or undefined when calling getVirtualInstanceMetrics.');
+                throw new RequiredError('virtualInstanceId','Required parameter virtualInstanceId was null or undefined when calling getVirtualInstanceQueries.');
             }
-            // verify required parameter 'start' is not null or undefined
-            if (start === null || start === undefined) {
-                throw new RequiredError('start','Required parameter start was null or undefined when calling getVirtualInstanceMetrics.');
-            }
-            // verify required parameter 'end' is not null or undefined
-            if (end === null || end === undefined) {
-                throw new RequiredError('end','Required parameter end was null or undefined when calling getVirtualInstanceMetrics.');
-            }
-            const localVarPath = `/v1/orgs/self/virtualinstances/{virtualInstanceId}/metrics`
+            const localVarPath = `/v1/orgs/self/virtualinstances/{virtualInstanceId}/queries`
                 .replace(`{${"virtualInstanceId"}}`, encodeURIComponent(String(virtualInstanceId)));
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-            if (start !== undefined) {
-                localVarQueryParameter['start'] = start;
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * [beta] List collection mounts for a particular VI.
+         * @summary List Collection Mounts
+         * @param {string} virtualInstanceId Virtual Instance RRN
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listCollectionMounts(virtualInstanceId: string, options: any = {}): FetchArgs {
+            // verify required parameter 'virtualInstanceId' is not null or undefined
+            if (virtualInstanceId === null || virtualInstanceId === undefined) {
+                throw new RequiredError('virtualInstanceId','Required parameter virtualInstanceId was null or undefined when calling listCollectionMounts.');
             }
-            if (end !== undefined) {
-                localVarQueryParameter['end'] = end;
-            }
+            const localVarPath = `/v1/orgs/self/virtualinstances/{virtualInstanceId}/mounts`
+                .replace(`{${"virtualInstanceId"}}`, encodeURIComponent(String(virtualInstanceId)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
@@ -19227,9 +10882,106 @@ export const VirtualInstancesApiFetchParamCreator = function (configuration?: Co
             };
         },
         /**
+         * [beta] Mount a collection to this virtual instance.
+         * @summary Mount Collection
+         * @param {string} virtualInstanceId Virtual Instance RRN
+         * @param {CreateCollectionMountRequest} body JSON object
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        mountCollection(virtualInstanceId: string, body: CreateCollectionMountRequest, options: any = {}): FetchArgs {
+            // verify required parameter 'virtualInstanceId' is not null or undefined
+            if (virtualInstanceId === null || virtualInstanceId === undefined) {
+                throw new RequiredError('virtualInstanceId','Required parameter virtualInstanceId was null or undefined when calling mountCollection.');
+            }
+            // verify required parameter 'body' is not null or undefined
+            if (body === null || body === undefined) {
+                throw new RequiredError('body','Required parameter body was null or undefined when calling mountCollection.');
+            }
+            const localVarPath = `/v1/orgs/self/virtualinstances/{virtualInstanceId}/mounts`
+                .replace(`{${"virtualInstanceId"}}`, encodeURIComponent(String(virtualInstanceId)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"CreateCollectionMountRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * [beta] Make a SQL query to Rockset.
+         * @summary Execute SQL Query
+         * @param {string} virtualInstanceId Virtual Instance RRN
+         * @param {QueryRequest} body JSON object
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        queryVirtualInstance(virtualInstanceId: string, body: QueryRequest, options: any = {}): FetchArgs {
+            // verify required parameter 'virtualInstanceId' is not null or undefined
+            if (virtualInstanceId === null || virtualInstanceId === undefined) {
+                throw new RequiredError('virtualInstanceId','Required parameter virtualInstanceId was null or undefined when calling queryVirtualInstance.');
+            }
+            // verify required parameter 'body' is not null or undefined
+            if (body === null || body === undefined) {
+                throw new RequiredError('body','Required parameter body was null or undefined when calling queryVirtualInstance.');
+            }
+            const localVarPath = `/v1/orgs/self/virtualinstances/{virtualInstanceId}/queries`
+                .replace(`{${"virtualInstanceId"}}`, encodeURIComponent(String(virtualInstanceId)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"QueryRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * [beta] Resume a virtual instance.
+         * @summary Resume Virtual Instance
+         * @param {string} virtualInstanceId Virtual Instance RRN
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        resumeVirtualInstance(virtualInstanceId: string, options: any = {}): FetchArgs {
+            // verify required parameter 'virtualInstanceId' is not null or undefined
+            if (virtualInstanceId === null || virtualInstanceId === undefined) {
+                throw new RequiredError('virtualInstanceId','Required parameter virtualInstanceId was null or undefined when calling resumeVirtualInstance.');
+            }
+            const localVarPath = `/v1/orgs/self/virtualinstances/{virtualInstanceId}/resume`
+                .replace(`{${"virtualInstanceId"}}`, encodeURIComponent(String(virtualInstanceId)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Update the properties of a virtual instance.
          * @summary Update Virtual Instance
-         * @param {string} virtualInstanceId uuid of the virtual instance
+         * @param {string} virtualInstanceId Virtual Instance RRN
          * @param {UpdateVirtualInstanceRequest} body JSON object
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -19262,35 +11014,60 @@ export const VirtualInstancesApiFetchParamCreator = function (configuration?: Co
             };
         },
         /**
-         * Switch a virtual instance type within an organization to a new virtual instance type.
-         * @summary Switch Virtual Instance Type
-         * @param {string} virtualInstanceId uuid of the virtual instance
-         * @param {UpdateVirtualInstanceRequest} body JSON object
+         * [beta] Suspend a virtual instance.
+         * @summary Suspend Virtual Instance
+         * @param {string} virtualInstanceId Virtual Instance RRN
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        setVirtualInstanceType(virtualInstanceId: string, body: UpdateVirtualInstanceRequest, options: any = {}): FetchArgs {
+        suspendVirtualInstance(virtualInstanceId: string, options: any = {}): FetchArgs {
             // verify required parameter 'virtualInstanceId' is not null or undefined
             if (virtualInstanceId === null || virtualInstanceId === undefined) {
-                throw new RequiredError('virtualInstanceId','Required parameter virtualInstanceId was null or undefined when calling setVirtualInstanceType.');
+                throw new RequiredError('virtualInstanceId','Required parameter virtualInstanceId was null or undefined when calling suspendVirtualInstance.');
             }
-            // verify required parameter 'body' is not null or undefined
-            if (body === null || body === undefined) {
-                throw new RequiredError('body','Required parameter body was null or undefined when calling setVirtualInstanceType.');
-            }
-            const localVarPath = `/v1/orgs/self/virtualinstances/{virtualInstanceId}/type`
+            const localVarPath = `/v1/orgs/self/virtualinstances/{virtualInstanceId}/suspend`
                 .replace(`{${"virtualInstanceId"}}`, encodeURIComponent(String(virtualInstanceId)));
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-            localVarHeaderParameter['Content-Type'] = 'application/json';
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"UpdateVirtualInstanceRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * [beta] Unmount a collection from this virtual instance.
+         * @summary Unmount Collection
+         * @param {string} virtualInstanceId Virtual Instance RRN
+         * @param {string} collectionPath 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        unmountCollection(virtualInstanceId: string, collectionPath: string, options: any = {}): FetchArgs {
+            // verify required parameter 'virtualInstanceId' is not null or undefined
+            if (virtualInstanceId === null || virtualInstanceId === undefined) {
+                throw new RequiredError('virtualInstanceId','Required parameter virtualInstanceId was null or undefined when calling unmountCollection.');
+            }
+            // verify required parameter 'collectionPath' is not null or undefined
+            if (collectionPath === null || collectionPath === undefined) {
+                throw new RequiredError('collectionPath','Required parameter collectionPath was null or undefined when calling unmountCollection.');
+            }
+            const localVarPath = `/v1/orgs/self/virtualinstances/{virtualInstanceId}/mounts/{collectionPath}`
+                .replace(`{${"virtualInstanceId"}}`, encodeURIComponent(String(virtualInstanceId)))
+                .replace(`{${"collectionPath"}}`, encodeURIComponent(String(collectionPath)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'DELETE' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
             return {
                 url: url.format(localVarUrlObj),
                 options: localVarRequestOptions,
@@ -19305,9 +11082,67 @@ export const VirtualInstancesApiFetchParamCreator = function (configuration?: Co
 export const VirtualInstancesApiFp = function(configuration?: Configuration) {
     return {
         /**
+         * [beta] Create virtual instance
+         * @summary Create Virtual Instance
+         * @param {CreateVirtualInstanceRequest} body JSON object
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createVirtualInstance(body: CreateVirtualInstanceRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<CreateVirtualInstanceResponse> {
+            const localVarFetchArgs = VirtualInstancesApiFetchParamCreator(configuration).createVirtualInstance(body, options);
+            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * [beta] Delete a virtual instance.
+         * @summary Delete Virtual Instance
+         * @param {string} virtualInstanceId Virtual Instance RRN
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteVirtualInstance(virtualInstanceId: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<DeleteVirtualInstanceResponse> {
+            const localVarFetchArgs = VirtualInstancesApiFetchParamCreator(configuration).deleteVirtualInstance(virtualInstanceId, options);
+            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * [beta] Get a mount on this virtual instance.
+         * @summary Get Collection Mount
+         * @param {string} virtualInstanceId Virtual Instance RRN
+         * @param {string} collectionPath 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCollectionMount(virtualInstanceId: string, collectionPath: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<CollectionMountResponse> {
+            const localVarFetchArgs = VirtualInstancesApiFetchParamCreator(configuration).getCollectionMount(virtualInstanceId, collectionPath, options);
+            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
          * Get details about a virtual instance.
          * @summary Retrieve Virtual Instance
-         * @param {string} virtualInstanceId uuid of the virtual instance
+         * @param {string} virtualInstanceId Virtual Instance RRN
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -19324,16 +11159,33 @@ export const VirtualInstancesApiFp = function(configuration?: Configuration) {
             };
         },
         /**
-         * Get relevant metrics for a specific virtual instance.
-         * @summary Get Virtual Instance metrics
-         * @param {string} virtualInstanceId uuid of the virtual instance
-         * @param {number} start start time (ms)
-         * @param {number} end end time (ms)
+         * [beta] Lists actively queued and running queries for a particular Virtual Instance.
+         * @summary List Queries
+         * @param {string} virtualInstanceId Virtual Instance RRN
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getVirtualInstanceMetrics(virtualInstanceId: string, start: number, end: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<GetVirtualInstanceMetricsResponse> {
-            const localVarFetchArgs = VirtualInstancesApiFetchParamCreator(configuration).getVirtualInstanceMetrics(virtualInstanceId, start, end, options);
+        getVirtualInstanceQueries(virtualInstanceId: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ListQueriesResponse> {
+            const localVarFetchArgs = VirtualInstancesApiFetchParamCreator(configuration).getVirtualInstanceQueries(virtualInstanceId, options);
+            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * [beta] List collection mounts for a particular VI.
+         * @summary List Collection Mounts
+         * @param {string} virtualInstanceId Virtual Instance RRN
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listCollectionMounts(virtualInstanceId: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ListCollectionMountsResponse> {
+            const localVarFetchArgs = VirtualInstancesApiFetchParamCreator(configuration).listCollectionMounts(virtualInstanceId, options);
             return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -19363,9 +11215,68 @@ export const VirtualInstancesApiFp = function(configuration?: Configuration) {
             };
         },
         /**
+         * [beta] Mount a collection to this virtual instance.
+         * @summary Mount Collection
+         * @param {string} virtualInstanceId Virtual Instance RRN
+         * @param {CreateCollectionMountRequest} body JSON object
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        mountCollection(virtualInstanceId: string, body: CreateCollectionMountRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<CollectionMountResponse> {
+            const localVarFetchArgs = VirtualInstancesApiFetchParamCreator(configuration).mountCollection(virtualInstanceId, body, options);
+            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * [beta] Make a SQL query to Rockset.
+         * @summary Execute SQL Query
+         * @param {string} virtualInstanceId Virtual Instance RRN
+         * @param {QueryRequest} body JSON object
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        queryVirtualInstance(virtualInstanceId: string, body: QueryRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<QueryResponse> {
+            const localVarFetchArgs = VirtualInstancesApiFetchParamCreator(configuration).queryVirtualInstance(virtualInstanceId, body, options);
+            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * [beta] Resume a virtual instance.
+         * @summary Resume Virtual Instance
+         * @param {string} virtualInstanceId Virtual Instance RRN
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        resumeVirtualInstance(virtualInstanceId: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ResumeVirtualInstanceResponse> {
+            const localVarFetchArgs = VirtualInstancesApiFetchParamCreator(configuration).resumeVirtualInstance(virtualInstanceId, options);
+            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
          * Update the properties of a virtual instance.
          * @summary Update Virtual Instance
-         * @param {string} virtualInstanceId uuid of the virtual instance
+         * @param {string} virtualInstanceId Virtual Instance RRN
          * @param {UpdateVirtualInstanceRequest} body JSON object
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -19383,15 +11294,34 @@ export const VirtualInstancesApiFp = function(configuration?: Configuration) {
             };
         },
         /**
-         * Switch a virtual instance type within an organization to a new virtual instance type.
-         * @summary Switch Virtual Instance Type
-         * @param {string} virtualInstanceId uuid of the virtual instance
-         * @param {UpdateVirtualInstanceRequest} body JSON object
+         * [beta] Suspend a virtual instance.
+         * @summary Suspend Virtual Instance
+         * @param {string} virtualInstanceId Virtual Instance RRN
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        setVirtualInstanceType(virtualInstanceId: string, body: UpdateVirtualInstanceRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<UpdateVirtualInstanceResponse> {
-            const localVarFetchArgs = VirtualInstancesApiFetchParamCreator(configuration).setVirtualInstanceType(virtualInstanceId, body, options);
+        suspendVirtualInstance(virtualInstanceId: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<SuspendVirtualInstanceResponse> {
+            const localVarFetchArgs = VirtualInstancesApiFetchParamCreator(configuration).suspendVirtualInstance(virtualInstanceId, options);
+            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * [beta] Unmount a collection from this virtual instance.
+         * @summary Unmount Collection
+         * @param {string} virtualInstanceId Virtual Instance RRN
+         * @param {string} collectionPath 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        unmountCollection(virtualInstanceId: string, collectionPath: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<CollectionMountResponse> {
+            const localVarFetchArgs = VirtualInstancesApiFetchParamCreator(configuration).unmountCollection(virtualInstanceId, collectionPath, options);
             return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -19412,9 +11342,40 @@ export const VirtualInstancesApiFp = function(configuration?: Configuration) {
 export const VirtualInstancesApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
     return {
         /**
+         * [beta] Create virtual instance
+         * @summary Create Virtual Instance
+         * @param {CreateVirtualInstanceRequest} body JSON object
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createVirtualInstance(body: CreateVirtualInstanceRequest, options?: any) {
+            return VirtualInstancesApiFp(configuration).createVirtualInstance(body, options)(fetch, basePath);
+        },
+        /**
+         * [beta] Delete a virtual instance.
+         * @summary Delete Virtual Instance
+         * @param {string} virtualInstanceId Virtual Instance RRN
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteVirtualInstance(virtualInstanceId: string, options?: any) {
+            return VirtualInstancesApiFp(configuration).deleteVirtualInstance(virtualInstanceId, options)(fetch, basePath);
+        },
+        /**
+         * [beta] Get a mount on this virtual instance.
+         * @summary Get Collection Mount
+         * @param {string} virtualInstanceId Virtual Instance RRN
+         * @param {string} collectionPath 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCollectionMount(virtualInstanceId: string, collectionPath: string, options?: any) {
+            return VirtualInstancesApiFp(configuration).getCollectionMount(virtualInstanceId, collectionPath, options)(fetch, basePath);
+        },
+        /**
          * Get details about a virtual instance.
          * @summary Retrieve Virtual Instance
-         * @param {string} virtualInstanceId uuid of the virtual instance
+         * @param {string} virtualInstanceId Virtual Instance RRN
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -19422,16 +11383,24 @@ export const VirtualInstancesApiFactory = function (configuration?: Configuratio
             return VirtualInstancesApiFp(configuration).getVirtualInstance(virtualInstanceId, options)(fetch, basePath);
         },
         /**
-         * Get relevant metrics for a specific virtual instance.
-         * @summary Get Virtual Instance metrics
-         * @param {string} virtualInstanceId uuid of the virtual instance
-         * @param {number} start start time (ms)
-         * @param {number} end end time (ms)
+         * [beta] Lists actively queued and running queries for a particular Virtual Instance.
+         * @summary List Queries
+         * @param {string} virtualInstanceId Virtual Instance RRN
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getVirtualInstanceMetrics(virtualInstanceId: string, start: number, end: number, options?: any) {
-            return VirtualInstancesApiFp(configuration).getVirtualInstanceMetrics(virtualInstanceId, start, end, options)(fetch, basePath);
+        getVirtualInstanceQueries(virtualInstanceId: string, options?: any) {
+            return VirtualInstancesApiFp(configuration).getVirtualInstanceQueries(virtualInstanceId, options)(fetch, basePath);
+        },
+        /**
+         * [beta] List collection mounts for a particular VI.
+         * @summary List Collection Mounts
+         * @param {string} virtualInstanceId Virtual Instance RRN
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listCollectionMounts(virtualInstanceId: string, options?: any) {
+            return VirtualInstancesApiFp(configuration).listCollectionMounts(virtualInstanceId, options)(fetch, basePath);
         },
         /**
          * Retrieve all virtual instances in an organization.
@@ -19443,9 +11412,41 @@ export const VirtualInstancesApiFactory = function (configuration?: Configuratio
             return VirtualInstancesApiFp(configuration).listVirtualInstances(options)(fetch, basePath);
         },
         /**
+         * [beta] Mount a collection to this virtual instance.
+         * @summary Mount Collection
+         * @param {string} virtualInstanceId Virtual Instance RRN
+         * @param {CreateCollectionMountRequest} body JSON object
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        mountCollection(virtualInstanceId: string, body: CreateCollectionMountRequest, options?: any) {
+            return VirtualInstancesApiFp(configuration).mountCollection(virtualInstanceId, body, options)(fetch, basePath);
+        },
+        /**
+         * [beta] Make a SQL query to Rockset.
+         * @summary Execute SQL Query
+         * @param {string} virtualInstanceId Virtual Instance RRN
+         * @param {QueryRequest} body JSON object
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        queryVirtualInstance(virtualInstanceId: string, body: QueryRequest, options?: any) {
+            return VirtualInstancesApiFp(configuration).queryVirtualInstance(virtualInstanceId, body, options)(fetch, basePath);
+        },
+        /**
+         * [beta] Resume a virtual instance.
+         * @summary Resume Virtual Instance
+         * @param {string} virtualInstanceId Virtual Instance RRN
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        resumeVirtualInstance(virtualInstanceId: string, options?: any) {
+            return VirtualInstancesApiFp(configuration).resumeVirtualInstance(virtualInstanceId, options)(fetch, basePath);
+        },
+        /**
          * Update the properties of a virtual instance.
          * @summary Update Virtual Instance
-         * @param {string} virtualInstanceId uuid of the virtual instance
+         * @param {string} virtualInstanceId Virtual Instance RRN
          * @param {UpdateVirtualInstanceRequest} body JSON object
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -19454,15 +11455,25 @@ export const VirtualInstancesApiFactory = function (configuration?: Configuratio
             return VirtualInstancesApiFp(configuration).setVirtualInstance(virtualInstanceId, body, options)(fetch, basePath);
         },
         /**
-         * Switch a virtual instance type within an organization to a new virtual instance type.
-         * @summary Switch Virtual Instance Type
-         * @param {string} virtualInstanceId uuid of the virtual instance
-         * @param {UpdateVirtualInstanceRequest} body JSON object
+         * [beta] Suspend a virtual instance.
+         * @summary Suspend Virtual Instance
+         * @param {string} virtualInstanceId Virtual Instance RRN
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        setVirtualInstanceType(virtualInstanceId: string, body: UpdateVirtualInstanceRequest, options?: any) {
-            return VirtualInstancesApiFp(configuration).setVirtualInstanceType(virtualInstanceId, body, options)(fetch, basePath);
+        suspendVirtualInstance(virtualInstanceId: string, options?: any) {
+            return VirtualInstancesApiFp(configuration).suspendVirtualInstance(virtualInstanceId, options)(fetch, basePath);
+        },
+        /**
+         * [beta] Unmount a collection from this virtual instance.
+         * @summary Unmount Collection
+         * @param {string} virtualInstanceId Virtual Instance RRN
+         * @param {string} collectionPath 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        unmountCollection(virtualInstanceId: string, collectionPath: string, options?: any) {
+            return VirtualInstancesApiFp(configuration).unmountCollection(virtualInstanceId, collectionPath, options)(fetch, basePath);
         },
     };
 };
@@ -19474,9 +11485,43 @@ export const VirtualInstancesApiFactory = function (configuration?: Configuratio
  */
 export class VirtualInstancesApi extends BaseAPI {
     /**
+     * [beta] Create virtual instance
+     * @summary Create Virtual Instance
+     * @param {CreateVirtualInstanceRequest} body JSON object
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof VirtualInstancesApi
+     */
+    public createVirtualInstance(body: CreateVirtualInstanceRequest, options?: any) {
+        return VirtualInstancesApiFp(this.configuration).createVirtualInstance(body, options)(this.fetch, this.basePath);
+    }
+    /**
+     * [beta] Delete a virtual instance.
+     * @summary Delete Virtual Instance
+     * @param {string} virtualInstanceId Virtual Instance RRN
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof VirtualInstancesApi
+     */
+    public deleteVirtualInstance(virtualInstanceId: string, options?: any) {
+        return VirtualInstancesApiFp(this.configuration).deleteVirtualInstance(virtualInstanceId, options)(this.fetch, this.basePath);
+    }
+    /**
+     * [beta] Get a mount on this virtual instance.
+     * @summary Get Collection Mount
+     * @param {string} virtualInstanceId Virtual Instance RRN
+     * @param {string} collectionPath 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof VirtualInstancesApi
+     */
+    public getCollectionMount(virtualInstanceId: string, collectionPath: string, options?: any) {
+        return VirtualInstancesApiFp(this.configuration).getCollectionMount(virtualInstanceId, collectionPath, options)(this.fetch, this.basePath);
+    }
+    /**
      * Get details about a virtual instance.
      * @summary Retrieve Virtual Instance
-     * @param {string} virtualInstanceId uuid of the virtual instance
+     * @param {string} virtualInstanceId Virtual Instance RRN
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof VirtualInstancesApi
@@ -19485,17 +11530,26 @@ export class VirtualInstancesApi extends BaseAPI {
         return VirtualInstancesApiFp(this.configuration).getVirtualInstance(virtualInstanceId, options)(this.fetch, this.basePath);
     }
     /**
-     * Get relevant metrics for a specific virtual instance.
-     * @summary Get Virtual Instance metrics
-     * @param {string} virtualInstanceId uuid of the virtual instance
-     * @param {number} start start time (ms)
-     * @param {number} end end time (ms)
+     * [beta] Lists actively queued and running queries for a particular Virtual Instance.
+     * @summary List Queries
+     * @param {string} virtualInstanceId Virtual Instance RRN
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof VirtualInstancesApi
      */
-    public getVirtualInstanceMetrics(virtualInstanceId: string, start: number, end: number, options?: any) {
-        return VirtualInstancesApiFp(this.configuration).getVirtualInstanceMetrics(virtualInstanceId, start, end, options)(this.fetch, this.basePath);
+    public getVirtualInstanceQueries(virtualInstanceId: string, options?: any) {
+        return VirtualInstancesApiFp(this.configuration).getVirtualInstanceQueries(virtualInstanceId, options)(this.fetch, this.basePath);
+    }
+    /**
+     * [beta] List collection mounts for a particular VI.
+     * @summary List Collection Mounts
+     * @param {string} virtualInstanceId Virtual Instance RRN
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof VirtualInstancesApi
+     */
+    public listCollectionMounts(virtualInstanceId: string, options?: any) {
+        return VirtualInstancesApiFp(this.configuration).listCollectionMounts(virtualInstanceId, options)(this.fetch, this.basePath);
     }
     /**
      * Retrieve all virtual instances in an organization.
@@ -19508,9 +11562,44 @@ export class VirtualInstancesApi extends BaseAPI {
         return VirtualInstancesApiFp(this.configuration).listVirtualInstances(options)(this.fetch, this.basePath);
     }
     /**
+     * [beta] Mount a collection to this virtual instance.
+     * @summary Mount Collection
+     * @param {string} virtualInstanceId Virtual Instance RRN
+     * @param {CreateCollectionMountRequest} body JSON object
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof VirtualInstancesApi
+     */
+    public mountCollection(virtualInstanceId: string, body: CreateCollectionMountRequest, options?: any) {
+        return VirtualInstancesApiFp(this.configuration).mountCollection(virtualInstanceId, body, options)(this.fetch, this.basePath);
+    }
+    /**
+     * [beta] Make a SQL query to Rockset.
+     * @summary Execute SQL Query
+     * @param {string} virtualInstanceId Virtual Instance RRN
+     * @param {QueryRequest} body JSON object
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof VirtualInstancesApi
+     */
+    public queryVirtualInstance(virtualInstanceId: string, body: QueryRequest, options?: any) {
+        return VirtualInstancesApiFp(this.configuration).queryVirtualInstance(virtualInstanceId, body, options)(this.fetch, this.basePath);
+    }
+    /**
+     * [beta] Resume a virtual instance.
+     * @summary Resume Virtual Instance
+     * @param {string} virtualInstanceId Virtual Instance RRN
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof VirtualInstancesApi
+     */
+    public resumeVirtualInstance(virtualInstanceId: string, options?: any) {
+        return VirtualInstancesApiFp(this.configuration).resumeVirtualInstance(virtualInstanceId, options)(this.fetch, this.basePath);
+    }
+    /**
      * Update the properties of a virtual instance.
      * @summary Update Virtual Instance
-     * @param {string} virtualInstanceId uuid of the virtual instance
+     * @param {string} virtualInstanceId Virtual Instance RRN
      * @param {UpdateVirtualInstanceRequest} body JSON object
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -19520,16 +11609,27 @@ export class VirtualInstancesApi extends BaseAPI {
         return VirtualInstancesApiFp(this.configuration).setVirtualInstance(virtualInstanceId, body, options)(this.fetch, this.basePath);
     }
     /**
-     * Switch a virtual instance type within an organization to a new virtual instance type.
-     * @summary Switch Virtual Instance Type
-     * @param {string} virtualInstanceId uuid of the virtual instance
-     * @param {UpdateVirtualInstanceRequest} body JSON object
+     * [beta] Suspend a virtual instance.
+     * @summary Suspend Virtual Instance
+     * @param {string} virtualInstanceId Virtual Instance RRN
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof VirtualInstancesApi
      */
-    public setVirtualInstanceType(virtualInstanceId: string, body: UpdateVirtualInstanceRequest, options?: any) {
-        return VirtualInstancesApiFp(this.configuration).setVirtualInstanceType(virtualInstanceId, body, options)(this.fetch, this.basePath);
+    public suspendVirtualInstance(virtualInstanceId: string, options?: any) {
+        return VirtualInstancesApiFp(this.configuration).suspendVirtualInstance(virtualInstanceId, options)(this.fetch, this.basePath);
+    }
+    /**
+     * [beta] Unmount a collection from this virtual instance.
+     * @summary Unmount Collection
+     * @param {string} virtualInstanceId Virtual Instance RRN
+     * @param {string} collectionPath 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof VirtualInstancesApi
+     */
+    public unmountCollection(virtualInstanceId: string, collectionPath: string, options?: any) {
+        return VirtualInstancesApiFp(this.configuration).unmountCollection(virtualInstanceId, collectionPath, options)(this.fetch, this.basePath);
     }
 }
 
@@ -19539,33 +11639,6 @@ export class VirtualInstancesApi extends BaseAPI {
  */
 export const WorkspacesApiFetchParamCreator = function (configuration?: Configuration) {
     return {
-        /**
-         * List workspaces under given workspace.
-         * @summary List Workspaces in Workspace
-         * @param {string} workspace name of the workspace
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        childWorkspaces(workspace: string, options: any = {}): FetchArgs {
-            // verify required parameter 'workspace' is not null or undefined
-            if (workspace === null || workspace === undefined) {
-                throw new RequiredError('workspace','Required parameter workspace was null or undefined when calling childWorkspaces.');
-            }
-            const localVarPath = `/v1/orgs/self/ws/{workspace}/ws`
-                .replace(`{${"workspace"}}`, encodeURIComponent(String(workspace)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
         /**
          * Create a new workspace.
          * @summary Create Workspace
@@ -19652,58 +11725,19 @@ export const WorkspacesApiFetchParamCreator = function (configuration?: Configur
         /**
          * List all workspaces in an organization.
          * @summary List Workspaces
-         * @param {boolean} [fetch_across_regions] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listWorkspaces(fetch_across_regions?: boolean, options: any = {}): FetchArgs {
+        listWorkspaces(options: any = {}): FetchArgs {
             const localVarPath = `/v1/orgs/self/ws`;
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-            if (fetch_across_regions !== undefined) {
-                localVarQueryParameter['fetch_across_regions'] = fetch_across_regions;
-            }
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Transfer ownership of a workspace to a new user.
-         * @summary Transfer Ownership of a Workspace
-         * @param {string} workspace name of the workspace
-         * @param {TransferOwnershipRequest} body JSON Object
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        transferOwnership(workspace: string, body: TransferOwnershipRequest, options: any = {}): FetchArgs {
-            // verify required parameter 'workspace' is not null or undefined
-            if (workspace === null || workspace === undefined) {
-                throw new RequiredError('workspace','Required parameter workspace was null or undefined when calling transferOwnership.');
-            }
-            // verify required parameter 'body' is not null or undefined
-            if (body === null || body === undefined) {
-                throw new RequiredError('body','Required parameter body was null or undefined when calling transferOwnership.');
-            }
-            const localVarPath = `/v1/orgs/self/ws/{workspace}/owner`
-                .replace(`{${"workspace"}}`, encodeURIComponent(String(workspace)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"TransferOwnershipRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
             return {
                 url: url.format(localVarUrlObj),
                 options: localVarRequestOptions,
@@ -19717,25 +11751,6 @@ export const WorkspacesApiFetchParamCreator = function (configuration?: Configur
  */
 export const WorkspacesApiFp = function(configuration?: Configuration) {
     return {
-        /**
-         * List workspaces under given workspace.
-         * @summary List Workspaces in Workspace
-         * @param {string} workspace name of the workspace
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        childWorkspaces(workspace: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ListWorkspacesResponse> {
-            const localVarFetchArgs = WorkspacesApiFetchParamCreator(configuration).childWorkspaces(workspace, options);
-            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
         /**
          * Create a new workspace.
          * @summary Create Workspace
@@ -19796,36 +11811,15 @@ export const WorkspacesApiFp = function(configuration?: Configuration) {
         /**
          * List all workspaces in an organization.
          * @summary List Workspaces
-         * @param {boolean} [fetch_across_regions] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listWorkspaces(fetch_across_regions?: boolean, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ListWorkspacesResponse> {
-            const localVarFetchArgs = WorkspacesApiFetchParamCreator(configuration).listWorkspaces(fetch_across_regions, options);
+        listWorkspaces(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ListWorkspacesResponse> {
+            const localVarFetchArgs = WorkspacesApiFetchParamCreator(configuration).listWorkspaces(options);
             return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
                         return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * Transfer ownership of a workspace to a new user.
-         * @summary Transfer Ownership of a Workspace
-         * @param {string} workspace name of the workspace
-         * @param {TransferOwnershipRequest} body JSON Object
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        transferOwnership(workspace: string, body: TransferOwnershipRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
-            const localVarFetchArgs = WorkspacesApiFetchParamCreator(configuration).transferOwnership(workspace, body, options);
-            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response;
                     } else {
                         throw response;
                     }
@@ -19841,16 +11835,6 @@ export const WorkspacesApiFp = function(configuration?: Configuration) {
  */
 export const WorkspacesApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
     return {
-        /**
-         * List workspaces under given workspace.
-         * @summary List Workspaces in Workspace
-         * @param {string} workspace name of the workspace
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        childWorkspaces(workspace: string, options?: any) {
-            return WorkspacesApiFp(configuration).childWorkspaces(workspace, options)(fetch, basePath);
-        },
         /**
          * Create a new workspace.
          * @summary Create Workspace
@@ -19884,23 +11868,11 @@ export const WorkspacesApiFactory = function (configuration?: Configuration, fet
         /**
          * List all workspaces in an organization.
          * @summary List Workspaces
-         * @param {boolean} [fetch_across_regions] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listWorkspaces(fetch_across_regions?: boolean, options?: any) {
-            return WorkspacesApiFp(configuration).listWorkspaces(fetch_across_regions, options)(fetch, basePath);
-        },
-        /**
-         * Transfer ownership of a workspace to a new user.
-         * @summary Transfer Ownership of a Workspace
-         * @param {string} workspace name of the workspace
-         * @param {TransferOwnershipRequest} body JSON Object
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        transferOwnership(workspace: string, body: TransferOwnershipRequest, options?: any) {
-            return WorkspacesApiFp(configuration).transferOwnership(workspace, body, options)(fetch, basePath);
+        listWorkspaces(options?: any) {
+            return WorkspacesApiFp(configuration).listWorkspaces(options)(fetch, basePath);
         },
     };
 };
@@ -19911,17 +11883,6 @@ export const WorkspacesApiFactory = function (configuration?: Configuration, fet
  * @extends {BaseAPI}
  */
 export class WorkspacesApi extends BaseAPI {
-    /**
-     * List workspaces under given workspace.
-     * @summary List Workspaces in Workspace
-     * @param {string} workspace name of the workspace
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof WorkspacesApi
-     */
-    public childWorkspaces(workspace: string, options?: any) {
-        return WorkspacesApiFp(this.configuration).childWorkspaces(workspace, options)(this.fetch, this.basePath);
-    }
     /**
      * Create a new workspace.
      * @summary Create Workspace
@@ -19958,24 +11919,11 @@ export class WorkspacesApi extends BaseAPI {
     /**
      * List all workspaces in an organization.
      * @summary List Workspaces
-     * @param {boolean} [fetch_across_regions] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof WorkspacesApi
      */
-    public listWorkspaces(fetch_across_regions?: boolean, options?: any) {
-        return WorkspacesApiFp(this.configuration).listWorkspaces(fetch_across_regions, options)(this.fetch, this.basePath);
-    }
-    /**
-     * Transfer ownership of a workspace to a new user.
-     * @summary Transfer Ownership of a Workspace
-     * @param {string} workspace name of the workspace
-     * @param {TransferOwnershipRequest} body JSON Object
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof WorkspacesApi
-     */
-    public transferOwnership(workspace: string, body: TransferOwnershipRequest, options?: any) {
-        return WorkspacesApiFp(this.configuration).transferOwnership(workspace, body, options)(this.fetch, this.basePath);
+    public listWorkspaces(options?: any) {
+        return WorkspacesApiFp(this.configuration).listWorkspaces(options)(this.fetch, this.basePath);
     }
 }

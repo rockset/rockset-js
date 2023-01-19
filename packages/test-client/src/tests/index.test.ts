@@ -57,8 +57,6 @@ describe('Test Rockset Test Client', () => {
         { name: 'foo2', value: 'bar', type: 'string' },
       ])
       .defaultRowLimit(100)
-      .generateWarnings(true)
-      .profilingEnabled(true)
       .execute()) as unknown) as QueryRequest;
 
     expect(body?.sql).toEqual({
@@ -69,8 +67,6 @@ describe('Test Rockset Test Client', () => {
         { name: 'foo2', value: 'bar', type: 'string' },
       ],
       default_row_limit: 100,
-      generate_warnings: true,
-      profiling_enabled: true,
     });
   });
 });

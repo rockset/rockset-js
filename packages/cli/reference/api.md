@@ -62,7 +62,6 @@ wrappers for Rockset's API endpoints (full documentation at https://docs.rockset
 * [`rockset api virtualInstances getVirtualInstance VIRTUALINSTANCEID`](#rockset-api-virtualinstances-getvirtualinstance-virtualinstanceid)
 * [`rockset api virtualInstances listVirtualInstances`](#rockset-api-virtualinstances-listvirtualinstances)
 * [`rockset api virtualInstances setVirtualInstance VIRTUALINSTANCEID`](#rockset-api-virtualinstances-setvirtualinstance-virtualinstanceid)
-* [`rockset api workspaces childWorkspaces WORKSPACE`](#rockset-api-workspaces-childworkspaces-workspace)
 * [`rockset api workspaces createWorkspace`](#rockset-api-workspaces-createworkspace)
 * [`rockset api workspaces deleteWorkspace WORKSPACE`](#rockset-api-workspaces-deleteworkspace-workspace)
 * [`rockset api workspaces getWorkspace WORKSPACE`](#rockset-api-workspaces-getworkspace-workspace)
@@ -2830,45 +2829,6 @@ EXAMPLES
   new_size: LARGE
   new_type: null
   monitoring_enabled: null
-```
-
-## `rockset api workspaces childWorkspaces WORKSPACE`
-
-list workspaces under given workspace
-
-```
-USAGE
-  $ rockset api workspaces childWorkspaces [WORKSPACE] [-h] [--raw] [--columns <value> | ] [--output csv|json|yaml |  |
-  ]
-
-ARGUMENTS
-  WORKSPACE  name of the workspace
-
-FLAGS
-  -h, --help         Show CLI help.
-  --columns=<value>  only show provided columns (comma-separated)
-  --output=<option>  output in a more machine friendly format
-                     <options: csv|json|yaml>
-  --raw              Show the raw output from the server, instead of grabbing the results. Usually used in conjunction
-                     with --output=json
-
-DESCRIPTION
-  list workspaces under given workspace
-
-  Arguments to this command will be passed as URL parameters to GET: /v1/orgs/self/ws/{workspace}/ws
-
-  Endpoint Reference
-
-  GET: /v1/orgs/self/ws/{workspace}/ws
-
-  List Workspaces in Workspace
-
-  List workspaces under given workspace.
-
-  More documentation at https://docs.rockset.com/rest-api#childworkspaces
-
-EXAMPLES
-  $ rockset api:workspaces:childWorkspaces WORKSPACE
 ```
 
 ## `rockset api workspaces createWorkspace`

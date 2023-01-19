@@ -91,7 +91,7 @@ describe('functionality tests (e2e)', function () {
       },
     });
 
-    const nextPage = await rockset.queries.getQueryPagination(
+    const nextPage = await rockset.queries.getQueryResults(
       out.query_id ?? '',
       out.pagination?.next_cursor ?? '',
       1,
