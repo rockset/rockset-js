@@ -23,22 +23,20 @@ class DownloadQueryLambda extends RockCommand {
     const { flags } = await this.parse(DownloadQueryLambda);
 
     const downloadLambdas = () =>
-      main.downloadQueryLambdas(
-        {
-          onWriteLambda: (lambda) => {
-            this.log(chalk`Downloaded lambda {green ${lambda.fullName}}`);
-          },
-          onNoOp: () => this.log('No lambdas found.'),
-          onDuplicateLambdas: (duplicates) => {
-            this.warn(
-              `Your filesystem is case-insensitive, and we have found multiple Query Lambdas that map to the same path. Skipping all of the following Query Lambdas.
+      main.downloadQueryLambdas({
+        onWriteLambda: (lambda) => {
+          this.log(chalk`Downloaded lambda {green ${lambda.fullName}}`);
+        },
+        onNoOp: () => this.log('No lambdas found.'),
+        onDuplicateLambdas: (duplicates) => {
+          this.warn(
+            `Your filesystem is case-insensitive, and we have found multiple Query Lambdas that map to the same path. Skipping all of the following Query Lambdas.
               ${prettyPrint(duplicates)}
 Please delete or rename Query Lambdas that are duplicates before re-attempting to download them.
               `,
-            );
-          },
-        }
-      );
+          );
+        },
+      });
 
     if (flags.yes) {
       await downloadLambdas();
