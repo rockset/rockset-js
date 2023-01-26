@@ -991,6 +991,12 @@ paths:
         required: false
         type: "integer"
         format: "int32"
+      - name: "offset"
+        in: "query"
+        description: "Offset from the cursor of the first document to be returned"
+        required: false
+        type: "integer"
+        format: "int32"
       responses:
         200:
           description: "successfully fetched query results"
@@ -2961,7 +2967,7 @@ paths:
         200:
           description: "collection mounted"
           schema:
-            $ref: "#/definitions/CollectionMountResponse"
+            $ref: "#/definitions/CreateCollectionMountsResponse"
         400:
           description: "bad request"
           schema:
@@ -6308,6 +6314,14 @@ definitions:
         example: 10000000
         description: "Total size of indexes after the completed bulk ingest. This\
           \ is the same as collection size."
+      data_indexed_throughput_bytes:
+        type: "number"
+        format: "double"
+        example: 800000.5
+        description: "Throughput of documents indexed in the last minute measured\
+          \ in bytes/s. This is based off the data_indexed_bytes size. Throughput\
+          \ during the download stage is shown on a per-source granularity in the\
+          \ sources field of the Collection response."
   CancelQueryResponse:
     type: "object"
     properties:
@@ -6634,6 +6648,14 @@ definitions:
         description: "Collections to mount."
         items:
           type: "string"
+  CreateCollectionMountsResponse:
+    type: "object"
+    properties:
+      data:
+        type: "array"
+        description: "Mounts created."
+        items:
+          $ref: "#/definitions/CollectionMount"
   CreateCollectionRequest:
     type: "object"
     properties:
@@ -7097,6 +7119,7 @@ definitions:
         - "CREATING"
         - "BADREQUEST"
         - "SERVICEUNAVAILABLE"
+        - "CONFLICT"
         - "RATELIMITEXCEEDED"
         - "QUERY_CANCELLED"
         - "CLIENT_CONNECTION_ERROR"
@@ -8076,6 +8099,7 @@ definitions:
         description: "SQL query string."
       generate_warnings:
         type: "boolean"
+        example: false
         description: "Flag to enable warnings. Warnings can help debug query issues\
           \ but negatively affect performance."
       parameters:

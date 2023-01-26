@@ -440,6 +440,12 @@ export interface BulkStats {
      * @memberof BulkStats
      */
     total_index_size_bytes?: number;
+    /**
+     * Throughput of documents indexed in the last minute measured in bytes/s. This is based off the data_indexed_bytes size. Throughput during the download stage is shown on a per-source granularity in the sources field of the Collection response.
+     * @type {number}
+     * @memberof BulkStats
+     */
+    data_indexed_throughput_bytes?: number;
 }
 
 /**
@@ -980,6 +986,20 @@ export namespace CreateCollectionMountRequest {
         STATIC = <any> 'STATIC',
         LIVE = <any> 'LIVE'
     }
+}
+
+/**
+ * 
+ * @export
+ * @interface CreateCollectionMountsResponse
+ */
+export interface CreateCollectionMountsResponse {
+    /**
+     * Mounts created.
+     * @type {Array<CollectionMount>}
+     * @memberof CreateCollectionMountsResponse
+     */
+    data?: Array<CollectionMount>;
 }
 
 /**
@@ -1820,6 +1840,7 @@ export namespace ErrorModel {
         CREATING = <any> 'CREATING',
         BADREQUEST = <any> 'BADREQUEST',
         SERVICEUNAVAILABLE = <any> 'SERVICEUNAVAILABLE',
+        CONFLICT = <any> 'CONFLICT',
         RATELIMITEXCEEDED = <any> 'RATELIMITEXCEEDED',
         QUERYCANCELLED = <any> 'QUERY_CANCELLED',
         CLIENTCONNECTIONERROR = <any> 'CLIENT_CONNECTION_ERROR'
@@ -7993,10 +8014,11 @@ export const QueriesApiFetchParamCreator = function (configuration?: Configurati
          * @param {string} queryId 
          * @param {string} [cursor] Cursor to current page. If unset, will default to the first page.
          * @param {number} [docs] Number of documents to fetch.
+         * @param {number} [offset] Offset from the cursor of the first document to be returned
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getQueryResults(queryId: string, cursor?: string, docs?: number, options: any = {}): FetchArgs {
+        getQueryResults(queryId: string, cursor?: string, docs?: number, offset?: number, options: any = {}): FetchArgs {
             // verify required parameter 'queryId' is not null or undefined
             if (queryId === null || queryId === undefined) {
                 throw new RequiredError('queryId','Required parameter queryId was null or undefined when calling getQueryResults.');
@@ -8012,6 +8034,9 @@ export const QueriesApiFetchParamCreator = function (configuration?: Configurati
             }
             if (docs !== undefined) {
                 localVarQueryParameter['docs'] = docs;
+            }
+            if (offset !== undefined) {
+                localVarQueryParameter['offset'] = offset;
             }
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
@@ -8153,11 +8178,12 @@ export const QueriesApiFp = function(configuration?: Configuration) {
          * @param {string} queryId 
          * @param {string} [cursor] Cursor to current page. If unset, will default to the first page.
          * @param {number} [docs] Number of documents to fetch.
+         * @param {number} [offset] Offset from the cursor of the first document to be returned
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getQueryResults(queryId: string, cursor?: string, docs?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<QueryPaginationResponse> {
-            const localVarFetchArgs = QueriesApiFetchParamCreator(configuration).getQueryResults(queryId, cursor, docs, options);
+        getQueryResults(queryId: string, cursor?: string, docs?: number, offset?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<QueryPaginationResponse> {
+            const localVarFetchArgs = QueriesApiFetchParamCreator(configuration).getQueryResults(queryId, cursor, docs, offset, options);
             return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -8259,11 +8285,12 @@ export const QueriesApiFactory = function (configuration?: Configuration, fetch?
          * @param {string} queryId 
          * @param {string} [cursor] Cursor to current page. If unset, will default to the first page.
          * @param {number} [docs] Number of documents to fetch.
+         * @param {number} [offset] Offset from the cursor of the first document to be returned
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getQueryResults(queryId: string, cursor?: string, docs?: number, options?: any) {
-            return QueriesApiFp(configuration).getQueryResults(queryId, cursor, docs, options)(fetch, basePath);
+        getQueryResults(queryId: string, cursor?: string, docs?: number, offset?: number, options?: any) {
+            return QueriesApiFp(configuration).getQueryResults(queryId, cursor, docs, offset, options)(fetch, basePath);
         },
         /**
          * Lists actively queued and running queries.
@@ -8331,12 +8358,13 @@ export class QueriesApi extends BaseAPI {
      * @param {string} queryId 
      * @param {string} [cursor] Cursor to current page. If unset, will default to the first page.
      * @param {number} [docs] Number of documents to fetch.
+     * @param {number} [offset] Offset from the cursor of the first document to be returned
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof QueriesApi
      */
-    public getQueryResults(queryId: string, cursor?: string, docs?: number, options?: any) {
-        return QueriesApiFp(this.configuration).getQueryResults(queryId, cursor, docs, options)(this.fetch, this.basePath);
+    public getQueryResults(queryId: string, cursor?: string, docs?: number, offset?: number, options?: any) {
+        return QueriesApiFp(this.configuration).getQueryResults(queryId, cursor, docs, offset, options)(this.fetch, this.basePath);
     }
     /**
      * Lists actively queued and running queries.
@@ -11222,7 +11250,7 @@ export const VirtualInstancesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        mountCollection(virtualInstanceId: string, body: CreateCollectionMountRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<CollectionMountResponse> {
+        mountCollection(virtualInstanceId: string, body: CreateCollectionMountRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<CreateCollectionMountsResponse> {
             const localVarFetchArgs = VirtualInstancesApiFetchParamCreator(configuration).mountCollection(virtualInstanceId, body, options);
             return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
