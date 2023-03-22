@@ -334,6 +334,53 @@ rocksetClient.aliases
   .catch(console.error);
 ```
 
+### Create a Virtual Instance
+
+```ts
+rocksetClient.virtualInstances
+  .createVirtualInstance({
+    name: "analytics",
+    type: "LARGE",
+    description: "virtual instance for running one-off analytics queries",
+    auto_suspend_seconds: 3600,
+    mount_refresh_interval_seconds: 3600,
+  })
+  .then(console.log)
+  .catch(console.err);;
+```
+### List Virtual Instances
+
+```ts
+rocksetClient.virtualInstances
+  .listVirtualInstances()
+  .then(console.log)
+  .catch(console.err);;
+```
+
+### Query a Virtual Instance
+
+The virtual instance ID can be found from the listVirtualInstances call.
+
+```ts
+rocksetClient.virtualInstances
+  .queryVirtualInstance("virtual-instance-id", {
+    sql: { query: "select 1" },
+  })
+  .then(console.log)
+  .catch(console.err);
+```
+  
+### Execute a Query Lambda on a Virtual Instance
+
+```ts
+rocksetClient.queryLambdas
+  .executeQueryLambda("commons", "exampleQueryLambda", "version", {
+    virtual_instance_id: "virtual-instance-id",
+  })
+  .then(console.log)
+  .catch(console.err);
+```
+
 ## Testing
 
 Unit tests are available in the [tests](https://github.com/rockset/rockset-js/tree/master/packages/client/src/tests) folder.

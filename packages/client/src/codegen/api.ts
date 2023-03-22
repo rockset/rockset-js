@@ -423,6 +423,18 @@ export interface BulkStats {
      */
     download_compute_ms?: number;
     /**
+     * Bulk ingest compute units in milliseconds used for ingest transformation.
+     * @type {number}
+     * @memberof BulkStats
+     */
+    transformation_compute_ms?: number;
+    /**
+     * Size in bytes of documents before being indexed. This is the total size of documents after decompression, transformations, and dropping. This is equal to data_indexed_bytes after the indexing stage is done unless there are retries during indexing the data.
+     * @type {number}
+     * @memberof BulkStats
+     */
+    pre_index_size_bytes?: number;
+    /**
      * Size in bytes of documents indexed. This is the total size of documents after transformations and dropping before indexes are built.
      * @type {number}
      * @memberof BulkStats
@@ -703,6 +715,12 @@ export interface CollectionMount {
      */
     rrn?: string;
     /**
+     * Unix timestamp of most recent refresh. Not applicable for live mounts.
+     * @type {number}
+     * @memberof CollectionMount
+     */
+    last_refresh_time_millis?: number;
+    /**
      * Time in millis at which the snapshot expires.
      * @type {number}
      * @memberof CollectionMount
@@ -736,6 +754,7 @@ export namespace CollectionMount {
     export enum StateEnum {
         CREATING = <any> 'CREATING',
         ACTIVE = <any> 'ACTIVE',
+        REFRESHING = <any> 'REFRESHING',
         EXPIRED = <any> 'EXPIRED',
         DELETING = <any> 'DELETING'
     }
@@ -960,32 +979,11 @@ export interface CreateApiKeyResponse {
  */
 export interface CreateCollectionMountRequest {
     /**
-     * Mount type.
-     * @type {string}
-     * @memberof CreateCollectionMountRequest
-     */
-    type?: CreateCollectionMountRequest.TypeEnum;
-    /**
      * Collections to mount.
      * @type {Array<string>}
      * @memberof CreateCollectionMountRequest
      */
     collection_paths?: Array<string>;
-}
-
-/**
- * @export
- * @namespace CreateCollectionMountRequest
- */
-export namespace CreateCollectionMountRequest {
-    /**
-     * @export
-     * @enum {string}
-     */
-    export enum TypeEnum {
-        STATIC = <any> 'STATIC',
-        LIVE = <any> 'LIVE'
-    }
 }
 
 /**
@@ -1056,6 +1054,27 @@ export interface CreateCollectionRequest {
      * @memberof CreateCollectionRequest
      */
     clustering_key?: Array<FieldPartition>;
+    /**
+     * RocksDB storage compression type.
+     * @type {string}
+     * @memberof CreateCollectionRequest
+     */
+    storage_compression_type?: CreateCollectionRequest.StorageCompressionTypeEnum;
+}
+
+/**
+ * @export
+ * @namespace CreateCollectionRequest
+ */
+export namespace CreateCollectionRequest {
+    /**
+     * @export
+     * @enum {string}
+     */
+    export enum StorageCompressionTypeEnum {
+        LZ4 = <any> 'LZ4',
+        ZSTD = <any> 'ZSTD'
+    }
 }
 
 /**
@@ -1360,6 +1379,12 @@ export interface CreateVirtualInstanceRequest {
      * @memberof CreateVirtualInstanceRequest
      */
     auto_suspend_seconds?: number;
+    /**
+     * Number of seconds between data refreshes for mounts on this Virtual Instance
+     * @type {number}
+     * @memberof CreateVirtualInstanceRequest
+     */
+    mount_refresh_interval_seconds?: number;
 }
 
 /**
@@ -3057,6 +3082,8 @@ export namespace Privilege {
         CREATEQUERYLAMBDAWS = <any> 'CREATE_QUERY_LAMBDA_WS',
         DELETEQUERYLAMBDAWS = <any> 'DELETE_QUERY_LAMBDA_WS',
         EXECUTEQUERYLAMBDAWS = <any> 'EXECUTE_QUERY_LAMBDA_WS',
+        CREATESCHEDULEDLAMBDAWS = <any> 'CREATE_SCHEDULED_LAMBDA_WS',
+        DELETESCHEDULEDLAMBDAWS = <any> 'DELETE_SCHEDULED_LAMBDA_WS',
         CREATEVIEWWS = <any> 'CREATE_VIEW_WS',
         DELETEVIEWWS = <any> 'DELETE_VIEW_WS',
         ALLVIACTIONS = <any> 'ALL_VI_ACTIONS',
@@ -3534,12 +3561,6 @@ export interface QueryRequestSql {
      * @memberof QueryRequestSql
      */
     default_row_limit?: number;
-    /**
-     * Flag to paginate and store the results of this query for later / sequential retrieval.
-     * @type {boolean}
-     * @memberof QueryRequestSql
-     */
-    paginate?: boolean;
     /**
      * Number of documents to return in addition to paginating for this query call. Only relevant if `paginate` flag is also set.
      * @type {number}
@@ -5165,6 +5186,12 @@ export interface UpdateVirtualInstanceRequest {
      * @memberof UpdateVirtualInstanceRequest
      */
     auto_suspend_seconds?: number;
+    /**
+     * Number of seconds between data refreshes for mounts on this Virtual Instance
+     * @type {number}
+     * @memberof UpdateVirtualInstanceRequest
+     */
+    mount_refresh_interval_seconds?: number;
 }
 
 /**
@@ -5456,6 +5483,12 @@ export interface VirtualInstance {
      * @memberof VirtualInstance
      */
     auto_suspend_seconds?: number;
+    /**
+     * Number of seconds between data refreshes for mounts on this Virtual Instance
+     * @type {number}
+     * @memberof VirtualInstance
+     */
+    mount_refresh_interval_seconds?: number;
     /**
      * Stats about this VirtualInstance
      * @type {VirtualInstanceStats}

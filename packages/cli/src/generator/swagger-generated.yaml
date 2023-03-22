@@ -6296,6 +6296,19 @@ definitions:
         example: 50000
         description: "Bulk ingest compute units in milliseconds used for downloading\
           \ documents."
+      transformation_compute_ms:
+        type: "integer"
+        format: "int64"
+        example: 50000
+        description: "Bulk ingest compute units in milliseconds used for ingest transformation."
+      pre_index_size_bytes:
+        type: "integer"
+        format: "int64"
+        example: 8000000
+        description: "Size in bytes of documents before being indexed. This is the\
+          \ total size of documents after decompression, transformations, and dropping.\
+          \ This is equal to data_indexed_bytes after the indexing stage is done unless\
+          \ there are retries during indexing the data."
       data_indexed_bytes:
         type: "integer"
         format: "int64"
@@ -6460,6 +6473,7 @@ definitions:
         enum:
         - "CREATING"
         - "ACTIVE"
+        - "REFRESHING"
         - "EXPIRED"
         - "DELETING"
       collection_path:
@@ -6482,6 +6496,12 @@ definitions:
         type: "string"
         example: "rrn:mnt:use1a1:123e4567-e89b-12d3-a456-556642440000"
         description: "Mount RRN."
+      last_refresh_time_millis:
+        type: "integer"
+        format: "int64"
+        example: 123123764
+        description: "Unix timestamp of most recent refresh. Not applicable for live\
+          \ mounts."
       snapshot_expiration_time_millis:
         type: "integer"
         format: "int64"
@@ -6635,13 +6655,6 @@ definitions:
   CreateCollectionMountRequest:
     type: "object"
     properties:
-      type:
-        type: "string"
-        example: "STATIC"
-        description: "Mount type."
-        enum:
-        - "STATIC"
-        - "LIVE"
       collection_paths:
         type: "array"
         example: "[\"commons.foo\", \"commons.bar\"]"
@@ -6698,6 +6711,12 @@ definitions:
           \ in `field_mapping_query` instead."
         items:
           $ref: "#/definitions/FieldPartition"
+      storage_compression_type:
+        type: "string"
+        description: "RocksDB storage compression type."
+        enum:
+        - "LZ4"
+        - "ZSTD"
   CreateCollectionResponse:
     type: "object"
     properties:
@@ -6891,6 +6910,12 @@ definitions:
         format: "int32"
         example: 3600
         description: "Number of seconds without queries after which the VI is suspended"
+      mount_refresh_interval_seconds:
+        type: "integer"
+        format: "int32"
+        example: 3600
+        description: "Number of seconds between data refreshes for mounts on this\
+          \ Virtual Instance"
   CreateVirtualInstanceResponse:
     type: "object"
     properties:
@@ -7810,6 +7835,8 @@ definitions:
         - "CREATE_QUERY_LAMBDA_WS"
         - "DELETE_QUERY_LAMBDA_WS"
         - "EXECUTE_QUERY_LAMBDA_WS"
+        - "CREATE_SCHEDULED_LAMBDA_WS"
+        - "DELETE_SCHEDULED_LAMBDA_WS"
         - "CREATE_VIEW_WS"
         - "DELETE_VIEW_WS"
         - "ALL_VI_ACTIONS"
@@ -8112,10 +8139,6 @@ definitions:
         format: "int32"
         description: "Row limit to use. Limits specified in the query text will override\
           \ this default."
-      paginate:
-        type: "boolean"
-        description: "Flag to paginate and store the results of this query for later\
-          \ / sequential retrieval."
       initial_paginate_response_doc_count:
         type: "integer"
         format: "int32"
@@ -9089,6 +9112,12 @@ definitions:
         format: "int32"
         example: 3600
         description: "Number of seconds without queries after which the VI is suspended"
+      mount_refresh_interval_seconds:
+        type: "integer"
+        format: "int32"
+        example: 3600
+        description: "Number of seconds between data refreshes for mounts on this\
+          \ Virtual Instance"
   UpdateVirtualInstanceResponse:
     type: "object"
     properties:
@@ -9294,6 +9323,12 @@ definitions:
         format: "int32"
         example: 3600
         description: "Number of seconds without queries after which the VI is suspended"
+      mount_refresh_interval_seconds:
+        type: "integer"
+        format: "int32"
+        example: 3600
+        description: "Number of seconds between data refreshes for mounts on this\
+          \ Virtual Instance"
       stats:
         description: "Stats about this VirtualInstance"
         $ref: "#/definitions/VirtualInstanceStats"
