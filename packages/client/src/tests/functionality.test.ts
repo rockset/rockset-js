@@ -60,8 +60,8 @@ describe('functionality tests (e2e)', function () {
         query: 'SELECT COUNT(*) FROM _events;',
       },
       async_options: {
-        max_initial_results: 0
-      }
+        max_initial_results: 0,
+      },
     });
     expect(out).toMatchObject({
       collections: ['commons._events'],
@@ -80,8 +80,8 @@ describe('functionality tests (e2e)', function () {
         query: 'SELECT * FROM _events LIMIT 2;',
       },
       async_options: {
-        max_initial_results: 1
-      }
+        max_initial_results: 1,
+      },
     });
     expect(out).toMatchObject({
       collections: ['commons._events'],
