@@ -32,7 +32,7 @@ describe('error handling', function () {
           column: 8,
           error_id: 'function_not_found',
           message: 'Function `COUT` not found.',
-          type: 'QueryError',
+          type: 'QUERY_ERROR',
         })
       );
     expect(out).toBeUndefined();

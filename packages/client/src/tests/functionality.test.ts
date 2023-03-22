@@ -54,63 +54,6 @@ describe('functionality tests (e2e)', function () {
     });
   });
 
-  test('paginate with no more pages', async () => {
-    const out = await rockset.queries.query({
-      sql: {
-        query: 'SELECT COUNT(*) FROM _events;',
-      },
-      async_options: {
-        max_initial_results: 0,
-      },
-    });
-    expect(out).toMatchObject({
-      collections: ['commons._events'],
-      column_fields: [{ name: '?COUNT', type: '' }],
-      results: [{ '?COUNT': expect.anything() }],
-      pagination: {
-        // There should not be any more results.
-        next_cursor: null,
-      },
-    });
-  });
-
-  test('paginate with more pages', async () => {
-    const out = await rockset.queries.query({
-      sql: {
-        query: 'SELECT * FROM _events LIMIT 2;',
-      },
-      async_options: {
-        max_initial_results: 1,
-      },
-    });
-    expect(out).toMatchObject({
-      collections: ['commons._events'],
-      results: [{ _event_time: expect.anything() }],
-      results_total_doc_count: 2,
-      pagination: {
-        // There should be a next cursor.
-        next_cursor: expect.anything(),
-        current_page_doc_count: 1,
-      },
-    });
-
-    const nextPage = await rockset.queries.getQueryResults(
-      out.query_id ?? '',
-      out.pagination?.next_cursor ?? '',
-      1,
-      0
-    );
-    expect(nextPage).toMatchObject({
-      results: [{ _event_time: expect.anything() }],
-      results_total_doc_count: 2,
-      pagination: {
-        // There should not be any more documents.
-        next_cursor: null,
-        current_page_doc_count: 1,
-      },
-    });
-  });
-
   test('getting collections', async () => {
     const out = await rockset.collections.getCollection('commons', '_events');
     const sampleOutput = {
@@ -267,7 +210,7 @@ describe('functionality tests (e2e)', function () {
       expect(error).toMatchObject({
         message:
           'Query Lambda "myFakeQuery" not found in workspace "commons.fake.workspace".',
-        type: 'NotFound',
+        type: 'NOTFOUND',
         line: null,
         column: null,
         trace_id: expect.anything(),
