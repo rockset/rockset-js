@@ -58,8 +58,10 @@ describe('functionality tests (e2e)', function () {
     const out = await rockset.queries.query({
       sql: {
         query: 'SELECT COUNT(*) FROM _events;',
-        paginate: true,
       },
+      async_options: {
+        max_initial_results: 0
+      }
     });
     expect(out).toMatchObject({
       collections: ['commons._events'],
@@ -76,9 +78,10 @@ describe('functionality tests (e2e)', function () {
     const out = await rockset.queries.query({
       sql: {
         query: 'SELECT * FROM _events LIMIT 2;',
-        paginate: true,
-        initial_paginate_response_doc_count: 1,
       },
+      async_options: {
+        max_initial_results: 1
+      }
     });
     expect(out).toMatchObject({
       collections: ['commons._events'],
