@@ -30,7 +30,7 @@
     "@rockset/client": "0.8.2",
     "@rockset/core": "0.8.2",
     "@rockset/parser": "0.8.2",
-    "immer": "^8.0.1",
+    "immer": "^9.0.6",
     "lodash": "^4.17.19"
   }
 }
