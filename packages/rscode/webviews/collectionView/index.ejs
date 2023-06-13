@@ -1,0 +1,89 @@
+<head>
+  <link rel="stylesheet" href="<%= stylesheet %>">
+</head>
+
+<div class="topbar">
+  <span class="item left">
+    Sort by: <select id="sort-by-options" onchange="refresh()">
+      <% for (var i = 0; i < fields.length; i++) { %>
+        <option value="<%= fields[i] %>"><%= fields[i] %></option>
+      <% } %>
+    </select>
+    <span id="sorting-direction">
+        <%- descending ? "↓" : "↑"%>
+    </span>
+  </span>
+  <span class="item right" id="refresh">↻</span>
+  <span class="item right">
+    Rows: <input 
+      id="rows-box" 
+      type="number" 
+      min="0"
+      max="<%= documents.length %>"
+      value="<%= Math.min(limit, documents.length) %>" 
+      onchange="refresh()">
+  </span>
+</div>
+
+<% if (documents.length <= 0) { %>
+  <p>Empty collection</p>
+<% } else { %>
+  <table>
+    <tr>
+      <% for (var i = 0; i < fields.length; i++) { %>
+        <th>
+          <%= fields[i] %>
+        </th>
+      <% } %>
+    </tr>
+    <% for (var i = 0; i < documents.length; i++) { %>
+      <tr>
+        <% var values = Object.values(documents[i]) %>
+        <% for (var j = 0; j < values.length; j++) { %>
+          <td>
+            <%- formatValue(values[j]) %>
+          </td>
+        <% } %>
+      </tr>
+    <% } %>
+  </table>
+<% } %>
+
+<script>
+  const vscode = acquireVsCodeApi();
+  const descending = <%= descending %>;
+  const refreshBtn = document.getElementById("refresh");
+  const sortingDireciton = document.getElementById("sorting-direction");
+
+  function refresh(toggleDirection, limit) {
+    document.getElementsByTagName("table")[0].replaceWith(document.createElement("p"));
+    vscode.postMessage({ 
+      request: "reload", 
+      params: {
+        sortBy: document.getElementById("sort-by-options").value,
+        descending: toggleDirection ? !descending : descending,
+        limit: parseInt(document.getElementById("rows-box").value)
+      }
+    });
+  }
+
+  function showObjectData(elem) {
+    vscode.postMessage({ 
+      request: "showObject", 
+      params: {
+        objectContents: elem.querySelector(".object-contents").innerHTML
+      }
+    });
+  }
+
+  document.getElementById("sort-by-options").value = `<%= sortBy %>`;
+  sortingDireciton.addEventListener("click", () => { 
+    refresh(true);
+    if (sortingDireciton.innerText === "↓") {
+      sortingDireciton.innerText = "↑"
+    } else {
+      sortingDireciton.innerText = "↓"
+    }
+  });
+  refreshBtn.addEventListener("click", () => { refresh(false) });
+</script>

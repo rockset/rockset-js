@@ -50,6 +50,9 @@ Then, open `myLambda.sql` in VSCode. You should confirm that the language of you
 
 You can execute and validate simple queries directly in VSCode. Open the Command Palette in VSCode (<kbd>CTRL</kbd> + <kbd>SHIFT</kbd> + <kbd>P</kbd> or <kbd>CMD</kbd> + <kbd>SHIFT</kbd> + <kbd>P</kbd>) and execute the command `Execute Rockset Query` or `Validate Rockset Query`. At this point, it is not possible to run parameterized queries directly from VSCode.
 
+### Viewing Collections
+You can view a collection by running the `View Rockset Collection` command. This command displays all documents in a collection.
+
 ### Adding Documents
 
 You can add documents with the [Write API](https://docs.rockset.com/write-api/) directly from VSCode. With a JSON or YAML file open, execute the command `Add Rockset Document(s)`. This command takes either a list of documents or a single document.
