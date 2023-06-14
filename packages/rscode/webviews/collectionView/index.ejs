@@ -5,9 +5,9 @@
 <div class="topbar">
   <span class="item left">
     Sort by: <select id="sort-by-options" onchange="refresh()">
-      <% for (var i = 0; i < fields.length; i++) { %>
-        <option value="<%= fields[i] %>"><%= fields[i] %></option>
-      <% } %>
+      <% fields.forEach(function(field) { %>
+        <option value="<%= field %>"><%= field %></option>
+      <% }) %>
     </select>
     <span id="sorting-direction">
         <%- descending ? "↓" : "↑"%>
@@ -30,11 +30,11 @@
 <% } else { %>
   <table>
     <tr>
-      <% for (var i = 0; i < fields.length; i++) { %>
+      <% fields.forEach(function(field) { %>
         <th>
-          <%= fields[i] %>
+          <%= field %>
         </th>
-      <% } %>
+      <% }) %>
     </tr>
     <% for (var i = 0; i < documents.length; i++) { %>
       <tr>
@@ -56,7 +56,7 @@
   const sortingDireciton = document.getElementById("sorting-direction");
 
   function refresh(toggleDirection, limit) {
-    document.getElementsByTagName("table")[0].replaceWith(document.createElement("p"));
+    document.getElementsByTagName("table")[0].innerHTML = "";
     vscode.postMessage({ 
       request: "reload", 
       params: {

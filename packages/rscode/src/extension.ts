@@ -38,14 +38,14 @@ class CollectionView {
         },
       })
     ).results;
-    const fields: string[] = [];
+    const fields: Set<string> = new Set<string>();
     if (!fieldsRes) {
       return fields;
     }
 
     fieldsRes.forEach((res: { field: string[] }) => {
       if (res.field.length === 1) {
-        fields.push(res.field[0]);
+        fields.add(res.field[0]);
       }
     });
     return fields;
@@ -70,15 +70,6 @@ class CollectionView {
       vscode.ViewColumn.One,
       { enableFindWidget: true, enableScripts: true }
     );
-    await CollectionView.reload();
-  }
-
-  static async reload(sortBy?: string, descending?: boolean, limit?: number) {
-    if (!CollectionView.initialized || !CollectionView.collectionView) {
-      await vscode.window.showErrorMessage('No collection open');
-      return;
-    }
-
     CollectionView.collectionView.webview.onDidReceiveMessage(
       async (message: {
         request?: string;
@@ -108,6 +99,14 @@ class CollectionView {
         }
       }
     );
+    await CollectionView.reload();
+  }
+
+  static async reload(sortBy?: string, descending?: boolean, limit?: number) {
+    if (!CollectionView.initialized || !CollectionView.collectionView) {
+      await vscode.window.showErrorMessage('No collection open');
+      return;
+    }
 
     const fields = await this.getFields();
 
@@ -121,20 +120,24 @@ class CollectionView {
       {
         collection: CollectionView.collection,
         workspace: CollectionView.workspace,
-        documents:
-          (
-            await CollectionView.client.queries.query({
-              sql: {
-                query: `
-          SELECT ${fields.map((field) => `"${field}"`).join(',')} FROM "${
-                  CollectionView.workspace
-                }"."${CollectionView.collection}" 
-          ORDER BY ${sortBy || '_id'} ${descending ? 'DESC' : 'ASC'}
-          LIMIT ${limit ?? 500}
-        `,
-              },
-            })
-          ).results ?? [],
+        documents:(
+          await CollectionView.client.queries.query({
+            sql: {
+              query: `
+                SELECT ${ (() => {
+                  let fieldStr = "";
+                  fields.forEach(field => {
+                    fieldStr += `${field}, `
+                  })
+                  return fieldStr.substring(0, fieldStr.length - 1);
+                })() } 
+                FROM "${CollectionView.workspace}"."${CollectionView.collection}" 
+                ORDER BY ${sortBy || '_id'} ${descending ? 'DESC' : 'ASC'}
+                LIMIT ${limit ?? 500}
+              `,
+            },
+          })
+        ).results ?? [],
         limit: limit ?? 500,
         fields,
         sortBy: sortBy || '_id',
@@ -174,13 +177,14 @@ class CollectionView {
           </span>`;
             value = JSON.stringify(value);
           }
-          const x = render(span, { value });
-          return render(`<center><%- x %></center>`, { x });
+          return render(`<center><%- renderedSpan %></center>`, { 
+            renderedSpan: render(span, { value }) 
+          });
         },
       }
     );
     if (CollectionView.collectionView) {
-      CollectionView.collectionView.webview.html = '';
+      CollectionView.collectionView.webview.html = "";
       CollectionView.collectionView.webview.html = webviewContent;
     } else {
       await vscode.window.showErrorMessage('No collection open');
