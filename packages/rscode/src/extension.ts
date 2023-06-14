@@ -120,24 +120,27 @@ class CollectionView {
       {
         collection: CollectionView.collection,
         workspace: CollectionView.workspace,
-        documents:(
-          await CollectionView.client.queries.query({
-            sql: {
-              query: `
-                SELECT ${ (() => {
-                  let fieldStr = "";
-                  fields.forEach(field => {
-                    fieldStr += `${field}, `
-                  })
+        documents:
+          (
+            await CollectionView.client.queries.query({
+              sql: {
+                query: `
+                SELECT ${(() => {
+                  let fieldStr = '';
+                  fields.forEach((field) => {
+                    fieldStr += `${field}, `;
+                  });
                   return fieldStr.substring(0, fieldStr.length - 1);
-                })() } 
-                FROM "${CollectionView.workspace}"."${CollectionView.collection}" 
+                })()} 
+                FROM "${CollectionView.workspace}"."${
+                  CollectionView.collection
+                }" 
                 ORDER BY ${sortBy || '_id'} ${descending ? 'DESC' : 'ASC'}
                 LIMIT ${limit ?? 500}
               `,
-            },
-          })
-        ).results ?? [],
+              },
+            })
+          ).results ?? [],
         limit: limit ?? 500,
         fields,
         sortBy: sortBy || '_id',
@@ -177,14 +180,14 @@ class CollectionView {
           </span>`;
             value = JSON.stringify(value);
           }
-          return render(`<center><%- renderedSpan %></center>`, { 
-            renderedSpan: render(span, { value }) 
+          return render(`<center><%- renderedSpan %></center>`, {
+            renderedSpan: render(span, { value }),
           });
         },
       }
     );
     if (CollectionView.collectionView) {
-      CollectionView.collectionView.webview.html = "";
+      CollectionView.collectionView.webview.html = '';
       CollectionView.collectionView.webview.html = webviewContent;
     } else {
       await vscode.window.showErrorMessage('No collection open');
