@@ -21,6 +21,7 @@
   "activationEvents": [
     "onLanguage:rsql",
     "onCommand:extension.rocksetRun",
+    "onCommand:extension.rocksetView",
     "onCommand:extension.rocksetValidate",
     "onCommand:extension.rocksetAdd"
   ],
@@ -45,6 +46,10 @@
       {
         "command": "extension.rocksetRun",
         "title": "Execute Rockset Query"
+      },
+      {
+        "command": "extension.rocksetView",
+        "title": "View Rockset Collection"
       },
       {
         "command": "extension.rocksetValidate",
@@ -125,8 +130,9 @@
     "lint": "eslint 'src/**/*.ts'"
   },
   "devDependencies": {
-    "@rockset/eslint-config": "0.8.32",
+    "@rockset/eslint-config": "^0.8.32",
     "@types/axios": "^0.14.0",
+    "@types/ejs": "^3.1.2",
     "@types/glob": "^7.1.1",
     "@types/js-yaml": "^4.0.1",
     "@types/lodash": "^4.14.141",
@@ -149,6 +155,7 @@
   "dependencies": {
     "@rockset/client": "0.8.32",
     "@rockset/core": "0.8.32",
+    "ejs": "^3.1.9",
     "js-yaml": "^3.14.1",
     "sql-formatter": "^2.3.3"
   }

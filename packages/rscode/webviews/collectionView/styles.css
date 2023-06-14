@@ -1,0 +1,100 @@
+table, th, td {
+  border: 1px solid;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+th, td {
+  word-wrap: break-word;
+}
+.null {
+  color: gray;
+}
+.number {
+  color: lightgreen;
+}
+.string {
+  color: pink;
+}
+
+.topnav {
+  background-color: #333;
+  overflow: hidden;
+}
+
+table, th, td {
+  border: 1px solid;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+th, td {
+  word-wrap: break-word;
+}
+.null {
+  color: gray;
+}
+.number {
+  color: lightgreen;
+}
+.string {
+  color: pink;
+}
+.boolean {
+  color: rgb(216, 191, 216);
+}
+
+.topbar {
+  overflow: hidden;
+  /*border: 0.5px solid gray;*/
+  background-color: gray;
+}
+
+/* Style the links inside the navigation bar */
+.topbar .item {
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  border-right: darkgray;
+  color: white;
+}
+
+.left {
+  float: left;
+}
+
+.right {
+  float: right
+}
+
+#refresh, .object {
+  cursor: pointer;
+}
+
+#refresh:hover {
+  background-color: lightgray;
+}
+
+#sorting-direction {
+  border: 1px solid !important;
+  border-radius: 2px 2px 2px 0px !important;
+  cursor: pointer;
+  font-size: 10px;
+}
+
+.green {
+  color: rgb(105, 203, 105);
+}
+
+select {
+  background-color: lightgray;
+}
+
+#rows-box {
+  width: 40px;
+  background-color: lightgray;
+}

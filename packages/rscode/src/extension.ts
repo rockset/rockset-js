@@ -16,6 +16,184 @@ import rocksetConfigure, { MainApi } from '@rockset/client';
 import { Collection, ErrorModel } from '@rockset/client/dist/codegen/api';
 import yaml = require('js-yaml');
 import assert = require('assert');
+import { render, renderFile } from 'ejs';
+import { join } from 'path';
+
+class CollectionView {
+  private static initialized: boolean;
+  private static workspace: string;
+  private static collection: string;
+  private static client: MainApi;
+  private static context: vscode.ExtensionContext;
+  private static collectionView?: vscode.WebviewPanel;
+  private static textChannel?: vscode.OutputChannel;
+
+  private static async getFields() {
+    const fieldsRes = (
+      await CollectionView.client.queries.query({
+        sql: {
+          query: render(`
+            DESCRIBE "${CollectionView.workspace}"."${CollectionView.collection}" 
+          `),
+        },
+      })
+    ).results;
+    const fields: Set<string> = new Set<string>();
+    if (!fieldsRes) {
+      return fields;
+    }
+
+    fieldsRes.forEach((res: { field: string[] }) => {
+      if (res.field.length === 1) {
+        fields.add(res.field[0]);
+      }
+    });
+    return fields;
+  }
+
+  static async create(
+    workspace: string,
+    collection: string,
+    client: MainApi,
+    context: vscode.ExtensionContext,
+    textChannel: vscode.OutputChannel
+  ) {
+    CollectionView.initialized = true;
+    CollectionView.workspace = workspace;
+    CollectionView.collection = collection;
+    CollectionView.client = client;
+    CollectionView.context = context;
+    CollectionView.textChannel = textChannel;
+    CollectionView.collectionView = vscode.window.createWebviewPanel(
+      `${CollectionView.workspace}.${CollectionView.collection}`,
+      `${CollectionView.workspace}.${CollectionView.collection}`,
+      vscode.ViewColumn.One,
+      { enableFindWidget: true, enableScripts: true }
+    );
+    CollectionView.collectionView.webview.onDidReceiveMessage(
+      async (message: {
+        request?: string;
+        params?: {
+          sortBy: string;
+          descending: boolean;
+          limit?: number;
+          objectContents?: string;
+        };
+      }) => {
+        if (message.request === 'reload') {
+          await this.reload(
+            message.params?.sortBy || '_id',
+            message.params?.descending,
+            message.params?.limit
+          );
+        } else if (message.request === 'showObject') {
+          CollectionView.textChannel?.clear();
+          CollectionView.textChannel?.append(
+            JSON.stringify(
+              JSON.parse(message.params?.objectContents ?? ''),
+              null,
+              2
+            )
+          );
+          CollectionView.textChannel?.show();
+        }
+      }
+    );
+    await CollectionView.reload();
+  }
+
+  static async reload(sortBy?: string, descending?: boolean, limit?: number) {
+    if (!CollectionView.initialized || !CollectionView.collectionView) {
+      await vscode.window.showErrorMessage('No collection open');
+      return;
+    }
+
+    const fields = await this.getFields();
+
+    const webviewContent = await renderFile(
+      join(
+        CollectionView.context.extensionPath,
+        'webviews',
+        'collectionView',
+        'index.ejs'
+      ),
+      {
+        collection: CollectionView.collection,
+        workspace: CollectionView.workspace,
+        documents:
+          (
+            await CollectionView.client.queries.query({
+              sql: {
+                query: `
+                SELECT ${(() => {
+                  let fieldStr = '';
+                  fields.forEach((field) => {
+                    fieldStr += `${field}, `;
+                  });
+                  return fieldStr.substring(0, fieldStr.length - 1);
+                })()} 
+                FROM "${CollectionView.workspace}"."${
+                  CollectionView.collection
+                }" 
+                ORDER BY ${sortBy || '_id'} ${descending ? 'DESC' : 'ASC'}
+                LIMIT ${limit ?? 500}
+              `,
+              },
+            })
+          ).results ?? [],
+        limit: limit ?? 500,
+        fields,
+        sortBy: sortBy || '_id',
+        descending: descending ?? false,
+        stylesheet: CollectionView.collectionView.webview.asWebviewUri(
+          vscode.Uri.file(
+            join(
+              CollectionView.context.extensionPath,
+              'webviews',
+              'collectionView',
+              'styles.css'
+            )
+          )
+        ),
+        formatValue: function formatValue(
+          value: string | number | object
+        ): string {
+          let span;
+          if (value === null) {
+            span = `<center><span class="value null">null</span></center>`;
+          } else if (typeof value === 'string') {
+            span = `<span class="value string">"<%= value %>"</span>`;
+          } else if (typeof value === 'number') {
+            span = `<span class="value number"><%= value %></span>`;
+          } else if (typeof value === 'boolean') {
+            span = `<span class="boolean"><%= value %></span>`;
+          } else {
+            span = `<span class="object" onclick="showObjectData(this)">
+          ${
+            Array.isArray(value)
+              ? "[ <span class='green'>...</span> ]"
+              : "{ <span class='green'>...</span> }"
+          }
+          <span class="object-contents" style="display: none">
+              <%= value %>
+            </span>
+          </span>`;
+            value = JSON.stringify(value);
+          }
+          return render(`<center><%- renderedSpan %></center>`, {
+            renderedSpan: render(span, { value }),
+          });
+        },
+      }
+    );
+    if (CollectionView.collectionView) {
+      CollectionView.collectionView.webview.html = '';
+      CollectionView.collectionView.webview.html = webviewContent;
+    } else {
+      await vscode.window.showErrorMessage('No collection open');
+    }
+  }
+}
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -46,7 +224,9 @@ export function activate(context: vscode.ExtensionContext) {
   client.collections
     .listCollections()
     .then((c) => {
-      collectionNames = c.data?.map((c) => c.name) as string[];
+      collectionNames = c.data?.map(
+        (c) => (c as { name: string }).name
+      ) as string[];
       collectionsMetadata = c.data as Collection[];
 
       collections =
@@ -64,9 +244,8 @@ export function activate(context: vscode.ExtensionContext) {
       )
     );
 
-  const diagnosticsCollection = vscode.languages.createDiagnosticCollection(
-    'rsql'
-  );
+  const diagnosticsCollection: vscode.DiagnosticCollection =
+    vscode.languages.createDiagnosticCollection('rsql');
 
   const setDiagnostic = (uri: vscode.Uri, error: ErrorModel | undefined) => {
     const { line, column, message } = error ?? {};
@@ -88,26 +267,28 @@ export function activate(context: vscode.ExtensionContext) {
   /**
    * This enables validation and error highlighting
    */
-  vscode.workspace.onDidChangeTextDocument(async (document) => {
-    if (document.document.languageId === 'rsql') {
-      try {
-        const result = await client.queries.validate(
-          {
-            sql: {
-              query: document.document.getText(),
+  vscode.workspace.onDidChangeTextDocument(
+    async (document: vscode.TextDocumentChangeEvent) => {
+      if (document.document.languageId === 'rsql') {
+        try {
+          const result = await client.queries.validate(
+            {
+              sql: {
+                query: document.document.getText(),
+              },
             },
-          },
-          true
-        );
-        parameters = result.parameters;
+            true
+          );
+          parameters = result.parameters;
 
-        diagnosticsCollection.set(document.document.uri, []);
-      } catch (e) {
-        const error: ErrorModel = e as ErrorModel;
-        setDiagnostic(document.document.uri, error);
+          diagnosticsCollection.set(document.document.uri, []);
+        } catch (e) {
+          const error: ErrorModel = e as ErrorModel;
+          setDiagnostic(document.document.uri, error);
+        }
       }
     }
-  });
+  );
 
   /**
    * This enables formatting
@@ -194,6 +375,50 @@ ${text}
     }
   );
 
+  // VIEW COLLECTION COMMAND
+  // The command has been defined in the package.json file
+  // The commandId parameter must match the command field in package.json
+  // This function is called when this command id is run
+  const viewCollection = vscode.commands.registerTextEditorCommand(
+    'extension.rocksetView',
+    async () => {
+      try {
+        const rawWorkspaces = await client.workspaces.listWorkspaces();
+        const workspaces = rawWorkspaces.data?.map((ws) => ws.name) as string[];
+
+        const workspace = await vscode.window.showQuickPick(workspaces, {
+          placeHolder: 'workspace',
+        });
+        if (!workspace) {
+          return;
+        }
+
+        const rawCollections = await client.collections.workspaceCollections(
+          workspace
+        );
+        const collections = rawCollections.data?.map(
+          (col) => col.name
+        ) as string[];
+        const collection = await vscode.window.showQuickPick(collections, {
+          placeHolder: 'collection',
+        });
+        if (!collection) {
+          return;
+        }
+        await CollectionView.create(
+          workspace,
+          collection,
+          client,
+          context,
+          channel
+        );
+      } catch (e) {
+        console.log(e);
+        await vscode.window.showErrorMessage((e as Error).message ?? '');
+      }
+    }
+  );
+
   // Add Docs command
   const addDocs = vscode.commands.registerTextEditorCommand(
     'extension.rocksetAdd',
@@ -215,7 +440,6 @@ ${text}
             | object
             | object[];
           assert(typeof inpDocs === 'object'); // verify that it's an object
-          console.log(typeof inpDocs);
         } catch (err) {
           // if all fails,
           if (
@@ -377,6 +601,7 @@ ${JSON.stringify(collectionsMetadata[index], null, 2)}
   context.subscriptions.push(
     disposable,
     rocksetAutoComplete,
+    viewCollection,
     addDocs,
     validateQuery,
     hovers
