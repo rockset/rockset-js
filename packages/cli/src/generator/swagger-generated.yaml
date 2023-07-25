@@ -21,6 +21,7 @@ tags:
 - name: "Queries"
 - name: "Query Lambdas"
 - name: "Shared Lambdas"
+- name: "Sources"
 - name: "Users"
 - name: "Views"
 - name: "Virtual Instances"
@@ -394,8 +395,8 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "integration"
-        in: "path"
+      - in: "path"
+        name: "integration"
         description: "name of the integration"
         required: true
         type: "string"
@@ -468,8 +469,8 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "integration"
-        in: "path"
+      - in: "path"
+        name: "integration"
         description: "name of the integration"
         required: true
         type: "string"
@@ -830,8 +831,8 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "queryId"
-        in: "path"
+      - in: "path"
+        name: "queryId"
         required: true
         type: "string"
       responses:
@@ -902,8 +903,8 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "queryId"
-        in: "path"
+      - in: "path"
+        name: "queryId"
         required: true
         type: "string"
       responses:
@@ -975,24 +976,24 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "queryId"
-        in: "path"
+      - in: "path"
+        name: "queryId"
         required: true
         type: "string"
-      - name: "cursor"
-        in: "query"
+      - in: "query"
+        name: "cursor"
         description: "Cursor to current page. If unset, will default to the first\
           \ page."
         required: false
         type: "string"
-      - name: "docs"
-        in: "query"
+      - in: "query"
+        name: "docs"
         description: "Number of documents to fetch."
         required: false
         type: "integer"
         format: "int32"
-      - name: "offset"
-        in: "query"
+      - in: "query"
+        name: "offset"
         description: "Offset from the cursor of the first document to be returned"
         required: false
         type: "integer"
@@ -1211,8 +1212,8 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "roleName"
-        in: "path"
+      - in: "path"
+        name: "roleName"
         required: true
         type: "string"
       responses:
@@ -1284,8 +1285,8 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "roleName"
-        in: "path"
+      - in: "path"
+        name: "roleName"
         required: true
         type: "string"
       - in: "body"
@@ -1363,8 +1364,8 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "roleName"
-        in: "path"
+      - in: "path"
+        name: "roleName"
         required: true
         type: "string"
       responses:
@@ -1870,8 +1871,8 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "user"
-        in: "path"
+      - in: "path"
+        name: "user"
         description: "user email"
         required: true
         type: "string"
@@ -1944,8 +1945,8 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "user"
-        in: "path"
+      - in: "path"
+        name: "user"
         description: "email of the user to update"
         required: true
         type: "string"
@@ -2024,8 +2025,8 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "user"
-        in: "path"
+      - in: "path"
+        name: "user"
         description: "user email"
         required: true
         type: "string"
@@ -2099,8 +2100,8 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "user"
-        in: "path"
+      - in: "path"
+        name: "user"
         description: "Email of the API key owner. Use `self` to specify the currently\
           \ authenticated user."
         required: true
@@ -2176,21 +2177,21 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "user"
-        in: "path"
+      - in: "path"
+        name: "user"
         description: "Email of the API key owner. Use `self` to specify the currently\
           \ authenticated user."
         required: true
         type: "string"
         x-example: "admin@me.com"
-      - name: "name"
-        in: "path"
+      - in: "path"
+        name: "name"
         description: "Name of the API key."
         required: true
         type: "string"
         x-example: "my-key"
-      - name: "reveal"
-        in: "query"
+      - in: "query"
+        name: "reveal"
         description: "Reveal full key."
         required: false
         type: "boolean"
@@ -2264,14 +2265,14 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "name"
-        in: "path"
+      - in: "path"
+        name: "name"
         description: "Name of the API key."
         required: true
         type: "string"
         x-example: "my-key"
-      - name: "user"
-        in: "path"
+      - in: "path"
+        name: "user"
         description: "Email of the API key owner. Use `self` to specify the currently\
           \ authenticated user."
         required: true
@@ -2352,14 +2353,14 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "name"
-        in: "path"
+      - in: "path"
+        name: "name"
         description: "Name of the API key."
         required: true
         type: "string"
         x-example: "my-key"
-      - name: "user"
-        in: "path"
+      - in: "path"
+        name: "user"
         description: "Email of the API key owner. Use `self` to specify the currently\
           \ authenticated user."
         required: true
@@ -2650,8 +2651,8 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "virtualInstanceId"
-        in: "path"
+      - in: "path"
+        name: "virtualInstanceId"
         description: "Virtual Instance RRN"
         required: true
         type: "string"
@@ -2724,8 +2725,8 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "virtualInstanceId"
-        in: "path"
+      - in: "path"
+        name: "virtualInstanceId"
         description: "Virtual Instance RRN"
         required: true
         type: "string"
@@ -2804,8 +2805,8 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "virtualInstanceId"
-        in: "path"
+      - in: "path"
+        name: "virtualInstanceId"
         description: "Virtual Instance RRN"
         required: true
         type: "string"
@@ -2879,8 +2880,8 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "virtualInstanceId"
-        in: "path"
+      - in: "path"
+        name: "virtualInstanceId"
         description: "Virtual Instance RRN"
         required: true
         type: "string"
@@ -2944,7 +2945,7 @@ paths:
     post:
       tags:
       - "Virtual Instances"
-      summary: "Mount Collection"
+      summary: "Mount Collections"
       description: "[beta] Mount a collection to this virtual instance."
       operationId: "mountCollection"
       consumes:
@@ -2952,8 +2953,8 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "virtualInstanceId"
-        in: "path"
+      - in: "path"
+        name: "virtualInstanceId"
         description: "Virtual Instance RRN"
         required: true
         type: "string"
@@ -3025,20 +3026,20 @@ paths:
       tags:
       - "Virtual Instances"
       summary: "Get Collection Mount"
-      description: "[beta] Get a mount on this virtual instance."
+      description: "[beta] Retrieve a mount on this virtual instance."
       operationId: "getCollectionMount"
       consumes:
       - "application/json"
       produces:
       - "application/json"
       parameters:
-      - name: "virtualInstanceId"
-        in: "path"
+      - in: "path"
+        name: "virtualInstanceId"
         description: "Virtual Instance RRN"
         required: true
         type: "string"
-      - name: "collectionPath"
-        in: "path"
+      - in: "path"
+        name: "collectionPath"
         required: true
         type: "string"
       responses:
@@ -3109,13 +3110,13 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "virtualInstanceId"
-        in: "path"
+      - in: "path"
+        name: "virtualInstanceId"
         description: "Virtual Instance RRN"
         required: true
         type: "string"
-      - name: "collectionPath"
-        in: "path"
+      - in: "path"
+        name: "collectionPath"
         required: true
         type: "string"
       responses:
@@ -3188,8 +3189,8 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "virtualInstanceId"
-        in: "path"
+      - in: "path"
+        name: "virtualInstanceId"
         description: "Virtual Instance RRN"
         required: true
         type: "string"
@@ -3261,8 +3262,8 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "virtualInstanceId"
-        in: "path"
+      - in: "path"
+        name: "virtualInstanceId"
         description: "Virtual Instance RRN"
         required: true
         type: "string"
@@ -3341,8 +3342,8 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "virtualInstanceId"
-        in: "path"
+      - in: "path"
+        name: "virtualInstanceId"
         description: "Virtual Instance RRN"
         required: true
         type: "string"
@@ -3415,8 +3416,8 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "virtualInstanceId"
-        in: "path"
+      - in: "path"
+        name: "virtualInstanceId"
         description: "Virtual Instance RRN"
         required: true
         type: "string"
@@ -3634,8 +3635,8 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "workspace"
-        in: "path"
+      - in: "path"
+        name: "workspace"
         description: "name of the workspace"
         required: true
         type: "string"
@@ -3709,8 +3710,8 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "workspace"
-        in: "path"
+      - in: "path"
+        name: "workspace"
         description: "name of the workspace"
         required: true
         type: "string"
@@ -3785,8 +3786,8 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "workspace"
-        in: "path"
+      - in: "path"
+        name: "workspace"
         description: "name of the workspace"
         required: true
         type: "string"
@@ -3859,8 +3860,8 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "workspace"
-        in: "path"
+      - in: "path"
+        name: "workspace"
         description: "name of the workspace"
         required: true
         type: "string"
@@ -3941,14 +3942,14 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "workspace"
-        in: "path"
+      - in: "path"
+        name: "workspace"
         description: "name of the workspace"
         required: true
         type: "string"
         default: "commons"
-      - name: "alias"
-        in: "path"
+      - in: "path"
+        name: "alias"
         description: "name of the alias"
         required: true
         type: "string"
@@ -4021,14 +4022,14 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "workspace"
-        in: "path"
+      - in: "path"
+        name: "workspace"
         description: "name of the workspace"
         required: true
         type: "string"
         default: "commons"
-      - name: "alias"
-        in: "path"
+      - in: "path"
+        name: "alias"
         description: "name of the alias"
         required: true
         type: "string"
@@ -4043,6 +4044,58 @@ paths:
           description: "alias updated successfully"
           schema:
             $ref: "#/definitions/GetAliasResponse"
+        400:
+          description: "bad request"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        401:
+          description: "unauthorized"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        403:
+          description: "forbidden"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        404:
+          description: "not found"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        405:
+          description: "not allowed"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        406:
+          description: "not acceptable"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        408:
+          description: "request timeout"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        415:
+          description: "not supported"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        429:
+          description: "resource exceeded"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        500:
+          description: "internal error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        501:
+          description: "not implemented"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        502:
+          description: "bad gateway"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        503:
+          description: "not ready"
+          schema:
+            $ref: "#/definitions/ErrorModel"
       x-rename: "update"
     delete:
       tags:
@@ -4055,14 +4108,14 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "workspace"
-        in: "path"
+      - in: "path"
+        name: "workspace"
         description: "name of the workspace"
         required: true
         type: "string"
         default: "commons"
-      - name: "alias"
-        in: "path"
+      - in: "path"
+        name: "alias"
         description: "name of the alias"
         required: true
         type: "string"
@@ -4071,6 +4124,58 @@ paths:
           description: "alias deleted successfully"
           schema:
             $ref: "#/definitions/DeleteAliasResponse"
+        400:
+          description: "bad request"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        401:
+          description: "unauthorized"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        403:
+          description: "forbidden"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        404:
+          description: "not found"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        405:
+          description: "not allowed"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        406:
+          description: "not acceptable"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        408:
+          description: "request timeout"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        415:
+          description: "not supported"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        429:
+          description: "resource exceeded"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        500:
+          description: "internal error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        501:
+          description: "not implemented"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        502:
+          description: "bad gateway"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        503:
+          description: "not ready"
+          schema:
+            $ref: "#/definitions/ErrorModel"
       x-rename: "delete"
   /v1/orgs/self/ws/{workspace}/collections:
     get:
@@ -4084,8 +4189,8 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "workspace"
-        in: "path"
+      - in: "path"
+        name: "workspace"
         description: "name of the workspace"
         required: true
         type: "string"
@@ -4158,8 +4263,8 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "workspace"
-        in: "path"
+      - in: "path"
+        name: "workspace"
         description: "name of the workspace"
         required: true
         type: "string"
@@ -4239,20 +4344,106 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "workspace"
-        in: "path"
+      - in: "path"
+        name: "workspace"
         description: "name of the workspace"
         required: true
         type: "string"
         default: "commons"
-      - name: "collection"
-        in: "path"
+      - in: "path"
+        name: "collection"
         description: "name of the collection"
         required: true
         type: "string"
       responses:
         200:
           description: "collection retrieved successfully"
+          schema:
+            $ref: "#/definitions/GetCollectionResponse"
+        400:
+          description: "bad request"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        401:
+          description: "unauthorized"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        403:
+          description: "forbidden"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        404:
+          description: "not found"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        405:
+          description: "not allowed"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        406:
+          description: "not acceptable"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        408:
+          description: "request timeout"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        415:
+          description: "not supported"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        429:
+          description: "resource exceeded"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        500:
+          description: "internal error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        501:
+          description: "not implemented"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        502:
+          description: "bad gateway"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        503:
+          description: "not ready"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+      x-rename: "get"
+    put:
+      tags:
+      - "Collections"
+      summary: "Update Collection"
+      description: "Update details about a collection."
+      operationId: "updateCollection"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "path"
+        name: "workspace"
+        description: "name of the workspace"
+        required: true
+        type: "string"
+        default: "commons"
+      - in: "path"
+        name: "collection"
+        description: "name of the collection"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        description: "JSON object"
+        required: true
+        schema:
+          $ref: "#/definitions/UpdateCollectionRequest"
+      responses:
+        200:
+          description: "collection updated successfully"
           schema:
             $ref: "#/definitions/GetCollectionResponse"
         400:
@@ -4319,14 +4510,14 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "workspace"
-        in: "path"
+      - in: "path"
+        name: "workspace"
         description: "name of the workspace"
         required: true
         type: "string"
         default: "commons"
-      - name: "collection"
-        in: "path"
+      - in: "path"
+        name: "collection"
         description: "name of the collection"
         required: true
         type: "string"
@@ -4400,14 +4591,14 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "workspace"
-        in: "path"
+      - in: "path"
+        name: "workspace"
         description: "Name of the workspace."
         required: true
         type: "string"
         default: "commons"
-      - name: "collection"
-        in: "path"
+      - in: "path"
+        name: "collection"
         description: "Name of the collection."
         required: true
         type: "string"
@@ -4489,14 +4680,14 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "workspace"
-        in: "path"
+      - in: "path"
+        name: "workspace"
         description: "Name of the workspace."
         required: true
         type: "string"
         default: "commons"
-      - name: "collection"
-        in: "path"
+      - in: "path"
+        name: "collection"
         description: "Name of the collection."
         required: true
         type: "string"
@@ -4574,14 +4765,14 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "workspace"
-        in: "path"
+      - in: "path"
+        name: "workspace"
         description: "Name of the workspace."
         required: true
         type: "string"
         default: "commons"
-      - name: "collection"
-        in: "path"
+      - in: "path"
+        name: "collection"
         description: "Name of the collection."
         required: true
         type: "string"
@@ -4652,6 +4843,514 @@ paths:
           description: "not ready"
           schema:
             $ref: "#/definitions/ErrorModel"
+  /v1/orgs/self/ws/{workspace}/collections/{collection}/sources:
+    get:
+      tags:
+      - "Sources"
+      summary: "List sources in collection"
+      description: "Retrieve all sources in a collection."
+      operationId: "listCollectionSources"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "path"
+        name: "workspace"
+        description: "name of the workspace"
+        required: true
+        type: "string"
+        default: "commons"
+      - in: "path"
+        name: "collection"
+        description: "name of the collection"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "collection sources retrieved successfully"
+          schema:
+            $ref: "#/definitions/ListSourcesResponse"
+        400:
+          description: "bad request"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        401:
+          description: "unauthorized"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        403:
+          description: "forbidden"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        404:
+          description: "not found"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        405:
+          description: "not allowed"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        406:
+          description: "not acceptable"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        408:
+          description: "request timeout"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        415:
+          description: "not supported"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        429:
+          description: "resource exceeded"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        500:
+          description: "internal error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        501:
+          description: "not implemented"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        502:
+          description: "bad gateway"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        503:
+          description: "not ready"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+    post:
+      tags:
+      - "Sources"
+      summary: "Create a source"
+      description: "Create new source in a collection."
+      operationId: "createSource"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "path"
+        name: "workspace"
+        description: "name of the workspace"
+        required: true
+        type: "string"
+        default: "commons"
+      - in: "path"
+        name: "collection"
+        description: "name of the collection"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        description: "JSON object"
+        required: true
+        schema:
+          $ref: "#/definitions/Source"
+      responses:
+        200:
+          description: "source created successfully"
+          schema:
+            $ref: "#/definitions/GetSourceResponse"
+        400:
+          description: "bad request"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        401:
+          description: "unauthorized"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        403:
+          description: "forbidden"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        404:
+          description: "not found"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        405:
+          description: "not allowed"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        406:
+          description: "not acceptable"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        408:
+          description: "request timeout"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        415:
+          description: "not supported"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        429:
+          description: "resource exceeded"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        500:
+          description: "internal error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        501:
+          description: "not implemented"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        502:
+          description: "bad gateway"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        503:
+          description: "not ready"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+  /v1/orgs/self/ws/{workspace}/collections/{collection}/sources/{source}:
+    get:
+      tags:
+      - "Sources"
+      summary: "Retrieve source"
+      description: "Get details about a collection source."
+      operationId: "getSource"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "path"
+        name: "workspace"
+        description: "name of the workspace"
+        required: true
+        type: "string"
+        default: "commons"
+      - in: "path"
+        name: "collection"
+        description: "name of the collection"
+        required: true
+        type: "string"
+      - in: "path"
+        name: "source"
+        description: "id of source"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "collection retrieved successfully"
+          schema:
+            $ref: "#/definitions/GetSourceResponse"
+        400:
+          description: "bad request"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        401:
+          description: "unauthorized"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        403:
+          description: "forbidden"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        404:
+          description: "not found"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        405:
+          description: "not allowed"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        406:
+          description: "not acceptable"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        408:
+          description: "request timeout"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        415:
+          description: "not supported"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        429:
+          description: "resource exceeded"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        500:
+          description: "internal error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        501:
+          description: "not implemented"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        502:
+          description: "bad gateway"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        503:
+          description: "not ready"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+      x-rename: "get"
+    delete:
+      tags:
+      - "Sources"
+      summary: "Delete Collection source"
+      description: "Delete a collection source"
+      operationId: "deleteSource"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "path"
+        name: "workspace"
+        description: "name of the workspace"
+        required: true
+        type: "string"
+        default: "commons"
+      - in: "path"
+        name: "collection"
+        description: "name of the collection"
+        required: true
+        type: "string"
+      - in: "path"
+        name: "source"
+        description: "id of source"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "source deleted successfully"
+          schema:
+            $ref: "#/definitions/DeleteSourceResponse"
+        400:
+          description: "bad request"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        401:
+          description: "unauthorized"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        403:
+          description: "forbidden"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        404:
+          description: "not found"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        405:
+          description: "not allowed"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        406:
+          description: "not acceptable"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        408:
+          description: "request timeout"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        415:
+          description: "not supported"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        429:
+          description: "resource exceeded"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        500:
+          description: "internal error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        501:
+          description: "not implemented"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        502:
+          description: "bad gateway"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        503:
+          description: "not ready"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+      x-rename: "delete"
+  /v1/orgs/self/ws/{workspace}/collections/{collection}/sources/{source}/resume:
+    post:
+      tags:
+      - "Sources"
+      summary: "Resume source ingest"
+      description: "Resume source ingest"
+      operationId: "resumeSource"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "path"
+        name: "workspace"
+        description: "name of the workspace"
+        required: true
+        type: "string"
+        default: "commons"
+      - in: "path"
+        name: "collection"
+        description: "name of the collection"
+        required: true
+        type: "string"
+      - in: "path"
+        name: "source"
+        description: "id of source"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "source was resumed"
+          schema:
+            $ref: "#/definitions/GetSourceResponse"
+        400:
+          description: "bad request"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        401:
+          description: "unauthorized"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        403:
+          description: "forbidden"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        404:
+          description: "not found"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        405:
+          description: "not allowed"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        406:
+          description: "not acceptable"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        408:
+          description: "request timeout"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        415:
+          description: "not supported"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        429:
+          description: "resource exceeded"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        500:
+          description: "internal error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        501:
+          description: "not implemented"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        502:
+          description: "bad gateway"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        503:
+          description: "not ready"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+      x-rename: "get"
+  /v1/orgs/self/ws/{workspace}/collections/{collection}/sources/{source}/suspend:
+    post:
+      tags:
+      - "Sources"
+      summary: "Suspend source ingest"
+      description: "Suspend source ingest"
+      operationId: "suspendSource"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "path"
+        name: "workspace"
+        description: "name of the workspace"
+        required: true
+        type: "string"
+        default: "commons"
+      - in: "path"
+        name: "collection"
+        description: "name of the collection"
+        required: true
+        type: "string"
+      - in: "path"
+        name: "source"
+        description: "id of source"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "source was suspended"
+          schema:
+            $ref: "#/definitions/GetSourceResponse"
+        400:
+          description: "bad request"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        401:
+          description: "unauthorized"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        403:
+          description: "forbidden"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        404:
+          description: "not found"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        405:
+          description: "not allowed"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        406:
+          description: "not acceptable"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        408:
+          description: "request timeout"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        415:
+          description: "not supported"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        429:
+          description: "resource exceeded"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        500:
+          description: "internal error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        501:
+          description: "not implemented"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        502:
+          description: "bad gateway"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        503:
+          description: "not ready"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+      x-rename: "get"
   /v1/orgs/self/ws/{workspace}/lambdas:
     get:
       tags:
@@ -4664,8 +5363,8 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "workspace"
-        in: "path"
+      - in: "path"
+        name: "workspace"
         description: "name of the workspace"
         required: true
         type: "string"
@@ -4738,8 +5437,8 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "workspace"
-        in: "path"
+      - in: "path"
+        name: "workspace"
         description: "name of the workspace"
         required: true
         type: "string"
@@ -4819,14 +5518,14 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "workspace"
-        in: "path"
+      - in: "path"
+        name: "workspace"
         description: "name of the workspace"
         required: true
         type: "string"
         default: "commons"
-      - name: "queryLambda"
-        in: "path"
+      - in: "path"
+        name: "queryLambda"
         description: "name of the Query Lambda"
         required: true
         type: "string"
@@ -4899,14 +5598,14 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "workspace"
-        in: "path"
+      - in: "path"
+        name: "workspace"
         description: "name of the workspace"
         required: true
         type: "string"
         default: "commons"
-      - name: "queryLambda"
-        in: "path"
+      - in: "path"
+        name: "queryLambda"
         description: "name of the Query Lambda"
         required: true
         type: "string"
@@ -4979,14 +5678,14 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "workspace"
-        in: "path"
+      - in: "path"
+        name: "workspace"
         description: "name of the workspace"
         required: true
         type: "string"
         default: "commons"
-      - name: "queryLambda"
-        in: "path"
+      - in: "path"
+        name: "queryLambda"
         description: "name of the Query Lambda"
         required: true
         type: "string"
@@ -5065,19 +5764,19 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "workspace"
-        in: "path"
+      - in: "path"
+        name: "workspace"
         description: "name of the workspace"
         required: true
         type: "string"
         default: "commons"
-      - name: "queryLambda"
-        in: "path"
+      - in: "path"
+        name: "queryLambda"
         description: "name of the Query Lambda"
         required: true
         type: "string"
-      - name: "tag"
-        in: "path"
+      - in: "path"
+        name: "tag"
         description: "name of the tag"
         required: true
         type: "string"
@@ -5149,19 +5848,19 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "workspace"
-        in: "path"
+      - in: "path"
+        name: "workspace"
         description: "name of the workspace"
         required: true
         type: "string"
         default: "commons"
-      - name: "queryLambda"
-        in: "path"
+      - in: "path"
+        name: "queryLambda"
         description: "name of the Query Lambda"
         required: true
         type: "string"
-      - name: "tag"
-        in: "path"
+      - in: "path"
+        name: "tag"
         description: "tag"
         required: true
         type: "string"
@@ -5239,19 +5938,19 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "workspace"
-        in: "path"
+      - in: "path"
+        name: "workspace"
         description: "name of the workspace"
         required: true
         type: "string"
         default: "commons"
-      - name: "queryLambda"
-        in: "path"
+      - in: "path"
+        name: "queryLambda"
         description: "name of the Query Lambda"
         required: true
         type: "string"
-      - name: "tag"
-        in: "path"
+      - in: "path"
+        name: "tag"
         description: "name of the tag"
         required: true
         type: "string"
@@ -5324,19 +6023,19 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "workspace"
-        in: "path"
+      - in: "path"
+        name: "workspace"
         description: "name of the workspace"
         required: true
         type: "string"
         default: "commons"
-      - name: "queryLambda"
-        in: "path"
+      - in: "path"
+        name: "queryLambda"
         description: "name of the Query Lambda"
         required: true
         type: "string"
-      - name: "version"
-        in: "path"
+      - in: "path"
+        name: "version"
         description: "version"
         required: true
         type: "string"
@@ -5409,14 +6108,14 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "workspace"
-        in: "path"
+      - in: "path"
+        name: "workspace"
         description: "name of the workspace"
         required: true
         type: "string"
         default: "commons"
-      - name: "queryLambda"
-        in: "path"
+      - in: "path"
+        name: "queryLambda"
         description: "name of the Query Lambda"
         required: true
         type: "string"
@@ -5488,14 +6187,14 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "workspace"
-        in: "path"
+      - in: "path"
+        name: "workspace"
         description: "name of the workspace"
         required: true
         type: "string"
         default: "commons"
-      - name: "queryLambda"
-        in: "path"
+      - in: "path"
+        name: "queryLambda"
         description: "name of the Query Lambda"
         required: true
         type: "string"
@@ -5505,8 +6204,8 @@ paths:
         required: true
         schema:
           $ref: "#/definitions/UpdateQueryLambdaRequest"
-      - name: "create"
-        in: "query"
+      - in: "query"
+        name: "create"
         description: "Create a new Query Lambda if one does not exist already."
         required: false
         type: "boolean"
@@ -5579,19 +6278,19 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "workspace"
-        in: "path"
+      - in: "path"
+        name: "workspace"
         description: "name of the workspace"
         required: true
         type: "string"
         default: "commons"
-      - name: "queryLambda"
-        in: "path"
+      - in: "path"
+        name: "queryLambda"
         description: "name of the Query Lambda"
         required: true
         type: "string"
-      - name: "version"
-        in: "path"
+      - in: "path"
+        name: "version"
         description: "version"
         required: true
         type: "string"
@@ -5663,19 +6362,19 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "workspace"
-        in: "path"
+      - in: "path"
+        name: "workspace"
         description: "name of the workspace"
         required: true
         type: "string"
         default: "commons"
-      - name: "queryLambda"
-        in: "path"
+      - in: "path"
+        name: "queryLambda"
         description: "name of the Query Lambda"
         required: true
         type: "string"
-      - name: "version"
-        in: "path"
+      - in: "path"
+        name: "version"
         description: "version"
         required: true
         type: "string"
@@ -5754,8 +6453,8 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "workspace"
-        in: "path"
+      - in: "path"
+        name: "workspace"
         description: "name of the workspace"
         required: true
         type: "string"
@@ -5828,8 +6527,8 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "workspace"
-        in: "path"
+      - in: "path"
+        name: "workspace"
         description: "name of the workspace"
         required: true
         type: "string"
@@ -5845,6 +6544,58 @@ paths:
           description: "view created successfully"
           schema:
             $ref: "#/definitions/CreateViewResponse"
+        400:
+          description: "bad request"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        401:
+          description: "unauthorized"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        403:
+          description: "forbidden"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        404:
+          description: "not found"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        405:
+          description: "not allowed"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        406:
+          description: "not acceptable"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        408:
+          description: "request timeout"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        415:
+          description: "not supported"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        429:
+          description: "resource exceeded"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        500:
+          description: "internal error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        501:
+          description: "not implemented"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        502:
+          description: "bad gateway"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        503:
+          description: "not ready"
+          schema:
+            $ref: "#/definitions/ErrorModel"
       x-rename: "create"
   /v1/orgs/self/ws/{workspace}/views/{view}:
     get:
@@ -5858,14 +6609,14 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "workspace"
-        in: "path"
+      - in: "path"
+        name: "workspace"
         description: "name of the workspace"
         required: true
         type: "string"
         default: "commons"
-      - name: "view"
-        in: "path"
+      - in: "path"
+        name: "view"
         description: "name of the view"
         required: true
         type: "string"
@@ -5938,14 +6689,14 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "workspace"
-        in: "path"
+      - in: "path"
+        name: "workspace"
         description: "name of the workspace"
         required: true
         type: "string"
         default: "commons"
-      - name: "view"
-        in: "path"
+      - in: "path"
+        name: "view"
         description: "name of the view"
         required: true
         type: "string"
@@ -5960,6 +6711,58 @@ paths:
           description: "view updated successfully"
           schema:
             $ref: "#/definitions/UpdateViewResponse"
+        400:
+          description: "bad request"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        401:
+          description: "unauthorized"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        403:
+          description: "forbidden"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        404:
+          description: "not found"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        405:
+          description: "not allowed"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        406:
+          description: "not acceptable"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        408:
+          description: "request timeout"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        415:
+          description: "not supported"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        429:
+          description: "resource exceeded"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        500:
+          description: "internal error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        501:
+          description: "not implemented"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        502:
+          description: "bad gateway"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        503:
+          description: "not ready"
+          schema:
+            $ref: "#/definitions/ErrorModel"
       x-rename: "update"
     delete:
       tags:
@@ -5972,14 +6775,14 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "workspace"
-        in: "path"
+      - in: "path"
+        name: "workspace"
         description: "name of the workspace"
         required: true
         type: "string"
         default: "commons"
-      - name: "view"
-        in: "path"
+      - in: "path"
+        name: "view"
         description: "name of the view"
         required: true
         type: "string"
@@ -5988,6 +6791,58 @@ paths:
           description: "view deleted successfully"
           schema:
             $ref: "#/definitions/DeleteViewResponse"
+        400:
+          description: "bad request"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        401:
+          description: "unauthorized"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        403:
+          description: "forbidden"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        404:
+          description: "not found"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        405:
+          description: "not allowed"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        406:
+          description: "not acceptable"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        408:
+          description: "request timeout"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        415:
+          description: "not supported"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        429:
+          description: "resource exceeded"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        500:
+          description: "internal error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        501:
+          description: "not implemented"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        502:
+          description: "bad gateway"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        503:
+          description: "not ready"
+          schema:
+            $ref: "#/definitions/ErrorModel"
       x-rename: "delete"
   /v1/public/shared_lambdas/{public_access_id}:
     post:
@@ -6001,8 +6856,8 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "public_access_id"
-        in: "path"
+      - in: "path"
+        name: "public_access_id"
         description: "public access ID of the query lambda"
         required: true
         type: "string"
@@ -6092,28 +6947,36 @@ definitions:
   Alias:
     type: "object"
     properties:
-      name:
-        type: "string"
-        example: "demo"
-        description: "Name of the alias."
-      description:
-        type: "string"
-        example: "alias referencing collection in workspace"
-        description: "Alias description."
-      workspace:
-        type: "string"
-        example: "commons"
-        description: "Name of the workspace."
-      creator_email:
-        type: "string"
-        example: "xyz@rockset.com"
-        description: "Email of the creator."
       collections:
         type: "array"
         example: "[\"commons.foo\", \"prod.demo\"]"
         description: "List of fully qualified collection names referenced by alias."
         items:
           type: "string"
+      created_at:
+        type: "string"
+        example: "2001-08-28T00:23:41Z"
+        description: "ISO-8601 date."
+      created_by_apikey_name:
+        type: "string"
+        description: "Name of the API key that was used to create this object if one\
+          \ was used."
+      creator_email:
+        type: "string"
+        example: "xyz@rockset.com"
+        description: "Email of the creator."
+      description:
+        type: "string"
+        example: "alias referencing collection in workspace"
+        description: "Alias description."
+      modified_at:
+        type: "string"
+        example: "2001-08-28T00:23:42Z"
+        description: "ISO-8601 date."
+      name:
+        type: "string"
+        example: "demo"
+        description: "Name of the alias."
       state:
         type: "string"
         example: "CREATED"
@@ -6121,14 +6984,10 @@ definitions:
         enum:
         - "CREATED"
         - "DELETED"
-      created_at:
+      workspace:
         type: "string"
-        example: "2001-08-28T00:23:41Z"
-        description: "ISO-8601 date."
-      modified_at:
-        type: "string"
-        example: "2001-08-28T00:23:42Z"
-        description: "ISO-8601 date."
+        example: "commons"
+        description: "Name of the workspace."
   ApiKey:
     type: "object"
     required:
@@ -6139,31 +6998,36 @@ definitions:
         type: "string"
         example: "2001-08-28T00:23:41Z"
         description: "Date that API key was created (ISO-8601 format)."
-      name:
+      created_by:
         type: "string"
-        example: "my-key"
-        description: "Name of the API key."
-      key:
+        example: "test@rockset.com"
+        description: "Email of API key owner."
+      created_by_apikey_name:
         type: "string"
-        example: "aB35kDjg*******************************"
-        description: "API key string of 64 alphanumeric characters."
-      last_access_time:
-        type: "string"
-        example: "2001-08-28T00:23:41Z"
-        description: "Date that API key was most recently used (ISO-8601 format)."
+        description: "Name of the API key that was used to create this object if one\
+          \ was used."
       expiry_time:
         type: "string"
         example: "2001-08-28T00:23:41Z"
         description: "The expiration date of this API key."
+      key:
+        type: "string"
+        example: "aB35kD"
+        description: "This field will only be populated with the full key when creating\
+          \ an API key. Otherwise, it will be an API key identifier of 6 characters."
+      last_access_time:
+        type: "string"
+        example: "2001-08-28T00:23:41Z"
+        description: "Date that API key was most recently used (ISO-8601 format)."
+      name:
+        type: "string"
+        example: "my-key"
+        description: "Name of the API key."
       role:
         type: "string"
         example: "read-only"
         description: "Role specifying access control. If not specified, API key will\
           \ have access to all of the associated user's roles."
-      created_by:
-        type: "string"
-        example: "test@rockset.com"
-        description: "Email of API key owner."
       state:
         type: "string"
         example: "ACTIVE"
@@ -6179,22 +7043,74 @@ definitions:
       client_timeout_ms:
         type: "integer"
         format: "int64"
-        description: "The maximum amount of time that the client is willing to wait\
-          \ for the query to complete. If the query is not complete by this timeout,\
-          \ a response will be returned with a `query_id` that can be used to check\
-          \ the status of the query and retrieve results once the query has completed."
-      timeout_ms:
-        type: "integer"
-        format: "int64"
-        description: "The maximum amount of time that the system will attempt to complete\
-          \ query execution before aborting the query and returning an error."
+        description: "If the query completes before the client timeout, the results\
+          \ are returned. Otherwise if the client timeout is exceeded, the query id\
+          \ will be returned, and the query will continue to run in the background\
+          \ for up to 30 minutes. (The 30 minute timeout can be configured lower with\
+          \ timeout_ms.) `async_options.client_timeout_ms` only applies when `async`\
+          \ is true. The default value of `client_timeout_ms` is 0, so async query\
+          \ requests will immediately return with a query id by default. "
       max_initial_results:
         type: "integer"
         format: "int64"
-        description: "The maximum number of results you will receive as a client.\
-          \ If the query exceeds this limit, the remaining results can be requested\
-          \ using a returned pagination cursor. In addition, there is a maximum response\
-          \ size of 100MiB so fewer than `max_results` may be returned."
+        description: "[DEPRECATED] Use the query request `max_initial_results` instead.\
+          \ The maximum number of results you will receive as a client. If the query\
+          \ exceeds this limit, the remaining results can be requested using a returned\
+          \ pagination cursor. In addition, there is a maximum response size of 100MiB\
+          \ so fewer than `max_results` may be returned."
+      timeout_ms:
+        type: "integer"
+        format: "int64"
+        description: "[DEPRECATED] Use the query request `timeout_ms` instead. The\
+          \ maximum amount of time that the system will attempt to complete query\
+          \ execution before aborting the query and returning an error. This must\
+          \ be set to a value that is greater than or equal to the client timeout,\
+          \ and the maximum value of this timeout is 30 minutes."
+  AutoScalingPolicy:
+    type: "object"
+    properties:
+      enabled:
+        type: "boolean"
+        example: true
+        description: "Whether auto scaling policy is enabled."
+      max_size:
+        type: "string"
+        example: "XLARGE2"
+        description: "Maximum size Rockset can auto scale the Virtual Instance to.\
+          \ This value should be one of the dedicated sizes greater than or same as\
+          \ the min_size and lower than or same as the current size."
+        enum:
+        - "FREE"
+        - "NANO"
+        - "SHARED"
+        - "MILLI"
+        - "SMALL"
+        - "MEDIUM"
+        - "LARGE"
+        - "XLARGE"
+        - "XLARGE2"
+        - "XLARGE4"
+        - "XLARGE8"
+        - "XLARGE16"
+      min_size:
+        type: "string"
+        example: "LARGE"
+        description: "Minimum size Rockset can auto scale the Virtual Instance to.\
+          \ This value should be one of the dedicated sizes lower than or same as\
+          \ the max_size and greater than or same as the current size."
+        enum:
+        - "FREE"
+        - "NANO"
+        - "SHARED"
+        - "MILLI"
+        - "SMALL"
+        - "MEDIUM"
+        - "LARGE"
+        - "XLARGE"
+        - "XLARGE2"
+        - "XLARGE4"
+        - "XLARGE8"
+        - "XLARGE16"
   AvroParams:
     type: "object"
   AwsAccessKey:
@@ -6216,14 +7132,14 @@ definitions:
     required:
     - "aws_role_arn"
     properties:
-      aws_role_arn:
-        type: "string"
-        example: "arn:aws:iam::2378964092:role/rockset-role"
-        description: "ARN of rockset-role created in your account."
       aws_external_id:
         type: "string"
         example: "external id of aws"
         description: "External id used for integration."
+      aws_role_arn:
+        type: "string"
+        example: "arn:aws:iam::2378964092:role/rockset-role"
+        description: "ARN of rockset-role created in your account."
   AzureBlobStorageIntegration:
     type: "object"
     required:
@@ -6252,37 +7168,6 @@ definitions:
   BulkStats:
     type: "object"
     properties:
-      started_at:
-        type: "string"
-        example: "2001-08-28T00:23:41Z"
-        description: "ISO-8601 date of when the bulk ingest was started."
-      initializing_stage_done_at:
-        type: "string"
-        example: "2001-08-28T00:23:41Z"
-        description: "ISO-8601 date of when the initializing stage was completed."
-      downloading_stage_done_at:
-        type: "string"
-        example: "2001-08-28T00:23:41Z"
-        description: "ISO-8601 date of when the downloading stage was completed."
-      provisioning_stage_done_at:
-        type: "string"
-        example: "2001-08-28T00:23:41Z"
-        description: "ISO-8601 date of when the provisioning stage was completed."
-      indexing_stage_done_at:
-        type: "string"
-        example: "2001-08-28T00:23:41Z"
-        description: "ISO-8601 date of when the indexing stage was completed."
-      finalizing_stage_done_at:
-        type: "string"
-        example: "2001-08-28T00:23:41Z"
-        description: "ISO-8601 date of when the finalizing stage was completed."
-      documents_downloaded:
-        type: "integer"
-        format: "int64"
-        example: 10000
-        description: "Number of documents downloaded from source during an ongoing\
-          \ or completed bulk ingest. This includes documents that are dropped and\
-          \ reingested."
       data_downloaded_bytes:
         type: "integer"
         format: "int64"
@@ -6290,43 +7175,12 @@ definitions:
         description: "Size in bytes of documents downloaded from source during an\
           \ ongoing or completed bulk ingest. This includes documents that are dropped\
           \ and reingested."
-      download_compute_ms:
-        type: "integer"
-        format: "int64"
-        example: 50000
-        description: "Bulk ingest compute units in milliseconds used for downloading\
-          \ documents."
-      transformation_compute_ms:
-        type: "integer"
-        format: "int64"
-        example: 50000
-        description: "Bulk ingest compute units in milliseconds used for ingest transformation."
-      pre_index_size_bytes:
-        type: "integer"
-        format: "int64"
-        example: 8000000
-        description: "Size in bytes of documents before being indexed. This is the\
-          \ total size of documents after decompression, transformations, and dropping.\
-          \ This is equal to data_indexed_bytes after the indexing stage is done unless\
-          \ there are retries during indexing the data."
       data_indexed_bytes:
         type: "integer"
         format: "int64"
         example: 8000000
         description: "Size in bytes of documents indexed. This is the total size of\
           \ documents after transformations and dropping before indexes are built."
-      index_compute_ms:
-        type: "integer"
-        format: "int64"
-        example: 100000
-        description: "Bulk ingest compute units in milliseconds used for indexing\
-          \ documents."
-      total_index_size_bytes:
-        type: "integer"
-        format: "int64"
-        example: 10000000
-        description: "Total size of indexes after the completed bulk ingest. This\
-          \ is the same as collection size."
       data_indexed_throughput_bytes:
         type: "number"
         format: "double"
@@ -6335,6 +7189,68 @@ definitions:
           \ in bytes/s. This is based off the data_indexed_bytes size. Throughput\
           \ during the download stage is shown on a per-source granularity in the\
           \ sources field of the Collection response."
+      documents_downloaded:
+        type: "integer"
+        format: "int64"
+        example: 10000
+        description: "Number of documents downloaded from source during an ongoing\
+          \ or completed bulk ingest. This includes documents that are dropped and\
+          \ reingested."
+      download_compute_ms:
+        type: "integer"
+        format: "int64"
+        example: 50000
+        description: "Bulk ingest compute units in milliseconds used for downloading\
+          \ documents."
+      downloading_stage_done_at:
+        type: "string"
+        example: "2001-08-28T00:23:41Z"
+        description: "ISO-8601 date of when the downloading stage was completed."
+      finalizing_stage_done_at:
+        type: "string"
+        example: "2001-08-28T00:23:41Z"
+        description: "ISO-8601 date of when the finalizing stage was completed."
+      index_compute_ms:
+        type: "integer"
+        format: "int64"
+        example: 100000
+        description: "Bulk ingest compute units in milliseconds used for indexing\
+          \ documents."
+      indexing_stage_done_at:
+        type: "string"
+        example: "2001-08-28T00:23:41Z"
+        description: "ISO-8601 date of when the indexing stage was completed."
+      initializing_stage_done_at:
+        type: "string"
+        example: "2001-08-28T00:23:41Z"
+        description: "ISO-8601 date of when the initializing stage was completed."
+      pre_index_size_bytes:
+        type: "integer"
+        format: "int64"
+        example: 8000000
+        description: "Size in bytes of documents before being indexed. This is the\
+          \ total size of documents after decompression, transformations, and dropping.\
+          \ This is equal to data_indexed_bytes after the indexing stage is done unless\
+          \ there are retries during indexing the data."
+      provisioning_stage_done_at:
+        type: "string"
+        example: "2001-08-28T00:23:41Z"
+        description: "ISO-8601 date of when the provisioning stage was completed."
+      started_at:
+        type: "string"
+        example: "2001-08-28T00:23:41Z"
+        description: "ISO-8601 date of when the bulk ingest was started."
+      total_index_size_bytes:
+        type: "integer"
+        format: "int64"
+        example: 10000000
+        description: "Total size of indexes after the completed bulk ingest. This\
+          \ is the same as collection size."
+      transformation_compute_ms:
+        type: "integer"
+        format: "int64"
+        example: 50000
+        description: "Bulk ingest compute units in milliseconds used for ingest transformation."
   CancelQueryResponse:
     type: "object"
     properties:
@@ -6343,35 +7259,49 @@ definitions:
   Cluster:
     type: "object"
     properties:
-      id:
+      apiserver_url:
         type: "string"
-        example: "asdf98-as9df8adf-adsf9asfd"
-        description: "Unique identifier for the cluster."
+        example: "api.rockset.us-west-2.rockset.com"
+        description: "Api server url for cluster."
+      aws_region:
+        type: "string"
+        example: "us-west-2"
+        description: "Aws region."
       cluster_type:
         type: "string"
         example: "PRIVATE"
         description: "Cluster type."
         enum:
         - "PUBLIC"
-      aws_region:
-        type: "string"
-        example: "us-west-2"
-        description: "Aws region."
       domain:
         type: "string"
         example: "rockset"
         description: "Domain of org using cluster."
+      id:
+        type: "string"
+        example: "asdf98-as9df8adf-adsf9asfd"
+        description: "Unique identifier for the cluster."
       top_level_domain:
         type: "string"
         example: ".com"
         description: "Top level domain of org using cluster."
-      apiserver_url:
-        type: "string"
-        example: "api.rockset.us-west-2.rockset.com"
-        description: "Api server url for cluster."
   Collection:
     type: "object"
     properties:
+      aliases:
+        type: "array"
+        description: "List of aliases for a collection."
+        items:
+          $ref: "#/definitions/Alias"
+      bulk_stats:
+        type: "array"
+        items:
+          $ref: "#/definitions/BulkStats"
+      clustering_key:
+        type: "array"
+        description: "List of clustering fields for a collection."
+        items:
+          $ref: "#/definitions/FieldPartition"
       created_at:
         type: "string"
         example: "2001-08-28T00:23:41Z"
@@ -6380,20 +7310,48 @@ definitions:
         type: "string"
         example: "hello@rockset.com"
         description: "Email of user who created the collection."
+      created_by_apikey_name:
+        type: "string"
+        description: "Name of the API key that was used to create this collection\
+          \ if one was used."
+      description:
+        type: "string"
+        example: "transactions from stores worldwide"
+        description: "Text describing the collection."
+      field_mapping_query:
+        $ref: "#/definitions/FieldMappingQuery"
+        description: "Field mapping for a collection."
+      field_mappings:
+        type: "array"
+        description: "List of mappings applied on all documents in a collection."
+        items:
+          $ref: "#/definitions/FieldMappingV2"
+      insert_only:
+        type: "boolean"
+        description: "Whether the collection is insert only or not."
       name:
         type: "string"
         example: "global-transactions"
         description: "Unique identifer for collection, can contain alphanumeric or\
           \ dash characters."
         pattern: "^[A-Za-z0-9_\\-.]+$"
-      description:
-        type: "string"
-        example: "transactions from stores worldwide"
-        description: "Text describing the collection."
-      workspace:
-        type: "string"
-        example: "commons"
-        description: "Name of the workspace that the collection is in."
+      read_only:
+        type: "boolean"
+        description: "Whether the collection is read-only or not."
+      retention_secs:
+        type: "integer"
+        format: "int64"
+        example: 2592000
+        description: "Number of seconds after which data is purged based on event\
+          \ time."
+      sources:
+        type: "array"
+        description: "List of sources from which collection ingests."
+        items:
+          $ref: "#/definitions/Source"
+      stats:
+        $ref: "#/definitions/CollectionStats"
+        description: "Metrics about the collection."
       status:
         type: "string"
         example: "READY"
@@ -6410,62 +7368,40 @@ definitions:
         - "BULK_INGEST_MODE"
         - "EXITING_BULK_INGEST_MODE"
         - "UNKNOWN"
-      sources:
-        type: "array"
-        description: "List of sources from which collection ingests."
-        items:
-          $ref: "#/definitions/Source"
-      stats:
-        description: "Metrics about the collection."
-        $ref: "#/definitions/CollectionStats"
-      retention_secs:
-        type: "integer"
-        format: "int64"
-        example: 2592000
-        description: "Number of seconds after which data is purged based on event\
-          \ time."
-      field_mappings:
-        type: "array"
-        description: "List of mappings applied on all documents in a collection."
-        items:
-          $ref: "#/definitions/FieldMappingV2"
-      field_mapping_query:
-        description: "Field mapping for a collection."
-        $ref: "#/definitions/FieldMappingQuery"
-      clustering_key:
-        type: "array"
-        description: "List of clustering fields for a collection."
-        items:
-          $ref: "#/definitions/FieldPartition"
-      aliases:
-        type: "array"
-        description: "List of aliases for a collection."
-        items:
-          $ref: "#/definitions/Alias"
-      read_only:
-        type: "boolean"
-        description: "Whether the collection is read-only or not."
-      insert_only:
-        type: "boolean"
-        description: "Whether the collection is insert only or not."
-      bulk_stats:
-        type: "array"
-        items:
-          $ref: "#/definitions/BulkStats"
+      workspace:
+        type: "string"
+        example: "commons"
+        description: "Name of the workspace that the collection is in."
   CollectionMount:
     type: "object"
     properties:
-      type:
+      collection_path:
         type: "string"
-        example: "STATIC"
-        description: "Mount type."
-        enum:
-        - "STATIC"
-        - "LIVE"
+        example: "commons.foo"
+        description: "Collection path."
       created_at:
         type: "string"
         example: "2001-08-28T00:23:41Z"
         description: "ISO-8601 date."
+      id:
+        type: "string"
+        example: "5ac23...."
+        description: "Mount ID."
+      last_refresh_time_millis:
+        type: "integer"
+        format: "int64"
+        example: 123123764
+        description: "Unix timestamp of most recent refresh. Not applicable for live\
+          \ mounts."
+      rrn:
+        type: "string"
+        example: "rrn:mnt:use1a1:123e4567-e89b-12d3-a456-556642440000"
+        description: "Mount RRN."
+      snapshot_expiration_time_millis:
+        type: "integer"
+        format: "int64"
+        example: 864000000
+        description: "Time in millis at which the snapshot expires."
       state:
         type: "string"
         example: "ACTIVE"
@@ -6476,10 +7412,12 @@ definitions:
         - "REFRESHING"
         - "EXPIRED"
         - "DELETING"
-      collection_path:
-        type: "string"
-        example: "commons.foo"
-        description: "Collection path."
+        - "SWITCHING_REFRESH_TYPE"
+        - "SUSPENDED"
+        - "SUSPENDING"
+      stats:
+        $ref: "#/definitions/CollectionMountStats"
+        description: "Stats about this Collection Mount"
       virtual_instance_id:
         type: "string"
         example: "5ac23...."
@@ -6488,34 +7426,12 @@ definitions:
         type: "string"
         example: "rrn:vi:use1a1:123e4567-e89b-12d3-a456-556642440000"
         description: "Virtual Instance RRN."
-      id:
-        type: "string"
-        example: "5ac23...."
-        description: "Mount ID."
-      rrn:
-        type: "string"
-        example: "rrn:mnt:use1a1:123e4567-e89b-12d3-a456-556642440000"
-        description: "Mount RRN."
-      last_refresh_time_millis:
-        type: "integer"
-        format: "int64"
-        example: 123123764
-        description: "Unix timestamp of most recent refresh. Not applicable for live\
-          \ mounts."
-      snapshot_expiration_time_millis:
-        type: "integer"
-        format: "int64"
-        example: 864000000
-        description: "Time in millis at which the snapshot expires."
-      stats:
-        description: "Stats about this Collection Mount"
-        $ref: "#/definitions/CollectionMountStats"
   CollectionMountResponse:
     type: "object"
     properties:
       data:
-        description: "Resource mount object."
         $ref: "#/definitions/CollectionMount"
+        description: "Resource mount object."
   CollectionMountStats:
     type: "object"
     properties:
@@ -6527,67 +7443,15 @@ definitions:
   CollectionStats:
     type: "object"
     properties:
-      doc_count:
+      bulk_bytes_inserted:
         type: "integer"
         format: "int64"
-        example: 2145
-        description: "Number of documents in the collection."
-      purged_doc_count:
+        description: "Total number of bytes inserted into the collection during bulk."
+      bulk_bytes_overwritten:
         type: "integer"
         format: "int64"
-        example: 2145
-        description: "Number of documents purged from the collection."
-      fill_progress:
-        type: "number"
-        format: "double"
-        example: 0.6
-        description: "Number between 0 and 1 that indicates progress of collection\
-          \ creation."
-      last_queried_ms:
-        type: "integer"
-        format: "int64"
-        example: 1535101119334
-        description: "Milliseconds since Unix epoch Jan 1, 1970."
-      last_updated_ms:
-        type: "integer"
-        format: "int64"
-        example: 1535101094433
-        description: "Milliseconds since Unix epoch Jan 1, 1970."
-      total_size:
-        type: "integer"
-        format: "int64"
-        example: 123456
-        description: "Total collection size in bytes."
-      total_index_size:
-        type: "integer"
-        format: "int64"
-        example: 123456
-        description: "Total collection index size in bytes."
-      row_index_size:
-        type: "integer"
-        format: "int64"
-        example: 123456
-        description: "Total collection row index size in bytes."
-      column_index_size:
-        type: "integer"
-        format: "int64"
-        example: 123456
-        description: "Total collection column index size in bytes."
-      inverted_index_size:
-        type: "integer"
-        format: "int64"
-        example: 123456
-        description: "Total collection inverted index size in bytes."
-      range_index_size:
-        type: "integer"
-        format: "int64"
-        example: 123456
-        description: "Total collection range index size in bytes."
-      purged_doc_size:
-        type: "integer"
-        format: "int64"
-        example: 123456
-        description: "Total size of bytes purged in bytes."
+        description: "Total number of bytes overwritten in writing into the collection\
+          \ during bulk."
       bytes_inserted:
         type: "integer"
         format: "int64"
@@ -6598,60 +7462,112 @@ definitions:
         format: "int64"
         example: 123456
         description: "Total number of bytes overwritten in writing into the collection."
-      bulk_bytes_inserted:
+      column_index_size:
         type: "integer"
         format: "int64"
-        description: "Total number of bytes inserted into the collection during bulk."
-      bulk_bytes_overwritten:
+        example: 123456
+        description: "Total collection column index size in bytes."
+      doc_count:
         type: "integer"
         format: "int64"
-        description: "Total number of bytes overwritten in writing into the collection\
-          \ during bulk."
+        example: 2145
+        description: "Number of documents in the collection."
+      fill_progress:
+        type: "number"
+        format: "double"
+        example: 0.6
+        description: "Number between 0 and 1 that indicates progress of collection\
+          \ creation."
+      inverted_index_size:
+        type: "integer"
+        format: "int64"
+        example: 123456
+        description: "Total collection inverted index size in bytes."
+      last_queried_ms:
+        type: "integer"
+        format: "int64"
+        example: 1535101119334
+        description: "Milliseconds since Unix epoch Jan 1, 1970."
+      last_updated_ms:
+        type: "integer"
+        format: "int64"
+        example: 1535101094433
+        description: "Milliseconds since Unix epoch Jan 1, 1970."
+      purged_doc_count:
+        type: "integer"
+        format: "int64"
+        example: 2145
+        description: "Number of documents purged from the collection."
+      purged_doc_size:
+        type: "integer"
+        format: "int64"
+        example: 123456
+        description: "Total size of bytes purged in bytes."
+      range_index_size:
+        type: "integer"
+        format: "int64"
+        example: 123456
+        description: "Total collection range index size in bytes."
+      row_index_size:
+        type: "integer"
+        format: "int64"
+        example: 123456
+        description: "Total collection row index size in bytes."
+      total_index_size:
+        type: "integer"
+        format: "int64"
+        example: 123456
+        description: "Total collection index size in bytes."
+      total_size:
+        type: "integer"
+        format: "int64"
+        example: 123456
+        description: "Total collection size in bytes."
   CreateAliasRequest:
     type: "object"
     required:
     - "collections"
     - "name"
     properties:
-      name:
-        type: "string"
-        example: "aliasName"
-        description: "Alias name."
-      description:
-        type: "string"
-        example: "version alias"
-        description: "Optional description."
       collections:
         type: "array"
         example: "[\"commons.foo\", \"prod.demo\"]"
         description: "List of fully qualified collection names referenced by alias."
         items:
           type: "string"
+      description:
+        type: "string"
+        example: "version alias"
+        description: "Optional description."
+      name:
+        type: "string"
+        example: "aliasName"
+        description: "Alias name."
   CreateAliasResponse:
     type: "object"
     properties:
       data:
-        description: "Alias that was created."
         $ref: "#/definitions/Alias"
+        description: "Alias that was created."
   CreateApiKeyRequest:
     type: "object"
     required:
     - "name"
     properties:
+      created_by:
+        type: "string"
       name:
         type: "string"
         example: "my-app"
         description: "Name for this API key."
       role:
         type: "string"
-      created_by:
-        type: "string"
   CreateApiKeyResponse:
     type: "object"
     properties:
       data:
-        description: "The API key that was created."
         $ref: "#/definitions/ApiKey"
+        description: "The API key that was created."
   CreateCollectionMountRequest:
     type: "object"
     properties:
@@ -6672,20 +7588,28 @@ definitions:
   CreateCollectionRequest:
     type: "object"
     properties:
+      clustering_key:
+        type: "array"
+        description: "Deprecated. List of clustering fields. Use CLUSTER BY clause\
+          \ in `field_mapping_query` instead."
+        items:
+          $ref: "#/definitions/FieldPartition"
+      description:
+        type: "string"
+        example: "transactions from stores worldwide"
+        description: "Text describing the collection."
+      event_time_info:
+        $ref: "#/definitions/EventTimeInfo"
+        description: "Deprecated. Configuration for event data. Use an _event_time\
+          \ mapping in `field_mapping_query` instead."
+      field_mapping_query:
+        $ref: "#/definitions/FieldMappingQuery"
+        description: "Ingest transformation query."
       name:
         type: "string"
         example: "global-transactions"
         description: "Unique identifier for collection, can contain alphanumeric or\
           \ dash characters."
-      description:
-        type: "string"
-        example: "transactions from stores worldwide"
-        description: "Text describing the collection."
-      sources:
-        type: "array"
-        description: "List of sources from which to ingest data."
-        items:
-          $ref: "#/definitions/Source"
       retention_secs:
         type: "integer"
         format: "int64"
@@ -6693,26 +7617,14 @@ definitions:
         description: "Number of seconds after which data is purged, based on event\
           \ time."
         minimum: 1
-      event_time_info:
-        description: "Deprecated. Configuration for event data. Use an _event_time\
-          \ mapping in `field_mapping_query` instead."
-        $ref: "#/definitions/EventTimeInfo"
-      field_mappings:
+      sources:
         type: "array"
-        description: "Deprecated. List of mappings. Use field_mapping_query instead."
+        description: "List of sources from which to ingest data."
         items:
-          $ref: "#/definitions/FieldMappingV2"
-      field_mapping_query:
-        description: "Mapping of fields for a collection."
-        $ref: "#/definitions/FieldMappingQuery"
-      clustering_key:
-        type: "array"
-        description: "Deprecated. List of clustering fields. Use CLUSTER BY clause\
-          \ in `field_mapping_query` instead."
-        items:
-          $ref: "#/definitions/FieldPartition"
+          $ref: "#/definitions/Source"
       storage_compression_type:
         type: "string"
+        example: "LZ4"
         description: "RocksDB storage compression type."
         enum:
         - "LZ4"
@@ -6721,75 +7633,75 @@ definitions:
     type: "object"
     properties:
       data:
-        description: "Collection that was created."
         $ref: "#/definitions/Collection"
+        description: "Collection that was created."
   CreateIntegrationRequest:
     type: "object"
     required:
     - "name"
     properties:
-      name:
-        type: "string"
-        example: "event-logs"
-        description: "Descriptive label."
+      azure_blob_storage:
+        $ref: "#/definitions/AzureBlobStorageIntegration"
+        description: "Azure Blob Storage details."
+      azure_event_hubs:
+        $ref: "#/definitions/AzureEventHubsIntegration"
+        description: "Azure Event Hubs details."
+      azure_service_bus:
+        $ref: "#/definitions/AzureServiceBusIntegration"
+        description: "Azure Service Bus details."
       description:
         type: "string"
         example: "AWS account with event data for the data science team."
         description: "Longer explanation for the integration."
-      s3:
-        description: "Amazon S3 details, must have one of aws_access_key or aws_role."
-        $ref: "#/definitions/S3Integration"
-      kinesis:
-        description: "Amazon Kinesis details, must have one of aws_access_key or aws_role."
-        $ref: "#/definitions/KinesisIntegration"
       dynamodb:
+        $ref: "#/definitions/DynamodbIntegration"
         description: "Amazon DynamoDB details, must have one of aws_access_key or\
           \ aws_role."
-        $ref: "#/definitions/DynamodbIntegration"
       gcs:
-        description: "GCS details."
         $ref: "#/definitions/GcsIntegration"
-      azure_blob_storage:
-        description: "Azure Blob Storage details."
-        $ref: "#/definitions/AzureBlobStorageIntegration"
-      azure_service_bus:
-        description: "Azure Service Bus details."
-        $ref: "#/definitions/AzureServiceBusIntegration"
-      azure_event_hubs:
-        description: "Azure Event Hubs details."
-        $ref: "#/definitions/AzureEventHubsIntegration"
+        description: "GCS details."
       kafka:
         $ref: "#/definitions/KafkaIntegration"
+      kinesis:
+        $ref: "#/definitions/KinesisIntegration"
+        description: "Amazon Kinesis details, must have one of aws_access_key or aws_role."
       mongodb:
-        description: "MongoDb details."
         $ref: "#/definitions/MongoDbIntegration"
+        description: "MongoDb details."
+      name:
+        type: "string"
+        example: "event-logs"
+        description: "Descriptive label."
+      s3:
+        $ref: "#/definitions/S3Integration"
+        description: "Amazon S3 details, must have one of aws_access_key or aws_role."
       snowflake:
         $ref: "#/definitions/SnowflakeIntegration"
   CreateIntegrationResponse:
     type: "object"
     properties:
       data:
-        description: "Integration object that was created."
         $ref: "#/definitions/Integration"
+        description: "Integration object that was created."
   CreateQueryLambdaRequest:
     type: "object"
     required:
     - "name"
     - "sql"
     properties:
-      name:
-        type: "string"
-        example: "myQueryLambda"
-        description: "Query Lambda name."
       description:
         type: "string"
         example: "production version foo"
         description: "Optional description."
-      sql:
-        description: "Query Lambda SQL query."
-        $ref: "#/definitions/QueryLambdaSql"
       is_public:
         type: "boolean"
+      name:
+        type: "string"
+        example: "myQueryLambda"
+        description: "Query Lambda name."
+      sql:
+        $ref: "#/definitions/QueryLambdaSql"
+        description: "Query Lambda SQL query."
   CreateQueryLambdaTagRequest:
     type: "object"
     required:
@@ -6807,10 +7719,6 @@ definitions:
   CreateRoleRequest:
     type: "object"
     properties:
-      role_name:
-        type: "string"
-        example: "read_write"
-        description: "Unique identifier for the role."
       description:
         type: "string"
         example: "Role with read and write privileges to all collections."
@@ -6820,6 +7728,10 @@ definitions:
         description: "List of privileges that will be associated with the role."
         items:
           $ref: "#/definitions/Privilege"
+      role_name:
+        type: "string"
+        example: "read_write"
+        description: "Unique identifier for the role."
   CreateUserRequest:
     type: "object"
     required:
@@ -6830,12 +7742,6 @@ definitions:
         type: "string"
         example: "hello@rockset.com"
         description: "User email, must be unique."
-      roles:
-        type: "array"
-        example: "[\"admin\", \"member\", \"read-only\"]"
-        description: "List of roles for a given user."
-        items:
-          type: "string"
       first_name:
         type: "string"
         example: "John"
@@ -6844,26 +7750,32 @@ definitions:
         type: "string"
         example: "Doe"
         description: "User last name."
+      roles:
+        type: "array"
+        example: "[\"admin\", \"member\", \"read-only\"]"
+        description: "List of roles for a given user."
+        items:
+          type: "string"
   CreateUserResponse:
     type: "object"
     properties:
       data:
-        description: "User that was created."
         $ref: "#/definitions/User"
+        description: "User that was created."
   CreateViewRequest:
     type: "object"
     required:
     - "name"
     - "query"
     properties:
-      name:
-        type: "string"
-        example: "myAwesomeView"
-        description: "View name."
       description:
         type: "string"
         example: "view of awesome collection"
         description: "Optional description."
+      name:
+        type: "string"
+        example: "myAwesomeView"
+        description: "View name."
       query:
         type: "string"
         example: "SELECT * FROM foo"
@@ -6872,13 +7784,39 @@ definitions:
     type: "object"
     properties:
       data:
-        description: "View that was updated."
         $ref: "#/definitions/View"
+        description: "View that was updated."
   CreateVirtualInstanceRequest:
     type: "object"
     required:
     - "name"
     properties:
+      auto_suspend_seconds:
+        type: "integer"
+        format: "int32"
+        example: 3600
+        description: "Number of seconds without queries after which the VI is suspended"
+      description:
+        type: "string"
+        example: "VI serving prod traffic"
+        description: "Description of requested virtual instance."
+      enable_remount_on_resume:
+        type: "boolean"
+        example: true
+        description: "When a Virtual Instance is resumed, it will remount all collections\
+          \ that were mounted when the Virtual Instance was suspended."
+      mount_refresh_interval_seconds:
+        type: "integer"
+        format: "int32"
+        example: 3600
+        description: "Number of seconds between data refreshes for mounts on this\
+          \ Virtual Instance. A value of 0 means continuous refresh and a value of\
+          \ null means never refresh."
+      name:
+        type: "string"
+        example: "prod_vi"
+        description: "Unique identifier for virtual instance, can contain alphanumeric\
+          \ or dash characters."
       type:
         type: "string"
         example: "LARGE"
@@ -6896,66 +7834,34 @@ definitions:
         - "XLARGE4"
         - "XLARGE8"
         - "XLARGE16"
-      name:
-        type: "string"
-        example: "prod_vi"
-        description: "Unique identifier for virtual instance, can contain alphanumeric\
-          \ or dash characters."
-      description:
-        type: "string"
-        example: "VI serving prod traffic"
-        description: "Description of requested virtual instance."
-      auto_suspend_seconds:
-        type: "integer"
-        format: "int32"
-        example: 3600
-        description: "Number of seconds without queries after which the VI is suspended"
-      mount_refresh_interval_seconds:
-        type: "integer"
-        format: "int32"
-        example: 3600
-        description: "Number of seconds between data refreshes for mounts on this\
-          \ Virtual Instance"
   CreateVirtualInstanceResponse:
     type: "object"
     properties:
       data:
-        description: "Virtual instance object."
         $ref: "#/definitions/VirtualInstance"
+        description: "Virtual instance object."
   CreateWorkspaceRequest:
     type: "object"
     required:
     - "name"
     properties:
-      name:
-        type: "string"
-        example: "event_logs"
-        description: "Descriptive label and unique identifier."
       description:
         type: "string"
         example: "Datasets of system logs for the ops team."
         description: "Longer explanation for the workspace."
+      name:
+        type: "string"
+        example: "event_logs"
+        description: "Descriptive label and unique identifier."
   CreateWorkspaceResponse:
     type: "object"
     properties:
       data:
-        description: "The workspace that was created."
         $ref: "#/definitions/Workspace"
+        description: "The workspace that was created."
   CsvParams:
     type: "object"
     properties:
-      firstLineAsColumnNames:
-        type: "boolean"
-        example: true
-        description: "If the first line in every object specifies the column names."
-      separator:
-        type: "string"
-        example: ","
-        description: "A single character that is the column separator."
-      encoding:
-        type: "string"
-        example: "UTF-8"
-        description: "One of: UTF-8, ISO_8859_1, UTF-16."
       columnNames:
         type: "array"
         example: "[\"c1\", \"c2\", \"c3\"]"
@@ -6967,7 +7873,6 @@ definitions:
         example: "[\"BOOLEAN\", \"INTEGER\", \"FLOAT\", \"STRING\"]"
         description: "Names of columns."
         items:
-          type: "string"
           enum:
           - "UNKNOWN"
           - "BOOLEAN"
@@ -6980,34 +7885,47 @@ definitions:
           - "DATETIME"
           - "TIMESTAMP"
           - "STRING"
-      quoteChar:
+          type: "string"
+      encoding:
         type: "string"
-        example: "\""
-        description: "character within which a cell value is enclosed,null character\
-          \ if no such character, default is '\"'"
+        example: "UTF-8"
+        description: "One of: UTF-8, ISO_8859_1, UTF-16."
       escapeChar:
         type: "string"
         example: "\\"
         description: "escape character removes any special meaning from the following\
           \ character,default is '\\'"
+      firstLineAsColumnNames:
+        type: "boolean"
+        example: true
+        description: "If the first line in every object specifies the column names."
+      quoteChar:
+        type: "string"
+        example: "\""
+        description: "character within which a cell value is enclosed,null character\
+          \ if no such character, default is '\"'"
+      separator:
+        type: "string"
+        example: ","
+        description: "A single character that is the column separator."
   DeleteAliasResponse:
     type: "object"
     properties:
       data:
-        description: "Alias that was deleted."
         $ref: "#/definitions/Alias"
+        description: "Alias that was deleted."
   DeleteApiKeyResponse:
     type: "object"
     properties:
       data:
-        description: "The API key that was deleted."
         $ref: "#/definitions/ApiKey"
+        description: "The API key that was deleted."
   DeleteCollectionResponse:
     type: "object"
     properties:
       data:
-        description: "Collection that was deleted."
         $ref: "#/definitions/Collection"
+        description: "Collection that was deleted."
   DeleteDocumentsRequest:
     type: "object"
     required:
@@ -7039,38 +7957,44 @@ definitions:
     type: "object"
     properties:
       data:
-        description: "Integration object that was deleted."
         $ref: "#/definitions/Integration"
+        description: "Integration object that was deleted."
   DeleteQueryLambdaResponse:
     type: "object"
     properties:
       data:
-        description: "Query Lambda details."
         $ref: "#/definitions/QueryLambda"
+        description: "Query Lambda details."
+  DeleteSourceResponse:
+    type: "object"
+    properties:
+      data:
+        $ref: "#/definitions/Source"
+        description: "source that was deleted"
   DeleteUserResponse:
     type: "object"
     properties:
       data:
-        description: "User object that was deleted."
         $ref: "#/definitions/User"
+        description: "User object that was deleted."
   DeleteViewResponse:
     type: "object"
     properties:
       data:
-        description: "View that was deleted."
         $ref: "#/definitions/View"
+        description: "View that was deleted."
   DeleteVirtualInstanceResponse:
     type: "object"
     properties:
       data:
-        description: "Virtual instance that was deleted."
         $ref: "#/definitions/VirtualInstance"
+        description: "Virtual instance that was deleted."
   DeleteWorkspaceResponse:
     type: "object"
     properties:
       data:
-        description: "The workspace that was deleted."
         $ref: "#/definitions/Workspace"
+        description: "The workspace that was deleted."
   DocumentStatus:
     type: "object"
     properties:
@@ -7078,13 +8002,17 @@ definitions:
         type: "string"
         example: "customers"
         description: "Collection name."
-      error:
-        description: "Error message, if any."
-        $ref: "#/definitions/ErrorModel"
       _id:
         type: "string"
         example: "2cd61e3b"
         description: "Unique document ID."
+      error:
+        $ref: "#/definitions/ErrorModel"
+        description: "Error message, if any."
+      patch_id:
+        type: "string"
+        example: "486gsg8"
+        description: "Unique id used to represent each patch request."
       status:
         type: "string"
         example: "ADDED"
@@ -7095,29 +8023,42 @@ definitions:
         - "DELETED"
         - "PATCHED"
         - "ERROR"
-      patch_id:
-        type: "string"
-        example: "486gsg8"
-        description: "Unique id used to represent each patch request."
   DynamodbIntegration:
     type: "object"
     properties:
       aws_access_key:
-        description: "Credentials for an AWS access key integration."
         $ref: "#/definitions/AwsAccessKey"
+        description: "Credentials for an AWS access key integration."
       aws_role:
-        description: "Role used for external id type authentication."
         $ref: "#/definitions/AwsRole"
+        description: "Role used for external id type authentication."
       s3_export_bucket_name:
         type: "string"
         description: "S3 bucket used for export during collection initial dump."
   ErrorModel:
     type: "object"
     properties:
+      column:
+        type: "integer"
+        format: "int32"
+        description: "Column where the error happened (if applicable)."
+      error_id:
+        type: "string"
+        description: "ID of the error."
+      line:
+        type: "integer"
+        format: "int32"
+        description: "Line where the error happened (if applicable)."
       message:
         type: "string"
         example: "collection not found"
         description: "Descriptive message about the error."
+      query_id:
+        type: "string"
+        description: "ID of the query (if applicable)."
+      trace_id:
+        type: "string"
+        description: "Internal trace ID to help with debugging."
       type:
         type: "string"
         example: "INVALIDINPUT"
@@ -7148,23 +8089,6 @@ definitions:
         - "RATELIMITEXCEEDED"
         - "QUERY_CANCELLED"
         - "CLIENT_CONNECTION_ERROR"
-      line:
-        type: "integer"
-        format: "int32"
-        description: "Line where the error happened (if applicable)."
-      column:
-        type: "integer"
-        format: "int32"
-        description: "Column where the error happened (if applicable)."
-      trace_id:
-        type: "string"
-        description: "Internal trace ID to help with debugging."
-      error_id:
-        type: "string"
-        description: "ID of the error."
-      query_id:
-        type: "string"
-        description: "ID of the query (if applicable)."
     description: "Describes details about an error"
   EventTimeInfo:
     type: "object"
@@ -7187,11 +8111,6 @@ definitions:
   ExecutePublicQueryLambdaRequest:
     type: "object"
     properties:
-      parameters:
-        type: "array"
-        description: "List of named parameters."
-        items:
-          $ref: "#/definitions/QueryParameter"
       default_row_limit:
         type: "integer"
         format: "int32"
@@ -7199,14 +8118,32 @@ definitions:
       generate_warnings:
         type: "boolean"
         description: "Whether to generate warnings."
+      parameters:
+        type: "array"
+        description: "List of named parameters."
+        items:
+          $ref: "#/definitions/QueryParameter"
   ExecuteQueryLambdaRequest:
     type: "object"
     properties:
-      parameters:
-        type: "array"
-        description: "List of named parameters."
-        items:
-          $ref: "#/definitions/QueryParameter"
+      async:
+        type: "boolean"
+        description: "If true, the query will run asynchronously for up to 30 minutes.\
+          \ The query request will immediately return with a query id that can be\
+          \ used to retrieve the query status and results. If false or not specified,\
+          \ the query will return with results once completed or timeout after 2 minutes.\
+          \ (To return results directly for shorter queries while still allowing a\
+          \ timeout of up to 30 minutes, set `async_options.client_timeout_ms`.) "
+      async_options:
+        $ref: "#/definitions/AsyncQueryOptions"
+        description: "Options for configuring Asynchronous Query Mode."
+      debug_threshold_ms:
+        type: "integer"
+        format: "int64"
+        description: "If query execution takes longer than this value, debug information\
+          \ will be logged. If the query text includes the DEBUG hint and this parameter\
+          \ is also provided, only this value will be used and the DEBUG hint will\
+          \ be ignored."
       default_row_limit:
         type: "integer"
         format: "int32"
@@ -7214,24 +8151,41 @@ definitions:
       generate_warnings:
         type: "boolean"
         description: "Whether to generate warnings."
+      initial_paginate_response_doc_count:
+        type: "integer"
+        format: "int32"
+        description: "[DEPRECATED] Use `max_initial_results` instead. Number of documents\
+          \ to return in addition to paginating for this query call. Only relevant\
+          \ if `paginate` flag is also set."
+      max_initial_results:
+        type: "integer"
+        format: "int64"
+        description: "This limits the maximum number of results in the initial response.\
+          \ A pagination cursor is returned if the number of results exceeds `max_initial_results`.\
+          \ If `max_initial_results` is not set, all results will be returned in the\
+          \ initial response up to 4 million. If `max_initial_results` is set, the\
+          \ value must be between 0 and 100,000. If the query is async and `client_timeout_ms`\
+          \ is exceeded, `max_initial_results` does not apply since none of the results\
+          \ will be returned with the initial response."
       paginate:
         type: "boolean"
         description: "Flag to paginate and store the results of this query for later\
           \ / sequential retrieval."
-      initial_paginate_response_doc_count:
+      parameters:
+        type: "array"
+        description: "List of named parameters."
+        items:
+          $ref: "#/definitions/QueryParameter"
+      timeout_ms:
         type: "integer"
-        format: "int32"
-        description: "Number of documents to return in addition to paginating for\
-          \ this query call. Only relevant if `paginate` flag is also set."
-      async_options:
-        description: "Options for configuring Asynchronous Query Mode (beta)."
-        $ref: "#/definitions/AsyncQueryOptions"
+        format: "int64"
+        description: "If a query exceeds the specified timeout, the query will automatically\
+          \ stop and return an error. The query timeout defaults to a maximum of 2\
+          \ minutes. If `async` is true, the query timeout defaults to a maximum of\
+          \ 30 minutes."
       virtual_instance_id:
         type: "string"
         description: "Virtual instance on which to run the query."
-  FieldMapping:
-    type: "object"
-    properties: {}
   FieldMappingQuery:
     type: "object"
     properties:
@@ -7242,23 +8196,23 @@ definitions:
   FieldMappingV2:
     type: "object"
     properties:
-      name:
-        type: "string"
-        example: "myTestMapping"
-        description: "A user specified string that is a name for this mapping."
-      is_drop_all_fields:
-        type: "boolean"
-        example: true
-        description: "A boolean that determines whether to drop all fields in this\
-          \ document. If set, input and output fields should not be set"
       input_fields:
         type: "array"
         description: "A List of InputField for this mapping."
         items:
           $ref: "#/definitions/InputField"
+      is_drop_all_fields:
+        type: "boolean"
+        example: true
+        description: "A boolean that determines whether to drop all fields in this\
+          \ document. If set, input and output fields should not be set"
+      name:
+        type: "string"
+        example: "myTestMapping"
+        description: "A user specified string that is a name for this mapping."
       output_field:
-        description: "An OutputField for this mapping."
         $ref: "#/definitions/OutputField"
+        description: "An OutputField for this mapping."
   FieldPartition:
     type: "object"
     properties:
@@ -7266,12 +8220,6 @@ definitions:
         type: "string"
         example: "address.city.zipcode"
         description: "The name of a field, parsed as a SQL qualified name."
-      type:
-        type: "string"
-        example: "AUTO"
-        description: "The type of partitions on a field."
-        enum:
-        - "AUTO"
       keys:
         type: "array"
         example: "[\"value1\", \"value2\"]"
@@ -7279,27 +8227,33 @@ definitions:
           \ type is AUTO."
         items:
           type: "string"
+      type:
+        type: "string"
+        example: "AUTO"
+        description: "The type of partitions on a field."
+        enum:
+        - "AUTO"
   FormatParams:
     type: "object"
     properties:
+      avro:
+        $ref: "#/definitions/AvroParams"
+      csv:
+        $ref: "#/definitions/CsvParams"
       json:
         type: "boolean"
         example: true
         description: "Source data is in json format."
-      csv:
-        $ref: "#/definitions/CsvParams"
-      xml:
-        $ref: "#/definitions/XmlParams"
-      mysql_dms:
-        type: "boolean"
-      postgres_dms:
-        type: "boolean"
       mssql_dms:
+        type: "boolean"
+      mysql_dms:
         type: "boolean"
       oracle_dms:
         type: "boolean"
-      avro:
-        $ref: "#/definitions/AvroParams"
+      postgres_dms:
+        type: "boolean"
+      xml:
+        $ref: "#/definitions/XmlParams"
   GcpServiceAccount:
     type: "object"
     required:
@@ -7312,55 +8266,61 @@ definitions:
     type: "object"
     properties:
       gcp_service_account:
-        description: "Credentials for an GCP key integration."
         $ref: "#/definitions/GcpServiceAccount"
+        description: "Credentials for an GCP key integration."
   GetAliasResponse:
     type: "object"
     properties:
       data:
-        description: "Alias that was requested."
         $ref: "#/definitions/Alias"
+        description: "Alias that was requested."
   GetApiKeyResponse:
     type: "object"
     properties:
       data:
-        description: "The requested API key object."
         $ref: "#/definitions/ApiKey"
+        description: "The requested API key object."
   GetCollectionResponse:
     type: "object"
     properties:
       data:
-        description: "Collection that was requested."
         $ref: "#/definitions/Collection"
+        description: "Collection that was requested."
   GetIntegrationResponse:
     type: "object"
     properties:
       data:
-        description: "Integration object."
         $ref: "#/definitions/Integration"
+        description: "Integration object."
   GetQueryResponse:
     type: "object"
     properties:
       data:
         $ref: "#/definitions/QueryInfo"
+  GetSourceResponse:
+    type: "object"
+    properties:
+      data:
+        $ref: "#/definitions/Source"
+        description: "source config for source"
   GetViewResponse:
     type: "object"
     properties:
       data:
-        description: "View that was requested."
         $ref: "#/definitions/View"
+        description: "View that was requested."
   GetVirtualInstanceResponse:
     type: "object"
     properties:
       data:
-        description: "Virtual instance that was requested."
         $ref: "#/definitions/VirtualInstance"
+        description: "Virtual instance that was requested."
   GetWorkspaceResponse:
     type: "object"
     properties:
       data:
-        description: "The workspace that was requested."
         $ref: "#/definitions/Workspace"
+        description: "The workspace that was requested."
   InputField:
     type: "object"
     properties:
@@ -7389,80 +8349,81 @@ definitions:
     - "created_by"
     - "name"
     properties:
-      name:
-        type: "string"
-        example: "event-logs"
-        description: "Descriptive label and unique identifier."
-      description:
-        type: "string"
-        example: "AWS account with event data for the data science team."
-        description: "Longer explanation for the integration."
-      created_by:
-        type: "string"
-        example: "hello@rockset.com"
-        description: "Email of user who created the integration."
-      owner_email:
-        type: "string"
-        example: "abc@rockset.com"
-        description: "User that owns this integration."
-      created_at:
-        type: "string"
-        example: "2001-08-28T00:23:41Z"
-        description: "ISO-8601 date."
-      s3:
-        description: "Amazon S3 details, must have one of aws_access_key or aws_role."
-        $ref: "#/definitions/S3Integration"
-      kinesis:
-        description: "Amazon Kinesis details, must have one of aws_access_key or aws_role."
-        $ref: "#/definitions/KinesisIntegration"
-      dynamodb:
-        description: "Amazon DynamoDB details, must have one of aws_access_key or\
-          \ aws_role."
-        $ref: "#/definitions/DynamodbIntegration"
-      gcs:
-        description: "GCS details."
-        $ref: "#/definitions/GcsIntegration"
       azure_blob_storage:
-        description: "Azure Blob Storage details."
         $ref: "#/definitions/AzureBlobStorageIntegration"
-      azure_service_bus:
-        description: "Azure Service Bus details."
-        $ref: "#/definitions/AzureServiceBusIntegration"
+        description: "Azure Blob Storage details."
       azure_event_hubs:
-        description: "Azure Event Hubs details."
         $ref: "#/definitions/AzureEventHubsIntegration"
-      kafka:
-        description: "Kafka details."
-        $ref: "#/definitions/KafkaIntegration"
-      mongodb:
-        description: "MongoDb details."
-        $ref: "#/definitions/MongoDbIntegration"
-      snowflake:
-        description: "Snowflake details."
-        $ref: "#/definitions/SnowflakeIntegration"
+        description: "Azure Event Hubs details."
+      azure_service_bus:
+        $ref: "#/definitions/AzureServiceBusIntegration"
+        description: "Azure Service Bus details."
       collections:
         type: "array"
         description: "List of collections that use the integration."
         items:
           $ref: "#/definitions/Collection"
+      created_at:
+        type: "string"
+        example: "2001-08-28T00:23:41Z"
+        description: "ISO-8601 date."
+      created_by:
+        type: "string"
+        example: "hello@rockset.com"
+        description: "Email of user who created the integration."
+      created_by_apikey_name:
+        type: "string"
+        description: "Name of the API key that was used to create this object if one\
+          \ was used."
+      description:
+        type: "string"
+        example: "AWS account with event data for the data science team."
+        description: "Longer explanation for the integration."
+      dynamodb:
+        $ref: "#/definitions/DynamodbIntegration"
+        description: "Amazon DynamoDB details, must have one of aws_access_key or\
+          \ aws_role."
+      gcs:
+        $ref: "#/definitions/GcsIntegration"
+        description: "GCS details."
+      kafka:
+        $ref: "#/definitions/KafkaIntegration"
+        description: "Kafka details."
+      kinesis:
+        $ref: "#/definitions/KinesisIntegration"
+        description: "Amazon Kinesis details, must have one of aws_access_key or aws_role."
+      mongodb:
+        $ref: "#/definitions/MongoDbIntegration"
+        description: "MongoDb details."
+      name:
+        type: "string"
+        example: "event-logs"
+        description: "Descriptive label and unique identifier."
+      owner_email:
+        type: "string"
+        example: "abc@rockset.com"
+        description: "User that owns this integration."
+      s3:
+        $ref: "#/definitions/S3Integration"
+        description: "Amazon S3 details, must have one of aws_access_key or aws_role."
+      snowflake:
+        $ref: "#/definitions/SnowflakeIntegration"
+        description: "Snowflake details."
     description: "Integrations that can be associated with data sources to create\
       \ collections. Only one type of integration may be specified."
   KafkaIntegration:
     type: "object"
     properties:
-      kafka_topic_names:
-        type: "array"
-        description: "Kafka topics to tail."
-        uniqueItems: true
-        items:
-          type: "string"
-      source_status_by_topic:
-        type: "object"
-        example: "{\"topic-a\": \"DORMANT\"}"
-        description: "The status of the Kafka source by topic."
-        readOnly: true
-        additionalProperties:
-          $ref: "#/definitions/StatusKafka"
+      aws_role:
+        $ref: "#/definitions/AwsRole"
+        description: "Details of an AWS cross-account role integration."
+      bootstrap_servers:
+        type: "string"
+        example: "localhost:9092"
+        description: "The Kafka bootstrap server url(s). Required only for V3 integration."
+      connection_string:
+        type: "string"
+        description: "Kafka connection string."
       kafka_data_format:
         type: "string"
         example: "JSON"
@@ -7470,24 +8431,27 @@ definitions:
         enum:
         - "JSON"
         - "AVRO"
-      connection_string:
-        type: "string"
-        description: "Kafka connection string."
-      aws_role:
-        description: "Details of an AWS cross-account role integration."
-        $ref: "#/definitions/AwsRole"
+      kafka_topic_names:
+        type: "array"
+        description: "Kafka topics to tail."
+        uniqueItems: true
+        items:
+          type: "string"
+      schema_registry_config:
+        $ref: "#/definitions/SchemaRegistryConfig"
+        description: "Kafka configurations for schema registry."
+      security_config:
+        $ref: "#/definitions/KafkaV3SecurityConfig"
+        description: "Kafka security configurations."
+      source_status_by_topic:
+        type: "object"
+        example: "{\"topic-a\": \"DORMANT\"}"
+        description: "The status of the Kafka source by topic."
+        readOnly: true
+        additionalProperties:
+          $ref: "#/definitions/StatusKafka"
       use_v3:
         type: "boolean"
-      bootstrap_servers:
-        type: "string"
-        example: "localhost:9092"
-        description: "The Kafka bootstrap server url(s). Required only for V3 integration."
-      security_config:
-        description: "Kafka security configurations."
-        $ref: "#/definitions/KafkaV3SecurityConfig"
-      schema_registry_config:
-        description: "Kafka configurations for schema registry."
-        $ref: "#/definitions/SchemaRegistryConfig"
   KafkaV3SecurityConfig:
     type: "object"
     properties:
@@ -7499,11 +8463,11 @@ definitions:
     type: "object"
     properties:
       aws_access_key:
-        description: "Credentials for an AWS access key integration."
         $ref: "#/definitions/AwsAccessKey"
+        description: "Credentials for an AWS access key integration."
       aws_role:
-        description: "Details of an AWS cross-account role integration."
         $ref: "#/definitions/AwsRole"
+        description: "Details of an AWS cross-account role integration."
   ListAliasesResponse:
     type: "object"
     properties:
@@ -7583,6 +8547,14 @@ definitions:
         description: "List of all roles."
         items:
           $ref: "#/definitions/Role"
+  ListSourcesResponse:
+    type: "object"
+    properties:
+      data:
+        type: "array"
+        description: "List of all sources in a collection"
+        items:
+          $ref: "#/definitions/Source"
   ListUnsubscribePreferencesResponse:
     type: "object"
     properties:
@@ -7635,10 +8607,12 @@ definitions:
   Organization:
     type: "object"
     properties:
-      id:
-        type: "string"
-        example: "rockset"
-        description: "Unique identifier for the organization."
+      clusters:
+        type: "array"
+        example: "[{ ... }]"
+        description: "List of clusters associated with this org."
+        items:
+          $ref: "#/definitions/Cluster"
       created_at:
         type: "string"
         example: "2001-08-28T00:23:41Z"
@@ -7651,23 +8625,29 @@ definitions:
         type: "string"
         example: "<hash>"
         description: "Organization's unique external ID within Rockset."
+      id:
+        type: "string"
+        example: "rockset"
+        description: "Unique identifier for the organization."
       rockset_user:
         type: "string"
         example: "<id>"
         description: "Rockset's global AWS user."
-      clusters:
-        type: "array"
-        example: "[{ ... }]"
-        description: "List of clusters associated with this org."
-        items:
-          $ref: "#/definitions/Cluster"
+      sso_connection:
+        type: "string"
+        example: "rockset"
+        description: "Connection name of SSO connection."
+      sso_only:
+        type: "boolean"
+        example: true
+        description: "Whether or not SSO is the only permitted form of auth."
     description: "An organization in Rockset is a container for users and collections."
   OrganizationResponse:
     type: "object"
     properties:
       data:
-        description: "Organization object."
         $ref: "#/definitions/Organization"
+        description: "Organization object."
   OutputField:
     type: "object"
     properties:
@@ -7675,10 +8655,6 @@ definitions:
         type: "string"
         example: "zip_hash"
         description: "The name of a field, parsed as a SQL qualified name."
-      value:
-        example: "SHA256(:zip)"
-        description: "The name of a sql function."
-        $ref: "#/definitions/SqlExpression"
       on_error:
         type: "string"
         example: "SKIP"
@@ -7686,6 +8662,10 @@ definitions:
         enum:
         - "SKIP"
         - "FAIL"
+      value:
+        example: "SHA256(:zip)"
+        $ref: "#/definitions/SqlExpression"
+        description: "The name of a sql function."
   Pagination:
     type: "object"
     properties:
@@ -7702,24 +8682,24 @@ definitions:
         format: "int64"
         example: 1000
         description: "Number of documents returned in this result set."
+      next_cursor:
+        type: "string"
+        example: "testnextcursor"
+        description: "Cursor to use to get the list of documents."
       next_cursor_offset:
         type: "integer"
         format: "int64"
         example: 2000
         description: "The doc offset that next_cursor starts at."
-      start_cursor:
-        type: "string"
-        example: "startcursor"
-        description: "Cursor used to retrieve the first set of documents."
-      next_cursor:
-        type: "string"
-        example: "testnextcursor"
-        description: "Cursor to use to get the list of documents."
       next_page_link:
         type: "string"
         example: "https://api.rs2.usw2.rockset.com/...."
         description: "Direct link to the next page of results."
         readOnly: true
+      start_cursor:
+        type: "string"
+        example: "startcursor"
+        description: "Cursor used to retrieve the first set of documents."
   PatchDocument:
     type: "object"
     required:
@@ -7760,6 +8740,11 @@ definitions:
     - "op"
     - "path"
     properties:
+      from:
+        type: "string"
+        description: "[JSON Pointer](https://datatracker.ietf.org/doc/html/rfc6901)\
+          \ referencing a location in the target document. Required for `COPY` and\
+          \ `MOVE` operations."
       op:
         type: "string"
         example: "ADD"
@@ -7783,11 +8768,6 @@ definitions:
         example: "baz"
         description: "Value used in the patch operation. Required for `ADD`, `REPLACE`,\
           \ `TEST`, and `INCREMENT` operations."
-      from:
-        type: "string"
-        description: "[JSON Pointer](https://datatracker.ietf.org/doc/html/rfc6901)\
-          \ referencing a location in the target document. Required for `COPY` and\
-          \ `MOVE` operations."
   Privilege:
     type: "object"
     properties:
@@ -7821,6 +8801,7 @@ definitions:
         - "DELETE_ROLE_GLOBAL"
         - "LIST_ROLES_GLOBAL"
         - "GRANT_REVOKE_ROLE_GLOBAL"
+        - "CREATE_QUERY_LOGS_COLLECTION_GLOBAL"
         - "ALL_INTEGRATION_ACTIONS"
         - "CREATE_COLLECTION_INTEGRATION"
         - "ALL_WORKSPACE_ACTIONS"
@@ -7844,24 +8825,20 @@ definitions:
         - "UPDATE_VI"
         - "SUSPEND_RESUME_VI"
         - "DELETE_VI"
-      resource_name:
-        type: "string"
-        example: "commons"
-        description: "The resources on which the action is allowed. Defaults to '*All*'\
-          \ if not specified."
       cluster:
         type: "string"
         example: "*ALL*"
         description: "Cluster ID (`usw2a1` for us-west-2, `use1a1` for us-east-1,\
           \ `euc1a1` for eu-central-1) for which the action is allowed. Defaults to\
           \ '*All*' if not specified."
+      resource_name:
+        type: "string"
+        example: "commons"
+        description: "The resources on which the action is allowed. Defaults to '*All*'\
+          \ if not specified."
   QueryError:
     type: "object"
     properties:
-      type:
-        type: "string"
-        example: "ResourceExceeded"
-        description: "The type of error."
       message:
         type: "string"
         example: "Too many rows"
@@ -7873,6 +8850,10 @@ definitions:
         example: 429
         description: "The HTTP status code associated with this error, had it been\
           \ sent as the response status code"
+      type:
+        type: "string"
+        example: "ResourceExceeded"
+        description: "The type of error."
   QueryFieldType:
     type: "object"
     required:
@@ -7890,10 +8871,38 @@ definitions:
   QueryInfo:
     type: "object"
     properties:
+      executed_by:
+        type: "string"
+        example: "xyz@rockset.com"
+        description: "User ID who executed the query."
+      expires_at:
+        type: "string"
+        example: "2001-08-28T00:23:41Z"
+        description: "Time (UTC) that query results expire. Only populated if `status`\
+          \ is `COMPLETE`."
+      last_offset:
+        type: "string"
+        description: "The log offset that query results were written to in the destination\
+          \ collection. Only populated for INSERT INTO queries."
+      pagination:
+        $ref: "#/definitions/Pagination"
+        description: "Information for fetching query results pages. Only populated\
+          \ if `status` is `COMPLETE`."
+      query_errors:
+        type: "array"
+        description: "Errors encountered while executing the query."
+        items:
+          $ref: "#/definitions/QueryError"
       query_id:
         type: "string"
         example: "5b596206-c632-4a08-8343-0c560f7ef7f1"
         description: "Unique Query ID."
+      sql:
+        type: "string"
+        description: "The SQL query for this request"
+      stats:
+        $ref: "#/definitions/Stats"
+        description: "Various stats about the query's execution."
       status:
         type: "string"
         example: "RUNNING"
@@ -7904,51 +8913,30 @@ definitions:
         - "COMPLETED"
         - "ERROR"
         - "CANCELLED"
-      executed_by:
-        type: "string"
-        example: "xyz@rockset.com"
-        description: "User ID who executed the query."
       submitted_at:
         type: "string"
         example: "2001-08-28T00:23:41Z"
         description: "Time (UTC) the query request was first received and queued for\
           \ execution."
-      expires_at:
-        type: "string"
-        example: "2001-08-28T00:23:41Z"
-        description: "Time (UTC) that query results expire. Only populated if `status`\
-          \ is `COMPLETE`."
-      stats:
-        description: "Various stats about the query's execution."
-        $ref: "#/definitions/Stats"
-      pagination:
-        description: "Information for fetching query results pages. Only populated\
-          \ if `status` is `COMPLETE`."
-        $ref: "#/definitions/Pagination"
-      last_offset:
-        type: "string"
-        description: "The log offset that query results were written to in the destination\
-          \ collection. Only populated for INSERT INTO queries."
-      query_errors:
-        type: "array"
-        description: "Errors encountered while executing the query."
-        items:
-          $ref: "#/definitions/QueryError"
   QueryLambda:
     type: "object"
     properties:
-      workspace:
-        type: "string"
-        example: "commons"
-        description: "Workspace of this Query Lambda."
-      last_updated_by:
-        type: "string"
-        example: "..@rockset.com"
-        description: "User that created this Query Lambda."
+      collections:
+        type: "array"
+        description: "Collections/aliases queried by underlying SQL query."
+        items:
+          type: "string"
       last_updated:
         type: "string"
         example: "2001-08-28T00:23:41Z"
         description: "ISO-8601 date of when Query Lambda was last updated."
+      last_updated_by:
+        type: "string"
+        example: "..@rockset.com"
+        description: "User that created this Query Lambda."
+      latest_version:
+        $ref: "#/definitions/QueryLambdaVersion"
+        description: "Query Lambda version details for most recently created version."
       name:
         type: "string"
         example: "myQuery"
@@ -7958,28 +8946,24 @@ definitions:
         format: "int32"
         example: 1
         description: "Number of Query Lambda versions."
-      collections:
-        type: "array"
-        description: "Collections/aliases queried by underlying SQL query."
-        items:
-          type: "string"
-      latest_version:
-        description: "Query Lambda version details for most recently created version."
-        $ref: "#/definitions/QueryLambdaVersion"
+      workspace:
+        type: "string"
+        example: "commons"
+        description: "Workspace of this Query Lambda."
   QueryLambdaSql:
     type: "object"
     required:
     - "query"
     properties:
-      query:
-        type: "string"
-        example: "SELECT 'Foo'"
-        description: "SQL text."
       default_parameters:
         type: "array"
         description: "Default parameters for this Query Lambda."
         items:
           $ref: "#/definitions/QueryParameter"
+      query:
+        type: "string"
+        example: "SELECT 'Foo'"
+        description: "SQL text."
   QueryLambdaStats:
     type: "object"
     properties:
@@ -8008,49 +8992,48 @@ definitions:
         description: "Name of Query Lambda tag."
       version:
         example: "b1d7c9a34b50cd"
-        description: "Query lambda version."
         $ref: "#/definitions/QueryLambdaVersion"
+        description: "Query lambda version."
   QueryLambdaTagResponse:
     type: "object"
     properties:
       data:
-        description: "Updated Query Lambda tag."
         $ref: "#/definitions/QueryLambdaTag"
+        description: "Updated Query Lambda tag."
   QueryLambdaVersion:
     type: "object"
     properties:
-      workspace:
-        type: "string"
-        example: "commons"
-        description: "Workspace of this Query Lambda."
-      created_by:
-        type: "string"
-        example: "..@rockset.com"
-        description: "User that created this Query Lambda."
-      created_at:
-        type: "string"
-        example: "2001-08-28T00:23:41Z"
-        description: "ISO-8601 date of when Query Lambda was created."
-      name:
-        type: "string"
-        example: "myQuery"
-        description: "Query Lambda name."
-      version:
-        type: "string"
-        example: "acb99feg92bcaf"
-        description: "Query Lambda version."
-      description:
-        type: "string"
-        example: "production version foo"
-        description: "Optional description."
-      sql:
-        description: "Query Lambda SQL query."
-        $ref: "#/definitions/QueryLambdaSql"
       collections:
         type: "array"
         description: "Collections queried by underlying SQL query."
         items:
           type: "string"
+      created_at:
+        type: "string"
+        example: "2001-08-28T00:23:41Z"
+        description: "ISO-8601 date of when Query Lambda was created."
+      created_by:
+        type: "string"
+        example: "..@rockset.com"
+        description: "User that created this Query Lambda."
+      created_by_apikey_name:
+        type: "string"
+        description: "Name of the API key that was used to create this object if one\
+          \ was used."
+      description:
+        type: "string"
+        example: "production version foo"
+        description: "Optional description."
+      name:
+        type: "string"
+        example: "myQuery"
+        description: "Query Lambda name."
+      public_access_id:
+        type: "string"
+        description: "Public access ID associated with this QL version"
+      sql:
+        $ref: "#/definitions/QueryLambdaSql"
+        description: "Query Lambda SQL query."
       state:
         type: "string"
         example: "ACTIVE"
@@ -8059,20 +9042,28 @@ definitions:
         - "ACTIVE"
         - "INVALID_SQL"
       stats:
-        description: "Stats related to this Query Lambda."
         $ref: "#/definitions/QueryLambdaStats"
-      public_access_id:
+        description: "Stats related to this Query Lambda."
+      version:
         type: "string"
-        description: "Public access ID associated with this QL version"
+        example: "acb99feg92bcaf"
+        description: "Query Lambda version."
+      workspace:
+        type: "string"
+        example: "commons"
+        description: "Workspace of this Query Lambda."
   QueryLambdaVersionResponse:
     type: "object"
     properties:
       data:
-        description: "Query Lambda version details."
         $ref: "#/definitions/QueryLambdaVersion"
+        description: "Query Lambda version details."
   QueryPaginationResponse:
     type: "object"
     properties:
+      pagination:
+        $ref: "#/definitions/PaginationInfo"
+        description: "Pagination metadata."
       results:
         type: "array"
         description: "List of documents returned by the query."
@@ -8082,9 +9073,6 @@ definitions:
         type: "integer"
         format: "int64"
         description: "Total documents returned by the query."
-      pagination:
-        description: "Pagination metadata."
-        $ref: "#/definitions/PaginationInfo"
   QueryParameter:
     type: "object"
     required:
@@ -8099,7 +9087,7 @@ definitions:
       type:
         type: "string"
         example: "string"
-        description: "Data type of the field."
+        description: "Deprecated. Data type of the field."
       value:
         type: "string"
         example: "85beb391"
@@ -8109,93 +9097,136 @@ definitions:
     required:
     - "sql"
     properties:
-      sql:
-        description: "Main query request body."
-        $ref: "#/definitions/QueryRequestSql"
+      async:
+        type: "boolean"
+        description: "If true, the query will run asynchronously for up to 30 minutes.\
+          \ The query request will immediately return with a query id that can be\
+          \ used to retrieve the query status and results. If false or not specified,\
+          \ the query will return with results once completed or timeout after 2 minutes.\
+          \ (To return results directly for shorter queries while still allowing a\
+          \ timeout of up to 30 minutes, set `async_options.client_timeout_ms`.) "
       async_options:
-        description: "Options for configuring Asynchronous Query Mode (beta)."
         $ref: "#/definitions/AsyncQueryOptions"
+        description: "Options for configuring Asynchronous Query Mode."
+      debug_threshold_ms:
+        type: "integer"
+        format: "int64"
+        description: "If query execution takes longer than this value, debug information\
+          \ will be logged. If the query text includes the DEBUG hint and this parameter\
+          \ is also provided, only this value will be used and the DEBUG hint will\
+          \ be ignored."
+      max_initial_results:
+        type: "integer"
+        format: "int64"
+        description: "This limits the maximum number of results in the initial response.\
+          \ A pagination cursor is returned if the number of results exceeds `max_initial_results`.\
+          \ If `max_initial_results` is not set, all results will be returned in the\
+          \ initial response up to 4 million. If `max_initial_results` is set, the\
+          \ value must be between 0 and 100,000. If the query is async and `client_timeout_ms`\
+          \ is exceeded, `max_initial_results` does not apply since none of the results\
+          \ will be returned with the initial response."
+      sql:
+        $ref: "#/definitions/QueryRequestSql"
+        description: "Main query request body."
+      timeout_ms:
+        type: "integer"
+        format: "int64"
+        description: "If a query exceeds the specified timeout, the query will automatically\
+          \ stop and return an error. The query timeout defaults to a maximum of 2\
+          \ minutes. If `async` is true, the query timeout defaults to a maximum of\
+          \ 30 minutes."
   QueryRequestSql:
     type: "object"
     required:
     - "query"
     properties:
-      query:
-        type: "string"
-        example: "SELECT * FROM foo where _id = :_id"
-        description: "SQL query string."
-      generate_warnings:
-        type: "boolean"
-        example: false
-        description: "Flag to enable warnings. Warnings can help debug query issues\
-          \ but negatively affect performance."
-      parameters:
-        type: "array"
-        description: "List of named parameters."
-        items:
-          $ref: "#/definitions/QueryParameter"
       default_row_limit:
         type: "integer"
         format: "int32"
         description: "Row limit to use. Limits specified in the query text will override\
           \ this default."
+      generate_warnings:
+        type: "boolean"
+        example: false
+        description: "Flag to enable warnings. Warnings can help debug query issues\
+          \ but negatively affect performance."
       initial_paginate_response_doc_count:
         type: "integer"
         format: "int32"
-        description: "Number of documents to return in addition to paginating for\
-          \ this query call. Only relevant if `paginate` flag is also set."
+        description: "[DEPRECATED] Use `max_initial_results` instead. Number of documents\
+          \ to return in addition to paginating for this query call. Only relevant\
+          \ if `paginate` flag is also set."
+      parameters:
+        type: "array"
+        description: "List of named parameters."
+        items:
+          $ref: "#/definitions/QueryParameter"
+      query:
+        type: "string"
+        example: "SELECT * FROM foo where _id = :_id"
+        description: "SQL query string."
   QueryResponse:
     type: "object"
     properties:
-      query_id:
-        type: "string"
-        description: "Unique ID for this query."
       collections:
         type: "array"
         description: "List of collections referenced in the query."
         items:
           type: "string"
-      results:
-        type: "array"
-        description: "Results from the query."
-        items:
-          type: "object"
-      stats:
-        description: "Meta information about the query including execution latencies."
-        $ref: "#/definitions/QueryResponseStats"
-      warnings:
-        type: "array"
-        description: "Warnings generated by the query. Only populated if `generate_warnings`\
-          \ is specified in the query request."
-        items:
-          type: "string"
-      query_lambda_path:
-        type: "string"
-        description: "The full path of the executed query lambda. Includes version\
-          \ information."
-      query_errors:
-        type: "array"
-        description: "Errors encountered while executing the query."
-        items:
-          $ref: "#/definitions/QueryError"
       column_fields:
         type: "array"
         description: "Meta information about each column in the result set. Not populated\
           \ in `SELECT *` queries."
         items:
           $ref: "#/definitions/QueryFieldType"
-      results_total_doc_count:
-        type: "integer"
-        format: "int64"
-        description: "Number of results generated by the query."
-      pagination:
-        description: "Pagination information. Only populated if `paginate` is specified\
-          \ in the query request."
-        $ref: "#/definitions/PaginationInfo"
       last_offset:
         type: "string"
         description: "If this was a write query, this is the log offset the query\
           \ was written to."
+      pagination:
+        $ref: "#/definitions/PaginationInfo"
+        description: "Pagination information. Only populated if `paginate` is specified\
+          \ in the query request."
+      query_errors:
+        type: "array"
+        description: "Errors encountered while executing the query."
+        items:
+          $ref: "#/definitions/QueryError"
+      query_id:
+        type: "string"
+        description: "Unique ID for this query."
+      query_lambda_path:
+        type: "string"
+        description: "The full path of the executed query lambda. Includes version\
+          \ information."
+      results:
+        type: "array"
+        description: "Results from the query."
+        items:
+          type: "object"
+      results_total_doc_count:
+        type: "integer"
+        format: "int64"
+        description: "Number of results generated by the query."
+      stats:
+        $ref: "#/definitions/QueryResponseStats"
+        description: "Meta information about the query including execution latencies."
+      status:
+        type: "string"
+        example: "RUNNING"
+        description: "Status of query execution. Possible values: `QUEUED`, `RUNNING`,\
+          \ `COMPLETED`, `ERROR`."
+        enum:
+        - "QUEUED"
+        - "RUNNING"
+        - "COMPLETED"
+        - "ERROR"
+      warnings:
+        type: "array"
+        description: "Warnings generated by the query. Only populated if `generate_warnings`\
+          \ is specified in the query request."
+        items:
+          type: "string"
   QueryResponseStats:
     type: "object"
     properties:
@@ -8213,15 +9244,19 @@ definitions:
     type: "object"
     properties:
       data:
-        description: "Virtual instance that was resumed."
         $ref: "#/definitions/VirtualInstance"
+        description: "Virtual instance that was resumed."
   Role:
     type: "object"
     properties:
-      role_name:
+      created_at:
         type: "string"
-        example: "read_write"
-        description: "Unique identifier for the role."
+        example: "2001-08-28T00:23:41Z"
+        description: "ISO-8601 date of when the role was created."
+      created_by:
+        type: "string"
+        example: "hello@rockset.com"
+        description: "Email of the user who created the role."
       description:
         type: "string"
         example: "Role with read and write privileges to all collections."
@@ -8230,19 +9265,15 @@ definitions:
         type: "string"
         example: "hello@rockset.com"
         description: "Email of the user who currently owns the role."
-      created_by:
-        type: "string"
-        example: "hello@rockset.com"
-        description: "Email of the user who created the role."
       privileges:
         type: "array"
         description: "List of privileges associated with the role."
         items:
           $ref: "#/definitions/Privilege"
-      created_at:
+      role_name:
         type: "string"
-        example: "2001-08-28T00:23:41Z"
-        description: "ISO-8601 date of when the role was created."
+        example: "read_write"
+        description: "Unique identifier for the role."
   RoleResponse:
     type: "object"
     properties:
@@ -8252,23 +9283,23 @@ definitions:
     type: "object"
     properties:
       aws_access_key:
-        description: "Credentials for an AWS access key integration."
         $ref: "#/definitions/AwsAccessKey"
+        description: "Credentials for an AWS access key integration."
       aws_role:
-        description: "Details of an AWS cross-account role integration."
         $ref: "#/definitions/AwsRole"
+        description: "Details of an AWS cross-account role integration."
   SchemaRegistryConfig:
     type: "object"
     properties:
-      url:
-        type: "string"
-        description: "Schema registry URL."
       key:
         type: "string"
         description: "The secure API key for schema registry."
       secret:
         type: "string"
         description: "The secure API password registry."
+      url:
+        type: "string"
+        description: "Schema registry URL."
   SnowflakeIntegration:
     type: "object"
     required:
@@ -8278,37 +9309,59 @@ definitions:
     - "snowflake_url"
     - "username"
     properties:
-      snowflake_url:
-        type: "string"
-        example: "acme-marketing-test-account.snowflakecomputing.com"
-        description: "Snowflake browser url."
-      username:
-        type: "string"
-        description: "Snowflake database username."
-      password:
-        type: "string"
-        description: "Snowflake database password."
-      user_role:
-        type: "string"
-        description: "Snowflake user role. If unspecified, will use the default user\
-          \ role."
-      aws_role:
-        description: "Details of an AWS cross-account role integration."
-        $ref: "#/definitions/AwsRole"
       aws_access_key:
-        description: "Credentials for an AWS access key integration."
         $ref: "#/definitions/AwsAccessKey"
+        description: "Credentials for an AWS access key integration."
+      aws_role:
+        $ref: "#/definitions/AwsRole"
+        description: "Details of an AWS cross-account role integration."
       default_warehouse:
         type: "string"
         description: "default snowflake data warehouse name for query execution. Warehouse\
           \ name can be overridden in the collection."
+      password:
+        type: "string"
+        description: "Snowflake database password."
       s3_export_path:
         type: "string"
         example: "s3://bucket/prefix"
         description: "S3 path used for running 'COPY INTO' command on snowflake table."
+      snowflake_url:
+        type: "string"
+        example: "acme-marketing-test-account.snowflakecomputing.com"
+        description: "Snowflake browser url."
+      user_role:
+        type: "string"
+        description: "Snowflake user role. If unspecified, will use the default user\
+          \ role."
+      username:
+        type: "string"
+        description: "Snowflake database username."
   Source:
     type: "object"
     properties:
+      azure_blob_storage:
+        $ref: "#/definitions/SourceAzureBlobStorage"
+        description: "Configuration for ingestion from Azure Blob Storage."
+      azure_event_hubs:
+        $ref: "#/definitions/SourceAzureEventHubs"
+        description: "Configuration for ingestion from Azure Event Hubs."
+      azure_service_bus:
+        $ref: "#/definitions/SourceAzureServiceBus"
+        description: "Configuration for ingestion from Azure Service Bus."
+      dynamodb:
+        $ref: "#/definitions/SourceDynamoDb"
+        description: "Configuration for ingestion from  a dynamodb table."
+      file_upload:
+        $ref: "#/definitions/SourceFileUpload"
+        description: "File upload details."
+        readOnly: true
+      format_params:
+        $ref: "#/definitions/FormatParams"
+        description: "Format parameters for data from this source."
+      gcs:
+        $ref: "#/definitions/SourceGcs"
+        description: "Configuration for ingestion from GCS."
       id:
         type: "string"
         example: "a1df483c-734e-485b-8005-f46386ef42f6"
@@ -8317,65 +9370,41 @@ definitions:
         type: "string"
         example: "aws-integration"
         description: "Name of integration to use."
-      s3:
-        description: "Configuration for ingestion from S3."
-        $ref: "#/definitions/SourceS3"
-      kinesis:
-        description: "Configuration for ingestion from kinesis stream."
-        $ref: "#/definitions/SourceKinesis"
-      gcs:
-        description: "Configuration for ingestion from GCS."
-        $ref: "#/definitions/SourceGcs"
-      azure_blob_storage:
-        description: "Configuration for ingestion from Azure Blob Storage."
-        $ref: "#/definitions/SourceAzureBlobStorage"
-      azure_service_bus:
-        description: "Configuration for ingestion from Azure Service Bus."
-        $ref: "#/definitions/SourceAzureServiceBus"
-      azure_event_hubs:
-        description: "Configuration for ingestion from Azure Event Hubs."
-        $ref: "#/definitions/SourceAzureEventHubs"
-      dynamodb:
-        description: "Configuration for ingestion from  a dynamodb table."
-        $ref: "#/definitions/SourceDynamoDb"
-      file_upload:
-        description: "File upload details."
-        $ref: "#/definitions/SourceFileUpload"
       kafka:
-        description: "Kafka collection identifier."
         $ref: "#/definitions/SourceKafka"
+        description: "Kafka collection identifier."
+      kinesis:
+        $ref: "#/definitions/SourceKinesis"
+        description: "Configuration for ingestion from kinesis stream."
       mongodb:
-        description: "MongoDB collection details."
         $ref: "#/definitions/SourceMongoDb"
+        description: "MongoDB collection details."
+      s3:
+        $ref: "#/definitions/SourceS3"
+        description: "Configuration for ingestion from S3."
       snowflake:
-        description: "Configuration for ingestion from Snowflake."
         $ref: "#/definitions/SourceSnowflake"
+        description: "Configuration for ingestion from Snowflake."
       status:
+        $ref: "#/definitions/Status"
         description: "The ingest status of this source."
         readOnly: true
-        $ref: "#/definitions/Status"
-      format_params:
-        description: "Format parameters for data from this source."
-        $ref: "#/definitions/FormatParams"
+      suspended_at:
+        type: "string"
+        example: "2019-01-15T21:48:23Z"
+        description: "ISO-8601 date when source was suspended, if suspended"
+      system:
+        $ref: "#/definitions/SourceSystem"
     description: "Details about the data source for the given collection. Only one\
       \ of the following fields are allowed to be defined. Only collections can act\
       \ as data sources for views. "
   SourceAzureBlobStorage:
     type: "object"
     properties:
-      container:
-        type: "string"
-        example: "server-logs"
-        description: "Name of Azure blob Storage container you want to ingest from."
-      prefix:
-        type: "string"
-        example: "prefix/to/blobs"
-        description: "Prefix that selects blobs to ingest."
-      pattern:
-        type: "string"
-        example: "prefix/to/**/keys/*.format"
-        description: "Glob-style pattern that selects keys to ingest. Only either\
-          \ prefix or pattern can be specified."
+      blob_bytes_total:
+        type: "integer"
+        format: "int64"
+        readOnly: true
       blob_count_downloaded:
         type: "integer"
         format: "int64"
@@ -8384,10 +9413,19 @@ definitions:
         type: "integer"
         format: "int64"
         readOnly: true
-      blob_bytes_total:
-        type: "integer"
-        format: "int64"
-        readOnly: true
+      container:
+        type: "string"
+        example: "server-logs"
+        description: "Name of Azure blob Storage container you want to ingest from."
+      pattern:
+        type: "string"
+        example: "prefix/to/**/keys/*.format"
+        description: "Glob-style pattern that selects keys to ingest. Only either\
+          \ prefix or pattern can be specified."
+      prefix:
+        type: "string"
+        example: "prefix/to/blobs"
+        description: "Prefix that selects blobs to ingest."
   SourceAzureEventHubs:
     type: "object"
     properties:
@@ -8403,24 +9441,24 @@ definitions:
         - "LATEST"
         - "EARLIEST"
       status:
+        $ref: "#/definitions/StatusAzureEventHubs"
         description: "Source status."
         readOnly: true
-        $ref: "#/definitions/StatusAzureEventHubs"
   SourceAzureServiceBus:
     type: "object"
     properties:
-      topic:
-        type: "string"
-        example: "rockset-topic"
-        description: "Name of the topic which rockset should ingest from."
+      status:
+        $ref: "#/definitions/StatusAzureServiceBus"
+        description: "Azure Service bus source status."
+        readOnly: true
       subscription:
         type: "string"
         example: "rockset-subscription"
         description: "The subscription to read from the topic."
-      status:
-        description: "Azure Service bus source status."
-        readOnly: true
-        $ref: "#/definitions/StatusAzureServiceBus"
+      topic:
+        type: "string"
+        example: "rockset-topic"
+        description: "Name of the topic which rockset should ingest from."
   SourceDynamoDb:
     type: "object"
     required:
@@ -8430,23 +9468,23 @@ definitions:
         type: "string"
         example: "us-east-2"
         description: "AWS region name of DynamoDB table, by default us-west-2 is used."
-      table_name:
-        type: "string"
-        example: "dynamodb_table_name"
-        description: "Name of DynamoDB table containing data."
       current_status:
+        $ref: "#/definitions/StatusDynamoDbV2"
         description: "DynamoDB source status v2."
         readOnly: true
-        $ref: "#/definitions/StatusDynamoDbV2"
       rcu:
         type: "integer"
         format: "int64"
         example: 1000
         description: "Max RCU usage for scan."
       status:
+        $ref: "#/definitions/StatusDynamoDb"
         description: "DynamoDB source status."
         readOnly: true
-        $ref: "#/definitions/StatusDynamoDb"
+      table_name:
+        type: "string"
+        example: "dynamodb_table_name"
+        description: "Name of DynamoDB table containing data."
       use_scan_api:
         type: "boolean"
         description: "Whether to use DynamoDB Scan API for the initial scan."
@@ -8477,15 +9515,14 @@ definitions:
         type: "string"
         example: "server-logs"
         description: "Name of GCS bucket you want to ingest from."
-      prefix:
-        type: "string"
-        example: "prefix/to/keys"
-        description: "Prefix that selects keys to ingest."
-      pattern:
-        type: "string"
-        example: "prefix/to/**/keys/*.format"
-        description: "Glob-style pattern that selects keys to ingest. Only either\
-          \ prefix or pattern can be specified."
+      object_bytes_downloaded:
+        type: "integer"
+        format: "int64"
+        readOnly: true
+      object_bytes_total:
+        type: "integer"
+        format: "int64"
+        readOnly: true
       object_count_downloaded:
         type: "integer"
         format: "int64"
@@ -8494,32 +9531,26 @@ definitions:
         type: "integer"
         format: "int64"
         readOnly: true
-      object_bytes_total:
-        type: "integer"
-        format: "int64"
-        readOnly: true
-      object_bytes_downloaded:
-        type: "integer"
-        format: "int64"
-        readOnly: true
+      pattern:
+        type: "string"
+        example: "prefix/to/**/keys/*.format"
+        description: "Glob-style pattern that selects keys to ingest. Only either\
+          \ prefix or pattern can be specified."
+      prefix:
+        type: "string"
+        example: "prefix/to/keys"
+        description: "Prefix that selects keys to ingest."
   SourceKafka:
     type: "object"
     properties:
-      kafka_topic_name:
-        type: "string"
-        example: "example-topic"
-        description: "The Kafka topic to be tailed."
-      status:
-        description: "Kafka source status."
-        readOnly: true
-        $ref: "#/definitions/StatusKafka"
       consumer_group_id:
         type: "string"
         example: "org-collection"
         description: "The Kafka consumer group Id being used."
-      use_v3:
-        type: "boolean"
-        description: "Whether to use v3 integration."
+      kafka_topic_name:
+        type: "string"
+        example: "example-topic"
+        description: "The Kafka topic to be tailed."
       offset_reset_policy:
         type: "string"
         example: "EARLIEST"
@@ -8527,6 +9558,13 @@ definitions:
         enum:
         - "LATEST"
         - "EARLIEST"
+      status:
+        $ref: "#/definitions/StatusKafka"
+        description: "Kafka source status."
+        readOnly: true
+      use_v3:
+        type: "boolean"
+        description: "Whether to use v3 integration."
   SourceKinesis:
     type: "object"
     required:
@@ -8536,10 +9574,6 @@ definitions:
         type: "string"
         example: "us-east-2"
         description: "AWS region name of Kinesis stream, by default us-west-2 is used."
-      stream_name:
-        type: "string"
-        example: "click_stream"
-        description: "Name of kinesis stream."
       dms_primary_key:
         type: "array"
         description: "Set of fields that correspond to a DMS primary key."
@@ -8553,54 +9587,51 @@ definitions:
         enum:
         - "LATEST"
         - "EARLIEST"
+      stream_name:
+        type: "string"
+        example: "click_stream"
+        description: "Name of kinesis stream."
   SourceMongoDb:
     type: "object"
     required:
     - "collection_name"
     - "database_name"
     properties:
-      database_name:
-        type: "string"
-        example: "my_database"
-        description: "MongoDB database name containing this collection."
       collection_name:
         type: "string"
         example: "my_collection"
         description: "MongoDB collection name."
+      database_name:
+        type: "string"
+        example: "my_database"
+        description: "MongoDB database name containing this collection."
+      retrieve_full_document:
+        type: "boolean"
+        description: "Whether to get the full document from the MongoDB change stream\
+          \ to enable multi-field expression transformations. Selecting this option\
+          \ will increase load on your upstream MongoDB database."
       status:
+        $ref: "#/definitions/StatusMongoDb"
         description: "MongoDB source status."
         readOnly: true
-        $ref: "#/definitions/StatusMongoDb"
   SourceS3:
     type: "object"
     required:
     - "bucket"
     - "prefixes"
     properties:
-      prefix:
-        type: "string"
-        example: "prefix/to/keys"
-        description: "Prefix that selects keys to ingest."
-      pattern:
-        type: "string"
-        example: "prefix/to/**/keys/*.format"
-        description: "Glob-style pattern that selects keys to ingest. Only either\
-          \ prefix or pattern can be specified."
-      region:
-        type: "string"
-        example: "us-west-2"
-        description: "AWS region containing source bucket."
       bucket:
         type: "string"
         example: "s3://customer-account-info"
         description: "Address of S3 bucket containing data."
-      prefixes:
-        type: "array"
-        example: "[\"/transactions\", \"/stores\"]"
-        description: "List of prefixes to paths from which data should be ingested."
+      object_bytes_downloaded:
+        type: "integer"
+        format: "int64"
         readOnly: true
-        items:
-          type: "string"
+      object_bytes_total:
+        type: "integer"
+        format: "int64"
+        readOnly: true
       object_count_downloaded:
         type: "integer"
         format: "int64"
@@ -8609,14 +9640,37 @@ definitions:
         type: "integer"
         format: "int64"
         readOnly: true
-      object_bytes_total:
-        type: "integer"
-        format: "int64"
+      pattern:
+        type: "string"
+        example: "prefix/to/**/keys/*.format"
+        description: "Glob-style pattern that selects keys to ingest. Only either\
+          \ prefix or pattern can be specified."
+      prefix:
+        type: "string"
+        example: "prefix/to/keys"
+        description: "Prefix that selects keys to ingest."
+      prefixes:
+        type: "array"
+        example: "[\"/transactions\", \"/stores\"]"
+        description: "List of prefixes to paths from which data should be ingested."
         readOnly: true
-      object_bytes_downloaded:
-        type: "integer"
-        format: "int64"
-        readOnly: true
+        items:
+          type: "string"
+      region:
+        type: "string"
+        example: "us-west-2"
+        description: "AWS region containing source bucket."
+  SourceSnapshot:
+    type: "object"
+    properties:
+      source_collection_path:
+        type: "string"
+        example: "commons.foo"
+        description: "Path of source collection to restore the snapshot from."
+      source_snapshot_id:
+        type: "string"
+        description: "Snapshot id of the snapshot that the new collection will be\
+          \ created from."
   SourceSnowflake:
     type: "object"
     required:
@@ -8632,6 +9686,10 @@ definitions:
         type: "string"
         example: "PUBLIC"
         description: "Name of the snowflake database schema."
+      status:
+        $ref: "#/definitions/StatusSnowflake"
+        description: "Snowflake source status."
+        readOnly: true
       table_name:
         type: "string"
         example: "COMPANIES"
@@ -8640,10 +9698,15 @@ definitions:
         type: "string"
         example: "COMPUTE_XL"
         description: "Name of the data warehouse to be used."
-      status:
-        description: "Snowflake source status."
-        readOnly: true
-        $ref: "#/definitions/StatusSnowflake"
+  SourceSystem:
+    type: "object"
+    properties:
+      type:
+        type: "string"
+        example: "QUERY_LOGS"
+        description: "The type of this system source."
+        enum:
+        - "QUERY_LOGS"
   SqlExpression:
     type: "object"
     properties:
@@ -8660,26 +9723,43 @@ definitions:
         example: 128
         description: "Total execution time (including time queued) of the query, in\
           \ milliseconds."
-      throttled_time_ms:
-        type: "integer"
-        format: "int64"
-        example: 16
-        description: "Time query spent queued, in milliseconds."
-      result_set_document_count:
-        type: "integer"
-        format: "int64"
-        example: 1235
-        description: "Number of documents returned by the query. Only populated if\
-          \ `status` is `COMPLETE`."
       result_set_bytes_size:
         type: "integer"
         format: "int64"
         example: 1235
         description: "Number of bytes in the query result set. Only populated if `status`\
           \ is `COMPLETE`. Not populated for INSERT INTO queries."
+      result_set_document_count:
+        type: "integer"
+        format: "int64"
+        example: 1235
+        description: "Number of documents returned by the query. Only populated if\
+          \ `status` is `COMPLETE`."
+      throttled_time_ms:
+        type: "integer"
+        format: "int64"
+        example: 16
+        description: "Time query spent queued, in milliseconds."
   Status:
     type: "object"
     properties:
+      detected_size_bytes:
+        type: "integer"
+        format: "int64"
+        description: "Size in bytes detected for the source at collection initialization.\
+          \ This size can be 0 or null for event stream sources."
+      last_processed_at:
+        type: "string"
+        example: "2019-01-15T21:48:23Z"
+        description: "ISO-8601 date when source was last processed."
+      last_processed_item:
+        type: "string"
+        example: "/path/to/some/object"
+        description: "Last source item processed by ingester."
+      message:
+        type: "string"
+        example: "error 403 forbidden"
+        description: "State message."
       state:
         type: "string"
         example: "INITIALIZING"
@@ -8690,39 +9770,15 @@ definitions:
         - "PROCESSING"
         - "COMPLETED"
         - "ERROR"
-      message:
-        type: "string"
-        example: "error 403 forbidden"
-        description: "State message."
-      last_processed_at:
-        type: "string"
-        example: "2019-01-15T21:48:23Z"
-        description: "ISO-8601 date when source was last processed."
-      last_processed_item:
-        type: "string"
-        example: "/path/to/some/object"
-        description: "Last source item processed by ingester."
+        - "SUSPENDED"
       total_processed_items:
         type: "integer"
         format: "int64"
         example: 32849023
         description: "Total items processed of source."
-      detected_size_bytes:
-        type: "integer"
-        format: "int64"
-        description: "Size in bytes detected for the source at collection initialization.\
-          \ This size can be 0 or null for event stream sources."
   StatusAzureEventHubs:
     type: "object"
     properties:
-      state:
-        type: "string"
-        example: "ACTIVE"
-        description: "State of the source."
-        enum:
-        - "NO_DOCS_YET"
-        - "ACTIVE"
-        - "DORMANT"
       last_consumed_time:
         type: "string"
         example: "2001-08-28T00:23:41Z"
@@ -8737,9 +9793,22 @@ definitions:
         description: "Status info per partition."
         items:
           $ref: "#/definitions/StatusAzureEventHubsPartition"
+      state:
+        type: "string"
+        example: "ACTIVE"
+        description: "State of the source."
+        enum:
+        - "NO_DOCS_YET"
+        - "ACTIVE"
+        - "DORMANT"
   StatusAzureEventHubsPartition:
     type: "object"
     properties:
+      offset_lag:
+        type: "integer"
+        format: "int64"
+        example: 10
+        description: "Per partition lag for offset."
       partition_number:
         type: "integer"
         format: "int32"
@@ -8750,11 +9819,6 @@ definitions:
         format: "int64"
         example: 100
         description: "Latest offset of partition."
-      offset_lag:
-        type: "integer"
-        format: "int64"
-        example: 10
-        description: "Per partition lag for offset."
   StatusAzureServiceBus:
     type: "object"
     properties:
@@ -8775,23 +9839,19 @@ definitions:
   StatusAzureServiceBusSession:
     type: "object"
     properties:
-      sequence_number:
-        type: "integer"
-        format: "int64"
-        example: 323862
-        description: "The last processed sequence number within this session."
       last_processed:
         type: "string"
         example: "2022-08-23T00:13:41Z"
         description: "Most recent ISO-8601 date when a message from this session was\
           \ processed."
+      sequence_number:
+        type: "integer"
+        format: "int64"
+        example: 323862
+        description: "The last processed sequence number within this session."
   StatusDynamoDb:
     type: "object"
     properties:
-      scan_start_time:
-        type: "string"
-        example: "2001-08-28T00:23:41Z"
-        description: "DynamoDB scan start time."
       scan_end_time:
         type: "string"
         example: "2001-08-28T00:23:41Z"
@@ -8801,6 +9861,10 @@ definitions:
         format: "int64"
         example: 1000
         description: "Number of records inserted using scan."
+      scan_start_time:
+        type: "string"
+        example: "2001-08-28T00:23:41Z"
+        description: "DynamoDB scan start time."
       scan_total_records:
         type: "integer"
         format: "int64"
@@ -8842,14 +9906,11 @@ definitions:
   StatusKafka:
     type: "object"
     properties:
-      state:
-        type: "string"
-        example: "ACTIVE"
-        description: "State of the Kafka source."
-        enum:
-        - "NO_DOCS_YET"
-        - "ACTIVE"
-        - "DORMANT"
+      kafka_partitions:
+        type: "array"
+        description: "Status info per partition."
+        items:
+          $ref: "#/definitions/StatusKafkaPartition"
       last_consumed_time:
         type: "string"
         example: "2001-08-28T00:23:41Z"
@@ -8859,14 +9920,22 @@ definitions:
         format: "int64"
         example: 1337
         description: "Number of documents consumed by this Kafka topic."
-      kafka_partitions:
-        type: "array"
-        description: "Status info per partition."
-        items:
-          $ref: "#/definitions/StatusKafkaPartition"
+      state:
+        type: "string"
+        example: "ACTIVE"
+        description: "State of the Kafka source."
+        enum:
+        - "NO_DOCS_YET"
+        - "ACTIVE"
+        - "DORMANT"
   StatusKafkaPartition:
     type: "object"
     properties:
+      offset_lag:
+        type: "integer"
+        format: "int64"
+        example: 10
+        description: "Per partition lag for offset."
       partition_number:
         type: "integer"
         format: "int32"
@@ -8877,18 +9946,9 @@ definitions:
         format: "int64"
         example: 100
         description: "Latest offset of partition."
-      offset_lag:
-        type: "integer"
-        format: "int64"
-        example: 10
-        description: "Per partition lag for offset."
   StatusMongoDb:
     type: "object"
     properties:
-      scan_start_time:
-        type: "string"
-        example: "2001-08-28T00:23:41Z"
-        description: "MongoDB scan start time."
       scan_end_time:
         type: "string"
         example: "2001-08-28T00:23:41Z"
@@ -8898,6 +9958,10 @@ definitions:
         format: "int64"
         example: 1000
         description: "Number of records inserted using scan."
+      scan_start_time:
+        type: "string"
+        example: "2001-08-28T00:23:41Z"
+        description: "MongoDB scan start time."
       scan_total_records:
         type: "integer"
         format: "int64"
@@ -8911,6 +9975,10 @@ definitions:
         - "INITIALIZING"
         - "SCANNING_TABLE"
         - "PROCESSING_STREAM"
+      stream_last_delete_processed_at:
+        type: "string"
+        example: "2019-01-15T21:48:23Z"
+        description: "ISO-8601 date when delete from source was last processed."
       stream_last_insert_processed_at:
         type: "string"
         example: "2019-01-15T21:48:23Z"
@@ -8919,10 +9987,11 @@ definitions:
         type: "string"
         example: "2019-01-15T21:48:23Z"
         description: "ISO-8601 date when update from source was last processed."
-      stream_last_delete_processed_at:
-        type: "string"
-        example: "2019-01-15T21:48:23Z"
-        description: "ISO-8601 date when delete from source was last processed."
+      stream_records_deleted:
+        type: "integer"
+        format: "int64"
+        example: 100
+        description: "Number of new records deleted using stream."
       stream_records_inserted:
         type: "integer"
         format: "int64"
@@ -8933,11 +10002,6 @@ definitions:
         format: "int64"
         example: 1000
         description: "Number of new records updated using stream."
-      stream_records_deleted:
-        type: "integer"
-        format: "int64"
-        example: 100
-        description: "Number of new records deleted using stream."
   StatusSnowflake:
     type: "object"
     properties:
@@ -8954,8 +10018,8 @@ definitions:
     type: "object"
     properties:
       data:
-        description: "Virtual instance that was suspended."
         $ref: "#/definitions/VirtualInstance"
+        description: "Virtual instance that was suspended."
   UnsubscribePreference:
     type: "object"
     required:
@@ -8971,16 +10035,16 @@ definitions:
     required:
     - "collections"
     properties:
-      description:
-        type: "string"
-        example: "version alias"
-        description: "Optional description."
       collections:
         type: "array"
         example: "[\"commons.foo\", \"prod.demo\"]"
         description: "List of fully qualified collection names referenced by alias."
         items:
           type: "string"
+      description:
+        type: "string"
+        example: "version alias"
+        description: "Optional description."
   UpdateApiKeyRequest:
     type: "object"
     properties:
@@ -8995,8 +10059,19 @@ definitions:
     type: "object"
     properties:
       data:
-        description: "The API key that was updated."
         $ref: "#/definitions/ApiKey"
+        description: "The API key that was updated."
+  UpdateCollectionRequest:
+    type: "object"
+    properties:
+      description:
+        type: "string"
+        example: "transactions from stores worldwide"
+        description: "Updated text describing the collection."
+      field_mapping_query:
+        $ref: "#/definitions/FieldMappingQuery"
+        description: "Updated ingest transformation query. Note that updating the\
+          \ transformation will lead to a brief interruption in ingestion."
   UpdateQueryLambdaRequest:
     type: "object"
     properties:
@@ -9004,11 +10079,11 @@ definitions:
         type: "string"
         example: "production version foo"
         description: "Optional description."
-      sql:
-        description: "Query Lambda SQL query."
-        $ref: "#/definitions/QueryLambdaSql"
       is_public:
         type: "boolean"
+      sql:
+        $ref: "#/definitions/QueryLambdaSql"
+        description: "Query Lambda SQL query."
   UpdateRoleRequest:
     type: "object"
     properties:
@@ -9071,11 +10146,44 @@ definitions:
     type: "object"
     properties:
       data:
-        description: "View that was updated."
         $ref: "#/definitions/View"
+        description: "View that was updated."
   UpdateVirtualInstanceRequest:
     type: "object"
     properties:
+      auto_scaling_policy:
+        example: "true"
+        $ref: "#/definitions/AutoScalingPolicy"
+        description: "Options for configuring auto scaling policy"
+      auto_suspend_enabled:
+        type: "boolean"
+        example: true
+        description: "Whether auto-suspend should be enabled for this Virtual Instance."
+      auto_suspend_seconds:
+        type: "integer"
+        format: "int32"
+        example: 3600
+        description: "Number of seconds without queries after which the VI is suspended"
+      description:
+        type: "string"
+        example: "VI for prod traffic"
+        description: "New virtual instance description."
+      enable_remount_on_resume:
+        type: "boolean"
+        example: true
+        description: "When a Virtual Instance is resumed, it will remount all collections\
+          \ that were mounted when the Virtual Instance was suspended."
+      mount_refresh_interval_seconds:
+        type: "integer"
+        format: "int32"
+        example: 3600
+        description: "Number of seconds between data refreshes for mounts on this\
+          \ Virtual Instance. A value of 0 means continuous refresh and a value of\
+          \ null means never refresh."
+      name:
+        type: "string"
+        example: "prod_vi"
+        description: "New virtual instance name."
       new_size:
         type: "string"
         example: "LARGE"
@@ -9093,37 +10201,12 @@ definitions:
         - "XLARGE4"
         - "XLARGE8"
         - "XLARGE16"
-      monitoring_enabled:
-        type: "boolean"
-      name:
-        type: "string"
-        example: "prod_vi"
-        description: "New virtual instance name."
-      description:
-        type: "string"
-        example: "VI for prod traffic"
-        description: "New virtual instance description."
-      auto_suspend_enabled:
-        type: "boolean"
-        example: true
-        description: "Whether auto-suspend should be enabled for this Virtual Instance."
-      auto_suspend_seconds:
-        type: "integer"
-        format: "int32"
-        example: 3600
-        description: "Number of seconds without queries after which the VI is suspended"
-      mount_refresh_interval_seconds:
-        type: "integer"
-        format: "int32"
-        example: 3600
-        description: "Number of seconds between data refreshes for mounts on this\
-          \ Virtual Instance"
   UpdateVirtualInstanceResponse:
     type: "object"
     properties:
       data:
-        description: "Virtual instance that was switched."
         $ref: "#/definitions/VirtualInstance"
+        description: "Virtual instance that was switched."
   User:
     type: "object"
     required:
@@ -9176,32 +10259,22 @@ definitions:
   View:
     type: "object"
     properties:
-      path:
+      created_at:
         type: "string"
-      name:
+        example: "2001-08-28T00:23:41Z"
+        description: "ISO-8601 date."
+      created_by_apikey_name:
         type: "string"
-        example: "demo"
-        description: "Name of the view."
-      description:
-        type: "string"
-        example: "view referencing collection in workspace"
-        description: "View description."
-      workspace:
-        type: "string"
-        example: "commons"
-        description: "Name of the workspace."
+        description: "Name of the API key that was used to create this object if one\
+          \ was used."
       creator_email:
         type: "string"
         example: "xyz@rockset.com"
         description: "Email of the creator."
-      owner_email:
+      description:
         type: "string"
-        example: "abc@rockset.com"
-        description: "Email of the owner, note: deprecated and will always be null."
-      query_sql:
-        type: "string"
-        example: "SELECT * FROM commons.foo"
-        description: "SQL query of the view."
+        example: "view referencing collection in workspace"
+        description: "View description."
       entities:
         type: "array"
         example: "[\"common.foo_view\", \"prod.demo_alias\", \"dev.user_collection\"\
@@ -9210,6 +10283,24 @@ definitions:
           \ alias or collection."
         items:
           type: "string"
+      modified_at:
+        type: "string"
+        example: "2001-08-28T00:23:42Z"
+        description: "ISO-8601 date."
+      name:
+        type: "string"
+        example: "demo"
+        description: "Name of the view."
+      owner_email:
+        type: "string"
+        example: "abc@rockset.com"
+        description: "Email of the owner, note: deprecated and will always be null."
+      path:
+        type: "string"
+      query_sql:
+        type: "string"
+        example: "SELECT * FROM commons.foo"
+        description: "SQL query of the view."
       state:
         type: "string"
         example: "CREATED"
@@ -9218,52 +10309,31 @@ definitions:
         - "CREATED"
         - "SYNCING"
         - "DELETED"
-      created_at:
+      workspace:
         type: "string"
-        example: "2001-08-28T00:23:41Z"
-        description: "ISO-8601 date."
-      modified_at:
-        type: "string"
-        example: "2001-08-28T00:23:42Z"
-        description: "ISO-8601 date."
+        example: "commons"
+        description: "Name of the workspace."
   VirtualInstance:
     type: "object"
     required:
     - "name"
     properties:
-      name:
-        type: "string"
-        example: "prod_vi"
-        description: "Virtual instance name."
-      description:
-        type: "string"
-        example: "VI for prod traffic"
-        description: "Virtual instance description."
-      created_by:
-        type: "string"
-        example: "hello@rockset.com"
-        description: "Creator of requested virtual instance."
+      auto_scaling_policy:
+        $ref: "#/definitions/AutoScalingPolicy"
+        description: "Options for configuring auto scaling policy"
+      auto_suspend_seconds:
+        type: "integer"
+        format: "int32"
+        example: 3600
+        description: "Number of seconds without queries after which the VI is suspended"
       created_at:
         type: "string"
         example: "2001-08-28T00:23:41Z"
         description: "ISO-8601 date of when virtual instance was created."
-      resumed_at:
+      created_by:
         type: "string"
-        example: "2001-08-28T00:23:41Z"
-        description: "ISO-8601 date of when virtual instance was created."
-      state:
-        type: "string"
-        example: "ACTIVE"
-        description: "Virtual instance state."
-        enum:
-        - "INITIALIZING"
-        - "PROVISIONING_RESOURCES"
-        - "REBALANCING_COLLECTIONS"
-        - "ACTIVE"
-        - "SUSPENDING"
-        - "SUSPENDED"
-        - "RESUMING"
-        - "DELETED"
+        example: "hello@rockset.com"
+        description: "Creator of requested virtual instance."
       current_size:
         type: "string"
         example: "MEDIUM"
@@ -9282,6 +10352,15 @@ definitions:
         - "XLARGE4"
         - "XLARGE8"
         - "XLARGE16"
+      default_pod_count:
+        type: "integer"
+        format: "int32"
+      default_vi:
+        type: "boolean"
+      description:
+        type: "string"
+        example: "VI for prod traffic"
+        description: "Virtual instance description."
       desired_size:
         type: "string"
         example: "MEDIUM"
@@ -9300,38 +10379,54 @@ definitions:
         - "XLARGE4"
         - "XLARGE8"
         - "XLARGE16"
-      monitoring_enabled:
+      enable_remount_on_resume:
         type: "boolean"
-      default_vi:
-        type: "boolean"
-      default_pod_count:
-        type: "integer"
-        format: "int32"
-      scaled_pod_count:
-        type: "integer"
-        format: "int32"
+        example: true
+        description: "When a Virtual Instance is resumed, it will remount all collections\
+          \ that were mounted when the Virtual Instance was suspended."
       id:
         type: "string"
         example: "123e4567-e89b-12d3-a456-556642440000"
         description: "Unique identifier for virtual instance."
-      rrn:
-        type: "string"
-        example: "rrn:vi:use1a1:123e4567-e89b-12d3-a456-556642440000"
-        description: "Virtual Instance RRN."
-      auto_suspend_seconds:
-        type: "integer"
-        format: "int32"
-        example: 3600
-        description: "Number of seconds without queries after which the VI is suspended"
+      monitoring_enabled:
+        type: "boolean"
       mount_refresh_interval_seconds:
         type: "integer"
         format: "int32"
         example: 3600
         description: "Number of seconds between data refreshes for mounts on this\
           \ Virtual Instance"
+      name:
+        type: "string"
+        example: "prod_vi"
+        description: "Virtual instance name."
+      resumed_at:
+        type: "string"
+        example: "2001-08-28T00:23:41Z"
+        description: "ISO-8601 date of when virtual instance was created."
+      rrn:
+        type: "string"
+        example: "rrn:vi:use1a1:123e4567-e89b-12d3-a456-556642440000"
+        description: "Virtual Instance RRN."
+      scaled_pod_count:
+        type: "integer"
+        format: "int32"
+      state:
+        type: "string"
+        example: "ACTIVE"
+        description: "Virtual instance state."
+        enum:
+        - "INITIALIZING"
+        - "PROVISIONING_RESOURCES"
+        - "REBALANCING_COLLECTIONS"
+        - "ACTIVE"
+        - "SUSPENDING"
+        - "SUSPENDED"
+        - "RESUMING"
+        - "DELETED"
       stats:
-        description: "Stats about this VirtualInstance"
         $ref: "#/definitions/VirtualInstanceStats"
+        description: "Stats about this VirtualInstance"
   VirtualInstanceStats:
     type: "object"
     properties:
@@ -9343,6 +10438,11 @@ definitions:
   Workspace:
     type: "object"
     properties:
+      collection_count:
+        type: "integer"
+        format: "int64"
+        example: 3
+        description: "Number of collections that are immediate children of workspace."
       created_at:
         type: "string"
         example: "2001-08-28T00:23:41Z"
@@ -9351,41 +10451,36 @@ definitions:
         type: "string"
         example: "hello@rockset.com"
         description: "Email of user who created the workspace."
-      name:
-        type: "string"
-        example: "event_logs"
-        description: "Descriptive label and unique identifier."
       description:
         type: "string"
         example: "Datasets of system logs for the ops team."
         description: "Longer explanation for the workspace."
-      collection_count:
-        type: "integer"
-        format: "int64"
-        example: 3
-        description: "Number of collections that are immediate children of workspace."
+      name:
+        type: "string"
+        example: "event_logs"
+        description: "Descriptive label and unique identifier."
     description: "Workspaces are organizational containers for collections."
   XmlParams:
     type: "object"
     properties:
-      root_tag:
+      attribute_prefix:
         type: "string"
-        example: "root"
-        description: "Tag until which xml is ignored."
-      encoding:
-        type: "string"
-        example: "UTF-8"
-        description: "Encoding in which data source is encoded."
+        example: "_attr"
+        description: "Tag to differentiate between attributes and elements."
       doc_tag:
         type: "string"
         example: "row"
         description: "Tags with which documents are identified."
+      encoding:
+        type: "string"
+        example: "UTF-8"
+        description: "Encoding in which data source is encoded."
+      root_tag:
+        type: "string"
+        example: "root"
+        description: "Tag until which xml is ignored."
       value_tag:
         type: "string"
         example: "value"
         description: "tag used for the value when there are attributes in the element\
           \ having no child"
-      attribute_prefix:
-        type: "string"
-        example: "_attr"
-        description: "Tag to differentiate between attributes and elements."

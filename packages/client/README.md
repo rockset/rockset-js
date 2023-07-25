@@ -190,13 +190,9 @@ let page = await rockset.queries.query({
   sql: {
     // This query will return 100 documents.
     query: 'SELECT * FROM my_collection LIMIT 100',
-
-    // Pagination must be enabled explicitly on a per-query basis.
-    paginate: true,
-
-    // This tells Rockset how many documents to include in the initial response.
-    initial_paginate_response_doc_count: 20,
   },
+  // This tells Rockset how many documents to include in the initial response.
+  max_initial_results: 20,
 });
 
 const qid = page.query_id ?? '';
@@ -206,7 +202,7 @@ while (page.pagination?.next_cursor) {
   // Process the results.
   console.log(page.results);
 
-  page = await rockset.queries.getQueryPagination(
+  page = await rockset.queries.getQueryResults(
     qid,
     page.pagination?.next_cursor ?? '',
     // Read results in batches of 10 results. This can be an arbitrary number.
@@ -217,6 +213,51 @@ while (page.pagination?.next_cursor) {
 
 // Process the last page of results.
 console.log(page.results);
+```
+
+### Run an async query
+
+```ts
+let resp = await rockset.queries.query({
+  sql: {
+    query: 'SELECT * FROM my_collection LIMIT 100',
+  },
+  // This extends the query timeout to 30 minutes, results wil be available asynchronously
+  async: true
+});
+
+const qid = resp.query_id ?? '';
+
+let success = false;
+
+while (true) {
+  const getQueryResp = await rockset.queries.getQuery(qid);
+  const status = getQueryResp.data.status;
+  if (status === QueryInfo.StatusEnum.ERROR) {
+    console.log('Error', getQueryResp.data.query_errors);
+    break;
+  }
+  else if (status === QueryInfo.StatusEnum.CANCELLED) {
+    console.log('Cancelled');
+    break;
+  }
+  else if (status === QueryInfo.StatusEnum.COMPLETED) {
+    console.log('Completed');
+    let nextCursor = getQueryResponse.data.pagination?.next_cursor;
+    // `next_cursor` will be null when all queries are read.
+    while (nextCursor) {
+      const page = await rockset.queries.getQueryPagination(
+        qid,
+        nextCursor ?? '',
+        // Read results in batches of 10 results. This can be an arbitrary number.
+        10,
+        0
+      );
+      console.log(page.results);
+      nextCursor = page.pagination?.next_cursor;
+    }
+  }
+}
 ```
 
 ### Run queries using Query Lambdas

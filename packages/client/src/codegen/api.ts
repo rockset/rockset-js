@@ -111,41 +111,11 @@ export interface AddDocumentsResponse {
  */
 export interface Alias {
     /**
-     * Name of the alias.
-     * @type {string}
-     * @memberof Alias
-     */
-    name?: string;
-    /**
-     * Alias description.
-     * @type {string}
-     * @memberof Alias
-     */
-    description?: string;
-    /**
-     * Name of the workspace.
-     * @type {string}
-     * @memberof Alias
-     */
-    workspace?: string;
-    /**
-     * Email of the creator.
-     * @type {string}
-     * @memberof Alias
-     */
-    creator_email?: string;
-    /**
      * List of fully qualified collection names referenced by alias.
      * @type {Array<string>}
      * @memberof Alias
      */
     collections?: Array<string>;
-    /**
-     * State of the alias.
-     * @type {string}
-     * @memberof Alias
-     */
-    state?: Alias.StateEnum;
     /**
      * ISO-8601 date.
      * @type {string}
@@ -153,11 +123,47 @@ export interface Alias {
      */
     created_at?: string;
     /**
+     * Name of the API key that was used to create this object if one was used.
+     * @type {string}
+     * @memberof Alias
+     */
+    created_by_apikey_name?: string;
+    /**
+     * Email of the creator.
+     * @type {string}
+     * @memberof Alias
+     */
+    creator_email?: string;
+    /**
+     * Alias description.
+     * @type {string}
+     * @memberof Alias
+     */
+    description?: string;
+    /**
      * ISO-8601 date.
      * @type {string}
      * @memberof Alias
      */
     modified_at?: string;
+    /**
+     * Name of the alias.
+     * @type {string}
+     * @memberof Alias
+     */
+    name?: string;
+    /**
+     * State of the alias.
+     * @type {string}
+     * @memberof Alias
+     */
+    state?: Alias.StateEnum;
+    /**
+     * Name of the workspace.
+     * @type {string}
+     * @memberof Alias
+     */
+    workspace?: string;
 }
 
 /**
@@ -188,13 +194,25 @@ export interface ApiKey {
      */
     created_at?: string;
     /**
-     * Name of the API key.
+     * Email of API key owner.
      * @type {string}
      * @memberof ApiKey
      */
-    name: string;
+    created_by?: string;
     /**
-     * API key string of 64 alphanumeric characters.
+     * Name of the API key that was used to create this object if one was used.
+     * @type {string}
+     * @memberof ApiKey
+     */
+    created_by_apikey_name?: string;
+    /**
+     * The expiration date of this API key.
+     * @type {string}
+     * @memberof ApiKey
+     */
+    expiry_time?: string;
+    /**
+     * This field will only be populated with the full key when creating an API key. Otherwise, it will be an API key identifier of 6 characters.
      * @type {string}
      * @memberof ApiKey
      */
@@ -206,23 +224,17 @@ export interface ApiKey {
      */
     last_access_time?: string;
     /**
-     * The expiration date of this API key.
+     * Name of the API key.
      * @type {string}
      * @memberof ApiKey
      */
-    expiry_time?: string;
+    name: string;
     /**
      * Role specifying access control. If not specified, API key will have access to all of the associated user's roles.
      * @type {string}
      * @memberof ApiKey
      */
     role?: string;
-    /**
-     * Email of API key owner.
-     * @type {string}
-     * @memberof ApiKey
-     */
-    created_by?: string;
     /**
      * Current state of this key.
      * @type {string}
@@ -253,23 +265,92 @@ export namespace ApiKey {
  */
 export interface AsyncQueryOptions {
     /**
-     * The maximum amount of time that the client is willing to wait for the query to complete. If the query is not complete by this timeout, a response will be returned with a `query_id` that can be used to check the status of the query and retrieve results once the query has completed.
+     * If the query completes before the client timeout, the results are returned. Otherwise if the client timeout is exceeded, the query id will be returned, and the query will continue to run in the background for up to 30 minutes. (The 30 minute timeout can be configured lower with timeout_ms.) `async_options.client_timeout_ms` only applies when `async` is true. The default value of `client_timeout_ms` is 0, so async query requests will immediately return with a query id by default. 
      * @type {number}
      * @memberof AsyncQueryOptions
      */
     client_timeout_ms?: number;
     /**
-     * The maximum amount of time that the system will attempt to complete query execution before aborting the query and returning an error.
-     * @type {number}
-     * @memberof AsyncQueryOptions
-     */
-    timeout_ms?: number;
-    /**
-     * The maximum number of results you will receive as a client. If the query exceeds this limit, the remaining results can be requested using a returned pagination cursor. In addition, there is a maximum response size of 100MiB so fewer than `max_results` may be returned.
+     * [DEPRECATED] Use the query request `max_initial_results` instead. The maximum number of results you will receive as a client. If the query exceeds this limit, the remaining results can be requested using a returned pagination cursor. In addition, there is a maximum response size of 100MiB so fewer than `max_results` may be returned.
      * @type {number}
      * @memberof AsyncQueryOptions
      */
     max_initial_results?: number;
+    /**
+     * [DEPRECATED] Use the query request `timeout_ms` instead. The maximum amount of time that the system will attempt to complete query execution before aborting the query and returning an error. This must be set to a value that is greater than or equal to the client timeout, and the maximum value of this timeout is 30 minutes.
+     * @type {number}
+     * @memberof AsyncQueryOptions
+     */
+    timeout_ms?: number;
+}
+
+/**
+ * 
+ * @export
+ * @interface AutoScalingPolicy
+ */
+export interface AutoScalingPolicy {
+    /**
+     * Whether auto scaling policy is enabled.
+     * @type {boolean}
+     * @memberof AutoScalingPolicy
+     */
+    enabled?: boolean;
+    /**
+     * Maximum size Rockset can auto scale the Virtual Instance to. This value should be one of the dedicated sizes greater than or same as the min_size and lower than or same as the current size.
+     * @type {string}
+     * @memberof AutoScalingPolicy
+     */
+    max_size?: AutoScalingPolicy.MaxSizeEnum;
+    /**
+     * Minimum size Rockset can auto scale the Virtual Instance to. This value should be one of the dedicated sizes lower than or same as the max_size and greater than or same as the current size.
+     * @type {string}
+     * @memberof AutoScalingPolicy
+     */
+    min_size?: AutoScalingPolicy.MinSizeEnum;
+}
+
+/**
+ * @export
+ * @namespace AutoScalingPolicy
+ */
+export namespace AutoScalingPolicy {
+    /**
+     * @export
+     * @enum {string}
+     */
+    export enum MaxSizeEnum {
+        FREE = <any> 'FREE',
+        NANO = <any> 'NANO',
+        SHARED = <any> 'SHARED',
+        MILLI = <any> 'MILLI',
+        SMALL = <any> 'SMALL',
+        MEDIUM = <any> 'MEDIUM',
+        LARGE = <any> 'LARGE',
+        XLARGE = <any> 'XLARGE',
+        XLARGE2 = <any> 'XLARGE2',
+        XLARGE4 = <any> 'XLARGE4',
+        XLARGE8 = <any> 'XLARGE8',
+        XLARGE16 = <any> 'XLARGE16'
+    }
+    /**
+     * @export
+     * @enum {string}
+     */
+    export enum MinSizeEnum {
+        FREE = <any> 'FREE',
+        NANO = <any> 'NANO',
+        SHARED = <any> 'SHARED',
+        MILLI = <any> 'MILLI',
+        SMALL = <any> 'SMALL',
+        MEDIUM = <any> 'MEDIUM',
+        LARGE = <any> 'LARGE',
+        XLARGE = <any> 'XLARGE',
+        XLARGE2 = <any> 'XLARGE2',
+        XLARGE4 = <any> 'XLARGE4',
+        XLARGE8 = <any> 'XLARGE8',
+        XLARGE16 = <any> 'XLARGE16'
+    }
 }
 
 /**
@@ -307,17 +388,17 @@ export interface AwsAccessKey {
  */
 export interface AwsRole {
     /**
-     * ARN of rockset-role created in your account.
-     * @type {string}
-     * @memberof AwsRole
-     */
-    aws_role_arn: string;
-    /**
      * External id used for integration.
      * @type {string}
      * @memberof AwsRole
      */
     aws_external_id?: string;
+    /**
+     * ARN of rockset-role created in your account.
+     * @type {string}
+     * @memberof AwsRole
+     */
+    aws_role_arn: string;
 }
 
 /**
@@ -369,71 +450,11 @@ export interface AzureServiceBusIntegration {
  */
 export interface BulkStats {
     /**
-     * ISO-8601 date of when the bulk ingest was started.
-     * @type {string}
-     * @memberof BulkStats
-     */
-    started_at?: string;
-    /**
-     * ISO-8601 date of when the initializing stage was completed.
-     * @type {string}
-     * @memberof BulkStats
-     */
-    initializing_stage_done_at?: string;
-    /**
-     * ISO-8601 date of when the downloading stage was completed.
-     * @type {string}
-     * @memberof BulkStats
-     */
-    downloading_stage_done_at?: string;
-    /**
-     * ISO-8601 date of when the provisioning stage was completed.
-     * @type {string}
-     * @memberof BulkStats
-     */
-    provisioning_stage_done_at?: string;
-    /**
-     * ISO-8601 date of when the indexing stage was completed.
-     * @type {string}
-     * @memberof BulkStats
-     */
-    indexing_stage_done_at?: string;
-    /**
-     * ISO-8601 date of when the finalizing stage was completed.
-     * @type {string}
-     * @memberof BulkStats
-     */
-    finalizing_stage_done_at?: string;
-    /**
-     * Number of documents downloaded from source during an ongoing or completed bulk ingest. This includes documents that are dropped and reingested.
-     * @type {number}
-     * @memberof BulkStats
-     */
-    documents_downloaded?: number;
-    /**
      * Size in bytes of documents downloaded from source during an ongoing or completed bulk ingest. This includes documents that are dropped and reingested.
      * @type {number}
      * @memberof BulkStats
      */
     data_downloaded_bytes?: number;
-    /**
-     * Bulk ingest compute units in milliseconds used for downloading documents.
-     * @type {number}
-     * @memberof BulkStats
-     */
-    download_compute_ms?: number;
-    /**
-     * Bulk ingest compute units in milliseconds used for ingest transformation.
-     * @type {number}
-     * @memberof BulkStats
-     */
-    transformation_compute_ms?: number;
-    /**
-     * Size in bytes of documents before being indexed. This is the total size of documents after decompression, transformations, and dropping. This is equal to data_indexed_bytes after the indexing stage is done unless there are retries during indexing the data.
-     * @type {number}
-     * @memberof BulkStats
-     */
-    pre_index_size_bytes?: number;
     /**
      * Size in bytes of documents indexed. This is the total size of documents after transformations and dropping before indexes are built.
      * @type {number}
@@ -441,11 +462,71 @@ export interface BulkStats {
      */
     data_indexed_bytes?: number;
     /**
+     * Throughput of documents indexed in the last minute measured in bytes/s. This is based off the data_indexed_bytes size. Throughput during the download stage is shown on a per-source granularity in the sources field of the Collection response.
+     * @type {number}
+     * @memberof BulkStats
+     */
+    data_indexed_throughput_bytes?: number;
+    /**
+     * Number of documents downloaded from source during an ongoing or completed bulk ingest. This includes documents that are dropped and reingested.
+     * @type {number}
+     * @memberof BulkStats
+     */
+    documents_downloaded?: number;
+    /**
+     * Bulk ingest compute units in milliseconds used for downloading documents.
+     * @type {number}
+     * @memberof BulkStats
+     */
+    download_compute_ms?: number;
+    /**
+     * ISO-8601 date of when the downloading stage was completed.
+     * @type {string}
+     * @memberof BulkStats
+     */
+    downloading_stage_done_at?: string;
+    /**
+     * ISO-8601 date of when the finalizing stage was completed.
+     * @type {string}
+     * @memberof BulkStats
+     */
+    finalizing_stage_done_at?: string;
+    /**
      * Bulk ingest compute units in milliseconds used for indexing documents.
      * @type {number}
      * @memberof BulkStats
      */
     index_compute_ms?: number;
+    /**
+     * ISO-8601 date of when the indexing stage was completed.
+     * @type {string}
+     * @memberof BulkStats
+     */
+    indexing_stage_done_at?: string;
+    /**
+     * ISO-8601 date of when the initializing stage was completed.
+     * @type {string}
+     * @memberof BulkStats
+     */
+    initializing_stage_done_at?: string;
+    /**
+     * Size in bytes of documents before being indexed. This is the total size of documents after decompression, transformations, and dropping. This is equal to data_indexed_bytes after the indexing stage is done unless there are retries during indexing the data.
+     * @type {number}
+     * @memberof BulkStats
+     */
+    pre_index_size_bytes?: number;
+    /**
+     * ISO-8601 date of when the provisioning stage was completed.
+     * @type {string}
+     * @memberof BulkStats
+     */
+    provisioning_stage_done_at?: string;
+    /**
+     * ISO-8601 date of when the bulk ingest was started.
+     * @type {string}
+     * @memberof BulkStats
+     */
+    started_at?: string;
     /**
      * Total size of indexes after the completed bulk ingest. This is the same as collection size.
      * @type {number}
@@ -453,11 +534,11 @@ export interface BulkStats {
      */
     total_index_size_bytes?: number;
     /**
-     * Throughput of documents indexed in the last minute measured in bytes/s. This is based off the data_indexed_bytes size. Throughput during the download stage is shown on a per-source granularity in the sources field of the Collection response.
+     * Bulk ingest compute units in milliseconds used for ingest transformation.
      * @type {number}
      * @memberof BulkStats
      */
-    data_indexed_throughput_bytes?: number;
+    transformation_compute_ms?: number;
 }
 
 /**
@@ -481,17 +562,11 @@ export interface CancelQueryResponse {
  */
 export interface Cluster {
     /**
-     * Unique identifier for the cluster.
+     * Api server url for cluster.
      * @type {string}
      * @memberof Cluster
      */
-    id?: string;
-    /**
-     * Cluster type.
-     * @type {string}
-     * @memberof Cluster
-     */
-    cluster_type?: Cluster.ClusterTypeEnum;
+    apiserver_url?: string;
     /**
      * Aws region.
      * @type {string}
@@ -499,23 +574,29 @@ export interface Cluster {
      */
     aws_region?: string;
     /**
+     * Cluster type.
+     * @type {string}
+     * @memberof Cluster
+     */
+    cluster_type?: Cluster.ClusterTypeEnum;
+    /**
      * Domain of org using cluster.
      * @type {string}
      * @memberof Cluster
      */
     domain?: string;
     /**
+     * Unique identifier for the cluster.
+     * @type {string}
+     * @memberof Cluster
+     */
+    id?: string;
+    /**
      * Top level domain of org using cluster.
      * @type {string}
      * @memberof Cluster
      */
     top_level_domain?: string;
-    /**
-     * Api server url for cluster.
-     * @type {string}
-     * @memberof Cluster
-     */
-    apiserver_url?: string;
 }
 
 /**
@@ -539,6 +620,24 @@ export namespace Cluster {
  */
 export interface Collection {
     /**
+     * List of aliases for a collection.
+     * @type {Array<Alias>}
+     * @memberof Collection
+     */
+    aliases?: Array<Alias>;
+    /**
+     * 
+     * @type {Array<BulkStats>}
+     * @memberof Collection
+     */
+    bulk_stats?: Array<BulkStats>;
+    /**
+     * List of clustering fields for a collection.
+     * @type {Array<FieldPartition>}
+     * @memberof Collection
+     */
+    clustering_key?: Array<FieldPartition>;
+    /**
      * ISO-8601 date.
      * @type {string}
      * @memberof Collection
@@ -551,11 +650,11 @@ export interface Collection {
      */
     created_by?: string;
     /**
-     * Unique identifer for collection, can contain alphanumeric or dash characters.
+     * Name of the API key that was used to create this collection if one was used.
      * @type {string}
      * @memberof Collection
      */
-    name?: string;
+    created_by_apikey_name?: string;
     /**
      * Text describing the collection.
      * @type {string}
@@ -563,17 +662,41 @@ export interface Collection {
      */
     description?: string;
     /**
-     * Name of the workspace that the collection is in.
-     * @type {string}
+     * Field mapping for a collection.
+     * @type {FieldMappingQuery}
      * @memberof Collection
      */
-    workspace?: string;
+    field_mapping_query?: FieldMappingQuery;
     /**
-     * Current status of collection.
+     * List of mappings applied on all documents in a collection.
+     * @type {Array<FieldMappingV2>}
+     * @memberof Collection
+     */
+    field_mappings?: Array<FieldMappingV2>;
+    /**
+     * Whether the collection is insert only or not.
+     * @type {boolean}
+     * @memberof Collection
+     */
+    insert_only?: boolean;
+    /**
+     * Unique identifer for collection, can contain alphanumeric or dash characters.
      * @type {string}
      * @memberof Collection
      */
-    status?: Collection.StatusEnum;
+    name?: string;
+    /**
+     * Whether the collection is read-only or not.
+     * @type {boolean}
+     * @memberof Collection
+     */
+    read_only?: boolean;
+    /**
+     * Number of seconds after which data is purged based on event time.
+     * @type {number}
+     * @memberof Collection
+     */
+    retention_secs?: number;
     /**
      * List of sources from which collection ingests.
      * @type {Array<Source>}
@@ -587,53 +710,17 @@ export interface Collection {
      */
     stats?: CollectionStats;
     /**
-     * Number of seconds after which data is purged based on event time.
-     * @type {number}
+     * Current status of collection.
+     * @type {string}
      * @memberof Collection
      */
-    retention_secs?: number;
+    status?: Collection.StatusEnum;
     /**
-     * List of mappings applied on all documents in a collection.
-     * @type {Array<FieldMappingV2>}
+     * Name of the workspace that the collection is in.
+     * @type {string}
      * @memberof Collection
      */
-    field_mappings?: Array<FieldMappingV2>;
-    /**
-     * Field mapping for a collection.
-     * @type {FieldMappingQuery}
-     * @memberof Collection
-     */
-    field_mapping_query?: FieldMappingQuery;
-    /**
-     * List of clustering fields for a collection.
-     * @type {Array<FieldPartition>}
-     * @memberof Collection
-     */
-    clustering_key?: Array<FieldPartition>;
-    /**
-     * List of aliases for a collection.
-     * @type {Array<Alias>}
-     * @memberof Collection
-     */
-    aliases?: Array<Alias>;
-    /**
-     * Whether the collection is read-only or not.
-     * @type {boolean}
-     * @memberof Collection
-     */
-    read_only?: boolean;
-    /**
-     * Whether the collection is insert only or not.
-     * @type {boolean}
-     * @memberof Collection
-     */
-    insert_only?: boolean;
-    /**
-     * 
-     * @type {Array<BulkStats>}
-     * @memberof Collection
-     */
-    bulk_stats?: Array<BulkStats>;
+    workspace?: string;
 }
 
 /**
@@ -667,11 +754,11 @@ export namespace Collection {
  */
 export interface CollectionMount {
     /**
-     * Mount type.
+     * Collection path.
      * @type {string}
      * @memberof CollectionMount
      */
-    type?: CollectionMount.TypeEnum;
+    collection_path?: string;
     /**
      * ISO-8601 date.
      * @type {string}
@@ -679,17 +766,41 @@ export interface CollectionMount {
      */
     created_at?: string;
     /**
+     * Mount ID.
+     * @type {string}
+     * @memberof CollectionMount
+     */
+    id?: string;
+    /**
+     * Unix timestamp of most recent refresh. Not applicable for live mounts.
+     * @type {number}
+     * @memberof CollectionMount
+     */
+    last_refresh_time_millis?: number;
+    /**
+     * Mount RRN.
+     * @type {string}
+     * @memberof CollectionMount
+     */
+    rrn?: string;
+    /**
+     * Time in millis at which the snapshot expires.
+     * @type {number}
+     * @memberof CollectionMount
+     */
+    snapshot_expiration_time_millis?: number;
+    /**
      * Mount type.
      * @type {string}
      * @memberof CollectionMount
      */
     state?: CollectionMount.StateEnum;
     /**
-     * Collection path.
-     * @type {string}
+     * Stats about this Collection Mount
+     * @type {CollectionMountStats}
      * @memberof CollectionMount
      */
-    collection_path?: string;
+    stats?: CollectionMountStats;
     /**
      * Virtual instance ID.
      * @type {string}
@@ -702,36 +813,6 @@ export interface CollectionMount {
      * @memberof CollectionMount
      */
     virtual_instance_rrn?: string;
-    /**
-     * Mount ID.
-     * @type {string}
-     * @memberof CollectionMount
-     */
-    id?: string;
-    /**
-     * Mount RRN.
-     * @type {string}
-     * @memberof CollectionMount
-     */
-    rrn?: string;
-    /**
-     * Unix timestamp of most recent refresh. Not applicable for live mounts.
-     * @type {number}
-     * @memberof CollectionMount
-     */
-    last_refresh_time_millis?: number;
-    /**
-     * Time in millis at which the snapshot expires.
-     * @type {number}
-     * @memberof CollectionMount
-     */
-    snapshot_expiration_time_millis?: number;
-    /**
-     * Stats about this Collection Mount
-     * @type {CollectionMountStats}
-     * @memberof CollectionMount
-     */
-    stats?: CollectionMountStats;
 }
 
 /**
@@ -743,20 +824,15 @@ export namespace CollectionMount {
      * @export
      * @enum {string}
      */
-    export enum TypeEnum {
-        STATIC = <any> 'STATIC',
-        LIVE = <any> 'LIVE'
-    }
-    /**
-     * @export
-     * @enum {string}
-     */
     export enum StateEnum {
         CREATING = <any> 'CREATING',
         ACTIVE = <any> 'ACTIVE',
         REFRESHING = <any> 'REFRESHING',
         EXPIRED = <any> 'EXPIRED',
-        DELETING = <any> 'DELETING'
+        DELETING = <any> 'DELETING',
+        SWITCHINGREFRESHTYPE = <any> 'SWITCHING_REFRESH_TYPE',
+        SUSPENDED = <any> 'SUSPENDED',
+        SUSPENDING = <any> 'SUSPENDING'
     }
 }
 
@@ -795,77 +871,17 @@ export interface CollectionMountStats {
  */
 export interface CollectionStats {
     /**
-     * Number of documents in the collection.
+     * Total number of bytes inserted into the collection during bulk.
      * @type {number}
      * @memberof CollectionStats
      */
-    doc_count?: number;
+    bulk_bytes_inserted?: number;
     /**
-     * Number of documents purged from the collection.
+     * Total number of bytes overwritten in writing into the collection during bulk.
      * @type {number}
      * @memberof CollectionStats
      */
-    purged_doc_count?: number;
-    /**
-     * Number between 0 and 1 that indicates progress of collection creation.
-     * @type {number}
-     * @memberof CollectionStats
-     */
-    fill_progress?: number;
-    /**
-     * Milliseconds since Unix epoch Jan 1, 1970.
-     * @type {number}
-     * @memberof CollectionStats
-     */
-    last_queried_ms?: number;
-    /**
-     * Milliseconds since Unix epoch Jan 1, 1970.
-     * @type {number}
-     * @memberof CollectionStats
-     */
-    last_updated_ms?: number;
-    /**
-     * Total collection size in bytes.
-     * @type {number}
-     * @memberof CollectionStats
-     */
-    total_size?: number;
-    /**
-     * Total collection index size in bytes.
-     * @type {number}
-     * @memberof CollectionStats
-     */
-    total_index_size?: number;
-    /**
-     * Total collection row index size in bytes.
-     * @type {number}
-     * @memberof CollectionStats
-     */
-    row_index_size?: number;
-    /**
-     * Total collection column index size in bytes.
-     * @type {number}
-     * @memberof CollectionStats
-     */
-    column_index_size?: number;
-    /**
-     * Total collection inverted index size in bytes.
-     * @type {number}
-     * @memberof CollectionStats
-     */
-    inverted_index_size?: number;
-    /**
-     * Total collection range index size in bytes.
-     * @type {number}
-     * @memberof CollectionStats
-     */
-    range_index_size?: number;
-    /**
-     * Total size of bytes purged in bytes.
-     * @type {number}
-     * @memberof CollectionStats
-     */
-    purged_doc_size?: number;
+    bulk_bytes_overwritten?: number;
     /**
      * Total number of bytes inserted into the collection.
      * @type {number}
@@ -879,17 +895,77 @@ export interface CollectionStats {
      */
     bytes_overwritten?: number;
     /**
-     * Total number of bytes inserted into the collection during bulk.
+     * Total collection column index size in bytes.
      * @type {number}
      * @memberof CollectionStats
      */
-    bulk_bytes_inserted?: number;
+    column_index_size?: number;
     /**
-     * Total number of bytes overwritten in writing into the collection during bulk.
+     * Number of documents in the collection.
      * @type {number}
      * @memberof CollectionStats
      */
-    bulk_bytes_overwritten?: number;
+    doc_count?: number;
+    /**
+     * Number between 0 and 1 that indicates progress of collection creation.
+     * @type {number}
+     * @memberof CollectionStats
+     */
+    fill_progress?: number;
+    /**
+     * Total collection inverted index size in bytes.
+     * @type {number}
+     * @memberof CollectionStats
+     */
+    inverted_index_size?: number;
+    /**
+     * Milliseconds since Unix epoch Jan 1, 1970.
+     * @type {number}
+     * @memberof CollectionStats
+     */
+    last_queried_ms?: number;
+    /**
+     * Milliseconds since Unix epoch Jan 1, 1970.
+     * @type {number}
+     * @memberof CollectionStats
+     */
+    last_updated_ms?: number;
+    /**
+     * Number of documents purged from the collection.
+     * @type {number}
+     * @memberof CollectionStats
+     */
+    purged_doc_count?: number;
+    /**
+     * Total size of bytes purged in bytes.
+     * @type {number}
+     * @memberof CollectionStats
+     */
+    purged_doc_size?: number;
+    /**
+     * Total collection range index size in bytes.
+     * @type {number}
+     * @memberof CollectionStats
+     */
+    range_index_size?: number;
+    /**
+     * Total collection row index size in bytes.
+     * @type {number}
+     * @memberof CollectionStats
+     */
+    row_index_size?: number;
+    /**
+     * Total collection index size in bytes.
+     * @type {number}
+     * @memberof CollectionStats
+     */
+    total_index_size?: number;
+    /**
+     * Total collection size in bytes.
+     * @type {number}
+     * @memberof CollectionStats
+     */
+    total_size?: number;
 }
 
 /**
@@ -899,11 +975,11 @@ export interface CollectionStats {
  */
 export interface CreateAliasRequest {
     /**
-     * Alias name.
-     * @type {string}
+     * List of fully qualified collection names referenced by alias.
+     * @type {Array<string>}
      * @memberof CreateAliasRequest
      */
-    name: string;
+    collections: Array<string>;
     /**
      * Optional description.
      * @type {string}
@@ -911,11 +987,11 @@ export interface CreateAliasRequest {
      */
     description?: string;
     /**
-     * List of fully qualified collection names referenced by alias.
-     * @type {Array<string>}
+     * Alias name.
+     * @type {string}
      * @memberof CreateAliasRequest
      */
-    collections: Array<string>;
+    name: string;
 }
 
 /**
@@ -939,6 +1015,12 @@ export interface CreateAliasResponse {
  */
 export interface CreateApiKeyRequest {
     /**
+     * 
+     * @type {string}
+     * @memberof CreateApiKeyRequest
+     */
+    created_by?: string;
+    /**
      * Name for this API key.
      * @type {string}
      * @memberof CreateApiKeyRequest
@@ -950,12 +1032,6 @@ export interface CreateApiKeyRequest {
      * @memberof CreateApiKeyRequest
      */
     role?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateApiKeyRequest
-     */
-    created_by?: string;
 }
 
 /**
@@ -1007,11 +1083,11 @@ export interface CreateCollectionMountsResponse {
  */
 export interface CreateCollectionRequest {
     /**
-     * Unique identifier for collection, can contain alphanumeric or dash characters.
-     * @type {string}
+     * Deprecated. List of clustering fields. Use CLUSTER BY clause in `field_mapping_query` instead.
+     * @type {Array<FieldPartition>}
      * @memberof CreateCollectionRequest
      */
-    name?: string;
+    clustering_key?: Array<FieldPartition>;
     /**
      * Text describing the collection.
      * @type {string}
@@ -1019,11 +1095,23 @@ export interface CreateCollectionRequest {
      */
     description?: string;
     /**
-     * List of sources from which to ingest data.
-     * @type {Array<Source>}
+     * Deprecated. Configuration for event data. Use an _event_time mapping in `field_mapping_query` instead.
+     * @type {EventTimeInfo}
      * @memberof CreateCollectionRequest
      */
-    sources?: Array<Source>;
+    event_time_info?: EventTimeInfo;
+    /**
+     * Ingest transformation query.
+     * @type {FieldMappingQuery}
+     * @memberof CreateCollectionRequest
+     */
+    field_mapping_query?: FieldMappingQuery;
+    /**
+     * Unique identifier for collection, can contain alphanumeric or dash characters.
+     * @type {string}
+     * @memberof CreateCollectionRequest
+     */
+    name?: string;
     /**
      * Number of seconds after which data is purged, based on event time.
      * @type {number}
@@ -1031,29 +1119,11 @@ export interface CreateCollectionRequest {
      */
     retention_secs?: number;
     /**
-     * Deprecated. Configuration for event data. Use an _event_time mapping in `field_mapping_query` instead.
-     * @type {EventTimeInfo}
+     * List of sources from which to ingest data.
+     * @type {Array<Source>}
      * @memberof CreateCollectionRequest
      */
-    event_time_info?: EventTimeInfo;
-    /**
-     * Deprecated. List of mappings. Use field_mapping_query instead.
-     * @type {Array<FieldMappingV2>}
-     * @memberof CreateCollectionRequest
-     */
-    field_mappings?: Array<FieldMappingV2>;
-    /**
-     * Mapping of fields for a collection.
-     * @type {FieldMappingQuery}
-     * @memberof CreateCollectionRequest
-     */
-    field_mapping_query?: FieldMappingQuery;
-    /**
-     * Deprecated. List of clustering fields. Use CLUSTER BY clause in `field_mapping_query` instead.
-     * @type {Array<FieldPartition>}
-     * @memberof CreateCollectionRequest
-     */
-    clustering_key?: Array<FieldPartition>;
+    sources?: Array<Source>;
     /**
      * RocksDB storage compression type.
      * @type {string}
@@ -1098,29 +1168,29 @@ export interface CreateCollectionResponse {
  */
 export interface CreateIntegrationRequest {
     /**
-     * Descriptive label.
-     * @type {string}
+     * Azure Blob Storage details.
+     * @type {AzureBlobStorageIntegration}
      * @memberof CreateIntegrationRequest
      */
-    name: string;
+    azure_blob_storage?: AzureBlobStorageIntegration;
+    /**
+     * Azure Event Hubs details.
+     * @type {AzureEventHubsIntegration}
+     * @memberof CreateIntegrationRequest
+     */
+    azure_event_hubs?: AzureEventHubsIntegration;
+    /**
+     * Azure Service Bus details.
+     * @type {AzureServiceBusIntegration}
+     * @memberof CreateIntegrationRequest
+     */
+    azure_service_bus?: AzureServiceBusIntegration;
     /**
      * Longer explanation for the integration.
      * @type {string}
      * @memberof CreateIntegrationRequest
      */
     description?: string;
-    /**
-     * Amazon S3 details, must have one of aws_access_key or aws_role.
-     * @type {S3Integration}
-     * @memberof CreateIntegrationRequest
-     */
-    s3?: S3Integration;
-    /**
-     * Amazon Kinesis details, must have one of aws_access_key or aws_role.
-     * @type {KinesisIntegration}
-     * @memberof CreateIntegrationRequest
-     */
-    kinesis?: KinesisIntegration;
     /**
      * Amazon DynamoDB details, must have one of aws_access_key or aws_role.
      * @type {DynamodbIntegration}
@@ -1134,35 +1204,35 @@ export interface CreateIntegrationRequest {
      */
     gcs?: GcsIntegration;
     /**
-     * Azure Blob Storage details.
-     * @type {AzureBlobStorageIntegration}
-     * @memberof CreateIntegrationRequest
-     */
-    azure_blob_storage?: AzureBlobStorageIntegration;
-    /**
-     * Azure Service Bus details.
-     * @type {AzureServiceBusIntegration}
-     * @memberof CreateIntegrationRequest
-     */
-    azure_service_bus?: AzureServiceBusIntegration;
-    /**
-     * Azure Event Hubs details.
-     * @type {AzureEventHubsIntegration}
-     * @memberof CreateIntegrationRequest
-     */
-    azure_event_hubs?: AzureEventHubsIntegration;
-    /**
      * 
      * @type {KafkaIntegration}
      * @memberof CreateIntegrationRequest
      */
     kafka?: KafkaIntegration;
     /**
+     * Amazon Kinesis details, must have one of aws_access_key or aws_role.
+     * @type {KinesisIntegration}
+     * @memberof CreateIntegrationRequest
+     */
+    kinesis?: KinesisIntegration;
+    /**
      * MongoDb details.
      * @type {MongoDbIntegration}
      * @memberof CreateIntegrationRequest
      */
     mongodb?: MongoDbIntegration;
+    /**
+     * Descriptive label.
+     * @type {string}
+     * @memberof CreateIntegrationRequest
+     */
+    name: string;
+    /**
+     * Amazon S3 details, must have one of aws_access_key or aws_role.
+     * @type {S3Integration}
+     * @memberof CreateIntegrationRequest
+     */
+    s3?: S3Integration;
     /**
      * 
      * @type {SnowflakeIntegration}
@@ -1192,29 +1262,29 @@ export interface CreateIntegrationResponse {
  */
 export interface CreateQueryLambdaRequest {
     /**
-     * Query Lambda name.
-     * @type {string}
-     * @memberof CreateQueryLambdaRequest
-     */
-    name: string;
-    /**
      * Optional description.
      * @type {string}
      * @memberof CreateQueryLambdaRequest
      */
     description?: string;
     /**
-     * Query Lambda SQL query.
-     * @type {QueryLambdaSql}
-     * @memberof CreateQueryLambdaRequest
-     */
-    sql: QueryLambdaSql;
-    /**
      * 
      * @type {boolean}
      * @memberof CreateQueryLambdaRequest
      */
     is_public?: boolean;
+    /**
+     * Query Lambda name.
+     * @type {string}
+     * @memberof CreateQueryLambdaRequest
+     */
+    name: string;
+    /**
+     * Query Lambda SQL query.
+     * @type {QueryLambdaSql}
+     * @memberof CreateQueryLambdaRequest
+     */
+    sql: QueryLambdaSql;
 }
 
 /**
@@ -1244,12 +1314,6 @@ export interface CreateQueryLambdaTagRequest {
  */
 export interface CreateRoleRequest {
     /**
-     * Unique identifier for the role.
-     * @type {string}
-     * @memberof CreateRoleRequest
-     */
-    role_name?: string;
-    /**
      * Description for the role.
      * @type {string}
      * @memberof CreateRoleRequest
@@ -1261,6 +1325,12 @@ export interface CreateRoleRequest {
      * @memberof CreateRoleRequest
      */
     privileges?: Array<Privilege>;
+    /**
+     * Unique identifier for the role.
+     * @type {string}
+     * @memberof CreateRoleRequest
+     */
+    role_name?: string;
 }
 
 /**
@@ -1276,12 +1346,6 @@ export interface CreateUserRequest {
      */
     email: string;
     /**
-     * List of roles for a given user.
-     * @type {Array<string>}
-     * @memberof CreateUserRequest
-     */
-    roles: Array<string>;
-    /**
      * User first name.
      * @type {string}
      * @memberof CreateUserRequest
@@ -1293,6 +1357,12 @@ export interface CreateUserRequest {
      * @memberof CreateUserRequest
      */
     last_name?: string;
+    /**
+     * List of roles for a given user.
+     * @type {Array<string>}
+     * @memberof CreateUserRequest
+     */
+    roles: Array<string>;
 }
 
 /**
@@ -1316,17 +1386,17 @@ export interface CreateUserResponse {
  */
 export interface CreateViewRequest {
     /**
-     * View name.
-     * @type {string}
-     * @memberof CreateViewRequest
-     */
-    name: string;
-    /**
      * Optional description.
      * @type {string}
      * @memberof CreateViewRequest
      */
     description?: string;
+    /**
+     * View name.
+     * @type {string}
+     * @memberof CreateViewRequest
+     */
+    name: string;
     /**
      * SQL for this view.
      * @type {string}
@@ -1356,17 +1426,11 @@ export interface CreateViewResponse {
  */
 export interface CreateVirtualInstanceRequest {
     /**
-     * Requested virtual instance type.
-     * @type {string}
+     * Number of seconds without queries after which the VI is suspended
+     * @type {number}
      * @memberof CreateVirtualInstanceRequest
      */
-    type?: CreateVirtualInstanceRequest.TypeEnum;
-    /**
-     * Unique identifier for virtual instance, can contain alphanumeric or dash characters.
-     * @type {string}
-     * @memberof CreateVirtualInstanceRequest
-     */
-    name: string;
+    auto_suspend_seconds?: number;
     /**
      * Description of requested virtual instance.
      * @type {string}
@@ -1374,17 +1438,29 @@ export interface CreateVirtualInstanceRequest {
      */
     description?: string;
     /**
-     * Number of seconds without queries after which the VI is suspended
-     * @type {number}
+     * When a Virtual Instance is resumed, it will remount all collections that were mounted when the Virtual Instance was suspended.
+     * @type {boolean}
      * @memberof CreateVirtualInstanceRequest
      */
-    auto_suspend_seconds?: number;
+    enable_remount_on_resume?: boolean;
     /**
-     * Number of seconds between data refreshes for mounts on this Virtual Instance
+     * Number of seconds between data refreshes for mounts on this Virtual Instance. A value of 0 means continuous refresh and a value of null means never refresh.
      * @type {number}
      * @memberof CreateVirtualInstanceRequest
      */
     mount_refresh_interval_seconds?: number;
+    /**
+     * Unique identifier for virtual instance, can contain alphanumeric or dash characters.
+     * @type {string}
+     * @memberof CreateVirtualInstanceRequest
+     */
+    name: string;
+    /**
+     * Requested virtual instance type.
+     * @type {string}
+     * @memberof CreateVirtualInstanceRequest
+     */
+    type?: CreateVirtualInstanceRequest.TypeEnum;
 }
 
 /**
@@ -1433,17 +1509,17 @@ export interface CreateVirtualInstanceResponse {
  */
 export interface CreateWorkspaceRequest {
     /**
-     * Descriptive label and unique identifier.
-     * @type {string}
-     * @memberof CreateWorkspaceRequest
-     */
-    name: string;
-    /**
      * Longer explanation for the workspace.
      * @type {string}
      * @memberof CreateWorkspaceRequest
      */
     description?: string;
+    /**
+     * Descriptive label and unique identifier.
+     * @type {string}
+     * @memberof CreateWorkspaceRequest
+     */
+    name: string;
 }
 
 /**
@@ -1467,24 +1543,6 @@ export interface CreateWorkspaceResponse {
  */
 export interface CsvParams {
     /**
-     * If the first line in every object specifies the column names.
-     * @type {boolean}
-     * @memberof CsvParams
-     */
-    firstLineAsColumnNames?: boolean;
-    /**
-     * A single character that is the column separator.
-     * @type {string}
-     * @memberof CsvParams
-     */
-    separator?: string;
-    /**
-     * One of: UTF-8, ISO_8859_1, UTF-16.
-     * @type {string}
-     * @memberof CsvParams
-     */
-    encoding?: string;
-    /**
      * Names of columns.
      * @type {Array<string>}
      * @memberof CsvParams
@@ -1497,17 +1555,35 @@ export interface CsvParams {
      */
     columnTypes?: Array<CsvParams.ColumnTypesEnum>;
     /**
-     * character within which a cell value is enclosed,null character if no such character, default is '\"'
+     * One of: UTF-8, ISO_8859_1, UTF-16.
      * @type {string}
      * @memberof CsvParams
      */
-    quoteChar?: string;
+    encoding?: string;
     /**
      * escape character removes any special meaning from the following character,default is '\\'
      * @type {string}
      * @memberof CsvParams
      */
     escapeChar?: string;
+    /**
+     * If the first line in every object specifies the column names.
+     * @type {boolean}
+     * @memberof CsvParams
+     */
+    firstLineAsColumnNames?: boolean;
+    /**
+     * character within which a cell value is enclosed,null character if no such character, default is '\"'
+     * @type {string}
+     * @memberof CsvParams
+     */
+    quoteChar?: string;
+    /**
+     * A single character that is the column separator.
+     * @type {string}
+     * @memberof CsvParams
+     */
+    separator?: string;
 }
 
 /**
@@ -1649,6 +1725,20 @@ export interface DeleteQueryLambdaResponse {
 /**
  * 
  * @export
+ * @interface DeleteSourceResponse
+ */
+export interface DeleteSourceResponse {
+    /**
+     * source that was deleted
+     * @type {Source}
+     * @memberof DeleteSourceResponse
+     */
+    data?: Source;
+}
+
+/**
+ * 
+ * @export
  * @interface DeleteUserResponse
  */
 export interface DeleteUserResponse {
@@ -1715,29 +1805,29 @@ export interface DocumentStatus {
      */
     _collection?: string;
     /**
-     * Error message, if any.
-     * @type {ErrorModel}
-     * @memberof DocumentStatus
-     */
-    error?: ErrorModel;
-    /**
      * Unique document ID.
      * @type {string}
      * @memberof DocumentStatus
      */
     _id?: string;
     /**
-     * Status of the document.
-     * @type {string}
+     * Error message, if any.
+     * @type {ErrorModel}
      * @memberof DocumentStatus
      */
-    status?: DocumentStatus.StatusEnum;
+    error?: ErrorModel;
     /**
      * Unique id used to represent each patch request.
      * @type {string}
      * @memberof DocumentStatus
      */
     patch_id?: string;
+    /**
+     * Status of the document.
+     * @type {string}
+     * @memberof DocumentStatus
+     */
+    status?: DocumentStatus.StatusEnum;
 }
 
 /**
@@ -1791,35 +1881,11 @@ export interface DynamodbIntegration {
  */
 export interface ErrorModel {
     /**
-     * Descriptive message about the error.
-     * @type {string}
-     * @memberof ErrorModel
-     */
-    message?: string;
-    /**
-     * Category of the error.
-     * @type {string}
-     * @memberof ErrorModel
-     */
-    type?: ErrorModel.TypeEnum;
-    /**
-     * Line where the error happened (if applicable).
-     * @type {number}
-     * @memberof ErrorModel
-     */
-    line?: number;
-    /**
      * Column where the error happened (if applicable).
      * @type {number}
      * @memberof ErrorModel
      */
     column?: number;
-    /**
-     * Internal trace ID to help with debugging.
-     * @type {string}
-     * @memberof ErrorModel
-     */
-    trace_id?: string;
     /**
      * ID of the error.
      * @type {string}
@@ -1827,11 +1893,35 @@ export interface ErrorModel {
      */
     error_id?: string;
     /**
+     * Line where the error happened (if applicable).
+     * @type {number}
+     * @memberof ErrorModel
+     */
+    line?: number;
+    /**
+     * Descriptive message about the error.
+     * @type {string}
+     * @memberof ErrorModel
+     */
+    message?: string;
+    /**
      * ID of the query (if applicable).
      * @type {string}
      * @memberof ErrorModel
      */
     query_id?: string;
+    /**
+     * Internal trace ID to help with debugging.
+     * @type {string}
+     * @memberof ErrorModel
+     */
+    trace_id?: string;
+    /**
+     * Category of the error.
+     * @type {string}
+     * @memberof ErrorModel
+     */
+    type?: ErrorModel.TypeEnum;
 }
 
 /**
@@ -1905,12 +1995,6 @@ export interface EventTimeInfo {
  */
 export interface ExecutePublicQueryLambdaRequest {
     /**
-     * List of named parameters.
-     * @type {Array<QueryParameter>}
-     * @memberof ExecutePublicQueryLambdaRequest
-     */
-    parameters?: Array<QueryParameter>;
-    /**
      * Row limit to use if no limit specified in the SQL query text.
      * @type {number}
      * @memberof ExecutePublicQueryLambdaRequest
@@ -1922,6 +2006,12 @@ export interface ExecutePublicQueryLambdaRequest {
      * @memberof ExecutePublicQueryLambdaRequest
      */
     generate_warnings?: boolean;
+    /**
+     * List of named parameters.
+     * @type {Array<QueryParameter>}
+     * @memberof ExecutePublicQueryLambdaRequest
+     */
+    parameters?: Array<QueryParameter>;
 }
 
 /**
@@ -1931,11 +2021,23 @@ export interface ExecutePublicQueryLambdaRequest {
  */
 export interface ExecuteQueryLambdaRequest {
     /**
-     * List of named parameters.
-     * @type {Array<QueryParameter>}
+     * If true, the query will run asynchronously for up to 30 minutes. The query request will immediately return with a query id that can be used to retrieve the query status and results. If false or not specified, the query will return with results once completed or timeout after 2 minutes. (To return results directly for shorter queries while still allowing a timeout of up to 30 minutes, set `async_options.client_timeout_ms`.) 
+     * @type {boolean}
      * @memberof ExecuteQueryLambdaRequest
      */
-    parameters?: Array<QueryParameter>;
+    async?: boolean;
+    /**
+     * Options for configuring Asynchronous Query Mode.
+     * @type {AsyncQueryOptions}
+     * @memberof ExecuteQueryLambdaRequest
+     */
+    async_options?: AsyncQueryOptions;
+    /**
+     * If query execution takes longer than this value, debug information will be logged. If the query text includes the DEBUG hint and this parameter is also provided, only this value will be used and the DEBUG hint will be ignored.
+     * @type {number}
+     * @memberof ExecuteQueryLambdaRequest
+     */
+    debug_threshold_ms?: number;
     /**
      * Row limit to use if no limit specified in the SQL query text.
      * @type {number}
@@ -1949,37 +2051,41 @@ export interface ExecuteQueryLambdaRequest {
      */
     generate_warnings?: boolean;
     /**
+     * [DEPRECATED] Use `max_initial_results` instead. Number of documents to return in addition to paginating for this query call. Only relevant if `paginate` flag is also set.
+     * @type {number}
+     * @memberof ExecuteQueryLambdaRequest
+     */
+    initial_paginate_response_doc_count?: number;
+    /**
+     * This limits the maximum number of results in the initial response. A pagination cursor is returned if the number of results exceeds `max_initial_results`. If `max_initial_results` is not set, all results will be returned in the initial response up to 4 million. If `max_initial_results` is set, the value must be between 0 and 100,000. If the query is async and `client_timeout_ms` is exceeded, `max_initial_results` does not apply since none of the results will be returned with the initial response.
+     * @type {number}
+     * @memberof ExecuteQueryLambdaRequest
+     */
+    max_initial_results?: number;
+    /**
      * Flag to paginate and store the results of this query for later / sequential retrieval.
      * @type {boolean}
      * @memberof ExecuteQueryLambdaRequest
      */
     paginate?: boolean;
     /**
-     * Number of documents to return in addition to paginating for this query call. Only relevant if `paginate` flag is also set.
+     * List of named parameters.
+     * @type {Array<QueryParameter>}
+     * @memberof ExecuteQueryLambdaRequest
+     */
+    parameters?: Array<QueryParameter>;
+    /**
+     * If a query exceeds the specified timeout, the query will automatically stop and return an error. The query timeout defaults to a maximum of 2 minutes. If `async` is true, the query timeout defaults to a maximum of 30 minutes.
      * @type {number}
      * @memberof ExecuteQueryLambdaRequest
      */
-    initial_paginate_response_doc_count?: number;
-    /**
-     * Options for configuring Asynchronous Query Mode (beta).
-     * @type {AsyncQueryOptions}
-     * @memberof ExecuteQueryLambdaRequest
-     */
-    async_options?: AsyncQueryOptions;
+    timeout_ms?: number;
     /**
      * Virtual instance on which to run the query.
      * @type {string}
      * @memberof ExecuteQueryLambdaRequest
      */
     virtual_instance_id?: string;
-}
-
-/**
- * 
- * @export
- * @interface FieldMapping
- */
-export interface FieldMapping {
 }
 
 /**
@@ -2003,11 +2109,11 @@ export interface FieldMappingQuery {
  */
 export interface FieldMappingV2 {
     /**
-     * A user specified string that is a name for this mapping.
-     * @type {string}
+     * A List of InputField for this mapping.
+     * @type {Array<InputField>}
      * @memberof FieldMappingV2
      */
-    name?: string;
+    input_fields?: Array<InputField>;
     /**
      * A boolean that determines whether to drop all fields in this document. If set, input and output fields should not be set
      * @type {boolean}
@@ -2015,11 +2121,11 @@ export interface FieldMappingV2 {
      */
     is_drop_all_fields?: boolean;
     /**
-     * A List of InputField for this mapping.
-     * @type {Array<InputField>}
+     * A user specified string that is a name for this mapping.
+     * @type {string}
      * @memberof FieldMappingV2
      */
-    input_fields?: Array<InputField>;
+    name?: string;
     /**
      * An OutputField for this mapping.
      * @type {OutputField}
@@ -2041,17 +2147,17 @@ export interface FieldPartition {
      */
     field_name?: string;
     /**
-     * The type of partitions on a field.
-     * @type {string}
-     * @memberof FieldPartition
-     */
-    type?: FieldPartition.TypeEnum;
-    /**
      * The values for partitioning of a field. Unneeded if the partition type is AUTO.
      * @type {Array<string>}
      * @memberof FieldPartition
      */
     keys?: Array<string>;
+    /**
+     * The type of partitions on a field.
+     * @type {string}
+     * @memberof FieldPartition
+     */
+    type?: FieldPartition.TypeEnum;
 }
 
 /**
@@ -2075,11 +2181,11 @@ export namespace FieldPartition {
  */
 export interface FormatParams {
     /**
-     * Source data is in json format.
-     * @type {boolean}
+     * 
+     * @type {AvroParams}
      * @memberof FormatParams
      */
-    json?: boolean;
+    avro?: AvroParams;
     /**
      * 
      * @type {CsvParams}
@@ -2087,23 +2193,11 @@ export interface FormatParams {
      */
     csv?: CsvParams;
     /**
-     * 
-     * @type {XmlParams}
-     * @memberof FormatParams
-     */
-    xml?: XmlParams;
-    /**
-     * 
+     * Source data is in json format.
      * @type {boolean}
      * @memberof FormatParams
      */
-    mysql_dms?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof FormatParams
-     */
-    postgres_dms?: boolean;
+    json?: boolean;
     /**
      * 
      * @type {boolean}
@@ -2115,13 +2209,25 @@ export interface FormatParams {
      * @type {boolean}
      * @memberof FormatParams
      */
+    mysql_dms?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof FormatParams
+     */
     oracle_dms?: boolean;
     /**
      * 
-     * @type {AvroParams}
+     * @type {boolean}
      * @memberof FormatParams
      */
-    avro?: AvroParams;
+    postgres_dms?: boolean;
+    /**
+     * 
+     * @type {XmlParams}
+     * @memberof FormatParams
+     */
+    xml?: XmlParams;
 }
 
 /**
@@ -2225,6 +2331,20 @@ export interface GetQueryResponse {
 /**
  * 
  * @export
+ * @interface GetSourceResponse
+ */
+export interface GetSourceResponse {
+    /**
+     * source config for source
+     * @type {Source}
+     * @memberof GetSourceResponse
+     */
+    data?: Source;
+}
+
+/**
+ * 
+ * @export
  * @interface GetViewResponse
  */
 export interface GetViewResponse {
@@ -2318,29 +2438,29 @@ export namespace InputField {
  */
 export interface Integration {
     /**
-     * Descriptive label and unique identifier.
-     * @type {string}
+     * Azure Blob Storage details.
+     * @type {AzureBlobStorageIntegration}
      * @memberof Integration
      */
-    name: string;
+    azure_blob_storage?: AzureBlobStorageIntegration;
     /**
-     * Longer explanation for the integration.
-     * @type {string}
+     * Azure Event Hubs details.
+     * @type {AzureEventHubsIntegration}
      * @memberof Integration
      */
-    description?: string;
+    azure_event_hubs?: AzureEventHubsIntegration;
     /**
-     * Email of user who created the integration.
-     * @type {string}
+     * Azure Service Bus details.
+     * @type {AzureServiceBusIntegration}
      * @memberof Integration
      */
-    created_by: string;
+    azure_service_bus?: AzureServiceBusIntegration;
     /**
-     * User that owns this integration.
-     * @type {string}
+     * List of collections that use the integration.
+     * @type {Array<Collection>}
      * @memberof Integration
      */
-    owner_email?: string;
+    collections?: Array<Collection>;
     /**
      * ISO-8601 date.
      * @type {string}
@@ -2348,17 +2468,23 @@ export interface Integration {
      */
     created_at?: string;
     /**
-     * Amazon S3 details, must have one of aws_access_key or aws_role.
-     * @type {S3Integration}
+     * Email of user who created the integration.
+     * @type {string}
      * @memberof Integration
      */
-    s3?: S3Integration;
+    created_by: string;
     /**
-     * Amazon Kinesis details, must have one of aws_access_key or aws_role.
-     * @type {KinesisIntegration}
+     * Name of the API key that was used to create this object if one was used.
+     * @type {string}
      * @memberof Integration
      */
-    kinesis?: KinesisIntegration;
+    created_by_apikey_name?: string;
+    /**
+     * Longer explanation for the integration.
+     * @type {string}
+     * @memberof Integration
+     */
+    description?: string;
     /**
      * Amazon DynamoDB details, must have one of aws_access_key or aws_role.
      * @type {DynamodbIntegration}
@@ -2372,29 +2498,17 @@ export interface Integration {
      */
     gcs?: GcsIntegration;
     /**
-     * Azure Blob Storage details.
-     * @type {AzureBlobStorageIntegration}
-     * @memberof Integration
-     */
-    azure_blob_storage?: AzureBlobStorageIntegration;
-    /**
-     * Azure Service Bus details.
-     * @type {AzureServiceBusIntegration}
-     * @memberof Integration
-     */
-    azure_service_bus?: AzureServiceBusIntegration;
-    /**
-     * Azure Event Hubs details.
-     * @type {AzureEventHubsIntegration}
-     * @memberof Integration
-     */
-    azure_event_hubs?: AzureEventHubsIntegration;
-    /**
      * Kafka details.
      * @type {KafkaIntegration}
      * @memberof Integration
      */
     kafka?: KafkaIntegration;
+    /**
+     * Amazon Kinesis details, must have one of aws_access_key or aws_role.
+     * @type {KinesisIntegration}
+     * @memberof Integration
+     */
+    kinesis?: KinesisIntegration;
     /**
      * MongoDb details.
      * @type {MongoDbIntegration}
@@ -2402,17 +2516,29 @@ export interface Integration {
      */
     mongodb?: MongoDbIntegration;
     /**
+     * Descriptive label and unique identifier.
+     * @type {string}
+     * @memberof Integration
+     */
+    name: string;
+    /**
+     * User that owns this integration.
+     * @type {string}
+     * @memberof Integration
+     */
+    owner_email?: string;
+    /**
+     * Amazon S3 details, must have one of aws_access_key or aws_role.
+     * @type {S3Integration}
+     * @memberof Integration
+     */
+    s3?: S3Integration;
+    /**
      * Snowflake details.
      * @type {SnowflakeIntegration}
      * @memberof Integration
      */
     snowflake?: SnowflakeIntegration;
-    /**
-     * List of collections that use the integration.
-     * @type {Array<Collection>}
-     * @memberof Integration
-     */
-    collections?: Array<Collection>;
 }
 
 /**
@@ -2422,41 +2548,11 @@ export interface Integration {
  */
 export interface KafkaIntegration {
     /**
-     * Kafka topics to tail.
-     * @type {Array<string>}
-     * @memberof KafkaIntegration
-     */
-    kafka_topic_names?: Array<string>;
-    /**
-     * The status of the Kafka source by topic.
-     * @type {{ [key: string]: StatusKafka; }}
-     * @memberof KafkaIntegration
-     */
-    source_status_by_topic?: { [key: string]: StatusKafka; };
-    /**
-     * The format of the Kafka topics being tailed.
-     * @type {string}
-     * @memberof KafkaIntegration
-     */
-    kafka_data_format?: KafkaIntegration.KafkaDataFormatEnum;
-    /**
-     * Kafka connection string.
-     * @type {string}
-     * @memberof KafkaIntegration
-     */
-    connection_string?: string;
-    /**
      * Details of an AWS cross-account role integration.
      * @type {AwsRole}
      * @memberof KafkaIntegration
      */
     aws_role?: AwsRole;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof KafkaIntegration
-     */
-    use_v3?: boolean;
     /**
      * The Kafka bootstrap server url(s). Required only for V3 integration.
      * @type {string}
@@ -2464,17 +2560,47 @@ export interface KafkaIntegration {
      */
     bootstrap_servers?: string;
     /**
-     * Kafka security configurations.
-     * @type {KafkaV3SecurityConfig}
+     * Kafka connection string.
+     * @type {string}
      * @memberof KafkaIntegration
      */
-    security_config?: KafkaV3SecurityConfig;
+    connection_string?: string;
+    /**
+     * The format of the Kafka topics being tailed.
+     * @type {string}
+     * @memberof KafkaIntegration
+     */
+    kafka_data_format?: KafkaIntegration.KafkaDataFormatEnum;
+    /**
+     * Kafka topics to tail.
+     * @type {Array<string>}
+     * @memberof KafkaIntegration
+     */
+    kafka_topic_names?: Array<string>;
     /**
      * Kafka configurations for schema registry.
      * @type {SchemaRegistryConfig}
      * @memberof KafkaIntegration
      */
     schema_registry_config?: SchemaRegistryConfig;
+    /**
+     * Kafka security configurations.
+     * @type {KafkaV3SecurityConfig}
+     * @memberof KafkaIntegration
+     */
+    security_config?: KafkaV3SecurityConfig;
+    /**
+     * The status of the Kafka source by topic.
+     * @type {{ [key: string]: StatusKafka; }}
+     * @memberof KafkaIntegration
+     */
+    source_status_by_topic?: { [key: string]: StatusKafka; };
+    /**
+     * 
+     * @type {boolean}
+     * @memberof KafkaIntegration
+     */
+    use_v3?: boolean;
 }
 
 /**
@@ -2675,6 +2801,20 @@ export interface ListRolesResponse {
 /**
  * 
  * @export
+ * @interface ListSourcesResponse
+ */
+export interface ListSourcesResponse {
+    /**
+     * List of all sources in a collection
+     * @type {Array<Source>}
+     * @memberof ListSourcesResponse
+     */
+    data?: Array<Source>;
+}
+
+/**
+ * 
+ * @export
  * @interface ListUnsubscribePreferencesResponse
  */
 export interface ListUnsubscribePreferencesResponse {
@@ -2763,11 +2903,11 @@ export interface MongoDbIntegration {
  */
 export interface Organization {
     /**
-     * Unique identifier for the organization.
-     * @type {string}
+     * List of clusters associated with this org.
+     * @type {Array<Cluster>}
      * @memberof Organization
      */
-    id?: string;
+    clusters?: Array<Cluster>;
     /**
      * ISO-8601 date.
      * @type {string}
@@ -2787,17 +2927,29 @@ export interface Organization {
      */
     external_id?: string;
     /**
+     * Unique identifier for the organization.
+     * @type {string}
+     * @memberof Organization
+     */
+    id?: string;
+    /**
      * Rockset's global AWS user.
      * @type {string}
      * @memberof Organization
      */
     rockset_user?: string;
     /**
-     * List of clusters associated with this org.
-     * @type {Array<Cluster>}
+     * Connection name of SSO connection.
+     * @type {string}
      * @memberof Organization
      */
-    clusters?: Array<Cluster>;
+    sso_connection?: string;
+    /**
+     * Whether or not SSO is the only permitted form of auth.
+     * @type {boolean}
+     * @memberof Organization
+     */
+    sso_only?: boolean;
 }
 
 /**
@@ -2827,17 +2979,17 @@ export interface OutputField {
      */
     field_name?: string;
     /**
-     * The name of a sql function.
-     * @type {SqlExpression}
-     * @memberof OutputField
-     */
-    value?: SqlExpression;
-    /**
      * Error in Mapping execution: 'skip' or 'fail'.
      * @type {string}
      * @memberof OutputField
      */
     on_error?: OutputField.OnErrorEnum;
+    /**
+     * The name of a sql function.
+     * @type {SqlExpression}
+     * @memberof OutputField
+     */
+    value?: SqlExpression;
 }
 
 /**
@@ -2882,29 +3034,29 @@ export interface PaginationInfo {
      */
     current_page_doc_count?: number;
     /**
-     * The doc offset that next_cursor starts at.
-     * @type {number}
-     * @memberof PaginationInfo
-     */
-    next_cursor_offset?: number;
-    /**
-     * Cursor used to retrieve the first set of documents.
-     * @type {string}
-     * @memberof PaginationInfo
-     */
-    start_cursor?: string;
-    /**
      * Cursor to use to get the list of documents.
      * @type {string}
      * @memberof PaginationInfo
      */
     next_cursor?: string;
     /**
+     * The doc offset that next_cursor starts at.
+     * @type {number}
+     * @memberof PaginationInfo
+     */
+    next_cursor_offset?: number;
+    /**
      * Direct link to the next page of results.
      * @type {string}
      * @memberof PaginationInfo
      */
     next_page_link?: string;
+    /**
+     * Cursor used to retrieve the first set of documents.
+     * @type {string}
+     * @memberof PaginationInfo
+     */
+    start_cursor?: string;
 }
 
 /**
@@ -2962,6 +3114,12 @@ export interface PatchDocumentsResponse {
  */
 export interface PatchOperation {
     /**
+     * [JSON Pointer](https://datatracker.ietf.org/doc/html/rfc6901) referencing a location in the target document. Required for `COPY` and `MOVE` operations.
+     * @type {string}
+     * @memberof PatchOperation
+     */
+    from?: string;
+    /**
      * [JSON Patch operation](https://datatracker.ietf.org/doc/html/rfc6902#page-4) to be performed in this patch. Case insensitive.
      * @type {string}
      * @memberof PatchOperation
@@ -2979,12 +3137,6 @@ export interface PatchOperation {
      * @memberof PatchOperation
      */
     value?: any;
-    /**
-     * [JSON Pointer](https://datatracker.ietf.org/doc/html/rfc6901) referencing a location in the target document. Required for `COPY` and `MOVE` operations.
-     * @type {string}
-     * @memberof PatchOperation
-     */
-    from?: string;
 }
 
 /**
@@ -3020,17 +3172,17 @@ export interface Privilege {
      */
     action?: Privilege.ActionEnum;
     /**
-     * The resources on which the action is allowed. Defaults to '*All*' if not specified.
-     * @type {string}
-     * @memberof Privilege
-     */
-    resource_name?: string;
-    /**
      * Cluster ID (`usw2a1` for us-west-2, `use1a1` for us-east-1, `euc1a1` for eu-central-1) for which the action is allowed. Defaults to '*All*' if not specified.
      * @type {string}
      * @memberof Privilege
      */
     cluster?: string;
+    /**
+     * The resources on which the action is allowed. Defaults to '*All*' if not specified.
+     * @type {string}
+     * @memberof Privilege
+     */
+    resource_name?: string;
 }
 
 /**
@@ -3068,6 +3220,7 @@ export namespace Privilege {
         DELETEROLEGLOBAL = <any> 'DELETE_ROLE_GLOBAL',
         LISTROLESGLOBAL = <any> 'LIST_ROLES_GLOBAL',
         GRANTREVOKEROLEGLOBAL = <any> 'GRANT_REVOKE_ROLE_GLOBAL',
+        CREATEQUERYLOGSCOLLECTIONGLOBAL = <any> 'CREATE_QUERY_LOGS_COLLECTION_GLOBAL',
         ALLINTEGRATIONACTIONS = <any> 'ALL_INTEGRATION_ACTIONS',
         CREATECOLLECTIONINTEGRATION = <any> 'CREATE_COLLECTION_INTEGRATION',
         ALLWORKSPACEACTIONS = <any> 'ALL_WORKSPACE_ACTIONS',
@@ -3101,12 +3254,6 @@ export namespace Privilege {
  */
 export interface QueryError {
     /**
-     * The type of error.
-     * @type {string}
-     * @memberof QueryError
-     */
-    type?: string;
-    /**
      * A message associated with the error, containing more information about it.
      * @type {string}
      * @memberof QueryError
@@ -3118,6 +3265,12 @@ export interface QueryError {
      * @memberof QueryError
      */
     status_code?: number;
+    /**
+     * The type of error.
+     * @type {string}
+     * @memberof QueryError
+     */
+    type?: string;
 }
 
 /**
@@ -3147,29 +3300,11 @@ export interface QueryFieldType {
  */
 export interface QueryInfo {
     /**
-     * Unique Query ID.
-     * @type {string}
-     * @memberof QueryInfo
-     */
-    query_id?: string;
-    /**
-     * Status of the query.
-     * @type {string}
-     * @memberof QueryInfo
-     */
-    status?: QueryInfo.StatusEnum;
-    /**
      * User ID who executed the query.
      * @type {string}
      * @memberof QueryInfo
      */
     executed_by?: string;
-    /**
-     * Time (UTC) the query request was first received and queued for execution.
-     * @type {string}
-     * @memberof QueryInfo
-     */
-    submitted_at?: string;
     /**
      * Time (UTC) that query results expire. Only populated if `status` is `COMPLETE`.
      * @type {string}
@@ -3177,11 +3312,11 @@ export interface QueryInfo {
      */
     expires_at?: string;
     /**
-     * Various stats about the query's execution.
-     * @type {Stats}
+     * The log offset that query results were written to in the destination collection. Only populated for INSERT INTO queries.
+     * @type {string}
      * @memberof QueryInfo
      */
-    stats?: Stats;
+    last_offset?: string;
     /**
      * Information for fetching query results pages. Only populated if `status` is `COMPLETE`.
      * @type {Pagination}
@@ -3189,17 +3324,41 @@ export interface QueryInfo {
      */
     pagination?: Pagination;
     /**
-     * The log offset that query results were written to in the destination collection. Only populated for INSERT INTO queries.
-     * @type {string}
-     * @memberof QueryInfo
-     */
-    last_offset?: string;
-    /**
      * Errors encountered while executing the query.
      * @type {Array<QueryError>}
      * @memberof QueryInfo
      */
     query_errors?: Array<QueryError>;
+    /**
+     * Unique Query ID.
+     * @type {string}
+     * @memberof QueryInfo
+     */
+    query_id?: string;
+    /**
+     * The SQL query for this request
+     * @type {string}
+     * @memberof QueryInfo
+     */
+    sql?: string;
+    /**
+     * Various stats about the query's execution.
+     * @type {Stats}
+     * @memberof QueryInfo
+     */
+    stats?: Stats;
+    /**
+     * Status of the query.
+     * @type {string}
+     * @memberof QueryInfo
+     */
+    status?: QueryInfo.StatusEnum;
+    /**
+     * Time (UTC) the query request was first received and queued for execution.
+     * @type {string}
+     * @memberof QueryInfo
+     */
+    submitted_at?: string;
 }
 
 /**
@@ -3227,11 +3386,17 @@ export namespace QueryInfo {
  */
 export interface QueryLambda {
     /**
-     * Workspace of this Query Lambda.
+     * Collections/aliases queried by underlying SQL query.
+     * @type {Array<string>}
+     * @memberof QueryLambda
+     */
+    collections?: Array<string>;
+    /**
+     * ISO-8601 date of when Query Lambda was last updated.
      * @type {string}
      * @memberof QueryLambda
      */
-    workspace?: string;
+    last_updated?: string;
     /**
      * User that created this Query Lambda.
      * @type {string}
@@ -3239,11 +3404,11 @@ export interface QueryLambda {
      */
     last_updated_by?: string;
     /**
-     * ISO-8601 date of when Query Lambda was last updated.
-     * @type {string}
+     * Query Lambda version details for most recently created version.
+     * @type {QueryLambdaVersion}
      * @memberof QueryLambda
      */
-    last_updated?: string;
+    latest_version?: QueryLambdaVersion;
     /**
      * Query Lambda name.
      * @type {string}
@@ -3257,17 +3422,11 @@ export interface QueryLambda {
      */
     version_count?: number;
     /**
-     * Collections/aliases queried by underlying SQL query.
-     * @type {Array<string>}
+     * Workspace of this Query Lambda.
+     * @type {string}
      * @memberof QueryLambda
      */
-    collections?: Array<string>;
-    /**
-     * Query Lambda version details for most recently created version.
-     * @type {QueryLambdaVersion}
-     * @memberof QueryLambda
-     */
-    latest_version?: QueryLambdaVersion;
+    workspace?: string;
 }
 
 /**
@@ -3277,17 +3436,17 @@ export interface QueryLambda {
  */
 export interface QueryLambdaSql {
     /**
-     * SQL text.
-     * @type {string}
-     * @memberof QueryLambdaSql
-     */
-    query: string;
-    /**
      * Default parameters for this Query Lambda.
      * @type {Array<QueryParameter>}
      * @memberof QueryLambdaSql
      */
     default_parameters?: Array<QueryParameter>;
+    /**
+     * SQL text.
+     * @type {string}
+     * @memberof QueryLambdaSql
+     */
+    query: string;
 }
 
 /**
@@ -3363,17 +3522,11 @@ export interface QueryLambdaTagResponse {
  */
 export interface QueryLambdaVersion {
     /**
-     * Workspace of this Query Lambda.
-     * @type {string}
+     * Collections queried by underlying SQL query.
+     * @type {Array<string>}
      * @memberof QueryLambdaVersion
      */
-    workspace?: string;
-    /**
-     * User that created this Query Lambda.
-     * @type {string}
-     * @memberof QueryLambdaVersion
-     */
-    created_by?: string;
+    collections?: Array<string>;
     /**
      * ISO-8601 date of when Query Lambda was created.
      * @type {string}
@@ -3381,17 +3534,17 @@ export interface QueryLambdaVersion {
      */
     created_at?: string;
     /**
-     * Query Lambda name.
+     * User that created this Query Lambda.
      * @type {string}
      * @memberof QueryLambdaVersion
      */
-    name?: string;
+    created_by?: string;
     /**
-     * Query Lambda version.
+     * Name of the API key that was used to create this object if one was used.
      * @type {string}
      * @memberof QueryLambdaVersion
      */
-    version?: string;
+    created_by_apikey_name?: string;
     /**
      * Optional description.
      * @type {string}
@@ -3399,17 +3552,23 @@ export interface QueryLambdaVersion {
      */
     description?: string;
     /**
+     * Query Lambda name.
+     * @type {string}
+     * @memberof QueryLambdaVersion
+     */
+    name?: string;
+    /**
+     * Public access ID associated with this QL version
+     * @type {string}
+     * @memberof QueryLambdaVersion
+     */
+    public_access_id?: string;
+    /**
      * Query Lambda SQL query.
      * @type {QueryLambdaSql}
      * @memberof QueryLambdaVersion
      */
     sql?: QueryLambdaSql;
-    /**
-     * Collections queried by underlying SQL query.
-     * @type {Array<string>}
-     * @memberof QueryLambdaVersion
-     */
-    collections?: Array<string>;
     /**
      * Status of this Query Lambda.
      * @type {string}
@@ -3423,11 +3582,17 @@ export interface QueryLambdaVersion {
      */
     stats?: QueryLambdaStats;
     /**
-     * Public access ID associated with this QL version
+     * Query Lambda version.
      * @type {string}
      * @memberof QueryLambdaVersion
      */
-    public_access_id?: string;
+    version?: string;
+    /**
+     * Workspace of this Query Lambda.
+     * @type {string}
+     * @memberof QueryLambdaVersion
+     */
+    workspace?: string;
 }
 
 /**
@@ -3466,6 +3631,12 @@ export interface QueryLambdaVersionResponse {
  */
 export interface QueryPaginationResponse {
     /**
+     * Pagination metadata.
+     * @type {PaginationInfo}
+     * @memberof QueryPaginationResponse
+     */
+    pagination?: PaginationInfo;
+    /**
      * List of documents returned by the query.
      * @type {Array<any>}
      * @memberof QueryPaginationResponse
@@ -3477,12 +3648,6 @@ export interface QueryPaginationResponse {
      * @memberof QueryPaginationResponse
      */
     results_total_doc_count?: number;
-    /**
-     * Pagination metadata.
-     * @type {PaginationInfo}
-     * @memberof QueryPaginationResponse
-     */
-    pagination?: PaginationInfo;
 }
 
 /**
@@ -3498,7 +3663,7 @@ export interface QueryParameter {
      */
     name: string;
     /**
-     * Data type of the field.
+     * Deprecated. Data type of the field.
      * @type {string}
      * @memberof QueryParameter
      */
@@ -3518,17 +3683,41 @@ export interface QueryParameter {
  */
 export interface QueryRequest {
     /**
+     * If true, the query will run asynchronously for up to 30 minutes. The query request will immediately return with a query id that can be used to retrieve the query status and results. If false or not specified, the query will return with results once completed or timeout after 2 minutes. (To return results directly for shorter queries while still allowing a timeout of up to 30 minutes, set `async_options.client_timeout_ms`.) 
+     * @type {boolean}
+     * @memberof QueryRequest
+     */
+    async?: boolean;
+    /**
+     * Options for configuring Asynchronous Query Mode.
+     * @type {AsyncQueryOptions}
+     * @memberof QueryRequest
+     */
+    async_options?: AsyncQueryOptions;
+    /**
+     * If query execution takes longer than this value, debug information will be logged. If the query text includes the DEBUG hint and this parameter is also provided, only this value will be used and the DEBUG hint will be ignored.
+     * @type {number}
+     * @memberof QueryRequest
+     */
+    debug_threshold_ms?: number;
+    /**
+     * This limits the maximum number of results in the initial response. A pagination cursor is returned if the number of results exceeds `max_initial_results`. If `max_initial_results` is not set, all results will be returned in the initial response up to 4 million. If `max_initial_results` is set, the value must be between 0 and 100,000. If the query is async and `client_timeout_ms` is exceeded, `max_initial_results` does not apply since none of the results will be returned with the initial response.
+     * @type {number}
+     * @memberof QueryRequest
+     */
+    max_initial_results?: number;
+    /**
      * Main query request body.
      * @type {QueryRequestSql}
      * @memberof QueryRequest
      */
     sql: QueryRequestSql;
     /**
-     * Options for configuring Asynchronous Query Mode (beta).
-     * @type {AsyncQueryOptions}
+     * If a query exceeds the specified timeout, the query will automatically stop and return an error. The query timeout defaults to a maximum of 2 minutes. If `async` is true, the query timeout defaults to a maximum of 30 minutes.
+     * @type {number}
      * @memberof QueryRequest
      */
-    async_options?: AsyncQueryOptions;
+    timeout_ms?: number;
 }
 
 /**
@@ -3538,11 +3727,11 @@ export interface QueryRequest {
  */
 export interface QueryRequestSql {
     /**
-     * SQL query string.
-     * @type {string}
+     * Row limit to use. Limits specified in the query text will override this default.
+     * @type {number}
      * @memberof QueryRequestSql
      */
-    query: string;
+    default_row_limit?: number;
     /**
      * Flag to enable warnings. Warnings can help debug query issues but negatively affect performance.
      * @type {boolean}
@@ -3550,23 +3739,23 @@ export interface QueryRequestSql {
      */
     generate_warnings?: boolean;
     /**
+     * [DEPRECATED] Use `max_initial_results` instead. Number of documents to return in addition to paginating for this query call. Only relevant if `paginate` flag is also set.
+     * @type {number}
+     * @memberof QueryRequestSql
+     */
+    initial_paginate_response_doc_count?: number;
+    /**
      * List of named parameters.
      * @type {Array<QueryParameter>}
      * @memberof QueryRequestSql
      */
     parameters?: Array<QueryParameter>;
     /**
-     * Row limit to use. Limits specified in the query text will override this default.
-     * @type {number}
+     * SQL query string.
+     * @type {string}
      * @memberof QueryRequestSql
      */
-    default_row_limit?: number;
-    /**
-     * Number of documents to return in addition to paginating for this query call. Only relevant if `paginate` flag is also set.
-     * @type {number}
-     * @memberof QueryRequestSql
-     */
-    initial_paginate_response_doc_count?: number;
+    query: string;
 }
 
 /**
@@ -3576,47 +3765,11 @@ export interface QueryRequestSql {
  */
 export interface QueryResponse {
     /**
-     * Unique ID for this query.
-     * @type {string}
-     * @memberof QueryResponse
-     */
-    query_id?: string;
-    /**
      * List of collections referenced in the query.
      * @type {Array<string>}
      * @memberof QueryResponse
      */
     collections?: Array<string>;
-    /**
-     * Results from the query.
-     * @type {Array<any>}
-     * @memberof QueryResponse
-     */
-    results?: Array<any>;
-    /**
-     * Meta information about the query including execution latencies.
-     * @type {QueryResponseStats}
-     * @memberof QueryResponse
-     */
-    stats?: QueryResponseStats;
-    /**
-     * Warnings generated by the query. Only populated if `generate_warnings` is specified in the query request.
-     * @type {Array<string>}
-     * @memberof QueryResponse
-     */
-    warnings?: Array<string>;
-    /**
-     * The full path of the executed query lambda. Includes version information.
-     * @type {string}
-     * @memberof QueryResponse
-     */
-    query_lambda_path?: string;
-    /**
-     * Errors encountered while executing the query.
-     * @type {Array<QueryError>}
-     * @memberof QueryResponse
-     */
-    query_errors?: Array<QueryError>;
     /**
      * Meta information about each column in the result set. Not populated in `SELECT *` queries.
      * @type {Array<QueryFieldType>}
@@ -3624,11 +3777,11 @@ export interface QueryResponse {
      */
     column_fields?: Array<QueryFieldType>;
     /**
-     * Number of results generated by the query.
-     * @type {number}
+     * If this was a write query, this is the log offset the query was written to.
+     * @type {string}
      * @memberof QueryResponse
      */
-    results_total_doc_count?: number;
+    last_offset?: string;
     /**
      * Pagination information. Only populated if `paginate` is specified in the query request.
      * @type {PaginationInfo}
@@ -3636,11 +3789,70 @@ export interface QueryResponse {
      */
     pagination?: PaginationInfo;
     /**
-     * If this was a write query, this is the log offset the query was written to.
+     * Errors encountered while executing the query.
+     * @type {Array<QueryError>}
+     * @memberof QueryResponse
+     */
+    query_errors?: Array<QueryError>;
+    /**
+     * Unique ID for this query.
      * @type {string}
      * @memberof QueryResponse
      */
-    last_offset?: string;
+    query_id?: string;
+    /**
+     * The full path of the executed query lambda. Includes version information.
+     * @type {string}
+     * @memberof QueryResponse
+     */
+    query_lambda_path?: string;
+    /**
+     * Results from the query.
+     * @type {Array<any>}
+     * @memberof QueryResponse
+     */
+    results?: Array<any>;
+    /**
+     * Number of results generated by the query.
+     * @type {number}
+     * @memberof QueryResponse
+     */
+    results_total_doc_count?: number;
+    /**
+     * Meta information about the query including execution latencies.
+     * @type {QueryResponseStats}
+     * @memberof QueryResponse
+     */
+    stats?: QueryResponseStats;
+    /**
+     * Status of query execution. Possible values: `QUEUED`, `RUNNING`, `COMPLETED`, `ERROR`.
+     * @type {string}
+     * @memberof QueryResponse
+     */
+    status?: QueryResponse.StatusEnum;
+    /**
+     * Warnings generated by the query. Only populated if `generate_warnings` is specified in the query request.
+     * @type {Array<string>}
+     * @memberof QueryResponse
+     */
+    warnings?: Array<string>;
+}
+
+/**
+ * @export
+ * @namespace QueryResponse
+ */
+export namespace QueryResponse {
+    /**
+     * @export
+     * @enum {string}
+     */
+    export enum StatusEnum {
+        QUEUED = <any> 'QUEUED',
+        RUNNING = <any> 'RUNNING',
+        COMPLETED = <any> 'COMPLETED',
+        ERROR = <any> 'ERROR'
+    }
 }
 
 /**
@@ -3684,11 +3896,17 @@ export interface ResumeVirtualInstanceResponse {
  */
 export interface Role {
     /**
-     * Unique identifier for the role.
+     * ISO-8601 date of when the role was created.
      * @type {string}
      * @memberof Role
      */
-    role_name?: string;
+    created_at?: string;
+    /**
+     * Email of the user who created the role.
+     * @type {string}
+     * @memberof Role
+     */
+    created_by?: string;
     /**
      * Description for the role.
      * @type {string}
@@ -3702,23 +3920,17 @@ export interface Role {
      */
     owner_email?: string;
     /**
-     * Email of the user who created the role.
-     * @type {string}
-     * @memberof Role
-     */
-    created_by?: string;
-    /**
      * List of privileges associated with the role.
      * @type {Array<Privilege>}
      * @memberof Role
      */
     privileges?: Array<Privilege>;
     /**
-     * ISO-8601 date of when the role was created.
+     * Unique identifier for the role.
      * @type {string}
      * @memberof Role
      */
-    created_at?: string;
+    role_name?: string;
 }
 
 /**
@@ -3762,12 +3974,6 @@ export interface S3Integration {
  */
 export interface SchemaRegistryConfig {
     /**
-     * Schema registry URL.
-     * @type {string}
-     * @memberof SchemaRegistryConfig
-     */
-    url?: string;
-    /**
      * The secure API key for schema registry.
      * @type {string}
      * @memberof SchemaRegistryConfig
@@ -3779,6 +3985,12 @@ export interface SchemaRegistryConfig {
      * @memberof SchemaRegistryConfig
      */
     secret?: string;
+    /**
+     * Schema registry URL.
+     * @type {string}
+     * @memberof SchemaRegistryConfig
+     */
+    url?: string;
 }
 
 /**
@@ -3788,29 +4000,11 @@ export interface SchemaRegistryConfig {
  */
 export interface SnowflakeIntegration {
     /**
-     * Snowflake browser url.
-     * @type {string}
+     * Credentials for an AWS access key integration.
+     * @type {AwsAccessKey}
      * @memberof SnowflakeIntegration
      */
-    snowflake_url: string;
-    /**
-     * Snowflake database username.
-     * @type {string}
-     * @memberof SnowflakeIntegration
-     */
-    username: string;
-    /**
-     * Snowflake database password.
-     * @type {string}
-     * @memberof SnowflakeIntegration
-     */
-    password: string;
-    /**
-     * Snowflake user role. If unspecified, will use the default user role.
-     * @type {string}
-     * @memberof SnowflakeIntegration
-     */
-    user_role?: string;
+    aws_access_key?: AwsAccessKey;
     /**
      * Details of an AWS cross-account role integration.
      * @type {AwsRole}
@@ -3818,23 +4012,41 @@ export interface SnowflakeIntegration {
      */
     aws_role?: AwsRole;
     /**
-     * Credentials for an AWS access key integration.
-     * @type {AwsAccessKey}
-     * @memberof SnowflakeIntegration
-     */
-    aws_access_key?: AwsAccessKey;
-    /**
      * default snowflake data warehouse name for query execution. Warehouse name can be overridden in the collection.
      * @type {string}
      * @memberof SnowflakeIntegration
      */
     default_warehouse: string;
     /**
+     * Snowflake database password.
+     * @type {string}
+     * @memberof SnowflakeIntegration
+     */
+    password: string;
+    /**
      * S3 path used for running 'COPY INTO' command on snowflake table.
      * @type {string}
      * @memberof SnowflakeIntegration
      */
     s3_export_path: string;
+    /**
+     * Snowflake browser url.
+     * @type {string}
+     * @memberof SnowflakeIntegration
+     */
+    snowflake_url: string;
+    /**
+     * Snowflake user role. If unspecified, will use the default user role.
+     * @type {string}
+     * @memberof SnowflakeIntegration
+     */
+    user_role?: string;
+    /**
+     * Snowflake database username.
+     * @type {string}
+     * @memberof SnowflakeIntegration
+     */
+    username: string;
 }
 
 /**
@@ -3844,53 +4056,23 @@ export interface SnowflakeIntegration {
  */
 export interface Source {
     /**
-     * Unique source identifier.
-     * @type {string}
-     * @memberof Source
-     */
-    id?: string;
-    /**
-     * Name of integration to use.
-     * @type {string}
-     * @memberof Source
-     */
-    integration_name?: string;
-    /**
-     * Configuration for ingestion from S3.
-     * @type {SourceS3}
-     * @memberof Source
-     */
-    s3?: SourceS3;
-    /**
-     * Configuration for ingestion from kinesis stream.
-     * @type {SourceKinesis}
-     * @memberof Source
-     */
-    kinesis?: SourceKinesis;
-    /**
-     * Configuration for ingestion from GCS.
-     * @type {SourceGcs}
-     * @memberof Source
-     */
-    gcs?: SourceGcs;
-    /**
      * Configuration for ingestion from Azure Blob Storage.
      * @type {SourceAzureBlobStorage}
      * @memberof Source
      */
     azure_blob_storage?: SourceAzureBlobStorage;
     /**
-     * Configuration for ingestion from Azure Service Bus.
-     * @type {SourceAzureServiceBus}
-     * @memberof Source
-     */
-    azure_service_bus?: SourceAzureServiceBus;
-    /**
      * Configuration for ingestion from Azure Event Hubs.
      * @type {SourceAzureEventHubs}
      * @memberof Source
      */
     azure_event_hubs?: SourceAzureEventHubs;
+    /**
+     * Configuration for ingestion from Azure Service Bus.
+     * @type {SourceAzureServiceBus}
+     * @memberof Source
+     */
+    azure_service_bus?: SourceAzureServiceBus;
     /**
      * Configuration for ingestion from  a dynamodb table.
      * @type {SourceDynamoDb}
@@ -3904,17 +4086,53 @@ export interface Source {
      */
     file_upload?: SourceFileUpload;
     /**
+     * Format parameters for data from this source.
+     * @type {FormatParams}
+     * @memberof Source
+     */
+    format_params?: FormatParams;
+    /**
+     * Configuration for ingestion from GCS.
+     * @type {SourceGcs}
+     * @memberof Source
+     */
+    gcs?: SourceGcs;
+    /**
+     * Unique source identifier.
+     * @type {string}
+     * @memberof Source
+     */
+    id?: string;
+    /**
+     * Name of integration to use.
+     * @type {string}
+     * @memberof Source
+     */
+    integration_name?: string;
+    /**
      * Kafka collection identifier.
      * @type {SourceKafka}
      * @memberof Source
      */
     kafka?: SourceKafka;
     /**
+     * Configuration for ingestion from kinesis stream.
+     * @type {SourceKinesis}
+     * @memberof Source
+     */
+    kinesis?: SourceKinesis;
+    /**
      * MongoDB collection details.
      * @type {SourceMongoDb}
      * @memberof Source
      */
     mongodb?: SourceMongoDb;
+    /**
+     * Configuration for ingestion from S3.
+     * @type {SourceS3}
+     * @memberof Source
+     */
+    s3?: SourceS3;
     /**
      * Configuration for ingestion from Snowflake.
      * @type {SourceSnowflake}
@@ -3928,11 +4146,17 @@ export interface Source {
      */
     status?: Status;
     /**
-     * Format parameters for data from this source.
-     * @type {FormatParams}
+     * ISO-8601 date when source was suspended, if suspended
+     * @type {string}
      * @memberof Source
      */
-    format_params?: FormatParams;
+    suspended_at?: string;
+    /**
+     * 
+     * @type {SourceSystem}
+     * @memberof Source
+     */
+    system?: SourceSystem;
 }
 
 /**
@@ -3942,23 +4166,11 @@ export interface Source {
  */
 export interface SourceAzureBlobStorage {
     /**
-     * Name of Azure blob Storage container you want to ingest from.
-     * @type {string}
+     * 
+     * @type {number}
      * @memberof SourceAzureBlobStorage
      */
-    container?: string;
-    /**
-     * Prefix that selects blobs to ingest.
-     * @type {string}
-     * @memberof SourceAzureBlobStorage
-     */
-    prefix?: string;
-    /**
-     * Glob-style pattern that selects keys to ingest. Only either prefix or pattern can be specified.
-     * @type {string}
-     * @memberof SourceAzureBlobStorage
-     */
-    pattern?: string;
+    blob_bytes_total?: number;
     /**
      * 
      * @type {number}
@@ -3972,11 +4184,23 @@ export interface SourceAzureBlobStorage {
      */
     blob_count_total?: number;
     /**
-     * 
-     * @type {number}
+     * Name of Azure blob Storage container you want to ingest from.
+     * @type {string}
      * @memberof SourceAzureBlobStorage
      */
-    blob_bytes_total?: number;
+    container?: string;
+    /**
+     * Glob-style pattern that selects keys to ingest. Only either prefix or pattern can be specified.
+     * @type {string}
+     * @memberof SourceAzureBlobStorage
+     */
+    pattern?: string;
+    /**
+     * Prefix that selects blobs to ingest.
+     * @type {string}
+     * @memberof SourceAzureBlobStorage
+     */
+    prefix?: string;
 }
 
 /**
@@ -4027,11 +4251,11 @@ export namespace SourceAzureEventHubs {
  */
 export interface SourceAzureServiceBus {
     /**
-     * Name of the topic which rockset should ingest from.
-     * @type {string}
+     * Azure Service bus source status.
+     * @type {StatusAzureServiceBus}
      * @memberof SourceAzureServiceBus
      */
-    topic?: string;
+    status?: StatusAzureServiceBus;
     /**
      * The subscription to read from the topic.
      * @type {string}
@@ -4039,11 +4263,11 @@ export interface SourceAzureServiceBus {
      */
     subscription?: string;
     /**
-     * Azure Service bus source status.
-     * @type {StatusAzureServiceBus}
+     * Name of the topic which rockset should ingest from.
+     * @type {string}
      * @memberof SourceAzureServiceBus
      */
-    status?: StatusAzureServiceBus;
+    topic?: string;
 }
 
 /**
@@ -4058,12 +4282,6 @@ export interface SourceDynamoDb {
      * @memberof SourceDynamoDb
      */
     aws_region?: string;
-    /**
-     * Name of DynamoDB table containing data.
-     * @type {string}
-     * @memberof SourceDynamoDb
-     */
-    table_name: string;
     /**
      * DynamoDB source status v2.
      * @type {StatusDynamoDbV2}
@@ -4082,6 +4300,12 @@ export interface SourceDynamoDb {
      * @memberof SourceDynamoDb
      */
     status?: StatusDynamoDb;
+    /**
+     * Name of DynamoDB table containing data.
+     * @type {string}
+     * @memberof SourceDynamoDb
+     */
+    table_name: string;
     /**
      * Whether to use DynamoDB Scan API for the initial scan.
      * @type {boolean}
@@ -4129,17 +4353,17 @@ export interface SourceGcs {
      */
     bucket?: string;
     /**
-     * Prefix that selects keys to ingest.
-     * @type {string}
+     * 
+     * @type {number}
      * @memberof SourceGcs
      */
-    prefix?: string;
+    object_bytes_downloaded?: number;
     /**
-     * Glob-style pattern that selects keys to ingest. Only either prefix or pattern can be specified.
-     * @type {string}
+     * 
+     * @type {number}
      * @memberof SourceGcs
      */
-    pattern?: string;
+    object_bytes_total?: number;
     /**
      * 
      * @type {number}
@@ -4153,17 +4377,17 @@ export interface SourceGcs {
      */
     object_count_total?: number;
     /**
-     * 
-     * @type {number}
+     * Glob-style pattern that selects keys to ingest. Only either prefix or pattern can be specified.
+     * @type {string}
      * @memberof SourceGcs
      */
-    object_bytes_total?: number;
+    pattern?: string;
     /**
-     * 
-     * @type {number}
+     * Prefix that selects keys to ingest.
+     * @type {string}
      * @memberof SourceGcs
      */
-    object_bytes_downloaded?: number;
+    prefix?: string;
 }
 
 /**
@@ -4173,11 +4397,23 @@ export interface SourceGcs {
  */
 export interface SourceKafka {
     /**
+     * The Kafka consumer group Id being used.
+     * @type {string}
+     * @memberof SourceKafka
+     */
+    consumer_group_id?: string;
+    /**
      * The Kafka topic to be tailed.
      * @type {string}
      * @memberof SourceKafka
      */
     kafka_topic_name?: string;
+    /**
+     * The offset reset policy.
+     * @type {string}
+     * @memberof SourceKafka
+     */
+    offset_reset_policy?: SourceKafka.OffsetResetPolicyEnum;
     /**
      * Kafka source status.
      * @type {StatusKafka}
@@ -4185,23 +4421,11 @@ export interface SourceKafka {
      */
     status?: StatusKafka;
     /**
-     * The Kafka consumer group Id being used.
-     * @type {string}
-     * @memberof SourceKafka
-     */
-    consumer_group_id?: string;
-    /**
      * Whether to use v3 integration.
      * @type {boolean}
      * @memberof SourceKafka
      */
     use_v3?: boolean;
-    /**
-     * The offset reset policy.
-     * @type {string}
-     * @memberof SourceKafka
-     */
-    offset_reset_policy?: SourceKafka.OffsetResetPolicyEnum;
 }
 
 /**
@@ -4232,12 +4456,6 @@ export interface SourceKinesis {
      */
     aws_region?: string;
     /**
-     * Name of kinesis stream.
-     * @type {string}
-     * @memberof SourceKinesis
-     */
-    stream_name: string;
-    /**
      * Set of fields that correspond to a DMS primary key.
      * @type {Array<string>}
      * @memberof SourceKinesis
@@ -4249,6 +4467,12 @@ export interface SourceKinesis {
      * @memberof SourceKinesis
      */
     offset_reset_policy?: SourceKinesis.OffsetResetPolicyEnum;
+    /**
+     * Name of kinesis stream.
+     * @type {string}
+     * @memberof SourceKinesis
+     */
+    stream_name: string;
 }
 
 /**
@@ -4273,17 +4497,23 @@ export namespace SourceKinesis {
  */
 export interface SourceMongoDb {
     /**
+     * MongoDB collection name.
+     * @type {string}
+     * @memberof SourceMongoDb
+     */
+    collection_name: string;
+    /**
      * MongoDB database name containing this collection.
      * @type {string}
      * @memberof SourceMongoDb
      */
     database_name: string;
     /**
-     * MongoDB collection name.
-     * @type {string}
+     * Whether to get the full document from the MongoDB change stream to enable multi-field expression transformations. Selecting this option will increase load on your upstream MongoDB database.
+     * @type {boolean}
      * @memberof SourceMongoDb
      */
-    collection_name: string;
+    retrieve_full_document?: boolean;
     /**
      * MongoDB source status.
      * @type {StatusMongoDb}
@@ -4299,35 +4529,23 @@ export interface SourceMongoDb {
  */
 export interface SourceS3 {
     /**
-     * Prefix that selects keys to ingest.
-     * @type {string}
-     * @memberof SourceS3
-     */
-    prefix?: string;
-    /**
-     * Glob-style pattern that selects keys to ingest. Only either prefix or pattern can be specified.
-     * @type {string}
-     * @memberof SourceS3
-     */
-    pattern?: string;
-    /**
-     * AWS region containing source bucket.
-     * @type {string}
-     * @memberof SourceS3
-     */
-    region?: string;
-    /**
      * Address of S3 bucket containing data.
      * @type {string}
      * @memberof SourceS3
      */
     bucket: string;
     /**
-     * List of prefixes to paths from which data should be ingested.
-     * @type {Array<string>}
+     * 
+     * @type {number}
      * @memberof SourceS3
      */
-    prefixes: Array<string>;
+    object_bytes_downloaded?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof SourceS3
+     */
+    object_bytes_total?: number;
     /**
      * 
      * @type {number}
@@ -4341,17 +4559,49 @@ export interface SourceS3 {
      */
     object_count_total?: number;
     /**
-     * 
-     * @type {number}
+     * Glob-style pattern that selects keys to ingest. Only either prefix or pattern can be specified.
+     * @type {string}
      * @memberof SourceS3
      */
-    object_bytes_total?: number;
+    pattern?: string;
     /**
-     * 
-     * @type {number}
+     * Prefix that selects keys to ingest.
+     * @type {string}
      * @memberof SourceS3
      */
-    object_bytes_downloaded?: number;
+    prefix?: string;
+    /**
+     * List of prefixes to paths from which data should be ingested.
+     * @type {Array<string>}
+     * @memberof SourceS3
+     */
+    prefixes: Array<string>;
+    /**
+     * AWS region containing source bucket.
+     * @type {string}
+     * @memberof SourceS3
+     */
+    region?: string;
+}
+
+/**
+ * 
+ * @export
+ * @interface SourceSnapshot
+ */
+export interface SourceSnapshot {
+    /**
+     * Path of source collection to restore the snapshot from.
+     * @type {string}
+     * @memberof SourceSnapshot
+     */
+    source_collection_path?: string;
+    /**
+     * Snapshot id of the snapshot that the new collection will be created from.
+     * @type {string}
+     * @memberof SourceSnapshot
+     */
+    source_snapshot_id?: string;
 }
 
 /**
@@ -4373,6 +4623,12 @@ export interface SourceSnowflake {
      */
     schema: string;
     /**
+     * Snowflake source status.
+     * @type {StatusSnowflake}
+     * @memberof SourceSnowflake
+     */
+    status?: StatusSnowflake;
+    /**
      * Name of the snowflake table.
      * @type {string}
      * @memberof SourceSnowflake
@@ -4384,12 +4640,34 @@ export interface SourceSnowflake {
      * @memberof SourceSnowflake
      */
     warehouse?: string;
+}
+
+/**
+ * 
+ * @export
+ * @interface SourceSystem
+ */
+export interface SourceSystem {
     /**
-     * Snowflake source status.
-     * @type {StatusSnowflake}
-     * @memberof SourceSnowflake
+     * The type of this system source.
+     * @type {string}
+     * @memberof SourceSystem
      */
-    status?: StatusSnowflake;
+    type?: SourceSystem.TypeEnum;
+}
+
+/**
+ * @export
+ * @namespace SourceSystem
+ */
+export namespace SourceSystem {
+    /**
+     * @export
+     * @enum {string}
+     */
+    export enum TypeEnum {
+        QUERYLOGS = <any> 'QUERY_LOGS'
+    }
 }
 
 /**
@@ -4419,11 +4697,11 @@ export interface Stats {
      */
     elapsed_time_ms?: number;
     /**
-     * Time query spent queued, in milliseconds.
+     * Number of bytes in the query result set. Only populated if `status` is `COMPLETE`. Not populated for INSERT INTO queries.
      * @type {number}
      * @memberof Stats
      */
-    throttled_time_ms?: number;
+    result_set_bytes_size?: number;
     /**
      * Number of documents returned by the query. Only populated if `status` is `COMPLETE`.
      * @type {number}
@@ -4431,11 +4709,11 @@ export interface Stats {
      */
     result_set_document_count?: number;
     /**
-     * Number of bytes in the query result set. Only populated if `status` is `COMPLETE`. Not populated for INSERT INTO queries.
+     * Time query spent queued, in milliseconds.
      * @type {number}
      * @memberof Stats
      */
-    result_set_bytes_size?: number;
+    throttled_time_ms?: number;
 }
 
 /**
@@ -4445,17 +4723,11 @@ export interface Stats {
  */
 export interface Status {
     /**
-     * Status of the Source's ingestion.
-     * @type {string}
+     * Size in bytes detected for the source at collection initialization. This size can be 0 or null for event stream sources.
+     * @type {number}
      * @memberof Status
      */
-    state?: Status.StateEnum;
-    /**
-     * State message.
-     * @type {string}
-     * @memberof Status
-     */
-    message?: string;
+    detected_size_bytes?: number;
     /**
      * ISO-8601 date when source was last processed.
      * @type {string}
@@ -4469,17 +4741,23 @@ export interface Status {
      */
     last_processed_item?: string;
     /**
+     * State message.
+     * @type {string}
+     * @memberof Status
+     */
+    message?: string;
+    /**
+     * Status of the Source's ingestion.
+     * @type {string}
+     * @memberof Status
+     */
+    state?: Status.StateEnum;
+    /**
      * Total items processed of source.
      * @type {number}
      * @memberof Status
      */
     total_processed_items?: number;
-    /**
-     * Size in bytes detected for the source at collection initialization. This size can be 0 or null for event stream sources.
-     * @type {number}
-     * @memberof Status
-     */
-    detected_size_bytes?: number;
 }
 
 /**
@@ -4496,7 +4774,8 @@ export namespace Status {
         WATCHING = <any> 'WATCHING',
         PROCESSING = <any> 'PROCESSING',
         COMPLETED = <any> 'COMPLETED',
-        ERROR = <any> 'ERROR'
+        ERROR = <any> 'ERROR',
+        SUSPENDED = <any> 'SUSPENDED'
     }
 }
 
@@ -4506,12 +4785,6 @@ export namespace Status {
  * @interface StatusAzureEventHubs
  */
 export interface StatusAzureEventHubs {
-    /**
-     * State of the source.
-     * @type {string}
-     * @memberof StatusAzureEventHubs
-     */
-    state?: StatusAzureEventHubs.StateEnum;
     /**
      * Time at which the last document was consumed.
      * @type {string}
@@ -4530,6 +4803,12 @@ export interface StatusAzureEventHubs {
      * @memberof StatusAzureEventHubs
      */
     partitions?: Array<StatusAzureEventHubsPartition>;
+    /**
+     * State of the source.
+     * @type {string}
+     * @memberof StatusAzureEventHubs
+     */
+    state?: StatusAzureEventHubs.StateEnum;
 }
 
 /**
@@ -4555,6 +4834,12 @@ export namespace StatusAzureEventHubs {
  */
 export interface StatusAzureEventHubsPartition {
     /**
+     * Per partition lag for offset.
+     * @type {number}
+     * @memberof StatusAzureEventHubsPartition
+     */
+    offset_lag?: number;
+    /**
      * The number of this partition.
      * @type {number}
      * @memberof StatusAzureEventHubsPartition
@@ -4566,12 +4851,6 @@ export interface StatusAzureEventHubsPartition {
      * @memberof StatusAzureEventHubsPartition
      */
     partition_offset?: number;
-    /**
-     * Per partition lag for offset.
-     * @type {number}
-     * @memberof StatusAzureEventHubsPartition
-     */
-    offset_lag?: number;
 }
 
 /**
@@ -4607,17 +4886,17 @@ export interface StatusAzureServiceBus {
  */
 export interface StatusAzureServiceBusSession {
     /**
-     * The last processed sequence number within this session.
-     * @type {number}
-     * @memberof StatusAzureServiceBusSession
-     */
-    sequence_number?: number;
-    /**
      * Most recent ISO-8601 date when a message from this session was processed.
      * @type {string}
      * @memberof StatusAzureServiceBusSession
      */
     last_processed?: string;
+    /**
+     * The last processed sequence number within this session.
+     * @type {number}
+     * @memberof StatusAzureServiceBusSession
+     */
+    sequence_number?: number;
 }
 
 /**
@@ -4626,12 +4905,6 @@ export interface StatusAzureServiceBusSession {
  * @interface StatusDynamoDb
  */
 export interface StatusDynamoDb {
-    /**
-     * DynamoDB scan start time.
-     * @type {string}
-     * @memberof StatusDynamoDb
-     */
-    scan_start_time?: string;
     /**
      * DynamoDb scan end time.
      * @type {string}
@@ -4644,6 +4917,12 @@ export interface StatusDynamoDb {
      * @memberof StatusDynamoDb
      */
     scan_records_processed?: number;
+    /**
+     * DynamoDB scan start time.
+     * @type {string}
+     * @memberof StatusDynamoDb
+     */
+    scan_start_time?: string;
     /**
      * Number of records in DynamoDB table at time of scan.
      * @type {number}
@@ -4731,11 +5010,11 @@ export namespace StatusDynamoDbV2 {
  */
 export interface StatusKafka {
     /**
-     * State of the Kafka source.
-     * @type {string}
+     * Status info per partition.
+     * @type {Array<StatusKafkaPartition>}
      * @memberof StatusKafka
      */
-    state?: StatusKafka.StateEnum;
+    kafka_partitions?: Array<StatusKafkaPartition>;
     /**
      * Time at which the last document was consumed from Kafka.
      * @type {string}
@@ -4749,11 +5028,11 @@ export interface StatusKafka {
      */
     num_documents_processed?: number;
     /**
-     * Status info per partition.
-     * @type {Array<StatusKafkaPartition>}
+     * State of the Kafka source.
+     * @type {string}
      * @memberof StatusKafka
      */
-    kafka_partitions?: Array<StatusKafkaPartition>;
+    state?: StatusKafka.StateEnum;
 }
 
 /**
@@ -4779,6 +5058,12 @@ export namespace StatusKafka {
  */
 export interface StatusKafkaPartition {
     /**
+     * Per partition lag for offset.
+     * @type {number}
+     * @memberof StatusKafkaPartition
+     */
+    offset_lag?: number;
+    /**
      * The number of this partition.
      * @type {number}
      * @memberof StatusKafkaPartition
@@ -4790,12 +5075,6 @@ export interface StatusKafkaPartition {
      * @memberof StatusKafkaPartition
      */
     partition_offset?: number;
-    /**
-     * Per partition lag for offset.
-     * @type {number}
-     * @memberof StatusKafkaPartition
-     */
-    offset_lag?: number;
 }
 
 /**
@@ -4804,12 +5083,6 @@ export interface StatusKafkaPartition {
  * @interface StatusMongoDb
  */
 export interface StatusMongoDb {
-    /**
-     * MongoDB scan start time.
-     * @type {string}
-     * @memberof StatusMongoDb
-     */
-    scan_start_time?: string;
     /**
      * MongoDB scan end time.
      * @type {string}
@@ -4823,6 +5096,12 @@ export interface StatusMongoDb {
      */
     scan_records_processed?: number;
     /**
+     * MongoDB scan start time.
+     * @type {string}
+     * @memberof StatusMongoDb
+     */
+    scan_start_time?: string;
+    /**
      * Number of records in MongoDB table at time of scan.
      * @type {number}
      * @memberof StatusMongoDb
@@ -4834,6 +5113,12 @@ export interface StatusMongoDb {
      * @memberof StatusMongoDb
      */
     state?: StatusMongoDb.StateEnum;
+    /**
+     * ISO-8601 date when delete from source was last processed.
+     * @type {string}
+     * @memberof StatusMongoDb
+     */
+    stream_last_delete_processed_at?: string;
     /**
      * ISO-8601 date when new insert from source was last processed.
      * @type {string}
@@ -4847,11 +5132,11 @@ export interface StatusMongoDb {
      */
     stream_last_update_processed_at?: string;
     /**
-     * ISO-8601 date when delete from source was last processed.
-     * @type {string}
+     * Number of new records deleted using stream.
+     * @type {number}
      * @memberof StatusMongoDb
      */
-    stream_last_delete_processed_at?: string;
+    stream_records_deleted?: number;
     /**
      * Number of new records inserted using stream.
      * @type {number}
@@ -4864,12 +5149,6 @@ export interface StatusMongoDb {
      * @memberof StatusMongoDb
      */
     stream_records_updated?: number;
-    /**
-     * Number of new records deleted using stream.
-     * @type {number}
-     * @memberof StatusMongoDb
-     */
-    stream_records_deleted?: number;
 }
 
 /**
@@ -4954,17 +5233,17 @@ export interface UnsubscribePreference {
  */
 export interface UpdateAliasRequest {
     /**
-     * Optional description.
-     * @type {string}
-     * @memberof UpdateAliasRequest
-     */
-    description?: string;
-    /**
      * List of fully qualified collection names referenced by alias.
      * @type {Array<string>}
      * @memberof UpdateAliasRequest
      */
     collections: Array<string>;
+    /**
+     * Optional description.
+     * @type {string}
+     * @memberof UpdateAliasRequest
+     */
+    description?: string;
 }
 
 /**
@@ -5013,6 +5292,26 @@ export interface UpdateApiKeyResponse {
 /**
  * 
  * @export
+ * @interface UpdateCollectionRequest
+ */
+export interface UpdateCollectionRequest {
+    /**
+     * Updated text describing the collection.
+     * @type {string}
+     * @memberof UpdateCollectionRequest
+     */
+    description?: string;
+    /**
+     * Updated ingest transformation query. Note that updating the transformation will lead to a brief interruption in ingestion.
+     * @type {FieldMappingQuery}
+     * @memberof UpdateCollectionRequest
+     */
+    field_mapping_query?: FieldMappingQuery;
+}
+
+/**
+ * 
+ * @export
  * @interface UpdateQueryLambdaRequest
  */
 export interface UpdateQueryLambdaRequest {
@@ -5023,17 +5322,17 @@ export interface UpdateQueryLambdaRequest {
      */
     description?: string;
     /**
-     * Query Lambda SQL query.
-     * @type {QueryLambdaSql}
-     * @memberof UpdateQueryLambdaRequest
-     */
-    sql?: QueryLambdaSql;
-    /**
      * 
      * @type {boolean}
      * @memberof UpdateQueryLambdaRequest
      */
     is_public?: boolean;
+    /**
+     * Query Lambda SQL query.
+     * @type {QueryLambdaSql}
+     * @memberof UpdateQueryLambdaRequest
+     */
+    sql?: QueryLambdaSql;
 }
 
 /**
@@ -5151,29 +5450,11 @@ export interface UpdateViewResponse {
  */
 export interface UpdateVirtualInstanceRequest {
     /**
-     * Requested virtual instance size.
-     * @type {string}
+     * Options for configuring auto scaling policy
+     * @type {AutoScalingPolicy}
      * @memberof UpdateVirtualInstanceRequest
      */
-    new_size?: UpdateVirtualInstanceRequest.NewSizeEnum;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof UpdateVirtualInstanceRequest
-     */
-    monitoring_enabled?: boolean;
-    /**
-     * New virtual instance name.
-     * @type {string}
-     * @memberof UpdateVirtualInstanceRequest
-     */
-    name?: string;
-    /**
-     * New virtual instance description.
-     * @type {string}
-     * @memberof UpdateVirtualInstanceRequest
-     */
-    description?: string;
+    auto_scaling_policy?: AutoScalingPolicy;
     /**
      * Whether auto-suspend should be enabled for this Virtual Instance.
      * @type {boolean}
@@ -5187,11 +5468,35 @@ export interface UpdateVirtualInstanceRequest {
      */
     auto_suspend_seconds?: number;
     /**
-     * Number of seconds between data refreshes for mounts on this Virtual Instance
+     * New virtual instance description.
+     * @type {string}
+     * @memberof UpdateVirtualInstanceRequest
+     */
+    description?: string;
+    /**
+     * When a Virtual Instance is resumed, it will remount all collections that were mounted when the Virtual Instance was suspended.
+     * @type {boolean}
+     * @memberof UpdateVirtualInstanceRequest
+     */
+    enable_remount_on_resume?: boolean;
+    /**
+     * Number of seconds between data refreshes for mounts on this Virtual Instance. A value of 0 means continuous refresh and a value of null means never refresh.
      * @type {number}
      * @memberof UpdateVirtualInstanceRequest
      */
     mount_refresh_interval_seconds?: number;
+    /**
+     * New virtual instance name.
+     * @type {string}
+     * @memberof UpdateVirtualInstanceRequest
+     */
+    name?: string;
+    /**
+     * Requested virtual instance size.
+     * @type {string}
+     * @memberof UpdateVirtualInstanceRequest
+     */
+    new_size?: UpdateVirtualInstanceRequest.NewSizeEnum;
 }
 
 /**
@@ -5304,29 +5609,17 @@ export interface ValidateQueryResponse {
  */
 export interface View {
     /**
-     * 
+     * ISO-8601 date.
      * @type {string}
      * @memberof View
      */
-    path?: string;
+    created_at?: string;
     /**
-     * Name of the view.
+     * Name of the API key that was used to create this object if one was used.
      * @type {string}
      * @memberof View
      */
-    name?: string;
-    /**
-     * View description.
-     * @type {string}
-     * @memberof View
-     */
-    description?: string;
-    /**
-     * Name of the workspace.
-     * @type {string}
-     * @memberof View
-     */
-    workspace?: string;
+    created_by_apikey_name?: string;
     /**
      * Email of the creator.
      * @type {string}
@@ -5334,17 +5627,11 @@ export interface View {
      */
     creator_email?: string;
     /**
-     * Email of the owner, note: deprecated and will always be null.
+     * View description.
      * @type {string}
      * @memberof View
      */
-    owner_email?: string;
-    /**
-     * SQL query of the view.
-     * @type {string}
-     * @memberof View
-     */
-    query_sql?: string;
+    description?: string;
     /**
      * List of entities referenced by view. An entity can be a view, alias or collection.
      * @type {Array<string>}
@@ -5352,23 +5639,47 @@ export interface View {
      */
     entities?: Array<string>;
     /**
+     * ISO-8601 date.
+     * @type {string}
+     * @memberof View
+     */
+    modified_at?: string;
+    /**
+     * Name of the view.
+     * @type {string}
+     * @memberof View
+     */
+    name?: string;
+    /**
+     * Email of the owner, note: deprecated and will always be null.
+     * @type {string}
+     * @memberof View
+     */
+    owner_email?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof View
+     */
+    path?: string;
+    /**
+     * SQL query of the view.
+     * @type {string}
+     * @memberof View
+     */
+    query_sql?: string;
+    /**
      * State of the view.
      * @type {string}
      * @memberof View
      */
     state?: View.StateEnum;
     /**
-     * ISO-8601 date.
+     * Name of the workspace.
      * @type {string}
      * @memberof View
      */
-    created_at?: string;
-    /**
-     * ISO-8601 date.
-     * @type {string}
-     * @memberof View
-     */
-    modified_at?: string;
+    workspace?: string;
 }
 
 /**
@@ -5394,23 +5705,17 @@ export namespace View {
  */
 export interface VirtualInstance {
     /**
-     * Virtual instance name.
-     * @type {string}
+     * Options for configuring auto scaling policy
+     * @type {AutoScalingPolicy}
      * @memberof VirtualInstance
      */
-    name: string;
+    auto_scaling_policy?: AutoScalingPolicy;
     /**
-     * Virtual instance description.
-     * @type {string}
+     * Number of seconds without queries after which the VI is suspended
+     * @type {number}
      * @memberof VirtualInstance
      */
-    description?: string;
-    /**
-     * Creator of requested virtual instance.
-     * @type {string}
-     * @memberof VirtualInstance
-     */
-    created_by?: string;
+    auto_suspend_seconds?: number;
     /**
      * ISO-8601 date of when virtual instance was created.
      * @type {string}
@@ -5418,41 +5723,17 @@ export interface VirtualInstance {
      */
     created_at?: string;
     /**
-     * ISO-8601 date of when virtual instance was created.
+     * Creator of requested virtual instance.
      * @type {string}
      * @memberof VirtualInstance
      */
-    resumed_at?: string;
-    /**
-     * Virtual instance state.
-     * @type {string}
-     * @memberof VirtualInstance
-     */
-    state?: VirtualInstance.StateEnum;
+    created_by?: string;
     /**
      * Virtual instance current size.
      * @type {string}
      * @memberof VirtualInstance
      */
     current_size?: VirtualInstance.CurrentSizeEnum;
-    /**
-     * Virtual instance desired size.
-     * @type {string}
-     * @memberof VirtualInstance
-     */
-    desired_size?: VirtualInstance.DesiredSizeEnum;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof VirtualInstance
-     */
-    monitoring_enabled?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof VirtualInstance
-     */
-    default_vi?: boolean;
     /**
      * 
      * @type {number}
@@ -5461,10 +5742,28 @@ export interface VirtualInstance {
     default_pod_count?: number;
     /**
      * 
-     * @type {number}
+     * @type {boolean}
      * @memberof VirtualInstance
      */
-    scaled_pod_count?: number;
+    default_vi?: boolean;
+    /**
+     * Virtual instance description.
+     * @type {string}
+     * @memberof VirtualInstance
+     */
+    description?: string;
+    /**
+     * Virtual instance desired size.
+     * @type {string}
+     * @memberof VirtualInstance
+     */
+    desired_size?: VirtualInstance.DesiredSizeEnum;
+    /**
+     * When a Virtual Instance is resumed, it will remount all collections that were mounted when the Virtual Instance was suspended.
+     * @type {boolean}
+     * @memberof VirtualInstance
+     */
+    enable_remount_on_resume?: boolean;
     /**
      * Unique identifier for virtual instance.
      * @type {string}
@@ -5472,23 +5771,47 @@ export interface VirtualInstance {
      */
     id?: string;
     /**
-     * Virtual Instance RRN.
-     * @type {string}
+     * 
+     * @type {boolean}
      * @memberof VirtualInstance
      */
-    rrn?: string;
-    /**
-     * Number of seconds without queries after which the VI is suspended
-     * @type {number}
-     * @memberof VirtualInstance
-     */
-    auto_suspend_seconds?: number;
+    monitoring_enabled?: boolean;
     /**
      * Number of seconds between data refreshes for mounts on this Virtual Instance
      * @type {number}
      * @memberof VirtualInstance
      */
     mount_refresh_interval_seconds?: number;
+    /**
+     * Virtual instance name.
+     * @type {string}
+     * @memberof VirtualInstance
+     */
+    name: string;
+    /**
+     * ISO-8601 date of when virtual instance was created.
+     * @type {string}
+     * @memberof VirtualInstance
+     */
+    resumed_at?: string;
+    /**
+     * Virtual Instance RRN.
+     * @type {string}
+     * @memberof VirtualInstance
+     */
+    rrn?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof VirtualInstance
+     */
+    scaled_pod_count?: number;
+    /**
+     * Virtual instance state.
+     * @type {string}
+     * @memberof VirtualInstance
+     */
+    state?: VirtualInstance.StateEnum;
     /**
      * Stats about this VirtualInstance
      * @type {VirtualInstanceStats}
@@ -5502,20 +5825,6 @@ export interface VirtualInstance {
  * @namespace VirtualInstance
  */
 export namespace VirtualInstance {
-    /**
-     * @export
-     * @enum {string}
-     */
-    export enum StateEnum {
-        INITIALIZING = <any> 'INITIALIZING',
-        PROVISIONINGRESOURCES = <any> 'PROVISIONING_RESOURCES',
-        REBALANCINGCOLLECTIONS = <any> 'REBALANCING_COLLECTIONS',
-        ACTIVE = <any> 'ACTIVE',
-        SUSPENDING = <any> 'SUSPENDING',
-        SUSPENDED = <any> 'SUSPENDED',
-        RESUMING = <any> 'RESUMING',
-        DELETED = <any> 'DELETED'
-    }
     /**
      * @export
      * @enum {string}
@@ -5552,6 +5861,20 @@ export namespace VirtualInstance {
         XLARGE8 = <any> 'XLARGE8',
         XLARGE16 = <any> 'XLARGE16'
     }
+    /**
+     * @export
+     * @enum {string}
+     */
+    export enum StateEnum {
+        INITIALIZING = <any> 'INITIALIZING',
+        PROVISIONINGRESOURCES = <any> 'PROVISIONING_RESOURCES',
+        REBALANCINGCOLLECTIONS = <any> 'REBALANCING_COLLECTIONS',
+        ACTIVE = <any> 'ACTIVE',
+        SUSPENDING = <any> 'SUSPENDING',
+        SUSPENDED = <any> 'SUSPENDED',
+        RESUMING = <any> 'RESUMING',
+        DELETED = <any> 'DELETED'
+    }
 }
 
 /**
@@ -5575,6 +5898,12 @@ export interface VirtualInstanceStats {
  */
 export interface Workspace {
     /**
+     * Number of collections that are immediate children of workspace.
+     * @type {number}
+     * @memberof Workspace
+     */
+    collection_count?: number;
+    /**
      * ISO-8601 date of when workspace was created.
      * @type {string}
      * @memberof Workspace
@@ -5587,23 +5916,17 @@ export interface Workspace {
      */
     created_by?: string;
     /**
-     * Descriptive label and unique identifier.
-     * @type {string}
-     * @memberof Workspace
-     */
-    name?: string;
-    /**
      * Longer explanation for the workspace.
      * @type {string}
      * @memberof Workspace
      */
     description?: string;
     /**
-     * Number of collections that are immediate children of workspace.
-     * @type {number}
+     * Descriptive label and unique identifier.
+     * @type {string}
      * @memberof Workspace
      */
-    collection_count?: number;
+    name?: string;
 }
 
 /**
@@ -5613,17 +5936,11 @@ export interface Workspace {
  */
 export interface XmlParams {
     /**
-     * Tag until which xml is ignored.
+     * Tag to differentiate between attributes and elements.
      * @type {string}
      * @memberof XmlParams
      */
-    root_tag?: string;
-    /**
-     * Encoding in which data source is encoded.
-     * @type {string}
-     * @memberof XmlParams
-     */
-    encoding?: string;
+    attribute_prefix?: string;
     /**
      * Tags with which documents are identified.
      * @type {string}
@@ -5631,17 +5948,23 @@ export interface XmlParams {
      */
     doc_tag?: string;
     /**
+     * Encoding in which data source is encoded.
+     * @type {string}
+     * @memberof XmlParams
+     */
+    encoding?: string;
+    /**
+     * Tag until which xml is ignored.
+     * @type {string}
+     * @memberof XmlParams
+     */
+    root_tag?: string;
+    /**
      * tag used for the value when there are attributes in the element having no child
      * @type {string}
      * @memberof XmlParams
      */
     value_tag?: string;
-    /**
-     * Tag to differentiate between attributes and elements.
-     * @type {string}
-     * @memberof XmlParams
-     */
-    attribute_prefix?: string;
 }
 
 
@@ -6666,6 +6989,47 @@ export const CollectionsApiFetchParamCreator = function (configuration?: Configu
             };
         },
         /**
+         * Update details about a collection.
+         * @summary Update Collection
+         * @param {string} workspace name of the workspace
+         * @param {string} collection name of the collection
+         * @param {UpdateCollectionRequest} body JSON object
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateCollection(workspace: string, collection: string, body: UpdateCollectionRequest, options: any = {}): FetchArgs {
+            // verify required parameter 'workspace' is not null or undefined
+            if (workspace === null || workspace === undefined) {
+                throw new RequiredError('workspace','Required parameter workspace was null or undefined when calling updateCollection.');
+            }
+            // verify required parameter 'collection' is not null or undefined
+            if (collection === null || collection === undefined) {
+                throw new RequiredError('collection','Required parameter collection was null or undefined when calling updateCollection.');
+            }
+            // verify required parameter 'body' is not null or undefined
+            if (body === null || body === undefined) {
+                throw new RequiredError('body','Required parameter body was null or undefined when calling updateCollection.');
+            }
+            const localVarPath = `/v1/orgs/self/ws/{workspace}/collections/{collection}`
+                .replace(`{${"workspace"}}`, encodeURIComponent(String(workspace)))
+                .replace(`{${"collection"}}`, encodeURIComponent(String(collection)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'PUT' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"UpdateCollectionRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Retrieve all collections in a workspace.
          * @summary List Collections in Workspace
          * @param {string} workspace name of the workspace
@@ -6779,6 +7143,27 @@ export const CollectionsApiFp = function(configuration?: Configuration) {
             };
         },
         /**
+         * Update details about a collection.
+         * @summary Update Collection
+         * @param {string} workspace name of the workspace
+         * @param {string} collection name of the collection
+         * @param {UpdateCollectionRequest} body JSON object
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateCollection(workspace: string, collection: string, body: UpdateCollectionRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<GetCollectionResponse> {
+            const localVarFetchArgs = CollectionsApiFetchParamCreator(configuration).updateCollection(workspace, collection, body, options);
+            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
          * Retrieve all collections in a workspace.
          * @summary List Collections in Workspace
          * @param {string} workspace name of the workspace
@@ -6849,6 +7234,18 @@ export const CollectionsApiFactory = function (configuration?: Configuration, fe
             return CollectionsApiFp(configuration).listCollections(options)(fetch, basePath);
         },
         /**
+         * Update details about a collection.
+         * @summary Update Collection
+         * @param {string} workspace name of the workspace
+         * @param {string} collection name of the collection
+         * @param {UpdateCollectionRequest} body JSON object
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateCollection(workspace: string, collection: string, body: UpdateCollectionRequest, options?: any) {
+            return CollectionsApiFp(configuration).updateCollection(workspace, collection, body, options)(fetch, basePath);
+        },
+        /**
          * Retrieve all collections in a workspace.
          * @summary List Collections in Workspace
          * @param {string} workspace name of the workspace
@@ -6912,6 +7309,19 @@ export class CollectionsApi extends BaseAPI {
      */
     public listCollections(options?: any) {
         return CollectionsApiFp(this.configuration).listCollections(options)(this.fetch, this.basePath);
+    }
+    /**
+     * Update details about a collection.
+     * @summary Update Collection
+     * @param {string} workspace name of the workspace
+     * @param {string} collection name of the collection
+     * @param {UpdateCollectionRequest} body JSON object
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CollectionsApi
+     */
+    public updateCollection(workspace: string, collection: string, body: UpdateCollectionRequest, options?: any) {
+        return CollectionsApiFp(this.configuration).updateCollection(workspace, collection, body, options)(this.fetch, this.basePath);
     }
     /**
      * Retrieve all collections in a workspace.
@@ -9712,6 +10122,543 @@ export class SharedLambdasApi extends BaseAPI {
 }
 
 /**
+ * SourcesApi - fetch parameter creator
+ * @export
+ */
+export const SourcesApiFetchParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Create new source in a collection.
+         * @summary Create a source
+         * @param {string} workspace name of the workspace
+         * @param {string} collection name of the collection
+         * @param {Source} body JSON object
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createSource(workspace: string, collection: string, body: Source, options: any = {}): FetchArgs {
+            // verify required parameter 'workspace' is not null or undefined
+            if (workspace === null || workspace === undefined) {
+                throw new RequiredError('workspace','Required parameter workspace was null or undefined when calling createSource.');
+            }
+            // verify required parameter 'collection' is not null or undefined
+            if (collection === null || collection === undefined) {
+                throw new RequiredError('collection','Required parameter collection was null or undefined when calling createSource.');
+            }
+            // verify required parameter 'body' is not null or undefined
+            if (body === null || body === undefined) {
+                throw new RequiredError('body','Required parameter body was null or undefined when calling createSource.');
+            }
+            const localVarPath = `/v1/orgs/self/ws/{workspace}/collections/{collection}/sources`
+                .replace(`{${"workspace"}}`, encodeURIComponent(String(workspace)))
+                .replace(`{${"collection"}}`, encodeURIComponent(String(collection)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"Source" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Delete a collection source
+         * @summary Delete Collection source
+         * @param {string} workspace name of the workspace
+         * @param {string} collection name of the collection
+         * @param {string} source id of source
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteSource(workspace: string, collection: string, source: string, options: any = {}): FetchArgs {
+            // verify required parameter 'workspace' is not null or undefined
+            if (workspace === null || workspace === undefined) {
+                throw new RequiredError('workspace','Required parameter workspace was null or undefined when calling deleteSource.');
+            }
+            // verify required parameter 'collection' is not null or undefined
+            if (collection === null || collection === undefined) {
+                throw new RequiredError('collection','Required parameter collection was null or undefined when calling deleteSource.');
+            }
+            // verify required parameter 'source' is not null or undefined
+            if (source === null || source === undefined) {
+                throw new RequiredError('source','Required parameter source was null or undefined when calling deleteSource.');
+            }
+            const localVarPath = `/v1/orgs/self/ws/{workspace}/collections/{collection}/sources/{source}`
+                .replace(`{${"workspace"}}`, encodeURIComponent(String(workspace)))
+                .replace(`{${"collection"}}`, encodeURIComponent(String(collection)))
+                .replace(`{${"source"}}`, encodeURIComponent(String(source)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'DELETE' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Get details about a collection source.
+         * @summary Retrieve source
+         * @param {string} workspace name of the workspace
+         * @param {string} collection name of the collection
+         * @param {string} source id of source
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getSource(workspace: string, collection: string, source: string, options: any = {}): FetchArgs {
+            // verify required parameter 'workspace' is not null or undefined
+            if (workspace === null || workspace === undefined) {
+                throw new RequiredError('workspace','Required parameter workspace was null or undefined when calling getSource.');
+            }
+            // verify required parameter 'collection' is not null or undefined
+            if (collection === null || collection === undefined) {
+                throw new RequiredError('collection','Required parameter collection was null or undefined when calling getSource.');
+            }
+            // verify required parameter 'source' is not null or undefined
+            if (source === null || source === undefined) {
+                throw new RequiredError('source','Required parameter source was null or undefined when calling getSource.');
+            }
+            const localVarPath = `/v1/orgs/self/ws/{workspace}/collections/{collection}/sources/{source}`
+                .replace(`{${"workspace"}}`, encodeURIComponent(String(workspace)))
+                .replace(`{${"collection"}}`, encodeURIComponent(String(collection)))
+                .replace(`{${"source"}}`, encodeURIComponent(String(source)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Retrieve all sources in a collection.
+         * @summary List sources in collection
+         * @param {string} workspace name of the workspace
+         * @param {string} collection name of the collection
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listCollectionSources(workspace: string, collection: string, options: any = {}): FetchArgs {
+            // verify required parameter 'workspace' is not null or undefined
+            if (workspace === null || workspace === undefined) {
+                throw new RequiredError('workspace','Required parameter workspace was null or undefined when calling listCollectionSources.');
+            }
+            // verify required parameter 'collection' is not null or undefined
+            if (collection === null || collection === undefined) {
+                throw new RequiredError('collection','Required parameter collection was null or undefined when calling listCollectionSources.');
+            }
+            const localVarPath = `/v1/orgs/self/ws/{workspace}/collections/{collection}/sources`
+                .replace(`{${"workspace"}}`, encodeURIComponent(String(workspace)))
+                .replace(`{${"collection"}}`, encodeURIComponent(String(collection)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Resume source ingest
+         * @summary Resume source ingest
+         * @param {string} workspace name of the workspace
+         * @param {string} collection name of the collection
+         * @param {string} source id of source
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        resumeSource(workspace: string, collection: string, source: string, options: any = {}): FetchArgs {
+            // verify required parameter 'workspace' is not null or undefined
+            if (workspace === null || workspace === undefined) {
+                throw new RequiredError('workspace','Required parameter workspace was null or undefined when calling resumeSource.');
+            }
+            // verify required parameter 'collection' is not null or undefined
+            if (collection === null || collection === undefined) {
+                throw new RequiredError('collection','Required parameter collection was null or undefined when calling resumeSource.');
+            }
+            // verify required parameter 'source' is not null or undefined
+            if (source === null || source === undefined) {
+                throw new RequiredError('source','Required parameter source was null or undefined when calling resumeSource.');
+            }
+            const localVarPath = `/v1/orgs/self/ws/{workspace}/collections/{collection}/sources/{source}/resume`
+                .replace(`{${"workspace"}}`, encodeURIComponent(String(workspace)))
+                .replace(`{${"collection"}}`, encodeURIComponent(String(collection)))
+                .replace(`{${"source"}}`, encodeURIComponent(String(source)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Suspend source ingest
+         * @summary Suspend source ingest
+         * @param {string} workspace name of the workspace
+         * @param {string} collection name of the collection
+         * @param {string} source id of source
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        suspendSource(workspace: string, collection: string, source: string, options: any = {}): FetchArgs {
+            // verify required parameter 'workspace' is not null or undefined
+            if (workspace === null || workspace === undefined) {
+                throw new RequiredError('workspace','Required parameter workspace was null or undefined when calling suspendSource.');
+            }
+            // verify required parameter 'collection' is not null or undefined
+            if (collection === null || collection === undefined) {
+                throw new RequiredError('collection','Required parameter collection was null or undefined when calling suspendSource.');
+            }
+            // verify required parameter 'source' is not null or undefined
+            if (source === null || source === undefined) {
+                throw new RequiredError('source','Required parameter source was null or undefined when calling suspendSource.');
+            }
+            const localVarPath = `/v1/orgs/self/ws/{workspace}/collections/{collection}/sources/{source}/suspend`
+                .replace(`{${"workspace"}}`, encodeURIComponent(String(workspace)))
+                .replace(`{${"collection"}}`, encodeURIComponent(String(collection)))
+                .replace(`{${"source"}}`, encodeURIComponent(String(source)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+/**
+ * SourcesApi - functional programming interface
+ * @export
+ */
+export const SourcesApiFp = function(configuration?: Configuration) {
+    return {
+        /**
+         * Create new source in a collection.
+         * @summary Create a source
+         * @param {string} workspace name of the workspace
+         * @param {string} collection name of the collection
+         * @param {Source} body JSON object
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createSource(workspace: string, collection: string, body: Source, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<GetSourceResponse> {
+            const localVarFetchArgs = SourcesApiFetchParamCreator(configuration).createSource(workspace, collection, body, options);
+            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * Delete a collection source
+         * @summary Delete Collection source
+         * @param {string} workspace name of the workspace
+         * @param {string} collection name of the collection
+         * @param {string} source id of source
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteSource(workspace: string, collection: string, source: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<DeleteSourceResponse> {
+            const localVarFetchArgs = SourcesApiFetchParamCreator(configuration).deleteSource(workspace, collection, source, options);
+            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * Get details about a collection source.
+         * @summary Retrieve source
+         * @param {string} workspace name of the workspace
+         * @param {string} collection name of the collection
+         * @param {string} source id of source
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getSource(workspace: string, collection: string, source: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<GetSourceResponse> {
+            const localVarFetchArgs = SourcesApiFetchParamCreator(configuration).getSource(workspace, collection, source, options);
+            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * Retrieve all sources in a collection.
+         * @summary List sources in collection
+         * @param {string} workspace name of the workspace
+         * @param {string} collection name of the collection
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listCollectionSources(workspace: string, collection: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ListSourcesResponse> {
+            const localVarFetchArgs = SourcesApiFetchParamCreator(configuration).listCollectionSources(workspace, collection, options);
+            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * Resume source ingest
+         * @summary Resume source ingest
+         * @param {string} workspace name of the workspace
+         * @param {string} collection name of the collection
+         * @param {string} source id of source
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        resumeSource(workspace: string, collection: string, source: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<GetSourceResponse> {
+            const localVarFetchArgs = SourcesApiFetchParamCreator(configuration).resumeSource(workspace, collection, source, options);
+            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * Suspend source ingest
+         * @summary Suspend source ingest
+         * @param {string} workspace name of the workspace
+         * @param {string} collection name of the collection
+         * @param {string} source id of source
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        suspendSource(workspace: string, collection: string, source: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<GetSourceResponse> {
+            const localVarFetchArgs = SourcesApiFetchParamCreator(configuration).suspendSource(workspace, collection, source, options);
+            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+    }
+};
+
+/**
+ * SourcesApi - factory interface
+ * @export
+ */
+export const SourcesApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
+    return {
+        /**
+         * Create new source in a collection.
+         * @summary Create a source
+         * @param {string} workspace name of the workspace
+         * @param {string} collection name of the collection
+         * @param {Source} body JSON object
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createSource(workspace: string, collection: string, body: Source, options?: any) {
+            return SourcesApiFp(configuration).createSource(workspace, collection, body, options)(fetch, basePath);
+        },
+        /**
+         * Delete a collection source
+         * @summary Delete Collection source
+         * @param {string} workspace name of the workspace
+         * @param {string} collection name of the collection
+         * @param {string} source id of source
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteSource(workspace: string, collection: string, source: string, options?: any) {
+            return SourcesApiFp(configuration).deleteSource(workspace, collection, source, options)(fetch, basePath);
+        },
+        /**
+         * Get details about a collection source.
+         * @summary Retrieve source
+         * @param {string} workspace name of the workspace
+         * @param {string} collection name of the collection
+         * @param {string} source id of source
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getSource(workspace: string, collection: string, source: string, options?: any) {
+            return SourcesApiFp(configuration).getSource(workspace, collection, source, options)(fetch, basePath);
+        },
+        /**
+         * Retrieve all sources in a collection.
+         * @summary List sources in collection
+         * @param {string} workspace name of the workspace
+         * @param {string} collection name of the collection
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listCollectionSources(workspace: string, collection: string, options?: any) {
+            return SourcesApiFp(configuration).listCollectionSources(workspace, collection, options)(fetch, basePath);
+        },
+        /**
+         * Resume source ingest
+         * @summary Resume source ingest
+         * @param {string} workspace name of the workspace
+         * @param {string} collection name of the collection
+         * @param {string} source id of source
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        resumeSource(workspace: string, collection: string, source: string, options?: any) {
+            return SourcesApiFp(configuration).resumeSource(workspace, collection, source, options)(fetch, basePath);
+        },
+        /**
+         * Suspend source ingest
+         * @summary Suspend source ingest
+         * @param {string} workspace name of the workspace
+         * @param {string} collection name of the collection
+         * @param {string} source id of source
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        suspendSource(workspace: string, collection: string, source: string, options?: any) {
+            return SourcesApiFp(configuration).suspendSource(workspace, collection, source, options)(fetch, basePath);
+        },
+    };
+};
+/**
+ * SourcesApi - object-oriented interface
+ * @export
+ * @class SourcesApi
+ * @extends {BaseAPI}
+ */
+export class SourcesApi extends BaseAPI {
+    /**
+     * Create new source in a collection.
+     * @summary Create a source
+     * @param {string} workspace name of the workspace
+     * @param {string} collection name of the collection
+     * @param {Source} body JSON object
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SourcesApi
+     */
+    public createSource(workspace: string, collection: string, body: Source, options?: any) {
+        return SourcesApiFp(this.configuration).createSource(workspace, collection, body, options)(this.fetch, this.basePath);
+    }
+    /**
+     * Delete a collection source
+     * @summary Delete Collection source
+     * @param {string} workspace name of the workspace
+     * @param {string} collection name of the collection
+     * @param {string} source id of source
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SourcesApi
+     */
+    public deleteSource(workspace: string, collection: string, source: string, options?: any) {
+        return SourcesApiFp(this.configuration).deleteSource(workspace, collection, source, options)(this.fetch, this.basePath);
+    }
+    /**
+     * Get details about a collection source.
+     * @summary Retrieve source
+     * @param {string} workspace name of the workspace
+     * @param {string} collection name of the collection
+     * @param {string} source id of source
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SourcesApi
+     */
+    public getSource(workspace: string, collection: string, source: string, options?: any) {
+        return SourcesApiFp(this.configuration).getSource(workspace, collection, source, options)(this.fetch, this.basePath);
+    }
+    /**
+     * Retrieve all sources in a collection.
+     * @summary List sources in collection
+     * @param {string} workspace name of the workspace
+     * @param {string} collection name of the collection
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SourcesApi
+     */
+    public listCollectionSources(workspace: string, collection: string, options?: any) {
+        return SourcesApiFp(this.configuration).listCollectionSources(workspace, collection, options)(this.fetch, this.basePath);
+    }
+    /**
+     * Resume source ingest
+     * @summary Resume source ingest
+     * @param {string} workspace name of the workspace
+     * @param {string} collection name of the collection
+     * @param {string} source id of source
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SourcesApi
+     */
+    public resumeSource(workspace: string, collection: string, source: string, options?: any) {
+        return SourcesApiFp(this.configuration).resumeSource(workspace, collection, source, options)(this.fetch, this.basePath);
+    }
+    /**
+     * Suspend source ingest
+     * @summary Suspend source ingest
+     * @param {string} workspace name of the workspace
+     * @param {string} collection name of the collection
+     * @param {string} source id of source
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SourcesApi
+     */
+    public suspendSource(workspace: string, collection: string, source: string, options?: any) {
+        return SourcesApiFp(this.configuration).suspendSource(workspace, collection, source, options)(this.fetch, this.basePath);
+    }
+}
+
+/**
  * UsersApi - fetch parameter creator
  * @export
  */
@@ -10808,7 +11755,7 @@ export const VirtualInstancesApiFetchParamCreator = function (configuration?: Co
             };
         },
         /**
-         * [beta] Get a mount on this virtual instance.
+         * [beta] Retrieve a mount on this virtual instance.
          * @summary Get Collection Mount
          * @param {string} virtualInstanceId Virtual Instance RRN
          * @param {string} collectionPath 
@@ -10944,7 +11891,7 @@ export const VirtualInstancesApiFetchParamCreator = function (configuration?: Co
         },
         /**
          * [beta] Mount a collection to this virtual instance.
-         * @summary Mount Collection
+         * @summary Mount Collections
          * @param {string} virtualInstanceId Virtual Instance RRN
          * @param {CreateCollectionMountRequest} body JSON object
          * @param {*} [options] Override http request option.
@@ -11181,7 +12128,7 @@ export const VirtualInstancesApiFp = function(configuration?: Configuration) {
             };
         },
         /**
-         * [beta] Get a mount on this virtual instance.
+         * [beta] Retrieve a mount on this virtual instance.
          * @summary Get Collection Mount
          * @param {string} virtualInstanceId Virtual Instance RRN
          * @param {string} collectionPath 
@@ -11277,7 +12224,7 @@ export const VirtualInstancesApiFp = function(configuration?: Configuration) {
         },
         /**
          * [beta] Mount a collection to this virtual instance.
-         * @summary Mount Collection
+         * @summary Mount Collections
          * @param {string} virtualInstanceId Virtual Instance RRN
          * @param {CreateCollectionMountRequest} body JSON object
          * @param {*} [options] Override http request option.
@@ -11423,7 +12370,7 @@ export const VirtualInstancesApiFactory = function (configuration?: Configuratio
             return VirtualInstancesApiFp(configuration).deleteVirtualInstance(virtualInstanceId, options)(fetch, basePath);
         },
         /**
-         * [beta] Get a mount on this virtual instance.
+         * [beta] Retrieve a mount on this virtual instance.
          * @summary Get Collection Mount
          * @param {string} virtualInstanceId Virtual Instance RRN
          * @param {string} collectionPath 
@@ -11474,7 +12421,7 @@ export const VirtualInstancesApiFactory = function (configuration?: Configuratio
         },
         /**
          * [beta] Mount a collection to this virtual instance.
-         * @summary Mount Collection
+         * @summary Mount Collections
          * @param {string} virtualInstanceId Virtual Instance RRN
          * @param {CreateCollectionMountRequest} body JSON object
          * @param {*} [options] Override http request option.
@@ -11568,7 +12515,7 @@ export class VirtualInstancesApi extends BaseAPI {
         return VirtualInstancesApiFp(this.configuration).deleteVirtualInstance(virtualInstanceId, options)(this.fetch, this.basePath);
     }
     /**
-     * [beta] Get a mount on this virtual instance.
+     * [beta] Retrieve a mount on this virtual instance.
      * @summary Get Collection Mount
      * @param {string} virtualInstanceId Virtual Instance RRN
      * @param {string} collectionPath 
@@ -11624,7 +12571,7 @@ export class VirtualInstancesApi extends BaseAPI {
     }
     /**
      * [beta] Mount a collection to this virtual instance.
-     * @summary Mount Collection
+     * @summary Mount Collections
      * @param {string} virtualInstanceId Virtual Instance RRN
      * @param {CreateCollectionMountRequest} body JSON object
      * @param {*} [options] Override http request option.
