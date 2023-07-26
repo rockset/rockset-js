@@ -86,53 +86,6 @@ rocksetClient.collections
     name: 'Users',
     description: "I'm the map!",
     retention_secs: 10000 /* (optional) number of seconds after which data is purged. */,
-    field_mappings: [
-      {
-        name: 'drop_all_fields' /* name of field mapping */,
-        is_drop_all_fields: true /*  (optional) whether to drop all fields - if true, don't set input or output fields */,
-      },
-      {
-        name: 'cast_age_to_int',
-        input_fields: [
-          {
-            field_name: 'age' /* name of field in input data */,
-            /*
-              (optional) If an incoming document is missing this input field:
-                SKIP: the field mapping will not be applied at all
-                PASS: the input field value will be set to null when applying the field mapping
-            */
-            if_missing: InputField.IfMissingEnum.SKIP,
-            is_drop: false /* (optional) drop this field at the time of ingest */,
-            param:
-              'input_age' /* (optional) an alias which can be referred in a SQL expression in the output_field */,
-          },
-          {
-            field_name: 'first_name',
-            if_missing: InputField.IfMissingEnum.PASS,
-            is_drop: true,
-          },
-          {
-            field_name: 'last_name',
-            if_missing: InputField.IfMissingEnum.PASS,
-            is_drop: true,
-          },
-        ],
-        output_field: {
-          field_name:
-            'user_description' /* (optional) name of the new field created by your SQL expression */,
-          value: {
-            sql:
-              "CONCAT(:first_name, ' ', :last_name, ' is ', CAST(:input_age as int), ' years old.')",
-          } /* (optional) an expression that is applied to every new document added to your collection */,
-          /*
-            (optional) When there is an error while evaluating the SQL expression:
-              SKIP: skips only this output field but continues the update
-              FAIL: causes the update to fail entirely
-          */
-          on_error: OutputField.OnErrorEnum.FAIL,
-        },
-      },
-    ],
   })
   .then(console.log)
   .catch(console.error);

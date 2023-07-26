@@ -29,7 +29,6 @@ describe('functionality tests (e2e)', function () {
       });
       expect(result).toMatchObject({
         data: {
-          field_mappings: [],
           name: collection,
           sources: [],
           status: 'CREATED',
@@ -61,7 +60,6 @@ describe('functionality tests (e2e)', function () {
         created_at: '2019-10-16T01:46:55Z',
         created_by: null,
         description: null,
-        field_mappings: [],
         name: '_events',
         retention_secs: 2592000,
         sources: [],
@@ -84,7 +82,6 @@ describe('functionality tests (e2e)', function () {
       );
       expect(result).toMatchObject({
         data: {
-          field_mappings: [],
           name: collection,
           sources: [],
           workspace: 'commons',

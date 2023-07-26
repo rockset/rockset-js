@@ -118,6 +118,5 @@ test('is snake case', async () => {
   // This line won't type check if the generated code is camel case
   await rockset.collections.createCollection('ws', {
     name: 'sname',
-    field_mappings: [],
   });
 });
