@@ -30,6 +30,11 @@ class DeployQueryLambda extends RockCommand {
       description: 'print out the names of the Query Lambdas that would be deployed and return',
       default: false,
     }),
+    onlyDeployIfFlagged: Flags.boolean({
+      description:
+        'if true, only lambdas with the flag of shouldDeploy in the local metadata file will be deployed',
+      default: false,
+    }),
   };
 
   static description = `deploy Query Lambda entities to Rockset
@@ -70,6 +75,7 @@ If a lambda parameter is passed, only that Query Lambda will be deployed.
         lambda: flags.lambda,
         dryRun: flags.dryRun,
         createMissingWorkspace: !flags.failOnMissingWorkspace,
+        onlyDeployIfFlagged: flags.onlyDeployIfFlagged,
       },
     );
   }

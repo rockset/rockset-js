@@ -1,5 +1,4 @@
-@rockset/cli
-============
+# @rockset/cli
 
 Official Rockset CLI
 
@@ -12,23 +11,23 @@ Official Rockset CLI
 [![License](https://img.shields.io/npm/l/@rockset/cli.svg)](https://github.com/rockset/rockset-js/blob/master/package.json)
 ![Build|Lint|Test](https://github.com/rockset/rockset-js/workflows/Build%7CLint%7CTest/badge.svg)
 
-* [Download & Installation Instructions](#download--installation-instructions)
-* [Authentication and Profile Management (`rockset auth`)](#authentication-and-profile-management-rockset-auth)
-    * [Multi-region support](#multi-region-support)
-* [Access the Rockset API from the Command Line (`rockset api`)](#access-the-rockset-api-from-the-command-line-rockset-api)
-    * [Sample Code Snippets](#sample-code-snippets)
-    * [Output Format Options](#output-format-options)
-* [Execute SQL from the Command Line (`rockset sql`)](#execute-sql-from-the-command-line-rockset-sql)
-* [Create and Deploy Query Lambdas (`rockset local`)](#create-and-deploy-query-lambdas-rockset-local)
-    * [Hello World Tutorial](/packages/cli/tutorials/queryLambdaHelloWorld.md)
-    * [Set Up Query Lambdas Source Directory](#set-up-query-lambdas-source-directory)
-    * [Download Existing Query Lambdas from Rockset](#download-existing-query-lambdas-from-rockset)
-    * [Add a New Query Lambda](#add-a-new-query-lambda)
-    * [Write and Edit Query Lambda SQL](#write-and-edit-query-lambda-sql)
-    * [Execute and Test Query Lambda SQL](#execute-and-test-query-lambda-sql)
-    * [Deploy Query Lambdas to Rockset](#deploy-query-lambdas-to-rockset)
-    * [Integrate with Version Control and CI/CD](#integrate-with-version-control-and-cicd)
-* [Telemetry](#telemetry)
+- [Download & Installation Instructions](#download--installation-instructions)
+- [Authentication and Profile Management (`rockset auth`)](#authentication-and-profile-management-rockset-auth)
+  - [Multi-region support](#multi-region-support)
+- [Access the Rockset API from the Command Line (`rockset api`)](#access-the-rockset-api-from-the-command-line-rockset-api)
+  - [Sample Code Snippets](#sample-code-snippets)
+  - [Output Format Options](#output-format-options)
+- [Execute SQL from the Command Line (`rockset sql`)](#execute-sql-from-the-command-line-rockset-sql)
+- [Create and Deploy Query Lambdas (`rockset local`)](#create-and-deploy-query-lambdas-rockset-local)
+  - [Hello World Tutorial](/packages/cli/tutorials/queryLambdaHelloWorld.md)
+  - [Set Up Query Lambdas Source Directory](#set-up-query-lambdas-source-directory)
+  - [Download Existing Query Lambdas from Rockset](#download-existing-query-lambdas-from-rockset)
+  - [Add a New Query Lambda](#add-a-new-query-lambda)
+  - [Write and Edit Query Lambda SQL](#write-and-edit-query-lambda-sql)
+  - [Execute and Test Query Lambda SQL](#execute-and-test-query-lambda-sql)
+  - [Deploy Query Lambdas to Rockset](#deploy-query-lambdas-to-rockset)
+  - [Integrate with Version Control and CI/CD](#integrate-with-version-control-and-cicd)
+- [Telemetry](#telemetry)
 
 # Download & Installation Instructions
 
@@ -53,6 +52,7 @@ npm install -g @rockset/cli
 ### Update to Latest Version
 
 You can update the Rockset CLI to the latest version at any time using `rockset update`.
+
 ```
 $ rockset update
 ```
@@ -60,7 +60,9 @@ $ rockset update
 After an update, run `rockset autocomplete -r` to rebuild the autocomplete cache.
 
 ### Verify Your Installation
+
 To verify that your installation was completed successfully, run `rockset --version` in your command line.
+
 ```
 $ rockset --version
 ```
@@ -70,10 +72,13 @@ $ rockset --version
 The Rockset CLI Autocomplete feature allows you to preview and complete commands using the tab key. It is currently compatible with bash and zsh.
 
 To install this feature, run `rockset autocomplete` in your command line.
+
 ```
 $ rockset autocomplete
 ```
+
 **Note: If you are installing autocomplete on macOS and using it from a login shell, you may need to run the following command:**
+
 ```bash
 $ echo 'source ~/.bashrc' >> ~/.bash_profile
 ```
@@ -103,6 +108,7 @@ $ rockset auth use
 You can find a complete reference for all supported `rockset auth` commands [here](/packages/cli/reference/auth.md).
 
 ### Multi-region support
+
 By default, the Rockset CLI tool uses the Oregon 1 server. To select another region, you will need to add and use a new profile that explicitly sets a different region. For more information, check out `rockset auth` commands [here](/packages/cli/reference/auth.md).
 
 # Access the Rockset API from the Command Line (`rockset api`)
@@ -145,16 +151,16 @@ $ rockset api collections createCollection commons --body body.yaml
 # YAML file for POST body
 name: testCollection
 sources:
-- s3:
-    access_key: ''
-    secret_access: ''
-    prefix: partial-cities
-    region: us-west-2
-    bucket: rockset-public-datasets
-    prefixes:
-    - partial-cities
-    mappings: []
-  format: JSON
+  - s3:
+      access_key: ''
+      secret_access: ''
+      prefix: partial-cities
+      region: us-west-2
+      bucket: rockset-public-datasets
+      prefixes:
+        - partial-cities
+      mappings: []
+    format: JSON
 
 # optionally specify retention duration of all documents in this collection
 retention_secs: 100000
@@ -171,42 +177,41 @@ $ rockset api collections createCollection commons --body body.yaml
 # YAML file for POST body
 name: testCollection
 sources:
-- s3:
-    access_key: ''
-    secret_access: ''
-    prefix: partial-cities
-    region: us-west-2
-    bucket: rockset-public-datasets
-    prefixes:
-    - partial-cities
-    mappings: []
-  format: JSON
+  - s3:
+      access_key: ''
+      secret_access: ''
+      prefix: partial-cities
+      region: us-west-2
+      bucket: rockset-public-datasets
+      prefixes:
+        - partial-cities
+      mappings: []
+    format: JSON
 field_mappings:
-- name: country_length_mapper
-  # used for Field Whitelisting
-  is_drop_all_fields:
-  input_fields:
-  - field_name: fields.country
+  - name: country_length_mapper
+    # used for Field Whitelisting
+    is_drop_all_fields:
+    input_fields:
+      - field_name: fields.country
 
-    # either 'SKIP' or 'PASS'
-    if_missing: PASS
+        # either 'SKIP' or 'PASS'
+        if_missing: PASS
 
-    # drop this field
-    is_drop: true
+        # drop this field
+        is_drop: true
 
-    # optional parameter name to be referenced in output_field sql
-    param: country
+        # optional parameter name to be referenced in output_field sql
+        param: country
 
-  output_field:
-    field_name: lenCountry
+    output_field:
+      field_name: lenCountry
 
-    # SQL transformation used to create a new field
-    value:
-      sql: LENGTH(:country)
+      # SQL transformation used to create a new field
+      value:
+        sql: LENGTH(:country)
 
-    # either 'SKIP' or 'FAIL'
-    on_error: SKIP
-
+      # either 'SKIP' or 'FAIL'
+      on_error: SKIP
 ```
 
 ```bash
@@ -221,8 +226,8 @@ $ rockset api collections createCollection commons --body body.yaml
 ```yaml
 # YAML file for POST body
 data:
-- col1: val1
-- col1: val2
+  - col1: val1
+  - col1: val2
 ```
 
 ```bash
@@ -235,8 +240,8 @@ $ rockset api documents addDocuments commons testCollection --body body.yaml
 ```yaml
 # YAML file for POST body
 data:
-- _id: 2774620d-7bd8-4b7a-bb2e-f8f477a8bdf4-1
-- _id: 2774620d-7bd8-4b7a-bb2e-f8f477a8bdf4-2
+  - _id: 2774620d-7bd8-4b7a-bb2e-f8f477a8bdf4-1
+  - _id: 2774620d-7bd8-4b7a-bb2e-f8f477a8bdf4-2
 ```
 
 ```bash
@@ -253,7 +258,7 @@ $ rockset api documents deleteDocuments commons testCollection --body body.yaml
 name: testAlias
 description: alias for testCollection
 collections:
-- commons.testCollection
+  - commons.testCollection
 ```
 
 ```bash
@@ -267,7 +272,7 @@ $ rockset api aliases createAlias commons --body body.yaml
 # YAML file for POST body
 description: alias for testCollection2
 collections:
-- commons.testCollection2
+  - commons.testCollection2
 ```
 
 ```bash
@@ -290,7 +295,6 @@ $ rockset api workspaces createWorkspace --body body.yaml
 ...
 ```
 
-
 ## Output Format Options
 
 All API Commands by default will intelligently grab the most relevant part of the response data and display it for you in a table. The most commonly used flags are shown below. The full set of flags can be found by setting the `-h` flag.
@@ -300,7 +304,6 @@ All API Commands by default will intelligently grab the most relevant part of th
 
   --output=csv|json|yaml         output in a more machine friendly format
 ```
-
 
 # Execute SQL from the Command Line (`rockset sql`)
 
@@ -370,8 +373,9 @@ rockset local queryLambda add commons.helloWorld
 ```
 
 This command will construct two boilerplate files on your behalf:
-* `[workspaceName]/[queryLambdaName].lambda.json` - definition file that includes meta information such as description and default parameters.
-* `[workspaceName]/__sql/[queryLambdaName].sql` - SQL file that contains the SQL statement associated with this Query Lambda.
+
+- `[workspaceName]/[queryLambdaName].lambda.json` - definition file that includes meta information such as description and default parameters.
+- `[workspaceName]/__sql/[queryLambdaName].sql` - SQL file that contains the SQL statement associated with this Query Lambda.
 
 ### Write and Edit Query Lambda SQL
 
@@ -414,6 +418,12 @@ $ rockset local deploy -l commons.helloWorld -t dev
 If a Query Lambda named `commons.helloWorld` already exists in Rockset (for example, if you'd already `deploy`'d it previously,
 or you had created a Query Lambda with the same name in the Rockset Console), this command will create a new version hash and append
 it to the version history for this Query Lambda. If such a Query Lambda does not yet exist, it will create a new Query Lambda.
+
+Note: if you do not provide either the `-l` or `-w` flags, this command will attempt to update all of the Query Lambdas that are currently defined locally regardless of whether or not you actually made changes to them. This may cause you to hit rate limits. If you do encounter rate limits, you have two options:
+
+1. Limit the number of Query Lambdas that are in your local state.
+2. Call the deploy command with the `--onlyDeployIfFlagged` option. Calling this command with that flag enabled will cause the CLI to ignore any Query Lambdas that do not have config.flagForDeploy set to true in the local file. You must handle setting this value for each Query Lambda yourself.
+
 You can tag this Query Lambda with the `-t` flag — this flag will apply the specified tag to the Query Lambda version created.
 
 So long as your applications hitting this Query Lambda are executing it by tag (as opposed to version hash), you can use this command
@@ -438,7 +448,11 @@ Then, your application can hit Query Lambda `helloWorld` with tag `development` 
 
 ```js
 // JS Application Example
-rockset.queryLambdas.executeQueryLambdaByTag('commons', 'helloWorld', isProduction() ? 'production' : 'development');
+rockset.queryLambdas.executeQueryLambdaByTag(
+  'commons',
+  'helloWorld',
+  isProduction() ? 'production' : 'development',
+);
 ```
 
 # Telemetry

@@ -33,4 +33,36 @@ describe('Main external facing functions', () => {
       ]);
     })
   );
+
+  test(
+    'Test deploy query lambdas',
+    mfs('emptyRoot', async () => {
+      process.env.ROCKSET_APIKEY = 'blah';
+      process.env.ROCKSET_APISERVER = 'blah.rockset.com';
+
+      // Write a lambda to commons.foo, and expect to see it listed
+      const entity = createEmptyQLEntity(
+        parseLambdaQualifiedName('commons.doNotDeploy')
+      );
+      const entity2 = createEmptyQLEntity(
+        parseLambdaQualifiedName('commons.willDeploy')
+      );
+      entity2.config.flagForDeploy = true;
+      await Promise.all([
+        writeLambda(entity),
+        writeLambda(entity2),
+      ]);
+
+      const deployStart = jest.fn();
+      const deploySkip = jest.fn();
+
+      const mockWorkspacesCall = jest.fn(() => ['commons']);
+      const mockClient = {workspaces: {listWorkspaces: mockWorkspacesCall}};
+      
+      await main.deployQueryLambdas({ onDeployStart: deployStart, onSkipQueryLambda: deploySkip }, {onlyDeployIfFlagged: true, dryRun: true}, mockClient);
+      
+      expect(deployStart).toBeCalledTimes(1);
+      expect(deploySkip).toBeCalledTimes(1);
+    })
+  );
 });

@@ -4,7 +4,7 @@ import {
   QueryLambdaVersionResponse,
   QueryResponse,
 } from '@rockset/client/dist/codegen/api';
-import { type, TypeOf, string, array } from 'io-ts';
+import { type, TypeOf, string, array, boolean } from 'io-ts';
 import * as t from 'io-ts';
 import * as path from 'path';
 import {
@@ -166,6 +166,7 @@ const LambdaConfigOptional = t.partial({
   default_parameters: array(QueryParameter),
   // Optional type
   description: string,
+  flagForDeploy: boolean,
 });
 
 export const LambdaConfig = t.intersection([
@@ -234,6 +235,7 @@ export interface LambdaDeployOptions {
   lambda?: string;
   createMissingWorkspace?: boolean;
   dryRun?: boolean;
+  onlyDeployIfFlagged?: boolean;
 }
 
 // *** Helper functions to parse stuff ***
@@ -322,7 +324,7 @@ export function createEmptyQLEntity(
       default_parameters: [],
       description,
     },
-    sql: `-- Your SQL here
+    sql: `-- Your SQL here,
 `,
   });
 }

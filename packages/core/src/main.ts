@@ -217,9 +217,11 @@ export async function deleteQueryLambdas(options: LambdaDeleteOptions) {
 // TODO add tests for this
 export async function deployQueryLambdas(
   hooks: DeployHooks = {},
-  options: LambdaDeployOptions
+  options: LambdaDeployOptions,
+  overrideClient?: any,
 ) {
-  const [srcPath, client] = await Promise.all([getSrcPath(), createClient()]);
+  const client = overrideClient ?? await createClient();
+  const srcPath = await getSrcPath();
 
   // Grab all files
   const allFiles = await getFiles(srcPath);
@@ -250,7 +252,19 @@ export async function deployQueryLambdas(
 
   return Promise.all(
     lambdaEntities.map(async (lambdaEntity) => {
-      const { ws, name: lambda, sql: text, fullName } = lambdaEntity;
+      const {
+        ws,
+        name: lambda,
+        sql: text,
+        fullName,
+      } = lambdaEntity;
+
+      const flagForDeploy = lambdaEntity.config.flagForDeploy;
+
+      if (options.onlyDeployIfFlagged && !flagForDeploy) {
+        hooks.onSkipQueryLambda?.(lambdaEntity.fullName);
+        return;
+      }
 
       if (
         (!options.workspace && !options.lambda) ||
