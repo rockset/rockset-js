@@ -1,4 +1,4 @@
-import rocksetConfigure from '@rockset/client';
+import rocksetConfigure, { MainApi } from '@rockset/client';
 import {
   DeployHooks,
   LambdaEntity,
@@ -217,9 +217,11 @@ export async function deleteQueryLambdas(options: LambdaDeleteOptions) {
 // TODO add tests for this
 export async function deployQueryLambdas(
   hooks: DeployHooks = {},
-  options: LambdaDeployOptions
+  options: LambdaDeployOptions,
+  mockClient?: MainApi
 ) {
-  const [srcPath, client] = await Promise.all([getSrcPath(), createClient()]);
+  const client = mockClient ?? (await createClient());
+  const srcPath = await getSrcPath();
 
   // Grab all files
   const allFiles = await getFiles(srcPath);
@@ -250,7 +252,8 @@ export async function deployQueryLambdas(
 
   return Promise.all(
     lambdaEntities.map(async (lambdaEntity) => {
-      const { ws, name: lambda, sql: text, fullName } = lambdaEntity;
+      const { ws, name: lambda, sql: text, fullName, config } = lambdaEntity;
+      const { description, default_parameters: defaultParameters } = config;
 
       if (
         (!options.workspace && !options.lambda) ||
@@ -264,6 +267,34 @@ export async function deployQueryLambdas(
         if (options.dryRun) {
           return;
         }
+
+        // If the user is changing tags, the QL must be deployed so that the version is known
+        if (!options.tag) {
+          try {
+            const savedQueryLambdas = await client.queryLambdas.listQueryLambdaVersions(
+              ws,
+              lambda
+            );
+
+            // If an equivalent version already exists, we can skip deploy
+            const hasEquivalentVersion = savedQueryLambdas?.data?.some(
+              (lambda) =>
+                description === lambda.description &&
+                text === lambda.sql?.query &&
+                _.isEqual(defaultParameters, lambda.sql?.default_parameters)
+            );
+
+            if (hasEquivalentVersion) {
+              hooks.onSkipQueryLambda?.(lambdaEntity.fullName);
+              return;
+            }
+          } catch (e) {
+            console.warn(
+              `Failed to list query lambda versions for comparison, assume QL ${lambdaEntity.fullName} must be deployed: ${e}`
+            );
+          }
+        }
+
         try {
           if (options.createMissingWorkspace && !remoteWorkspacesMap?.[ws]) {
             await client.workspaces.createWorkspace({
@@ -275,10 +306,10 @@ export async function deployQueryLambdas(
             ws,
             lambda,
             {
-              description: lambdaEntity.config.description,
+              description: description,
               sql: {
                 query: text,
-                default_parameters: lambdaEntity.config.default_parameters,
+                default_parameters: defaultParameters,
               },
             },
             /* create if not present */ true
