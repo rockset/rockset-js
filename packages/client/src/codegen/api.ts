@@ -102,6 +102,12 @@ export interface AddDocumentsResponse {
      * @memberof AddDocumentsResponse
      */
     data?: Array<DocumentStatus>;
+    /**
+     * A string representing the collection offset after completing the write.
+     * @type {string}
+     * @memberof AddDocumentsResponse
+     */
+    last_offset?: string;
 }
 
 /**
@@ -324,6 +330,7 @@ export namespace AutoScalingPolicy {
         NANO = <any> 'NANO',
         SHARED = <any> 'SHARED',
         MILLI = <any> 'MILLI',
+        XSMALL = <any> 'XSMALL',
         SMALL = <any> 'SMALL',
         MEDIUM = <any> 'MEDIUM',
         LARGE = <any> 'LARGE',
@@ -342,6 +349,7 @@ export namespace AutoScalingPolicy {
         NANO = <any> 'NANO',
         SHARED = <any> 'SHARED',
         MILLI = <any> 'MILLI',
+        XSMALL = <any> 'XSMALL',
         SMALL = <any> 'SMALL',
         MEDIUM = <any> 'MEDIUM',
         LARGE = <any> 'LARGE',
@@ -698,6 +706,12 @@ export interface Collection {
      */
     retention_secs?: number;
     /**
+     * Collection RRN.
+     * @type {string}
+     * @memberof Collection
+     */
+    rrn?: string;
+    /**
      * List of sources from which collection ingests.
      * @type {Array<Source>}
      * @memberof Collection
@@ -715,6 +729,12 @@ export interface Collection {
      * @memberof Collection
      */
     status?: Collection.StatusEnum;
+    /**
+     * RocksDB storage compression type.
+     * @type {string}
+     * @memberof Collection
+     */
+    storage_compression_type?: Collection.StorageCompressionTypeEnum;
     /**
      * Name of the workspace that the collection is in.
      * @type {string}
@@ -743,6 +763,16 @@ export namespace Collection {
         PREPARINGBULK = <any> 'PREPARING_BULK',
         BULKINGESTMODE = <any> 'BULK_INGEST_MODE',
         EXITINGBULKINGESTMODE = <any> 'EXITING_BULK_INGEST_MODE',
+        ENCRYPTIONKEYERROR = <any> 'ENCRYPTION_KEY_ERROR',
+        UNKNOWN = <any> 'UNKNOWN'
+    }
+    /**
+     * @export
+     * @enum {string}
+     */
+    export enum StorageCompressionTypeEnum {
+        LZ4 = <any> 'LZ4',
+        ZSTD = <any> 'ZSTD',
         UNKNOWN = <any> 'UNKNOWN'
     }
 }
@@ -1021,6 +1051,12 @@ export interface CreateApiKeyRequest {
      */
     created_by?: string;
     /**
+     * If provided, the API key will automatically expire at this time (ISO-8601 format). Requires premium.
+     * @type {string}
+     * @memberof CreateApiKeyRequest
+     */
+    expiry_time?: string;
+    /**
      * Name for this API key.
      * @type {string}
      * @memberof CreateApiKeyRequest
@@ -1113,11 +1149,17 @@ export interface CreateCollectionRequest {
      */
     name?: string;
     /**
-     * Number of seconds after which data is purged, based on event time.
+     * Number of seconds after which data is purged, based on event time. Minimum allowable value is 3600s/1 hour. The maximum value is strictly less than 10 years.
      * @type {number}
      * @memberof CreateCollectionRequest
      */
     retention_secs?: number;
+    /**
+     * Soft ingest limit for this collection.
+     * @type {number}
+     * @memberof CreateCollectionRequest
+     */
+    source_download_soft_limit_bytes?: number;
     /**
      * List of sources from which to ingest data.
      * @type {Array<Source>}
@@ -1234,7 +1276,7 @@ export interface CreateIntegrationRequest {
      */
     s3?: S3Integration;
     /**
-     * 
+     * Snowflake details.
      * @type {SnowflakeIntegration}
      * @memberof CreateIntegrationRequest
      */
@@ -1331,6 +1373,68 @@ export interface CreateRoleRequest {
      * @memberof CreateRoleRequest
      */
     role_name?: string;
+}
+
+/**
+ * 
+ * @export
+ * @interface CreateScheduledLambdaRequest
+ */
+export interface CreateScheduledLambdaRequest {
+    /**
+     * The apikey to use when triggering execution of the associated query lambda.
+     * @type {string}
+     * @memberof CreateScheduledLambdaRequest
+     */
+    apikey?: string;
+    /**
+     * The UNIX-formatted cron string for this scheduled query lambda.
+     * @type {string}
+     * @memberof CreateScheduledLambdaRequest
+     */
+    cron_string: string;
+    /**
+     * The name of the QL to use for scheduled execution.
+     * @type {string}
+     * @memberof CreateScheduledLambdaRequest
+     */
+    ql_name: string;
+    /**
+     * The QL tag to use for scheduled execution.
+     * @type {string}
+     * @memberof CreateScheduledLambdaRequest
+     */
+    tag?: string;
+    /**
+     * The number of times to execute this scheduled query lambda. Once this scheduled query lambda has been executed this many times, it will no longer be executed.
+     * @type {number}
+     * @memberof CreateScheduledLambdaRequest
+     */
+    total_times_to_execute?: number;
+    /**
+     * The version of the QL to use for scheduled execution.
+     * @type {string}
+     * @memberof CreateScheduledLambdaRequest
+     */
+    version?: string;
+    /**
+     * The value to use as the authorization header when hitting the webhook.
+     * @type {string}
+     * @memberof CreateScheduledLambdaRequest
+     */
+    webhook_auth_header?: string;
+    /**
+     * The payload that should be sent to the webhook. JSON format.
+     * @type {string}
+     * @memberof CreateScheduledLambdaRequest
+     */
+    webhook_payload?: string;
+    /**
+     * The URL of the webhook that should be triggered after this scheduled query lambda completes.
+     * @type {string}
+     * @memberof CreateScheduledLambdaRequest
+     */
+    webhook_url?: string;
 }
 
 /**
@@ -1444,11 +1548,17 @@ export interface CreateVirtualInstanceRequest {
      */
     enable_remount_on_resume?: boolean;
     /**
-     * Number of seconds between data refreshes for mounts on this Virtual Instance. A value of 0 means continuous refresh and a value of null means never refresh.
+     * DEPRECATED. Use `mount_type` instead. Number of seconds between data refreshes for mounts on this Virtual Instance. The only valid values are 0 and null. 0 means the data will be refreshed continuously and null means the data will never refresh.
      * @type {number}
      * @memberof CreateVirtualInstanceRequest
      */
     mount_refresh_interval_seconds?: number;
+    /**
+     * The mount type of collections that this Virtual Instance will query. Live mounted collections stay up-to-date with the underlying collection in real-time. Static mounted collections do not stay up-to-date. See https://docs.rockset.com/documentation/docs/virtual-instances#virtual-instance-configuration
+     * @type {string}
+     * @memberof CreateVirtualInstanceRequest
+     */
+    mount_type?: CreateVirtualInstanceRequest.MountTypeEnum;
     /**
      * Unique identifier for virtual instance, can contain alphanumeric or dash characters.
      * @type {string}
@@ -1472,11 +1582,20 @@ export namespace CreateVirtualInstanceRequest {
      * @export
      * @enum {string}
      */
+    export enum MountTypeEnum {
+        LIVE = <any> 'LIVE',
+        STATIC = <any> 'STATIC'
+    }
+    /**
+     * @export
+     * @enum {string}
+     */
     export enum TypeEnum {
         FREE = <any> 'FREE',
         NANO = <any> 'NANO',
         SHARED = <any> 'SHARED',
         MILLI = <any> 'MILLI',
+        XSMALL = <any> 'XSMALL',
         SMALL = <any> 'SMALL',
         MEDIUM = <any> 'MEDIUM',
         LARGE = <any> 'LARGE',
@@ -1692,6 +1811,12 @@ export interface DeleteDocumentsResponse {
      * @memberof DeleteDocumentsResponse
      */
     data?: Array<DocumentStatus>;
+    /**
+     * A string representing the collection offset after completing the deletes.
+     * @type {string}
+     * @memberof DeleteDocumentsResponse
+     */
+    last_offset?: string;
 }
 
 /**
@@ -1941,9 +2066,9 @@ export namespace ErrorModel {
         NOTIMPLEMENTEDYET = <any> 'NOTIMPLEMENTEDYET',
         RESOURCEEXCEEDED = <any> 'RESOURCEEXCEEDED',
         ALREADYEXISTS = <any> 'ALREADYEXISTS',
-        NOTALLOWED = <any> 'NOTALLOWED',
+        METHODNOTALLOWED = <any> 'METHODNOTALLOWED',
         NOTACCEPTABLE = <any> 'NOTACCEPTABLE',
-        NOTSUPPORTED = <any> 'NOTSUPPORTED',
+        UNSUPPORTEDMEDIATYPE = <any> 'UNSUPPORTEDMEDIATYPE',
         NOTFOUND = <any> 'NOTFOUND',
         DEPENDENTRESOURCES = <any> 'DEPENDENTRESOURCES',
         QUERYERROR = <any> 'QUERY_ERROR',
@@ -2001,12 +2126,6 @@ export interface ExecutePublicQueryLambdaRequest {
      */
     default_row_limit?: number;
     /**
-     * Whether to generate warnings.
-     * @type {boolean}
-     * @memberof ExecutePublicQueryLambdaRequest
-     */
-    generate_warnings?: boolean;
-    /**
      * List of named parameters.
      * @type {Array<QueryParameter>}
      * @memberof ExecutePublicQueryLambdaRequest
@@ -2045,12 +2164,6 @@ export interface ExecuteQueryLambdaRequest {
      */
     default_row_limit?: number;
     /**
-     * Whether to generate warnings.
-     * @type {boolean}
-     * @memberof ExecuteQueryLambdaRequest
-     */
-    generate_warnings?: boolean;
-    /**
      * [DEPRECATED] Use `max_initial_results` instead. Number of documents to return in addition to paginating for this query call. Only relevant if `paginate` flag is also set.
      * @type {number}
      * @memberof ExecuteQueryLambdaRequest
@@ -2086,6 +2199,41 @@ export interface ExecuteQueryLambdaRequest {
      * @memberof ExecuteQueryLambdaRequest
      */
     virtual_instance_id?: string;
+}
+
+/**
+ * 
+ * @export
+ * @interface ExecutionStatus
+ */
+export interface ExecutionStatus {
+    /**
+     * Message describing the execution status.
+     * @type {string}
+     * @memberof ExecutionStatus
+     */
+    message?: string;
+    /**
+     * The scheduled query lambda execution status
+     * @type {string}
+     * @memberof ExecutionStatus
+     */
+    state?: ExecutionStatus.StateEnum;
+}
+
+/**
+ * @export
+ * @namespace ExecutionStatus
+ */
+export namespace ExecutionStatus {
+    /**
+     * @export
+     * @enum {string}
+     */
+    export enum StateEnum {
+        WARNING = <any> 'WARNING',
+        ERROR = <any> 'ERROR'
+    }
 }
 
 /**
@@ -2188,6 +2336,12 @@ export interface FormatParams {
     avro?: AvroParams;
     /**
      * 
+     * @type {boolean}
+     * @memberof FormatParams
+     */
+    bson?: boolean;
+    /**
+     * 
      * @type {CsvParams}
      * @memberof FormatParams
      */
@@ -2284,6 +2438,60 @@ export interface GetApiKeyResponse {
      * @memberof GetApiKeyResponse
      */
     data?: ApiKey;
+}
+
+/**
+ * 
+ * @export
+ * @interface GetCollectionCommit
+ */
+export interface GetCollectionCommit {
+    /**
+     * 
+     * @type {GetCollectionCommitData}
+     * @memberof GetCollectionCommit
+     */
+    data?: GetCollectionCommitData;
+    /**
+     * 
+     * @type {Offsets}
+     * @memberof GetCollectionCommit
+     */
+    offsets?: Offsets;
+}
+
+/**
+ * 
+ * @export
+ * @interface GetCollectionCommitData
+ */
+export interface GetCollectionCommitData {
+    /**
+     * The max offset passed in the request which is the latest offset that was compared to the commit.
+     * @type {string}
+     * @memberof GetCollectionCommitData
+     */
+    fence?: string;
+    /**
+     * True if all the data in the offsets are available to be queried. False if one or more of the offsets is still behind the request offsets.
+     * @type {boolean}
+     * @memberof GetCollectionCommitData
+     */
+    passed?: boolean;
+}
+
+/**
+ * 
+ * @export
+ * @interface GetCollectionCommitRequest
+ */
+export interface GetCollectionCommitRequest {
+    /**
+     * a list of zero or more collection offset fences
+     * @type {Array<string>}
+     * @memberof GetCollectionCommitRequest
+     */
+    name?: Array<string>;
 }
 
 /**
@@ -2894,6 +3102,26 @@ export interface MongoDbIntegration {
      * @memberof MongoDbIntegration
      */
     connection_uri: string;
+    /**
+     * TLS configuration for mongo connection
+     * @type {TLSConfig}
+     * @memberof MongoDbIntegration
+     */
+    tls?: TLSConfig;
+}
+
+/**
+ * 
+ * @export
+ * @interface Offsets
+ */
+export interface Offsets {
+    /**
+     * An encoded value representing the most recent offsets that have been committed. If the fence offset is less than or equal to the commit, then passed is true.
+     * @type {string}
+     * @memberof Offsets
+     */
+    commit?: string;
 }
 
 /**
@@ -3105,6 +3333,12 @@ export interface PatchDocumentsResponse {
      * @memberof PatchDocumentsResponse
      */
     data: Array<DocumentStatus>;
+    /**
+     * A string representing the collection offset after completing the patch.
+     * @type {string}
+     * @memberof PatchDocumentsResponse
+     */
+    last_offset?: string;
 }
 
 /**
@@ -3213,6 +3447,7 @@ export namespace Privilege {
         CREATEINTEGRATIONGLOBAL = <any> 'CREATE_INTEGRATION_GLOBAL',
         DELETEINTEGRATIONGLOBAL = <any> 'DELETE_INTEGRATION_GLOBAL',
         LISTINTEGRATIONSGLOBAL = <any> 'LIST_INTEGRATIONS_GLOBAL',
+        EXPORTDATAGLOBAL = <any> 'EXPORT_DATA_GLOBAL',
         UPDATERESOURCEOWNERGLOBAL = <any> 'UPDATE_RESOURCE_OWNER_GLOBAL',
         CREATEAPIKEYGLOBAL = <any> 'CREATE_API_KEY_GLOBAL',
         CREATEROLEGLOBAL = <any> 'CREATE_ROLE_GLOBAL',
@@ -3221,6 +3456,7 @@ export namespace Privilege {
         LISTROLESGLOBAL = <any> 'LIST_ROLES_GLOBAL',
         GRANTREVOKEROLEGLOBAL = <any> 'GRANT_REVOKE_ROLE_GLOBAL',
         CREATEQUERYLOGSCOLLECTIONGLOBAL = <any> 'CREATE_QUERY_LOGS_COLLECTION_GLOBAL',
+        CREATEINGESTLOGSCOLLECTIONGLOBAL = <any> 'CREATE_INGEST_LOGS_COLLECTION_GLOBAL',
         ALLINTEGRATIONACTIONS = <any> 'ALL_INTEGRATION_ACTIONS',
         CREATECOLLECTIONINTEGRATION = <any> 'CREATE_COLLECTION_INTEGRATION',
         ALLWORKSPACEACTIONS = <any> 'ALL_WORKSPACE_ACTIONS',
@@ -3229,8 +3465,10 @@ export namespace Privilege {
         WRITEDATAWS = <any> 'WRITE_DATA_WS',
         CREATECOLLECTIONWS = <any> 'CREATE_COLLECTION_WS',
         DELETECOLLECTIONWS = <any> 'DELETE_COLLECTION_WS',
+        UPDATECOLLECTIONWS = <any> 'UPDATE_COLLECTION_WS',
         CREATEALIASWS = <any> 'CREATE_ALIAS_WS',
         DELETEALIASWS = <any> 'DELETE_ALIAS_WS',
+        CREATESNAPSHOTWS = <any> 'CREATE_SNAPSHOT_WS',
         LISTRESOURCESWS = <any> 'LIST_RESOURCES_WS',
         CREATEQUERYLAMBDAWS = <any> 'CREATE_QUERY_LAMBDA_WS',
         DELETEQUERYLAMBDAWS = <any> 'DELETE_QUERY_LAMBDA_WS',
@@ -3243,7 +3481,13 @@ export namespace Privilege {
         QUERYVI = <any> 'QUERY_VI',
         UPDATEVI = <any> 'UPDATE_VI',
         SUSPENDRESUMEVI = <any> 'SUSPEND_RESUME_VI',
-        DELETEVI = <any> 'DELETE_VI'
+        DELETEVI = <any> 'DELETE_VI',
+        CREATESIMILARITYINDEXWS = <any> 'CREATE_SIMILARITY_INDEX_WS',
+        DELETESIMILARITYINDEXWS = <any> 'DELETE_SIMILARITY_INDEX_WS',
+        CREATENETWORKCONFIGURATIONGLOBAL = <any> 'CREATE_NETWORK_CONFIGURATION_GLOBAL',
+        DELETENETWORKCONFIGURATIONGLOBAL = <any> 'DELETE_NETWORK_CONFIGURATION_GLOBAL',
+        LISTNETWORKCONFIGURATIONSGLOBAL = <any> 'LIST_NETWORK_CONFIGURATIONS_GLOBAL',
+        UPDATEORGQUERYROUTING = <any> 'UPDATE_ORG_QUERY_ROUTING'
     }
 }
 
@@ -3733,12 +3977,6 @@ export interface QueryRequestSql {
      */
     default_row_limit?: number;
     /**
-     * Flag to enable warnings. Warnings can help debug query issues but negatively affect performance.
-     * @type {boolean}
-     * @memberof QueryRequestSql
-     */
-    generate_warnings?: boolean;
-    /**
      * [DEPRECATED] Use `max_initial_results` instead. Number of documents to return in addition to paginating for this query call. Only relevant if `paginate` flag is also set.
      * @type {number}
      * @memberof QueryRequestSql
@@ -3831,7 +4069,7 @@ export interface QueryResponse {
      */
     status?: QueryResponse.StatusEnum;
     /**
-     * Warnings generated by the query. Only populated if `generate_warnings` is specified in the query request.
+     * 
      * @type {Array<string>}
      * @memberof QueryResponse
      */
@@ -3970,6 +4208,118 @@ export interface S3Integration {
 /**
  * 
  * @export
+ * @interface ScheduledLambda
+ */
+export interface ScheduledLambda {
+    /**
+     * The UNIX-formatted cron string for this scheduled query lambda.
+     * @type {string}
+     * @memberof ScheduledLambda
+     */
+    cron_string?: string;
+    /**
+     * The number of times this scheduled QL has been executed.
+     * @type {number}
+     * @memberof ScheduledLambda
+     */
+    execution_count?: number;
+    /**
+     * The last time this scheduled query lambda completed successfully.
+     * @type {string}
+     * @memberof ScheduledLambda
+     */
+    last_completion_date?: string;
+    /**
+     * The ID of the query that was triggered by this scheduled lambda's last run.
+     * @type {string}
+     * @memberof ScheduledLambda
+     */
+    last_query_id?: string;
+    /**
+     * The next time this scheduled query lambda will be executed.
+     * @type {string}
+     * @memberof ScheduledLambda
+     */
+    next_execution_date?: string;
+    /**
+     * The name of the associated query lambda.
+     * @type {string}
+     * @memberof ScheduledLambda
+     */
+    ql_name?: string;
+    /**
+     * Query execution status of the scheduled lambda. This field will only be populated when the query execution encounters a warning or error state.
+     * @type {ExecutionStatus}
+     * @memberof ScheduledLambda
+     */
+    query_execution_status?: ExecutionStatus;
+    /**
+     * Boolean flag to allow a scheduled query lambda to resume execution after being suspended due to execution failure. This flag will be unset after scheduled lambda execution.
+     * @type {boolean}
+     * @memberof ScheduledLambda
+     */
+    resume_permanent_error?: boolean;
+    /**
+     * Scheduled Lambda mapping RRN.
+     * @type {string}
+     * @memberof ScheduledLambda
+     */
+    rrn?: string;
+    /**
+     * The query lambda tag.
+     * @type {string}
+     * @memberof ScheduledLambda
+     */
+    tag?: string;
+    /**
+     * The number of times to execute this scheduled query lambda. Once this scheduled query lambda has been executed this many times, it will no longer be executed.
+     * @type {number}
+     * @memberof ScheduledLambda
+     */
+    total_times_to_execute?: number;
+    /**
+     * The version of the associated query lambda.
+     * @type {string}
+     * @memberof ScheduledLambda
+     */
+    version?: string;
+    /**
+     * The payload that should be sent to the webhook.
+     * @type {string}
+     * @memberof ScheduledLambda
+     */
+    webhook_payload?: string;
+    /**
+     * The URL of the webhook that should be triggered after this scheduled query lambda completes.
+     * @type {string}
+     * @memberof ScheduledLambda
+     */
+    webhook_url?: string;
+    /**
+     * Workspace of the associated query lambda.
+     * @type {string}
+     * @memberof ScheduledLambda
+     */
+    workspace?: string;
+}
+
+/**
+ * 
+ * @export
+ * @interface ScheduledLambdaResponse
+ */
+export interface ScheduledLambdaResponse {
+    /**
+     * Scheduled lambda mapping
+     * @type {ScheduledLambda}
+     * @memberof ScheduledLambdaResponse
+     */
+    data?: ScheduledLambda;
+}
+
+/**
+ * 
+ * @export
  * @interface SchemaRegistryConfig
  */
 export interface SchemaRegistryConfig {
@@ -4068,7 +4418,7 @@ export interface Source {
      */
     azure_event_hubs?: SourceAzureEventHubs;
     /**
-     * Configuration for ingestion from Azure Service Bus.
+     * 
      * @type {SourceAzureServiceBus}
      * @memberof Source
      */
@@ -4104,6 +4454,12 @@ export interface Source {
      */
     id?: string;
     /**
+     * Ingest transformation for a source.
+     * @type {FieldMappingQuery}
+     * @memberof Source
+     */
+    ingest_transformation?: FieldMappingQuery;
+    /**
      * Name of integration to use.
      * @type {string}
      * @memberof Source
@@ -4128,11 +4484,23 @@ export interface Source {
      */
     mongodb?: SourceMongoDb;
     /**
+     * ISO-8601 date when source would be auto resumed, if suspended
+     * @type {string}
+     * @memberof Source
+     */
+    resume_at?: string;
+    /**
      * Configuration for ingestion from S3.
      * @type {SourceS3}
      * @memberof Source
      */
     s3?: SourceS3;
+    /**
+     * Configuration for restoring from snapshot.
+     * @type {SourceSnapshot}
+     * @memberof Source
+     */
+    snapshot?: SourceSnapshot;
     /**
      * Configuration for ingestion from Snowflake.
      * @type {SourceSnowflake}
@@ -4157,6 +4525,34 @@ export interface Source {
      * @memberof Source
      */
     system?: SourceSystem;
+}
+
+/**
+ * 
+ * @export
+ * @interface SourceAzBlobStorageBase
+ */
+export interface SourceAzBlobStorageBase {
+    /**
+     * custom settings for Azure blob Storage source
+     * @type {SourceAzBlobStorageSettings}
+     * @memberof SourceAzBlobStorageBase
+     */
+    settings?: SourceAzBlobStorageSettings;
+}
+
+/**
+ * 
+ * @export
+ * @interface SourceAzBlobStorageSettings
+ */
+export interface SourceAzBlobStorageSettings {
+    /**
+     * Rockset scans an Azure blob Storage container based on a defined time interval. The scan frequency determines the length of time between a new scan and the previous scan. If the previous scan finds new objects or updates to existing objects, Rockset immediately scans the bucket again after processing changes from the previous scan. Duration value is of type ISO 8601 (e.g. PT5H, PT4M, PT3S). It doesn't account for DST, leap seconds and leap years. Minimum value: PT1S. Maximum value: PT1H.
+     * @type {string}
+     * @memberof SourceAzBlobStorageSettings
+     */
+    azblob_scan_frequency?: string;
 }
 
 /**
@@ -4201,6 +4597,12 @@ export interface SourceAzureBlobStorage {
      * @memberof SourceAzureBlobStorage
      */
     prefix?: string;
+    /**
+     * custom settings for Azure blob Storage source
+     * @type {SourceAzBlobStorageSettings}
+     * @memberof SourceAzureBlobStorage
+     */
+    settings?: SourceAzBlobStorageSettings;
 }
 
 /**
@@ -4273,6 +4675,38 @@ export interface SourceAzureServiceBus {
 /**
  * 
  * @export
+ * @interface SourceBase
+ */
+export interface SourceBase {
+    /**
+     * Configuration for ingestion from Azure Blob Storage.
+     * @type {SourceAzBlobStorageBase}
+     * @memberof SourceBase
+     */
+    azure_blob_storage?: SourceAzBlobStorageBase;
+    /**
+     * Configuration for ingestion from a DynamoDb table.
+     * @type {SourceDynamoDbBase}
+     * @memberof SourceBase
+     */
+    dynamodb?: SourceDynamoDbBase;
+    /**
+     * Configuration for ingestion from GCS.
+     * @type {SourceGcsBase}
+     * @memberof SourceBase
+     */
+    gcs?: SourceGcsBase;
+    /**
+     * Configuration for ingestion from S3.
+     * @type {SourceS3Base}
+     * @memberof SourceBase
+     */
+    s3?: SourceS3Base;
+}
+
+/**
+ * 
+ * @export
  * @interface SourceDynamoDb
  */
 export interface SourceDynamoDb {
@@ -4295,6 +4729,12 @@ export interface SourceDynamoDb {
      */
     rcu?: number;
     /**
+     * custom settings for Amazon DynamoDB source
+     * @type {SourceDynamoDbSettings}
+     * @memberof SourceDynamoDb
+     */
+    settings?: SourceDynamoDbSettings;
+    /**
      * DynamoDB source status.
      * @type {StatusDynamoDb}
      * @memberof SourceDynamoDb
@@ -4312,6 +4752,34 @@ export interface SourceDynamoDb {
      * @memberof SourceDynamoDb
      */
     use_scan_api?: boolean;
+}
+
+/**
+ * 
+ * @export
+ * @interface SourceDynamoDbBase
+ */
+export interface SourceDynamoDbBase {
+    /**
+     * custom settings for Amazon DynamoDB source
+     * @type {SourceDynamoDbSettings}
+     * @memberof SourceDynamoDbBase
+     */
+    settings?: SourceDynamoDbSettings;
+}
+
+/**
+ * 
+ * @export
+ * @interface SourceDynamoDbSettings
+ */
+export interface SourceDynamoDbSettings {
+    /**
+     * Each DynamoDB stream can have one to many shards, and Rockset polls each DynamoDB shard at a fixed rate. Decreasing the duration between polls helps reduce ingest latency, while increasing the duration can prevent  Rockset from keeping up with the updates. If the latency exceeds 24 hours (DynamoDB stream retention duration), Rockset will not be able to process all of the streaming updates. Each request also has a fixed price associated with it. Duration value is of type ISO 8601 (e.g. PT5H, PT4M, PT3S). It doesn't account for DST, leap seconds and leap years. Minimum value: PT0.25S. Maximum value: PT5M.
+     * @type {string}
+     * @memberof SourceDynamoDbSettings
+     */
+    dynamodb_stream_poll_frequency?: string;
 }
 
 /**
@@ -4388,6 +4856,40 @@ export interface SourceGcs {
      * @memberof SourceGcs
      */
     prefix?: string;
+    /**
+     * custom settings for Google cloud Storage source
+     * @type {SourceGcsSettings}
+     * @memberof SourceGcs
+     */
+    settings?: SourceGcsSettings;
+}
+
+/**
+ * 
+ * @export
+ * @interface SourceGcsBase
+ */
+export interface SourceGcsBase {
+    /**
+     * custom settings for Google cloud Storage source
+     * @type {SourceGcsSettings}
+     * @memberof SourceGcsBase
+     */
+    settings?: SourceGcsSettings;
+}
+
+/**
+ * 
+ * @export
+ * @interface SourceGcsSettings
+ */
+export interface SourceGcsSettings {
+    /**
+     * Rockset scans a GCS bucket based on a defined time interval. The scan frequency determines the length of time between a new scan and the previous scan. If the previous scan finds new objects or updates to existing objects, Rockset immediately scans the bucket again after processing changes from the previous scan. Duration value is of type ISO 8601 (e.g. PT5H, PT4M, PT3S). It doesn't account for DST, leap seconds and leap years. Minimum value: PT1S. Maximum value: PT1H.
+     * @type {string}
+     * @memberof SourceGcsSettings
+     */
+    gcs_scan_frequency?: string;
 }
 
 /**
@@ -4396,6 +4898,12 @@ export interface SourceGcs {
  * @interface SourceKafka
  */
 export interface SourceKafka {
+    /**
+     * The kafka client id being used.
+     * @type {string}
+     * @memberof SourceKafka
+     */
+    client_id?: string;
     /**
      * The Kafka consumer group Id being used.
      * @type {string}
@@ -4571,17 +5079,51 @@ export interface SourceS3 {
      */
     prefix?: string;
     /**
-     * List of prefixes to paths from which data should be ingested.
+     * Deprecated in favor of `prefix`. List of prefixes to paths from which data should be ingested.
      * @type {Array<string>}
      * @memberof SourceS3
      */
-    prefixes: Array<string>;
+    prefixes?: Array<string>;
     /**
      * AWS region containing source bucket.
      * @type {string}
      * @memberof SourceS3
      */
     region?: string;
+    /**
+     * custom settings for Amazon S3 source
+     * @type {SourceS3Settings}
+     * @memberof SourceS3
+     */
+    settings?: SourceS3Settings;
+}
+
+/**
+ * 
+ * @export
+ * @interface SourceS3Base
+ */
+export interface SourceS3Base {
+    /**
+     * custom settings for Amazon S3 source
+     * @type {SourceS3Settings}
+     * @memberof SourceS3Base
+     */
+    settings?: SourceS3Settings;
+}
+
+/**
+ * 
+ * @export
+ * @interface SourceS3Settings
+ */
+export interface SourceS3Settings {
+    /**
+     * Rockset scans an S3 bucket based on a defined time interval. The scan frequency determines the length of time between a new scan and the previous scan. If the previous scan finds new objects or updates to existing objects, Rockset immediately scans the bucket again after processing changes from the previous scan. Duration value is of type ISO 8601 (e.g. PT5H, PT4M, PT3S). It doesn't account for DST, leap seconds and leap years. Minimum value: PT1S. Maximum value: PT1H.
+     * @type {string}
+     * @memberof SourceS3Settings
+     */
+    s3_scan_frequency?: string;
 }
 
 /**
@@ -4591,17 +5133,17 @@ export interface SourceS3 {
  */
 export interface SourceSnapshot {
     /**
-     * Path of source collection to restore the snapshot from.
+     * A representation of the workspace and collection where the source snapshot originated.
      * @type {string}
      * @memberof SourceSnapshot
      */
     source_collection_path?: string;
     /**
-     * Snapshot id of the snapshot that the new collection will be created from.
+     * RRN of the snapshot that the new collection will be created from.
      * @type {string}
      * @memberof SourceSnapshot
      */
-    source_snapshot_id?: string;
+    source_snapshot_rrn?: string;
 }
 
 /**
@@ -4654,6 +5196,12 @@ export interface SourceSystem {
      * @memberof SourceSystem
      */
     type?: SourceSystem.TypeEnum;
+    /**
+     * The workspace for which collections will have logs created. If unspecified, logs will be created for collections in all workspaces. Currently only supported for the INGEST_LOGS system source.
+     * @type {string}
+     * @memberof SourceSystem
+     */
+    workspace?: string;
 }
 
 /**
@@ -4666,7 +5214,8 @@ export namespace SourceSystem {
      * @enum {string}
      */
     export enum TypeEnum {
-        QUERYLOGS = <any> 'QUERY_LOGS'
+        QUERYLOGS = <any> 'QUERY_LOGS',
+        INGESTLOGS = <any> 'INGEST_LOGS'
     }
 }
 
@@ -5201,6 +5750,20 @@ export namespace StatusSnowflake {
 /**
  * 
  * @export
+ * @interface SuspendSourceRequest
+ */
+export interface SuspendSourceRequest {
+    /**
+     * duration to suspend source; 1h is the default
+     * @type {string}
+     * @memberof SuspendSourceRequest
+     */
+    resume_after_duration?: string;
+}
+
+/**
+ * 
+ * @export
  * @interface SuspendVirtualInstanceResponse
  */
 export interface SuspendVirtualInstanceResponse {
@@ -5210,6 +5773,44 @@ export interface SuspendVirtualInstanceResponse {
      * @memberof SuspendVirtualInstanceResponse
      */
     data?: VirtualInstance;
+}
+
+/**
+ * 
+ * @export
+ * @interface TLSConfig
+ */
+export interface TLSConfig {
+    /**
+     * PEM-formatted certificate chain of the Certificate Authority used to verify remote server. If empty, Rockset, will use publicly trusted CAs
+     * @type {string}
+     * @memberof TLSConfig
+     */
+    ca_cert?: string;
+    /**
+     * PEM-formatted certificate chain to use for client authentication
+     * @type {string}
+     * @memberof TLSConfig
+     */
+    client_cert: string;
+    /**
+     * Expiration date of the client certificate (represented as number of ms since epoch)
+     * @type {number}
+     * @memberof TLSConfig
+     */
+    client_cert_expiry?: number;
+    /**
+     * Subject of the client certificate, containing common name and other attributes
+     * @type {string}
+     * @memberof TLSConfig
+     */
+    client_cert_subject?: string;
+    /**
+     * PEM-formatted private key to be used for client authentication
+     * @type {string}
+     * @memberof TLSConfig
+     */
+    client_key: string;
 }
 
 /**
@@ -5252,6 +5853,18 @@ export interface UpdateAliasRequest {
  * @interface UpdateApiKeyRequest
  */
 export interface UpdateApiKeyRequest {
+    /**
+     * If set to true, the expiration time for this key will be cleared.
+     * @type {boolean}
+     * @memberof UpdateApiKeyRequest
+     */
+    clear_expiry_time?: boolean;
+    /**
+     * If provided, the API key will automatically expire at this time (ISO-8601 format). Requires premium.
+     * @type {string}
+     * @memberof UpdateApiKeyRequest
+     */
+    expiry_time?: string;
     /**
      * State that the api key should be set to.
      * @type {string}
@@ -5312,6 +5925,94 @@ export interface UpdateCollectionRequest {
 /**
  * 
  * @export
+ * @interface UpdateIntegrationRequest
+ */
+export interface UpdateIntegrationRequest {
+    /**
+     * Azure Blob Storage details.
+     * @type {AzureBlobStorageIntegration}
+     * @memberof UpdateIntegrationRequest
+     */
+    azure_blob_storage?: AzureBlobStorageIntegration;
+    /**
+     * Azure Event Hubs details.
+     * @type {AzureEventHubsIntegration}
+     * @memberof UpdateIntegrationRequest
+     */
+    azure_event_hubs?: AzureEventHubsIntegration;
+    /**
+     * Azure Service Bus details.
+     * @type {AzureServiceBusIntegration}
+     * @memberof UpdateIntegrationRequest
+     */
+    azure_service_bus?: AzureServiceBusIntegration;
+    /**
+     * Longer explanation for the integration.
+     * @type {string}
+     * @memberof UpdateIntegrationRequest
+     */
+    description?: string;
+    /**
+     * Amazon DynamoDB details, must have one of aws_access_key or aws_role.
+     * @type {DynamodbIntegration}
+     * @memberof UpdateIntegrationRequest
+     */
+    dynamodb?: DynamodbIntegration;
+    /**
+     * GCS details.
+     * @type {GcsIntegration}
+     * @memberof UpdateIntegrationRequest
+     */
+    gcs?: GcsIntegration;
+    /**
+     * 
+     * @type {KafkaIntegration}
+     * @memberof UpdateIntegrationRequest
+     */
+    kafka?: KafkaIntegration;
+    /**
+     * Amazon Kinesis details, must have one of aws_access_key or aws_role.
+     * @type {KinesisIntegration}
+     * @memberof UpdateIntegrationRequest
+     */
+    kinesis?: KinesisIntegration;
+    /**
+     * MongoDb details.
+     * @type {MongoDbIntegration}
+     * @memberof UpdateIntegrationRequest
+     */
+    mongodb?: MongoDbIntegration;
+    /**
+     * Amazon S3 details, must have one of aws_access_key or aws_role.
+     * @type {S3Integration}
+     * @memberof UpdateIntegrationRequest
+     */
+    s3?: S3Integration;
+    /**
+     * Snowflake details.
+     * @type {SnowflakeIntegration}
+     * @memberof UpdateIntegrationRequest
+     */
+    snowflake?: SnowflakeIntegration;
+}
+
+/**
+ * 
+ * @export
+ * @interface UpdateIntegrationResponse
+ */
+export interface UpdateIntegrationResponse {
+    /**
+     * Updated integration object.
+     * @type {Integration}
+     * @memberof UpdateIntegrationResponse
+     */
+    data?: Integration;
+}
+
+/**
+ * 
+ * @export
  * @interface UpdateQueryLambdaRequest
  */
 export interface UpdateQueryLambdaRequest {
@@ -5353,6 +6054,50 @@ export interface UpdateRoleRequest {
      * @memberof UpdateRoleRequest
      */
     privileges?: Array<Privilege>;
+}
+
+/**
+ * 
+ * @export
+ * @interface UpdateScheduledLambdaRequest
+ */
+export interface UpdateScheduledLambdaRequest {
+    /**
+     * The apikey to use when triggering execution of the associated query lambda.
+     * @type {string}
+     * @memberof UpdateScheduledLambdaRequest
+     */
+    apikey?: string;
+    /**
+     * Boolean flag to allow a scheduled query lambda to resume execution after being suspended due to execution failure. This flag will be unset after scheduled lambda execution.
+     * @type {boolean}
+     * @memberof UpdateScheduledLambdaRequest
+     */
+    resume_permanent_error?: boolean;
+    /**
+     * The number of times to execute this scheduled query lambda.
+     * @type {number}
+     * @memberof UpdateScheduledLambdaRequest
+     */
+    total_times_to_execute?: number;
+    /**
+     * The value to use as the authorization header when hitting the webhook.
+     * @type {string}
+     * @memberof UpdateScheduledLambdaRequest
+     */
+    webhook_auth_header?: string;
+    /**
+     * The payload that should be sent to the webhook. JSON format.
+     * @type {string}
+     * @memberof UpdateScheduledLambdaRequest
+     */
+    webhook_payload?: string;
+    /**
+     * The URL of the webhook that should be triggered after this scheduled query lambda completes.
+     * @type {string}
+     * @memberof UpdateScheduledLambdaRequest
+     */
+    webhook_url?: string;
 }
 
 /**
@@ -5456,13 +6201,13 @@ export interface UpdateVirtualInstanceRequest {
      */
     auto_scaling_policy?: AutoScalingPolicy;
     /**
-     * Whether auto-suspend should be enabled for this Virtual Instance.
+     * Whether Query VI auto-suspend should be enabled for this Virtual Instance.
      * @type {boolean}
      * @memberof UpdateVirtualInstanceRequest
      */
     auto_suspend_enabled?: boolean;
     /**
-     * Number of seconds without queries after which the VI is suspended
+     * Number of seconds without queries after which the Query VI is suspended
      * @type {number}
      * @memberof UpdateVirtualInstanceRequest
      */
@@ -5480,11 +6225,17 @@ export interface UpdateVirtualInstanceRequest {
      */
     enable_remount_on_resume?: boolean;
     /**
-     * Number of seconds between data refreshes for mounts on this Virtual Instance. A value of 0 means continuous refresh and a value of null means never refresh.
+     * DEPRECATED. Use `mount_type` instead. Number of seconds between data refreshes for mounts on this Virtual Instance. The only valid values are 0 and null. 0 means the data will be refreshed continuously and null means the data will never refresh.
      * @type {number}
      * @memberof UpdateVirtualInstanceRequest
      */
     mount_refresh_interval_seconds?: number;
+    /**
+     * The mount type of collections that this Virtual Instance will query. Live mounted collections stay up-to-date with the underlying collection in real-time. Static mounted collections do not stay up-to-date. See https://docs.rockset.com/documentation/docs/virtual-instances#virtual-instance-configuration
+     * @type {string}
+     * @memberof UpdateVirtualInstanceRequest
+     */
+    mount_type?: UpdateVirtualInstanceRequest.MountTypeEnum;
     /**
      * New virtual instance name.
      * @type {string}
@@ -5508,11 +6259,20 @@ export namespace UpdateVirtualInstanceRequest {
      * @export
      * @enum {string}
      */
+    export enum MountTypeEnum {
+        LIVE = <any> 'LIVE',
+        STATIC = <any> 'STATIC'
+    }
+    /**
+     * @export
+     * @enum {string}
+     */
     export enum NewSizeEnum {
         FREE = <any> 'FREE',
         NANO = <any> 'NANO',
         SHARED = <any> 'SHARED',
         MILLI = <any> 'MILLI',
+        XSMALL = <any> 'XSMALL',
         SMALL = <any> 'SMALL',
         MEDIUM = <any> 'MEDIUM',
         LARGE = <any> 'LARGE',
@@ -5777,11 +6537,17 @@ export interface VirtualInstance {
      */
     monitoring_enabled?: boolean;
     /**
-     * Number of seconds between data refreshes for mounts on this Virtual Instance
+     * DEPRECATED. Number of seconds between data refreshes for mounts on this Virtual Instance
      * @type {number}
      * @memberof VirtualInstance
      */
     mount_refresh_interval_seconds?: number;
+    /**
+     * The mount type of collections that this Virtual Instance will query. Live mounted collections stay up-to-date with the underlying collection in real-time. Static mounted collections do not stay up-to-date. See https://docs.rockset.com/documentation/docs/virtual-instances#virtual-instance-configuration
+     * @type {string}
+     * @memberof VirtualInstance
+     */
+    mount_type?: VirtualInstance.MountTypeEnum;
     /**
      * Virtual instance name.
      * @type {string}
@@ -5834,6 +6600,7 @@ export namespace VirtualInstance {
         NANO = <any> 'NANO',
         SHARED = <any> 'SHARED',
         MILLI = <any> 'MILLI',
+        XSMALL = <any> 'XSMALL',
         SMALL = <any> 'SMALL',
         MEDIUM = <any> 'MEDIUM',
         LARGE = <any> 'LARGE',
@@ -5852,6 +6619,7 @@ export namespace VirtualInstance {
         NANO = <any> 'NANO',
         SHARED = <any> 'SHARED',
         MILLI = <any> 'MILLI',
+        XSMALL = <any> 'XSMALL',
         SMALL = <any> 'SMALL',
         MEDIUM = <any> 'MEDIUM',
         LARGE = <any> 'LARGE',
@@ -5865,6 +6633,14 @@ export namespace VirtualInstance {
      * @export
      * @enum {string}
      */
+    export enum MountTypeEnum {
+        LIVE = <any> 'LIVE',
+        STATIC = <any> 'STATIC'
+    }
+    /**
+     * @export
+     * @enum {string}
+     */
     export enum StateEnum {
         INITIALIZING = <any> 'INITIALIZING',
         PROVISIONINGRESOURCES = <any> 'PROVISIONING_RESOURCES',
@@ -5873,7 +6649,9 @@ export namespace VirtualInstance {
         SUSPENDING = <any> 'SUSPENDING',
         SUSPENDED = <any> 'SUSPENDED',
         RESUMING = <any> 'RESUMING',
-        DELETED = <any> 'DELETED'
+        DELETED = <any> 'DELETED',
+        ENABLINGDEDICATEDSERVICES = <any> 'ENABLING_DEDICATED_SERVICES',
+        DISABLINGDEDICATEDSERVICES = <any> 'DISABLING_DEDICATED_SERVICES'
     }
 }
 
@@ -6968,6 +7746,47 @@ export const CollectionsApiFetchParamCreator = function (configuration?: Configu
             };
         },
         /**
+         * Determines if the collection includes data at or after the specified fence(s) for close read-after-write semantics.
+         * @summary Get Collection Commit
+         * @param {string} workspace name of the workspace
+         * @param {string} collection name of the collection
+         * @param {GetCollectionCommitRequest} body JSON object
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCollectionOffsets(workspace: string, collection: string, body: GetCollectionCommitRequest, options: any = {}): FetchArgs {
+            // verify required parameter 'workspace' is not null or undefined
+            if (workspace === null || workspace === undefined) {
+                throw new RequiredError('workspace','Required parameter workspace was null or undefined when calling getCollectionOffsets.');
+            }
+            // verify required parameter 'collection' is not null or undefined
+            if (collection === null || collection === undefined) {
+                throw new RequiredError('collection','Required parameter collection was null or undefined when calling getCollectionOffsets.');
+            }
+            // verify required parameter 'body' is not null or undefined
+            if (body === null || body === undefined) {
+                throw new RequiredError('body','Required parameter body was null or undefined when calling getCollectionOffsets.');
+            }
+            const localVarPath = `/v1/orgs/self/ws/{workspace}/collections/{collection}/offsets/commit`
+                .replace(`{${"workspace"}}`, encodeURIComponent(String(workspace)))
+                .replace(`{${"collection"}}`, encodeURIComponent(String(collection)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"GetCollectionCommitRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Retrieve all collections in an organization.
          * @summary List Collections
          * @param {*} [options] Override http request option.
@@ -7125,6 +7944,27 @@ export const CollectionsApiFp = function(configuration?: Configuration) {
             };
         },
         /**
+         * Determines if the collection includes data at or after the specified fence(s) for close read-after-write semantics.
+         * @summary Get Collection Commit
+         * @param {string} workspace name of the workspace
+         * @param {string} collection name of the collection
+         * @param {GetCollectionCommitRequest} body JSON object
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCollectionOffsets(workspace: string, collection: string, body: GetCollectionCommitRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<GetCollectionCommit> {
+            const localVarFetchArgs = CollectionsApiFetchParamCreator(configuration).getCollectionOffsets(workspace, collection, body, options);
+            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
          * Retrieve all collections in an organization.
          * @summary List Collections
          * @param {*} [options] Override http request option.
@@ -7225,6 +8065,18 @@ export const CollectionsApiFactory = function (configuration?: Configuration, fe
             return CollectionsApiFp(configuration).getCollection(workspace, collection, options)(fetch, basePath);
         },
         /**
+         * Determines if the collection includes data at or after the specified fence(s) for close read-after-write semantics.
+         * @summary Get Collection Commit
+         * @param {string} workspace name of the workspace
+         * @param {string} collection name of the collection
+         * @param {GetCollectionCommitRequest} body JSON object
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCollectionOffsets(workspace: string, collection: string, body: GetCollectionCommitRequest, options?: any) {
+            return CollectionsApiFp(configuration).getCollectionOffsets(workspace, collection, body, options)(fetch, basePath);
+        },
+        /**
          * Retrieve all collections in an organization.
          * @summary List Collections
          * @param {*} [options] Override http request option.
@@ -7299,6 +8151,19 @@ export class CollectionsApi extends BaseAPI {
      */
     public getCollection(workspace: string, collection: string, options?: any) {
         return CollectionsApiFp(this.configuration).getCollection(workspace, collection, options)(this.fetch, this.basePath);
+    }
+    /**
+     * Determines if the collection includes data at or after the specified fence(s) for close read-after-write semantics.
+     * @summary Get Collection Commit
+     * @param {string} workspace name of the workspace
+     * @param {string} collection name of the collection
+     * @param {GetCollectionCommitRequest} body JSON object
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CollectionsApi
+     */
+    public getCollectionOffsets(workspace: string, collection: string, body: GetCollectionCommitRequest, options?: any) {
+        return CollectionsApiFp(this.configuration).getCollectionOffsets(workspace, collection, body, options)(this.fetch, this.basePath);
     }
     /**
      * Retrieve all collections in an organization.
@@ -8114,6 +8979,41 @@ export const IntegrationsApiFetchParamCreator = function (configuration?: Config
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * Update an existing integration.
+         * @summary Update Integration
+         * @param {string} integration 
+         * @param {UpdateIntegrationRequest} body integration configuration
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateIntegration(integration: string, body: UpdateIntegrationRequest, options: any = {}): FetchArgs {
+            // verify required parameter 'integration' is not null or undefined
+            if (integration === null || integration === undefined) {
+                throw new RequiredError('integration','Required parameter integration was null or undefined when calling updateIntegration.');
+            }
+            // verify required parameter 'body' is not null or undefined
+            if (body === null || body === undefined) {
+                throw new RequiredError('body','Required parameter body was null or undefined when calling updateIntegration.');
+            }
+            const localVarPath = `/v1/orgs/self/integrations/{integration}`
+                .replace(`{${"integration"}}`, encodeURIComponent(String(integration)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'PUT' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"UpdateIntegrationRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 /**
@@ -8197,6 +9097,26 @@ export const IntegrationsApiFp = function(configuration?: Configuration) {
                 });
             };
         },
+        /**
+         * Update an existing integration.
+         * @summary Update Integration
+         * @param {string} integration 
+         * @param {UpdateIntegrationRequest} body integration configuration
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateIntegration(integration: string, body: UpdateIntegrationRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<UpdateIntegrationResponse> {
+            const localVarFetchArgs = IntegrationsApiFetchParamCreator(configuration).updateIntegration(integration, body, options);
+            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
     }
 };
 
@@ -8244,6 +9164,17 @@ export const IntegrationsApiFactory = function (configuration?: Configuration, f
          */
         listIntegrations(options?: any) {
             return IntegrationsApiFp(configuration).listIntegrations(options)(fetch, basePath);
+        },
+        /**
+         * Update an existing integration.
+         * @summary Update Integration
+         * @param {string} integration 
+         * @param {UpdateIntegrationRequest} body integration configuration
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateIntegration(integration: string, body: UpdateIntegrationRequest, options?: any) {
+            return IntegrationsApiFp(configuration).updateIntegration(integration, body, options)(fetch, basePath);
         },
     };
 };
@@ -8296,6 +9227,18 @@ export class IntegrationsApi extends BaseAPI {
      */
     public listIntegrations(options?: any) {
         return IntegrationsApiFp(this.configuration).listIntegrations(options)(this.fetch, this.basePath);
+    }
+    /**
+     * Update an existing integration.
+     * @summary Update Integration
+     * @param {string} integration 
+     * @param {UpdateIntegrationRequest} body integration configuration
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof IntegrationsApi
+     */
+    public updateIntegration(integration: string, body: UpdateIntegrationRequest, options?: any) {
+        return IntegrationsApiFp(this.configuration).updateIntegration(integration, body, options)(this.fetch, this.basePath);
     }
 }
 
@@ -8512,7 +9455,7 @@ export const QueriesApiFetchParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Make a SQL query to Rockset.
+         * Make a SQL query to Rockset. If you want to issue the query to a specific Virtual Instance use this https://docs.rockset.com/documentation/reference/queryvirtualinstance
          * @summary Execute SQL Query
          * @param {QueryRequest} body JSON object
          * @param {*} [options] Override http request option.
@@ -8656,7 +9599,7 @@ export const QueriesApiFp = function(configuration?: Configuration) {
             };
         },
         /**
-         * Make a SQL query to Rockset.
+         * Make a SQL query to Rockset. If you want to issue the query to a specific Virtual Instance use this https://docs.rockset.com/documentation/reference/queryvirtualinstance
          * @summary Execute SQL Query
          * @param {QueryRequest} body JSON object
          * @param {*} [options] Override http request option.
@@ -8745,7 +9688,7 @@ export const QueriesApiFactory = function (configuration?: Configuration, fetch?
             return QueriesApiFp(configuration).listActiveQueries(options)(fetch, basePath);
         },
         /**
-         * Make a SQL query to Rockset.
+         * Make a SQL query to Rockset. If you want to issue the query to a specific Virtual Instance use this https://docs.rockset.com/documentation/reference/queryvirtualinstance
          * @summary Execute SQL Query
          * @param {QueryRequest} body JSON object
          * @param {*} [options] Override http request option.
@@ -8820,7 +9763,7 @@ export class QueriesApi extends BaseAPI {
         return QueriesApiFp(this.configuration).listActiveQueries(options)(this.fetch, this.basePath);
     }
     /**
-     * Make a SQL query to Rockset.
+     * Make a SQL query to Rockset. If you want to issue the query to a specific Virtual Instance use this https://docs.rockset.com/documentation/reference/queryvirtualinstance
      * @summary Execute SQL Query
      * @param {QueryRequest} body JSON object
      * @param {*} [options] Override http request option.
@@ -10014,6 +10957,281 @@ export class QueryLambdasApi extends BaseAPI {
 }
 
 /**
+ * ScheduledLambdasApi - fetch parameter creator
+ * @export
+ */
+export const ScheduledLambdasApiFetchParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Create a scheduled lambda mapping for your organization.
+         * @summary Create a Scheduled Lambda mapping
+         * @param {string} workspace name of the workspace
+         * @param {CreateScheduledLambdaRequest} body JSON Object
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createScheduledLambda(workspace: string, body: CreateScheduledLambdaRequest, options: any = {}): FetchArgs {
+            // verify required parameter 'workspace' is not null or undefined
+            if (workspace === null || workspace === undefined) {
+                throw new RequiredError('workspace','Required parameter workspace was null or undefined when calling createScheduledLambda.');
+            }
+            // verify required parameter 'body' is not null or undefined
+            if (body === null || body === undefined) {
+                throw new RequiredError('body','Required parameter body was null or undefined when calling createScheduledLambda.');
+            }
+            const localVarPath = `/v1/orgs/self/ws/{workspace}/scheduled_lambdas`
+                .replace(`{${"workspace"}}`, encodeURIComponent(String(workspace)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"CreateScheduledLambdaRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Delete a scheduled lambda mapping for your organization.
+         * @summary Delete a Scheduled Lambda mapping
+         * @param {string} workspace name of the workspace
+         * @param {string} scheduledLambdaId Scheduled Lambda RRN
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteScheduledLambda(workspace: string, scheduledLambdaId: string, options: any = {}): FetchArgs {
+            // verify required parameter 'workspace' is not null or undefined
+            if (workspace === null || workspace === undefined) {
+                throw new RequiredError('workspace','Required parameter workspace was null or undefined when calling deleteScheduledLambda.');
+            }
+            // verify required parameter 'scheduledLambdaId' is not null or undefined
+            if (scheduledLambdaId === null || scheduledLambdaId === undefined) {
+                throw new RequiredError('scheduledLambdaId','Required parameter scheduledLambdaId was null or undefined when calling deleteScheduledLambda.');
+            }
+            const localVarPath = `/v1/orgs/self/ws/{workspace}/scheduled_lambdas/{scheduledLambdaId}`
+                .replace(`{${"workspace"}}`, encodeURIComponent(String(workspace)))
+                .replace(`{${"scheduledLambdaId"}}`, encodeURIComponent(String(scheduledLambdaId)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'DELETE' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Update a scheduled lambda mapping for your organization.
+         * @summary Update a Scheduled Lambda mapping
+         * @param {string} workspace name of the workspace
+         * @param {string} scheduledLambdaId Scheduled Lambda RRN
+         * @param {UpdateScheduledLambdaRequest} body JSON Object
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateScheduledLambda(workspace: string, scheduledLambdaId: string, body: UpdateScheduledLambdaRequest, options: any = {}): FetchArgs {
+            // verify required parameter 'workspace' is not null or undefined
+            if (workspace === null || workspace === undefined) {
+                throw new RequiredError('workspace','Required parameter workspace was null or undefined when calling updateScheduledLambda.');
+            }
+            // verify required parameter 'scheduledLambdaId' is not null or undefined
+            if (scheduledLambdaId === null || scheduledLambdaId === undefined) {
+                throw new RequiredError('scheduledLambdaId','Required parameter scheduledLambdaId was null or undefined when calling updateScheduledLambda.');
+            }
+            // verify required parameter 'body' is not null or undefined
+            if (body === null || body === undefined) {
+                throw new RequiredError('body','Required parameter body was null or undefined when calling updateScheduledLambda.');
+            }
+            const localVarPath = `/v1/orgs/self/ws/{workspace}/scheduled_lambdas/{scheduledLambdaId}`
+                .replace(`{${"workspace"}}`, encodeURIComponent(String(workspace)))
+                .replace(`{${"scheduledLambdaId"}}`, encodeURIComponent(String(scheduledLambdaId)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"UpdateScheduledLambdaRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+/**
+ * ScheduledLambdasApi - functional programming interface
+ * @export
+ */
+export const ScheduledLambdasApiFp = function(configuration?: Configuration) {
+    return {
+        /**
+         * Create a scheduled lambda mapping for your organization.
+         * @summary Create a Scheduled Lambda mapping
+         * @param {string} workspace name of the workspace
+         * @param {CreateScheduledLambdaRequest} body JSON Object
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createScheduledLambda(workspace: string, body: CreateScheduledLambdaRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ScheduledLambdaResponse> {
+            const localVarFetchArgs = ScheduledLambdasApiFetchParamCreator(configuration).createScheduledLambda(workspace, body, options);
+            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * Delete a scheduled lambda mapping for your organization.
+         * @summary Delete a Scheduled Lambda mapping
+         * @param {string} workspace name of the workspace
+         * @param {string} scheduledLambdaId Scheduled Lambda RRN
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteScheduledLambda(workspace: string, scheduledLambdaId: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ScheduledLambdaResponse> {
+            const localVarFetchArgs = ScheduledLambdasApiFetchParamCreator(configuration).deleteScheduledLambda(workspace, scheduledLambdaId, options);
+            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * Update a scheduled lambda mapping for your organization.
+         * @summary Update a Scheduled Lambda mapping
+         * @param {string} workspace name of the workspace
+         * @param {string} scheduledLambdaId Scheduled Lambda RRN
+         * @param {UpdateScheduledLambdaRequest} body JSON Object
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateScheduledLambda(workspace: string, scheduledLambdaId: string, body: UpdateScheduledLambdaRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<ScheduledLambdaResponse> {
+            const localVarFetchArgs = ScheduledLambdasApiFetchParamCreator(configuration).updateScheduledLambda(workspace, scheduledLambdaId, body, options);
+            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+    }
+};
+
+/**
+ * ScheduledLambdasApi - factory interface
+ * @export
+ */
+export const ScheduledLambdasApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
+    return {
+        /**
+         * Create a scheduled lambda mapping for your organization.
+         * @summary Create a Scheduled Lambda mapping
+         * @param {string} workspace name of the workspace
+         * @param {CreateScheduledLambdaRequest} body JSON Object
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createScheduledLambda(workspace: string, body: CreateScheduledLambdaRequest, options?: any) {
+            return ScheduledLambdasApiFp(configuration).createScheduledLambda(workspace, body, options)(fetch, basePath);
+        },
+        /**
+         * Delete a scheduled lambda mapping for your organization.
+         * @summary Delete a Scheduled Lambda mapping
+         * @param {string} workspace name of the workspace
+         * @param {string} scheduledLambdaId Scheduled Lambda RRN
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteScheduledLambda(workspace: string, scheduledLambdaId: string, options?: any) {
+            return ScheduledLambdasApiFp(configuration).deleteScheduledLambda(workspace, scheduledLambdaId, options)(fetch, basePath);
+        },
+        /**
+         * Update a scheduled lambda mapping for your organization.
+         * @summary Update a Scheduled Lambda mapping
+         * @param {string} workspace name of the workspace
+         * @param {string} scheduledLambdaId Scheduled Lambda RRN
+         * @param {UpdateScheduledLambdaRequest} body JSON Object
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateScheduledLambda(workspace: string, scheduledLambdaId: string, body: UpdateScheduledLambdaRequest, options?: any) {
+            return ScheduledLambdasApiFp(configuration).updateScheduledLambda(workspace, scheduledLambdaId, body, options)(fetch, basePath);
+        },
+    };
+};
+/**
+ * ScheduledLambdasApi - object-oriented interface
+ * @export
+ * @class ScheduledLambdasApi
+ * @extends {BaseAPI}
+ */
+export class ScheduledLambdasApi extends BaseAPI {
+    /**
+     * Create a scheduled lambda mapping for your organization.
+     * @summary Create a Scheduled Lambda mapping
+     * @param {string} workspace name of the workspace
+     * @param {CreateScheduledLambdaRequest} body JSON Object
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ScheduledLambdasApi
+     */
+    public createScheduledLambda(workspace: string, body: CreateScheduledLambdaRequest, options?: any) {
+        return ScheduledLambdasApiFp(this.configuration).createScheduledLambda(workspace, body, options)(this.fetch, this.basePath);
+    }
+    /**
+     * Delete a scheduled lambda mapping for your organization.
+     * @summary Delete a Scheduled Lambda mapping
+     * @param {string} workspace name of the workspace
+     * @param {string} scheduledLambdaId Scheduled Lambda RRN
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ScheduledLambdasApi
+     */
+    public deleteScheduledLambda(workspace: string, scheduledLambdaId: string, options?: any) {
+        return ScheduledLambdasApiFp(this.configuration).deleteScheduledLambda(workspace, scheduledLambdaId, options)(this.fetch, this.basePath);
+    }
+    /**
+     * Update a scheduled lambda mapping for your organization.
+     * @summary Update a Scheduled Lambda mapping
+     * @param {string} workspace name of the workspace
+     * @param {string} scheduledLambdaId Scheduled Lambda RRN
+     * @param {UpdateScheduledLambdaRequest} body JSON Object
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ScheduledLambdasApi
+     */
+    public updateScheduledLambda(workspace: string, scheduledLambdaId: string, body: UpdateScheduledLambdaRequest, options?: any) {
+        return ScheduledLambdasApiFp(this.configuration).updateScheduledLambda(workspace, scheduledLambdaId, body, options)(this.fetch, this.basePath);
+    }
+}
+
+/**
  * SharedLambdasApi - fetch parameter creator
  * @export
  */
@@ -10324,10 +11542,11 @@ export const SourcesApiFetchParamCreator = function (configuration?: Configurati
          * @param {string} workspace name of the workspace
          * @param {string} collection name of the collection
          * @param {string} source id of source
+         * @param {SuspendSourceRequest} [body] JSON object
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        suspendSource(workspace: string, collection: string, source: string, options: any = {}): FetchArgs {
+        suspendSource(workspace: string, collection: string, source: string, body?: SuspendSourceRequest, options: any = {}): FetchArgs {
             // verify required parameter 'workspace' is not null or undefined
             if (workspace === null || workspace === undefined) {
                 throw new RequiredError('workspace','Required parameter workspace was null or undefined when calling suspendSource.');
@@ -10348,10 +11567,60 @@ export const SourcesApiFetchParamCreator = function (configuration?: Configurati
             const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+            localVarHeaderParameter['Content-Type'] = 'application/json';
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"SuspendSourceRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Update details about a collection source.
+         * @summary Update a collection source
+         * @param {string} workspace name of the workspace
+         * @param {string} collection name of the collection
+         * @param {string} source id of source
+         * @param {SourceBase} body JSON object
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateSource(workspace: string, collection: string, source: string, body: SourceBase, options: any = {}): FetchArgs {
+            // verify required parameter 'workspace' is not null or undefined
+            if (workspace === null || workspace === undefined) {
+                throw new RequiredError('workspace','Required parameter workspace was null or undefined when calling updateSource.');
+            }
+            // verify required parameter 'collection' is not null or undefined
+            if (collection === null || collection === undefined) {
+                throw new RequiredError('collection','Required parameter collection was null or undefined when calling updateSource.');
+            }
+            // verify required parameter 'source' is not null or undefined
+            if (source === null || source === undefined) {
+                throw new RequiredError('source','Required parameter source was null or undefined when calling updateSource.');
+            }
+            // verify required parameter 'body' is not null or undefined
+            if (body === null || body === undefined) {
+                throw new RequiredError('body','Required parameter body was null or undefined when calling updateSource.');
+            }
+            const localVarPath = `/v1/orgs/self/ws/{workspace}/collections/{collection}/sources/{source}`
+                .replace(`{${"workspace"}}`, encodeURIComponent(String(workspace)))
+                .replace(`{${"collection"}}`, encodeURIComponent(String(collection)))
+                .replace(`{${"source"}}`, encodeURIComponent(String(source)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'PUT' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"SourceBase" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
             return {
                 url: url.format(localVarUrlObj),
                 options: localVarRequestOptions,
@@ -10475,11 +11744,34 @@ export const SourcesApiFp = function(configuration?: Configuration) {
          * @param {string} workspace name of the workspace
          * @param {string} collection name of the collection
          * @param {string} source id of source
+         * @param {SuspendSourceRequest} [body] JSON object
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        suspendSource(workspace: string, collection: string, source: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<GetSourceResponse> {
-            const localVarFetchArgs = SourcesApiFetchParamCreator(configuration).suspendSource(workspace, collection, source, options);
+        suspendSource(workspace: string, collection: string, source: string, body?: SuspendSourceRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<GetSourceResponse> {
+            const localVarFetchArgs = SourcesApiFetchParamCreator(configuration).suspendSource(workspace, collection, source, body, options);
+            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * Update details about a collection source.
+         * @summary Update a collection source
+         * @param {string} workspace name of the workspace
+         * @param {string} collection name of the collection
+         * @param {string} source id of source
+         * @param {SourceBase} body JSON object
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateSource(workspace: string, collection: string, source: string, body: SourceBase, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<GetSourceResponse> {
+            const localVarFetchArgs = SourcesApiFetchParamCreator(configuration).updateSource(workspace, collection, source, body, options);
             return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -10564,11 +11856,25 @@ export const SourcesApiFactory = function (configuration?: Configuration, fetch?
          * @param {string} workspace name of the workspace
          * @param {string} collection name of the collection
          * @param {string} source id of source
+         * @param {SuspendSourceRequest} [body] JSON object
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        suspendSource(workspace: string, collection: string, source: string, options?: any) {
-            return SourcesApiFp(configuration).suspendSource(workspace, collection, source, options)(fetch, basePath);
+        suspendSource(workspace: string, collection: string, source: string, body?: SuspendSourceRequest, options?: any) {
+            return SourcesApiFp(configuration).suspendSource(workspace, collection, source, body, options)(fetch, basePath);
+        },
+        /**
+         * Update details about a collection source.
+         * @summary Update a collection source
+         * @param {string} workspace name of the workspace
+         * @param {string} collection name of the collection
+         * @param {string} source id of source
+         * @param {SourceBase} body JSON object
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateSource(workspace: string, collection: string, source: string, body: SourceBase, options?: any) {
+            return SourcesApiFp(configuration).updateSource(workspace, collection, source, body, options)(fetch, basePath);
         },
     };
 };
@@ -10649,12 +11955,27 @@ export class SourcesApi extends BaseAPI {
      * @param {string} workspace name of the workspace
      * @param {string} collection name of the collection
      * @param {string} source id of source
+     * @param {SuspendSourceRequest} [body] JSON object
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SourcesApi
      */
-    public suspendSource(workspace: string, collection: string, source: string, options?: any) {
-        return SourcesApiFp(this.configuration).suspendSource(workspace, collection, source, options)(this.fetch, this.basePath);
+    public suspendSource(workspace: string, collection: string, source: string, body?: SuspendSourceRequest, options?: any) {
+        return SourcesApiFp(this.configuration).suspendSource(workspace, collection, source, body, options)(this.fetch, this.basePath);
+    }
+    /**
+     * Update details about a collection source.
+     * @summary Update a collection source
+     * @param {string} workspace name of the workspace
+     * @param {string} collection name of the collection
+     * @param {string} source id of source
+     * @param {SourceBase} body JSON object
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SourcesApi
+     */
+    public updateSource(workspace: string, collection: string, source: string, body: SourceBase, options?: any) {
+        return SourcesApiFp(this.configuration).updateSource(workspace, collection, source, body, options)(this.fetch, this.basePath);
     }
 }
 
@@ -11699,7 +13020,7 @@ export class ViewsApi extends BaseAPI {
 export const VirtualInstancesApiFetchParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * [beta] Create virtual instance
+         * Create virtual instance
          * @summary Create Virtual Instance
          * @param {CreateVirtualInstanceRequest} body JSON object
          * @param {*} [options] Override http request option.
@@ -11728,7 +13049,7 @@ export const VirtualInstancesApiFetchParamCreator = function (configuration?: Co
             };
         },
         /**
-         * [beta] Delete a virtual instance.
+         * Delete a virtual instance.
          * @summary Delete Virtual Instance
          * @param {string} virtualInstanceId Virtual Instance RRN
          * @param {*} [options] Override http request option.
@@ -11755,7 +13076,7 @@ export const VirtualInstancesApiFetchParamCreator = function (configuration?: Co
             };
         },
         /**
-         * [beta] Retrieve a mount on this virtual instance.
+         * Retrieve a mount on this virtual instance.
          * @summary Get Collection Mount
          * @param {string} virtualInstanceId Virtual Instance RRN
          * @param {string} collectionPath 
@@ -11782,6 +13103,47 @@ export const VirtualInstancesApiFetchParamCreator = function (configuration?: Co
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Determines if the collection includes data at or after the specified fence(s) for close read-after-write semantics.
+         * @summary Get Collection Commit
+         * @param {string} virtualInstanceId Virtual Instance RRN
+         * @param {string} collectionPath 
+         * @param {GetCollectionCommitRequest} body JSON object
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMountOffsets(virtualInstanceId: string, collectionPath: string, body: GetCollectionCommitRequest, options: any = {}): FetchArgs {
+            // verify required parameter 'virtualInstanceId' is not null or undefined
+            if (virtualInstanceId === null || virtualInstanceId === undefined) {
+                throw new RequiredError('virtualInstanceId','Required parameter virtualInstanceId was null or undefined when calling getMountOffsets.');
+            }
+            // verify required parameter 'collectionPath' is not null or undefined
+            if (collectionPath === null || collectionPath === undefined) {
+                throw new RequiredError('collectionPath','Required parameter collectionPath was null or undefined when calling getMountOffsets.');
+            }
+            // verify required parameter 'body' is not null or undefined
+            if (body === null || body === undefined) {
+                throw new RequiredError('body','Required parameter body was null or undefined when calling getMountOffsets.');
+            }
+            const localVarPath = `/v1/orgs/self/virtualinstances/{virtualInstanceId}/mounts/{collectionPath}/offsets/commit`
+                .replace(`{${"virtualInstanceId"}}`, encodeURIComponent(String(virtualInstanceId)))
+                .replace(`{${"collectionPath"}}`, encodeURIComponent(String(collectionPath)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"GetCollectionCommitRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
             return {
                 url: url.format(localVarUrlObj),
                 options: localVarRequestOptions,
@@ -11815,7 +13177,7 @@ export const VirtualInstancesApiFetchParamCreator = function (configuration?: Co
             };
         },
         /**
-         * [beta] Lists actively queued and running queries for a particular Virtual Instance.
+         * Lists actively queued and running queries for a particular Virtual Instance.
          * @summary List Queries
          * @param {string} virtualInstanceId Virtual Instance RRN
          * @param {*} [options] Override http request option.
@@ -11842,7 +13204,7 @@ export const VirtualInstancesApiFetchParamCreator = function (configuration?: Co
             };
         },
         /**
-         * [beta] List collection mounts for a particular VI.
+         * List collection mounts for a particular VI.
          * @summary List Collection Mounts
          * @param {string} virtualInstanceId Virtual Instance RRN
          * @param {*} [options] Override http request option.
@@ -11890,7 +13252,7 @@ export const VirtualInstancesApiFetchParamCreator = function (configuration?: Co
             };
         },
         /**
-         * [beta] Mount a collection to this virtual instance.
+         * Mount a collection to this virtual instance.
          * @summary Mount Collections
          * @param {string} virtualInstanceId Virtual Instance RRN
          * @param {CreateCollectionMountRequest} body JSON object
@@ -11925,8 +13287,8 @@ export const VirtualInstancesApiFetchParamCreator = function (configuration?: Co
             };
         },
         /**
-         * [beta] Make a SQL query to Rockset.
-         * @summary Execute SQL Query
+         * Make a SQL query to Rockset.
+         * @summary Execute SQL Query on a specific Virtual Instance
          * @param {string} virtualInstanceId Virtual Instance RRN
          * @param {QueryRequest} body JSON object
          * @param {*} [options] Override http request option.
@@ -11960,7 +13322,7 @@ export const VirtualInstancesApiFetchParamCreator = function (configuration?: Co
             };
         },
         /**
-         * [beta] Resume a virtual instance.
+         * Resume a virtual instance.
          * @summary Resume Virtual Instance
          * @param {string} virtualInstanceId Virtual Instance RRN
          * @param {*} [options] Override http request option.
@@ -12022,7 +13384,7 @@ export const VirtualInstancesApiFetchParamCreator = function (configuration?: Co
             };
         },
         /**
-         * [beta] Suspend a virtual instance.
+         * Suspend a virtual instance.
          * @summary Suspend Virtual Instance
          * @param {string} virtualInstanceId Virtual Instance RRN
          * @param {*} [options] Override http request option.
@@ -12049,7 +13411,7 @@ export const VirtualInstancesApiFetchParamCreator = function (configuration?: Co
             };
         },
         /**
-         * [beta] Unmount a collection from this virtual instance.
+         * Unmount a collection from this virtual instance.
          * @summary Unmount Collection
          * @param {string} virtualInstanceId Virtual Instance RRN
          * @param {string} collectionPath 
@@ -12090,7 +13452,7 @@ export const VirtualInstancesApiFetchParamCreator = function (configuration?: Co
 export const VirtualInstancesApiFp = function(configuration?: Configuration) {
     return {
         /**
-         * [beta] Create virtual instance
+         * Create virtual instance
          * @summary Create Virtual Instance
          * @param {CreateVirtualInstanceRequest} body JSON object
          * @param {*} [options] Override http request option.
@@ -12109,7 +13471,7 @@ export const VirtualInstancesApiFp = function(configuration?: Configuration) {
             };
         },
         /**
-         * [beta] Delete a virtual instance.
+         * Delete a virtual instance.
          * @summary Delete Virtual Instance
          * @param {string} virtualInstanceId Virtual Instance RRN
          * @param {*} [options] Override http request option.
@@ -12128,7 +13490,7 @@ export const VirtualInstancesApiFp = function(configuration?: Configuration) {
             };
         },
         /**
-         * [beta] Retrieve a mount on this virtual instance.
+         * Retrieve a mount on this virtual instance.
          * @summary Get Collection Mount
          * @param {string} virtualInstanceId Virtual Instance RRN
          * @param {string} collectionPath 
@@ -12137,6 +13499,27 @@ export const VirtualInstancesApiFp = function(configuration?: Configuration) {
          */
         getCollectionMount(virtualInstanceId: string, collectionPath: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<CollectionMountResponse> {
             const localVarFetchArgs = VirtualInstancesApiFetchParamCreator(configuration).getCollectionMount(virtualInstanceId, collectionPath, options);
+            return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * Determines if the collection includes data at or after the specified fence(s) for close read-after-write semantics.
+         * @summary Get Collection Commit
+         * @param {string} virtualInstanceId Virtual Instance RRN
+         * @param {string} collectionPath 
+         * @param {GetCollectionCommitRequest} body JSON object
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMountOffsets(virtualInstanceId: string, collectionPath: string, body: GetCollectionCommitRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<GetCollectionCommit> {
+            const localVarFetchArgs = VirtualInstancesApiFetchParamCreator(configuration).getMountOffsets(virtualInstanceId, collectionPath, body, options);
             return (fetch: FetchAPI = fetchPonyfill.fetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -12167,7 +13550,7 @@ export const VirtualInstancesApiFp = function(configuration?: Configuration) {
             };
         },
         /**
-         * [beta] Lists actively queued and running queries for a particular Virtual Instance.
+         * Lists actively queued and running queries for a particular Virtual Instance.
          * @summary List Queries
          * @param {string} virtualInstanceId Virtual Instance RRN
          * @param {*} [options] Override http request option.
@@ -12186,7 +13569,7 @@ export const VirtualInstancesApiFp = function(configuration?: Configuration) {
             };
         },
         /**
-         * [beta] List collection mounts for a particular VI.
+         * List collection mounts for a particular VI.
          * @summary List Collection Mounts
          * @param {string} virtualInstanceId Virtual Instance RRN
          * @param {*} [options] Override http request option.
@@ -12223,7 +13606,7 @@ export const VirtualInstancesApiFp = function(configuration?: Configuration) {
             };
         },
         /**
-         * [beta] Mount a collection to this virtual instance.
+         * Mount a collection to this virtual instance.
          * @summary Mount Collections
          * @param {string} virtualInstanceId Virtual Instance RRN
          * @param {CreateCollectionMountRequest} body JSON object
@@ -12243,8 +13626,8 @@ export const VirtualInstancesApiFp = function(configuration?: Configuration) {
             };
         },
         /**
-         * [beta] Make a SQL query to Rockset.
-         * @summary Execute SQL Query
+         * Make a SQL query to Rockset.
+         * @summary Execute SQL Query on a specific Virtual Instance
          * @param {string} virtualInstanceId Virtual Instance RRN
          * @param {QueryRequest} body JSON object
          * @param {*} [options] Override http request option.
@@ -12263,7 +13646,7 @@ export const VirtualInstancesApiFp = function(configuration?: Configuration) {
             };
         },
         /**
-         * [beta] Resume a virtual instance.
+         * Resume a virtual instance.
          * @summary Resume Virtual Instance
          * @param {string} virtualInstanceId Virtual Instance RRN
          * @param {*} [options] Override http request option.
@@ -12302,7 +13685,7 @@ export const VirtualInstancesApiFp = function(configuration?: Configuration) {
             };
         },
         /**
-         * [beta] Suspend a virtual instance.
+         * Suspend a virtual instance.
          * @summary Suspend Virtual Instance
          * @param {string} virtualInstanceId Virtual Instance RRN
          * @param {*} [options] Override http request option.
@@ -12321,7 +13704,7 @@ export const VirtualInstancesApiFp = function(configuration?: Configuration) {
             };
         },
         /**
-         * [beta] Unmount a collection from this virtual instance.
+         * Unmount a collection from this virtual instance.
          * @summary Unmount Collection
          * @param {string} virtualInstanceId Virtual Instance RRN
          * @param {string} collectionPath 
@@ -12350,7 +13733,7 @@ export const VirtualInstancesApiFp = function(configuration?: Configuration) {
 export const VirtualInstancesApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
     return {
         /**
-         * [beta] Create virtual instance
+         * Create virtual instance
          * @summary Create Virtual Instance
          * @param {CreateVirtualInstanceRequest} body JSON object
          * @param {*} [options] Override http request option.
@@ -12360,7 +13743,7 @@ export const VirtualInstancesApiFactory = function (configuration?: Configuratio
             return VirtualInstancesApiFp(configuration).createVirtualInstance(body, options)(fetch, basePath);
         },
         /**
-         * [beta] Delete a virtual instance.
+         * Delete a virtual instance.
          * @summary Delete Virtual Instance
          * @param {string} virtualInstanceId Virtual Instance RRN
          * @param {*} [options] Override http request option.
@@ -12370,7 +13753,7 @@ export const VirtualInstancesApiFactory = function (configuration?: Configuratio
             return VirtualInstancesApiFp(configuration).deleteVirtualInstance(virtualInstanceId, options)(fetch, basePath);
         },
         /**
-         * [beta] Retrieve a mount on this virtual instance.
+         * Retrieve a mount on this virtual instance.
          * @summary Get Collection Mount
          * @param {string} virtualInstanceId Virtual Instance RRN
          * @param {string} collectionPath 
@@ -12379,6 +13762,18 @@ export const VirtualInstancesApiFactory = function (configuration?: Configuratio
          */
         getCollectionMount(virtualInstanceId: string, collectionPath: string, options?: any) {
             return VirtualInstancesApiFp(configuration).getCollectionMount(virtualInstanceId, collectionPath, options)(fetch, basePath);
+        },
+        /**
+         * Determines if the collection includes data at or after the specified fence(s) for close read-after-write semantics.
+         * @summary Get Collection Commit
+         * @param {string} virtualInstanceId Virtual Instance RRN
+         * @param {string} collectionPath 
+         * @param {GetCollectionCommitRequest} body JSON object
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMountOffsets(virtualInstanceId: string, collectionPath: string, body: GetCollectionCommitRequest, options?: any) {
+            return VirtualInstancesApiFp(configuration).getMountOffsets(virtualInstanceId, collectionPath, body, options)(fetch, basePath);
         },
         /**
          * Get details about a virtual instance.
@@ -12391,7 +13786,7 @@ export const VirtualInstancesApiFactory = function (configuration?: Configuratio
             return VirtualInstancesApiFp(configuration).getVirtualInstance(virtualInstanceId, options)(fetch, basePath);
         },
         /**
-         * [beta] Lists actively queued and running queries for a particular Virtual Instance.
+         * Lists actively queued and running queries for a particular Virtual Instance.
          * @summary List Queries
          * @param {string} virtualInstanceId Virtual Instance RRN
          * @param {*} [options] Override http request option.
@@ -12401,7 +13796,7 @@ export const VirtualInstancesApiFactory = function (configuration?: Configuratio
             return VirtualInstancesApiFp(configuration).getVirtualInstanceQueries(virtualInstanceId, options)(fetch, basePath);
         },
         /**
-         * [beta] List collection mounts for a particular VI.
+         * List collection mounts for a particular VI.
          * @summary List Collection Mounts
          * @param {string} virtualInstanceId Virtual Instance RRN
          * @param {*} [options] Override http request option.
@@ -12420,7 +13815,7 @@ export const VirtualInstancesApiFactory = function (configuration?: Configuratio
             return VirtualInstancesApiFp(configuration).listVirtualInstances(options)(fetch, basePath);
         },
         /**
-         * [beta] Mount a collection to this virtual instance.
+         * Mount a collection to this virtual instance.
          * @summary Mount Collections
          * @param {string} virtualInstanceId Virtual Instance RRN
          * @param {CreateCollectionMountRequest} body JSON object
@@ -12431,8 +13826,8 @@ export const VirtualInstancesApiFactory = function (configuration?: Configuratio
             return VirtualInstancesApiFp(configuration).mountCollection(virtualInstanceId, body, options)(fetch, basePath);
         },
         /**
-         * [beta] Make a SQL query to Rockset.
-         * @summary Execute SQL Query
+         * Make a SQL query to Rockset.
+         * @summary Execute SQL Query on a specific Virtual Instance
          * @param {string} virtualInstanceId Virtual Instance RRN
          * @param {QueryRequest} body JSON object
          * @param {*} [options] Override http request option.
@@ -12442,7 +13837,7 @@ export const VirtualInstancesApiFactory = function (configuration?: Configuratio
             return VirtualInstancesApiFp(configuration).queryVirtualInstance(virtualInstanceId, body, options)(fetch, basePath);
         },
         /**
-         * [beta] Resume a virtual instance.
+         * Resume a virtual instance.
          * @summary Resume Virtual Instance
          * @param {string} virtualInstanceId Virtual Instance RRN
          * @param {*} [options] Override http request option.
@@ -12463,7 +13858,7 @@ export const VirtualInstancesApiFactory = function (configuration?: Configuratio
             return VirtualInstancesApiFp(configuration).setVirtualInstance(virtualInstanceId, body, options)(fetch, basePath);
         },
         /**
-         * [beta] Suspend a virtual instance.
+         * Suspend a virtual instance.
          * @summary Suspend Virtual Instance
          * @param {string} virtualInstanceId Virtual Instance RRN
          * @param {*} [options] Override http request option.
@@ -12473,7 +13868,7 @@ export const VirtualInstancesApiFactory = function (configuration?: Configuratio
             return VirtualInstancesApiFp(configuration).suspendVirtualInstance(virtualInstanceId, options)(fetch, basePath);
         },
         /**
-         * [beta] Unmount a collection from this virtual instance.
+         * Unmount a collection from this virtual instance.
          * @summary Unmount Collection
          * @param {string} virtualInstanceId Virtual Instance RRN
          * @param {string} collectionPath 
@@ -12493,7 +13888,7 @@ export const VirtualInstancesApiFactory = function (configuration?: Configuratio
  */
 export class VirtualInstancesApi extends BaseAPI {
     /**
-     * [beta] Create virtual instance
+     * Create virtual instance
      * @summary Create Virtual Instance
      * @param {CreateVirtualInstanceRequest} body JSON object
      * @param {*} [options] Override http request option.
@@ -12504,7 +13899,7 @@ export class VirtualInstancesApi extends BaseAPI {
         return VirtualInstancesApiFp(this.configuration).createVirtualInstance(body, options)(this.fetch, this.basePath);
     }
     /**
-     * [beta] Delete a virtual instance.
+     * Delete a virtual instance.
      * @summary Delete Virtual Instance
      * @param {string} virtualInstanceId Virtual Instance RRN
      * @param {*} [options] Override http request option.
@@ -12515,7 +13910,7 @@ export class VirtualInstancesApi extends BaseAPI {
         return VirtualInstancesApiFp(this.configuration).deleteVirtualInstance(virtualInstanceId, options)(this.fetch, this.basePath);
     }
     /**
-     * [beta] Retrieve a mount on this virtual instance.
+     * Retrieve a mount on this virtual instance.
      * @summary Get Collection Mount
      * @param {string} virtualInstanceId Virtual Instance RRN
      * @param {string} collectionPath 
@@ -12525,6 +13920,19 @@ export class VirtualInstancesApi extends BaseAPI {
      */
     public getCollectionMount(virtualInstanceId: string, collectionPath: string, options?: any) {
         return VirtualInstancesApiFp(this.configuration).getCollectionMount(virtualInstanceId, collectionPath, options)(this.fetch, this.basePath);
+    }
+    /**
+     * Determines if the collection includes data at or after the specified fence(s) for close read-after-write semantics.
+     * @summary Get Collection Commit
+     * @param {string} virtualInstanceId Virtual Instance RRN
+     * @param {string} collectionPath 
+     * @param {GetCollectionCommitRequest} body JSON object
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof VirtualInstancesApi
+     */
+    public getMountOffsets(virtualInstanceId: string, collectionPath: string, body: GetCollectionCommitRequest, options?: any) {
+        return VirtualInstancesApiFp(this.configuration).getMountOffsets(virtualInstanceId, collectionPath, body, options)(this.fetch, this.basePath);
     }
     /**
      * Get details about a virtual instance.
@@ -12538,7 +13946,7 @@ export class VirtualInstancesApi extends BaseAPI {
         return VirtualInstancesApiFp(this.configuration).getVirtualInstance(virtualInstanceId, options)(this.fetch, this.basePath);
     }
     /**
-     * [beta] Lists actively queued and running queries for a particular Virtual Instance.
+     * Lists actively queued and running queries for a particular Virtual Instance.
      * @summary List Queries
      * @param {string} virtualInstanceId Virtual Instance RRN
      * @param {*} [options] Override http request option.
@@ -12549,7 +13957,7 @@ export class VirtualInstancesApi extends BaseAPI {
         return VirtualInstancesApiFp(this.configuration).getVirtualInstanceQueries(virtualInstanceId, options)(this.fetch, this.basePath);
     }
     /**
-     * [beta] List collection mounts for a particular VI.
+     * List collection mounts for a particular VI.
      * @summary List Collection Mounts
      * @param {string} virtualInstanceId Virtual Instance RRN
      * @param {*} [options] Override http request option.
@@ -12570,7 +13978,7 @@ export class VirtualInstancesApi extends BaseAPI {
         return VirtualInstancesApiFp(this.configuration).listVirtualInstances(options)(this.fetch, this.basePath);
     }
     /**
-     * [beta] Mount a collection to this virtual instance.
+     * Mount a collection to this virtual instance.
      * @summary Mount Collections
      * @param {string} virtualInstanceId Virtual Instance RRN
      * @param {CreateCollectionMountRequest} body JSON object
@@ -12582,8 +13990,8 @@ export class VirtualInstancesApi extends BaseAPI {
         return VirtualInstancesApiFp(this.configuration).mountCollection(virtualInstanceId, body, options)(this.fetch, this.basePath);
     }
     /**
-     * [beta] Make a SQL query to Rockset.
-     * @summary Execute SQL Query
+     * Make a SQL query to Rockset.
+     * @summary Execute SQL Query on a specific Virtual Instance
      * @param {string} virtualInstanceId Virtual Instance RRN
      * @param {QueryRequest} body JSON object
      * @param {*} [options] Override http request option.
@@ -12594,7 +14002,7 @@ export class VirtualInstancesApi extends BaseAPI {
         return VirtualInstancesApiFp(this.configuration).queryVirtualInstance(virtualInstanceId, body, options)(this.fetch, this.basePath);
     }
     /**
-     * [beta] Resume a virtual instance.
+     * Resume a virtual instance.
      * @summary Resume Virtual Instance
      * @param {string} virtualInstanceId Virtual Instance RRN
      * @param {*} [options] Override http request option.
@@ -12617,7 +14025,7 @@ export class VirtualInstancesApi extends BaseAPI {
         return VirtualInstancesApiFp(this.configuration).setVirtualInstance(virtualInstanceId, body, options)(this.fetch, this.basePath);
     }
     /**
-     * [beta] Suspend a virtual instance.
+     * Suspend a virtual instance.
      * @summary Suspend Virtual Instance
      * @param {string} virtualInstanceId Virtual Instance RRN
      * @param {*} [options] Override http request option.
@@ -12628,7 +14036,7 @@ export class VirtualInstancesApi extends BaseAPI {
         return VirtualInstancesApiFp(this.configuration).suspendVirtualInstance(virtualInstanceId, options)(this.fetch, this.basePath);
     }
     /**
-     * [beta] Unmount a collection from this virtual instance.
+     * Unmount a collection from this virtual instance.
      * @summary Unmount Collection
      * @param {string} virtualInstanceId Virtual Instance RRN
      * @param {string} collectionPath 
