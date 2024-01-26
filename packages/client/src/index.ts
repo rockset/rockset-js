@@ -39,10 +39,10 @@ const rocksetConfigure = (
     const newOptions = {
       ...options,
       headers: {
+        'User-Agent': `Rockset Node SDK/${version}`,
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
         ...options.headers,
         Authorization: `ApiKey ${apikey}`,
-        'User-Agent': `Rockset Node SDK/${version}`,
       },
     };
 
