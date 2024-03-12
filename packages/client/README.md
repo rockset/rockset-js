@@ -337,7 +337,7 @@ rocksetClient.virtualInstances
     type: "LARGE",
     description: "virtual instance for running one-off analytics queries",
     auto_suspend_seconds: 3600,
-    mount_refresh_interval_seconds: 3600,
+    mount_type: "LIVE"
   })
   .then(console.log)
   .catch(console.err);;
